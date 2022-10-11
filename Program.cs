@@ -1,9 +1,12 @@
 ﻿using Gtk;
+using AccountingSoftware;
 
-namespace StorageAndTrade
+namespace Configurator
 {
     class Program
     {
+        public static Kernel? Kernel { get; set; }
+
         public static void Main()
         {
             Application.Init();

@@ -2,7 +2,7 @@
 using System.Xml;
 using System.Xml.XPath;
 
-namespace StorageAndTrade
+namespace Configurator
 {
     public class ConfigurationParamCollection
     {

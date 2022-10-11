@@ -2,7 +2,7 @@ using Gtk;
 
 using AccountingSoftware;
 
-namespace StorageAndTrade
+namespace Configurator
 {
     class FormConfigurationSelectionParam : Window
     {
@@ -17,7 +17,7 @@ namespace StorageAndTrade
         {
             SetDefaultSize(420, 0);
             SetPosition(WindowPosition.Center);
-            SetDefaultIconFromFile("form.ico");
+            SetDefaultIconFromFile("configurator.ico");
             BorderWidth = 5;
 
             VBox vbox = new VBox(false, 2);

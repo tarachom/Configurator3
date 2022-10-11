@@ -2,7 +2,7 @@ using Gtk;
 
 using AccountingSoftware;
 
-namespace StorageAndTrade
+namespace Configurator
 {
     class FormConfigurationSelection : Window
     {
@@ -13,7 +13,7 @@ namespace StorageAndTrade
         {
             SetDefaultSize(660, 320);
             SetPosition(WindowPosition.Center);
-            SetDefaultIconFromFile("form.ico");
+            SetDefaultIconFromFile("configurator.ico");
 
             DeleteEvent += delegate { Application.Quit(); };
 
@@ -133,14 +133,36 @@ namespace StorageAndTrade
                 ConfigurationParamCollection.SelectConfigurationParam(selectedRows[0].Name);
                 ConfigurationParamCollection.SaveConfigurationParamFromXML(ConfigurationParamCollection.PathToXML);
 
-                string PathToConfXML = System.IO.Path.Combine(AppContext.BaseDirectory, "Conf.xml");
+                string PathToConfXML = System.IO.Path.Combine(AppContext.BaseDirectory, "Confa.xml");
 
-                //Exception exception;
+                Program.Kernel = new Kernel();
 
-                //Конфа.Config.Kernel = new Kernel();
-                
+                Exception exception;
+                bool flagOpen = Program.Kernel.Open(PathToConfXML,
+                    OpenConfigurationParam.DataBaseServer,
+                    OpenConfigurationParam.DataBaseLogin,
+                    OpenConfigurationParam.DataBasePassword,
+                    OpenConfigurationParam.DataBasePort,
+                    OpenConfigurationParam.DataBaseBaseName,
+                    out exception);
 
-                //Hide();
+                if (flagOpen)
+                {
+                    FormConfigurator сonfigurator = new FormConfigurator();
+                    сonfigurator.OpenConfigurationParam = ConfigurationParamCollection.GetConfigurationParam(selectedRows[0].Name);
+                    сonfigurator.Show();
+
+                    Hide();
+                }
+                else
+                {
+                    MessageDialog md = new MessageDialog(this, DialogFlags.DestroyWithParent, MessageType.Warning, ButtonsType.Close,
+                        "Error: " + exception.Message);
+
+                    md.Run();
+                    md.Destroy();
+                }
+
             }
         }
 
