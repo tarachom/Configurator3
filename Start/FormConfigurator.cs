@@ -315,13 +315,18 @@ namespace Configurator
             LoadConf();
         }
 
+        void CallBack_CloseCurrentPageNotebook()
+        {
+            topNotebook.RemovePage(topNotebook.CurrentPage);
+        }
+
         void CreateNotebookPage(string tabName, System.Func<Widget>? pageWidget)
         {
             ScrolledWindow scroll = new ScrolledWindow() { ShadowType = ShadowType.In };
             scroll.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
 
             int numPage = topNotebook.AppendPage(scroll, new Label { Text = tabName, Expand = false, Halign = Align.Start });
-            
+
             if (pageWidget != null)
                 scroll.Add((Widget)pageWidget.Invoke());
 
@@ -349,9 +354,10 @@ namespace Configurator
                 {
                     case "Константи":
                         {
-                            //Console.WriteLine(key[1]);
-
-                            CreateNotebookPage("Константа", () => { return new PageConstant(); });
+                            CreateNotebookPage("Константа", () =>
+                            {
+                                return new PageConstant() { CallBack_ClosePage = CallBack_CloseCurrentPageNotebook };
+                            });
 
                             break;
                         }
