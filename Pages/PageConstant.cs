@@ -13,9 +13,7 @@ namespace Configurator
                 return Program.Kernel?.Conf;
             }
         }
-
         public ConfigurationConstants? ConfConstants { get; set; }
-
         public System.Action? CallBack_ClosePage { get; set; }
 
         ListBox? listBoxTableParts;
@@ -93,15 +91,18 @@ namespace Configurator
             vBox.PackStart(fixDesc, false, false, 5);
 
             fixDesc.Put(new Label("Опис:"), 5, 5);
-            fixDesc.Put(textViewDesc = new TextView(), 60, 0);
+            fixDesc.Put(textViewDesc = new TextView(), 60, 5);
             textViewDesc.SetSizeRequest(300, 50);
             hPaned.Pack2(vBox, false, false);
         }
 
         void OnSaveClick(object? sender, EventArgs args)
         {
-            if (CallBack_ClosePage != null)
-                CallBack_ClosePage.Invoke();
+            if (ConfConstants != null && entryName != null)
+            {
+                ConfConstants.Name = entryName.Text;
+                ConfConstants.Desc = textViewDesc?.Buffer.Text ?? "";
+            }
         }
     }
 }
