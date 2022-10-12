@@ -1,6 +1,4 @@
 using Gtk;
-using System;
-using System.IO;
 
 using AccountingSoftware;
 
@@ -9,7 +7,6 @@ namespace Configurator
     class FormConfigurator : Window
     {
         public ConfigurationParam? OpenConfigurationParam { get; set; }
-
         Configuration? Conf
         {
             get
@@ -268,7 +265,7 @@ namespace Configurator
             thread.Start();
         }
 
-        void AddTreeColumn()
+        TreeStore AddTreeColumn()
         {
             treeStore = new TreeStore(typeof(string), typeof(string), typeof(string));
 
@@ -276,6 +273,8 @@ namespace Configurator
             treeConfiguration.AppendColumn(new TreeViewColumn("Тип", new CellRendererText(), "text", 1));
             treeConfiguration.AppendColumn(new TreeViewColumn("Ключ", new CellRendererText(), "text", 2) { Visible = false });
             treeConfiguration.Model = treeStore;
+
+            return treeStore;
         }
 
         #endregion
@@ -289,7 +288,7 @@ namespace Configurator
             DeleteEvent += delegate { Application.Quit(); };
 
             hPaned = new HPaned();
-            hPaned.Position = 800;
+            hPaned.Position = 400;
 
             ScrolledWindow scrollTree = new ScrolledWindow() { ShadowType = ShadowType.In };
             scrollTree.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
@@ -297,16 +296,16 @@ namespace Configurator
             treeConfiguration = new TreeView();
             treeConfiguration.RowActivated += OnRowActivated;
 
-            AddTreeColumn();
-
             scrollTree.Add(treeConfiguration);
+            treeStore = AddTreeColumn();
 
             hPaned.Pack1(scrollTree, false, true);
 
-            topNotebook = new Notebook() { BorderWidth = 0, ShowBorder = false };
+            topNotebook = new Notebook() { Scrollable = true, EnablePopup = true, BorderWidth = 0, ShowBorder = false };
             topNotebook.TabPos = PositionType.Top;
+            //topNotebook.PopupMenu
 
-            CreateTopNotebookPages();
+            CreateNotebookPage("Стартова", null);
 
             hPaned.Pack2(topNotebook, false, true);
 
@@ -316,35 +315,46 @@ namespace Configurator
             LoadConf();
         }
 
-        void CreateTopNotebookPages()
+        void CreateNotebookPage(string tabName, System.Func<Widget>? pageWidget)
         {
             ScrolledWindow scroll = new ScrolledWindow() { ShadowType = ShadowType.In };
             scroll.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
 
-            int numPage = topNotebook.AppendPage(scroll, new Label { Text = "Ok", Expand = false, Halign = Align.End });
+            int numPage = topNotebook.AppendPage(scroll, new Label { Text = tabName, Expand = false, Halign = Align.Start });
+            
+            if (pageWidget != null)
+                scroll.Add((Widget)pageWidget.Invoke());
 
+            topNotebook.ShowAll();
+
+            topNotebook.CurrentPage = numPage;
         }
 
         void OnRowActivated(object sender, RowActivatedArgs args)
         {
-            Console.WriteLine(args.Path + " - " + args.Column);
-
             TreeIter iter;
-            treeConfiguration.Selection.GetSelected(out iter);
 
-            if (treeConfiguration.Model.GetIter(out iter, args.Path))
+            if (!treeConfiguration.Selection.GetSelected(out iter) || !treeConfiguration.Model.GetIter(out iter, args.Path))
+                return;
+
+            string keyTree = (string)treeConfiguration.Model.GetValue(iter, 2);
+
+            if (String.IsNullOrEmpty(keyTree))
+                return;
+
+            string[] key = keyTree.Split(".");
+            if (key.Length == 2)
             {
-                string[] key = ((string)treeConfiguration.Model.GetValue(iter, 2)).Split(".");
-                if (key.Length == 2)
+                switch (key[0])
                 {
-                    switch (key[0])
-                    {
-                        case "Константи":
-                            {
-                                Console.WriteLine(key[1]);
-                                break;
-                            }
-                    }
+                    case "Константи":
+                        {
+                            //Console.WriteLine(key[1]);
+
+                            CreateNotebookPage("Константа", () => { return new PageConstant(); });
+
+                            break;
+                        }
                 }
             }
         }
