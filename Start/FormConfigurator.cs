@@ -334,15 +334,14 @@ namespace Configurator
 
             if (treeConfiguration.Model.GetIter(out iter, args.Path))
             {
-                string key = (string)treeConfiguration.Model.GetValue(iter, 2);
-                string[] keySplit = key.Split(".");
-                if (keySplit.Length == 2)
+                string[] key = ((string)treeConfiguration.Model.GetValue(iter, 2)).Split(".");
+                if (key.Length == 2)
                 {
-                    switch (keySplit[0])
+                    switch (key[0])
                     {
                         case "Константи":
                             {
-                                Console.WriteLine(keySplit[1]);
+                                Console.WriteLine(key[1]);
                                 break;
                             }
                     }
