@@ -20,7 +20,7 @@ namespace Configurator
 
         ListBox? listBoxTableParts;
         Entry? entryName;
-        Entry? entryDesc;
+        TextView? textViewDesc;
 
         public PageConstant() : base()
         {
@@ -59,7 +59,7 @@ namespace Configurator
                 listBoxTableParts?.Add(new Label(tablePart.Name) { Halign = Align.Start });
 
             entryName!.Text = ConfConstants?.Name;
-            entryDesc!.Text = ConfConstants?.Desc;
+            textViewDesc!.Buffer.Text = ConfConstants?.Desc;
         }
 
         void CreatePack1(HPaned hPaned)
@@ -93,8 +93,8 @@ namespace Configurator
             vBox.PackStart(fixDesc, false, false, 5);
 
             fixDesc.Put(new Label("Опис:"), 5, 5);
-            fixDesc.Put(entryDesc = new Entry() { WidthRequest = 300 }, 60, 0);
-
+            fixDesc.Put(textViewDesc = new TextView(), 60, 0);
+            textViewDesc.SetSizeRequest(300, 50);
             hPaned.Pack2(vBox, false, false);
         }
 

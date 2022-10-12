@@ -360,7 +360,7 @@ namespace Configurator
                             string blockConst = blockAndName[0];
                             string nameConst = blockAndName[1];
 
-                            CreateNotebookPage("Константа: " + name, () =>
+                            CreateNotebookPage("Константа: " + nameConst, () =>
                             {
                                 PageConstant page = new PageConstant()
                                 {
