@@ -139,7 +139,7 @@ namespace Configurator
 
             foreach (KeyValuePair<string, ConfigurationEnumField> ConfEnumFields in confEnum.Fields)
             {
-                TreeIter enumFieldIter = treeStore.AppendValues(rootIter, ConfEnumFields.Value.Name);
+                TreeIter enumFieldIter = treeStore.AppendValues(enumIter, ConfEnumFields.Value.Name);
             }
         }
 
@@ -235,12 +235,12 @@ namespace Configurator
             treeStore.Clear();
 
             TreeIter contantsIter = treeStore.AppendValues("Константи");
-
             LoadConstants(contantsIter);
+            treeConfiguration.ExpandToPath(treeConfiguration.Model.GetPath(contantsIter));
 
             TreeIter directoriesIter = treeStore.AppendValues("Довідники");
-
             LoadDirectories(directoriesIter);
+            //treeConfiguration.ExpandToPath(treeConfiguration.Model.GetPath(directoriesIter));
 
             TreeIter documentsIter = treeStore.AppendValues("Документи");
 
@@ -259,12 +259,6 @@ namespace Configurator
             LoadRegistersAccumulation(registersAccumulationIter);
         }
 
-        void LoadConf()
-        {
-            Thread thread = new Thread(new ThreadStart(LoadTree));
-            thread.Start();
-        }
-
         TreeStore AddTreeColumn()
         {
             treeStore = new TreeStore(typeof(string), typeof(string), typeof(string));
@@ -275,6 +269,11 @@ namespace Configurator
             treeConfiguration.Model = treeStore;
 
             return treeStore;
+        }
+
+        void UpdateConstant(TreePath path)
+        {
+
         }
 
         #endregion
@@ -311,7 +310,7 @@ namespace Configurator
             Add(hPaned);
             ShowAll();
 
-            LoadConf();
+            LoadTree();
         }
 
         void CallBack_CloseCurrentPageNotebook()
@@ -343,6 +342,8 @@ namespace Configurator
 
             string keyTree = (string)treeConfiguration.Model.GetValue(iter, 2);
 
+            //treeConfiguration.Model.SetValue(iter, 2, "EDITTT");
+
             if (String.IsNullOrEmpty(keyTree))
                 return;
 
@@ -366,7 +367,8 @@ namespace Configurator
                                 {
                                     IsNew = false,
                                     CallBack_ClosePage = CallBack_CloseCurrentPageNotebook,
-                                    CallBack_ReloadTree = LoadTree,
+                                    //CallBack_ReloadTree = LoadTree,
+                                    TreePathExpand = args.Path,
                                     ConfConstantsBlock = Conf?.ConstantsBlock[blockConst],
                                     ConfConstants = Conf!.ConstantsBlock[blockConst].Constants[nameConst]
                                 };
