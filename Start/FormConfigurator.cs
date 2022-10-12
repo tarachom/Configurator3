@@ -364,8 +364,11 @@ namespace Configurator
                             {
                                 PageConstant page = new PageConstant()
                                 {
+                                    IsNew = false,
                                     CallBack_ClosePage = CallBack_CloseCurrentPageNotebook,
-                                    ConfConstants = Conf?.ConstantsBlock[blockConst].Constants[nameConst]
+                                    CallBack_ReloadTree = LoadTree,
+                                    ConfConstantsBlock = Conf?.ConstantsBlock[blockConst],
+                                    ConfConstants = Conf!.ConstantsBlock[blockConst].Constants[nameConst]
                                 };
 
                                 page.SetValue();

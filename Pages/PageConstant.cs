@@ -13,12 +13,15 @@ namespace Configurator
                 return Program.Kernel?.Conf;
             }
         }
-        public ConfigurationConstants? ConfConstants { get; set; }
+        public ConfigurationConstantsBlock? ConfConstantsBlock { get; set; }
+        public ConfigurationConstants ConfConstants { get; set; } = new ConfigurationConstants();
         public System.Action? CallBack_ClosePage { get; set; }
+        public System.Action? CallBack_ReloadTree { get; set; }
+        public bool IsNew { get; set; } = true;
 
-        ListBox? listBoxTableParts;
-        Entry? entryName;
-        TextView? textViewDesc;
+        ListBox listBoxTableParts = new ListBox() { SelectionMode = SelectionMode.Single };
+        Entry entryName = new Entry() { WidthRequest = 300 };
+        TextView textViewDesc = new TextView();
 
         public PageConstant() : base()
         {
@@ -54,10 +57,16 @@ namespace Configurator
         public void SetValue()
         {
             foreach (ConfigurationObjectTablePart tablePart in ConfConstants!.TabularParts.Values)
-                listBoxTableParts?.Add(new Label(tablePart.Name) { Halign = Align.Start });
+                listBoxTableParts.Add(new Label(tablePart.Name) { Halign = Align.Start });
 
-            entryName!.Text = ConfConstants?.Name;
-            textViewDesc!.Buffer.Text = ConfConstants?.Desc;
+            entryName.Text = ConfConstants?.Name;
+            textViewDesc.Buffer.Text = ConfConstants?.Desc;
+        }
+
+        void GetValue()
+        {
+            ConfConstants.Name = entryName.Text;
+            ConfConstants.Desc = textViewDesc.Buffer.Text;
         }
 
         void CreatePack1(HPaned hPaned)
@@ -69,8 +78,6 @@ namespace Configurator
             scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
             scrollList.SetSizeRequest(0, 300);
 
-            listBoxTableParts = new ListBox();
-            listBoxTableParts.SelectionMode = SelectionMode.Single;
             scrollList.Add(listBoxTableParts);
 
             vBox.PackStart(scrollList, false, false, 0);
@@ -85,24 +92,61 @@ namespace Configurator
             vBox.PackStart(fixName, false, false, 5);
 
             fixName.Put(new Label("Назва:"), 5, 5);
-            fixName.Put(entryName = new Entry() { WidthRequest = 300 }, 60, 0);
+            fixName.Put(entryName, 60, 0);
 
             Fixed fixDesc = new Fixed();
             vBox.PackStart(fixDesc, false, false, 5);
 
             fixDesc.Put(new Label("Опис:"), 5, 5);
-            fixDesc.Put(textViewDesc = new TextView(), 60, 5);
+            fixDesc.Put(textViewDesc, 60, 5);
             textViewDesc.SetSizeRequest(300, 50);
             hPaned.Pack2(vBox, false, false);
         }
 
         void OnSaveClick(object? sender, EventArgs args)
         {
-            if (ConfConstants != null && entryName != null)
+            string name = entryName.Text;
+            string errorList = Configuration.ValidateConfigurationObjectName(Program.Kernel!, ref name);
+            entryName.Text = name;
+
+            if (errorList.Length > 0)
             {
-                ConfConstants.Name = entryName.Text;
-                ConfConstants.Desc = textViewDesc?.Buffer.Text ?? "";
+                Message.ErrorMessage($"{errorList}");
+                return;
             }
+
+            if (IsNew)
+            {
+                if (ConfConstantsBlock!.Constants.ContainsKey(entryName.Text))
+                {
+                    Message.ErrorMessage("Назва константи не унікальна");
+                    return;
+                }
+
+                GetValue();
+
+                Conf?.AppendConstants(ConfConstantsBlock!.BlockName, ConfConstants);
+            }
+            else
+            {
+                if (ConfConstants.Name != entryName.Text)
+                {
+                    if (ConfConstantsBlock!.Constants.ContainsKey(entryName.Text))
+                    {
+                        Message.ErrorMessage("Назва константи не унікальна");
+                        return;
+                    }
+
+                    Conf?.ConstantsBlock.Remove(ConfConstants.Name);
+
+                    GetValue();
+
+                    Conf?.AppendConstants(ConfConstantsBlock!.BlockName, ConfConstants);
+                }
+            }
+
+            if (CallBack_ReloadTree != null)
+                CallBack_ReloadTree.Invoke();
         }
     }
 }
