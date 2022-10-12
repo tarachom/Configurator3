@@ -27,9 +27,9 @@ namespace Configurator
             return ConfType == "pointer" || ConfType == "enum" ? Pointer : ConfType;
         }
 
-        void LoadConstant(TreeIter rootIter, ConfigurationConstants confConstant)
+        void LoadConstant(TreeIter rootIter, string ConstantsBlock, ConfigurationConstants confConstant)
         {
-            string key = $"Константи.{confConstant.Name}";
+            string key = $"Константи.{ConstantsBlock}:{confConstant.Name}";
 
             TreeIter constantIter = treeStore.AppendValues(rootIter, confConstant.Name, GetTypeInfo(confConstant.Type, confConstant.Pointer), key);
 
@@ -58,7 +58,7 @@ namespace Configurator
 
                 foreach (ConfigurationConstants ConfConstants in ConfConstantsBlock.Value.Constants.Values)
                 {
-                    LoadConstant(contantsBlockIter, ConfConstants);
+                    LoadConstant(contantsBlockIter, ConfConstantsBlock.Value.BlockName, ConfConstants);
                 }
             }
         }
@@ -271,7 +271,7 @@ namespace Configurator
 
             treeConfiguration.AppendColumn(new TreeViewColumn("Конфігурація", new CellRendererText(), "text", 0));
             treeConfiguration.AppendColumn(new TreeViewColumn("Тип", new CellRendererText(), "text", 1));
-            treeConfiguration.AppendColumn(new TreeViewColumn("Ключ", new CellRendererText(), "text", 2) { Visible = false });
+            treeConfiguration.AppendColumn(new TreeViewColumn("Ключ", new CellRendererText(), "text", 2) { /*Visible = false*/ });
             treeConfiguration.Model = treeStore;
 
             return treeStore;
@@ -356,9 +356,21 @@ namespace Configurator
                 {
                     case "Константи":
                         {
+                            string[] blockAndName = name.Split(":");
+                            string blockConst = blockAndName[0];
+                            string nameConst = blockAndName[1];
+
                             CreateNotebookPage("Константа: " + name, () =>
                             {
-                                return new PageConstant() { CallBack_ClosePage = CallBack_CloseCurrentPageNotebook };
+                                PageConstant page = new PageConstant()
+                                {
+                                    CallBack_ClosePage = CallBack_CloseCurrentPageNotebook,
+                                    ConfConstants = Conf?.ConstantsBlock[blockConst].Constants[nameConst]
+                                };
+
+                                page.SetValue();
+
+                                return page;
                             });
 
                             break;

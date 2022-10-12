@@ -14,7 +14,13 @@ namespace Configurator
             }
         }
 
+        public ConfigurationConstants? ConfConstants { get; set; }
+
         public System.Action? CallBack_ClosePage { get; set; }
+
+        ListBox? listBoxTableParts;
+        Entry? entryName;
+        Entry? entryDesc;
 
         public PageConstant() : base()
         {
@@ -36,32 +42,60 @@ namespace Configurator
             PackStart(hBox, false, false, 10);
 
             HPaned hPaned = new HPaned();
-            hPaned.BorderWidth = 10;
+            hPaned.BorderWidth = 7;
             hPaned.Position = 200;
 
-            ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
-            scrollList.SetPolicy(PolicyType.Never, PolicyType.Automatic);
-            scrollList.SetSizeRequest(0, 300);
-
-            ListBox listBox = new ListBox();
-            listBox.SelectionMode = SelectionMode.Single;
-            scrollList.Add(listBox);
-
-            hPaned.Pack1(scrollList, true, true);
-
-            VBox vBoxConstant = new VBox(false, 0);
-
-            HBox hBoxConstant = new HBox(false, 0);
-            vBoxConstant.PackStart(hBoxConstant, false, false, 0);
-
-            Button bSave2 = new Button("Зберегти");
-            hBoxConstant.PackStart(bSave2, false, false, 5);
-
-            hPaned.Pack2(vBoxConstant, false, false);
+            CreatePack1(hPaned);
+            CreatePack2(hPaned);
 
             PackStart(hPaned, false, false, 5);
 
             ShowAll();
+        }
+
+        public void SetValue()
+        {
+            foreach (ConfigurationObjectTablePart tablePart in ConfConstants!.TabularParts.Values)
+                listBoxTableParts?.Add(new Label(tablePart.Name) { Halign = Align.Start });
+
+            entryName!.Text = ConfConstants?.Name;
+            entryDesc!.Text = ConfConstants?.Desc;
+        }
+
+        void CreatePack1(HPaned hPaned)
+        {
+            VBox vBox = new VBox(false, 0);
+            vBox.PackStart(new Label("Табличні частини:") { Halign = Align.Start }, false, false, 5);
+
+            ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
+            scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+            scrollList.SetSizeRequest(0, 300);
+
+            listBoxTableParts = new ListBox();
+            listBoxTableParts.SelectionMode = SelectionMode.Single;
+            scrollList.Add(listBoxTableParts);
+
+            vBox.PackStart(scrollList, false, false, 0);
+            hPaned.Pack1(vBox, true, true);
+        }
+
+        void CreatePack2(HPaned hPaned)
+        {
+            VBox vBox = new VBox(false, 0);
+
+            Fixed fixName = new Fixed();
+            vBox.PackStart(fixName, false, false, 5);
+
+            fixName.Put(new Label("Назва:"), 5, 5);
+            fixName.Put(entryName = new Entry() { WidthRequest = 300 }, 60, 0);
+
+            Fixed fixDesc = new Fixed();
+            vBox.PackStart(fixDesc, false, false, 5);
+
+            fixDesc.Put(new Label("Опис:"), 5, 5);
+            fixDesc.Put(entryDesc = new Entry() { WidthRequest = 300 }, 60, 0);
+
+            hPaned.Pack2(vBox, false, false);
         }
 
         void OnSaveClick(object? sender, EventArgs args)
