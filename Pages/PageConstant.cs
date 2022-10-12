@@ -35,10 +35,31 @@ namespace Configurator
 
             PackStart(hBox, false, false, 10);
 
-            Separator hSeparator = new Separator(Orientation.Horizontal);
-            PackStart(hSeparator, false, false, 2);
+            HPaned hPaned = new HPaned();
+            hPaned.BorderWidth = 10;
+            hPaned.Position = 200;
 
+            ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
+            scrollList.SetPolicy(PolicyType.Never, PolicyType.Automatic);
+            scrollList.SetSizeRequest(0, 300);
 
+            ListBox listBox = new ListBox();
+            listBox.SelectionMode = SelectionMode.Single;
+            scrollList.Add(listBox);
+
+            hPaned.Pack1(scrollList, true, true);
+
+            VBox vBoxConstant = new VBox(false, 0);
+
+            HBox hBoxConstant = new HBox(false, 0);
+            vBoxConstant.PackStart(hBoxConstant, false, false, 0);
+
+            Button bSave2 = new Button("Зберегти");
+            hBoxConstant.PackStart(bSave2, false, false, 5);
+
+            hPaned.Pack2(vBoxConstant, false, false);
+
+            PackStart(hPaned, false, false, 5);
 
             ShowAll();
         }

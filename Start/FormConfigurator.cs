@@ -303,7 +303,6 @@ namespace Configurator
 
             topNotebook = new Notebook() { Scrollable = true, EnablePopup = true, BorderWidth = 0, ShowBorder = false };
             topNotebook.TabPos = PositionType.Top;
-            //topNotebook.PopupMenu
 
             CreateNotebookPage("Стартова", null);
 
@@ -350,11 +349,14 @@ namespace Configurator
             string[] key = keyTree.Split(".");
             if (key.Length == 2)
             {
-                switch (key[0])
+                string block = key[0];
+                string name = key[1];
+
+                switch (block)
                 {
                     case "Константи":
                         {
-                            CreateNotebookPage("Константа", () =>
+                            CreateNotebookPage("Константа: " + name, () =>
                             {
                                 return new PageConstant() { CallBack_ClosePage = CallBack_CloseCurrentPageNotebook };
                             });
