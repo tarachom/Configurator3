@@ -181,6 +181,12 @@ namespace Configurator
             ConfConstants.Desc = textViewDesc.Buffer.Text;
             ConfConstants.Block = Conf!.ConstantsBlock[comboBoxBlock.ActiveId];
             ConfConstants.Type = comboBoxType.ActiveId;
+
+            if (ConfConstants!.Type == "pointer")
+                ConfConstants.Pointer = comboBoxPointer.ActiveId;
+
+            if (ConfConstants!.Type == "enum")
+                ConfConstants.Pointer = comboBoxEnum.ActiveId;
         }
 
         #endregion
@@ -226,6 +232,9 @@ namespace Configurator
             }
 
             GetValue();
+
+            if (ConfConstants.Type =="pointer" )
+
             Conf!.AppendConstants(ConfConstants.Block.BlockName, ConfConstants);
 
             if (CallBack_RelodTree != null)
