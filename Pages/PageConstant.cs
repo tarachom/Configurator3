@@ -233,9 +233,16 @@ namespace Configurator
 
             GetValue();
 
-            if (ConfConstants.Type =="pointer" )
+            if (ConfConstants.Type == "pointer" || ConfConstants.Type == "enum")
+                if (String.IsNullOrEmpty(ConfConstants.Pointer))
+                {
+                    Message.ErrorMessage($"Потрібно деталізувати тип даних для [ pointer ] або [ enum ]");
+                    return;
+                }
 
             Conf!.AppendConstants(ConfConstants.Block.BlockName, ConfConstants);
+
+            IsNew = false;
 
             if (CallBack_RelodTree != null)
                 CallBack_RelodTree.Invoke();
