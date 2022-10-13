@@ -55,26 +55,6 @@ namespace Configurator
             ShowAll();
         }
 
-        public void SetValue()
-        {
-            foreach (ConfigurationObjectTablePart tablePart in ConfConstants!.TabularParts.Values)
-                listBoxTableParts.Add(new Label(tablePart.Name) { Halign = Align.Start });
-
-            entryName.Text = ConfConstants?.Name;
-            textViewDesc.Buffer.Text = ConfConstants?.Desc;
-
-            comboBoxBlock.ActiveId = ConfConstants?.Block.BlockName;
-            comboBoxType.ActiveId = ConfConstants?.Type;
-        }
-
-        void GetValue()
-        {
-            ConfConstants.Name = entryName.Text;
-            ConfConstants.Desc = textViewDesc.Buffer.Text;
-            ConfConstants.Block = Conf!.ConstantsBlock[comboBoxBlock.ActiveId];
-            ConfConstants.Type = comboBoxType.ActiveId;
-        }
-
         void CreatePack1(HPaned hPaned)
         {
             VBox vBox = new VBox(false, 0);
@@ -136,6 +116,30 @@ namespace Configurator
 
             hPaned.Pack2(vBox, false, false);
         }
+
+        #region Присвоєння / зчитування значень віджетів
+
+        public void SetValue()
+        {
+            foreach (ConfigurationObjectTablePart tablePart in ConfConstants!.TabularParts.Values)
+                listBoxTableParts.Add(new Label(tablePart.Name) { Halign = Align.Start });
+
+            entryName.Text = ConfConstants?.Name;
+            textViewDesc.Buffer.Text = ConfConstants?.Desc;
+
+            comboBoxBlock.ActiveId = ConfConstants?.Block.BlockName;
+            comboBoxType.ActiveId = ConfConstants?.Type;
+        }
+
+        void GetValue()
+        {
+            ConfConstants.Name = entryName.Text;
+            ConfConstants.Desc = textViewDesc.Buffer.Text;
+            ConfConstants.Block = Conf!.ConstantsBlock[comboBoxBlock.ActiveId];
+            ConfConstants.Type = comboBoxType.ActiveId;
+        }
+
+        #endregion
 
         void OnSaveClick(object? sender, EventArgs args)
         {
