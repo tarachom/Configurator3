@@ -16,13 +16,13 @@ namespace Configurator
         public ConfigurationConstantsBlock? ConfConstantsBlock { get; set; }
         public ConfigurationConstants ConfConstants { get; set; } = new ConfigurationConstants();
         public System.Action? CallBack_ClosePage { get; set; }
-        //public System.Action<TreePath?>? CallBack_ReloadTree { get; set; }
-        //public TreePath? TreePathExpand { get; set; }
         public bool IsNew { get; set; } = true;
 
         ListBox listBoxTableParts = new ListBox() { SelectionMode = SelectionMode.Single };
         Entry entryName = new Entry() { WidthRequest = 300 };
         TextView textViewDesc = new TextView();
+        ComboBoxText comboBoxBlock = new ComboBoxText();
+        ComboBoxText comboBoxType = new ComboBoxText();
 
         public PageConstant() : base()
         {
@@ -62,6 +62,9 @@ namespace Configurator
 
             entryName.Text = ConfConstants?.Name;
             textViewDesc.Buffer.Text = ConfConstants?.Desc;
+
+            comboBoxBlock.ActiveId = ConfConstants?.Block.BlockName;
+            comboBoxType.ActiveId = ConfConstants?.Type;
         }
 
         void GetValue()
@@ -89,12 +92,34 @@ namespace Configurator
         {
             VBox vBox = new VBox(false, 0);
 
+            //Назва
             Fixed fixName = new Fixed();
             vBox.PackStart(fixName, false, false, 5);
 
             fixName.Put(new Label("Назва:"), 5, 5);
             fixName.Put(entryName, 60, 0);
 
+            //Блок
+            foreach (ConfigurationConstantsBlock block in Conf!.ConstantsBlock.Values)
+                comboBoxBlock.Append(block.BlockName, block.BlockName);
+
+            Fixed fixBlock = new Fixed();
+            vBox.PackStart(fixBlock, false, false, 5);
+
+            fixBlock.Put(new Label("Блок:"), 5, 5);
+            fixBlock.Put(comboBoxBlock, 60, 0);
+
+            //Тип
+            foreach (var fieldType in FieldType.DefaultList())
+                comboBoxType.Append(fieldType.ConfTypeName, fieldType.ViewTypeName);
+
+            Fixed fixType = new Fixed();
+            vBox.PackStart(fixType, false, false, 5);
+
+            fixType.Put(new Label("Тип:"), 5, 5);
+            fixType.Put(comboBoxType, 60, 0);
+
+            //Опис
             Fixed fixDesc = new Fixed();
             vBox.PackStart(fixDesc, false, false, 5);
 
@@ -102,12 +127,11 @@ namespace Configurator
 
             ScrolledWindow scrollTextView = new ScrolledWindow() { ShadowType = ShadowType.In };
             scrollTextView.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-            scrollTextView.SetSizeRequest(300, 100);
-
+            scrollTextView.SetSizeRequest(400, 100);
             scrollTextView.Add(textViewDesc);
-
+            
             fixDesc.Put(scrollTextView, 60, 5);
-            textViewDesc.SetSizeRequest(300, 50);
+
             hPaned.Pack2(vBox, false, false);
         }
 

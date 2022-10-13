@@ -271,11 +271,6 @@ namespace Configurator
             return treeStore;
         }
 
-        void UpdateConstant(TreePath path)
-        {
-
-        }
-
         #endregion
 
         public FormConfigurator() : base("Конфігуратор")
@@ -342,10 +337,7 @@ namespace Configurator
 
             string keyComposite = (string)treeConfiguration.Model.GetValue(iter, 2);
 
-            if (String.IsNullOrEmpty(keyComposite))
-                return;
-
-            if (keyComposite.IndexOf(".") == -1)
+            if (String.IsNullOrEmpty(keyComposite) || keyComposite.IndexOf(".") == -1)
                 return;
 
             string[] keySplit = keyComposite.Split(".");
