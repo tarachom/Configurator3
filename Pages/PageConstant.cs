@@ -21,7 +21,7 @@ namespace Configurator
         public bool IsNew { get; set; } = true;
 
         ListBox listBoxTableParts = new ListBox() { SelectionMode = SelectionMode.Single };
-        Entry entryName = new Entry() { WidthRequest = 300 };
+        Entry entryName = new Entry() { WidthRequest = 400 };
         TextView textViewDesc = new TextView();
         ComboBoxText comboBoxBlock = new ComboBoxText();
         ComboBoxText comboBoxType = new ComboBoxText();
@@ -174,6 +174,8 @@ namespace Configurator
         {
             comboBoxBlock.Active = 0;
             comboBoxType.Active = 0;
+
+            OnComboBoxTypeChanged(comboBoxType, new EventArgs());
         }
 
         void GetValue()
