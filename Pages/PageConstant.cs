@@ -24,6 +24,8 @@ namespace Configurator
         TextView textViewDesc = new TextView();
         ComboBoxText comboBoxBlock = new ComboBoxText();
         ComboBoxText comboBoxType = new ComboBoxText();
+        ComboBoxText comboBoxPointer = new ComboBoxText();
+        ComboBoxText comboBoxEnum = new ComboBoxText();
 
         public PageConstant() : base()
         {
@@ -73,6 +75,8 @@ namespace Configurator
 
         void CreatePack2(HPaned hPaned)
         {
+            int offset = 110;
+
             VBox vBox = new VBox(false, 0);
 
             //Назва
@@ -80,7 +84,7 @@ namespace Configurator
             vBox.PackStart(fixName, false, false, 5);
 
             fixName.Put(new Label("Назва:"), 5, 5);
-            fixName.Put(entryName, 60, 0);
+            fixName.Put(entryName, offset, 0);
 
             //Блок
             foreach (ConfigurationConstantsBlock block in Conf!.ConstantsBlock.Values)
@@ -90,17 +94,42 @@ namespace Configurator
             vBox.PackStart(fixBlock, false, false, 5);
 
             fixBlock.Put(new Label("Блок:"), 5, 5);
-            fixBlock.Put(comboBoxBlock, 60, 0);
+            fixBlock.Put(comboBoxBlock, offset, 0);
 
             //Тип
             foreach (var fieldType in FieldType.DefaultList())
                 comboBoxType.Append(fieldType.ConfTypeName, fieldType.ViewTypeName);
 
+            comboBoxType.Changed += OnComboBoxTypeChanged;
+
             Fixed fixType = new Fixed();
             vBox.PackStart(fixType, false, false, 5);
 
             fixType.Put(new Label("Тип:"), 5, 5);
-            fixType.Put(comboBoxType, 60, 0);
+            fixType.Put(comboBoxType, offset, 0);
+
+            //Pointer
+            foreach (ConfigurationDirectories item in Conf!.Directories.Values)
+                comboBoxPointer.Append($"Довідники.{item.Name}", $"Довідники.{item.Name}");
+
+            foreach (ConfigurationDocuments item in Conf!.Documents.Values)
+                comboBoxPointer.Append($"Документи.{item.Name}", $"Документи.{item.Name}");
+
+            Fixed fixPointer = new Fixed();
+            vBox.PackStart(fixPointer, false, false, 5);
+
+            fixPointer.Put(new Label("Вказівник:"), 5, 5);
+            fixPointer.Put(comboBoxPointer, offset, 0);
+
+            //Enum
+            foreach (ConfigurationEnums item in Conf!.Enums.Values)
+                comboBoxEnum.Append($"Перелічення.{item.Name}", $"Перелічення.{item.Name}");
+
+            Fixed fixEnum = new Fixed();
+            vBox.PackStart(fixEnum, false, false, 5);
+
+            fixEnum.Put(new Label("Перелічення:"), 5, 5);
+            fixEnum.Put(comboBoxEnum, offset, 0);
 
             //Опис
             Fixed fixDesc = new Fixed();
@@ -113,7 +142,7 @@ namespace Configurator
             scrollTextView.SetSizeRequest(400, 100);
             scrollTextView.Add(textViewDesc);
 
-            fixDesc.Put(scrollTextView, 60, 5);
+            fixDesc.Put(scrollTextView, offset, 5);
 
             hPaned.Pack2(vBox, false, false);
         }
@@ -130,6 +159,20 @@ namespace Configurator
 
             comboBoxBlock.ActiveId = ConfConstants?.Block.BlockName;
             comboBoxType.ActiveId = ConfConstants?.Type;
+
+            if (comboBoxType.ActiveId == "pointer")
+                comboBoxPointer.ActiveId = ConfConstants?.Pointer;
+
+            if (comboBoxType.ActiveId == "enum")
+                comboBoxEnum.ActiveId = ConfConstants?.Pointer;
+
+            OnComboBoxTypeChanged(comboBoxType, new EventArgs());
+        }
+
+        public void SetDefValue()
+        {
+            comboBoxBlock.Active = 0;
+            comboBoxType.Active = 0;
         }
 
         void GetValue()
@@ -141,6 +184,12 @@ namespace Configurator
         }
 
         #endregion
+
+        void OnComboBoxTypeChanged(object? sender, EventArgs args)
+        {
+            comboBoxPointer.Sensitive = comboBoxType.ActiveId == "pointer";
+            comboBoxEnum.Sensitive = comboBoxType.ActiveId == "enum";
+        }
 
         void OnSaveClick(object? sender, EventArgs args)
         {

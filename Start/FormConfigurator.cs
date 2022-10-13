@@ -332,11 +332,13 @@ namespace Configurator
             vbox.PackStart(toolbar, false, false, 0);
 
             Menu Menu = new Menu();
-            Menu.Add(new MenuItem("Константу"));
+            MenuItem AddConstant = new MenuItem("Константу");
+            AddConstant.Activated += OnAddConstant;
+            Menu.Add(AddConstant);
             Menu.Add(new MenuItem("Блок констант"));
             Menu.ShowAll();
 
-            MenuToolButton mt = new MenuToolButton(Stock.Add) { Label = "Add", IsImportant = true };
+            MenuToolButton mt = new MenuToolButton(Stock.Add) { Label = "Додати", IsImportant = true };
             mt.Menu = Menu;
 
             //mt.Add(new Label("test"));
@@ -466,5 +468,21 @@ namespace Configurator
             LoadTree();
         }
 
+        void OnAddConstant(object? sender, EventArgs args)
+        {
+            CreateNotebookPage("Константа *", () =>
+            {
+                PageConstant page = new PageConstant()
+                {
+                    IsNew = true,
+                    CallBack_ClosePage = CallBack_CloseCurrentPageNotebook,
+                    CallBack_RelodTree = LoadTree
+                };
+
+                page.SetDefValue();
+
+                return page;
+            });
+        }
     }
 }
