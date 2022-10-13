@@ -236,7 +236,7 @@ namespace Configurator
             if (ConfConstants.Type == "pointer" || ConfConstants.Type == "enum")
                 if (String.IsNullOrEmpty(ConfConstants.Pointer))
                 {
-                    Message.ErrorMessage($"Потрібно деталізувати тип даних для [ pointer ] або [ enum ]");
+                    Message.ErrorMessage($"Потрібно деталізувати тип для [ pointer ] або [ enum ]\nВиберіть із списку тип для деталізації");
                     return;
                 }
 
