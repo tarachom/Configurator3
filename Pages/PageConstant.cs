@@ -16,7 +16,7 @@ namespace Configurator
         public ConfigurationConstantsBlock? ConfConstantsBlock { get; set; }
         public ConfigurationConstants ConfConstants { get; set; } = new ConfigurationConstants();
         public System.Action? CallBack_ClosePage { get; set; }
-        public System.Action<TreePath?>? CallBack_ReloadTree { get; set; }
+        //public System.Action<TreePath?>? CallBack_ReloadTree { get; set; }
         public TreePath? TreePathExpand { get; set; }
         public bool IsNew { get; set; } = true;
 
@@ -99,7 +99,14 @@ namespace Configurator
             vBox.PackStart(fixDesc, false, false, 5);
 
             fixDesc.Put(new Label("Опис:"), 5, 5);
-            fixDesc.Put(textViewDesc, 60, 5);
+
+            ScrolledWindow scrollTextView = new ScrolledWindow() { ShadowType = ShadowType.In };
+            scrollTextView.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+            scrollTextView.SetSizeRequest(300, 100);
+
+            scrollTextView.Add(textViewDesc);
+
+            fixDesc.Put(scrollTextView, 60, 5);
             textViewDesc.SetSizeRequest(300, 50);
             hPaned.Pack2(vBox, false, false);
         }
@@ -145,9 +152,6 @@ namespace Configurator
                     Conf?.AppendConstants(ConfConstantsBlock!.BlockName, ConfConstants);
                 }
             }
-
-            if (CallBack_ReloadTree != null)
-                CallBack_ReloadTree.Invoke(TreePathExpand);
         }
     }
 }
