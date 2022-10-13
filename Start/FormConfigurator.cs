@@ -29,7 +29,7 @@ namespace Configurator
 
         void LoadConstant(TreeIter rootIter, string ConstantsBlock, ConfigurationConstants confConstant)
         {
-            string key = $"Константи.{ConstantsBlock}:{confConstant.Name}";
+            string key = $"Константи.{ConstantsBlock}/{confConstant.Name}";
 
             TreeIter constantIter = treeStore.AppendValues(rootIter, confConstant.Name, GetTypeInfo(confConstant.Type, confConstant.Pointer), key);
 
@@ -340,47 +340,43 @@ namespace Configurator
             if (!treeConfiguration.Selection.GetSelected(out iter) || !treeConfiguration.Model.GetIter(out iter, args.Path))
                 return;
 
-            string keyTree = (string)treeConfiguration.Model.GetValue(iter, 2);
+            string keyComposite = (string)treeConfiguration.Model.GetValue(iter, 2);
 
-            //treeConfiguration.Model.SetValue(iter, 2, "EDITTT");
-
-            if (String.IsNullOrEmpty(keyTree))
+            if (String.IsNullOrEmpty(keyComposite))
                 return;
 
-            string[] key = keyTree.Split(".");
-            if (key.Length == 2)
+            if (keyComposite.IndexOf(".") == -1)
+                return;
+
+            string[] keySplit = keyComposite.Split(".");
+            string block = keySplit[0];
+            string name = keySplit[1];
+
+            switch (block)
             {
-                string block = key[0];
-                string name = key[1];
+                case "Константи":
+                    {
+                        string[] blockAndName = name.Split("/");
+                        string blockConst = blockAndName[0];
+                        string nameConst = blockAndName[1];
 
-                switch (block)
-                {
-                    case "Константи":
+                        CreateNotebookPage("Константа: " + nameConst, () =>
                         {
-                            string[] blockAndName = name.Split(":");
-                            string blockConst = blockAndName[0];
-                            string nameConst = blockAndName[1];
-
-                            CreateNotebookPage("Константа: " + nameConst, () =>
+                            PageConstant page = new PageConstant()
                             {
-                                PageConstant page = new PageConstant()
-                                {
-                                    IsNew = false,
-                                    CallBack_ClosePage = CallBack_CloseCurrentPageNotebook,
-                                    //CallBack_ReloadTree = LoadTree,
-                                    TreePathExpand = args.Path,
-                                    ConfConstantsBlock = Conf?.ConstantsBlock[blockConst],
-                                    ConfConstants = Conf!.ConstantsBlock[blockConst].Constants[nameConst]
-                                };
+                                IsNew = false,
+                                CallBack_ClosePage = CallBack_CloseCurrentPageNotebook,
+                                ConfConstantsBlock = Conf!.ConstantsBlock[blockConst],
+                                ConfConstants = Conf!.ConstantsBlock[blockConst].Constants[nameConst]
+                            };
 
-                                page.SetValue();
+                            page.SetValue();
 
-                                return page;
-                            });
+                            return page;
+                        });
 
-                            break;
-                        }
-                }
+                        break;
+                    }
             }
         }
 

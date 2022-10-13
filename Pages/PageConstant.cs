@@ -17,7 +17,7 @@ namespace Configurator
         public ConfigurationConstants ConfConstants { get; set; } = new ConfigurationConstants();
         public System.Action? CallBack_ClosePage { get; set; }
         //public System.Action<TreePath?>? CallBack_ReloadTree { get; set; }
-        public TreePath? TreePathExpand { get; set; }
+        //public TreePath? TreePathExpand { get; set; }
         public bool IsNew { get; set; } = true;
 
         ListBox listBoxTableParts = new ListBox() { SelectionMode = SelectionMode.Single };
