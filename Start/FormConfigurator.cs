@@ -14,6 +14,7 @@ namespace Configurator
                 return Program.Kernel?.Conf;
             }
         }
+        List<string> TreeRowExpanded;
 
         HPaned hPaned;
         TreeView treeConfiguration;
@@ -27,9 +28,9 @@ namespace Configurator
             return ConfType == "pointer" || ConfType == "enum" ? Pointer : ConfType;
         }
 
-        void LoadConstant(TreeIter rootIter, string ConstantsBlock, ConfigurationConstants confConstant)
+        void LoadConstant(TreeIter rootIter, ConfigurationConstants confConstant)
         {
-            string key = $"Константи.{ConstantsBlock}/{confConstant.Name}";
+            string key = $"Константи.{confConstant.Block.BlockName}/{confConstant.Name}";
 
             TreeIter constantIter = treeStore.AppendValues(rootIter, confConstant.Name, GetTypeInfo(confConstant.Type, confConstant.Pointer), key);
 
@@ -46,8 +47,14 @@ namespace Configurator
                         string typeInfo = GetTypeInfo(ConfTablePartFields.Value.Type, ConfTablePartFields.Value.Pointer);
                         treeStore.AppendValues(constantTablePartIter, ConfTablePartFields.Value.Name, typeInfo, key);
                     }
+
+                    IsExpand(constantTablePartIter);
                 }
+
+                IsExpand(constantTabularPartsIter);
             }
+
+            IsExpand(constantIter);
         }
 
         void LoadConstants(TreeIter rootIter)
@@ -55,11 +62,11 @@ namespace Configurator
             foreach (KeyValuePair<string, ConfigurationConstantsBlock> ConfConstantsBlock in Conf!.ConstantsBlock)
             {
                 TreeIter contantsBlockIter = treeStore.AppendValues(rootIter, ConfConstantsBlock.Value.BlockName);
-
                 foreach (ConfigurationConstants ConfConstants in ConfConstantsBlock.Value.Constants.Values)
                 {
-                    LoadConstant(contantsBlockIter, ConfConstantsBlock.Value.BlockName, ConfConstants);
+                    LoadConstant(contantsBlockIter, ConfConstants);
                 }
+                IsExpand(contantsBlockIter);
             }
         }
 
@@ -70,7 +77,7 @@ namespace Configurator
             foreach (KeyValuePair<string, ConfigurationObjectField> ConfFields in confDirectory.Fields)
             {
                 string info = GetTypeInfo(ConfFields.Value.Type, ConfFields.Value.Pointer);
-                TreeIter fieldIter = treeStore.AppendValues(directoryIter, ConfFields.Value.Name, info);
+                treeStore.AppendValues(directoryIter, ConfFields.Value.Name, info);
             }
 
             if (confDirectory.TabularParts.Count > 0)
@@ -84,10 +91,16 @@ namespace Configurator
                     foreach (KeyValuePair<string, ConfigurationObjectField> ConfTablePartFields in ConfTablePart.Value.Fields)
                     {
                         string info = GetTypeInfo(ConfTablePartFields.Value.Type, ConfTablePartFields.Value.Pointer);
-                        TreeIter fieldIter = treeStore.AppendValues(directoriTablePartIter, ConfTablePartFields.Value.Name, info);
+                        treeStore.AppendValues(directoriTablePartIter, ConfTablePartFields.Value.Name, info);
                     }
+
+                    IsExpand(directoriTablePartIter);
                 }
+
+                IsExpand(directoriTabularPartsIter);
             }
+
+            IsExpand(directoryIter);
         }
 
         void LoadDirectories(TreeIter rootIter)
@@ -105,7 +118,7 @@ namespace Configurator
             foreach (KeyValuePair<string, ConfigurationObjectField> ConfFields in confDocument.Fields)
             {
                 string info = GetTypeInfo(ConfFields.Value.Type, ConfFields.Value.Pointer);
-                TreeIter fieldIter = treeStore.AppendValues(documentIter, ConfFields.Value.Name, info);
+                treeStore.AppendValues(documentIter, ConfFields.Value.Name, info);
             }
 
             if (confDocument.TabularParts.Count > 0)
@@ -119,10 +132,16 @@ namespace Configurator
                     foreach (KeyValuePair<string, ConfigurationObjectField> ConfTablePartFields in ConfTablePart.Value.Fields)
                     {
                         string info = GetTypeInfo(ConfTablePartFields.Value.Type, ConfTablePartFields.Value.Pointer);
-                        TreeIter fieldIter = treeStore.AppendValues(documentTablePartIter, ConfTablePartFields.Value.Name, info);
+                        treeStore.AppendValues(documentTablePartIter, ConfTablePartFields.Value.Name, info);
                     }
+
+                    IsExpand(documentTablePartIter);
                 }
+
+                IsExpand(documentTabularPartsIter);
             }
+
+            IsExpand(documentIter);
         }
 
         void LoadDocuments(TreeIter rootIter)
@@ -138,9 +157,9 @@ namespace Configurator
             TreeIter enumIter = treeStore.AppendValues(rootIter, confEnum.Name);
 
             foreach (KeyValuePair<string, ConfigurationEnumField> ConfEnumFields in confEnum.Fields)
-            {
-                TreeIter enumFieldIter = treeStore.AppendValues(enumIter, ConfEnumFields.Value.Name);
-            }
+                treeStore.AppendValues(enumIter, ConfEnumFields.Value.Name);
+
+            IsExpand(enumIter);
         }
 
         void LoadEnums(TreeIter rootIter)
@@ -154,6 +173,7 @@ namespace Configurator
         void LoadRegisterInformation(TreeIter rootIter, ConfigurationRegistersInformation confRegisterInformation)
         {
             TreeIter registerInformationIter = treeStore.AppendValues(rootIter, confRegisterInformation.Name);
+
             TreeIter dimensionFieldsIter = treeStore.AppendValues(registerInformationIter, "Виміри");
 
             //Поля вимірів
@@ -162,6 +182,8 @@ namespace Configurator
                 string info = GetTypeInfo(ConfDimensionFields.Value.Type, ConfDimensionFields.Value.Pointer);
                 treeStore.AppendValues(dimensionFieldsIter, ConfDimensionFields.Value.Name, info);
             }
+
+            IsExpand(dimensionFieldsIter);
 
             TreeIter resourcesFieldsIter = treeStore.AppendValues(registerInformationIter, "Ресурси");
 
@@ -172,6 +194,8 @@ namespace Configurator
                 treeStore.AppendValues(resourcesFieldsIter, ConfResourcesFields.Value.Name, info);
             }
 
+            IsExpand(resourcesFieldsIter);
+
             TreeIter propertyFieldsIter = treeStore.AppendValues(registerInformationIter, "Поля");
 
             //Поля реквізитів
@@ -180,6 +204,10 @@ namespace Configurator
                 string info = GetTypeInfo(ConfPropertyFields.Value.Type, ConfPropertyFields.Value.Pointer);
                 treeStore.AppendValues(propertyFieldsIter, ConfPropertyFields.Value.Name, info);
             }
+
+            IsExpand(propertyFieldsIter);
+
+            IsExpand(registerInformationIter);
         }
 
         void LoadRegistersInformation(TreeIter rootIter)
@@ -203,6 +231,8 @@ namespace Configurator
                 TreeIter fieldIter = treeStore.AppendValues(dimensionFieldsIter, ConfDimensionFields.Value.Name, info);
             }
 
+            IsExpand(dimensionFieldsIter);
+
             TreeIter resourcesFieldsIter = treeStore.AppendValues(registerAccumulationIter, "Ресурси");
 
             //Поля ресурсів
@@ -212,6 +242,8 @@ namespace Configurator
                 TreeIter fieldIter = treeStore.AppendValues(resourcesFieldsIter, ConfResourcesFields.Value.Name, info);
             }
 
+            IsExpand(resourcesFieldsIter);
+
             TreeIter propertyFieldsIter = treeStore.AppendValues(registerAccumulationIter, "Поля");
 
             //Поля реквізитів
@@ -220,6 +252,10 @@ namespace Configurator
                 string info = GetTypeInfo(ConfPropertyFields.Value.Type, ConfPropertyFields.Value.Pointer);
                 TreeIter fieldIter = treeStore.AppendValues(propertyFieldsIter, ConfPropertyFields.Value.Name, info);
             }
+
+            IsExpand(propertyFieldsIter);
+
+            IsExpand(registerAccumulationIter);
         }
 
         void LoadRegistersAccumulation(TreeIter rootIter)
@@ -230,33 +266,41 @@ namespace Configurator
             }
         }
 
+        void IsExpand(TreeIter iter)
+        {
+            TreePath path = treeConfiguration.Model.GetPath(iter);
+
+            if (TreeRowExpanded.Contains(path.ToString()))
+                treeConfiguration.ExpandToPath(path);
+        }
+
         void LoadTree()
         {
             treeStore.Clear();
 
             TreeIter contantsIter = treeStore.AppendValues("Константи");
             LoadConstants(contantsIter);
-            treeConfiguration.ExpandToPath(treeConfiguration.Model.GetPath(contantsIter));
+            IsExpand(contantsIter);
 
             TreeIter directoriesIter = treeStore.AppendValues("Довідники");
             LoadDirectories(directoriesIter);
-            //treeConfiguration.ExpandToPath(treeConfiguration.Model.GetPath(directoriesIter));
+            IsExpand(directoriesIter);
 
             TreeIter documentsIter = treeStore.AppendValues("Документи");
-
             LoadDocuments(documentsIter);
+            IsExpand(documentsIter);
 
             TreeIter enumsIter = treeStore.AppendValues("Перелічення");
-
             LoadEnums(enumsIter);
+            IsExpand(enumsIter);
 
             TreeIter registersInformationIter = treeStore.AppendValues("Регістри відомостей");
-
             LoadRegistersInformation(registersInformationIter);
+            IsExpand(registersInformationIter);
 
             TreeIter registersAccumulationIter = treeStore.AppendValues("Регістри накопичення");
-
             LoadRegistersAccumulation(registersAccumulationIter);
+            IsExpand(registersAccumulationIter);
         }
 
         TreeStore AddTreeColumn()
@@ -281,6 +325,35 @@ namespace Configurator
 
             DeleteEvent += delegate { Application.Quit(); };
 
+            VBox vbox = new VBox(false, 0);
+            Add(vbox);
+
+            Toolbar toolbar = new Toolbar();
+            vbox.PackStart(toolbar, false, false, 0);
+
+            Menu Menu = new Menu();
+            Menu.Add(new MenuItem("Константу"));
+            Menu.Add(new MenuItem("Блок констант"));
+            Menu.ShowAll();
+
+            MenuToolButton mt = new MenuToolButton(Stock.Add) { Label = "Add", IsImportant = true };
+            mt.Menu = Menu;
+
+            //mt.Add(new Label("test"));
+            toolbar.Add(mt);
+
+            ToolButton refreshButton = new ToolButton(Stock.Refresh) { Label = "Обновити", IsImportant = true };
+            refreshButton.Clicked += OnRefreshClick;
+            toolbar.Add(refreshButton);
+
+            ToolButton deleteButton = new ToolButton(Stock.Delete) { Label = "Видалити", IsImportant = true };
+            //deleteButton.Clicked += OnDeleteClick;
+            toolbar.Add(deleteButton);
+
+            ToolButton copyButton = new ToolButton(Stock.Copy) { Label = "Копіювати", IsImportant = true };
+            //copyButton.Clicked += OnCopyClick;
+            toolbar.Add(copyButton);
+
             hPaned = new HPaned();
             hPaned.Position = 400;
 
@@ -289,6 +362,10 @@ namespace Configurator
 
             treeConfiguration = new TreeView();
             treeConfiguration.RowActivated += OnRowActivated;
+            treeConfiguration.RowExpanded += OnRowExpanded;
+            treeConfiguration.RowCollapsed += OnRowCollapsed;
+
+            TreeRowExpanded = new List<string>();
 
             scrollTree.Add(treeConfiguration);
             treeStore = AddTreeColumn();
@@ -302,7 +379,7 @@ namespace Configurator
 
             hPaned.Pack2(topNotebook, false, true);
 
-            Add(hPaned);
+            vbox.PackStart(hPaned, true, true, 0);
             ShowAll();
 
             LoadTree();
@@ -358,6 +435,7 @@ namespace Configurator
                             {
                                 IsNew = false,
                                 CallBack_ClosePage = CallBack_CloseCurrentPageNotebook,
+                                CallBack_RelodTree = LoadTree,
                                 ConfConstants = Conf!.ConstantsBlock[blockConst].Constants[nameConst]
                             };
 
@@ -369,6 +447,23 @@ namespace Configurator
                         break;
                     }
             }
+        }
+
+        void OnRowExpanded(object sender, RowExpandedArgs args)
+        {
+            if (!TreeRowExpanded.Contains(args.Path.ToString()))
+                TreeRowExpanded.Add(args.Path.ToString());
+        }
+
+        void OnRowCollapsed(object sender, RowCollapsedArgs args)
+        {
+            if (TreeRowExpanded.Contains(args.Path.ToString()))
+                TreeRowExpanded.Remove(args.Path.ToString());
+        }
+
+        void OnRefreshClick(object? sender, EventArgs args)
+        {
+            LoadTree();
         }
 
     }

@@ -16,6 +16,7 @@ namespace Configurator
 
         public ConfigurationConstants ConfConstants { get; set; } = new ConfigurationConstants();
         public System.Action? CallBack_ClosePage { get; set; }
+        public System.Action? CallBack_RelodTree { get; set; }
         public bool IsNew { get; set; } = true;
 
         ListBox listBoxTableParts = new ListBox() { SelectionMode = SelectionMode.Single };
@@ -155,35 +156,31 @@ namespace Configurator
 
             if (IsNew)
             {
-                if (ConfConstants.Block.Constants.ContainsKey(entryName.Text))
+                if (Conf!.ConstantsBlock[comboBoxBlock.ActiveId].Constants.ContainsKey(entryName.Text))
                 {
-                    Message.ErrorMessage("Назва константи не унікальна");
+                    Message.ErrorMessage($"Назва константи не унікальна в межах блоку {comboBoxBlock.ActiveId}");
                     return;
                 }
-
-                GetValue();
-                Conf!.AppendConstants(ConfConstants.Block.BlockName, ConfConstants);
             }
             else
             {
-                if (ConfConstants.Name != entryName.Text)
+                if (ConfConstants.Name != entryName.Text || ConfConstants.Block.BlockName != comboBoxBlock.ActiveId)
                 {
-                    if (ConfConstants.Block.Constants.ContainsKey(entryName.Text))
+                    if (Conf!.ConstantsBlock[comboBoxBlock.ActiveId].Constants.ContainsKey(entryName.Text))
                     {
-                        Message.ErrorMessage("Назва константи не унікальна");
+                        Message.ErrorMessage($"Назва константи не унікальна в межах блоку {comboBoxBlock.ActiveId}");
                         return;
                     }
+                }
 
-                    Conf!.ConstantsBlock.Remove(ConfConstants.Name);
-                    GetValue();
-                    Conf!.AppendConstants(ConfConstants.Block.BlockName, ConfConstants);
-                }
-                else
-                {
-                    GetValue();
-                    Conf!.ConstantsBlock[ConfConstants.Block.BlockName].Constants[ConfConstants.Name] = ConfConstants;
-                }
+                Conf!.ConstantsBlock[ConfConstants.Block.BlockName].Constants.Remove(ConfConstants.Name);
             }
+
+            GetValue();
+            Conf!.AppendConstants(ConfConstants.Block.BlockName, ConfConstants);
+
+            if (CallBack_RelodTree != null)
+                CallBack_RelodTree.Invoke();
         }
     }
 }
