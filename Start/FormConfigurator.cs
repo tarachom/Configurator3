@@ -392,6 +392,11 @@ namespace Configurator
             topNotebook.RemovePage(topNotebook.CurrentPage);
         }
 
+        void CallBack_RenameCurrentPageNotebook(string name)
+        {
+            topNotebook.SetTabLabelText(topNotebook.CurrentPageWidget, name);
+        }
+
         void CreateNotebookPage(string tabName, System.Func<Widget>? pageWidget)
         {
             ScrolledWindow scroll = new ScrolledWindow() { ShadowType = ShadowType.In };
@@ -437,6 +442,7 @@ namespace Configurator
                             {
                                 IsNew = false,
                                 CallBack_ClosePage = CallBack_CloseCurrentPageNotebook,
+                                CallBack_RenamePage = CallBack_RenameCurrentPageNotebook,
                                 CallBack_RelodTree = LoadTree,
                                 ConfConstants = Conf!.ConstantsBlock[blockConst].Constants[nameConst]
                             };
@@ -476,6 +482,7 @@ namespace Configurator
                 {
                     IsNew = true,
                     CallBack_ClosePage = CallBack_CloseCurrentPageNotebook,
+                    CallBack_RenamePage = CallBack_RenameCurrentPageNotebook,
                     CallBack_RelodTree = LoadTree
                 };
 

@@ -16,6 +16,7 @@ namespace Configurator
 
         public ConfigurationConstants ConfConstants { get; set; } = new ConfigurationConstants();
         public System.Action? CallBack_ClosePage { get; set; }
+        public System.Action<string>? CallBack_RenamePage { get; set; }
         public System.Action? CallBack_RelodTree { get; set; }
         public bool IsNew { get; set; } = true;
 
@@ -246,6 +247,9 @@ namespace Configurator
 
             if (CallBack_RelodTree != null)
                 CallBack_RelodTree.Invoke();
+
+            if (CallBack_RenamePage != null)
+                CallBack_RenamePage.Invoke($"Константа: {ConfConstants.Name}");
         }
     }
 }
