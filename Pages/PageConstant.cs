@@ -13,7 +13,7 @@ namespace Configurator
                 return Program.Kernel?.Conf;
             }
         }
-        public ConfigurationConstantsBlock? ConfConstantsBlock { get; set; }
+
         public ConfigurationConstants ConfConstants { get; set; } = new ConfigurationConstants();
         public System.Action? CallBack_ClosePage { get; set; }
         public bool IsNew { get; set; } = true;
@@ -71,6 +71,8 @@ namespace Configurator
         {
             ConfConstants.Name = entryName.Text;
             ConfConstants.Desc = textViewDesc.Buffer.Text;
+            ConfConstants.Block = Conf!.ConstantsBlock[comboBoxBlock.ActiveId];
+            ConfConstants.Type = comboBoxType.ActiveId;
         }
 
         void CreatePack1(HPaned hPaned)
@@ -129,7 +131,7 @@ namespace Configurator
             scrollTextView.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
             scrollTextView.SetSizeRequest(400, 100);
             scrollTextView.Add(textViewDesc);
-            
+
             fixDesc.Put(scrollTextView, 60, 5);
 
             hPaned.Pack2(vBox, false, false);
@@ -149,31 +151,33 @@ namespace Configurator
 
             if (IsNew)
             {
-                if (ConfConstantsBlock!.Constants.ContainsKey(entryName.Text))
+                if (ConfConstants.Block.Constants.ContainsKey(entryName.Text))
                 {
                     Message.ErrorMessage("Назва константи не унікальна");
                     return;
                 }
 
                 GetValue();
-
-                Conf?.AppendConstants(ConfConstantsBlock!.BlockName, ConfConstants);
+                Conf!.AppendConstants(ConfConstants.Block.BlockName, ConfConstants);
             }
             else
             {
                 if (ConfConstants.Name != entryName.Text)
                 {
-                    if (ConfConstantsBlock!.Constants.ContainsKey(entryName.Text))
+                    if (ConfConstants.Block.Constants.ContainsKey(entryName.Text))
                     {
                         Message.ErrorMessage("Назва константи не унікальна");
                         return;
                     }
 
-                    Conf?.ConstantsBlock.Remove(ConfConstants.Name);
-
+                    Conf!.ConstantsBlock.Remove(ConfConstants.Name);
                     GetValue();
-
-                    Conf?.AppendConstants(ConfConstantsBlock!.BlockName, ConfConstants);
+                    Conf!.AppendConstants(ConfConstants.Block.BlockName, ConfConstants);
+                }
+                else
+                {
+                    GetValue();
+                    Conf!.ConstantsBlock[ConfConstants.Block.BlockName].Constants[ConfConstants.Name] = ConfConstants;
                 }
             }
         }

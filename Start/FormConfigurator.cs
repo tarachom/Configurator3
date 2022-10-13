@@ -358,7 +358,6 @@ namespace Configurator
                             {
                                 IsNew = false,
                                 CallBack_ClosePage = CallBack_CloseCurrentPageNotebook,
-                                ConfConstantsBlock = Conf!.ConstantsBlock[blockConst],
                                 ConfConstants = Conf!.ConstantsBlock[blockConst].Constants[nameConst]
                             };
 
