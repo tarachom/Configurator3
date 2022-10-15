@@ -15,6 +15,7 @@ namespace Configurator
         }
 
         public Dictionary<string, ConfigurationObjectField> Fields = new Dictionary<string, ConfigurationObjectField>();
+        public Dictionary<string, ConfigurationObjectField>? AllFields; //Для регістрів
         public ConfigurationObjectField Field { get; set; } = new ConfigurationObjectField();
         public FormConfigurator? GeneralForm { get; set; }
         public System.Action? CallBack_RefreshList { get; set; }
@@ -184,7 +185,15 @@ namespace Configurator
 
             if (IsNew)
             {
-                if (Fields.ContainsKey(entryName.Text))
+                if (AllFields != null)
+                {
+                    if (AllFields.ContainsKey(entryName.Text))
+                    {
+                        Message.ErrorMessage($"Назва поля не унікальна");
+                        return;
+                    }
+                }
+                else if (Fields.ContainsKey(entryName.Text))
                 {
                     Message.ErrorMessage($"Назва поля не унікальна");
                     return;
@@ -194,7 +203,15 @@ namespace Configurator
             {
                 if (Field.Name != entryName.Text)
                 {
-                    if (Fields.ContainsKey(entryName.Text))
+                    if (AllFields != null)
+                    {
+                        if (AllFields.ContainsKey(entryName.Text))
+                        {
+                            Message.ErrorMessage($"Назва поля не унікальна");
+                            return;
+                        }
+                    }
+                    else if (Fields.ContainsKey(entryName.Text))
                     {
                         Message.ErrorMessage($"Назва поля не унікальна");
                         return;

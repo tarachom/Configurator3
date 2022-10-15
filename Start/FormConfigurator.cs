@@ -261,7 +261,7 @@ namespace Configurator
             foreach (KeyValuePair<string, ConfigurationObjectField> ConfDimensionFields in confRegisterAccumulation.DimensionFields)
             {
                 string info = GetTypeInfo(ConfDimensionFields.Value.Type, ConfDimensionFields.Value.Pointer);
-                string keyField = $"{key}/{ConfDimensionFields.Value.Name}";
+                string keyField = $"{key}/Dimension:{ConfDimensionFields.Value.Name}";
 
                 TreeIter fieldIter = treeStore.AppendValues(dimensionFieldsIter, ConfDimensionFields.Value.Name, info, keyField);
             }
@@ -274,7 +274,7 @@ namespace Configurator
             foreach (KeyValuePair<string, ConfigurationObjectField> ConfResourcesFields in confRegisterAccumulation.ResourcesFields)
             {
                 string info = GetTypeInfo(ConfResourcesFields.Value.Type, ConfResourcesFields.Value.Pointer);
-                string keyField = $"{key}/{ConfResourcesFields.Value.Name}";
+                string keyField = $"{key}/Resources:{ConfResourcesFields.Value.Name}";
 
                 TreeIter fieldIter = treeStore.AppendValues(resourcesFieldsIter, ConfResourcesFields.Value.Name, info, keyField);
             }
@@ -287,7 +287,7 @@ namespace Configurator
             foreach (KeyValuePair<string, ConfigurationObjectField> ConfPropertyFields in confRegisterAccumulation.PropertyFields)
             {
                 string info = GetTypeInfo(ConfPropertyFields.Value.Type, ConfPropertyFields.Value.Pointer);
-                string keyField = $"{key}/{ConfPropertyFields.Value.Name}";
+                string keyField = $"{key}/Property:{ConfPropertyFields.Value.Name}";
 
                 TreeIter fieldIter = treeStore.AppendValues(propertyFieldsIter, ConfPropertyFields.Value.Name, info, keyField);
             }
@@ -750,41 +750,109 @@ namespace Configurator
 
                                     CreateNotebookPage($"Поле: {fieldName}", () =>
                                     {
-                                        Dictionary<string, ConfigurationObjectField> Fields = new Dictionary<string, ConfigurationObjectField>();
+                                        Dictionary<string, ConfigurationObjectField> AllFields = new Dictionary<string, ConfigurationObjectField>();
 
                                         foreach (ConfigurationObjectField item in Conf!.RegistersInformation[register].DimensionFields.Values)
-                                            Fields.Add(item.Name, item);
+                                            AllFields.Add(item.Name, item);
 
                                         foreach (ConfigurationObjectField item in Conf!.RegistersInformation[register].ResourcesFields.Values)
-                                            Fields.Add(item.Name, item);
+                                            AllFields.Add(item.Name, item);
 
                                         foreach (ConfigurationObjectField item in Conf!.RegistersInformation[register].PropertyFields.Values)
-                                            Fields.Add(item.Name, item);
+                                            AllFields.Add(item.Name, item);
 
+                                        Dictionary<string, ConfigurationObjectField> Fields;
                                         ConfigurationObjectField Field;
 
-                                        Console.WriteLine(typeName + " '" + fieldName + "'");
-
-                                        // foreach (var item in Fields.Values)
-                                        // {
-                                        //     Console.WriteLine(item.Name);
-                                        // }
-
                                         if (typeName == "Dimension")
+                                        {
+                                            Fields = Conf!.RegistersInformation[register].DimensionFields;
                                             Field = Conf!.RegistersInformation[register].DimensionFields[fieldName];
+                                        }
                                         else if (typeName == "Resources")
                                         {
-                                            foreach (var item in Conf!.RegistersInformation[register].ResourcesFields.Values)
-                                            {
-                                                Console.WriteLine("'" + item.Name + "'");
-                                            }
+                                            Fields = Conf!.RegistersInformation[register].ResourcesFields;
                                             Field = Conf!.RegistersInformation[register].ResourcesFields[fieldName];
                                         }
                                         else
+                                        {
+                                            Fields = Conf!.RegistersInformation[register].PropertyFields;
                                             Field = Conf!.RegistersInformation[register].PropertyFields[fieldName];
+                                        }
 
                                         PageField page = new PageField()
                                         {
+                                            AllFields = AllFields,
+                                            Fields = Fields,
+                                            Field = Field,
+                                            IsNew = false,
+                                            GeneralForm = this
+                                        };
+
+                                        page.SetValue();
+
+                                        return page;
+                                    });
+
+                                    break;
+                                }
+                        }
+
+                        break;
+                    }
+                case "РегістриНакопичення":
+                    {
+                        string[] registerPath = name.Split("/");
+                        string register = registerPath[0];
+
+                        switch (registerPath.Length)
+                        {
+                            case 1:
+                                {
+
+                                    break;
+                                }
+                            case 2:
+                                {
+                                    string[] typeAndField = registerPath[1].Split(":");
+                                    string typeName = typeAndField[0];
+                                    string fieldName = typeAndField[1];
+
+                                    CreateNotebookPage($"Поле: {fieldName}", () =>
+                                    {
+                                        Dictionary<string, ConfigurationObjectField> AllFields = new Dictionary<string, ConfigurationObjectField>();
+
+                                        foreach (ConfigurationObjectField item in Conf!.RegistersAccumulation[register].DimensionFields.Values)
+                                            AllFields.Add(item.Name, item);
+
+                                        foreach (ConfigurationObjectField item in Conf!.RegistersAccumulation[register].ResourcesFields.Values)
+                                            AllFields.Add(item.Name, item);
+
+                                        foreach (ConfigurationObjectField item in Conf!.RegistersAccumulation[register].PropertyFields.Values)
+                                            AllFields.Add(item.Name, item);
+
+                                        Dictionary<string, ConfigurationObjectField> Fields;
+                                        ConfigurationObjectField Field;
+
+                                        if (typeName == "Dimension")
+                                        {
+                                            Fields = Conf!.RegistersAccumulation[register].DimensionFields;
+                                            Field = Conf!.RegistersAccumulation[register].DimensionFields[fieldName];
+                                        }
+                                        else if (typeName == "Resources")
+                                        {
+                                            Fields = Conf!.RegistersAccumulation[register].ResourcesFields;
+                                            Field = Conf!.RegistersAccumulation[register].ResourcesFields[fieldName];
+                                        }
+                                        else
+                                        {
+                                            Fields = Conf!.RegistersAccumulation[register].PropertyFields;
+                                            Field = Conf!.RegistersAccumulation[register].PropertyFields[fieldName];
+                                        }
+
+                                        PageField page = new PageField()
+                                        {
+                                            AllFields = AllFields,
                                             Fields = Fields,
                                             Field = Field,
                                             IsNew = false,
