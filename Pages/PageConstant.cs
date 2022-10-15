@@ -18,7 +18,7 @@ namespace Configurator
         public FormConfigurator? GeneralForm { get; set; }
         public bool IsNew { get; set; } = true;
 
-        ListBox listBoxTableParts = new ListBox() { SelectionMode = SelectionMode.Multiple };
+        ListBox listBoxTableParts = new ListBox() { SelectionMode = SelectionMode.Single };
         Entry entryName = new Entry() { WidthRequest = 400 };
         TextView textViewDesc = new TextView();
         ComboBoxText comboBoxBlock = new ComboBoxText();
@@ -80,6 +80,8 @@ namespace Configurator
             ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
             scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
             scrollList.SetSizeRequest(0, 300);
+
+            listBoxTableParts.ButtonPressEvent += OnTabularPartsButtonPress;
 
             scrollList.Add(listBoxTableParts);
             hBoxScroll.PackStart(scrollList, true, true, 5);
@@ -166,17 +168,17 @@ namespace Configurator
         {
             FillTabularParts();
 
-            entryName.Text = ConfConstants?.Name;
-            textViewDesc.Buffer.Text = ConfConstants?.Desc;
+            entryName.Text = ConfConstants.Name;
+            textViewDesc.Buffer.Text = ConfConstants.Desc;
 
-            comboBoxBlock.ActiveId = ConfConstants?.Block.BlockName;
-            comboBoxType.ActiveId = ConfConstants?.Type;
+            comboBoxBlock.ActiveId = ConfConstants.Block.BlockName;
+            comboBoxType.ActiveId = ConfConstants.Type;
 
             if (comboBoxType.ActiveId == "pointer")
-                comboBoxPointer.ActiveId = ConfConstants?.Pointer;
+                comboBoxPointer.ActiveId = ConfConstants.Pointer;
 
             if (comboBoxType.ActiveId == "enum")
-                comboBoxEnum.ActiveId = ConfConstants?.Pointer;
+                comboBoxEnum.ActiveId = ConfConstants.Pointer;
 
             OnComboBoxTypeChanged(comboBoxType, new EventArgs());
         }
@@ -269,17 +271,46 @@ namespace Configurator
 
         }
 
+        void OnTabularPartsButtonPress(object? sender, ButtonPressEventArgs args)
+        {
+            if (args.Event.Type == Gdk.EventType.DoubleButtonPress)
+            {
+                ListBoxRow[] selectedRows = listBoxTableParts.SelectedRows;
+
+                if (selectedRows.Length != 0)
+                {
+                    ListBoxRow curRow = selectedRows[0];
+
+                    if (ConfConstants.TabularParts.ContainsKey(curRow.Child.Name))
+                        GeneralForm?.CreateNotebookPage($"Таблична частина {curRow.Child.Name}", () =>
+                        {
+                            PageTablePart page = new PageTablePart()
+                            {
+                                ConfConstants = ConfConstants,
+                                TablePart = ConfConstants.TabularParts[curRow.Child.Name],
+                                IsNew = false,
+                                GeneralForm = GeneralForm
+                            };
+
+                            page.SetValue();
+
+                            return page;
+                        });
+
+                }
+            }
+        }
+
         void OnTabularPartsAddClick(object? sender, EventArgs args)
         {
             GeneralForm?.CreateNotebookPage("Таблична частина *", () =>
             {
                 PageTablePart page = new PageTablePart()
                 {
+                    ConfConstants = ConfConstants,
                     IsNew = true,
                     GeneralForm = GeneralForm
                 };
-
-                //page.SetDefValue();
 
                 return page;
             });

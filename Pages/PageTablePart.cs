@@ -15,6 +15,7 @@ namespace Configurator
         }
 
         public ConfigurationConstants ConfConstants { get; set; } = new ConfigurationConstants();
+        public ConfigurationObjectTablePart TablePart { get; set; } = new ConfigurationObjectTablePart();
         public FormConfigurator? GeneralForm { get; set; }
         public bool IsNew { get; set; } = true;
 
@@ -110,6 +111,30 @@ namespace Configurator
 
             hPaned.Pack1(vBox, false, false);
         }
+
+        #region Присвоєння / зчитування значень віджетів
+
+        public void SetValue()
+        {
+            FillTabularParts();
+
+            entryName.Text = TablePart.Name;
+            textViewDesc.Buffer.Text = TablePart.Desc;
+        }
+
+        void FillTabularParts()
+        {
+            foreach (ConfigurationObjectField field in TablePart.Fields.Values)
+                listBoxFields.Add(new Label(field.Name) { Name = field.Name, Halign = Align.Start });
+        }
+
+        void GetValue()
+        {
+            TablePart.Name = entryName.Text;
+            TablePart.Desc = textViewDesc.Buffer.Text;
+        }
+
+        #endregion
 
     }
 }
