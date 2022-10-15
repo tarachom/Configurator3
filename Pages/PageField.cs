@@ -25,6 +25,8 @@ namespace Configurator
         ComboBoxText comboBoxType = new ComboBoxText();
         ComboBoxText comboBoxPointer = new ComboBoxText();
         ComboBoxText comboBoxEnum = new ComboBoxText();
+        CheckButton checkButtonIndex = new CheckButton("Індексувати");
+        CheckButton checkButtonPresentation = new CheckButton("Використовувати для представлення");
 
         public PageField() : base()
         {
@@ -107,6 +109,12 @@ namespace Configurator
 
             hBoxDesc.PackStart(scrollTextView, false, false, 5);
 
+            //Індексувати
+            vBox.PackStart(checkButtonIndex, false, false, 5);
+
+            //Індексувати
+            vBox.PackStart(checkButtonPresentation, false, false, 5);
+
             PackStart(vBox, false, false, 5);
         }
 
@@ -124,6 +132,9 @@ namespace Configurator
 
             if (comboBoxType.ActiveId == "enum")
                 comboBoxEnum.ActiveId = Field.Pointer;
+
+            checkButtonIndex.Active = Field.IsIndex;
+            checkButtonPresentation.Active = Field.IsPresentation;
 
             OnComboBoxTypeChanged(comboBoxType, new EventArgs());
         }
@@ -146,6 +157,9 @@ namespace Configurator
 
             if (Field.Type == "enum")
                 Field.Pointer = comboBoxEnum.ActiveId;
+
+            Field.IsIndex = checkButtonIndex.Active;
+            Field.IsPresentation = checkButtonPresentation.Active;
         }
 
         #endregion
