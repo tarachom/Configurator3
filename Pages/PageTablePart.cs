@@ -62,15 +62,15 @@ namespace Configurator
             vBox.PackStart(toolbar, false, false, 0);
 
             ToolButton buttonAdd = new ToolButton(Stock.Add) { Label = "Додати", IsImportant = true };
-            //refreshButton.Clicked += OnRefreshClick;
+            buttonAdd.Clicked += OnTabularPartsAddClick;
             toolbar.Add(buttonAdd);
 
             ToolButton buttonRefresh = new ToolButton(Stock.Refresh) { Label = "Обновити", IsImportant = true };
-            //buttonRefresh.Clicked += OnTabularPartsRefreshClick;
+            buttonRefresh.Clicked += OnTabularPartsRefreshClick;
             toolbar.Add(buttonRefresh);
 
             ToolButton buttonDelete = new ToolButton(Stock.Delete) { Label = "Видалити", IsImportant = true };
-            //buttonDelete.Clicked += OnTabularPartsRemoveClick;
+            buttonDelete.Clicked += OnTabularPartsRemoveClick;
             toolbar.Add(buttonDelete);
 
             HBox hBoxScroll = new HBox();
@@ -178,6 +178,78 @@ namespace Configurator
 
             GeneralForm?.LoadTree();
             GeneralForm?.RenameCurrentPageNotebook($"Таблична частина: {TablePart.Name}");
+        }
+
+        void OnTabularPartsButtonPress(object? sender, ButtonPressEventArgs args)
+        {
+            if (args.Event.Type == Gdk.EventType.DoubleButtonPress)
+            {
+                ListBoxRow[] selectedRows = listBoxFields.SelectedRows;
+
+                if (selectedRows.Length != 0)
+                {
+                    ListBoxRow curRow = selectedRows[0];
+
+                    if (ConfConstants.TabularParts.ContainsKey(curRow.Child.Name))
+                        GeneralForm?.CreateNotebookPage($"Поле: {curRow.Child.Name}", () =>
+                        {
+                            PageField page = new PageField()
+                            {
+                                Fields = TablePart.Fields,
+                                Field = TablePart.Fields[curRow.Child.Name],
+                                IsNew = true,
+                                GeneralForm = GeneralForm
+                            };
+
+                            page.SetValue();
+
+                            return page;
+                        });
+                }
+            }
+        }
+
+        void OnTabularPartsAddClick(object? sender, EventArgs args)
+        {
+            GeneralForm?.CreateNotebookPage("Поле *", () =>
+            {
+                PageField page = new PageField()
+                {
+                    Fields = TablePart.Fields,
+                    IsNew = true,
+                    GeneralForm = GeneralForm
+                };
+
+                return page;
+            });
+        }
+
+        void OnTabularPartsRefreshClick(object? sender, EventArgs args)
+        {
+            foreach (Widget item in listBoxFields.Children)
+                listBoxFields.Remove(item);
+
+            FillTabularParts();
+
+            listBoxFields.ShowAll();
+        }
+
+        void OnTabularPartsRemoveClick(object? sender, EventArgs args)
+        {
+            ListBoxRow[] selectedRows = listBoxFields.SelectedRows;
+
+            if (selectedRows.Length != 0)
+            {
+                foreach (ListBoxRow row in selectedRows)
+                {
+                    if (TablePart.Fields.ContainsKey(row.Child.Name))
+                        TablePart.Fields.Remove(row.Child.Name);
+                }
+
+                OnTabularPartsRefreshClick(null, new EventArgs());
+
+                GeneralForm?.LoadTree();
+            }
         }
     }
 }

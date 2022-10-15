@@ -204,10 +204,10 @@ namespace Configurator
             ConfConstants.Block = Conf!.ConstantsBlock[comboBoxBlock.ActiveId];
             ConfConstants.Type = comboBoxType.ActiveId;
 
-            if (ConfConstants!.Type == "pointer")
+            if (ConfConstants.Type == "pointer")
                 ConfConstants.Pointer = comboBoxPointer.ActiveId;
 
-            if (ConfConstants!.Type == "enum")
+            if (ConfConstants.Type == "enum")
                 ConfConstants.Pointer = comboBoxEnum.ActiveId;
         }
 
