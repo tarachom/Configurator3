@@ -290,7 +290,10 @@ namespace Configurator
             if (selectedRows.Length != 0)
             {
                 foreach (ListBoxRow row in selectedRows)
-                    ConfConstants.TabularParts.Remove(row.Child.Name);
+                {
+                    if (ConfConstants.TabularParts.ContainsKey(row.Child.Name))
+                        ConfConstants.TabularParts.Remove(row.Child.Name);
+                }
 
                 OnTabularPartsRefreshClick(null, new EventArgs());
             }
