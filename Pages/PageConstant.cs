@@ -281,7 +281,7 @@ namespace Configurator
                     ListBoxRow curRow = selectedRows[0];
 
                     if (ConfConstants.TabularParts.ContainsKey(curRow.Child.Name))
-                        GeneralForm?.CreateNotebookPage($"Таблична частина {curRow.Child.Name}", () =>
+                        GeneralForm?.CreateNotebookPage($"Таблична частина: {curRow.Child.Name}", () =>
                         {
                             PageTablePart page = new PageTablePart()
                             {
@@ -295,7 +295,6 @@ namespace Configurator
 
                             return page;
                         });
-
                 }
             }
         }
@@ -338,7 +337,7 @@ namespace Configurator
                 }
 
                 OnTabularPartsRefreshClick(null, new EventArgs());
-                
+
                 GeneralForm?.LoadTree();
             }
         }
