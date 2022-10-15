@@ -78,6 +78,8 @@ namespace Configurator
             scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
             scrollList.SetSizeRequest(0, 300);
 
+            listBoxFields.ButtonPressEvent += OnTabularPartsButtonPress;
+
             scrollList.Add(listBoxFields);
             hBoxScroll.PackStart(scrollList, true, true, 5);
 
@@ -190,14 +192,14 @@ namespace Configurator
                 {
                     ListBoxRow curRow = selectedRows[0];
 
-                    if (ConfConstants.TabularParts.ContainsKey(curRow.Child.Name))
+                    if (TablePart.Fields.ContainsKey(curRow.Child.Name))
                         GeneralForm?.CreateNotebookPage($"Поле: {curRow.Child.Name}", () =>
                         {
                             PageField page = new PageField()
                             {
                                 Fields = TablePart.Fields,
                                 Field = TablePart.Fields[curRow.Child.Name],
-                                IsNew = true,
+                                IsNew = false,
                                 GeneralForm = GeneralForm
                             };
 
@@ -219,6 +221,8 @@ namespace Configurator
                     IsNew = true,
                     GeneralForm = GeneralForm
                 };
+
+                page.SetDefValue();
 
                 return page;
             });

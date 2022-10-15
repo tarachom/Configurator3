@@ -482,9 +482,23 @@ namespace Configurator
                                 }
                             case 4:
                                 {
+                                    string nameTablePart = blockAndName[2];
                                     string nameField = blockAndName[3];
 
-                                    //...
+                                    CreateNotebookPage($"Поле: {nameField}", () =>
+                                    {
+                                        PageField page = new PageField()
+                                        {
+                                            Fields = Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart].Fields,
+                                            Field = Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart].Fields[nameField],
+                                            IsNew = false,
+                                            GeneralForm = this
+                                        };
+
+                                        page.SetValue();
+
+                                        return page;
+                                    });
 
                                     break;
                                 }
