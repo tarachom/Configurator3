@@ -20,7 +20,7 @@ namespace Configurator
         public System.Action? CallBack_RelodTree { get; set; }
         public bool IsNew { get; set; } = true;
 
-        ListBox listBoxTableParts = new ListBox() { SelectionMode = SelectionMode.Single };
+        ListBox listBoxTableParts = new ListBox() { SelectionMode = SelectionMode.Multiple };
         Entry entryName = new Entry() { WidthRequest = 400 };
         TextView textViewDesc = new TextView();
         ComboBoxText comboBoxBlock = new ComboBoxText();
@@ -60,7 +60,7 @@ namespace Configurator
             VBox vBox = new VBox();
 
             HBox hBox = new HBox();
-            hBox.PackStart(new Label("Табличні частини:") { Halign = Align.Start }, false, false, 5);
+            hBox.PackStart(new Label("Табличні частини:"), false, false, 5);
             vBox.PackStart(hBox, false, false, 5);
 
             Toolbar toolbar = new Toolbar();
@@ -71,11 +71,11 @@ namespace Configurator
             toolbar.Add(buttonAdd);
 
             ToolButton buttonRefresh = new ToolButton(Stock.Refresh) { Label = "Обновити", IsImportant = true };
-            //refreshButton.Clicked += OnRefreshClick;
+            buttonRefresh.Clicked += OnTabularPartsRefreshClick;
             toolbar.Add(buttonRefresh);
 
             ToolButton buttonDelete = new ToolButton(Stock.Delete) { Label = "Видалити", IsImportant = true };
-            //deleteButton.Clicked += OnDeleteClick;
+            buttonDelete.Clicked += OnTabularPartsRemoveClick;
             toolbar.Add(buttonDelete);
 
             HBox hBoxScroll = new HBox();
@@ -166,8 +166,7 @@ namespace Configurator
 
         public void SetValue()
         {
-            foreach (ConfigurationObjectTablePart tablePart in ConfConstants!.TabularParts.Values)
-                listBoxTableParts.Add(new Label(tablePart.Name) { Halign = Align.Start });
+            FillTabularParts();
 
             entryName.Text = ConfConstants?.Name;
             textViewDesc.Buffer.Text = ConfConstants?.Desc;
@@ -182,6 +181,12 @@ namespace Configurator
                 comboBoxEnum.ActiveId = ConfConstants?.Pointer;
 
             OnComboBoxTypeChanged(comboBoxType, new EventArgs());
+        }
+
+        void FillTabularParts()
+        {
+            foreach (ConfigurationObjectTablePart tablePart in ConfConstants.TabularParts.Values)
+                listBoxTableParts.Add(new Label(tablePart.Name) { Name = tablePart.Name, Halign = Align.Start });
         }
 
         public void SetDefValue()
@@ -266,6 +271,29 @@ namespace Configurator
 
             if (CallBack_RenamePage != null)
                 CallBack_RenamePage.Invoke($"Константа: {ConfConstants.Name}");
+        }
+
+        void OnTabularPartsRefreshClick(object? sender, EventArgs args)
+        {
+            foreach (Widget item in listBoxTableParts.Children)
+                listBoxTableParts.Remove(item);
+
+            FillTabularParts();
+
+            listBoxTableParts.ShowAll();
+        }
+
+        void OnTabularPartsRemoveClick(object? sender, EventArgs args)
+        {
+            ListBoxRow[] selectedRows = listBoxTableParts.SelectedRows;
+
+            if (selectedRows.Length != 0)
+            {
+                foreach (ListBoxRow row in selectedRows)
+                    ConfConstants.TabularParts.Remove(row.Child.Name);
+
+                OnTabularPartsRefreshClick(null, new EventArgs());
+            }
         }
     }
 }
