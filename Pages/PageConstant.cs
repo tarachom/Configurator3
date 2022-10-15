@@ -41,6 +41,11 @@ namespace Configurator
 
             hBox.PackStart(bClose, false, false, 10);
 
+            Button bCopy = new Button("Копіювати");
+            bCopy.Clicked += OnCopyClick;
+
+            hBox.PackStart(bCopy, false, false, 10);
+
             PackStart(hBox, false, false, 10);
 
             HPaned hPaned = new HPaned() { BorderWidth = 5 };
@@ -272,6 +277,28 @@ namespace Configurator
 
             GeneralForm?.LoadTree();
             GeneralForm?.RenameCurrentPageNotebook($"Константа: {ConfConstants.Name}");
+        }
+
+        void OnCopyClick(object? sender, EventArgs args)
+        {
+            string newName = ConfConstants.Name + "_copy";
+
+            GeneralForm?.CreateNotebookPage($"Константа: {newName}", () =>
+            {
+                ConfigurationConstants newConst = ConfConstants.Copy();
+                newConst.Name = newName;
+
+                PageConstant page = new PageConstant()
+                {
+                    IsNew = true,
+                    GeneralForm = GeneralForm,
+                    ConfConstants = newConst
+                };
+
+                page.SetValue();
+
+                return page;
+            });
         }
 
         void OnTabularPartsButtonPress(object? sender, ButtonPressEventArgs args)
