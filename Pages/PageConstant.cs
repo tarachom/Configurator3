@@ -47,9 +47,7 @@ namespace Configurator
 
             PackStart(hBox, false, false, 10);
 
-            HPaned hPaned = new HPaned();
-            hPaned.BorderWidth = 7;
-            hPaned.Position = 200;
+            HPaned hPaned = new HPaned() { BorderWidth = 5 };
 
             CreatePack1(hPaned);
             CreatePack2(hPaned);
@@ -59,93 +57,96 @@ namespace Configurator
             ShowAll();
         }
 
-        void CreatePack1(HPaned hPaned)
+        void CreatePack2(HPaned hPaned)
         {
-            VBox vBox = new VBox(false, 0);
-            vBox.PackStart(new Label("Табличні частини:") { Halign = Align.Start }, false, false, 5);
+            VBox vBox = new VBox();
 
+            HBox hBox = new HBox();
+            hBox.PackStart(new Label("Табличні частини:") { Halign = Align.Start }, false, false, 5);
+            vBox.PackStart(hBox, false, false, 5);
+
+            HBox hBoxScroll = new HBox();
             ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
             scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
             scrollList.SetSizeRequest(0, 300);
 
             scrollList.Add(listBoxTableParts);
+            hBoxScroll.PackStart(scrollList, true, true, 5);
 
-            vBox.PackStart(scrollList, false, false, 0);
-            hPaned.Pack1(vBox, true, true);
+            vBox.PackStart(hBoxScroll, false, false, 5);
+            hPaned.Pack2(vBox, true, false);
         }
 
-        void CreatePack2(HPaned hPaned)
+        void CreatePack1(HPaned hPaned)
         {
-            int offset = 110;
-
-            VBox vBox = new VBox(false, 0);
+            VBox vBox = new VBox();
 
             //Назва
-            Fixed fixName = new Fixed();
-            vBox.PackStart(fixName, false, false, 5);
+            HBox hBoxName = new HBox();
+            vBox.PackStart(hBoxName, false, false, 5);
 
-            fixName.Put(new Label("Назва:"), 5, 5);
-            fixName.Put(entryName, offset, 0);
+            hBoxName.PackStart(new Label("Назва:"), false, false, 5);
+            hBoxName.PackStart(entryName, false, false, 5);
 
             //Блок
+            HBox hBoxBlock = new HBox();
+            vBox.PackStart(hBoxBlock, false, false, 5);
+
             foreach (ConfigurationConstantsBlock block in Conf!.ConstantsBlock.Values)
                 comboBoxBlock.Append(block.BlockName, block.BlockName);
 
-            Fixed fixBlock = new Fixed();
-            vBox.PackStart(fixBlock, false, false, 5);
-
-            fixBlock.Put(new Label("Блок:"), 5, 5);
-            fixBlock.Put(comboBoxBlock, offset, 0);
+            hBoxBlock.PackStart(new Label("Блок:"), false, false, 5);
+            hBoxBlock.PackStart(comboBoxBlock, false, false, 5);
 
             //Тип
+            HBox hBoxType = new HBox();
+            vBox.PackStart(hBoxType, false, false, 5);
+
             foreach (var fieldType in FieldType.DefaultList())
                 comboBoxType.Append(fieldType.ConfTypeName, fieldType.ViewTypeName);
 
             comboBoxType.Changed += OnComboBoxTypeChanged;
 
-            Fixed fixType = new Fixed();
-            vBox.PackStart(fixType, false, false, 5);
-
-            fixType.Put(new Label("Тип:"), 5, 5);
-            fixType.Put(comboBoxType, offset, 0);
+            hBoxType.PackStart(new Label("Тип:"), false, false, 5);
+            hBoxType.PackStart(comboBoxType, false, false, 5);
 
             //Pointer
+            HBox hBoxPointer = new HBox();
+            vBox.PackStart(hBoxPointer, false, false, 5);
+
             foreach (ConfigurationDirectories item in Conf!.Directories.Values)
                 comboBoxPointer.Append($"Довідники.{item.Name}", $"Довідники.{item.Name}");
 
             foreach (ConfigurationDocuments item in Conf!.Documents.Values)
                 comboBoxPointer.Append($"Документи.{item.Name}", $"Документи.{item.Name}");
 
-            Fixed fixPointer = new Fixed();
-            vBox.PackStart(fixPointer, false, false, 5);
-
-            fixPointer.Put(new Label("Вказівник:"), 5, 5);
-            fixPointer.Put(comboBoxPointer, offset, 0);
+            hBoxPointer.PackStart(new Label("Вказівник:"), false, false, 5);
+            hBoxPointer.PackStart(comboBoxPointer, false, false, 5);
 
             //Enum
+            HBox hBoxEnum = new HBox();
+            vBox.PackStart(hBoxEnum, false, false, 5);
+
             foreach (ConfigurationEnums item in Conf!.Enums.Values)
                 comboBoxEnum.Append($"Перелічення.{item.Name}", $"Перелічення.{item.Name}");
 
-            Fixed fixEnum = new Fixed();
-            vBox.PackStart(fixEnum, false, false, 5);
-
-            fixEnum.Put(new Label("Перелічення:"), 5, 5);
-            fixEnum.Put(comboBoxEnum, offset, 0);
+            hBoxEnum.PackStart(new Label("Перелічення:"), false, false, 5);
+            hBoxEnum.PackStart(comboBoxEnum, false, false, 5);
 
             //Опис
-            Fixed fixDesc = new Fixed();
-            vBox.PackStart(fixDesc, false, false, 5);
+            HBox hBoxDesc = new HBox();
+            vBox.PackStart(hBoxDesc, false, false, 5);
 
-            fixDesc.Put(new Label("Опис:"), 5, 5);
+            hBoxDesc.PackStart(new Label("Опис:") { Valign = Align.Start }, false, false, 5);
 
             ScrolledWindow scrollTextView = new ScrolledWindow() { ShadowType = ShadowType.In };
             scrollTextView.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
             scrollTextView.SetSizeRequest(400, 100);
             scrollTextView.Add(textViewDesc);
 
-            fixDesc.Put(scrollTextView, offset, 5);
+            hBoxDesc.PackStart(scrollTextView, false, false, 5);
 
-            hPaned.Pack2(vBox, false, false);
+            hPaned.Pack1(vBox, false, false);
         }
 
         #region Присвоєння / зчитування значень віджетів
