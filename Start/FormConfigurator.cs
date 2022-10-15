@@ -65,7 +65,10 @@ namespace Configurator
         {
             foreach (KeyValuePair<string, ConfigurationConstantsBlock> ConfConstantsBlock in Conf!.ConstantsBlock)
             {
-                TreeIter contantsBlockIter = treeStore.AppendValues(rootIter, ConfConstantsBlock.Value.BlockName);
+                string key = $"БлокКонстант.{ConfConstantsBlock.Value.BlockName}";
+
+                TreeIter contantsBlockIter = treeStore.AppendValues(rootIter, ConfConstantsBlock.Value.BlockName, "", key);
+
                 foreach (ConfigurationConstants ConfConstants in ConfConstantsBlock.Value.Constants.Values)
                 {
                     LoadConstant(contantsBlockIter, ConfConstants);
@@ -335,18 +338,9 @@ namespace Configurator
             Toolbar toolbar = new Toolbar();
             vbox.PackStart(toolbar, false, false, 0);
 
-            Menu Menu = new Menu();
-            MenuItem AddConstant = new MenuItem("Константу");
-            AddConstant.Activated += OnAddConstant;
-            Menu.Add(AddConstant);
-            Menu.Add(new MenuItem("Блок констант"));
-            Menu.ShowAll();
-
-            MenuToolButton mt = new MenuToolButton(Stock.Add) { Label = "Додати", IsImportant = true };
-            mt.Menu = Menu;
-
-            //mt.Add(new Label("test"));
-            toolbar.Add(mt);
+            MenuToolButton menuToolButton = new MenuToolButton(Stock.Add) { Label = "Додати", IsImportant = true };
+            menuToolButton.Menu = CreateMenuAdd();
+            toolbar.Add(menuToolButton);
 
             ToolButton refreshButton = new ToolButton(Stock.Refresh) { Label = "Обновити", IsImportant = true };
             refreshButton.Clicked += OnRefreshClick;
@@ -389,6 +383,23 @@ namespace Configurator
             ShowAll();
 
             LoadTree();
+        }
+
+        Menu CreateMenuAdd()
+        {
+            Menu Menu = new Menu();
+
+            MenuItem AddConstantBlock = new MenuItem("Блок констант");
+            AddConstantBlock.Activated += OnAddConstantBlock;
+            Menu.Add(AddConstantBlock);
+
+            MenuItem AddConstant = new MenuItem("Константу");
+            AddConstant.Activated += OnAddConstant;
+            Menu.Add(AddConstant);
+
+            Menu.ShowAll();
+
+            return Menu;
         }
 
         public void CloseCurrentPageNotebook()
@@ -506,7 +517,23 @@ namespace Configurator
 
                         break;
                     }
-                
+                case "БлокКонстант":
+                    {
+                        CreateNotebookPage($"Блок констант: {name}", () =>
+                        {
+                            PageConstantBlock page = new PageConstantBlock()
+                            {
+                                ConfConstantsBlock = Conf!.ConstantsBlock[name],
+                                IsNew = false,
+                                GeneralForm = this
+                            };
+
+                            page.SetValue();
+
+                            return page;
+                        });
+                        break;
+                    }
             }
         }
 
@@ -525,6 +552,20 @@ namespace Configurator
         void OnRefreshClick(object? sender, EventArgs args)
         {
             LoadTree();
+        }
+
+        void OnAddConstantBlock(object? sender, EventArgs args)
+        {
+            CreateNotebookPage("Блок констант: *", () =>
+            {
+                PageConstantBlock page = new PageConstantBlock()
+                {
+                    IsNew = true,
+                    GeneralForm = this
+                };
+
+                return page;
+            });
         }
 
         void OnAddConstant(object? sender, EventArgs args)

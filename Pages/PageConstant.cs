@@ -240,6 +240,12 @@ namespace Configurator
                 return;
             }
 
+            if (!Conf!.ConstantsBlock.ContainsKey(comboBoxBlock.ActiveId))
+            {
+                Message.ErrorMessage($"Відсутній блок {comboBoxBlock.ActiveId}");
+                return;
+            }
+
             if (IsNew)
             {
                 if (Conf!.ConstantsBlock[comboBoxBlock.ActiveId].Constants.ContainsKey(entryName.Text))
