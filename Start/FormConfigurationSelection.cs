@@ -231,5 +231,6 @@ namespace Configurator
                 configurationSelectionParam.Show();
             }
         }
+        
     }
 }
