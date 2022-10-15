@@ -288,7 +288,8 @@ namespace Configurator
                                 ConfConstants = ConfConstants,
                                 TablePart = ConfConstants.TabularParts[curRow.Child.Name],
                                 IsNew = false,
-                                GeneralForm = GeneralForm
+                                GeneralForm = GeneralForm,
+                                CallBack_RefreshList = TabularPartsRefreshList
                             };
 
                             page.SetValue();
@@ -307,11 +308,17 @@ namespace Configurator
                 {
                     ConfConstants = ConfConstants,
                     IsNew = true,
-                    GeneralForm = GeneralForm
+                    GeneralForm = GeneralForm,
+                    CallBack_RefreshList = TabularPartsRefreshList
                 };
 
                 return page;
             });
+        }
+
+        void TabularPartsRefreshList()
+        {
+            OnTabularPartsRefreshClick(null, new EventArgs());
         }
 
         void OnTabularPartsRefreshClick(object? sender, EventArgs args)

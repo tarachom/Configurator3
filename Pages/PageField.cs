@@ -17,6 +17,7 @@ namespace Configurator
         public Dictionary<string, ConfigurationObjectField> Fields = new Dictionary<string, ConfigurationObjectField>();
         public ConfigurationObjectField Field { get; set; } = new ConfigurationObjectField();
         public FormConfigurator? GeneralForm { get; set; }
+        public System.Action? CallBack_RefreshList { get; set; }
         public bool IsNew { get; set; } = true;
 
         Entry entryName = new Entry() { WidthRequest = 400 };
@@ -204,6 +205,9 @@ namespace Configurator
 
             GeneralForm?.LoadTree();
             GeneralForm?.RenameCurrentPageNotebook($"Поле: {Field.Name}");
+
+            if (CallBack_RefreshList != null)
+                CallBack_RefreshList.Invoke();
         }
     }
 }

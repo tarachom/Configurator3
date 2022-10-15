@@ -17,6 +17,7 @@ namespace Configurator
         public ConfigurationConstants ConfConstants { get; set; } = new ConfigurationConstants();
         public ConfigurationObjectTablePart TablePart { get; set; } = new ConfigurationObjectTablePart();
         public FormConfigurator? GeneralForm { get; set; }
+        public System.Action? CallBack_RefreshList { get; set; }
         public bool IsNew { get; set; } = true;
 
         ListBox listBoxFields = new ListBox() { SelectionMode = SelectionMode.Single };
@@ -180,6 +181,9 @@ namespace Configurator
 
             GeneralForm?.LoadTree();
             GeneralForm?.RenameCurrentPageNotebook($"Таблична частина: {TablePart.Name}");
+
+            if (CallBack_RefreshList != null)
+                CallBack_RefreshList.Invoke();
         }
 
         void OnTabularPartsButtonPress(object? sender, ButtonPressEventArgs args)
@@ -200,7 +204,8 @@ namespace Configurator
                                 Fields = TablePart.Fields,
                                 Field = TablePart.Fields[curRow.Child.Name],
                                 IsNew = false,
-                                GeneralForm = GeneralForm
+                                GeneralForm = GeneralForm,
+                                CallBack_RefreshList = TabularPartsRefreshList
                             };
 
                             page.SetValue();
@@ -211,15 +216,21 @@ namespace Configurator
             }
         }
 
+        void TabularPartsRefreshList()
+        {
+            OnTabularPartsRefreshClick(null, new EventArgs());
+        }
+
         void OnTabularPartsAddClick(object? sender, EventArgs args)
         {
-            GeneralForm?.CreateNotebookPage("Поле *", () =>
+            GeneralForm?.CreateNotebookPage("Поле: *", () =>
             {
                 PageField page = new PageField()
                 {
                     Fields = TablePart.Fields,
                     IsNew = true,
-                    GeneralForm = GeneralForm
+                    GeneralForm = GeneralForm,
+                    CallBack_RefreshList = TabularPartsRefreshList
                 };
 
                 page.SetDefValue();
