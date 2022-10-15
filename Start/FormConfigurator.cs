@@ -40,12 +40,16 @@ namespace Configurator
 
                 foreach (KeyValuePair<string, ConfigurationObjectTablePart> ConfTablePart in confConstant.TabularParts)
                 {
-                    TreeIter constantTablePartIter = treeStore.AppendValues(constantTabularPartsIter, ConfTablePart.Value.Name, "", $"{key}/{ConfTablePart.Value.Name}");
+                    string keyTablePart = $"{key}/{ConfTablePart.Value.Name}";
+
+                    TreeIter constantTablePartIter = treeStore.AppendValues(constantTabularPartsIter, ConfTablePart.Value.Name, "", keyTablePart);
 
                     foreach (KeyValuePair<string, ConfigurationObjectField> ConfTablePartFields in ConfTablePart.Value.Fields)
                     {
                         string typeInfo = GetTypeInfo(ConfTablePartFields.Value.Type, ConfTablePartFields.Value.Pointer);
-                        treeStore.AppendValues(constantTablePartIter, ConfTablePartFields.Value.Name, typeInfo, key);
+                        string keyField = $"{keyTablePart}/{ConfTablePartFields.Value.Name}";
+
+                        treeStore.AppendValues(constantTablePartIter, ConfTablePartFields.Value.Name, typeInfo, keyField);
                     }
 
                     IsExpand(constantTablePartIter);
@@ -473,6 +477,14 @@ namespace Configurator
 
                                         return page;
                                     });
+
+                                    break;
+                                }
+                            case 4:
+                                {
+                                    string nameField = blockAndName[3];
+
+                                    //...
 
                                     break;
                                 }
