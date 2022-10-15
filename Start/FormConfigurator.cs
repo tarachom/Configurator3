@@ -441,7 +441,7 @@ namespace Configurator
                             PageConstant page = new PageConstant()
                             {
                                 IsNew = false,
-                                ParentForm = this,
+                                GeneralForm = this,
                                 ConfConstants = Conf!.ConstantsBlock[blockConst].Constants[nameConst]
                             };
 
@@ -479,7 +479,7 @@ namespace Configurator
                 PageConstant page = new PageConstant()
                 {
                     IsNew = true,
-                    ParentForm = this
+                    GeneralForm = this
                 };
 
                 page.SetDefValue();

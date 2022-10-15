@@ -15,7 +15,7 @@ namespace Configurator
         }
 
         public ConfigurationConstants ConfConstants { get; set; } = new ConfigurationConstants();
-        public FormConfigurator? ParentForm { get; set; }
+        public FormConfigurator? GeneralForm { get; set; }
         public bool IsNew { get; set; } = true;
 
         ListBox listBoxTableParts = new ListBox() { SelectionMode = SelectionMode.Multiple };
@@ -37,7 +37,7 @@ namespace Configurator
             hBox.PackStart(bSave, false, false, 10);
 
             Button bClose = new Button("Закрити");
-            bClose.Clicked += (object? sender, EventArgs args) => { ParentForm?.CloseCurrentPageNotebook(); };
+            bClose.Clicked += (object? sender, EventArgs args) => { GeneralForm?.CloseCurrentPageNotebook(); };
 
             hBox.PackStart(bClose, false, false, 10);
 
@@ -264,19 +264,19 @@ namespace Configurator
 
             IsNew = false;
 
-            ParentForm?.LoadTree();
-            ParentForm?.RenameCurrentPageNotebook($"Константа: {ConfConstants.Name}");
+            GeneralForm?.LoadTree();
+            GeneralForm?.RenameCurrentPageNotebook($"Константа: {ConfConstants.Name}");
 
         }
 
         void OnTabularPartsAddClick(object? sender, EventArgs args)
         {
-            ParentForm?.CreateNotebookPage("Таблична частина *", () =>
+            GeneralForm?.CreateNotebookPage("Таблична частина *", () =>
             {
                 PageTablePart page = new PageTablePart()
                 {
                     IsNew = true,
-                    ParentForm = ParentForm
+                    GeneralForm = GeneralForm
                 };
 
                 //page.SetDefValue();

@@ -15,7 +15,7 @@ namespace Configurator
         }
 
         public ConfigurationConstants ConfConstants { get; set; } = new ConfigurationConstants();
-        public FormConfigurator? ParentForm { get; set; }
+        public FormConfigurator? GeneralForm { get; set; }
         public bool IsNew { get; set; } = true;
 
         ListBox listBoxFields = new ListBox() { SelectionMode = SelectionMode.Multiple };
@@ -33,7 +33,7 @@ namespace Configurator
             hBox.PackStart(bSave, false, false, 10);
 
             Button bClose = new Button("Закрити");
-            bClose.Clicked += (object? sender, EventArgs args) => { ParentForm?.CloseCurrentPageNotebook(); };
+            bClose.Clicked += (object? sender, EventArgs args) => { GeneralForm?.CloseCurrentPageNotebook(); };
 
             hBox.PackStart(bClose, false, false, 10);
 
@@ -49,8 +49,7 @@ namespace Configurator
             ShowAll();
         }
 
-
-        void CreatePack1(HPaned hPaned)
+        void CreatePack2(HPaned hPaned)
         {
             VBox vBox = new VBox();
 
@@ -85,7 +84,7 @@ namespace Configurator
             hPaned.Pack2(vBox, true, false);
         }
 
-        void CreatePack2(HPaned hPaned)
+        void CreatePack1(HPaned hPaned)
         {
             VBox vBox = new VBox();
 
