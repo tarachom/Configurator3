@@ -322,7 +322,7 @@ namespace Configurator
                         {
                             PageTablePart page = new PageTablePart()
                             {
-                                ConfConstants = ConfConstants,
+                                TabularParts = ConfConstants.TabularParts,
                                 TablePart = ConfConstants.TabularParts[curRow.Child.Name],
                                 IsNew = false,
                                 GeneralForm = GeneralForm,
@@ -343,7 +343,7 @@ namespace Configurator
             {
                 PageTablePart page = new PageTablePart()
                 {
-                    ConfConstants = ConfConstants,
+                    TabularParts = ConfConstants.TabularParts,
                     IsNew = true,
                     GeneralForm = GeneralForm,
                     CallBack_RefreshList = TabularPartsRefreshList

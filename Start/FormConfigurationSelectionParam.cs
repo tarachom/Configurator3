@@ -17,7 +17,6 @@ namespace Configurator
         {
             SetDefaultSize(420, 0);
             SetPosition(WindowPosition.Center);
-            WindowPosition = WindowPosition.Center;
             SetDefaultIconFromFile("configurator.ico");
             BorderWidth = 5;
 

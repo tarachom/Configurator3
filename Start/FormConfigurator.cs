@@ -79,12 +79,16 @@ namespace Configurator
 
         void LoadDirectory(TreeIter rootIter, ConfigurationDirectories confDirectory)
         {
-            TreeIter directoryIter = treeStore.AppendValues(rootIter, confDirectory.Name);
+            string key = $"Довідники.{confDirectory.Name}";
+
+            TreeIter directoryIter = treeStore.AppendValues(rootIter, confDirectory.Name, "", key);
 
             foreach (KeyValuePair<string, ConfigurationObjectField> ConfFields in confDirectory.Fields)
             {
                 string info = GetTypeInfo(ConfFields.Value.Type, ConfFields.Value.Pointer);
-                treeStore.AppendValues(directoryIter, ConfFields.Value.Name, info);
+                string keyField = $"{key}:{ConfFields.Value.Name}";
+
+                treeStore.AppendValues(directoryIter, ConfFields.Value.Name, info, keyField);
             }
 
             if (confDirectory.TabularParts.Count > 0)
@@ -93,12 +97,16 @@ namespace Configurator
 
                 foreach (KeyValuePair<string, ConfigurationObjectTablePart> ConfTablePart in confDirectory.TabularParts)
                 {
-                    TreeIter directoriTablePartIter = treeStore.AppendValues(directoriTabularPartsIter, ConfTablePart.Value.Name);
+                    string keyTablePart = $"{key}/{ConfTablePart.Value.Name}";
+
+                    TreeIter directoriTablePartIter = treeStore.AppendValues(directoriTabularPartsIter, ConfTablePart.Value.Name, "", keyTablePart);
 
                     foreach (KeyValuePair<string, ConfigurationObjectField> ConfTablePartFields in ConfTablePart.Value.Fields)
                     {
                         string info = GetTypeInfo(ConfTablePartFields.Value.Type, ConfTablePartFields.Value.Pointer);
-                        treeStore.AppendValues(directoriTablePartIter, ConfTablePartFields.Value.Name, info);
+                        string keyField = $"{keyTablePart}/{ConfTablePartFields.Value.Name}";
+
+                        treeStore.AppendValues(directoriTablePartIter, ConfTablePartFields.Value.Name, info, keyField);
                     }
 
                     IsExpand(directoriTablePartIter);
@@ -328,7 +336,6 @@ namespace Configurator
         {
             SetDefaultSize(1000, 600);
             SetPosition(WindowPosition.Center);
-            WindowPosition = WindowPosition.Center;
             SetDefaultIconFromFile("configurator.ico");
 
             DeleteEvent += delegate { Application.Quit(); };
@@ -446,6 +453,23 @@ namespace Configurator
 
             switch (block)
             {
+                case "БлокКонстант":
+                    {
+                        CreateNotebookPage($"Блок констант: {name}", () =>
+                        {
+                            PageConstantBlock page = new PageConstantBlock()
+                            {
+                                ConfConstantsBlock = Conf!.ConstantsBlock[name],
+                                IsNew = false,
+                                GeneralForm = this
+                            };
+
+                            page.SetValue();
+
+                            return page;
+                        });
+                        break;
+                    }
                 case "Константи":
                     {
                         string[] blockAndName = name.Split("/");
@@ -480,7 +504,7 @@ namespace Configurator
                                         PageTablePart page = new PageTablePart()
                                         {
                                             GeneralForm = this,
-                                            ConfConstants = Conf!.ConstantsBlock[blockConst].Constants[nameConst],
+                                            TabularParts = Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts,
                                             TablePart = Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart],
                                             IsNew = false
                                         };
@@ -518,21 +542,86 @@ namespace Configurator
 
                         break;
                     }
-                case "БлокКонстант":
+                case "Довідники":
                     {
-                        CreateNotebookPage($"Блок констант: {name}", () =>
+                        string[] directoryPath = name.Split("/");
+                        string directory = directoryPath[0];
+
+                        switch (directoryPath.Length)
                         {
-                            PageConstantBlock page = new PageConstantBlock()
-                            {
-                                ConfConstantsBlock = Conf!.ConstantsBlock[name],
-                                IsNew = false,
-                                GeneralForm = this
-                            };
+                            case 1:
+                                {
+                                    if (directory.IndexOf(":") != -1)
+                                    {
+                                        string[] directoryAndField = name.Split(":");
+                                        string directoryName = directoryAndField[0];
+                                        string fieldName = directoryAndField[1];
 
-                            page.SetValue();
+                                        CreateNotebookPage($"Поле: {fieldName}", () =>
+                                        {
+                                            PageField page = new PageField()
+                                            {
+                                                Fields = Conf!.Directories[directoryName].Fields,
+                                                Field = Conf!.Directories[directoryName].Fields[fieldName],
+                                                IsNew = false,
+                                                GeneralForm = this
+                                            };
 
-                            return page;
-                        });
+                                            page.SetValue();
+
+                                            return page;
+                                        });
+                                    }
+                                    else
+                                    {
+
+                                    }
+                                    break;
+                                }
+                            case 2:
+                                {
+                                    string nameTablePart = directoryPath[1];
+
+                                    CreateNotebookPage($"Таблична частина: {nameTablePart}", () =>
+                                    {
+                                        PageTablePart page = new PageTablePart()
+                                        {
+                                            GeneralForm = this,
+                                            TabularParts = Conf!.Directories[directory].TabularParts,
+                                            TablePart = Conf!.Directories[directory].TabularParts[nameTablePart],
+                                            IsNew = false
+                                        };
+
+                                        page.SetValue();
+
+                                        return page;
+                                    });
+                                    break;
+                                }
+                            case 3:
+                                {
+                                    string nameTablePart = directoryPath[1];
+                                    string nameField = directoryPath[2];
+
+                                    CreateNotebookPage($"Поле: {nameField}", () =>
+                                    {
+                                        PageField page = new PageField()
+                                        {
+                                            Fields = Conf!.Directories[directory].TabularParts[nameTablePart].Fields,
+                                            Field = Conf!.Directories[directory].TabularParts[nameTablePart].Fields[nameField],
+                                            IsNew = false,
+                                            GeneralForm = this
+                                        };
+
+                                        page.SetValue();
+
+                                        return page;
+                                    });
+
+                                    break;
+                                }
+                        }
+
                         break;
                     }
             }

@@ -14,7 +14,7 @@ namespace Configurator
             }
         }
 
-        public ConfigurationConstants ConfConstants { get; set; } = new ConfigurationConstants();
+        public Dictionary<string, ConfigurationObjectTablePart> TabularParts { get; set; } = new Dictionary<string, ConfigurationObjectTablePart>();
         public ConfigurationObjectTablePart TablePart { get; set; } = new ConfigurationObjectTablePart();
         public FormConfigurator? GeneralForm { get; set; }
         public System.Action? CallBack_RefreshList { get; set; }
@@ -157,7 +157,7 @@ namespace Configurator
 
             if (IsNew)
             {
-                if (ConfConstants.TabularParts.ContainsKey(entryName.Text))
+                if (TabularParts.ContainsKey(entryName.Text))
                 {
                     Message.ErrorMessage($"Назва табличної частини не унікальна");
                     return;
@@ -167,19 +167,19 @@ namespace Configurator
             {
                 if (TablePart.Name != entryName.Text)
                 {
-                    if (ConfConstants.TabularParts.ContainsKey(entryName.Text))
+                    if (TabularParts.ContainsKey(entryName.Text))
                     {
                         Message.ErrorMessage($"Назва табличної частини не унікальна");
                         return;
                     }
                 }
 
-                ConfConstants.TabularParts.Remove(TablePart.Name);
+               TabularParts.Remove(TablePart.Name);
             }
 
             GetValue();
 
-            ConfConstants.AppendTablePart(TablePart);
+            TabularParts.Add(TablePart.Name, TablePart);
 
             IsNew = false;
 

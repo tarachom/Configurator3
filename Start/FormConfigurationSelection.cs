@@ -12,7 +12,6 @@ namespace Configurator
         public FormConfigurationSelection() : base("Конфігуратор | Вибір бази даних")
         {
             SetDefaultSize(660, 320);
-            WindowPosition = WindowPosition.Center;
             SetPosition(WindowPosition.Center);
             SetDefaultIconFromFile("configurator.ico");
 
@@ -227,10 +226,8 @@ namespace Configurator
                 FormConfigurationSelectionParam configurationSelectionParam = new FormConfigurationSelectionParam();
                 configurationSelectionParam.OpenConfigurationParam = ConfigurationParamCollection.GetConfigurationParam(selectedRows[0].Name);
                 configurationSelectionParam.CallBackUpdate = CallBackUpdate;
-                configurationSelectionParam.WindowPosition = WindowPosition.Center;
                 configurationSelectionParam.Show();
             }
         }
-        
     }
 }
