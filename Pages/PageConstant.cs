@@ -15,9 +15,7 @@ namespace Configurator
         }
 
         public ConfigurationConstants ConfConstants { get; set; } = new ConfigurationConstants();
-        public System.Action? CallBack_ClosePage { get; set; }
-        public System.Action<string>? CallBack_RenamePage { get; set; }
-        public System.Action? CallBack_RelodTree { get; set; }
+        public FormConfigurator? ParentForm { get; set; }
         public bool IsNew { get; set; } = true;
 
         ListBox listBoxTableParts = new ListBox() { SelectionMode = SelectionMode.Multiple };
@@ -39,7 +37,7 @@ namespace Configurator
             hBox.PackStart(bSave, false, false, 10);
 
             Button bClose = new Button("Закрити");
-            bClose.Clicked += (object? sender, EventArgs args) => { if (CallBack_ClosePage != null) CallBack_ClosePage.Invoke(); };
+            bClose.Clicked += (object? sender, EventArgs args) => { ParentForm?.CloseCurrentPageNotebook(); };
 
             hBox.PackStart(bClose, false, false, 10);
 
@@ -67,7 +65,7 @@ namespace Configurator
             vBox.PackStart(toolbar, false, false, 0);
 
             ToolButton buttonAdd = new ToolButton(Stock.Add) { Label = "Додати", IsImportant = true };
-            //refreshButton.Clicked += OnRefreshClick;
+            buttonAdd.Clicked += OnTabularPartsAddClick;
             toolbar.Add(buttonAdd);
 
             ToolButton buttonRefresh = new ToolButton(Stock.Refresh) { Label = "Обновити", IsImportant = true };
@@ -266,11 +264,25 @@ namespace Configurator
 
             IsNew = false;
 
-            if (CallBack_RelodTree != null)
-                CallBack_RelodTree.Invoke();
+            ParentForm?.LoadTree();
+            ParentForm?.RenameCurrentPageNotebook($"Константа: {ConfConstants.Name}");
 
-            if (CallBack_RenamePage != null)
-                CallBack_RenamePage.Invoke($"Константа: {ConfConstants.Name}");
+        }
+
+        void OnTabularPartsAddClick(object? sender, EventArgs args)
+        {
+            ParentForm?.CreateNotebookPage("Таблична частина *", () =>
+            {
+                PageTablePart page = new PageTablePart()
+                {
+                    IsNew = true,
+                    ParentForm = ParentForm
+                };
+
+                //page.SetDefValue();
+
+                return page;
+            });
         }
 
         void OnTabularPartsRefreshClick(object? sender, EventArgs args)

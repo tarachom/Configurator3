@@ -274,7 +274,7 @@ namespace Configurator
                 treeConfiguration.ExpandToPath(path);
         }
 
-        void LoadTree()
+        public void LoadTree()
         {
             treeStore.Clear();
 
@@ -387,17 +387,17 @@ namespace Configurator
             LoadTree();
         }
 
-        void CallBack_CloseCurrentPageNotebook()
+        public void CloseCurrentPageNotebook()
         {
             topNotebook.RemovePage(topNotebook.CurrentPage);
         }
 
-        void CallBack_RenameCurrentPageNotebook(string name)
+        public void RenameCurrentPageNotebook(string name)
         {
             topNotebook.SetTabLabelText(topNotebook.CurrentPageWidget, name);
         }
 
-        void CreateNotebookPage(string tabName, System.Func<Widget>? pageWidget)
+        public void CreateNotebookPage(string tabName, System.Func<Widget>? pageWidget)
         {
             ScrolledWindow scroll = new ScrolledWindow() { ShadowType = ShadowType.In };
             scroll.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
@@ -441,9 +441,7 @@ namespace Configurator
                             PageConstant page = new PageConstant()
                             {
                                 IsNew = false,
-                                CallBack_ClosePage = CallBack_CloseCurrentPageNotebook,
-                                CallBack_RenamePage = CallBack_RenameCurrentPageNotebook,
-                                CallBack_RelodTree = LoadTree,
+                                ParentForm = this,
                                 ConfConstants = Conf!.ConstantsBlock[blockConst].Constants[nameConst]
                             };
 
@@ -481,9 +479,7 @@ namespace Configurator
                 PageConstant page = new PageConstant()
                 {
                     IsNew = true,
-                    CallBack_ClosePage = CallBack_CloseCurrentPageNotebook,
-                    CallBack_RenamePage = CallBack_RenameCurrentPageNotebook,
-                    CallBack_RelodTree = LoadTree
+                    ParentForm = this
                 };
 
                 page.SetDefValue();
