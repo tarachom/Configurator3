@@ -68,6 +68,10 @@ namespace Configurator
             buttonAdd.Clicked += OnTabularPartsAddClick;
             toolbar.Add(buttonAdd);
 
+            ToolButton buttonCopy = new ToolButton(Stock.Copy) { Label = "Копіювати", IsImportant = true };
+            buttonCopy.Clicked += OnTabularPartsCopyClick;
+            toolbar.Add(buttonCopy);
+
             ToolButton buttonRefresh = new ToolButton(Stock.Refresh) { Label = "Обновити", IsImportant = true };
             buttonRefresh.Clicked += OnTabularPartsRefreshClick;
             toolbar.Add(buttonRefresh);
@@ -316,9 +320,40 @@ namespace Configurator
             });
         }
 
-        void TabularPartsRefreshList()
+        void OnTabularPartsCopyClick(object? sender, EventArgs args)
         {
-            OnTabularPartsRefreshClick(null, new EventArgs());
+            ListBoxRow[] selectedRows = listBoxTableParts.SelectedRows;
+
+            if (selectedRows.Length != 0)
+            {
+                foreach (ListBoxRow row in selectedRows)
+                {
+                    if (ConfConstants.TabularParts.ContainsKey(row.Child.Name))
+                    {
+                        string newName = "";
+
+                        for (int i = 1; i < 99; i++)
+                        {
+                            newName = row.Child.Name + i.ToString();
+
+                            if (!ConfConstants.TabularParts.ContainsKey(newName))
+                                break;
+                        }
+
+                        if (String.IsNullOrEmpty(newName))
+                            newName = row.Child.Name + new Random(int.MaxValue).ToString();
+
+                        ConfigurationObjectTablePart newTablePart = ConfConstants.TabularParts[row.Child.Name].Copy();
+                        newTablePart.Name = newName;
+
+                        ConfConstants.AppendTablePart(newTablePart);
+                    }
+                }
+
+                OnTabularPartsRefreshClick(null, new EventArgs());
+
+                GeneralForm?.LoadTree();
+            }
         }
 
         void OnTabularPartsRefreshClick(object? sender, EventArgs args)
@@ -347,6 +382,11 @@ namespace Configurator
 
                 GeneralForm?.LoadTree();
             }
+        }
+
+        void TabularPartsRefreshList()
+        {
+            OnTabularPartsRefreshClick(null, new EventArgs());
         }
     }
 }

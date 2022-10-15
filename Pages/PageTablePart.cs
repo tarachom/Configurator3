@@ -66,6 +66,10 @@ namespace Configurator
             buttonAdd.Clicked += OnTabularPartsAddClick;
             toolbar.Add(buttonAdd);
 
+            ToolButton buttonCopy = new ToolButton(Stock.Copy) { Label = "Копіювати", IsImportant = true };
+            buttonCopy.Clicked += OnTabularPartsCopyClick;
+            toolbar.Add(buttonCopy);
+
             ToolButton buttonRefresh = new ToolButton(Stock.Refresh) { Label = "Обновити", IsImportant = true };
             buttonRefresh.Clicked += OnTabularPartsRefreshClick;
             toolbar.Add(buttonRefresh);
@@ -216,11 +220,6 @@ namespace Configurator
             }
         }
 
-        void TabularPartsRefreshList()
-        {
-            OnTabularPartsRefreshClick(null, new EventArgs());
-        }
-
         void OnTabularPartsAddClick(object? sender, EventArgs args)
         {
             GeneralForm?.CreateNotebookPage("Поле: *", () =>
@@ -237,6 +236,43 @@ namespace Configurator
 
                 return page;
             });
+        }
+
+        void OnTabularPartsCopyClick(object? sender, EventArgs args)
+        {
+            ListBoxRow[] selectedRows = listBoxFields.SelectedRows;
+
+            if (selectedRows.Length != 0)
+            {
+                foreach (ListBoxRow row in selectedRows)
+                {
+                    if (TablePart.Fields.ContainsKey(row.Child.Name))
+                    {
+                        string newName = "";
+
+                        for (int i = 1; i < 99; i++)
+                        {
+                            newName = row.Child.Name + i.ToString();
+
+                            if (!TablePart.Fields.ContainsKey(newName))
+                                break;
+                        }
+
+                        if (String.IsNullOrEmpty(newName))
+                            newName = row.Child.Name + new Random(int.MaxValue).ToString();
+
+                        ConfigurationObjectField newField = TablePart.Fields[row.Child.Name].Copy();
+                        newField.Name = newName;
+
+                        TablePart.AppendField(newField);
+                    }
+
+                }
+
+                OnTabularPartsRefreshClick(null, new EventArgs());
+
+                GeneralForm?.LoadTree();
+            }
         }
 
         void OnTabularPartsRefreshClick(object? sender, EventArgs args)
@@ -265,6 +301,11 @@ namespace Configurator
 
                 GeneralForm?.LoadTree();
             }
+        }
+
+        void TabularPartsRefreshList()
+        {
+            OnTabularPartsRefreshClick(null, new EventArgs());
         }
     }
 }
