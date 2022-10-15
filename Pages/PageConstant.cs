@@ -30,10 +30,8 @@ namespace Configurator
 
         public PageConstant() : base()
         {
-            new VBox(false, 0);
-            BorderWidth = 0;
-
-            HBox hBox = new HBox(false, 0);
+            new VBox();
+            HBox hBox = new HBox();
 
             Button bSave = new Button("Зберегти");
             bSave.Clicked += OnSaveClick;
@@ -65,6 +63,21 @@ namespace Configurator
             hBox.PackStart(new Label("Табличні частини:") { Halign = Align.Start }, false, false, 5);
             vBox.PackStart(hBox, false, false, 5);
 
+            Toolbar toolbar = new Toolbar();
+            vBox.PackStart(toolbar, false, false, 0);
+
+            ToolButton buttonAdd = new ToolButton(Stock.Add) { Label = "Додати", IsImportant = true };
+            //refreshButton.Clicked += OnRefreshClick;
+            toolbar.Add(buttonAdd);
+
+            ToolButton buttonRefresh = new ToolButton(Stock.Refresh) { Label = "Обновити", IsImportant = true };
+            //refreshButton.Clicked += OnRefreshClick;
+            toolbar.Add(buttonRefresh);
+
+            ToolButton buttonDelete = new ToolButton(Stock.Delete) { Label = "Видалити", IsImportant = true };
+            //deleteButton.Clicked += OnDeleteClick;
+            toolbar.Add(buttonDelete);
+
             HBox hBoxScroll = new HBox();
             ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
             scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
@@ -73,7 +86,7 @@ namespace Configurator
             scrollList.Add(listBoxTableParts);
             hBoxScroll.PackStart(scrollList, true, true, 5);
 
-            vBox.PackStart(hBoxScroll, false, false, 5);
+            vBox.PackStart(hBoxScroll, false, false, 0);
             hPaned.Pack2(vBox, true, false);
         }
 

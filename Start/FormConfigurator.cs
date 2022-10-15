@@ -325,7 +325,7 @@ namespace Configurator
 
             DeleteEvent += delegate { Application.Quit(); };
 
-            VBox vbox = new VBox(false, 0);
+            VBox vbox = new VBox();
             Add(vbox);
 
             Toolbar toolbar = new Toolbar();
@@ -357,7 +357,7 @@ namespace Configurator
             toolbar.Add(copyButton);
 
             hPaned = new HPaned();
-            hPaned.Position = 400;
+            hPaned.Position = 200;
 
             ScrolledWindow scrollTree = new ScrolledWindow() { ShadowType = ShadowType.In };
             scrollTree.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
