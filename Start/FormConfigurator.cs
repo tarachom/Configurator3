@@ -36,11 +36,11 @@ namespace Configurator
 
             if (confConstant.TabularParts.Count > 0)
             {
-                TreeIter constantTabularPartsIter = treeStore.AppendValues(constantIter, "[ Табличні частини ]", "", key);
+                TreeIter constantTabularPartsIter = treeStore.AppendValues(constantIter, "[ Табличні частини ]");
 
                 foreach (KeyValuePair<string, ConfigurationObjectTablePart> ConfTablePart in confConstant.TabularParts)
                 {
-                    TreeIter constantTablePartIter = treeStore.AppendValues(constantTabularPartsIter, ConfTablePart.Value.Name, "", key);
+                    TreeIter constantTablePartIter = treeStore.AppendValues(constantTabularPartsIter, ConfTablePart.Value.Name, "", $"{key}/{ConfTablePart.Value.Name}");
 
                     foreach (KeyValuePair<string, ConfigurationObjectField> ConfTablePartFields in ConfTablePart.Value.Fields)
                     {
@@ -436,19 +436,47 @@ namespace Configurator
                         string blockConst = blockAndName[0];
                         string nameConst = blockAndName[1];
 
-                        CreateNotebookPage("Константа: " + nameConst, () =>
+                        switch (blockAndName.Length)
                         {
-                            PageConstant page = new PageConstant()
-                            {
-                                IsNew = false,
-                                GeneralForm = this,
-                                ConfConstants = Conf!.ConstantsBlock[blockConst].Constants[nameConst]
-                            };
+                            case 2:
+                                {
+                                    CreateNotebookPage("Константа: " + nameConst, () =>
+                                    {
+                                        PageConstant page = new PageConstant()
+                                        {
+                                            IsNew = false,
+                                            GeneralForm = this,
+                                            ConfConstants = Conf!.ConstantsBlock[blockConst].Constants[nameConst]
+                                        };
 
-                            page.SetValue();
+                                        page.SetValue();
 
-                            return page;
-                        });
+                                        return page;
+                                    });
+                                    break;
+                                }
+                            case 3:
+                                {
+                                    string nameTablePart = blockAndName[2];
+
+                                    CreateNotebookPage($"Таблична частина: {nameTablePart}", () =>
+                                    {
+                                        PageTablePart page = new PageTablePart()
+                                        {
+                                            GeneralForm = this,
+                                            ConfConstants = Conf!.ConstantsBlock[blockConst].Constants[nameConst],
+                                            TablePart = Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart],
+                                            IsNew = false
+                                        };
+
+                                        page.SetValue();
+
+                                        return page;
+                                    });
+
+                                    break;
+                                }
+                        }
 
                         break;
                     }

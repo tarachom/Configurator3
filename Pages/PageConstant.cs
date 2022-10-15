@@ -268,7 +268,6 @@ namespace Configurator
 
             GeneralForm?.LoadTree();
             GeneralForm?.RenameCurrentPageNotebook($"Константа: {ConfConstants.Name}");
-
         }
 
         void OnTabularPartsButtonPress(object? sender, ButtonPressEventArgs args)
@@ -339,6 +338,8 @@ namespace Configurator
                 }
 
                 OnTabularPartsRefreshClick(null, new EventArgs());
+                
+                GeneralForm?.LoadTree();
             }
         }
     }

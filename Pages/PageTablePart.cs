@@ -19,7 +19,7 @@ namespace Configurator
         public FormConfigurator? GeneralForm { get; set; }
         public bool IsNew { get; set; } = true;
 
-        ListBox listBoxFields = new ListBox() { SelectionMode = SelectionMode.Multiple };
+        ListBox listBoxFields = new ListBox() { SelectionMode = SelectionMode.Single };
         Entry entryName = new Entry() { WidthRequest = 400 };
         TextView textViewDesc = new TextView();
 
@@ -29,7 +29,7 @@ namespace Configurator
             HBox hBox = new HBox();
 
             Button bSave = new Button("Зберегти");
-            //bSave.Clicked += OnSaveClick;
+            bSave.Clicked += OnSaveClick;
 
             hBox.PackStart(bSave, false, false, 10);
 
@@ -136,5 +136,48 @@ namespace Configurator
 
         #endregion
 
+        void OnSaveClick(object? sender, EventArgs args)
+        {
+            string name = entryName.Text;
+            string errorList = Configuration.ValidateConfigurationObjectName(Program.Kernel!, ref name);
+            entryName.Text = name;
+
+            if (errorList.Length > 0)
+            {
+                Message.ErrorMessage($"{errorList}");
+                return;
+            }
+
+            if (IsNew)
+            {
+                if (ConfConstants.TabularParts.ContainsKey(entryName.Text))
+                {
+                    Message.ErrorMessage($"Назва табличної частини не унікальна");
+                    return;
+                }
+            }
+            else
+            {
+                if (TablePart.Name != entryName.Text)
+                {
+                    if (ConfConstants.TabularParts.ContainsKey(entryName.Text))
+                    {
+                        Message.ErrorMessage($"Назва табличної частини не унікальна");
+                        return;
+                    }
+                }
+
+                ConfConstants.TabularParts.Remove(TablePart.Name);
+            }
+
+            GetValue();
+
+            ConfConstants.AppendTablePart(TablePart);
+
+            IsNew = false;
+
+            GeneralForm?.LoadTree();
+            GeneralForm?.RenameCurrentPageNotebook($"Таблична частина: {TablePart.Name}");
+        }
     }
 }
