@@ -12,6 +12,7 @@ namespace Configurator
         public FormConfigurationSelection() : base("Конфігуратор | Вибір бази даних")
         {
             SetDefaultSize(660, 320);
+            WindowPosition = WindowPosition.Center;
             SetPosition(WindowPosition.Center);
             SetDefaultIconFromFile("configurator.ico");
 
@@ -27,6 +28,7 @@ namespace Configurator
             listBoxDataBase = new ListBox();
             listBoxDataBase.SetSizeRequest(500, 300);
             listBoxDataBase.SelectionMode = SelectionMode.Single;
+            listBoxDataBase.ButtonPressEvent += OnListBoxDataBaseButtonPress;
             scrolledWindowListBox.Add(listBoxDataBase);
 
             Button buttonOpen = new Button("Відкрити");
@@ -155,15 +157,14 @@ namespace Configurator
                     Hide();
                 }
                 else
-                {
-                    MessageDialog md = new MessageDialog(this, DialogFlags.DestroyWithParent, MessageType.Warning, ButtonsType.Close,
-                        "Error: " + exception.Message);
-
-                    md.Run();
-                    md.Destroy();
-                }
-
+                    Message.ErrorMessage("Error: " + exception.Message);
             }
+        }
+
+        void OnListBoxDataBaseButtonPress(object? sender, ButtonPressEventArgs args)
+        {
+            if (args.Event.Type == Gdk.EventType.DoubleButtonPress)
+                OnButtonEditClicked(null, new EventArgs());
         }
 
         void OnButtonConfiguratorClicked(object? sender, EventArgs args)
@@ -226,6 +227,7 @@ namespace Configurator
                 FormConfigurationSelectionParam configurationSelectionParam = new FormConfigurationSelectionParam();
                 configurationSelectionParam.OpenConfigurationParam = ConfigurationParamCollection.GetConfigurationParam(selectedRows[0].Name);
                 configurationSelectionParam.CallBackUpdate = CallBackUpdate;
+                configurationSelectionParam.WindowPosition = WindowPosition.Center;
                 configurationSelectionParam.Show();
             }
         }

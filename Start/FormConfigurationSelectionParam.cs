@@ -17,6 +17,7 @@ namespace Configurator
         {
             SetDefaultSize(420, 0);
             SetPosition(WindowPosition.Center);
+            WindowPosition = WindowPosition.Center;
             SetDefaultIconFromFile("configurator.ico");
             BorderWidth = 5;
 
@@ -103,12 +104,7 @@ namespace Configurator
             int rezult;
             if (!int.TryParse(Port.Text, out rezult))
             {
-                MessageDialog md = new MessageDialog(this, DialogFlags.DestroyWithParent, MessageType.Warning, ButtonsType.Close,
-                    "Порт має бути цілим числом!");
-
-                md.Run();
-                md.Destroy();
-
+                Message.ErrorMessage("Порт має бути цілим числом!");
                 return false;
             }
 
@@ -155,21 +151,9 @@ namespace Configurator
                     OpenConfigurationParam.DataBaseBaseName, out exception, out IsExistsDatabase);
 
                 if (flag)
-                {
-                    MessageDialog md = new MessageDialog(this, DialogFlags.DestroyWithParent, MessageType.Info, ButtonsType.Close,
-                        "OK.\n\nБаза даних створена або вже існує");
-
-                    md.Run();
-                    md.Destroy();
-                }
+                    Message.InfoMessage("OK.\n\nБаза даних створена або вже існує");
                 else
-                {
-                    MessageDialog md = new MessageDialog(this, DialogFlags.DestroyWithParent, MessageType.Warning, ButtonsType.Close,
-                        "Error: " + exception.Message);
-
-                    md.Run();
-                    md.Destroy();
-                }
+                    Message.ErrorMessage("Error: " + exception.Message);
             }
         }
 

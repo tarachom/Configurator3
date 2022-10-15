@@ -328,6 +328,7 @@ namespace Configurator
         {
             SetDefaultSize(1000, 600);
             SetPosition(WindowPosition.Center);
+            WindowPosition = WindowPosition.Center;
             SetDefaultIconFromFile("configurator.ico");
 
             DeleteEvent += delegate { Application.Quit(); };
