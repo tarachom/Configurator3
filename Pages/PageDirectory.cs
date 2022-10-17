@@ -62,40 +62,9 @@ namespace Configurator
             //Поля
             CreateFieldList(vBox);
 
-            HBox hBox = new HBox();
-            hBox.PackStart(new Label("Табличні частини:"), false, false, 5);
-            vBox.PackStart(hBox, false, false, 5);
+            //Табличні частини
+            CreateTablePartList(vBox);
 
-            Toolbar toolbar = new Toolbar();
-            vBox.PackStart(toolbar, false, false, 0);
-
-            ToolButton buttonAdd = new ToolButton(Stock.Add) { Label = "Додати", IsImportant = true };
-            buttonAdd.Clicked += OnTabularPartsAddClick;
-            toolbar.Add(buttonAdd);
-
-            ToolButton buttonCopy = new ToolButton(Stock.Copy) { Label = "Копіювати", IsImportant = true };
-            buttonCopy.Clicked += OnTabularPartsCopyClick;
-            toolbar.Add(buttonCopy);
-
-            ToolButton buttonRefresh = new ToolButton(Stock.Refresh) { Label = "Обновити", IsImportant = true };
-            buttonRefresh.Clicked += OnTabularPartsRefreshClick;
-            toolbar.Add(buttonRefresh);
-
-            ToolButton buttonDelete = new ToolButton(Stock.Delete) { Label = "Видалити", IsImportant = true };
-            buttonDelete.Clicked += OnTabularPartsRemoveClick;
-            toolbar.Add(buttonDelete);
-
-            HBox hBoxScroll = new HBox();
-            ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
-            scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-            scrollList.SetSizeRequest(0, 200);
-
-            listBoxTableParts.ButtonPressEvent += OnTabularPartsButtonPress;
-
-            scrollList.Add(listBoxTableParts);
-            hBoxScroll.PackStart(scrollList, true, true, 5);
-
-            vBox.PackStart(hBoxScroll, false, false, 0);
             hPaned.Pack2(vBox, true, false);
         }
 
@@ -156,11 +125,53 @@ namespace Configurator
             HBox hBoxScroll = new HBox();
             ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
             scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-            scrollList.SetSizeRequest(0, 300);
+            scrollList.SetSizeRequest(0, 400);
 
             listBoxFields.ButtonPressEvent += OnFieldsButtonPress;
 
             scrollList.Add(listBoxFields);
+            hBoxScroll.PackStart(scrollList, true, true, 5);
+
+            vBox.PackStart(hBoxScroll, false, false, 0);
+
+            vBoxContainer.PackStart(vBox, false, false, 0);
+        }
+
+        void CreateTablePartList(VBox vBoxContainer)
+        {
+            VBox vBox = new VBox();
+
+            HBox hBox = new HBox();
+            hBox.PackStart(new Label("Табличні частини:"), false, false, 5);
+            vBox.PackStart(hBox, false, false, 5);
+
+            Toolbar toolbar = new Toolbar();
+            vBox.PackStart(toolbar, false, false, 0);
+
+            ToolButton buttonAdd = new ToolButton(Stock.Add) { Label = "Додати", IsImportant = true };
+            buttonAdd.Clicked += OnTabularPartsAddClick;
+            toolbar.Add(buttonAdd);
+
+            ToolButton buttonCopy = new ToolButton(Stock.Copy) { Label = "Копіювати", IsImportant = true };
+            buttonCopy.Clicked += OnTabularPartsCopyClick;
+            toolbar.Add(buttonCopy);
+
+            ToolButton buttonRefresh = new ToolButton(Stock.Refresh) { Label = "Обновити", IsImportant = true };
+            buttonRefresh.Clicked += OnTabularPartsRefreshClick;
+            toolbar.Add(buttonRefresh);
+
+            ToolButton buttonDelete = new ToolButton(Stock.Delete) { Label = "Видалити", IsImportant = true };
+            buttonDelete.Clicked += OnTabularPartsRemoveClick;
+            toolbar.Add(buttonDelete);
+
+            HBox hBoxScroll = new HBox();
+            ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
+            scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+            scrollList.SetSizeRequest(0, 200);
+
+            listBoxTableParts.ButtonPressEvent += OnTabularPartsButtonPress;
+
+            scrollList.Add(listBoxTableParts);
             hBoxScroll.PackStart(scrollList, true, true, 5);
 
             vBox.PackStart(hBoxScroll, false, false, 0);
