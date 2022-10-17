@@ -19,7 +19,7 @@ Linux, Windows
 
 <ul>
  <li>
-  Інструкція як встановити .NET 6 в Ubuntu 22.04 [Installing .NET 6 on Ubuntu 22.04](https://github.com/dotnet/core/issues/7699)<br/>
+  Інструкція як встановити .NET 6 в Ubuntu 22.04 (https://github.com/dotnet/core/issues/7699)<br/>
   або Install .NET on Linux (https://learn.microsoft.com/uk-ua/dotnet/core/install/linux) на сайті Microsoft
   
       sudo apt update && sudo apt -y install dotnet6
@@ -29,13 +29,8 @@ Linux, Windows
  </li>
 </ul>
 
+Скачати програму [accounting.org.ua](https://accounting.org.ua/configurator.html) <br/>
     
-
-  
-  Скачати програму  [accounting.org.ua](https://accounting.org.ua/configurator.html) <br/>
-  
-  Для роботи потрібна база даних [PostgreSQL](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads) <br/>
-  
  <b>Можливості:</b>
     
     Легке проектування бази даних
