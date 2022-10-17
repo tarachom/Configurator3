@@ -34,8 +34,6 @@ Linux, Windows
  <li>
   Інструкція як встановити .NET 6 в Ubuntu 22.04 (https://github.com/dotnet/core/issues/7699)<br/>
   або Install .NET on Linux (https://learn.microsoft.com/uk-ua/dotnet/core/install/linux) на сайті Microsoft
-  
-      sudo apt update && sudo apt -y install dotnet6
  </li>
  <li>
   Скачати і встановити PostgreSQL (https://www.enterprisedb.com/downloads/postgres-postgresql-downloads)
