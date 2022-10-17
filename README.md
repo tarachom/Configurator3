@@ -14,8 +14,6 @@ Linux, Windows
   Скачати і встановити PostgreSQL (https://www.enterprisedb.com/downloads/postgres-postgresql-downloads)
  </li>
 </ul>
-
-<br/><br/>
  
 Для запуску програми на <b>Linux:</b>
 
