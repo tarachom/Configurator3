@@ -442,7 +442,7 @@ namespace Configurator
             Menu.Add(AddRegistersInformation);
 
             MenuItem AddRegistersAccumulation = new MenuItem("Регістр накопичення");
-            //AddDocument.Activated += OnAddDocument;
+            AddDocument.Activated += OnAddRegisterAccumulation;
             Menu.Add(AddRegistersAccumulation);
 
             Menu.ShowAll();
@@ -1025,6 +1025,22 @@ namespace Configurator
             CreateNotebookPage($"Регістер інформації: *", () =>
             {
                 PageRegisterInformation page = new PageRegisterInformation()
+                {
+                    IsNew = true,
+                    GeneralForm = this
+                };
+
+                page.SetValue();
+
+                return page;
+            });
+        }
+
+        void OnAddRegisterAccumulation(object? sender, EventArgs args)
+        {
+            CreateNotebookPage($"Регістер накопичення: *", () =>
+            {
+                PageRegistersAccumulation page = new PageRegistersAccumulation()
                 {
                     IsNew = true,
                     GeneralForm = this
