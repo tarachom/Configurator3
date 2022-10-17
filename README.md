@@ -14,11 +14,12 @@ Linux
     
 Windows
 
-  Скачати і встановити [.NET 6.0 Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/6.0/runtime) на сайті Microsoft
+  Скачати із сайту Microsoft і встановити [.NET 6.0 Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/6.0/runtime) 
+  (Може бути "Run console apps" або "Run desktop apps")
   
-  Скачати програму      https://accounting.org.ua/configurator.html <br/>
+  Скачати програму  [accounting.org.ua](https://accounting.org.ua/configurator.html) <br/>
   
-  Для роботи потрібна база даних PostgreSQL https://www.enterprisedb.com/downloads/postgres-postgresql-downloads <br/>
+  Для роботи потрібна база даних [PostgreSQL](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads) <br/>
   
  <b>Можливості:</b>
     
