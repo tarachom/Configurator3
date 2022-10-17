@@ -3,7 +3,7 @@ Linux, Windows
 
 <img src="https://accounting.org.ua/images/configuration.png" /> <b>Програма для проектування бази даних.</b><br/><br/>
  
-Для запуску програми на <b>Windows:</b>
+Для запуску на <b>Windows:</b>
 
 <ul>
  <li>
@@ -15,7 +15,7 @@ Linux, Windows
  </li>
 </ul>
  
-Для запуску програми на <b>Linux:</b>
+Для запуску на <b>Linux:</b>
 
 <ul>
  <li>
