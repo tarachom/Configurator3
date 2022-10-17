@@ -168,6 +168,8 @@ namespace Configurator
                 return;
             }
 
+
+
             if (IsNew)
             {
                 if (Conf!.Enums.ContainsKey(entryName.Text))
@@ -261,10 +263,13 @@ namespace Configurator
                 PageEnumField page = new PageEnumField()
                 {
                     Fields = ConfEnum.Fields,
+                    Field = new ConfigurationEnumField("", ++ConfEnum.SerialNumber),
                     IsNew = true,
                     GeneralForm = GeneralForm,
                     CallBack_RefreshList = FieldsRefreshList
                 };
+
+                page.SetValue();
 
                 return page;
             });
