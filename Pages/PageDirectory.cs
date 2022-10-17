@@ -21,6 +21,9 @@ namespace Configurator
         ListBox listBoxFields = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxTableParts = new ListBox() { SelectionMode = SelectionMode.Single };
         Entry entryName = new Entry() { WidthRequest = 400 };
+        Entry entryBeforeSave = new Entry() { WidthRequest = 400 };
+        Entry entryAfterSave = new Entry() { WidthRequest = 400 };
+        Entry entryBeforeDelete = new Entry() { WidthRequest = 400 };
         TextView textViewDesc = new TextView();
 
         public PageDirectory() : base()
@@ -78,6 +81,35 @@ namespace Configurator
             scrollTextView.Add(textViewDesc);
 
             hBoxDesc.PackStart(scrollTextView, false, false, 5);
+
+            //Сепаратор
+            vBox.PackStart(new Separator(Orientation.Horizontal), false, false, 5);
+
+            //Заголовок блоку Тригери
+            HBox hBoxTrigerInfo = new HBox() { Halign = Align.Center };
+            vBox.PackStart(hBoxTrigerInfo, false, false, 5);
+            hBoxTrigerInfo.PackStart(new Label("Тригери"), false, false, 5);
+
+            //Перед записом
+            HBox hBoxTrigerBeforeSave = new HBox();
+            vBox.PackStart(hBoxTrigerBeforeSave, false, false, 5);
+
+            hBoxTrigerBeforeSave.PackStart(new Label("Перед записом:"), false, false, 5);
+            hBoxTrigerBeforeSave.PackStart(entryBeforeSave, false, false, 5);
+
+            //Після запису
+            HBox hBoxTrigerAfterSave = new HBox();
+            vBox.PackStart(hBoxTrigerAfterSave, false, false, 5);
+
+            hBoxTrigerAfterSave.PackStart(new Label("Після запису:"), false, false, 5);
+            hBoxTrigerAfterSave.PackStart(entryAfterSave, false, false, 5);
+
+            //Перед видаленням
+            HBox hBoxTrigerBeforeDelete = new HBox();
+            vBox.PackStart(hBoxTrigerBeforeDelete, false, false, 5);
+
+            hBoxTrigerBeforeDelete.PackStart(new Label("Перед видаленням:"), false, false, 5);
+            hBoxTrigerBeforeDelete.PackStart(entryBeforeDelete, false, false, 5);
 
             hPaned.Pack1(vBox, false, false);
         }
@@ -188,6 +220,10 @@ namespace Configurator
 
             entryName.Text = ConfDirectory.Name;
             textViewDesc.Buffer.Text = ConfDirectory.Desc;
+
+            entryBeforeSave.Text = ConfDirectory.TriggerFunctions.BeforeSave;
+            entryAfterSave.Text = ConfDirectory.TriggerFunctions.AfterSave;
+            entryBeforeDelete.Text = ConfDirectory.TriggerFunctions.BeforeDelete;
         }
 
         void FillFields()
@@ -206,6 +242,10 @@ namespace Configurator
         {
             ConfDirectory.Name = entryName.Text;
             ConfDirectory.Desc = textViewDesc.Buffer.Text;
+
+            ConfDirectory.TriggerFunctions.BeforeSave = entryBeforeSave.Text;
+            ConfDirectory.TriggerFunctions.AfterSave = entryAfterSave.Text;
+            ConfDirectory.TriggerFunctions.BeforeDelete = entryBeforeDelete.Text;
         }
 
         #endregion
