@@ -2,7 +2,20 @@
 Linux, Windows
 
 <img src="https://accounting.org.ua/images/configuration.png" /> <b>Програма для проектування бази даних.</b><br/><br/>
- 
+
+Скачати програму [accounting.org.ua](https://accounting.org.ua/configurator.html) <br/>
+    
+ <b>Можливості:</b>
+    
+    Легке проектування бази даних
+    Структура конфігурації на українській мові
+    Генерування коду на C#
+    Вигрузка та загрузка даних або конфігурації
+    Обслуговування бази даних
+
+<br/>
+<br/>
+    
 Для запуску на <b>Windows:</b>
 
 <ul>
@@ -28,14 +41,3 @@ Linux, Windows
   Скачати і встановити PostgreSQL (https://www.enterprisedb.com/downloads/postgres-postgresql-downloads)
  </li>
 </ul>
-
-Скачати програму [accounting.org.ua](https://accounting.org.ua/configurator.html) <br/>
-    
- <b>Можливості:</b>
-    
-    Легке проектування бази даних
-    Структура конфігурації на українській мові
-    Генерування коду на C#
-    Вигрузка та загрузка даних або конфігурації
-    Обслуговування бази даних
-    
