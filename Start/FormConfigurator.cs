@@ -598,7 +598,19 @@ namespace Configurator
                                     }
                                     else
                                     {
+                                        CreateNotebookPage($"Довідник: {directory}", () =>
+                                        {
+                                            PageDirectory page = new PageDirectory()
+                                            {
+                                                ConfDirectory = Conf!.Directories[directory],
+                                                IsNew = false,
+                                                GeneralForm = this
+                                            };
 
+                                            page.SetValue();
+
+                                            return page;
+                                        });
                                     }
                                     break;
                                 }

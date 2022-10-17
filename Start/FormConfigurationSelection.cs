@@ -156,7 +156,7 @@ namespace Configurator
                     Hide();
                 }
                 else
-                    Message.ErrorMessage("Error: " + exception.Message);
+                    Message.Error("Error: " + exception.Message);
             }
         }
 
@@ -164,16 +164,6 @@ namespace Configurator
         {
             if (args.Event.Type == Gdk.EventType.DoubleButtonPress)
                 OnButtonEditClicked(null, new EventArgs());
-        }
-
-        void OnButtonConfiguratorClicked(object? sender, EventArgs args)
-        {
-            ListBoxRow[] selectedRows = listBoxDataBase.SelectedRows;
-
-            if (selectedRows.Length != 0)
-            {
-                //selectedRows[0].Name
-            }
         }
 
         void OnButtonAddClicked(object? sender, EventArgs args)

@@ -88,7 +88,7 @@ namespace Configurator
             HBox hBoxScroll = new HBox();
             ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
             scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-            scrollList.SetSizeRequest(0, 300);
+            scrollList.SetSizeRequest(0, 250);
 
             listBoxTableParts.ButtonPressEvent += OnTabularPartsButtonPress;
 
@@ -236,13 +236,13 @@ namespace Configurator
 
             if (errorList.Length > 0)
             {
-                Message.ErrorMessage($"{errorList}");
+                Message.Error($"{errorList}");
                 return;
             }
 
             if (!Conf!.ConstantsBlock.ContainsKey(comboBoxBlock.ActiveId))
             {
-                Message.ErrorMessage($"Відсутній блок {comboBoxBlock.ActiveId}");
+                Message.Error($"Відсутній блок {comboBoxBlock.ActiveId}");
                 return;
             }
 
@@ -250,7 +250,7 @@ namespace Configurator
             {
                 if (Conf!.ConstantsBlock[comboBoxBlock.ActiveId].Constants.ContainsKey(entryName.Text))
                 {
-                    Message.ErrorMessage($"Назва константи не унікальна в межах блоку {comboBoxBlock.ActiveId}");
+                    Message.Error($"Назва константи не унікальна в межах блоку {comboBoxBlock.ActiveId}");
                     return;
                 }
             }
@@ -260,7 +260,7 @@ namespace Configurator
                 {
                     if (Conf!.ConstantsBlock[comboBoxBlock.ActiveId].Constants.ContainsKey(entryName.Text))
                     {
-                        Message.ErrorMessage($"Назва константи не унікальна в межах блоку {comboBoxBlock.ActiveId}");
+                        Message.Error($"Назва константи не унікальна в межах блоку {comboBoxBlock.ActiveId}");
                         return;
                     }
                 }
@@ -273,7 +273,7 @@ namespace Configurator
             if (ConfConstants.Type == "pointer" || ConfConstants.Type == "enum")
                 if (String.IsNullOrEmpty(ConfConstants.Pointer))
                 {
-                    Message.ErrorMessage($"Потрібно деталізувати тип для [ pointer ] або [ enum ]\nВиберіть із списку тип для деталізації");
+                    Message.Error($"Потрібно деталізувати тип для [ pointer ] або [ enum ]\nВиберіть із списку тип для деталізації");
                     return;
                 }
 

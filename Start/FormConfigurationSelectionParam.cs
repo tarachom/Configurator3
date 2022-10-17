@@ -6,12 +6,12 @@ namespace Configurator
 {
     class FormConfigurationSelectionParam : Window
     {
-        Entry ConfName;
-        Entry Server;
-        Entry Port;
-        Entry Login;
-        Entry Password;
-        Entry Basename;
+        Entry ConfName = new Entry();
+        Entry Server = new Entry();
+        Entry Port = new Entry();
+        Entry Login = new Entry();
+        Entry Password = new Entry();
+        Entry Basename = new Entry();
 
         public FormConfigurationSelectionParam() : base("Параметри підключення PostgreSQL")
         {
@@ -21,13 +21,6 @@ namespace Configurator
             BorderWidth = 5;
 
             VBox vbox = new VBox(false, 2);
-
-            ConfName = new Entry();
-            Server = new Entry();
-            Port = new Entry();
-            Login = new Entry();
-            Password = new Entry();
-            Basename = new Entry();
 
             AddNameAndField(vbox, "Назва", ConfName);
             AddNameAndField(vbox, "Сервер", Server);
@@ -103,7 +96,7 @@ namespace Configurator
             int rezult;
             if (!int.TryParse(Port.Text, out rezult))
             {
-                Message.ErrorMessage("Порт має бути цілим числом!");
+                Message.Error("Порт має бути цілим числом!");
                 return false;
             }
 
@@ -150,9 +143,9 @@ namespace Configurator
                     OpenConfigurationParam.DataBaseBaseName, out exception, out IsExistsDatabase);
 
                 if (flag)
-                    Message.InfoMessage("OK.\n\nБаза даних створена або вже існує");
+                    Message.Info("OK.\n\nБаза даних створена або вже існує");
                 else
-                    Message.ErrorMessage("Error: " + exception.Message);
+                    Message.Error("Error: " + exception.Message);
             }
         }
 
