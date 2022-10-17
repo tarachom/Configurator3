@@ -46,7 +46,7 @@ namespace Configurator
 
             PackStart(hBox, false, false, 10);
 
-            HPaned hPaned = new HPaned() { BorderWidth = 5 };
+            HPaned hPaned = new HPaned() { BorderWidth = 5, Position = 500 };
 
             CreatePack1(hPaned);
             CreatePack2(hPaned);
@@ -125,7 +125,14 @@ namespace Configurator
 
         void CreatePack2(HPaned hPaned)
         {
-            hPaned.Pack2(new Label("test"), true, false);
+            VBox vBox = new VBox();
+
+            HBox hBox = new HBox() { Halign = Align.Fill };
+            vBox.PackStart(hBox, false, false, 5);
+
+            hBox.PackStart(new Label("help"), false, false, 5);
+
+            hPaned.Pack2(vBox, false, false);
         }
 
         #region Присвоєння / зчитування значень віджетів

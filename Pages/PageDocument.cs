@@ -83,9 +83,6 @@ namespace Configurator
 
             hBoxDesc.PackStart(scrollTextView, false, false, 5);
 
-            //Сепаратор
-            vBox.PackStart(new Separator(Orientation.Horizontal), false, false, 5);
-
             //Заголовок блоку Функції
             HBox hBoxSpendInfo = new HBox() { Halign = Align.Center };
             vBox.PackStart(hBoxSpendInfo, false, false, 5);
@@ -104,9 +101,6 @@ namespace Configurator
 
             hBoxClearSpend.PackStart(new Label("Очищення:"), false, false, 5);
             hBoxClearSpend.PackStart(entryClearSpend, false, false, 5);
-
-            //Сепаратор
-            vBox.PackStart(new Separator(Orientation.Horizontal), false, false, 5);
 
             //Заголовок блоку Тригери
             HBox hBoxTrigerInfo = new HBox() { Halign = Align.Center };
@@ -131,7 +125,7 @@ namespace Configurator
             HBox hBoxTrigerBeforeDelete = new HBox() { Halign = Align.End };
             vBox.PackStart(hBoxTrigerBeforeDelete, false, false, 5);
 
-            hBoxTrigerBeforeDelete.PackStart(new Label("Перед видаленням:"), false, false, 5);
+            hBoxTrigerBeforeDelete.PackStart(new Label("Перед видален.:"), false, false, 5);
             hBoxTrigerBeforeDelete.PackStart(entryBeforeDelete, false, false, 5);
 
             hPaned.Pack1(vBox, false, false);

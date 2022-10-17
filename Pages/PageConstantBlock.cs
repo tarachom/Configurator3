@@ -18,7 +18,7 @@ namespace Configurator
         public FormConfigurator? GeneralForm { get; set; }
         public bool IsNew { get; set; } = true;
 
-        Entry entryName = new Entry() { WidthRequest = 400 };
+        Entry entryName = new Entry() { WidthRequest = 500 };
         TextView textViewDesc = new TextView();
 
         public PageConstantBlock() : base()
@@ -38,36 +38,52 @@ namespace Configurator
 
             PackStart(hBox, false, false, 10);
 
-            CreatePack();
+            HPaned hPaned = new HPaned() { BorderWidth = 5, Position = 500 };
+
+            CreatePack1(hPaned);
+            CreatePack2(hPaned);
+
+            PackStart(hPaned, false, false, 5);
 
             ShowAll();
         }
 
-        void CreatePack()
+        void CreatePack1(HPaned hPaned)
         {
             VBox vBox = new VBox();
 
             //Назва
-            HBox hBoxName = new HBox();
+            HBox hBoxName = new HBox() { Halign = Align.End };
             vBox.PackStart(hBoxName, false, false, 5);
 
             hBoxName.PackStart(new Label("Назва:"), false, false, 5);
             hBoxName.PackStart(entryName, false, false, 5);
 
             //Опис
-            HBox hBoxDesc = new HBox();
+            HBox hBoxDesc = new HBox() { Halign = Align.End };
             vBox.PackStart(hBoxDesc, false, false, 5);
 
             hBoxDesc.PackStart(new Label("Опис:") { Valign = Align.Start }, false, false, 5);
 
-            ScrolledWindow scrollTextView = new ScrolledWindow() { ShadowType = ShadowType.In };
+            ScrolledWindow scrollTextView = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 500, HeightRequest = 100 };
             scrollTextView.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-            scrollTextView.SetSizeRequest(400, 100);
             scrollTextView.Add(textViewDesc);
 
             hBoxDesc.PackStart(scrollTextView, false, false, 5);
 
-            PackStart(vBox, false, false, 5);
+            hPaned.Pack1(vBox, false, false);
+        }
+
+        void CreatePack2(HPaned hPaned)
+        {
+            VBox vBox = new VBox();
+
+            HBox hBox = new HBox() { Halign = Align.Fill };
+            vBox.PackStart(hBox, false, false, 5);
+
+            hBox.PackStart(new Label("help"), false, false, 5);
+
+            hPaned.Pack2(vBox, false, false);
         }
 
         #region Присвоєння / зчитування значень віджетів
