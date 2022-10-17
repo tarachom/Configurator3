@@ -429,6 +429,14 @@ namespace Configurator
             AddConstant.Activated += OnAddConstant;
             Menu.Add(AddConstant);
 
+            MenuItem AddDirectory = new MenuItem("Довідник");
+            AddDirectory.Activated += OnAddDirectory;
+            Menu.Add(AddDirectory);
+
+            MenuItem AddDocument = new MenuItem("Документ");
+            AddDocument.Activated += OnAddDocument;
+            Menu.Add(AddDocument);
+
             Menu.ShowAll();
 
             return Menu;
@@ -692,7 +700,19 @@ namespace Configurator
                                     }
                                     else
                                     {
+                                        CreateNotebookPage($"Документ: {document}", () =>
+                                        {
+                                            PageDocument page = new PageDocument()
+                                            {
+                                                ConfDocument = Conf!.Documents[document],
+                                                IsNew = false,
+                                                GeneralForm = this
+                                            };
 
+                                            page.SetValue();
+
+                                            return page;
+                                        });
                                     }
                                     break;
                                 }
@@ -902,6 +922,8 @@ namespace Configurator
             LoadTree();
         }
 
+        #region Add Menu
+
         void OnAddConstantBlock(object? sender, EventArgs args)
         {
             CreateNotebookPage("Блок констант: *", () =>
@@ -931,5 +953,41 @@ namespace Configurator
                 return page;
             });
         }
+
+        void OnAddDirectory(object? sender, EventArgs args)
+        {
+            CreateNotebookPage($"Довідник: *", () =>
+            {
+                PageDirectory page = new PageDirectory()
+                {
+                    IsNew = true,
+                    GeneralForm = this
+                };
+
+                page.SetValue();
+
+                return page;
+            });
+        }
+
+        void OnAddDocument(object? sender, EventArgs args)
+        {
+            CreateNotebookPage($"Документ: *", () =>
+            {
+                PageDocument page = new PageDocument()
+                {
+                    IsNew = true,
+                    GeneralForm = this
+                };
+
+                page.SetValue();
+
+                return page;
+            });
+        }
+
+        #endregion
+
+
     }
 }

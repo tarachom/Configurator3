@@ -4,7 +4,7 @@ using AccountingSoftware;
 
 namespace Configurator
 {
-    class PageDirectory : VBox
+    class PageDocument : VBox
     {
         Configuration? Conf
         {
@@ -14,7 +14,7 @@ namespace Configurator
             }
         }
 
-        public ConfigurationDirectories ConfDirectory { get; set; } = new ConfigurationDirectories();
+        public ConfigurationDocuments ConfDocument { get; set; } = new ConfigurationDocuments();
         public FormConfigurator? GeneralForm { get; set; }
         public bool IsNew { get; set; } = true;
 
@@ -23,7 +23,7 @@ namespace Configurator
         Entry entryName = new Entry() { WidthRequest = 400 };
         TextView textViewDesc = new TextView();
 
-        public PageDirectory() : base()
+        public PageDocument() : base()
         {
             new VBox();
             HBox hBox = new HBox();
@@ -175,26 +175,26 @@ namespace Configurator
             FillFields();
             FillTabularParts();
 
-            entryName.Text = ConfDirectory.Name;
-            textViewDesc.Buffer.Text = ConfDirectory.Desc;
+            entryName.Text = ConfDocument.Name;
+            textViewDesc.Buffer.Text = ConfDocument.Desc;
         }
 
         void FillFields()
         {
-            foreach (ConfigurationObjectField field in ConfDirectory.Fields.Values)
+            foreach (ConfigurationObjectField field in ConfDocument.Fields.Values)
                 listBoxFields.Add(new Label(field.Name) { Name = field.Name, Halign = Align.Start });
         }
 
         void FillTabularParts()
         {
-            foreach (ConfigurationObjectTablePart tablePart in ConfDirectory.TabularParts.Values)
+            foreach (ConfigurationObjectTablePart tablePart in ConfDocument.TabularParts.Values)
                 listBoxTableParts.Add(new Label(tablePart.Name) { Name = tablePart.Name, Halign = Align.Start });
         }
 
         void GetValue()
         {
-            ConfDirectory.Name = entryName.Text;
-            ConfDirectory.Desc = textViewDesc.Buffer.Text;
+            ConfDocument.Name = entryName.Text;
+            ConfDocument.Desc = textViewDesc.Buffer.Text;
         }
 
         #endregion
@@ -215,48 +215,48 @@ namespace Configurator
             {
                 if (Conf!.Directories.ContainsKey(entryName.Text))
                 {
-                    Message.Error($"Назва довідника не унікальна");
+                    Message.Error($"Назва документу не унікальна");
                     return;
                 }
             }
             else
             {
-                if (ConfDirectory.Name != entryName.Text)
+                if (ConfDocument.Name != entryName.Text)
                 {
                     if (Conf!.Directories.ContainsKey(entryName.Text))
                     {
-                        Message.Error($"Назва довідника не унікальна");
+                        Message.Error($"Назва документу не унікальна");
                         return;
                     }
                 }
 
-                Conf!.Directories.Remove(ConfDirectory.Name);
+                Conf!.Directories.Remove(ConfDocument.Name);
             }
 
             GetValue();
 
-            Conf!.AppendDirectory(ConfDirectory);
+            Conf!.AppendDocument(ConfDocument);
 
             IsNew = false;
 
             GeneralForm?.LoadTree();
-            GeneralForm?.RenameCurrentPageNotebook($"Довідник: {ConfDirectory.Name}");
+            GeneralForm?.RenameCurrentPageNotebook($"Документ: {ConfDocument.Name}");
         }
 
         void OnCopyClick(object? sender, EventArgs args)
         {
-            string newName = ConfDirectory.Name + "_copy";
+            string newName = ConfDocument.Name + "_copy";
 
-            GeneralForm?.CreateNotebookPage($"Довідник: {newName}", () =>
+            GeneralForm?.CreateNotebookPage($"Документ: {newName}", () =>
             {
-                ConfigurationDirectories newDirectory = ConfDirectory.Copy();
-                newDirectory.Name = newName;
+                ConfigurationDocuments newDocuments = ConfDocument.Copy();
+                newDocuments.Name = newName;
 
-                PageDirectory page = new PageDirectory()
+                PageDocument page = new PageDocument()
                 {
                     IsNew = true,
                     GeneralForm = GeneralForm,
-                    ConfDirectory = newDirectory
+                    ConfDocument = newDocuments
                 };
 
                 page.SetValue();
@@ -277,13 +277,13 @@ namespace Configurator
                 {
                     ListBoxRow curRow = selectedRows[0];
 
-                    if (ConfDirectory.Fields.ContainsKey(curRow.Child.Name))
+                    if (ConfDocument.Fields.ContainsKey(curRow.Child.Name))
                         GeneralForm?.CreateNotebookPage($"Поле: {curRow.Child.Name}", () =>
                         {
                             PageField page = new PageField()
                             {
-                                Fields = ConfDirectory.Fields,
-                                Field = ConfDirectory.Fields[curRow.Child.Name],
+                                Fields = ConfDocument.Fields,
+                                Field = ConfDocument.Fields[curRow.Child.Name],
                                 IsNew = false,
                                 GeneralForm = GeneralForm,
                                 CallBack_RefreshList = FieldsRefreshList
@@ -303,7 +303,7 @@ namespace Configurator
             {
                 PageField page = new PageField()
                 {
-                    Fields = ConfDirectory.Fields,
+                    Fields = ConfDocument.Fields,
                     IsNew = true,
                     GeneralForm = GeneralForm,
                     CallBack_RefreshList = FieldsRefreshList
@@ -323,7 +323,7 @@ namespace Configurator
             {
                 foreach (ListBoxRow row in selectedRows)
                 {
-                    if (ConfDirectory.Fields.ContainsKey(row.Child.Name))
+                    if (ConfDocument.Fields.ContainsKey(row.Child.Name))
                     {
                         string newName = "";
 
@@ -331,17 +331,17 @@ namespace Configurator
                         {
                             newName = row.Child.Name + i.ToString();
 
-                            if (!ConfDirectory.Fields.ContainsKey(newName))
+                            if (!ConfDocument.Fields.ContainsKey(newName))
                                 break;
                         }
 
                         if (String.IsNullOrEmpty(newName))
                             newName = row.Child.Name + new Random(int.MaxValue).ToString();
 
-                        ConfigurationObjectField newField = ConfDirectory.Fields[row.Child.Name].Copy();
+                        ConfigurationObjectField newField = ConfDocument.Fields[row.Child.Name].Copy();
                         newField.Name = newName;
 
-                        ConfDirectory.AppendField(newField);
+                        ConfDocument.AppendField(newField);
                     }
                 }
 
@@ -369,8 +369,8 @@ namespace Configurator
             {
                 foreach (ListBoxRow row in selectedRows)
                 {
-                    if (ConfDirectory.Fields.ContainsKey(row.Child.Name))
-                        ConfDirectory.Fields.Remove(row.Child.Name);
+                    if (ConfDocument.Fields.ContainsKey(row.Child.Name))
+                        ConfDocument.Fields.Remove(row.Child.Name);
                 }
 
                 FieldsRefreshList();
@@ -398,13 +398,13 @@ namespace Configurator
                 {
                     ListBoxRow curRow = selectedRows[0];
 
-                    if (ConfDirectory.TabularParts.ContainsKey(curRow.Child.Name))
+                    if (ConfDocument.TabularParts.ContainsKey(curRow.Child.Name))
                         GeneralForm?.CreateNotebookPage($"Таблична частина: {curRow.Child.Name}", () =>
                         {
                             PageTablePart page = new PageTablePart()
                             {
-                                TabularParts = ConfDirectory.TabularParts,
-                                TablePart = ConfDirectory.TabularParts[curRow.Child.Name],
+                                TabularParts = ConfDocument.TabularParts,
+                                TablePart = ConfDocument.TabularParts[curRow.Child.Name],
                                 IsNew = false,
                                 GeneralForm = GeneralForm,
                                 CallBack_RefreshList = TabularPartsRefreshList
@@ -424,7 +424,7 @@ namespace Configurator
             {
                 PageTablePart page = new PageTablePart()
                 {
-                    TabularParts = ConfDirectory.TabularParts,
+                    TabularParts = ConfDocument.TabularParts,
                     IsNew = true,
                     GeneralForm = GeneralForm,
                     CallBack_RefreshList = TabularPartsRefreshList
@@ -442,7 +442,7 @@ namespace Configurator
             {
                 foreach (ListBoxRow row in selectedRows)
                 {
-                    if (ConfDirectory.TabularParts.ContainsKey(row.Child.Name))
+                    if (ConfDocument.TabularParts.ContainsKey(row.Child.Name))
                     {
                         string newName = "";
 
@@ -450,17 +450,17 @@ namespace Configurator
                         {
                             newName = row.Child.Name + i.ToString();
 
-                            if (!ConfDirectory.TabularParts.ContainsKey(newName))
+                            if (!ConfDocument.TabularParts.ContainsKey(newName))
                                 break;
                         }
 
                         if (String.IsNullOrEmpty(newName))
                             newName = row.Child.Name + new Random(int.MaxValue).ToString();
 
-                        ConfigurationObjectTablePart newTablePart = ConfDirectory.TabularParts[row.Child.Name].Copy();
+                        ConfigurationObjectTablePart newTablePart = ConfDocument.TabularParts[row.Child.Name].Copy();
                         newTablePart.Name = newName;
 
-                        ConfDirectory.AppendTablePart(newTablePart);
+                        ConfDocument.AppendTablePart(newTablePart);
                     }
                 }
 
@@ -488,8 +488,8 @@ namespace Configurator
             {
                 foreach (ListBoxRow row in selectedRows)
                 {
-                    if (ConfDirectory.TabularParts.ContainsKey(row.Child.Name))
-                        ConfDirectory.TabularParts.Remove(row.Child.Name);
+                    if (ConfDocument.TabularParts.ContainsKey(row.Child.Name))
+                        ConfDocument.TabularParts.Remove(row.Child.Name);
                 }
 
                 TabularPartsRefreshList();
