@@ -20,10 +20,10 @@ namespace Configurator
 
         ListBox listBoxFields = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxTableParts = new ListBox() { SelectionMode = SelectionMode.Single };
-        Entry entryName = new Entry() { WidthRequest = 400 };
-        Entry entryBeforeSave = new Entry() { WidthRequest = 400 };
-        Entry entryAfterSave = new Entry() { WidthRequest = 400 };
-        Entry entryBeforeDelete = new Entry() { WidthRequest = 400 };
+        Entry entryName = new Entry() { WidthRequest = 500 };
+        Entry entryBeforeSave = new Entry() { WidthRequest = 500 };
+        Entry entryAfterSave = new Entry() { WidthRequest = 500 };
+        Entry entryBeforeDelete = new Entry() { WidthRequest = 500 };
         TextView textViewDesc = new TextView();
 
         public PageDirectory() : base()
@@ -63,21 +63,20 @@ namespace Configurator
             VBox vBox = new VBox();
 
             //Назва
-            HBox hBoxName = new HBox();
+            HBox hBoxName = new HBox() { Halign = Align.End };
             vBox.PackStart(hBoxName, false, false, 5);
 
             hBoxName.PackStart(new Label("Назва:"), false, false, 5);
             hBoxName.PackStart(entryName, false, false, 5);
 
             //Опис
-            HBox hBoxDesc = new HBox();
+            HBox hBoxDesc = new HBox() { Halign = Align.End };
             vBox.PackStart(hBoxDesc, false, false, 5);
 
             hBoxDesc.PackStart(new Label("Опис:") { Valign = Align.Start }, false, false, 5);
 
-            ScrolledWindow scrollTextView = new ScrolledWindow() { ShadowType = ShadowType.In };
+            ScrolledWindow scrollTextView = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 500, HeightRequest = 100 };
             scrollTextView.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-            scrollTextView.SetSizeRequest(400, 100);
             scrollTextView.Add(textViewDesc);
 
             hBoxDesc.PackStart(scrollTextView, false, false, 5);
@@ -91,21 +90,21 @@ namespace Configurator
             hBoxTrigerInfo.PackStart(new Label("Тригери"), false, false, 5);
 
             //Перед записом
-            HBox hBoxTrigerBeforeSave = new HBox();
+            HBox hBoxTrigerBeforeSave = new HBox() { Halign = Align.End };
             vBox.PackStart(hBoxTrigerBeforeSave, false, false, 5);
 
             hBoxTrigerBeforeSave.PackStart(new Label("Перед записом:"), false, false, 5);
             hBoxTrigerBeforeSave.PackStart(entryBeforeSave, false, false, 5);
 
             //Після запису
-            HBox hBoxTrigerAfterSave = new HBox();
+            HBox hBoxTrigerAfterSave = new HBox() { Halign = Align.End };
             vBox.PackStart(hBoxTrigerAfterSave, false, false, 5);
 
             hBoxTrigerAfterSave.PackStart(new Label("Після запису:"), false, false, 5);
             hBoxTrigerAfterSave.PackStart(entryAfterSave, false, false, 5);
 
             //Перед видаленням
-            HBox hBoxTrigerBeforeDelete = new HBox();
+            HBox hBoxTrigerBeforeDelete = new HBox() { Halign = Align.End };
             vBox.PackStart(hBoxTrigerBeforeDelete, false, false, 5);
 
             hBoxTrigerBeforeDelete.PackStart(new Label("Перед видаленням:"), false, false, 5);

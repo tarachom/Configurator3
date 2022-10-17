@@ -21,7 +21,7 @@ namespace Configurator
         public bool IsNew { get; set; } = true;
 
         ListBox listBoxFields = new ListBox() { SelectionMode = SelectionMode.Single };
-        Entry entryName = new Entry() { WidthRequest = 400 };
+        Entry entryName = new Entry() { WidthRequest = 500 };
         TextView textViewDesc = new TextView();
 
         public PageTablePart() : base()
@@ -97,21 +97,20 @@ namespace Configurator
             VBox vBox = new VBox();
 
             //Назва
-            HBox hBoxName = new HBox();
+            HBox hBoxName = new HBox() { Halign = Align.End };
             vBox.PackStart(hBoxName, false, false, 5);
 
             hBoxName.PackStart(new Label("Назва:"), false, false, 5);
             hBoxName.PackStart(entryName, false, false, 5);
 
             //Опис
-            HBox hBoxDesc = new HBox();
+            HBox hBoxDesc = new HBox() { Halign = Align.End };
             vBox.PackStart(hBoxDesc, false, false, 5);
 
             hBoxDesc.PackStart(new Label("Опис:") { Valign = Align.Start }, false, false, 5);
 
-            ScrolledWindow scrollTextView = new ScrolledWindow() { ShadowType = ShadowType.In };
+            ScrolledWindow scrollTextView = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 500, HeightRequest = 100 };
             scrollTextView.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-            scrollTextView.SetSizeRequest(400, 100);
             scrollTextView.Add(textViewDesc);
 
             hBoxDesc.PackStart(scrollTextView, false, false, 5);
@@ -174,7 +173,7 @@ namespace Configurator
                     }
                 }
 
-               TabularParts.Remove(TablePart.Name);
+                TabularParts.Remove(TablePart.Name);
             }
 
             GetValue();

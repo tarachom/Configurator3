@@ -19,7 +19,7 @@ namespace Configurator
         public bool IsNew { get; set; } = true;
 
         ListBox listBoxTableParts = new ListBox() { SelectionMode = SelectionMode.Single };
-        Entry entryName = new Entry() { WidthRequest = 400 };
+        Entry entryName = new Entry() { WidthRequest = 500 };
         TextView textViewDesc = new TextView();
         ComboBoxText comboBoxBlock = new ComboBoxText();
         ComboBoxText comboBoxType = new ComboBoxText();
@@ -104,14 +104,14 @@ namespace Configurator
             VBox vBox = new VBox();
 
             //Назва
-            HBox hBoxName = new HBox();
+            HBox hBoxName = new HBox() { Halign = Align.End };
             vBox.PackStart(hBoxName, false, false, 5);
 
             hBoxName.PackStart(new Label("Назва:"), false, false, 5);
             hBoxName.PackStart(entryName, false, false, 5);
 
             //Блок
-            HBox hBoxBlock = new HBox();
+            HBox hBoxBlock = new HBox() { Halign = Align.End };
             vBox.PackStart(hBoxBlock, false, false, 5);
 
             foreach (ConfigurationConstantsBlock block in Conf!.ConstantsBlock.Values)
@@ -121,7 +121,7 @@ namespace Configurator
             hBoxBlock.PackStart(comboBoxBlock, false, false, 5);
 
             //Тип
-            HBox hBoxType = new HBox();
+            HBox hBoxType = new HBox() { Halign = Align.End };
             vBox.PackStart(hBoxType, false, false, 5);
 
             foreach (var fieldType in FieldType.DefaultList())
@@ -133,7 +133,7 @@ namespace Configurator
             hBoxType.PackStart(comboBoxType, false, false, 5);
 
             //Pointer
-            HBox hBoxPointer = new HBox();
+            HBox hBoxPointer = new HBox() { Halign = Align.End };
             vBox.PackStart(hBoxPointer, false, false, 5);
 
             foreach (ConfigurationDirectories item in Conf!.Directories.Values)
@@ -146,7 +146,7 @@ namespace Configurator
             hBoxPointer.PackStart(comboBoxPointer, false, false, 5);
 
             //Enum
-            HBox hBoxEnum = new HBox();
+            HBox hBoxEnum = new HBox() { Halign = Align.End };
             vBox.PackStart(hBoxEnum, false, false, 5);
 
             foreach (ConfigurationEnums item in Conf!.Enums.Values)
@@ -156,14 +156,13 @@ namespace Configurator
             hBoxEnum.PackStart(comboBoxEnum, false, false, 5);
 
             //Опис
-            HBox hBoxDesc = new HBox();
+            HBox hBoxDesc = new HBox() { Halign = Align.End };
             vBox.PackStart(hBoxDesc, false, false, 5);
 
             hBoxDesc.PackStart(new Label("Опис:") { Valign = Align.Start }, false, false, 5);
 
-            ScrolledWindow scrollTextView = new ScrolledWindow() { ShadowType = ShadowType.In };
+            ScrolledWindow scrollTextView = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 500, HeightRequest = 100 };
             scrollTextView.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-            scrollTextView.SetSizeRequest(400, 100);
             scrollTextView.Add(textViewDesc);
 
             hBoxDesc.PackStart(scrollTextView, false, false, 5);

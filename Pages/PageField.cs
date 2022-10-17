@@ -21,7 +21,7 @@ namespace Configurator
         public System.Action? CallBack_RefreshList { get; set; }
         public bool IsNew { get; set; } = true;
 
-        Entry entryName = new Entry() { WidthRequest = 400 };
+        Entry entryName = new Entry() { WidthRequest = 500 };
         TextView textViewDesc = new TextView();
         ComboBoxText comboBoxType = new ComboBoxText();
         ComboBoxText comboBoxPointer = new ComboBoxText();
@@ -46,24 +46,29 @@ namespace Configurator
 
             PackStart(hBox, false, false, 10);
 
-            CreatePack();
+            HPaned hPaned = new HPaned() { BorderWidth = 5 };
+
+            CreatePack1(hPaned);
+            CreatePack2(hPaned);
+
+            PackStart(hPaned, false, false, 5);
 
             ShowAll();
         }
 
-        void CreatePack()
+        void CreatePack1(HPaned hPaned)
         {
             VBox vBox = new VBox();
 
             //Назва
-            HBox hBoxName = new HBox();
+            HBox hBoxName = new HBox() { Halign = Align.End };
             vBox.PackStart(hBoxName, false, false, 5);
 
             hBoxName.PackStart(new Label("Назва:"), false, false, 5);
             hBoxName.PackStart(entryName, false, false, 5);
 
             //Тип
-            HBox hBoxType = new HBox();
+            HBox hBoxType = new HBox() { Halign = Align.End };
             vBox.PackStart(hBoxType, false, false, 5);
 
             foreach (var fieldType in FieldType.DefaultList())
@@ -75,7 +80,7 @@ namespace Configurator
             hBoxType.PackStart(comboBoxType, false, false, 5);
 
             //Pointer
-            HBox hBoxPointer = new HBox();
+            HBox hBoxPointer = new HBox() { Halign = Align.End };
             vBox.PackStart(hBoxPointer, false, false, 5);
 
             foreach (ConfigurationDirectories item in Conf!.Directories.Values)
@@ -88,7 +93,7 @@ namespace Configurator
             hBoxPointer.PackStart(comboBoxPointer, false, false, 5);
 
             //Enum
-            HBox hBoxEnum = new HBox();
+            HBox hBoxEnum = new HBox() { Halign = Align.End };
             vBox.PackStart(hBoxEnum, false, false, 5);
 
             foreach (ConfigurationEnums item in Conf!.Enums.Values)
@@ -98,14 +103,13 @@ namespace Configurator
             hBoxEnum.PackStart(comboBoxEnum, false, false, 5);
 
             //Опис
-            HBox hBoxDesc = new HBox();
+            HBox hBoxDesc = new HBox() { Halign = Align.End };
             vBox.PackStart(hBoxDesc, false, false, 5);
 
             hBoxDesc.PackStart(new Label("Опис:") { Valign = Align.Start }, false, false, 5);
 
-            ScrolledWindow scrollTextView = new ScrolledWindow() { ShadowType = ShadowType.In };
+            ScrolledWindow scrollTextView = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 500, HeightRequest = 100 };
             scrollTextView.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-            scrollTextView.SetSizeRequest(400, 100);
             scrollTextView.Add(textViewDesc);
 
             hBoxDesc.PackStart(scrollTextView, false, false, 5);
@@ -116,7 +120,12 @@ namespace Configurator
             //Індексувати
             vBox.PackStart(checkButtonPresentation, false, false, 5);
 
-            PackStart(vBox, false, false, 5);
+            hPaned.Pack1(vBox, false, false);
+        }
+
+        void CreatePack2(HPaned hPaned)
+        {
+            hPaned.Pack2(new Label("test"), true, false);
         }
 
         #region Присвоєння / зчитування значень віджетів
