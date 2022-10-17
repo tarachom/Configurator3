@@ -3,12 +3,12 @@ Linux, Windows | .NET 6
 
  <img src="https://accounting.org.ua/images/configuration.png" /> <b>Програма для проектування бази даних.</b>
 
-<b>Для запуску програми на Windows:</b>
+Для запуску програми на <b>Windows:</b>
 
   Скачати із сайту Microsoft та встановити [.NET 6.0 Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/6.0/runtime) 
   (Може бути "Run console apps" або "Run desktop apps")
 
-<b>Для запуску програми на Linux:</b>
+Для запуску програми на <b>Linux:</b>
 
   Інструкція як встановити .NET 6 в Ubuntu 22.04 - [Installing .NET 6 on Ubuntu 22.04](https://github.com/dotnet/core/issues/7699)
   або [Install .NET on Linux](https://learn.microsoft.com/uk-ua/dotnet/core/install/linux) на сайті Microsoft
