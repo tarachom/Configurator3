@@ -165,7 +165,7 @@ namespace Configurator
 
             vBox.PackStart(hBoxScroll, false, false, 0);
 
-            vBoxContainer.PackStart(vBox, false, false, 5);
+            vBoxContainer.PackStart(vBox, false, false, 0);
         }
 
         #region Присвоєння / зчитування значень віджетів

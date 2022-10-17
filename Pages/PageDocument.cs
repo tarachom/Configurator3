@@ -165,7 +165,7 @@ namespace Configurator
 
             vBox.PackStart(hBoxScroll, false, false, 0);
 
-            vBoxContainer.PackStart(vBox, false, false, 5);
+            vBoxContainer.PackStart(vBox, false, false, 0);
         }
 
         #region Присвоєння / зчитування значень віджетів
@@ -213,7 +213,7 @@ namespace Configurator
 
             if (IsNew)
             {
-                if (Conf!.Directories.ContainsKey(entryName.Text))
+                if (Conf!.Documents.ContainsKey(entryName.Text))
                 {
                     Message.Error($"Назва документу не унікальна");
                     return;
@@ -223,14 +223,14 @@ namespace Configurator
             {
                 if (ConfDocument.Name != entryName.Text)
                 {
-                    if (Conf!.Directories.ContainsKey(entryName.Text))
+                    if (Conf!.Documents.ContainsKey(entryName.Text))
                     {
                         Message.Error($"Назва документу не унікальна");
                         return;
                     }
                 }
 
-                Conf!.Directories.Remove(ConfDocument.Name);
+                Conf!.Documents.Remove(ConfDocument.Name);
             }
 
             GetValue();
