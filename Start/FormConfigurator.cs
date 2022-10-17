@@ -389,7 +389,7 @@ namespace Configurator
             toolbar.Add(deleteButton);
 
             ToolButton copyButton = new ToolButton(Stock.Copy) { Label = "Копіювати", IsImportant = true };
-            //copyButton.Clicked += OnCopyClick;
+            copyButton.Clicked += OnCopyClick;
             toolbar.Add(copyButton);
 
             hPaned = new HPaned();
@@ -1221,6 +1221,263 @@ namespace Configurator
             LoadTree();
         }
 
+        void OnCopyClick(object? sender, EventArgs args)
+        {
+            TreeIter iter;
+
+            if (!treeConfiguration.Selection.GetSelected(out iter))
+                return;
+
+            TreePath pathRemove = treeConfiguration.Model.GetPath(iter);
+
+            string keyComposite = (string)treeConfiguration.Model.GetValue(iter, 2);
+
+            if (String.IsNullOrEmpty(keyComposite) || keyComposite.IndexOf(".") == -1)
+                return;
+
+            string[] keySplit = keyComposite.Split(".");
+            string block = keySplit[0];
+            string name = keySplit[1];
+
+            switch (block)
+            {
+                case "БлокКонстант":
+                    {
+                        ConfigurationConstantsBlock newConstantBlock = Conf!.ConstantsBlock[name].Copy();
+                        newConstantBlock.BlockName += GenerateName.GetNewName();
+
+                        if (!Conf!.ConstantsBlock.ContainsKey(newConstantBlock.BlockName))
+                            Conf!.AppendConstantsBlock(newConstantBlock);
+
+                        break;
+                    }
+                case "Константи":
+                    {
+                        string[] blockAndName = name.Split("/");
+                        string blockConst = blockAndName[0];
+                        string nameConst = blockAndName[1];
+
+                        switch (blockAndName.Length)
+                        {
+                            case 2:
+                                {
+                                    ConfigurationConstants newConstant = Conf!.ConstantsBlock[blockConst].Constants[nameConst].Copy();
+                                    newConstant.Name += GenerateName.GetNewName();
+
+                                    if (!Conf!.ConstantsBlock[blockConst].Constants.ContainsKey(newConstant.Name))
+                                        Conf!.ConstantsBlock[blockConst].AppendConstant(newConstant);
+
+                                    break;
+                                }
+                            case 3:
+                                {
+                                    string nameTablePart = blockAndName[2];
+                                    ConfigurationObjectTablePart newTablePart = Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart].Copy();
+                                    newTablePart.Name += GenerateName.GetNewName();
+
+                                    if (!Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts.ContainsKey(newTablePart.Name))
+                                        Conf!.ConstantsBlock[blockConst].Constants[nameConst].AppendTablePart(newTablePart);
+
+                                    break;
+                                }
+                            case 4:
+                                {
+                                    string nameTablePart = blockAndName[2];
+                                    string nameField = blockAndName[3];
+
+                                    ConfigurationObjectField newField = Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart].Fields[nameField].Copy();
+                                    newField.Name += GenerateName.GetNewName();
+
+                                    if (!Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart].Fields.ContainsKey(newField.Name))
+                                        Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart].AppendField(newField);
+
+                                    break;
+                                }
+                        }
+
+                        break;
+                    }
+                case "Довідники":
+                    {
+                        string[] directoryPath = name.Split("/");
+                        string directory = directoryPath[0];
+
+                        switch (directoryPath.Length)
+                        {
+                            case 1:
+                                {
+                                    if (directory.IndexOf(":") != -1)
+                                    {
+                                        string[] directoryAndField = directory.Split(":");
+                                        string directoryName = directoryAndField[0];
+                                        string fieldName = directoryAndField[1];
+
+                                        ConfigurationObjectField newField = Conf!.Directories[directoryName].Fields[fieldName].Copy();
+                                        newField.Name += GenerateName.GetNewName();
+
+                                        if (!Conf!.Directories[directoryName].Fields.ContainsKey(newField.Name))
+                                            Conf!.Directories[directoryName].AppendField(newField);
+                                    }
+                                    else
+                                    {
+                                        ConfigurationDirectories newDirectory = Conf!.Directories[directory].Copy();
+                                        newDirectory.Name += GenerateName.GetNewName();
+
+                                        if (!Conf!.Directories.ContainsKey(newDirectory.Name))
+                                            Conf!.AppendDirectory(newDirectory);
+                                    }
+                                    break;
+                                }
+                            case 2:
+                                {
+                                    string nameTablePart = directoryPath[1];
+                                    ConfigurationObjectTablePart newTablePart = Conf!.Directories[directory].TabularParts[nameTablePart].Copy();
+                                    newTablePart.Name += GenerateName.GetNewName();
+
+                                    if (!Conf!.Directories[directory].TabularParts.ContainsKey(newTablePart.Name))
+                                        Conf!.Directories[directory].AppendTablePart(newTablePart);
+
+                                    break;
+                                }
+                            case 3:
+                                {
+                                    string nameTablePart = directoryPath[1];
+                                    string nameField = directoryPath[2];
+
+                                    ConfigurationObjectField newField = Conf!.Directories[directory].TabularParts[nameTablePart].Fields[nameField].Copy();
+                                    newField.Name += GenerateName.GetNewName();
+
+                                    if (!Conf!.Directories[directory].TabularParts[nameTablePart].Fields.ContainsKey(newField.Name))
+                                        Conf!.Directories[directory].TabularParts[nameTablePart].AppendField(newField);
+
+                                    break;
+                                }
+                        }
+
+                        break;
+                    }
+                case "Документи":
+                    {
+                        string[] documentPath = name.Split("/");
+                        string document = documentPath[0];
+
+                        switch (documentPath.Length)
+                        {
+                            case 1:
+                                {
+                                    if (document.IndexOf(":") != -1)
+                                    {
+                                        string[] documentAndField = document.Split(":");
+                                        string documentName = documentAndField[0];
+                                        string fieldName = documentAndField[1];
+                                        Conf!.Documents[documentName].Fields.Remove(fieldName);
+                                    }
+                                    else
+                                        Conf!.Documents.Remove(document);
+                                    break;
+                                }
+                            case 2:
+                                {
+                                    string nameTablePart = documentPath[1];
+                                    Conf!.Documents[document].TabularParts.Remove(nameTablePart);
+                                    break;
+                                }
+                            case 3:
+                                {
+                                    string nameTablePart = documentPath[1];
+                                    string nameField = documentPath[2];
+                                    Conf!.Documents[document].TabularParts[nameTablePart].Fields.Remove(nameField);
+                                    break;
+                                }
+                        }
+
+                        break;
+                    }
+                case "РегістриІнформації":
+                    {
+                        string[] registerPath = name.Split("/");
+                        string register = registerPath[0];
+
+                        switch (registerPath.Length)
+                        {
+                            case 1:
+                                {
+                                    Conf!.RegistersInformation.Remove(register);
+                                    break;
+                                }
+                            case 2:
+                                {
+                                    string[] typeAndField = registerPath[1].Split(":");
+                                    string typeName = typeAndField[0];
+                                    string fieldName = typeAndField[1];
+
+                                    if (typeName == "Dimension")
+                                        Conf!.RegistersInformation[register].DimensionFields.Remove(fieldName);
+                                    else if (typeName == "Resources")
+                                        Conf!.RegistersInformation[register].ResourcesFields.Remove(fieldName);
+                                    else
+                                        Conf!.RegistersInformation[register].PropertyFields.Remove(fieldName);
+
+                                    break;
+                                }
+                        }
+
+                        break;
+                    }
+                case "РегістриНакопичення":
+                    {
+                        string[] registerPath = name.Split("/");
+                        string register = registerPath[0];
+
+                        switch (registerPath.Length)
+                        {
+                            case 1:
+                                {
+                                    Conf!.RegistersAccumulation.Remove(register);
+                                    break;
+                                }
+                            case 2:
+                                {
+                                    string[] typeAndField = registerPath[1].Split(":");
+                                    string typeName = typeAndField[0];
+                                    string fieldName = typeAndField[1];
+
+                                    if (typeName == "Dimension")
+                                        Conf!.RegistersAccumulation[register].DimensionFields.Remove(fieldName);
+                                    else if (typeName == "Resources")
+                                        Conf!.RegistersAccumulation[register].ResourcesFields.Remove(fieldName);
+                                    else
+                                        Conf!.RegistersAccumulation[register].PropertyFields.Remove(fieldName);
+
+                                    break;
+                                }
+                        }
+
+                        break;
+                    }
+                case "Перелічення":
+                    {
+                        if (name.IndexOf(":") != -1)
+                        {
+                            string[] enumAndField = name.Split(":");
+                            string enumName = enumAndField[0];
+                            string fieldName = enumAndField[1];
+
+                            Conf!.Enums[enumName].Fields.Remove(fieldName);
+                        }
+                        else
+                            Conf!.Enums.Remove(name);
+
+                        break;
+                    }
+            }
+
+            if (TreeRowExpanded.Contains(pathRemove.ToString()))
+                TreeRowExpanded.Remove(pathRemove.ToString());
+
+            LoadTree();
+        }
+
         #region Add Menu
 
         void OnAddConstantBlock(object? sender, EventArgs args)
@@ -1334,7 +1591,6 @@ namespace Configurator
         }
 
         #endregion
-
 
     }
 }
