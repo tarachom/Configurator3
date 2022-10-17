@@ -377,7 +377,7 @@ namespace Configurator
             vbox.PackStart(toolbar, false, false, 0);
 
             MenuToolButton menuToolButton = new MenuToolButton(Stock.Add) { Label = "Додати", IsImportant = true };
-            menuToolButton.Menu = CreateMenuAdd();
+            menuToolButton.Menu = CreateAddMenu();
             toolbar.Add(menuToolButton);
 
             ToolButton refreshButton = new ToolButton(Stock.Refresh) { Label = "Обновити", IsImportant = true };
@@ -385,7 +385,7 @@ namespace Configurator
             toolbar.Add(refreshButton);
 
             ToolButton deleteButton = new ToolButton(Stock.Delete) { Label = "Видалити", IsImportant = true };
-            //deleteButton.Clicked += OnDeleteClick;
+            deleteButton.Clicked += OnDeleteClick;
             toolbar.Add(deleteButton);
 
             ToolButton copyButton = new ToolButton(Stock.Copy) { Label = "Копіювати", IsImportant = true };
@@ -423,7 +423,7 @@ namespace Configurator
             LoadTree();
         }
 
-        Menu CreateMenuAdd()
+        Menu CreateAddMenu()
         {
             Menu Menu = new Menu();
 
@@ -1004,6 +1004,220 @@ namespace Configurator
 
         void OnRefreshClick(object? sender, EventArgs args)
         {
+            LoadTree();
+        }
+
+        void OnDeleteClick(object? sender, EventArgs args)
+        {
+            TreeIter iter;
+
+            if (!treeConfiguration.Selection.GetSelected(out iter))
+                return;
+
+            TreePath pathRemove = treeConfiguration.Model.GetPath(iter);
+
+            string keyComposite = (string)treeConfiguration.Model.GetValue(iter, 2);
+
+            if (String.IsNullOrEmpty(keyComposite) || keyComposite.IndexOf(".") == -1)
+                return;
+
+            string[] keySplit = keyComposite.Split(".");
+            string block = keySplit[0];
+            string name = keySplit[1];
+
+            switch (block)
+            {
+                case "БлокКонстант":
+                    {
+                        Conf!.ConstantsBlock.Remove(name);
+                        break;
+                    }
+                case "Константи":
+                    {
+                        string[] blockAndName = name.Split("/");
+                        string blockConst = blockAndName[0];
+                        string nameConst = blockAndName[1];
+
+                        switch (blockAndName.Length)
+                        {
+                            case 2:
+                                {
+                                    Conf!.ConstantsBlock[blockConst].Constants.Remove(nameConst);
+                                    break;
+                                }
+                            case 3:
+                                {
+                                    string nameTablePart = blockAndName[2];
+                                    Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts.Remove(nameTablePart);
+                                    break;
+                                }
+                            case 4:
+                                {
+                                    string nameTablePart = blockAndName[2];
+                                    string nameField = blockAndName[3];
+                                    Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart].Fields.Remove(nameField);
+                                    break;
+                                }
+                        }
+
+                        break;
+                    }
+                case "Довідники":
+                    {
+                        string[] directoryPath = name.Split("/");
+                        string directory = directoryPath[0];
+
+                        switch (directoryPath.Length)
+                        {
+                            case 1:
+                                {
+                                    if (directory.IndexOf(":") != -1)
+                                    {
+                                        string[] directoryAndField = directory.Split(":");
+                                        string directoryName = directoryAndField[0];
+                                        string fieldName = directoryAndField[1];
+                                        Conf!.Directories[directoryName].Fields.Remove(fieldName);
+                                    }
+                                    else
+                                        Conf!.Directories.Remove(directory);
+                                    break;
+                                }
+                            case 2:
+                                {
+                                    string nameTablePart = directoryPath[1];
+                                    Conf!.Directories[directory].TabularParts.Remove(nameTablePart);
+                                    break;
+                                }
+                            case 3:
+                                {
+                                    string nameTablePart = directoryPath[1];
+                                    string nameField = directoryPath[2];
+                                    Conf!.Directories[directory].TabularParts[nameTablePart].Fields.Remove(nameField);
+                                    break;
+                                }
+                        }
+
+                        break;
+                    }
+                case "Документи":
+                    {
+                        string[] documentPath = name.Split("/");
+                        string document = documentPath[0];
+
+                        switch (documentPath.Length)
+                        {
+                            case 1:
+                                {
+                                    if (document.IndexOf(":") != -1)
+                                    {
+                                        string[] documentAndField = document.Split(":");
+                                        string documentName = documentAndField[0];
+                                        string fieldName = documentAndField[1];
+                                        Conf!.Documents[documentName].Fields.Remove(fieldName);
+                                    }
+                                    else
+                                        Conf!.Documents.Remove(document);
+                                    break;
+                                }
+                            case 2:
+                                {
+                                    string nameTablePart = documentPath[1];
+                                    Conf!.Documents[document].TabularParts.Remove(nameTablePart);
+                                    break;
+                                }
+                            case 3:
+                                {
+                                    string nameTablePart = documentPath[1];
+                                    string nameField = documentPath[2];
+                                    Conf!.Documents[document].TabularParts[nameTablePart].Fields.Remove(nameField);
+                                    break;
+                                }
+                        }
+
+                        break;
+                    }
+                case "РегістриІнформації":
+                    {
+                        string[] registerPath = name.Split("/");
+                        string register = registerPath[0];
+
+                        switch (registerPath.Length)
+                        {
+                            case 1:
+                                {
+                                    Conf!.RegistersInformation.Remove(register);
+                                    break;
+                                }
+                            case 2:
+                                {
+                                    string[] typeAndField = registerPath[1].Split(":");
+                                    string typeName = typeAndField[0];
+                                    string fieldName = typeAndField[1];
+
+                                    if (typeName == "Dimension")
+                                        Conf!.RegistersInformation[register].DimensionFields.Remove(fieldName);
+                                    else if (typeName == "Resources")
+                                        Conf!.RegistersInformation[register].ResourcesFields.Remove(fieldName);
+                                    else
+                                        Conf!.RegistersInformation[register].PropertyFields.Remove(fieldName);
+
+                                    break;
+                                }
+                        }
+
+                        break;
+                    }
+                case "РегістриНакопичення":
+                    {
+                        string[] registerPath = name.Split("/");
+                        string register = registerPath[0];
+
+                        switch (registerPath.Length)
+                        {
+                            case 1:
+                                {
+                                    Conf!.RegistersAccumulation.Remove(register);
+                                    break;
+                                }
+                            case 2:
+                                {
+                                    string[] typeAndField = registerPath[1].Split(":");
+                                    string typeName = typeAndField[0];
+                                    string fieldName = typeAndField[1];
+
+                                    if (typeName == "Dimension")
+                                        Conf!.RegistersAccumulation[register].DimensionFields.Remove(fieldName);
+                                    else if (typeName == "Resources")
+                                        Conf!.RegistersAccumulation[register].ResourcesFields.Remove(fieldName);
+                                    else
+                                        Conf!.RegistersAccumulation[register].PropertyFields.Remove(fieldName);
+
+                                    break;
+                                }
+                        }
+
+                        break;
+                    }
+                case "Перелічення":
+                    {
+                        if (name.IndexOf(":") != -1)
+                        {
+                            string[] enumAndField = name.Split(":");
+                            string enumName = enumAndField[0];
+                            string fieldName = enumAndField[1];
+
+                            Conf!.Enums[enumName].Fields.Remove(fieldName);
+                        }
+                        else
+                            Conf!.Enums.Remove(name);
+
+                        break;
+                    }
+            }
+
+            if (TreeRowExpanded.Contains(pathRemove.ToString()))
+                TreeRowExpanded.Remove(pathRemove.ToString());
+
             LoadTree();
         }
 
