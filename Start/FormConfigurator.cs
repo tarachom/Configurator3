@@ -437,6 +437,14 @@ namespace Configurator
             AddDocument.Activated += OnAddDocument;
             Menu.Add(AddDocument);
 
+            MenuItem AddRegistersInformation = new MenuItem("Регістр інформації");
+            AddDocument.Activated += OnAddRegisterInformation;
+            Menu.Add(AddDocument);
+
+            MenuItem AddRegistersAccumulation = new MenuItem("Регістр накопичення");
+            //AddDocument.Activated += OnAddDocument;
+            Menu.Add(AddDocument);
+
             Menu.ShowAll();
 
             return Menu;
@@ -771,6 +779,19 @@ namespace Configurator
                         {
                             case 1:
                                 {
+                                    CreateNotebookPage($"Документ: {register}", () =>
+                                    {
+                                        PageRegisterInformation page = new PageRegisterInformation()
+                                        {
+                                            ConfRegister = Conf!.RegistersInformation[register],
+                                            IsNew = false,
+                                            GeneralForm = this
+                                        };
+
+                                        page.SetValue();
+
+                                        return page;
+                                    });
 
                                     break;
                                 }
@@ -986,6 +1007,21 @@ namespace Configurator
             });
         }
 
+        void OnAddRegisterInformation(object? sender, EventArgs args)
+        {
+            CreateNotebookPage($"Регістер інформації: *", () =>
+            {
+                PageRegisterInformation page = new PageRegisterInformation()
+                {
+                    IsNew = true,
+                    GeneralForm = this
+                };
+
+                page.SetValue();
+
+                return page;
+            });
+        }
         #endregion
 
 

@@ -151,19 +151,19 @@ namespace Configurator
             vBox.PackStart(toolbar, false, false, 0);
 
             ToolButton buttonAdd = new ToolButton(Stock.Add) { Label = "Додати", IsImportant = true };
-            buttonAdd.Clicked += OnFieldsAddClick;
+            buttonAdd.Clicked += OnDimensionFieldsAddClick;
             toolbar.Add(buttonAdd);
 
             ToolButton buttonCopy = new ToolButton(Stock.Copy) { Label = "Копіювати", IsImportant = true };
-            buttonCopy.Clicked += OnFieldsCopyClick;
+            buttonCopy.Clicked += OnDimensionFieldsCopyClick;
             toolbar.Add(buttonCopy);
 
             ToolButton buttonRefresh = new ToolButton(Stock.Refresh) { Label = "Обновити", IsImportant = true };
-            buttonRefresh.Clicked += OnFieldsRefreshClick;
+            buttonRefresh.Clicked += OnDimensionFieldsRefreshClick;
             toolbar.Add(buttonRefresh);
 
             ToolButton buttonDelete = new ToolButton(Stock.Delete) { Label = "Видалити", IsImportant = true };
-            buttonDelete.Clicked += OnFieldsRemoveClick;
+            buttonDelete.Clicked += OnDimensionFieldsRemoveClick;
             toolbar.Add(buttonDelete);
 
             HBox hBoxScroll = new HBox();
@@ -171,7 +171,7 @@ namespace Configurator
             scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
             scrollList.SetSizeRequest(0, 300);
 
-            listBoxResourcesFields.ButtonPressEvent += OnFieldsButtonPress;
+            listBoxResourcesFields.ButtonPressEvent += OnDimensionFieldsButtonPress;
 
             scrollList.Add(listBoxResourcesFields);
             hBoxScroll.PackStart(scrollList, true, true, 5);
@@ -193,19 +193,19 @@ namespace Configurator
             vBox.PackStart(toolbar, false, false, 0);
 
             ToolButton buttonAdd = new ToolButton(Stock.Add) { Label = "Додати", IsImportant = true };
-            buttonAdd.Clicked += OnFieldsAddClick;
+            buttonAdd.Clicked += OnPropertyFieldsAddClick;
             toolbar.Add(buttonAdd);
 
             ToolButton buttonCopy = new ToolButton(Stock.Copy) { Label = "Копіювати", IsImportant = true };
-            buttonCopy.Clicked += OnFieldsCopyClick;
+            buttonCopy.Clicked += OnPropertyFieldsCopyClick;
             toolbar.Add(buttonCopy);
 
             ToolButton buttonRefresh = new ToolButton(Stock.Refresh) { Label = "Обновити", IsImportant = true };
-            buttonRefresh.Clicked += OnFieldsRefreshClick;
+            buttonRefresh.Clicked += OnPropertyFieldsRefreshClick;
             toolbar.Add(buttonRefresh);
 
             ToolButton buttonDelete = new ToolButton(Stock.Delete) { Label = "Видалити", IsImportant = true };
-            buttonDelete.Clicked += OnFieldsRemoveClick;
+            buttonDelete.Clicked += OnPropertyFieldsRemoveClick;
             toolbar.Add(buttonDelete);
 
             HBox hBoxScroll = new HBox();
@@ -213,7 +213,7 @@ namespace Configurator
             scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
             scrollList.SetSizeRequest(0, 300);
 
-            listBoxPropertyFields.ButtonPressEvent += OnFieldsButtonPress;
+            listBoxPropertyFields.ButtonPressEvent += OnPropertyFieldsButtonPress;
 
             scrollList.Add(listBoxPropertyFields);
             hBoxScroll.PackStart(scrollList, true, true, 5);
@@ -440,5 +440,246 @@ namespace Configurator
 
         #endregion
 
+        #region Resources Fields
+
+        void OnResourcesFieldsButtonPress(object? sender, ButtonPressEventArgs args)
+        {
+            if (args.Event.Type == Gdk.EventType.DoubleButtonPress)
+            {
+                ListBoxRow[] selectedRows = listBoxResourcesFields.SelectedRows;
+
+                if (selectedRows.Length != 0)
+                {
+                    ListBoxRow curRow = selectedRows[0];
+
+                    if (ConfRegister.ResourcesFields.ContainsKey(curRow.Child.Name))
+                        GeneralForm?.CreateNotebookPage($"Поле: {curRow.Child.Name}", () =>
+                        {
+                            PageField page = new PageField()
+                            {
+                                Fields = ConfRegister.ResourcesFields,
+                                Field = ConfRegister.ResourcesFields[curRow.Child.Name],
+                                IsNew = false,
+                                GeneralForm = GeneralForm,
+                                CallBack_RefreshList = ResourcesFieldsRefreshList
+                            };
+
+                            page.SetValue();
+
+                            return page;
+                        });
+                }
+            }
+        }
+
+        void OnResourcesFieldsAddClick(object? sender, EventArgs args)
+        {
+            GeneralForm?.CreateNotebookPage("Поле *", () =>
+            {
+                PageField page = new PageField()
+                {
+                    Fields = ConfRegister.ResourcesFields,
+                    IsNew = true,
+                    GeneralForm = GeneralForm,
+                    CallBack_RefreshList = ResourcesFieldsRefreshList
+                };
+
+                page.SetDefValue();
+
+                return page;
+            });
+        }
+
+        void OnResourcesFieldsCopyClick(object? sender, EventArgs args)
+        {
+            ListBoxRow[] selectedRows = listBoxResourcesFields.SelectedRows;
+
+            if (selectedRows.Length != 0)
+            {
+                foreach (ListBoxRow row in selectedRows)
+                {
+                    if (ConfRegister.ResourcesFields.ContainsKey(row.Child.Name))
+                    {
+                        string newName = "";
+
+                        for (int i = 1; i < 99; i++)
+                        {
+                            newName = row.Child.Name + i.ToString();
+
+                            if (!ConfRegister.ResourcesFields.ContainsKey(newName))
+                                break;
+                        }
+
+                        if (String.IsNullOrEmpty(newName))
+                            newName = row.Child.Name + new Random(int.MaxValue).ToString();
+
+                        ConfigurationObjectField newField = ConfRegister.ResourcesFields[row.Child.Name].Copy();
+                        newField.Name = newName;
+
+                        ConfRegister.AppendResourcesField(newField);
+                    }
+                }
+
+                ResourcesFieldsRefreshList();
+
+                GeneralForm?.LoadTree();
+            }
+        }
+
+        void OnResourcesFieldsRefreshClick(object? sender, EventArgs args)
+        {
+            foreach (Widget item in listBoxResourcesFields.Children)
+                listBoxResourcesFields.Remove(item);
+
+            FillFields();
+
+            listBoxResourcesFields.ShowAll();
+        }
+
+        void OnResourcesFieldsRemoveClick(object? sender, EventArgs args)
+        {
+            ListBoxRow[] selectedRows = listBoxResourcesFields.SelectedRows;
+
+            if (selectedRows.Length != 0)
+            {
+                foreach (ListBoxRow row in selectedRows)
+                {
+                    if (ConfRegister.ResourcesFields.ContainsKey(row.Child.Name))
+                        ConfRegister.ResourcesFields.Remove(row.Child.Name);
+                }
+
+                ResourcesFieldsRefreshList();
+
+                GeneralForm?.LoadTree();
+            }
+        }
+
+        void ResourcesFieldsRefreshList()
+        {
+            OnResourcesFieldsRefreshClick(null, new EventArgs());
+        }
+
+        #endregion
+
+        #region Property Fields
+
+        void OnPropertyFieldsButtonPress(object? sender, ButtonPressEventArgs args)
+        {
+            if (args.Event.Type == Gdk.EventType.DoubleButtonPress)
+            {
+                ListBoxRow[] selectedRows = listBoxPropertyFields.SelectedRows;
+
+                if (selectedRows.Length != 0)
+                {
+                    ListBoxRow curRow = selectedRows[0];
+
+                    if (ConfRegister.PropertyFields.ContainsKey(curRow.Child.Name))
+                        GeneralForm?.CreateNotebookPage($"Поле: {curRow.Child.Name}", () =>
+                        {
+                            PageField page = new PageField()
+                            {
+                                Fields = ConfRegister.PropertyFields,
+                                Field = ConfRegister.PropertyFields[curRow.Child.Name],
+                                IsNew = false,
+                                GeneralForm = GeneralForm,
+                                CallBack_RefreshList = PropertyFieldsRefreshList
+                            };
+
+                            page.SetValue();
+
+                            return page;
+                        });
+                }
+            }
+        }
+
+        void OnPropertyFieldsAddClick(object? sender, EventArgs args)
+        {
+            GeneralForm?.CreateNotebookPage("Поле *", () =>
+            {
+                PageField page = new PageField()
+                {
+                    Fields = ConfRegister.PropertyFields,
+                    IsNew = true,
+                    GeneralForm = GeneralForm,
+                    CallBack_RefreshList = PropertyFieldsRefreshList
+                };
+
+                page.SetDefValue();
+
+                return page;
+            });
+        }
+
+        void OnPropertyFieldsCopyClick(object? sender, EventArgs args)
+        {
+            ListBoxRow[] selectedRows = listBoxPropertyFields.SelectedRows;
+
+            if (selectedRows.Length != 0)
+            {
+                foreach (ListBoxRow row in selectedRows)
+                {
+                    if (ConfRegister.PropertyFields.ContainsKey(row.Child.Name))
+                    {
+                        string newName = "";
+
+                        for (int i = 1; i < 99; i++)
+                        {
+                            newName = row.Child.Name + i.ToString();
+
+                            if (!ConfRegister.PropertyFields.ContainsKey(newName))
+                                break;
+                        }
+
+                        if (String.IsNullOrEmpty(newName))
+                            newName = row.Child.Name + new Random(int.MaxValue).ToString();
+
+                        ConfigurationObjectField newField = ConfRegister.PropertyFields[row.Child.Name].Copy();
+                        newField.Name = newName;
+
+                        ConfRegister.AppendPropertyField(newField);
+                    }
+                }
+
+                ResourcesFieldsRefreshList();
+
+                GeneralForm?.LoadTree();
+            }
+        }
+
+        void OnPropertyFieldsRefreshClick(object? sender, EventArgs args)
+        {
+            foreach (Widget item in listBoxPropertyFields.Children)
+                listBoxPropertyFields.Remove(item);
+
+            FillFields();
+
+            listBoxPropertyFields.ShowAll();
+        }
+
+        void OnPropertyFieldsRemoveClick(object? sender, EventArgs args)
+        {
+            ListBoxRow[] selectedRows = listBoxPropertyFields.SelectedRows;
+
+            if (selectedRows.Length != 0)
+            {
+                foreach (ListBoxRow row in selectedRows)
+                {
+                    if (ConfRegister.PropertyFields.ContainsKey(row.Child.Name))
+                        ConfRegister.PropertyFields.Remove(row.Child.Name);
+                }
+
+                ResourcesFieldsRefreshList();
+
+                GeneralForm?.LoadTree();
+            }
+        }
+
+        void PropertyFieldsRefreshList()
+        {
+            OnPropertyFieldsRefreshClick(null, new EventArgs());
+        }
+
+        #endregion
     }
 }
