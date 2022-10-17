@@ -300,6 +300,7 @@ namespace Configurator
 
                         ConfigurationEnumField newField = ConfEnum.Fields[row.Child.Name].Copy();
                         newField.Name = newName;
+                        newField.Value = ++ConfEnum.SerialNumber;
 
                         ConfEnum.AppendField(newField);
                     }

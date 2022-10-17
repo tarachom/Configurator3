@@ -21,7 +21,7 @@ namespace Configurator
         public bool IsNew { get; set; } = true;
 
         Entry entryName = new Entry() { WidthRequest = 500 };
-        Entry entryValue = new Entry() { WidthRequest = 500 };
+        Entry entryValue = new Entry() { WidthRequest = 500, Sensitive = false };
         TextView textViewDesc = new TextView();
 
         public PageEnumField() : base()

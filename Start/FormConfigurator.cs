@@ -443,12 +443,16 @@ namespace Configurator
             AddDocument.Activated += OnAddDocument;
             Menu.Add(AddDocument);
 
+            MenuItem AddEnum = new MenuItem("Перелічення");
+            AddEnum.Activated += OnAddEnum;
+            Menu.Add(AddEnum);
+
             MenuItem AddRegistersInformation = new MenuItem("Регістр інформації");
-            AddDocument.Activated += OnAddRegisterInformation;
+            AddRegistersInformation.Activated += OnAddRegisterInformation;
             Menu.Add(AddRegistersInformation);
 
             MenuItem AddRegistersAccumulation = new MenuItem("Регістр накопичення");
-            AddDocument.Activated += OnAddRegisterAccumulation;
+            AddRegistersAccumulation.Activated += OnAddRegisterAccumulation;
             Menu.Add(AddRegistersAccumulation);
 
             Menu.ShowAll();
@@ -983,7 +987,6 @@ namespace Configurator
                         }
                         break;
                     }
-
             }
         }
 
@@ -1057,6 +1060,22 @@ namespace Configurator
             CreateNotebookPage($"Документ: *", () =>
             {
                 PageDocument page = new PageDocument()
+                {
+                    IsNew = true,
+                    GeneralForm = this
+                };
+
+                page.SetValue();
+
+                return page;
+            });
+        }
+
+        void OnAddEnum(object? sender, EventArgs args)
+        {
+            CreateNotebookPage($"Перелічення: *", () =>
+            {
+                PageEnum page = new PageEnum()
                 {
                     IsNew = true,
                     GeneralForm = this
