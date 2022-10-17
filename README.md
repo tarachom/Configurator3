@@ -6,7 +6,7 @@ Linux, Windows
 <b>.NET 6</b>
 
   Інструкція як встановити .NET 6 в Ubuntu - [Installing .NET 6 on Ubuntu](https://github.com/dotnet/core/issues/7699)
-  або https://learn.microsoft.com/uk-ua/dotnet/core/install/linux
+  або [Install .NET on Linux](https://learn.microsoft.com/uk-ua/dotnet/core/install/linux)
 
     sudo apt update && sudo apt -y install dotnet6
     
