@@ -127,7 +127,7 @@ namespace Configurator
             HBox hBoxScroll = new HBox();
             ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
             scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-            scrollList.SetSizeRequest(0, 300);
+            scrollList.SetSizeRequest(0, 150);
 
             listBoxDimensionFields.ButtonPressEvent += OnDimensionFieldsButtonPress;
 
@@ -144,34 +144,34 @@ namespace Configurator
             VBox vBox = new VBox();
 
             HBox hBox = new HBox();
-            hBox.PackStart(new Label("Поля:"), false, false, 5);
+            hBox.PackStart(new Label("Ресурси:"), false, false, 5);
             vBox.PackStart(hBox, false, false, 5);
 
             Toolbar toolbar = new Toolbar();
             vBox.PackStart(toolbar, false, false, 0);
 
             ToolButton buttonAdd = new ToolButton(Stock.Add) { Label = "Додати", IsImportant = true };
-            buttonAdd.Clicked += OnDimensionFieldsAddClick;
+            buttonAdd.Clicked += OnResourcesFieldsAddClick;
             toolbar.Add(buttonAdd);
 
             ToolButton buttonCopy = new ToolButton(Stock.Copy) { Label = "Копіювати", IsImportant = true };
-            buttonCopy.Clicked += OnDimensionFieldsCopyClick;
+            buttonCopy.Clicked += OnResourcesFieldsCopyClick;
             toolbar.Add(buttonCopy);
 
             ToolButton buttonRefresh = new ToolButton(Stock.Refresh) { Label = "Обновити", IsImportant = true };
-            buttonRefresh.Clicked += OnDimensionFieldsRefreshClick;
+            buttonRefresh.Clicked += OnResourcesFieldsRefreshClick;
             toolbar.Add(buttonRefresh);
 
             ToolButton buttonDelete = new ToolButton(Stock.Delete) { Label = "Видалити", IsImportant = true };
-            buttonDelete.Clicked += OnDimensionFieldsRemoveClick;
+            buttonDelete.Clicked += OnResourcesFieldsRemoveClick;
             toolbar.Add(buttonDelete);
 
             HBox hBoxScroll = new HBox();
             ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
             scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-            scrollList.SetSizeRequest(0, 300);
+            scrollList.SetSizeRequest(0, 150);
 
-            listBoxResourcesFields.ButtonPressEvent += OnDimensionFieldsButtonPress;
+            listBoxResourcesFields.ButtonPressEvent += OnResourcesFieldsButtonPress;
 
             scrollList.Add(listBoxResourcesFields);
             hBoxScroll.PackStart(scrollList, true, true, 5);
@@ -211,7 +211,7 @@ namespace Configurator
             HBox hBoxScroll = new HBox();
             ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
             scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-            scrollList.SetSizeRequest(0, 300);
+            scrollList.SetSizeRequest(0, 150);
 
             listBoxPropertyFields.ButtonPressEvent += OnPropertyFieldsButtonPress;
 
@@ -227,20 +227,28 @@ namespace Configurator
 
         public void SetValue()
         {
-            FillFields();
+            FillDimensionFields();
+            FillResourcesFields();
+            FillPropertyFields();
 
             entryName.Text = ConfRegister.Name;
             textViewDesc.Buffer.Text = ConfRegister.Desc;
         }
 
-        void FillFields()
+        void FillDimensionFields()
         {
             foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
                 listBoxDimensionFields.Add(new Label(field.Name) { Name = field.Name, Halign = Align.Start });
+        }
 
+        void FillResourcesFields()
+        {
             foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
                 listBoxResourcesFields.Add(new Label(field.Name) { Name = field.Name, Halign = Align.Start });
+        }
 
+        void FillPropertyFields()
+        {
             foreach (ConfigurationObjectField field in ConfRegister.PropertyFields.Values)
                 listBoxPropertyFields.Add(new Label(field.Name) { Name = field.Name, Halign = Align.Start });
         }
@@ -410,7 +418,7 @@ namespace Configurator
             foreach (Widget item in listBoxDimensionFields.Children)
                 listBoxDimensionFields.Remove(item);
 
-            FillFields();
+            FillDimensionFields();
 
             listBoxDimensionFields.ShowAll();
         }
@@ -531,7 +539,7 @@ namespace Configurator
             foreach (Widget item in listBoxResourcesFields.Children)
                 listBoxResourcesFields.Remove(item);
 
-            FillFields();
+            FillResourcesFields();
 
             listBoxResourcesFields.ShowAll();
         }
@@ -641,7 +649,7 @@ namespace Configurator
                     }
                 }
 
-                ResourcesFieldsRefreshList();
+                PropertyFieldsRefreshList();
 
                 GeneralForm?.LoadTree();
             }
@@ -652,7 +660,7 @@ namespace Configurator
             foreach (Widget item in listBoxPropertyFields.Children)
                 listBoxPropertyFields.Remove(item);
 
-            FillFields();
+            FillPropertyFields();
 
             listBoxPropertyFields.ShowAll();
         }
@@ -669,7 +677,7 @@ namespace Configurator
                         ConfRegister.PropertyFields.Remove(row.Child.Name);
                 }
 
-                ResourcesFieldsRefreshList();
+                PropertyFieldsRefreshList();
 
                 GeneralForm?.LoadTree();
             }

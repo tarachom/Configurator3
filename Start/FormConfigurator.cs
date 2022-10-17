@@ -439,11 +439,11 @@ namespace Configurator
 
             MenuItem AddRegistersInformation = new MenuItem("Регістр інформації");
             AddDocument.Activated += OnAddRegisterInformation;
-            Menu.Add(AddDocument);
+            Menu.Add(AddRegistersInformation);
 
             MenuItem AddRegistersAccumulation = new MenuItem("Регістр накопичення");
             //AddDocument.Activated += OnAddDocument;
-            Menu.Add(AddDocument);
+            Menu.Add(AddRegistersAccumulation);
 
             Menu.ShowAll();
 
@@ -779,7 +779,7 @@ namespace Configurator
                         {
                             case 1:
                                 {
-                                    CreateNotebookPage($"Документ: {register}", () =>
+                                    CreateNotebookPage($"Регістер інформації: {register}", () =>
                                     {
                                         PageRegisterInformation page = new PageRegisterInformation()
                                         {
