@@ -1,9 +1,7 @@
 # Конфігуратор 3
 Linux, Windows
 
-<p>
- <img src="https://accounting.org.ua/images/configuration.png" /> <b>Програма для проектування бази даних.</b>
-</p>
+<img src="https://accounting.org.ua/images/configuration.png" /> <b>Програма для проектування бази даних.</b><br/><br/>
  
 Для запуску програми на <b>Windows:</b>
 
@@ -13,7 +11,7 @@ Linux, Windows
   (Може бути "Run console apps" або "Run desktop apps")
  </li>
  <li>
-  Скачати із офіційного сайту і встановити PostgreSQL (https://www.enterprisedb.com/downloads/postgres-postgresql-downloads) <br/>
+  Скачати і встановити PostgreSQL (https://www.enterprisedb.com/downloads/postgres-postgresql-downloads)
  </li>
 </ul>
  
