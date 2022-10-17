@@ -177,10 +177,16 @@ namespace Configurator
 
         void LoadEnum(TreeIter rootIter, ConfigurationEnums confEnum)
         {
-            TreeIter enumIter = treeStore.AppendValues(rootIter, confEnum.Name);
+            string key = $"Перелічення.{confEnum.Name}";
+
+            TreeIter enumIter = treeStore.AppendValues(rootIter, confEnum.Name, "", key);
 
             foreach (KeyValuePair<string, ConfigurationEnumField> ConfEnumFields in confEnum.Fields)
-                treeStore.AppendValues(enumIter, ConfEnumFields.Value.Name);
+            {
+                string keyField = $"{key}:{ConfEnumFields.Value.Name}";
+
+                treeStore.AppendValues(enumIter, ConfEnumFields.Value.Name, "", keyField);
+            }
 
             IsExpand(enumIter);
         }
@@ -936,6 +942,48 @@ namespace Configurator
 
                         break;
                     }
+                case "Перелічення":
+                    {
+                        if (name.IndexOf(":") != -1)
+                        {
+                            string[] enumAndField = name.Split(":");
+                            string enumName = enumAndField[0];
+                            string fieldName = enumAndField[1];
+
+                            CreateNotebookPage($"Поле: {fieldName}", () =>
+                            {
+                                PageEnumField page = new PageEnumField()
+                                {
+                                    Fields = Conf!.Enums[enumName].Fields,
+                                    Field = Conf!.Enums[enumName].Fields[fieldName],
+                                    IsNew = false,
+                                    GeneralForm = this
+                                };
+
+                                page.SetValue();
+
+                                return page;
+                            });
+                        }
+                        else
+                        {
+                            CreateNotebookPage($"Перелічення: {name}", () =>
+                            {
+                                PageEnum page = new PageEnum()
+                                {
+                                    ConfEnum = Conf!.Enums[name],
+                                    IsNew = false,
+                                    GeneralForm = this
+                                };
+
+                                page.SetValue();
+
+                                return page;
+                            });
+                        }
+                        break;
+                    }
+
             }
         }
 
