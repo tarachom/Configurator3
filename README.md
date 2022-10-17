@@ -1,5 +1,5 @@
 # Конфігуратор 3
-Linux, Windows | .NET 6
+Linux, Windows
 
  <img src="https://accounting.org.ua/images/configuration.png" /> <b>Програма для проектування бази даних.</b>
 
