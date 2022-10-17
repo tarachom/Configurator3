@@ -7,6 +7,9 @@ Linux, Windows
 
   Інструкція встановлення .NET 6 в Ubuntu - [Installing .NET 6 on Ubuntu](https://github.com/dotnet/core/issues/7699)
 
+    sudo apt update && sudo apt -y install dotnet6
+    
+  
   Скачати програму      https://accounting.org.ua/configurator.html <br/>
   
   Для роботи потрібна база даних PostgreSQL https://www.enterprisedb.com/downloads/postgres-postgresql-downloads <br/>
