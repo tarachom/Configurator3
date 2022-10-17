@@ -139,14 +139,12 @@ namespace Configurator
 
             OnComboBoxTypeChanged(comboBoxType, new EventArgs());
         }
-
         public void SetDefValue()
         {
             comboBoxType.Active = 0;
 
             OnComboBoxTypeChanged(comboBoxType, new EventArgs());
         }
-
         void GetValue()
         {
             Field.Name = entryName.Text;

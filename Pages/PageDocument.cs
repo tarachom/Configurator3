@@ -21,6 +21,11 @@ namespace Configurator
         ListBox listBoxFields = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxTableParts = new ListBox() { SelectionMode = SelectionMode.Single };
         Entry entryName = new Entry() { WidthRequest = 400 };
+        Entry entrySpend = new Entry() { WidthRequest = 400 };
+        Entry entryClearSpend = new Entry() { WidthRequest = 400 };
+        Entry entryBeforeSave = new Entry() { WidthRequest = 400 };
+        Entry entryAfterSave = new Entry() { WidthRequest = 400 };
+        Entry entryBeforeDelete = new Entry() { WidthRequest = 400 };
         TextView textViewDesc = new TextView();
 
         public PageDocument() : base()
@@ -78,6 +83,57 @@ namespace Configurator
             scrollTextView.Add(textViewDesc);
 
             hBoxDesc.PackStart(scrollTextView, false, false, 5);
+
+            //Сепаратор
+            vBox.PackStart(new Separator(Orientation.Horizontal), false, false, 5);
+
+            //Заголовок блоку Функції
+            HBox hBoxSpendInfo = new HBox() { Halign = Align.Center };
+            vBox.PackStart(hBoxSpendInfo, false, false, 5);
+            hBoxSpendInfo.PackStart(new Label("Функції"), false, false, 5);
+
+            //Проведення
+            HBox hBoxSpend = new HBox();
+            vBox.PackStart(hBoxSpend, false, false, 5);
+
+            hBoxSpend.PackStart(new Label("Проведення:"), false, false, 5);
+            hBoxSpend.PackStart(entrySpend, false, false, 5);
+
+            //Очищення
+            HBox hBoxClearSpend = new HBox();
+            vBox.PackStart(hBoxClearSpend, false, false, 5);
+
+            hBoxClearSpend.PackStart(new Label("Очищення:"), false, false, 5);
+            hBoxClearSpend.PackStart(entryClearSpend, false, false, 5);
+
+            //Сепаратор
+            vBox.PackStart(new Separator(Orientation.Horizontal), false, false, 5);
+
+            //Заголовок блоку Тригери
+            HBox hBoxTrigerInfo = new HBox() { Halign = Align.Center };
+            vBox.PackStart(hBoxTrigerInfo, false, false, 5);
+            hBoxTrigerInfo.PackStart(new Label("Тригери"), false, false, 5);
+
+            //Перед записом
+            HBox hBoxTrigerBeforeSave = new HBox();
+            vBox.PackStart(hBoxTrigerBeforeSave, false, false, 5);
+
+            hBoxTrigerBeforeSave.PackStart(new Label("Перед записом:"), false, false, 5);
+            hBoxTrigerBeforeSave.PackStart(entryBeforeSave, false, false, 5);
+
+            //Після запису
+            HBox hBoxTrigerAfterSave = new HBox();
+            vBox.PackStart(hBoxTrigerAfterSave, false, false, 5);
+
+            hBoxTrigerAfterSave.PackStart(new Label("Після запису:"), false, false, 5);
+            hBoxTrigerAfterSave.PackStart(entryAfterSave, false, false, 5);
+
+            //Перед видаленням
+            HBox hBoxTrigerBeforeDelete = new HBox();
+            vBox.PackStart(hBoxTrigerBeforeDelete, false, false, 5);
+
+            hBoxTrigerBeforeDelete.PackStart(new Label("Перед видаленням:"), false, false, 5);
+            hBoxTrigerBeforeDelete.PackStart(entryBeforeDelete, false, false, 5);
 
             hPaned.Pack1(vBox, false, false);
         }
@@ -188,6 +244,13 @@ namespace Configurator
 
             entryName.Text = ConfDocument.Name;
             textViewDesc.Buffer.Text = ConfDocument.Desc;
+
+            entrySpend.Text = ConfDocument.SpendFunctions.Spend;
+            entryClearSpend.Text = ConfDocument.SpendFunctions.ClearSpend;
+
+            entryBeforeSave.Text = ConfDocument.TriggerFunctions.BeforeSave;
+            entryAfterSave.Text = ConfDocument.TriggerFunctions.AfterSave;
+            entryBeforeDelete.Text = ConfDocument.TriggerFunctions.BeforeDelete;
         }
 
         void FillFields()
@@ -206,6 +269,13 @@ namespace Configurator
         {
             ConfDocument.Name = entryName.Text;
             ConfDocument.Desc = textViewDesc.Buffer.Text;
+
+            ConfDocument.SpendFunctions.Spend = entrySpend.Text;
+            ConfDocument.SpendFunctions.ClearSpend = entryClearSpend.Text;
+
+            ConfDocument.TriggerFunctions.BeforeSave = entryBeforeSave.Text;
+            ConfDocument.TriggerFunctions.AfterSave = entryAfterSave.Text;
+            ConfDocument.TriggerFunctions.BeforeDelete = entryBeforeDelete.Text;
         }
 
         #endregion
