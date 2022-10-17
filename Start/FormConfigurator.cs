@@ -333,7 +333,7 @@ namespace Configurator
             LoadEnums(enumsIter);
             IsExpand(enumsIter);
 
-            TreeIter registersInformationIter = treeStore.AppendValues("Регістри відомостей");
+            TreeIter registersInformationIter = treeStore.AppendValues("Регістри інформації");
             LoadRegistersInformation(registersInformationIter);
             IsExpand(registersInformationIter);
 
@@ -1022,6 +1022,7 @@ namespace Configurator
                 return page;
             });
         }
+        
         #endregion
 
 
