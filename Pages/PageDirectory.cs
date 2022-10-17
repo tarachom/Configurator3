@@ -55,19 +55,6 @@ namespace Configurator
             ShowAll();
         }
 
-        void CreatePack2(HPaned hPaned)
-        {
-            VBox vBox = new VBox();
-
-            //Поля
-            CreateFieldList(vBox);
-
-            //Табличні частини
-            CreateTablePartList(vBox);
-
-            hPaned.Pack2(vBox, true, false);
-        }
-
         void CreatePack1(HPaned hPaned)
         {
             VBox vBox = new VBox();
@@ -93,6 +80,19 @@ namespace Configurator
             hBoxDesc.PackStart(scrollTextView, false, false, 5);
 
             hPaned.Pack1(vBox, false, false);
+        }
+
+        void CreatePack2(HPaned hPaned)
+        {
+            VBox vBox = new VBox();
+
+            //Поля
+            CreateFieldList(vBox);
+
+            //Табличні частини
+            CreateTablePartList(vBox);
+
+            hPaned.Pack2(vBox, true, false);
         }
 
         void CreateFieldList(VBox vBoxContainer)
