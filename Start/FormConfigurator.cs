@@ -862,6 +862,19 @@ namespace Configurator
                         {
                             case 1:
                                 {
+                                    CreateNotebookPage($"Регістер накопичення: {register}", () =>
+                                    {
+                                        PageRegistersAccumulation page = new PageRegistersAccumulation()
+                                        {
+                                            ConfRegister = Conf!.RegistersAccumulation[register],
+                                            IsNew = false,
+                                            GeneralForm = this
+                                        };
+
+                                        page.SetValue();
+
+                                        return page;
+                                    });
 
                                     break;
                                 }
@@ -1022,7 +1035,7 @@ namespace Configurator
                 return page;
             });
         }
-        
+
         #endregion
 
 

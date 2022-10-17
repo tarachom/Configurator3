@@ -4,7 +4,7 @@ using AccountingSoftware;
 
 namespace Configurator
 {
-    class PageRegisterInformation : VBox
+    class PageRegistersAccumulation : VBox
     {
         Configuration? Conf
         {
@@ -14,7 +14,7 @@ namespace Configurator
             }
         }
 
-        public ConfigurationRegistersInformation ConfRegister { get; set; } = new ConfigurationRegistersInformation();
+        public ConfigurationRegistersAccumulation ConfRegister { get; set; } = new ConfigurationRegistersAccumulation();
         public FormConfigurator? GeneralForm { get; set; }
         public bool IsNew { get; set; } = true;
 
@@ -24,7 +24,7 @@ namespace Configurator
         Entry entryName = new Entry() { WidthRequest = 400 };
         TextView textViewDesc = new TextView();
 
-        public PageRegisterInformation() : base()
+        public PageRegistersAccumulation() : base()
         {
             new VBox();
             HBox hBox = new HBox();
@@ -279,7 +279,7 @@ namespace Configurator
 
             if (IsNew)
             {
-                if (Conf!.RegistersInformation.ContainsKey(entryName.Text))
+                if (Conf!.RegistersAccumulation.ContainsKey(entryName.Text))
                 {
                     Message.Error($"Назва регістру не унікальна");
                     return;
@@ -289,19 +289,19 @@ namespace Configurator
             {
                 if (ConfRegister.Name != entryName.Text)
                 {
-                    if (Conf!.RegistersInformation.ContainsKey(entryName.Text))
+                    if (Conf!.RegistersAccumulation.ContainsKey(entryName.Text))
                     {
                         Message.Error($"Назва регістру не унікальна");
                         return;
                     }
                 }
 
-                Conf!.RegistersInformation.Remove(ConfRegister.Name);
+                Conf!.RegistersAccumulation.Remove(ConfRegister.Name);
             }
 
             GetValue();
 
-            Conf!.AppendRegistersInformation(ConfRegister);
+            Conf!.AppendRegistersAccumulation(ConfRegister);
 
             IsNew = false;
 
@@ -315,10 +315,10 @@ namespace Configurator
 
             GeneralForm?.CreateNotebookPage($"Регістр: {newName}", () =>
             {
-                ConfigurationRegistersInformation newRegister = ConfRegister.Copy();
+                ConfigurationRegistersAccumulation newRegister = ConfRegister.Copy();
                 newRegister.Name = newName;
 
-                PageRegisterInformation page = new PageRegisterInformation()
+                PageRegistersAccumulation page = new PageRegistersAccumulation()
                 {
                     IsNew = true,
                     GeneralForm = GeneralForm,
