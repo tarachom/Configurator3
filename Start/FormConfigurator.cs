@@ -1367,7 +1367,12 @@ namespace Configurator
                                         newDirectory.Table = Configuration.GetNewUnigueTableName(Program.Kernel!);
 
                                         if (!Conf!.Directories.ContainsKey(newDirectory.Name))
+                                        {
+                                            foreach (ConfigurationObjectTablePart tablePart in newDirectory.TabularParts.Values)
+                                                tablePart.Table = Configuration.GetNewUnigueTableName(Program.Kernel!);
+
                                             Conf!.AppendDirectory(newDirectory);
+                                        }
                                     }
                                     break;
                                 }
@@ -1430,7 +1435,12 @@ namespace Configurator
                                         newDocument.Table = Configuration.GetNewUnigueTableName(Program.Kernel!);
 
                                         if (!Conf!.Documents.ContainsKey(newDocument.Name))
+                                        {
+                                            foreach (ConfigurationObjectTablePart tablePart in newDocument.TabularParts.Values)
+                                                tablePart.Table = Configuration.GetNewUnigueTableName(Program.Kernel!);
+
                                             Conf!.AppendDocument(newDocument);
+                                        }
                                     }
                                     break;
                                 }

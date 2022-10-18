@@ -214,13 +214,18 @@ namespace Configurator
 
         public void SetValue()
         {
-            FillFields();
-            FillTabularParts();
-
             entryName.Text = ConfDirectory.Name;
 
             if (IsNew)
+            {
                 entryTable.Text = Configuration.GetNewUnigueTableName(Program.Kernel!);
+
+                string nameInTable_Code = Configuration.GetNewUnigueColumnName(Program.Kernel!, entryTable.Text, ConfDirectory.Fields);
+                ConfDirectory.AppendField(new ConfigurationObjectField("Код", nameInTable_Code, "string", "", "Код"));
+
+                string nameInTable_Name = Configuration.GetNewUnigueColumnName(Program.Kernel!, entryTable.Text, ConfDirectory.Fields);
+                ConfDirectory.AppendField(new ConfigurationObjectField("Назва", nameInTable_Name, "string", "", "Назва"));
+            }
             else
                 entryTable.Text = ConfDirectory.Table;
 
@@ -229,6 +234,9 @@ namespace Configurator
             entryBeforeSave.Text = ConfDirectory.TriggerFunctions.BeforeSave;
             entryAfterSave.Text = ConfDirectory.TriggerFunctions.AfterSave;
             entryBeforeDelete.Text = ConfDirectory.TriggerFunctions.BeforeDelete;
+
+            FillFields();
+            FillTabularParts();
         }
 
         void FillFields()
@@ -453,6 +461,8 @@ namespace Configurator
                     GeneralForm = GeneralForm,
                     CallBack_RefreshList = TabularPartsRefreshList
                 };
+
+                page.SetValue();
 
                 return page;
             });

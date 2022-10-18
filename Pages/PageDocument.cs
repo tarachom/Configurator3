@@ -235,13 +235,19 @@ namespace Configurator
 
         public void SetValue()
         {
-            FillFields();
-            FillTabularParts();
-
             entryName.Text = ConfDocument.Name;
 
             if (IsNew)
+            {
                 entryTable.Text = Configuration.GetNewUnigueTableName(Program.Kernel!);
+
+                ConfDocument.AppendField(new ConfigurationObjectField("Назва", "docname", "string", "", "Назва", true));
+                ConfDocument.AppendField(new ConfigurationObjectField("ДатаДок", "docdate", "datetime", "", "ДатаДок", false, true));
+                ConfDocument.AppendField(new ConfigurationObjectField("НомерДок", "docnomer", "string", "", "НомерДок", false, true));
+
+                string nameInTable_Comment = Configuration.GetNewUnigueColumnName(Program.Kernel!, entryTable.Text, ConfDocument.Fields);
+                ConfDocument.AppendField(new ConfigurationObjectField("Коментар", nameInTable_Comment, "string", "", "Коментар"));
+            }
             else
                 entryTable.Text = ConfDocument.Table;
 
@@ -253,6 +259,9 @@ namespace Configurator
             entryBeforeSave.Text = ConfDocument.TriggerFunctions.BeforeSave;
             entryAfterSave.Text = ConfDocument.TriggerFunctions.AfterSave;
             entryBeforeDelete.Text = ConfDocument.TriggerFunctions.BeforeDelete;
+
+            FillFields();
+            FillTabularParts();
         }
 
         void FillFields()
@@ -479,6 +488,8 @@ namespace Configurator
                     GeneralForm = GeneralForm,
                     CallBack_RefreshList = TabularPartsRefreshList
                 };
+
+                page.SetValue();
 
                 return page;
             });
