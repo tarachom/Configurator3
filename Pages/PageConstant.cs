@@ -175,21 +175,6 @@ namespace Configurator
 
         #region Присвоєння / зчитування значень віджетів
 
-        Dictionary<string, ConfigurationObjectField> GetConstantsAllFields()
-        {
-            Dictionary<string, ConfigurationObjectField> ConstantsAllFields = new Dictionary<string, ConfigurationObjectField>();
-            foreach (ConfigurationConstantsBlock block in Conf!.ConstantsBlock.Values)
-            {
-                foreach (ConfigurationConstants constants in block.Constants.Values)
-                {
-                    string fullName = block.BlockName + "." + constants.Name;
-                    ConstantsAllFields.Add(fullName, new ConfigurationObjectField(fullName, constants.NameInTable, constants.Type, constants.Pointer, constants.Desc));
-                }
-            }
-
-            return ConstantsAllFields;
-        }
-
         public void SetValue()
         {
             FillTabularParts();
@@ -197,7 +182,7 @@ namespace Configurator
             entryName.Text = ConfConstants.Name;
 
             if (IsNew)
-                entryColumn.Text = Configuration.GetNewUnigueColumnName(Program.Kernel!, "tab_constants", GetConstantsAllFields());
+                entryColumn.Text = Configuration.GetNewUnigueColumnName(Program.Kernel!, "tab_constants", GeneralForm!.GetConstantsAllFields());
             else
                 entryColumn.Text = ConfConstants.NameInTable;
 

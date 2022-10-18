@@ -362,6 +362,25 @@ namespace Configurator
 
         #endregion
 
+        #region Func
+
+        public Dictionary<string, ConfigurationObjectField> GetConstantsAllFields()
+        {
+            Dictionary<string, ConfigurationObjectField> ConstantsAllFields = new Dictionary<string, ConfigurationObjectField>();
+            foreach (ConfigurationConstantsBlock block in Conf!.ConstantsBlock.Values)
+            {
+                foreach (ConfigurationConstants constants in block.Constants.Values)
+                {
+                    string fullName = block.BlockName + "." + constants.Name;
+                    ConstantsAllFields.Add(fullName, new ConfigurationObjectField(fullName, constants.NameInTable, constants.Type, constants.Pointer, constants.Desc));
+                }
+            }
+
+            return ConstantsAllFields;
+        }
+
+        #endregion
+
         public FormConfigurator() : base("Конфігуратор")
         {
             SetDefaultSize(1000, 600);
@@ -1246,8 +1265,21 @@ namespace Configurator
                         ConfigurationConstantsBlock newConstantBlock = Conf!.ConstantsBlock[name].Copy();
                         newConstantBlock.BlockName += GenerateName.GetNewName();
 
+                        Dictionary<string, ConfigurationObjectField> AllFields = GetConstantsAllFields();
+
                         if (!Conf!.ConstantsBlock.ContainsKey(newConstantBlock.BlockName))
+                        {
+                            foreach (ConfigurationConstants itemConst in newConstantBlock.Constants.Values)
+                            {
+                                itemConst.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!, "tab_constants", AllFields);
+                                itemConst.
+                                itemConst.Name += "2";
+
+                                Console.WriteLine(itemConst.NameInTable);
+                            }
+
                             Conf!.AppendConstantsBlock(newConstantBlock);
+                        }
 
                         break;
                     }
