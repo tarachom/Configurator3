@@ -1292,7 +1292,12 @@ namespace Configurator
                                     newConstant.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!, "tab_constants", GetConstantsAllFields());
 
                                     if (!Conf!.ConstantsBlock[blockConst].Constants.ContainsKey(newConstant.Name))
+                                    {
+                                        foreach (ConfigurationObjectTablePart tablePart in newConstant.TabularParts.Values)
+                                            tablePart.Table = Configuration.GetNewUnigueTableName(Program.Kernel!);
+
                                         Conf!.ConstantsBlock[blockConst].AppendConstant(newConstant);
+                                    }
 
                                     break;
                                 }
