@@ -10,7 +10,9 @@
     Вигрузка та загрузка даних або конфігурації
     Обслуговування бази даних
 
-Скачати програму на сайті [accounting.org.ua](https://accounting.org.ua/configurator.html)
+ <b>Завантажити:</b>
+ 
+Програму на сайті [accounting.org.ua](https://accounting.org.ua/configurator.html)
 
 Середовище розробки [Visual Studio Code](https://code.visualstudio.com)
 
