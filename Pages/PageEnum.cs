@@ -140,7 +140,7 @@ namespace Configurator
         void FillFields()
         {
             foreach (ConfigurationEnumField field in ConfEnum.Fields.Values)
-                listBoxFields.Add(new Label(field.Name) { Name = field.Name, Halign = Align.Start });
+                listBoxFields.Add(new Label($"{field.Name} = {field.Value}") { Name = field.Name, Halign = Align.Start });
         }
 
         void GetValue()

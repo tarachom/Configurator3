@@ -350,13 +350,14 @@ namespace Configurator
             {
                 PageField page = new PageField()
                 {
+                    Table = ConfDocument.Table,
                     Fields = ConfDocument.Fields,
                     IsNew = true,
                     GeneralForm = GeneralForm,
                     CallBack_RefreshList = FieldsRefreshList
                 };
 
-                page.SetDefValue();
+                page.SetValue();
 
                 return page;
             });
@@ -480,6 +481,7 @@ namespace Configurator
                     {
                         ConfigurationObjectTablePart newTablePart = ConfDocument.TabularParts[row.Child.Name].Copy();
                         newTablePart.Name += GenerateName.GetNewName();
+                        newTablePart.Table = Configuration.GetNewUnigueTableName(Program.Kernel!);
 
                         ConfDocument.AppendTablePart(newTablePart);
                     }

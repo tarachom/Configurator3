@@ -1314,6 +1314,7 @@ namespace Configurator
 
                                         ConfigurationObjectField newField = Conf!.Directories[directoryName].Fields[fieldName].Copy();
                                         newField.Name += GenerateName.GetNewName();
+                                        newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!, Conf!.Directories[directoryName].Table, Conf!.Directories[directoryName].Fields);
 
                                         if (!Conf!.Directories[directoryName].Fields.ContainsKey(newField.Name))
                                             Conf!.Directories[directoryName].AppendField(newField);
@@ -1322,6 +1323,7 @@ namespace Configurator
                                     {
                                         ConfigurationDirectories newDirectory = Conf!.Directories[directory].Copy();
                                         newDirectory.Name += GenerateName.GetNewName();
+                                        newDirectory.Table = Configuration.GetNewUnigueTableName(Program.Kernel!);
 
                                         if (!Conf!.Directories.ContainsKey(newDirectory.Name))
                                             Conf!.AppendDirectory(newDirectory);
@@ -1333,6 +1335,7 @@ namespace Configurator
                                     string nameTablePart = directoryPath[1];
                                     ConfigurationObjectTablePart newTablePart = Conf!.Directories[directory].TabularParts[nameTablePart].Copy();
                                     newTablePart.Name += GenerateName.GetNewName();
+                                    newTablePart.Table = Configuration.GetNewUnigueTableName(Program.Kernel!);
 
                                     if (!Conf!.Directories[directory].TabularParts.ContainsKey(newTablePart.Name))
                                         Conf!.Directories[directory].AppendTablePart(newTablePart);
@@ -1346,6 +1349,7 @@ namespace Configurator
 
                                     ConfigurationObjectField newField = Conf!.Directories[directory].TabularParts[nameTablePart].Fields[nameField].Copy();
                                     newField.Name += GenerateName.GetNewName();
+                                    newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!, Conf!.Directories[directory].Table, Conf!.Directories[directory].Fields);
 
                                     if (!Conf!.Directories[directory].TabularParts[nameTablePart].Fields.ContainsKey(newField.Name))
                                         Conf!.Directories[directory].TabularParts[nameTablePart].AppendField(newField);
@@ -1373,6 +1377,7 @@ namespace Configurator
 
                                         ConfigurationObjectField newField = Conf!.Documents[documentName].Fields[fieldName].Copy();
                                         newField.Name += GenerateName.GetNewName();
+                                        newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!, Conf!.Documents[documentName].Table, Conf!.Documents[documentName].Fields);
 
                                         if (!Conf!.Documents[documentName].Fields.ContainsKey(newField.Name))
                                             Conf!.Documents[documentName].AppendField(newField);
@@ -1381,6 +1386,7 @@ namespace Configurator
                                     {
                                         ConfigurationDocuments newDocument = Conf!.Documents[document].Copy();
                                         newDocument.Name += GenerateName.GetNewName();
+                                        newDocument.Table = Configuration.GetNewUnigueTableName(Program.Kernel!);
 
                                         if (!Conf!.Documents.ContainsKey(newDocument.Name))
                                             Conf!.AppendDocument(newDocument);
@@ -1393,6 +1399,7 @@ namespace Configurator
 
                                     ConfigurationObjectTablePart newTablePart = Conf!.Documents[document].TabularParts[nameTablePart].Copy();
                                     newTablePart.Name += GenerateName.GetNewName();
+                                    newTablePart.Table = Configuration.GetNewUnigueTableName(Program.Kernel!);
 
                                     if (!Conf!.Documents[document].TabularParts.ContainsKey(newTablePart.Name))
                                         Conf!.Documents[document].AppendTablePart(newTablePart);
@@ -1406,6 +1413,7 @@ namespace Configurator
 
                                     ConfigurationObjectField newField = Conf!.Documents[document].TabularParts[nameTablePart].Fields[nameField].Copy();
                                     newField.Name += GenerateName.GetNewName();
+                                    newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!, Conf!.Documents[document].Table, Conf!.Documents[document].Fields);
 
                                     if (!Conf!.Documents[document].TabularParts[nameTablePart].Fields.ContainsKey(newField.Name))
                                         Conf!.Documents[document].TabularParts[nameTablePart].AppendField(newField);
@@ -1427,6 +1435,7 @@ namespace Configurator
                                 {
                                     ConfigurationRegistersInformation newRegInfo = Conf!.RegistersInformation[register].Copy();
                                     newRegInfo.Name += GenerateName.GetNewName();
+                                    newRegInfo.Table = Configuration.GetNewUnigueTableName(Program.Kernel!);
 
                                     if (!Conf!.RegistersInformation.ContainsKey(newRegInfo.Name))
                                         Conf!.AppendRegistersInformation(newRegInfo);
@@ -1439,6 +1448,17 @@ namespace Configurator
                                     string typeName = typeAndField[0];
                                     string fieldName = typeAndField[1];
 
+                                    Dictionary<string, ConfigurationObjectField> AllFields = new Dictionary<string, ConfigurationObjectField>();
+
+                                    foreach (ConfigurationObjectField item in Conf!.RegistersInformation[register].DimensionFields.Values)
+                                        AllFields.Add(item.Name, item);
+
+                                    foreach (ConfigurationObjectField item in Conf!.RegistersInformation[register].ResourcesFields.Values)
+                                        AllFields.Add(item.Name, item);
+
+                                    foreach (ConfigurationObjectField item in Conf!.RegistersInformation[register].PropertyFields.Values)
+                                        AllFields.Add(item.Name, item);
+
                                     ConfigurationObjectField newField;
 
                                     if (typeName == "Dimension")
@@ -1449,6 +1469,7 @@ namespace Configurator
                                         newField = Conf!.RegistersInformation[register].PropertyFields[fieldName].Copy();
 
                                     newField.Name += GenerateName.GetNewName();
+                                    newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!, Conf!.RegistersInformation[register].Table, AllFields);
 
                                     if (typeName == "Dimension")
                                     {
@@ -1483,6 +1504,7 @@ namespace Configurator
                                 {
                                     ConfigurationRegistersAccumulation newRegAccum = Conf!.RegistersAccumulation[register].Copy();
                                     newRegAccum.Name += GenerateName.GetNewName();
+                                    newRegAccum.Table = Configuration.GetNewUnigueTableName(Program.Kernel!);
 
                                     if (!Conf!.RegistersAccumulation.ContainsKey(newRegAccum.Name))
                                         Conf!.AppendRegistersAccumulation(newRegAccum);
@@ -1495,6 +1517,17 @@ namespace Configurator
                                     string typeName = typeAndField[0];
                                     string fieldName = typeAndField[1];
 
+                                    Dictionary<string, ConfigurationObjectField> AllFields = new Dictionary<string, ConfigurationObjectField>();
+
+                                    foreach (ConfigurationObjectField item in Conf!.RegistersAccumulation[register].DimensionFields.Values)
+                                        AllFields.Add(item.Name, item);
+
+                                    foreach (ConfigurationObjectField item in Conf!.RegistersAccumulation[register].ResourcesFields.Values)
+                                        AllFields.Add(item.Name, item);
+
+                                    foreach (ConfigurationObjectField item in Conf!.RegistersAccumulation[register].PropertyFields.Values)
+                                        AllFields.Add(item.Name, item);
+
                                     ConfigurationObjectField newField;
 
                                     if (typeName == "Dimension")
@@ -1505,6 +1538,7 @@ namespace Configurator
                                         newField = Conf!.RegistersAccumulation[register].PropertyFields[fieldName].Copy();
 
                                     newField.Name += GenerateName.GetNewName();
+                                    newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!, Conf!.RegistersAccumulation[register].Table, AllFields);
 
                                     if (typeName == "Dimension")
                                     {

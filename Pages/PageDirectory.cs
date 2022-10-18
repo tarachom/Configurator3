@@ -21,6 +21,7 @@ namespace Configurator
         ListBox listBoxFields = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxTableParts = new ListBox() { SelectionMode = SelectionMode.Single };
         Entry entryName = new Entry() { WidthRequest = 500 };
+        Entry entryTable = new Entry() { WidthRequest = 500 };
         Entry entryBeforeSave = new Entry() { WidthRequest = 500 };
         Entry entryAfterSave = new Entry() { WidthRequest = 500 };
         Entry entryBeforeDelete = new Entry() { WidthRequest = 500 };
@@ -63,6 +64,13 @@ namespace Configurator
 
             hBoxName.PackStart(new Label("Назва:"), false, false, 5);
             hBoxName.PackStart(entryName, false, false, 5);
+
+            //Таблиця
+            HBox hBoxTable = new HBox() { Halign = Align.End };
+            vBox.PackStart(hBoxTable, false, false, 5);
+
+            hBoxTable.PackStart(new Label("Таблиця:"), false, false, 5);
+            hBoxTable.PackStart(entryTable, false, false, 5);
 
             //Опис
             HBox hBoxDesc = new HBox() { Halign = Align.End };
@@ -210,6 +218,12 @@ namespace Configurator
             FillTabularParts();
 
             entryName.Text = ConfDirectory.Name;
+
+            if (IsNew)
+                entryTable.Text = Configuration.GetNewUnigueTableName(Program.Kernel!);
+            else
+                entryTable.Text = ConfDirectory.Table;
+
             textViewDesc.Buffer.Text = ConfDirectory.Desc;
 
             entryBeforeSave.Text = ConfDirectory.TriggerFunctions.BeforeSave;
@@ -323,13 +337,14 @@ namespace Configurator
             {
                 PageField page = new PageField()
                 {
+                    Table = ConfDirectory.Table,
                     Fields = ConfDirectory.Fields,
                     IsNew = true,
                     GeneralForm = GeneralForm,
                     CallBack_RefreshList = FieldsRefreshList
                 };
 
-                page.SetDefValue();
+                page.SetValue();
 
                 return page;
             });
@@ -347,6 +362,7 @@ namespace Configurator
                     {
                         ConfigurationObjectField newField = ConfDirectory.Fields[row.Child.Name].Copy();
                         newField.Name += GenerateName.GetNewName();
+                        newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!, ConfDirectory.Table, ConfDirectory.Fields);
 
                         ConfDirectory.AppendField(newField);
                     }
@@ -453,6 +469,7 @@ namespace Configurator
                     {
                         ConfigurationObjectTablePart newTablePart = ConfDirectory.TabularParts[row.Child.Name].Copy();
                         newTablePart.Name += GenerateName.GetNewName();
+                        newTablePart.Table = Configuration.GetNewUnigueTableName(Program.Kernel!);
 
                         ConfDirectory.AppendTablePart(newTablePart);
                     }

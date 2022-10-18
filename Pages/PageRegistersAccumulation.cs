@@ -347,7 +347,7 @@ namespace Configurator
                     CallBack_RefreshList = DimensionFieldsRefreshList
                 };
 
-                page.SetDefValue();
+                page.SetValue();
 
                 return page;
             });
@@ -455,7 +455,7 @@ namespace Configurator
                     CallBack_RefreshList = ResourcesFieldsRefreshList
                 };
 
-                page.SetDefValue();
+                page.SetValue();
 
                 return page;
             });
@@ -557,13 +557,14 @@ namespace Configurator
             {
                 PageField page = new PageField()
                 {
+                    Table = ConfRegister.Table,
                     Fields = ConfRegister.PropertyFields,
                     IsNew = true,
                     GeneralForm = GeneralForm,
                     CallBack_RefreshList = PropertyFieldsRefreshList
                 };
 
-                page.SetDefValue();
+                page.SetValue();
 
                 return page;
             });

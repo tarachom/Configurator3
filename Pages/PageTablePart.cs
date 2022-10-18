@@ -225,13 +225,14 @@ namespace Configurator
             {
                 PageField page = new PageField()
                 {
+                    Table = TablePart.Table,
                     Fields = TablePart.Fields,
                     IsNew = true,
                     GeneralForm = GeneralForm,
                     CallBack_RefreshList = TabularPartsRefreshList
                 };
 
-                page.SetDefValue();
+                page.SetValue();
 
                 return page;
             });

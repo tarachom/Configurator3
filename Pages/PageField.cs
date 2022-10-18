@@ -14,6 +14,7 @@ namespace Configurator
             }
         }
 
+        public string Table { get; set; } = "";
         public Dictionary<string, ConfigurationObjectField> Fields = new Dictionary<string, ConfigurationObjectField>();
         public Dictionary<string, ConfigurationObjectField>? AllFields; //Для регістрів
         public ConfigurationObjectField Field { get; set; } = new ConfigurationObjectField();
@@ -22,6 +23,7 @@ namespace Configurator
         public bool IsNew { get; set; } = true;
 
         Entry entryName = new Entry() { WidthRequest = 500 };
+        Entry entryColumn = new Entry() { WidthRequest = 500 };
         TextView textViewDesc = new TextView();
         ComboBoxText comboBoxType = new ComboBoxText();
         ComboBoxText comboBoxPointer = new ComboBoxText();
@@ -66,6 +68,13 @@ namespace Configurator
 
             hBoxName.PackStart(new Label("Назва:"), false, false, 5);
             hBoxName.PackStart(entryName, false, false, 5);
+
+            //Назва
+            HBox hBoxColumn = new HBox() { Halign = Align.End };
+            vBox.PackStart(hBoxColumn, false, false, 5);
+
+            hBoxColumn.PackStart(new Label("Назва в таблиці:"), false, false, 5);
+            hBoxColumn.PackStart(entryColumn, false, false, 5);
 
             //Тип
             HBox hBoxType = new HBox() { Halign = Align.End };
@@ -144,6 +153,9 @@ namespace Configurator
 
             comboBoxType.ActiveId = Field.Type;
 
+            if (comboBoxType.Active == -1)
+                comboBoxType.Active = 0;
+
             if (comboBoxType.ActiveId == "pointer")
                 comboBoxPointer.ActiveId = Field.Pointer;
 
@@ -153,14 +165,14 @@ namespace Configurator
             checkButtonIndex.Active = Field.IsIndex;
             checkButtonPresentation.Active = Field.IsPresentation;
 
-            OnComboBoxTypeChanged(comboBoxType, new EventArgs());
-        }
-        public void SetDefValue()
-        {
-            comboBoxType.Active = 0;
+            if (IsNew)
+                entryColumn.Text = Configuration.GetNewUnigueColumnName(Program.Kernel!, Table, AllFields ?? Fields);
+            else
+                entryColumn.Text = Field.NameInTable;
 
             OnComboBoxTypeChanged(comboBoxType, new EventArgs());
         }
+
         void GetValue()
         {
             Field.Name = entryName.Text;
@@ -175,6 +187,8 @@ namespace Configurator
 
             Field.IsIndex = checkButtonIndex.Active;
             Field.IsPresentation = checkButtonPresentation.Active;
+
+            Field.NameInTable = entryColumn.Text;
         }
 
         #endregion
