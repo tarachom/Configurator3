@@ -10,9 +10,11 @@
     Вигрузка та загрузка даних або конфігурації
     Обслуговування бази даних
 
-Скачати програму [accounting.org.ua/configurator.html](https://accounting.org.ua/configurator.html)
+Скачати програму на сайті [accounting.org.ua](https://accounting.org.ua/configurator.html)
 
 Середовище розробки [Visual Studio Code](https://code.visualstudio.com)
+
+База даних [PostgreSQL](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads)
 
 <br/>
     
@@ -23,9 +25,6 @@
   Скачати із сайту Microsoft та встановити .NET 6.0 Runtime (https://dotnet.microsoft.com/en-us/download/dotnet/6.0/runtime)<br/>
   Може бути "Run console apps" або "Run desktop apps"
  </li>
- <li>
-  Скачати і встановити PostgreSQL (https://www.enterprisedb.com/downloads/postgres-postgresql-downloads)
- </li>
 </ul>
  
 Для запуску на <b>Linux:</b>
@@ -34,8 +33,5 @@
  <li>
   Інструкція як встановити .NET 6 в Ubuntu 22.04 (https://github.com/dotnet/core/issues/7699)<br/>
   або Install .NET on Linux (https://learn.microsoft.com/uk-ua/dotnet/core/install/linux) на сайті Microsoft
- </li>
- <li>
-  Скачати і встановити PostgreSQL (https://www.enterprisedb.com/downloads/postgres-postgresql-downloads)
  </li>
 </ul>
