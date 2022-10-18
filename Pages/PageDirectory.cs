@@ -272,7 +272,7 @@ namespace Configurator
 
             if (errorList.Length > 0)
             {
-                Message.Error($"{errorList}");
+                Message.Error(GeneralForm,$"{errorList}");
                 return;
             }
 
@@ -280,7 +280,7 @@ namespace Configurator
             {
                 if (Conf!.Directories.ContainsKey(entryName.Text))
                 {
-                    Message.Error($"Назва довідника не унікальна");
+                    Message.Error(GeneralForm,$"Назва довідника не унікальна");
                     return;
                 }
             }
@@ -290,7 +290,7 @@ namespace Configurator
                 {
                     if (Conf!.Directories.ContainsKey(entryName.Text))
                     {
-                        Message.Error($"Назва довідника не унікальна");
+                        Message.Error(GeneralForm,$"Назва довідника не унікальна");
                         return;
                     }
                 }

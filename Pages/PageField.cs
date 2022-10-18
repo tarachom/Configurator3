@@ -208,7 +208,7 @@ namespace Configurator
 
             if (errorList.Length > 0)
             {
-                Message.Error($"{errorList}");
+                Message.Error(GeneralForm,$"{errorList}");
                 return;
             }
 
@@ -218,13 +218,13 @@ namespace Configurator
                 {
                     if (AllFields.ContainsKey(entryName.Text))
                     {
-                        Message.Error($"Назва поля не унікальна");
+                        Message.Error(GeneralForm,$"Назва поля не унікальна");
                         return;
                     }
                 }
                 else if (Fields.ContainsKey(entryName.Text))
                 {
-                    Message.Error($"Назва поля не унікальна");
+                    Message.Error(GeneralForm,$"Назва поля не унікальна");
                     return;
                 }
             }
@@ -236,13 +236,13 @@ namespace Configurator
                     {
                         if (AllFields.ContainsKey(entryName.Text))
                         {
-                            Message.Error($"Назва поля не унікальна");
+                            Message.Error(GeneralForm,$"Назва поля не унікальна");
                             return;
                         }
                     }
                     else if (Fields.ContainsKey(entryName.Text))
                     {
-                        Message.Error($"Назва поля не унікальна");
+                        Message.Error(GeneralForm,$"Назва поля не унікальна");
                         return;
                     }
                 }
@@ -255,7 +255,7 @@ namespace Configurator
             if (Field.Type == "pointer" || Field.Type == "enum")
                 if (String.IsNullOrEmpty(Field.Pointer))
                 {
-                    Message.Error($"Потрібно деталізувати тип для [ pointer ] або [ enum ]\nВиберіть із списку тип для деталізації");
+                    Message.Error(GeneralForm,$"Потрібно деталізувати тип для [ pointer ] або [ enum ]\nВиберіть із списку тип для деталізації");
                     return;
                 }
 

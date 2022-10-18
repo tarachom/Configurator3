@@ -122,7 +122,7 @@ namespace Configurator
 
             if (errorList.Length > 0)
             {
-                Message.Error($"{errorList}");
+                Message.Error(GeneralForm,$"{errorList}");
                 return;
             }
 
@@ -130,7 +130,7 @@ namespace Configurator
             {
                 if (Fields.ContainsKey(entryName.Text))
                 {
-                    Message.Error($"Назва поля не унікальна");
+                    Message.Error(GeneralForm,$"Назва поля не унікальна");
                     return;
                 }
             }
@@ -140,7 +140,7 @@ namespace Configurator
                 {
                     if (Fields.ContainsKey(entryName.Text))
                     {
-                        Message.Error($"Назва поля не унікальна");
+                        Message.Error(GeneralForm,$"Назва поля не унікальна");
                         return;
                     }
                 }

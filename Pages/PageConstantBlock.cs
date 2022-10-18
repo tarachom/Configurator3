@@ -113,7 +113,7 @@ namespace Configurator
 
             if (errorList.Length > 0)
             {
-                Message.Error($"{errorList}");
+                Message.Error(GeneralForm, $"{errorList}");
                 return;
             }
 
@@ -121,7 +121,7 @@ namespace Configurator
             {
                 if (Conf!.ConstantsBlock.ContainsKey(entryName.Text))
                 {
-                    Message.Error($"Назва блоку не унікальна");
+                    Message.Error(GeneralForm, $"Назва блоку не унікальна");
                     return;
                 }
             }
@@ -131,7 +131,7 @@ namespace Configurator
                 {
                     if (Conf!.ConstantsBlock.ContainsKey(entryName.Text))
                     {
-                        Message.Error($"Назва блоку не унікальна");
+                        Message.Error(GeneralForm, $"Назва блоку не унікальна");
                         return;
                     }
                 }

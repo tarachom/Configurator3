@@ -156,7 +156,7 @@ namespace Configurator
                     Hide();
                 }
                 else
-                    Message.Error("Error: " + exception.Message);
+                    Message.Error(this, "Error: " + exception.Message);
             }
         }
 

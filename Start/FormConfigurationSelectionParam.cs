@@ -96,7 +96,7 @@ namespace Configurator
             int rezult;
             if (!int.TryParse(Port.Text, out rezult))
             {
-                Message.Error("Порт має бути цілим числом!");
+                Message.Error(this, "Порт має бути цілим числом!");
                 return false;
             }
 
@@ -143,9 +143,9 @@ namespace Configurator
                     OpenConfigurationParam.DataBaseBaseName, out exception, out IsExistsDatabase);
 
                 if (flag)
-                    Message.Info("OK.\n\nБаза даних створена або вже існує");
+                    Message.Info(this, "OK.\n\nБаза даних створена або вже існує");
                 else
-                    Message.Error("Error: " + exception.Message);
+                    Message.Error(this, "Error: " + exception.Message);
             }
         }
 

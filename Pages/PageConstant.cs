@@ -242,19 +242,19 @@ namespace Configurator
 
             if (errorList.Length > 0)
             {
-                Message.Error($"{errorList}");
+                Message.Error(GeneralForm, $"{errorList}");
                 return;
             }
 
             if (comboBoxBlock.Active == -1)
             {
-                Message.Error($"Не вибраний блок");
+                Message.Error(GeneralForm, $"Не вибраний блок");
                 return;
             }
 
             if (!Conf!.ConstantsBlock.ContainsKey(comboBoxBlock.ActiveId))
             {
-                Message.Error($"Відсутній блок {comboBoxBlock.ActiveId}");
+                Message.Error(GeneralForm, $"Відсутній блок {comboBoxBlock.ActiveId}");
                 return;
             }
 
@@ -262,7 +262,7 @@ namespace Configurator
             {
                 if (Conf!.ConstantsBlock[comboBoxBlock.ActiveId].Constants.ContainsKey(entryName.Text))
                 {
-                    Message.Error($"Назва константи не унікальна в межах блоку {comboBoxBlock.ActiveId}");
+                    Message.Error(GeneralForm, $"Назва константи не унікальна в межах блоку {comboBoxBlock.ActiveId}");
                     return;
                 }
             }
@@ -272,7 +272,7 @@ namespace Configurator
                 {
                     if (Conf!.ConstantsBlock[comboBoxBlock.ActiveId].Constants.ContainsKey(entryName.Text))
                     {
-                        Message.Error($"Назва константи не унікальна в межах блоку {comboBoxBlock.ActiveId}");
+                        Message.Error(GeneralForm, $"Назва константи не унікальна в межах блоку {comboBoxBlock.ActiveId}");
                         return;
                     }
                 }
@@ -284,14 +284,14 @@ namespace Configurator
 
             if (comboBoxType.Active == -1)
             {
-                Message.Error($"Не вибраний тип даних");
+                Message.Error(GeneralForm, $"Не вибраний тип даних");
                 return;
             }
 
             if (ConfConstants.Type == "pointer" || ConfConstants.Type == "enum")
                 if (String.IsNullOrEmpty(ConfConstants.Pointer))
                 {
-                    Message.Error($"Потрібно деталізувати тип для [ pointer ] або [ enum ]\nВиберіть із списку тип для деталізації");
+                    Message.Error(GeneralForm, $"Потрібно деталізувати тип для [ pointer ] або [ enum ]\nВиберіть із списку тип для деталізації");
                     return;
                 }
 

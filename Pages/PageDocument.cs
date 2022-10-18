@@ -340,7 +340,7 @@ namespace Configurator
 
             if (errorList.Length > 0)
             {
-                Message.Error($"{errorList}");
+                Message.Error(GeneralForm,$"{errorList}");
                 return;
             }
 
@@ -348,7 +348,7 @@ namespace Configurator
             {
                 if (Conf!.Documents.ContainsKey(entryName.Text))
                 {
-                    Message.Error($"Назва документу не унікальна");
+                    Message.Error(GeneralForm,$"Назва документу не унікальна");
                     return;
                 }
             }
@@ -358,7 +358,7 @@ namespace Configurator
                 {
                     if (Conf!.Documents.ContainsKey(entryName.Text))
                     {
-                        Message.Error($"Назва документу не унікальна");
+                        Message.Error(GeneralForm,$"Назва документу не унікальна");
                         return;
                     }
                 }

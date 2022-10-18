@@ -165,7 +165,7 @@ namespace Configurator
 
             if (errorList.Length > 0)
             {
-                Message.Error($"{errorList}");
+                Message.Error(GeneralForm,$"{errorList}");
                 return;
             }
 
@@ -173,7 +173,7 @@ namespace Configurator
             {
                 if (TabularParts.ContainsKey(entryName.Text))
                 {
-                    Message.Error($"Назва табличної частини не унікальна");
+                    Message.Error(GeneralForm,$"Назва табличної частини не унікальна");
                     return;
                 }
             }
@@ -183,7 +183,7 @@ namespace Configurator
                 {
                     if (TabularParts.ContainsKey(entryName.Text))
                     {
-                        Message.Error($"Назва табличної частини не унікальна");
+                        Message.Error(GeneralForm,$"Назва табличної частини не унікальна");
                         return;
                     }
                 }

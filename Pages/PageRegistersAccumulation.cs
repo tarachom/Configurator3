@@ -282,7 +282,7 @@ namespace Configurator
 
             if (errorList.Length > 0)
             {
-                Message.Error($"{errorList}");
+                Message.Error(GeneralForm,$"{errorList}");
                 return;
             }
 
@@ -290,7 +290,7 @@ namespace Configurator
             {
                 if (Conf!.RegistersAccumulation.ContainsKey(entryName.Text))
                 {
-                    Message.Error($"Назва регістру не унікальна");
+                    Message.Error(GeneralForm,$"Назва регістру не унікальна");
                     return;
                 }
             }
@@ -300,7 +300,7 @@ namespace Configurator
                 {
                     if (Conf!.RegistersAccumulation.ContainsKey(entryName.Text))
                     {
-                        Message.Error($"Назва регістру не унікальна");
+                        Message.Error(GeneralForm,$"Назва регістру не унікальна");
                         return;
                     }
                 }
