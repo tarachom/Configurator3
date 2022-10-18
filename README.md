@@ -12,6 +12,8 @@
 
 Скачати програму [accounting.org.ua/configurator.html](https://accounting.org.ua/configurator.html)
 
+Середовище розробки [Visual Studio Code](https://code.visualstudio.com)
+
 <br/>
     
 Для запуску на <b>Windows:</b>
