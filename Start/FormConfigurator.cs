@@ -1390,14 +1390,26 @@ namespace Configurator
                             case 2:
                                 {
                                     string nameTablePart = documentPath[1];
-                                    Conf!.Documents[document].TabularParts.Remove(nameTablePart);
+
+                                    ConfigurationObjectTablePart newTablePart = Conf!.Documents[document].TabularParts[nameTablePart].Copy();
+                                    newTablePart.Name += GenerateName.GetNewName();
+
+                                    if (!Conf!.Documents[document].TabularParts.ContainsKey(newTablePart.Name))
+                                        Conf!.Documents[document].AppendTablePart(newTablePart);
+
                                     break;
                                 }
                             case 3:
                                 {
                                     string nameTablePart = documentPath[1];
                                     string nameField = documentPath[2];
-                                    Conf!.Documents[document].TabularParts[nameTablePart].Fields.Remove(nameField);
+
+                                    ConfigurationObjectField newField = Conf!.Documents[document].TabularParts[nameTablePart].Fields[nameField].Copy();
+                                    newField.Name += GenerateName.GetNewName();
+
+                                    if (!Conf!.Documents[document].TabularParts[nameTablePart].Fields.ContainsKey(newField.Name))
+                                        Conf!.Documents[document].TabularParts[nameTablePart].AppendField(newField);
+
                                     break;
                                 }
                         }
