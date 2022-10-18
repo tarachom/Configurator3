@@ -1370,10 +1370,21 @@ namespace Configurator
                                         string[] documentAndField = document.Split(":");
                                         string documentName = documentAndField[0];
                                         string fieldName = documentAndField[1];
-                                        Conf!.Documents[documentName].Fields.Remove(fieldName);
+
+                                        ConfigurationObjectField newField = Conf!.Documents[documentName].Fields[fieldName].Copy();
+                                        newField.Name += GenerateName.GetNewName();
+
+                                        if (!Conf!.Documents[documentName].Fields.ContainsKey(newField.Name))
+                                            Conf!.Documents[documentName].AppendField(newField);
                                     }
                                     else
-                                        Conf!.Documents.Remove(document);
+                                    {
+                                        ConfigurationDocuments newDocument = Conf!.Documents[document].Copy();
+                                        newDocument.Name += GenerateName.GetNewName();
+
+                                        if (!Conf!.Documents.ContainsKey(newDocument.Name))
+                                            Conf!.AppendDocument(newDocument);
+                                    }
                                     break;
                                 }
                             case 2:
