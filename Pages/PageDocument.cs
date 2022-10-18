@@ -372,21 +372,8 @@ namespace Configurator
                 {
                     if (ConfDocument.Fields.ContainsKey(row.Child.Name))
                     {
-                        string newName = "";
-
-                        for (int i = 1; i < 99; i++)
-                        {
-                            newName = row.Child.Name + i.ToString();
-
-                            if (!ConfDocument.Fields.ContainsKey(newName))
-                                break;
-                        }
-
-                        if (String.IsNullOrEmpty(newName))
-                            newName = row.Child.Name + new Random(int.MaxValue).ToString();
-
                         ConfigurationObjectField newField = ConfDocument.Fields[row.Child.Name].Copy();
-                        newField.Name = newName;
+                        newField.Name += GenerateName.GetNewName();
 
                         ConfDocument.AppendField(newField);
                     }
@@ -491,21 +478,8 @@ namespace Configurator
                 {
                     if (ConfDocument.TabularParts.ContainsKey(row.Child.Name))
                     {
-                        string newName = "";
-
-                        for (int i = 1; i < 99; i++)
-                        {
-                            newName = row.Child.Name + i.ToString();
-
-                            if (!ConfDocument.TabularParts.ContainsKey(newName))
-                                break;
-                        }
-
-                        if (String.IsNullOrEmpty(newName))
-                            newName = row.Child.Name + new Random(int.MaxValue).ToString();
-
                         ConfigurationObjectTablePart newTablePart = ConfDocument.TabularParts[row.Child.Name].Copy();
-                        newTablePart.Name = newName;
+                        newTablePart.Name += GenerateName.GetNewName();
 
                         ConfDocument.AppendTablePart(newTablePart);
                     }

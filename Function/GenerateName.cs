@@ -13,7 +13,7 @@ namespace Configurator
             for (int i = 0; i < 5; i++)
                 random += EnglishAlphabet[new Random().Next(EnglishAlphabet.Length)];
 
-            return "_" + random;
+            return $"_{random}";
         }
     }
 }

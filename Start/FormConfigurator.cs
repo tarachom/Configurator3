@@ -1536,7 +1536,7 @@ namespace Configurator
                             string enumName = enumAndField[0];
                             string fieldName = enumAndField[1];
 
-                            ConfigurationEnumField newField = Conf!.Enums[enumName].Fields[fieldName].Copy();
+                            ConfigurationEnumField newField = Conf!.Enums[enumName].Fields[fieldName].Copy(++Conf!.Enums[enumName].SerialNumber);
                             newField.Name += GenerateName.GetNewName();
 
                             if (!Conf!.Enums[enumName].Fields.ContainsKey(newField.Name))

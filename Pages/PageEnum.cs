@@ -258,22 +258,8 @@ namespace Configurator
                 {
                     if (ConfEnum.Fields.ContainsKey(row.Child.Name))
                     {
-                        string newName = "";
-
-                        for (int i = 1; i < 99; i++)
-                        {
-                            newName = row.Child.Name + i.ToString();
-
-                            if (!ConfEnum.Fields.ContainsKey(newName))
-                                break;
-                        }
-
-                        if (String.IsNullOrEmpty(newName))
-                            newName = row.Child.Name + new Random(int.MaxValue).ToString();
-
-                        ConfigurationEnumField newField = ConfEnum.Fields[row.Child.Name].Copy();
-                        newField.Name = newName;
-                        newField.Value = ++ConfEnum.SerialNumber;
+                        ConfigurationEnumField newField = ConfEnum.Fields[row.Child.Name].Copy(++ConfEnum.SerialNumber);
+                        newField.Name += GenerateName.GetNewName();
 
                         ConfEnum.AppendField(newField);
                     }

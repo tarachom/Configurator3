@@ -363,21 +363,8 @@ namespace Configurator
                 {
                     if (ConfRegister.DimensionFields.ContainsKey(row.Child.Name))
                     {
-                        string newName = "";
-
-                        for (int i = 1; i < 99; i++)
-                        {
-                            newName = row.Child.Name + i.ToString();
-
-                            if (!ConfRegister.DimensionFields.ContainsKey(newName))
-                                break;
-                        }
-
-                        if (String.IsNullOrEmpty(newName))
-                            newName = row.Child.Name + new Random(int.MaxValue).ToString();
-
                         ConfigurationObjectField newField = ConfRegister.DimensionFields[row.Child.Name].Copy();
-                        newField.Name = newName;
+                        newField.Name += GenerateName.GetNewName();
 
                         ConfRegister.AppendDimensionField(newField);
                     }
@@ -484,21 +471,8 @@ namespace Configurator
                 {
                     if (ConfRegister.ResourcesFields.ContainsKey(row.Child.Name))
                     {
-                        string newName = "";
-
-                        for (int i = 1; i < 99; i++)
-                        {
-                            newName = row.Child.Name + i.ToString();
-
-                            if (!ConfRegister.ResourcesFields.ContainsKey(newName))
-                                break;
-                        }
-
-                        if (String.IsNullOrEmpty(newName))
-                            newName = row.Child.Name + new Random(int.MaxValue).ToString();
-
                         ConfigurationObjectField newField = ConfRegister.ResourcesFields[row.Child.Name].Copy();
-                        newField.Name = newName;
+                        newField.Name += GenerateName.GetNewName();
 
                         ConfRegister.AppendResourcesField(newField);
                     }
@@ -605,21 +579,8 @@ namespace Configurator
                 {
                     if (ConfRegister.PropertyFields.ContainsKey(row.Child.Name))
                     {
-                        string newName = "";
-
-                        for (int i = 1; i < 99; i++)
-                        {
-                            newName = row.Child.Name + i.ToString();
-
-                            if (!ConfRegister.PropertyFields.ContainsKey(newName))
-                                break;
-                        }
-
-                        if (String.IsNullOrEmpty(newName))
-                            newName = row.Child.Name + new Random(int.MaxValue).ToString();
-
                         ConfigurationObjectField newField = ConfRegister.PropertyFields[row.Child.Name].Copy();
-                        newField.Name = newName;
+                        newField.Name += GenerateName.GetNewName();
 
                         ConfRegister.AppendPropertyField(newField);
                     }

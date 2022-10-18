@@ -247,25 +247,11 @@ namespace Configurator
                 {
                     if (TablePart.Fields.ContainsKey(row.Child.Name))
                     {
-                        string newName = "";
-
-                        for (int i = 1; i < 99; i++)
-                        {
-                            newName = row.Child.Name + i.ToString();
-
-                            if (!TablePart.Fields.ContainsKey(newName))
-                                break;
-                        }
-
-                        if (String.IsNullOrEmpty(newName))
-                            newName = row.Child.Name + new Random(int.MaxValue).ToString();
-
                         ConfigurationObjectField newField = TablePart.Fields[row.Child.Name].Copy();
-                        newField.Name = newName;
+                        newField.Name += GenerateName.GetNewName();
 
                         TablePart.AppendField(newField);
                     }
-
                 }
 
                 OnTabularPartsRefreshClick(null, new EventArgs());

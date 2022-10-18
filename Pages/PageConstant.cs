@@ -345,21 +345,8 @@ namespace Configurator
                 {
                     if (ConfConstants.TabularParts.ContainsKey(row.Child.Name))
                     {
-                        string newName = "";
-
-                        for (int i = 1; i < 99; i++)
-                        {
-                            newName = row.Child.Name + i.ToString();
-
-                            if (!ConfConstants.TabularParts.ContainsKey(newName))
-                                break;
-                        }
-
-                        if (String.IsNullOrEmpty(newName))
-                            newName = row.Child.Name + new Random(int.MaxValue).ToString();
-
                         ConfigurationObjectTablePart newTablePart = ConfConstants.TabularParts[row.Child.Name].Copy();
-                        newTablePart.Name = newName;
+                        newTablePart.Name += GenerateName.GetNewName();
 
                         ConfConstants.AppendTablePart(newTablePart);
                     }
