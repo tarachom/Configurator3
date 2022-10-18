@@ -24,7 +24,7 @@
 
 <ul>
  <li>
-  Встановити .NET 6.0 Runtime (https://dotnet.microsoft.com/en-us/download/dotnet/6.0/runtime)<br/>
+  Встановити .net 6 Runtime (https://dotnet.microsoft.com/en-us/download/dotnet/6.0/runtime)<br/>
   Може бути "Run console apps" або "Run desktop apps"
  </li>
 </ul>
@@ -33,7 +33,7 @@
 
 <ul>
  <li>
-  Інструкція як встановити .NET 6 в Ubuntu 22.04 (https://github.com/dotnet/core/issues/7699)<br/>
-  або Install .NET on Linux (https://learn.microsoft.com/uk-ua/dotnet/core/install/linux)
+  Інструкція як встановити .net 6 в Ubuntu 22.04 (https://github.com/dotnet/core/issues/7699)<br/>
+  або Install .net on Linux (https://learn.microsoft.com/uk-ua/dotnet/core/install/linux)
  </li>
 </ul>
