@@ -34,6 +34,6 @@
 <ul>
  <li>
   Інструкція як встановити .NET 6 в Ubuntu 22.04 (https://github.com/dotnet/core/issues/7699)<br/>
-  або Install .NET on Linux (https://learn.microsoft.com/uk-ua/dotnet/core/install/linux) на сайті Microsoft
+  або Install .NET on Linux (https://learn.microsoft.com/uk-ua/dotnet/core/install/linux)
  </li>
 </ul>
