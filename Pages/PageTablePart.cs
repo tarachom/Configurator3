@@ -22,6 +22,7 @@ namespace Configurator
 
         ListBox listBoxFields = new ListBox() { SelectionMode = SelectionMode.Single };
         Entry entryName = new Entry() { WidthRequest = 500 };
+        Entry entryTable = new Entry() { WidthRequest = 500 };
         TextView textViewDesc = new TextView();
 
         public PageTablePart() : base()
@@ -103,6 +104,13 @@ namespace Configurator
             hBoxName.PackStart(new Label("Назва:"), false, false, 5);
             hBoxName.PackStart(entryName, false, false, 5);
 
+            //Таблиця
+            HBox hBoxTable = new HBox() { Halign = Align.End };
+            vBox.PackStart(hBoxTable, false, false, 5);
+
+            hBoxTable.PackStart(new Label("Таблиця:"), false, false, 5);
+            hBoxTable.PackStart(entryTable, false, false, 5);
+
             //Опис
             HBox hBoxDesc = new HBox() { Halign = Align.End };
             vBox.PackStart(hBoxDesc, false, false, 5);
@@ -125,6 +133,12 @@ namespace Configurator
             FillTabularParts();
 
             entryName.Text = TablePart.Name;
+
+            if (IsNew)
+                entryTable.Text = Configuration.GetNewUnigueTableName(Program.Kernel!);
+            else
+                entryTable.Text = TablePart.Table;
+
             textViewDesc.Buffer.Text = TablePart.Desc;
         }
 
@@ -137,6 +151,7 @@ namespace Configurator
         void GetValue()
         {
             TablePart.Name = entryName.Text;
+            TablePart.Table = entryTable.Text;
             TablePart.Desc = textViewDesc.Buffer.Text;
         }
 

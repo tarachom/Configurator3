@@ -1289,6 +1289,7 @@ namespace Configurator
                                 {
                                     ConfigurationConstants newConstant = Conf!.ConstantsBlock[blockConst].Constants[nameConst].Copy();
                                     newConstant.Name += GenerateName.GetNewName();
+                                    newConstant.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!, "tab_constants", GetConstantsAllFields());
 
                                     if (!Conf!.ConstantsBlock[blockConst].Constants.ContainsKey(newConstant.Name))
                                         Conf!.ConstantsBlock[blockConst].AppendConstant(newConstant);
@@ -1300,6 +1301,7 @@ namespace Configurator
                                     string nameTablePart = blockAndName[2];
                                     ConfigurationObjectTablePart newTablePart = Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart].Copy();
                                     newTablePart.Name += GenerateName.GetNewName();
+                                    newTablePart.Table = Configuration.GetNewUnigueTableName(Program.Kernel!);
 
                                     if (!Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts.ContainsKey(newTablePart.Name))
                                         Conf!.ConstantsBlock[blockConst].Constants[nameConst].AppendTablePart(newTablePart);
@@ -1313,6 +1315,9 @@ namespace Configurator
 
                                     ConfigurationObjectField newField = Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart].Fields[nameField].Copy();
                                     newField.Name += GenerateName.GetNewName();
+                                    newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!,
+                                        Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart].Table,
+                                        Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart].Fields);
 
                                     if (!Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart].Fields.ContainsKey(newField.Name))
                                         Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart].AppendField(newField);
