@@ -19,5 +19,14 @@ namespace Configurator
             md.Run();
             md.Destroy();
         }
+
+        public static ResponseType Request(string message)
+        {
+            MessageDialog md = new MessageDialog(null, DialogFlags.DestroyWithParent, MessageType.Question, ButtonsType.YesNo, message);
+            ResponseType response = (ResponseType)md.Run();
+            md.Destroy();
+
+            return response;
+        }
     }
 }

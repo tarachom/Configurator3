@@ -1048,7 +1048,8 @@ namespace Configurator
             {
                 case "БлокКонстант":
                     {
-                        Conf!.ConstantsBlock.Remove(name);
+                        if (Message.Request("Видалити?") == ResponseType.Yes)
+                            Conf!.ConstantsBlock.Remove(name);
                         break;
                     }
                 case "Константи":
@@ -1061,20 +1062,28 @@ namespace Configurator
                         {
                             case 2:
                                 {
-                                    Conf!.ConstantsBlock[blockConst].Constants.Remove(nameConst);
+                                    if (Message.Request("Видалити?") == ResponseType.Yes)
+                                        Conf!.ConstantsBlock[blockConst].Constants.Remove(nameConst);
+
                                     break;
                                 }
                             case 3:
                                 {
                                     string nameTablePart = blockAndName[2];
-                                    Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts.Remove(nameTablePart);
+
+                                    if (Message.Request("Видалити?") == ResponseType.Yes)
+                                        Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts.Remove(nameTablePart);
+
                                     break;
                                 }
                             case 4:
                                 {
                                     string nameTablePart = blockAndName[2];
                                     string nameField = blockAndName[3];
-                                    Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart].Fields.Remove(nameField);
+
+                                    if (Message.Request("Видалити?") == ResponseType.Yes)
+                                        Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart].Fields.Remove(nameField);
+
                                     break;
                                 }
                         }
@@ -1098,20 +1107,45 @@ namespace Configurator
                                         Conf!.Directories[directoryName].Fields.Remove(fieldName);
                                     }
                                     else
-                                        Conf!.Directories.Remove(directory);
+                                    {
+                                        List<string> ListPointers = Conf!.SearchForPointers("Довідники." + directory);
+
+                                        if (ListPointers.Count == 0)
+                                        {
+                                            if (Message.Request("Видалити?") == ResponseType.Yes)
+                                                Conf!.Directories.Remove(directory);
+                                        }
+                                        else
+                                        {
+                                            string textListPointer = "Знайденно " + ListPointers.Count.ToString() + " вказівники на довідник \"" + directory + "\":\n";
+
+                                            foreach (string item in ListPointers)
+                                                textListPointer += " -> " + item + "\n";
+
+                                            textListPointer += "\nВидалитити неможливо";
+
+                                            Message.Error(textListPointer);
+                                        }
+                                    }
                                     break;
                                 }
                             case 2:
                                 {
                                     string nameTablePart = directoryPath[1];
-                                    Conf!.Directories[directory].TabularParts.Remove(nameTablePart);
+
+                                    if (Message.Request("Видалити?") == ResponseType.Yes)
+                                        Conf!.Directories[directory].TabularParts.Remove(nameTablePart);
+
                                     break;
                                 }
                             case 3:
                                 {
                                     string nameTablePart = directoryPath[1];
                                     string nameField = directoryPath[2];
-                                    Conf!.Directories[directory].TabularParts[nameTablePart].Fields.Remove(nameField);
+
+                                    if (Message.Request("Видалити?") == ResponseType.Yes)
+                                        Conf!.Directories[directory].TabularParts[nameTablePart].Fields.Remove(nameField);
+
                                     break;
                                 }
                         }
@@ -1132,23 +1166,50 @@ namespace Configurator
                                         string[] documentAndField = document.Split(":");
                                         string documentName = documentAndField[0];
                                         string fieldName = documentAndField[1];
-                                        Conf!.Documents[documentName].Fields.Remove(fieldName);
+
+                                        if (Message.Request("Видалити?") == ResponseType.Yes)
+                                            Conf!.Documents[documentName].Fields.Remove(fieldName);
                                     }
                                     else
-                                        Conf!.Documents.Remove(document);
+                                    {
+                                        List<string> ListPointers = Conf!.SearchForPointers("Документи." + document);
+
+                                        if (ListPointers.Count == 0)
+                                        {
+                                            if (Message.Request("Видалити?") == ResponseType.Yes)
+                                                Conf!.Documents.Remove(document);
+                                        }
+                                        else
+                                        {
+                                            string textListPointer = "Знайденно " + ListPointers.Count.ToString() + " вказівники на документ \"" + document + "\":\n";
+
+                                            foreach (string item in ListPointers)
+                                                textListPointer += " -> " + item + "\n";
+
+                                            textListPointer += "\nВидалитити неможливо";
+
+                                            Message.Error(textListPointer);
+                                        }
+                                    }
                                     break;
                                 }
                             case 2:
                                 {
                                     string nameTablePart = documentPath[1];
-                                    Conf!.Documents[document].TabularParts.Remove(nameTablePart);
+
+                                    if (Message.Request("Видалити?") == ResponseType.Yes)
+                                        Conf!.Documents[document].TabularParts.Remove(nameTablePart);
+
                                     break;
                                 }
                             case 3:
                                 {
                                     string nameTablePart = documentPath[1];
                                     string nameField = documentPath[2];
-                                    Conf!.Documents[document].TabularParts[nameTablePart].Fields.Remove(nameField);
+
+                                    if (Message.Request("Видалити?") == ResponseType.Yes)
+                                        Conf!.Documents[document].TabularParts[nameTablePart].Fields.Remove(nameField);
+
                                     break;
                                 }
                         }
@@ -1164,7 +1225,9 @@ namespace Configurator
                         {
                             case 1:
                                 {
-                                    Conf!.RegistersInformation.Remove(register);
+                                    if (Message.Request("Видалити?") == ResponseType.Yes)
+                                        Conf!.RegistersInformation.Remove(register);
+
                                     break;
                                 }
                             case 2:
@@ -1173,12 +1236,15 @@ namespace Configurator
                                     string typeName = typeAndField[0];
                                     string fieldName = typeAndField[1];
 
-                                    if (typeName == "Dimension")
-                                        Conf!.RegistersInformation[register].DimensionFields.Remove(fieldName);
-                                    else if (typeName == "Resources")
-                                        Conf!.RegistersInformation[register].ResourcesFields.Remove(fieldName);
-                                    else
-                                        Conf!.RegistersInformation[register].PropertyFields.Remove(fieldName);
+                                    if (Message.Request("Видалити?") == ResponseType.Yes)
+                                    {
+                                        if (typeName == "Dimension")
+                                            Conf!.RegistersInformation[register].DimensionFields.Remove(fieldName);
+                                        else if (typeName == "Resources")
+                                            Conf!.RegistersInformation[register].ResourcesFields.Remove(fieldName);
+                                        else
+                                            Conf!.RegistersInformation[register].PropertyFields.Remove(fieldName);
+                                    }
 
                                     break;
                                 }
@@ -1195,7 +1261,9 @@ namespace Configurator
                         {
                             case 1:
                                 {
-                                    Conf!.RegistersAccumulation.Remove(register);
+                                    if (Message.Request("Видалити?") == ResponseType.Yes)
+                                        Conf!.RegistersAccumulation.Remove(register);
+
                                     break;
                                 }
                             case 2:
@@ -1204,12 +1272,15 @@ namespace Configurator
                                     string typeName = typeAndField[0];
                                     string fieldName = typeAndField[1];
 
-                                    if (typeName == "Dimension")
-                                        Conf!.RegistersAccumulation[register].DimensionFields.Remove(fieldName);
-                                    else if (typeName == "Resources")
-                                        Conf!.RegistersAccumulation[register].ResourcesFields.Remove(fieldName);
-                                    else
-                                        Conf!.RegistersAccumulation[register].PropertyFields.Remove(fieldName);
+                                    if (Message.Request("Видалити?") == ResponseType.Yes)
+                                    {
+                                        if (typeName == "Dimension")
+                                            Conf!.RegistersAccumulation[register].DimensionFields.Remove(fieldName);
+                                        else if (typeName == "Resources")
+                                            Conf!.RegistersAccumulation[register].ResourcesFields.Remove(fieldName);
+                                        else
+                                            Conf!.RegistersAccumulation[register].PropertyFields.Remove(fieldName);
+                                    }
 
                                     break;
                                 }
@@ -1225,10 +1296,30 @@ namespace Configurator
                             string enumName = enumAndField[0];
                             string fieldName = enumAndField[1];
 
-                            Conf!.Enums[enumName].Fields.Remove(fieldName);
+                            if (Message.Request("Видалити?") == ResponseType.Yes)
+                                Conf!.Enums[enumName].Fields.Remove(fieldName);
                         }
                         else
-                            Conf!.Enums.Remove(name);
+                        {
+                            List<string> ListPointers = Conf!.SearchForPointersEnum("Перелічення." + name);
+
+                            if (ListPointers.Count == 0)
+                            {
+                                if (Message.Request("Видалити?") == ResponseType.Yes)
+                                    Conf!.Enums.Remove(name);
+                            }
+                            else
+                            {
+                                string textListPointer = "Знайденно " + ListPointers.Count.ToString() + " вказівники на перелічення \"" + name + "\":\n";
+
+                                foreach (string item in ListPointers)
+                                    textListPointer += " -> " + item + "\n";
+
+                                textListPointer += "\nВидалитити неможливо";
+
+                                Message.Error(textListPointer);
+                            }
+                        }
 
                         break;
                     }
