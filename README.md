@@ -13,7 +13,6 @@
 Скачати програму [accounting.org.ua](https://accounting.org.ua/configurator.html)
 
 <br/>
-<br/>
     
 Для запуску на <b>Windows:</b>
 
