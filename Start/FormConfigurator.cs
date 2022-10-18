@@ -1425,7 +1425,12 @@ namespace Configurator
                         {
                             case 1:
                                 {
-                                    Conf!.RegistersInformation.Remove(register);
+                                    ConfigurationRegistersInformation newRegInfo = Conf!.RegistersInformation[register].Copy();
+                                    newRegInfo.Name += GenerateName.GetNewName();
+
+                                    if (!Conf!.RegistersInformation.ContainsKey(newRegInfo.Name))
+                                        Conf!.AppendRegistersInformation(newRegInfo);
+
                                     break;
                                 }
                             case 2:
@@ -1434,12 +1439,32 @@ namespace Configurator
                                     string typeName = typeAndField[0];
                                     string fieldName = typeAndField[1];
 
+                                    ConfigurationObjectField newField;
+
                                     if (typeName == "Dimension")
-                                        Conf!.RegistersInformation[register].DimensionFields.Remove(fieldName);
+                                        newField = Conf!.RegistersInformation[register].DimensionFields[fieldName].Copy();
                                     else if (typeName == "Resources")
-                                        Conf!.RegistersInformation[register].ResourcesFields.Remove(fieldName);
+                                        newField = Conf!.RegistersInformation[register].ResourcesFields[fieldName].Copy();
                                     else
-                                        Conf!.RegistersInformation[register].PropertyFields.Remove(fieldName);
+                                        newField = Conf!.RegistersInformation[register].PropertyFields[fieldName].Copy();
+
+                                    newField.Name += GenerateName.GetNewName();
+
+                                    if (typeName == "Dimension")
+                                    {
+                                        if (!Conf!.RegistersInformation[register].DimensionFields.ContainsKey(newField.Name))
+                                            Conf!.RegistersInformation[register].AppendDimensionField(newField);
+                                    }
+                                    else if (typeName == "Resources")
+                                    {
+                                        if (!Conf!.RegistersInformation[register].ResourcesFields.ContainsKey(newField.Name))
+                                            Conf!.RegistersInformation[register].AppendResourcesField(newField);
+                                    }
+                                    else
+                                    {
+                                        if (!Conf!.RegistersInformation[register].PropertyFields.ContainsKey(newField.Name))
+                                            Conf!.RegistersInformation[register].AppendPropertyField(newField);
+                                    }
 
                                     break;
                                 }
@@ -1456,7 +1481,12 @@ namespace Configurator
                         {
                             case 1:
                                 {
-                                    Conf!.RegistersAccumulation.Remove(register);
+                                    ConfigurationRegistersAccumulation newRegAccum = Conf!.RegistersAccumulation[register].Copy();
+                                    newRegAccum.Name += GenerateName.GetNewName();
+
+                                    if (!Conf!.RegistersAccumulation.ContainsKey(newRegAccum.Name))
+                                        Conf!.AppendRegistersAccumulation(newRegAccum);
+
                                     break;
                                 }
                             case 2:
@@ -1465,12 +1495,32 @@ namespace Configurator
                                     string typeName = typeAndField[0];
                                     string fieldName = typeAndField[1];
 
+                                    ConfigurationObjectField newField;
+
                                     if (typeName == "Dimension")
-                                        Conf!.RegistersAccumulation[register].DimensionFields.Remove(fieldName);
+                                        newField = Conf!.RegistersAccumulation[register].DimensionFields[fieldName].Copy();
                                     else if (typeName == "Resources")
-                                        Conf!.RegistersAccumulation[register].ResourcesFields.Remove(fieldName);
+                                        newField = Conf!.RegistersAccumulation[register].ResourcesFields[fieldName].Copy();
                                     else
-                                        Conf!.RegistersAccumulation[register].PropertyFields.Remove(fieldName);
+                                        newField = Conf!.RegistersAccumulation[register].PropertyFields[fieldName].Copy();
+
+                                    newField.Name += GenerateName.GetNewName();
+
+                                    if (typeName == "Dimension")
+                                    {
+                                        if (!Conf!.RegistersAccumulation[register].DimensionFields.ContainsKey(newField.Name))
+                                            Conf!.RegistersAccumulation[register].AppendDimensionField(newField);
+                                    }
+                                    else if (typeName == "Resources")
+                                    {
+                                        if (!Conf!.RegistersAccumulation[register].ResourcesFields.ContainsKey(newField.Name))
+                                            Conf!.RegistersAccumulation[register].AppendResourcesField(newField);
+                                    }
+                                    else
+                                    {
+                                        if (!Conf!.RegistersAccumulation[register].PropertyFields.ContainsKey(newField.Name))
+                                            Conf!.RegistersAccumulation[register].AppendPropertyField(newField);
+                                    }
 
                                     break;
                                 }
@@ -1486,10 +1536,21 @@ namespace Configurator
                             string enumName = enumAndField[0];
                             string fieldName = enumAndField[1];
 
-                            Conf!.Enums[enumName].Fields.Remove(fieldName);
+                            ConfigurationEnumField newField = Conf!.Enums[enumName].Fields[fieldName].Copy();
+                            newField.Name += GenerateName.GetNewName();
+
+                            if (!Conf!.Enums[enumName].Fields.ContainsKey(newField.Name))
+                                Conf!.Enums[enumName].AppendField(newField);
+
                         }
                         else
-                            Conf!.Enums.Remove(name);
+                        {
+                            ConfigurationEnums newEnum = Conf!.Enums[name].Copy();
+                            newEnum.Name += GenerateName.GetNewName();
+
+                            if (!Conf!.Enums.ContainsKey(newEnum.Name))
+                                Conf!.AppendEnum(newEnum);
+                        }
 
                         break;
                     }
