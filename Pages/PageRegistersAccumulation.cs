@@ -22,6 +22,7 @@ namespace Configurator
         ListBox listBoxResourcesFields = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxPropertyFields = new ListBox() { SelectionMode = SelectionMode.Single };
         Entry entryName = new Entry() { WidthRequest = 500 };
+        Entry entryTable = new Entry() { WidthRequest = 500 };
         TextView textViewDesc = new TextView();
 
         public PageRegistersAccumulation() : base()
@@ -75,6 +76,13 @@ namespace Configurator
 
             hBoxName.PackStart(new Label("Назва:"), false, false, 5);
             hBoxName.PackStart(entryName, false, false, 5);
+
+            //Таблиця
+            HBox hBoxTable = new HBox() { Halign = Align.End };
+            vBox.PackStart(hBoxTable, false, false, 5);
+
+            hBoxTable.PackStart(new Label("Таблиця:"), false, false, 5);
+            hBoxTable.PackStart(entryTable, false, false, 5);
 
             //Опис
             HBox hBoxDesc = new HBox() { Halign = Align.End };
@@ -230,6 +238,12 @@ namespace Configurator
             FillPropertyFields();
 
             entryName.Text = ConfRegister.Name;
+
+            if (IsNew)
+                entryTable.Text = Configuration.GetNewUnigueTableName(Program.Kernel!);
+            else
+                entryTable.Text = ConfRegister.Table;
+
             textViewDesc.Buffer.Text = ConfRegister.Desc;
         }
 
@@ -254,6 +268,7 @@ namespace Configurator
         void GetValue()
         {
             ConfRegister.Name = entryName.Text;
+            ConfRegister.Table = entryTable.Text;
             ConfRegister.Desc = textViewDesc.Buffer.Text;
         }
 

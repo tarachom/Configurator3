@@ -246,6 +246,7 @@ namespace Configurator
         void GetValue()
         {
             ConfDirectory.Name = entryName.Text;
+            ConfDirectory.Table = entryTable.Text;
             ConfDirectory.Desc = textViewDesc.Buffer.Text;
 
             ConfDirectory.TriggerFunctions.BeforeSave = entryBeforeSave.Text;

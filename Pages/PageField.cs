@@ -69,7 +69,7 @@ namespace Configurator
             hBoxName.PackStart(new Label("Назва:"), false, false, 5);
             hBoxName.PackStart(entryName, false, false, 5);
 
-            //Назва
+            //Поле
             HBox hBoxColumn = new HBox() { Halign = Align.End };
             vBox.PackStart(hBoxColumn, false, false, 5);
 
@@ -149,6 +149,12 @@ namespace Configurator
         public void SetValue()
         {
             entryName.Text = Field.Name;
+
+            if (IsNew)
+                entryColumn.Text = Configuration.GetNewUnigueColumnName(Program.Kernel!, Table, AllFields ?? Fields);
+            else
+                entryColumn.Text = Field.NameInTable;
+
             textViewDesc.Buffer.Text = Field.Desc;
 
             comboBoxType.ActiveId = Field.Type;
@@ -164,11 +170,6 @@ namespace Configurator
 
             checkButtonIndex.Active = Field.IsIndex;
             checkButtonPresentation.Active = Field.IsPresentation;
-
-            if (IsNew)
-                entryColumn.Text = Configuration.GetNewUnigueColumnName(Program.Kernel!, Table, AllFields ?? Fields);
-            else
-                entryColumn.Text = Field.NameInTable;
 
             OnComboBoxTypeChanged(comboBoxType, new EventArgs());
         }

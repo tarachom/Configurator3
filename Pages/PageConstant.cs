@@ -20,6 +20,7 @@ namespace Configurator
 
         ListBox listBoxTableParts = new ListBox() { SelectionMode = SelectionMode.Single };
         Entry entryName = new Entry() { WidthRequest = 500 };
+        Entry entryColumn = new Entry() { WidthRequest = 500 };
         TextView textViewDesc = new TextView();
         ComboBoxText comboBoxBlock = new ComboBoxText();
         ComboBoxText comboBoxType = new ComboBoxText();
@@ -105,6 +106,13 @@ namespace Configurator
             hBoxName.PackStart(new Label("Назва:"), false, false, 5);
             hBoxName.PackStart(entryName, false, false, 5);
 
+            //Поле
+            HBox hBoxColumn = new HBox() { Halign = Align.End };
+            vBox.PackStart(hBoxColumn, false, false, 5);
+
+            hBoxColumn.PackStart(new Label("Назва в таблиці:"), false, false, 5);
+            hBoxColumn.PackStart(entryColumn, false, false, 5);
+
             //Блок
             HBox hBoxBlock = new HBox() { Halign = Align.End };
             vBox.PackStart(hBoxBlock, false, false, 5);
@@ -167,11 +175,32 @@ namespace Configurator
 
         #region Присвоєння / зчитування значень віджетів
 
+        Dictionary<string, ConfigurationObjectField> GetConstantsAllFields()
+        {
+            Dictionary<string, ConfigurationObjectField> ConstantsAllFields = new Dictionary<string, ConfigurationObjectField>();
+            foreach (ConfigurationConstantsBlock block in Conf!.ConstantsBlock.Values)
+            {
+                foreach (ConfigurationConstants constants in block.Constants.Values)
+                {
+                    string fullName = block.BlockName + "." + constants.Name;
+                    ConstantsAllFields.Add(fullName, new ConfigurationObjectField(fullName, constants.NameInTable, constants.Type, constants.Pointer, constants.Desc));
+                }
+            }
+
+            return ConstantsAllFields;
+        }
+
         public void SetValue()
         {
             FillTabularParts();
 
             entryName.Text = ConfConstants.Name;
+
+            if (IsNew)
+                entryColumn.Text = Configuration.GetNewUnigueColumnName(Program.Kernel!, "tab_constants", GetConstantsAllFields());
+            else
+                entryColumn.Text = ConfConstants.NameInTable;
+
             textViewDesc.Buffer.Text = ConfConstants.Desc;
 
             comboBoxBlock.ActiveId = ConfConstants.Block.BlockName;

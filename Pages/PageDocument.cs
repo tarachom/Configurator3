@@ -21,6 +21,7 @@ namespace Configurator
         ListBox listBoxFields = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxTableParts = new ListBox() { SelectionMode = SelectionMode.Single };
         Entry entryName = new Entry() { WidthRequest = 500 };
+        Entry entryTable = new Entry() { WidthRequest = 500 };
         Entry entrySpend = new Entry() { WidthRequest = 500 };
         Entry entryClearSpend = new Entry() { WidthRequest = 500 };
         Entry entryBeforeSave = new Entry() { WidthRequest = 500 };
@@ -65,6 +66,13 @@ namespace Configurator
 
             hBoxName.PackStart(new Label("Назва:"), false, false, 5);
             hBoxName.PackStart(entryName, false, false, 5);
+
+            //Таблиця
+            HBox hBoxTable = new HBox() { Halign = Align.End };
+            vBox.PackStart(hBoxTable, false, false, 5);
+
+            hBoxTable.PackStart(new Label("Таблиця:"), false, false, 5);
+            hBoxTable.PackStart(entryTable, false, false, 5);
 
             //Опис
             HBox hBoxDesc = new HBox() { Halign = Align.End };
@@ -231,6 +239,12 @@ namespace Configurator
             FillTabularParts();
 
             entryName.Text = ConfDocument.Name;
+
+            if (IsNew)
+                entryTable.Text = Configuration.GetNewUnigueTableName(Program.Kernel!);
+            else
+                entryTable.Text = ConfDocument.Table;
+
             textViewDesc.Buffer.Text = ConfDocument.Desc;
 
             entrySpend.Text = ConfDocument.SpendFunctions.Spend;
@@ -256,6 +270,7 @@ namespace Configurator
         void GetValue()
         {
             ConfDocument.Name = entryName.Text;
+            ConfDocument.Table = entryTable.Text;
             ConfDocument.Desc = textViewDesc.Buffer.Text;
 
             ConfDocument.SpendFunctions.Spend = entrySpend.Text;
