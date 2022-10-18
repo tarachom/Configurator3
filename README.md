@@ -10,8 +10,8 @@
     Вигрузка та загрузка даних або конфігурації
     Обслуговування бази даних
 
-<br/>
 Скачати програму [accounting.org.ua](https://accounting.org.ua/configurator.html)
+
 <br/>
 <br/>
     
