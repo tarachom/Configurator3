@@ -1,6 +1,6 @@
 # Конфігуратор 3
 
-<img src="https://accounting.org.ua/images/configuration.png" /> <b>Програма для проектування бази даних PostgreSQL</b> | .net 6, Linux, Windows <br/><br/>
+<img src="https://accounting.org.ua/images/configuration.png" /> <b>Програма для проектування бази даних PostgreSQL</b> | .net 6, Linux, Windows <br/>
     
  <b>Можливості:</b>
     
@@ -12,7 +12,7 @@
 
  <b>Завантажити:</b>
  
-Програму на сайті [accounting.org.ua](https://accounting.org.ua/configurator.html)
+Програму [accounting.org.ua](https://accounting.org.ua/configurator.html)
 
 Середовище розробки [Visual Studio Code](https://code.visualstudio.com)
 
