@@ -39,11 +39,6 @@ namespace Configurator
 
             hBox.PackStart(bClose, false, false, 10);
 
-            Button bCopy = new Button("Копіювати");
-            bCopy.Clicked += OnCopyClick;
-
-            hBox.PackStart(bCopy, false, false, 10);
-
             PackStart(hBox, false, false, 10);
 
             HPaned hPaned = new HPaned() { BorderWidth = 5 };
@@ -306,28 +301,6 @@ namespace Configurator
 
             GeneralForm?.LoadTree();
             GeneralForm?.RenameCurrentPageNotebook($"Регістр: {ConfRegister.Name}");
-        }
-
-        void OnCopyClick(object? sender, EventArgs args)
-        {
-            string newName = ConfRegister.Name + "_copy";
-
-            GeneralForm?.CreateNotebookPage($"Регістр: {newName}", () =>
-            {
-                ConfigurationRegistersInformation newRegister = ConfRegister.Copy();
-                newRegister.Name = newName;
-
-                PageRegisterInformation page = new PageRegisterInformation()
-                {
-                    IsNew = true,
-                    GeneralForm = GeneralForm,
-                    ConfRegister = newRegister
-                };
-
-                page.SetValue();
-
-                return page;
-            });
         }
 
         #region Dimension Fields

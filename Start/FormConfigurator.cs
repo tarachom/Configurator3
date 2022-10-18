@@ -1504,7 +1504,7 @@ namespace Configurator
                     GeneralForm = this
                 };
 
-                page.SetDefValue();
+                page.SetValue();
 
                 return page;
             });

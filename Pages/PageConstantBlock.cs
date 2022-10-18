@@ -81,7 +81,10 @@ namespace Configurator
             HBox hBox = new HBox() { Halign = Align.Fill };
             vBox.PackStart(hBox, false, false, 5);
 
-            hBox.PackStart(new Label("help"), false, false, 5);
+            Button bAddConst = new Button("Додати нову константу");
+            bAddConst.Clicked += OnAddConstClick;
+
+            hBox.PackStart(bAddConst, false, false, 10);
 
             hPaned.Pack2(vBox, false, false);
         }
@@ -144,6 +147,30 @@ namespace Configurator
 
             GeneralForm?.LoadTree();
             GeneralForm?.RenameCurrentPageNotebook($"Блок констант: {ConfConstantsBlock.BlockName}");
+        }
+
+        void OnAddConstClick(object? sender, EventArgs args)
+        {
+            GeneralForm?.CreateNotebookPage("Константа *", () =>
+            {
+                ConfigurationConstants ConfConstants = new ConfigurationConstants();
+
+                if (Conf!.ConstantsBlock.ContainsKey(ConfConstantsBlock.BlockName))
+                    ConfConstants.Block = new ConfigurationConstantsBlock(ConfConstantsBlock.BlockName);
+                else if (Conf!.ConstantsBlock.Count != 0)
+                    ConfConstants.Block = Conf!.ConstantsBlock.Values.First<ConfigurationConstantsBlock>();
+
+                PageConstant page = new PageConstant()
+                {
+                    ConfConstants = ConfConstants,
+                    IsNew = true,
+                    GeneralForm = GeneralForm
+                };
+
+                page.SetValue();
+
+                return page;
+            });
         }
     }
 }

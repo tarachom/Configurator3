@@ -37,11 +37,6 @@ namespace Configurator
 
             hBox.PackStart(bClose, false, false, 10);
 
-            Button bCopy = new Button("Копіювати");
-            bCopy.Clicked += OnCopyClick;
-
-            hBox.PackStart(bCopy, false, false, 10);
-
             PackStart(hBox, false, false, 10);
 
             HPaned hPaned = new HPaned() { BorderWidth = 5 };
@@ -200,28 +195,6 @@ namespace Configurator
 
             GeneralForm?.LoadTree();
             GeneralForm?.RenameCurrentPageNotebook($"Перелічення: {ConfEnum.Name}");
-        }
-
-        void OnCopyClick(object? sender, EventArgs args)
-        {
-            string newName = ConfEnum.Name + "_copy";
-
-            GeneralForm?.CreateNotebookPage($"Перелічення: {newName}", () =>
-            {
-                ConfigurationEnums newEnum = ConfEnum.Copy();
-                newEnum.Name = newName;
-
-                PageEnum page = new PageEnum()
-                {
-                    IsNew = true,
-                    GeneralForm = GeneralForm,
-                    ConfEnum = newEnum
-                };
-
-                page.SetValue();
-
-                return page;
-            });
         }
 
         #region Fields

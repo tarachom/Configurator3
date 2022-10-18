@@ -41,11 +41,6 @@ namespace Configurator
 
             hBox.PackStart(bClose, false, false, 10);
 
-            Button bCopy = new Button("Копіювати");
-            bCopy.Clicked += OnCopyClick;
-
-            hBox.PackStart(bCopy, false, false, 10);
-
             PackStart(hBox, false, false, 10);
 
             HPaned hPaned = new HPaned() { BorderWidth = 5 };
@@ -182,6 +177,12 @@ namespace Configurator
             comboBoxBlock.ActiveId = ConfConstants.Block.BlockName;
             comboBoxType.ActiveId = ConfConstants.Type;
 
+            if (comboBoxBlock.Active == -1)
+                comboBoxBlock.Active = 0;
+
+            if (comboBoxType.Active == -1)
+                comboBoxType.Active = 0;
+
             if (comboBoxType.ActiveId == "pointer")
                 comboBoxPointer.ActiveId = ConfConstants.Pointer;
 
@@ -195,14 +196,6 @@ namespace Configurator
         {
             foreach (ConfigurationObjectTablePart tablePart in ConfConstants.TabularParts.Values)
                 listBoxTableParts.Add(new Label(tablePart.Name) { Name = tablePart.Name, Halign = Align.Start });
-        }
-
-        public void SetDefValue()
-        {
-            comboBoxBlock.Active = 0;
-            comboBoxType.Active = 0;
-
-            OnComboBoxTypeChanged(comboBoxType, new EventArgs());
         }
 
         void GetValue()
@@ -239,6 +232,12 @@ namespace Configurator
                 return;
             }
 
+            if (comboBoxBlock.Active == -1)
+            {
+                Message.Error($"Не вибраний блок");
+                return;
+            }
+
             if (!Conf!.ConstantsBlock.ContainsKey(comboBoxBlock.ActiveId))
             {
                 Message.Error($"Відсутній блок {comboBoxBlock.ActiveId}");
@@ -269,6 +268,12 @@ namespace Configurator
 
             GetValue();
 
+            if (comboBoxType.Active == -1)
+            {
+                Message.Error($"Не вибраний тип даних");
+                return;
+            }
+
             if (ConfConstants.Type == "pointer" || ConfConstants.Type == "enum")
                 if (String.IsNullOrEmpty(ConfConstants.Pointer))
                 {
@@ -282,28 +287,6 @@ namespace Configurator
 
             GeneralForm?.LoadTree();
             GeneralForm?.RenameCurrentPageNotebook($"Константа: {ConfConstants.Name}");
-        }
-
-        void OnCopyClick(object? sender, EventArgs args)
-        {
-            string newName = ConfConstants.Name + "_copy";
-
-            GeneralForm?.CreateNotebookPage($"Константа: {newName}", () =>
-            {
-                ConfigurationConstants newConst = ConfConstants.Copy();
-                newConst.Name = newName;
-
-                PageConstant page = new PageConstant()
-                {
-                    IsNew = true,
-                    GeneralForm = GeneralForm,
-                    ConfConstants = newConst
-                };
-
-                page.SetValue();
-
-                return page;
-            });
         }
 
         void OnTabularPartsButtonPress(object? sender, ButtonPressEventArgs args)

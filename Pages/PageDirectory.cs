@@ -41,11 +41,6 @@ namespace Configurator
 
             hBox.PackStart(bClose, false, false, 10);
 
-            Button bCopy = new Button("Копіювати");
-            bCopy.Clicked += OnCopyClick;
-
-            hBox.PackStart(bCopy, false, false, 10);
-
             PackStart(hBox, false, false, 10);
 
             HPaned hPaned = new HPaned() { BorderWidth = 5 };
@@ -288,28 +283,6 @@ namespace Configurator
 
             GeneralForm?.LoadTree();
             GeneralForm?.RenameCurrentPageNotebook($"Довідник: {ConfDirectory.Name}");
-        }
-
-        void OnCopyClick(object? sender, EventArgs args)
-        {
-            string newName = ConfDirectory.Name + "_copy";
-
-            GeneralForm?.CreateNotebookPage($"Довідник: {newName}", () =>
-            {
-                ConfigurationDirectories newDirectory = ConfDirectory.Copy();
-                newDirectory.Name = newName;
-
-                PageDirectory page = new PageDirectory()
-                {
-                    IsNew = true,
-                    GeneralForm = GeneralForm,
-                    ConfDirectory = newDirectory
-                };
-
-                page.SetValue();
-
-                return page;
-            });
         }
 
         #region Fields
