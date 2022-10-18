@@ -20,6 +20,8 @@ namespace Configurator
 
         ListBox listBoxFields = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxTableParts = new ListBox() { SelectionMode = SelectionMode.Single };
+        ListBox listBoxAllowRegAccum = new ListBox() { SelectionMode = SelectionMode.Single };
+
         Entry entryName = new Entry() { WidthRequest = 500 };
         Entry entryTable = new Entry() { WidthRequest = 500 };
         Entry entrySpend = new Entry() { WidthRequest = 500 };
@@ -85,6 +87,22 @@ namespace Configurator
             scrollTextView.Add(textViewDesc);
 
             hBoxDesc.PackStart(scrollTextView, false, false, 5);
+
+            //Заголовок списку регістрів
+            HBox hBoxAllowRegAcummInfo = new HBox() { Halign = Align.Center };
+            vBox.PackStart(hBoxAllowRegAcummInfo, false, false, 5);
+            hBoxAllowRegAcummInfo.PackStart(new Label("Робить рухи по регістрах"), false, false, 5);
+
+            //Робить рухи по регістрах
+            HBox hBoxAllowRegAcumm = new HBox() { Halign = Align.End };
+            vBox.PackStart(hBoxAllowRegAcumm, false, false, 5);
+
+            ScrolledWindow scrollAllowList = new ScrolledWindow() { ShadowType = ShadowType.In };
+            scrollAllowList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+            scrollAllowList.SetSizeRequest(500, 200);
+
+            scrollAllowList.Add(listBoxAllowRegAccum);
+            hBoxAllowRegAcumm.PackStart(scrollAllowList, true, true, 5);
 
             //Заголовок блоку Функції
             HBox hBoxSpendInfo = new HBox() { Halign = Align.Center };
@@ -260,8 +278,20 @@ namespace Configurator
             entryAfterSave.Text = ConfDocument.TriggerFunctions.AfterSave;
             entryBeforeDelete.Text = ConfDocument.TriggerFunctions.BeforeDelete;
 
+            FillAllowRegAccum();
             FillFields();
             FillTabularParts();
+        }
+
+        void FillAllowRegAccum()
+        {
+            foreach (ConfigurationRegistersAccumulation regAccum in Conf!.RegistersAccumulation.Values)
+                listBoxAllowRegAccum.Add(
+                    new CheckButton(regAccum.Name)
+                    {
+                        Name = regAccum.Name,
+                        Active = ConfDocument.AllowRegisterAccumulation.Contains(regAccum.Name)
+                    });
         }
 
         void FillFields()
@@ -288,6 +318,16 @@ namespace Configurator
             ConfDocument.TriggerFunctions.BeforeSave = entryBeforeSave.Text;
             ConfDocument.TriggerFunctions.AfterSave = entryAfterSave.Text;
             ConfDocument.TriggerFunctions.BeforeDelete = entryBeforeDelete.Text;
+
+            //Доспупні регістри
+            ConfDocument.AllowRegisterAccumulation.Clear();
+
+            foreach (ListBoxRow item in listBoxAllowRegAccum.Children)
+            {
+                CheckButton cb = (CheckButton)item.Child;
+                if (cb.Active)
+                    ConfDocument.AllowRegisterAccumulation.Add(cb.Name);
+            }
         }
 
         #endregion
