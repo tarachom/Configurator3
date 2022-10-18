@@ -1270,7 +1270,12 @@ namespace Configurator
                         if (!Conf!.ConstantsBlock.ContainsKey(newConstantBlock.BlockName))
                         {
                             foreach (ConfigurationConstants itemConst in newConstantBlock.Constants.Values)
+                            {
                                 itemConst.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!, "tab_constants", AllFields);
+
+                                foreach (ConfigurationObjectTablePart tablePart in itemConst.TabularParts.Values)
+                                    tablePart.Table = Configuration.GetNewUnigueTableName(Program.Kernel!);
+                            }
 
                             Conf!.AppendConstantsBlock(newConstantBlock);
                         }
