@@ -1,8 +1,6 @@
 # Конфігуратор 3
 
 <img src="https://accounting.org.ua/images/configuration.png" /> <b>Програма для проектування бази даних</b> | .net 6, Linux, Windows <br/><br/>
-
-Скачати програму [accounting.org.ua](https://accounting.org.ua/configurator.html) <br/>
     
  <b>Можливості:</b>
     
@@ -13,6 +11,7 @@
     Обслуговування бази даних
 
 <br/>
+Скачати програму [accounting.org.ua](https://accounting.org.ua/configurator.html)
 <br/>
     
 Для запуску на <b>Windows:</b>
