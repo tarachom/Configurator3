@@ -6,6 +6,7 @@ namespace Configurator
 {
     class FormConfigurator : Window
     {
+        public object locked = new Object();
         public ConfigurationParam? OpenConfigurationParam { get; set; }
         Configuration? Conf
         {
@@ -321,31 +322,40 @@ namespace Configurator
 
         public void LoadTree()
         {
-            treeStore.Clear();
+            lock (locked)
+            {
+                treeStore.Clear();
 
-            TreeIter contantsIter = treeStore.AppendValues("Константи");
-            LoadConstants(contantsIter);
-            IsExpand(contantsIter);
+                TreeIter contantsIter = treeStore.AppendValues("Константи");
+                LoadConstants(contantsIter);
+                IsExpand(contantsIter);
 
-            TreeIter directoriesIter = treeStore.AppendValues("Довідники");
-            LoadDirectories(directoriesIter);
-            IsExpand(directoriesIter);
+                TreeIter directoriesIter = treeStore.AppendValues("Довідники");
+                LoadDirectories(directoriesIter);
+                IsExpand(directoriesIter);
 
-            TreeIter documentsIter = treeStore.AppendValues("Документи");
-            LoadDocuments(documentsIter);
-            IsExpand(documentsIter);
+                TreeIter documentsIter = treeStore.AppendValues("Документи");
+                LoadDocuments(documentsIter);
+                IsExpand(documentsIter);
 
-            TreeIter enumsIter = treeStore.AppendValues("Перелічення");
-            LoadEnums(enumsIter);
-            IsExpand(enumsIter);
+                TreeIter enumsIter = treeStore.AppendValues("Перелічення");
+                LoadEnums(enumsIter);
+                IsExpand(enumsIter);
 
-            TreeIter registersInformationIter = treeStore.AppendValues("Регістри інформації");
-            LoadRegistersInformation(registersInformationIter);
-            IsExpand(registersInformationIter);
+                TreeIter registersInformationIter = treeStore.AppendValues("Регістри інформації");
+                LoadRegistersInformation(registersInformationIter);
+                IsExpand(registersInformationIter);
 
-            TreeIter registersAccumulationIter = treeStore.AppendValues("Регістри накопичення");
-            LoadRegistersAccumulation(registersAccumulationIter);
-            IsExpand(registersAccumulationIter);
+                TreeIter registersAccumulationIter = treeStore.AppendValues("Регістри накопичення");
+                LoadRegistersAccumulation(registersAccumulationIter);
+                IsExpand(registersAccumulationIter);
+            }
+        }
+
+        public void LoadTreeAsync()
+        {
+            Thread thread = new Thread(new ThreadStart(LoadTree));
+            thread.Start();
         }
 
         TreeStore AddTreeColumn()
@@ -438,8 +448,6 @@ namespace Configurator
 
             vbox.PackStart(hPaned, true, true, 0);
             ShowAll();
-
-            LoadTree();
         }
 
         Menu CreateAddMenu()

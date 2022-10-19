@@ -153,6 +153,8 @@ namespace Configurator
                     сonfigurator.OpenConfigurationParam = ConfigurationParamCollection.GetConfigurationParam(selectedRows[0].Name);
                     сonfigurator.Show();
 
+                    сonfigurator.LoadTreeAsync();
+
                     Hide();
                 }
                 else
