@@ -390,6 +390,20 @@ namespace Configurator
             return ConstantsAllFields;
         }
 
+        public void SetValue()
+        {
+            if (OpenConfigurationParam != null)
+            {
+                statusBar.Halign = Align.Start;
+                statusBar.Add(new Label($"Конфігурація: {OpenConfigurationParam.ConfigurationName} "));
+                statusBar.Add(new Separator(Orientation.Vertical));
+                statusBar.Add(new Label($" Сервер: {OpenConfigurationParam.DataBaseServer} "));
+                statusBar.Add(new Separator(Orientation.Vertical));
+                statusBar.Add(new Label($" База даних: {OpenConfigurationParam.DataBaseBaseName} "));
+                statusBar.ShowAll();
+            }
+        }
+
         #endregion
 
         public FormConfigurator() : base("Конфігуратор")
@@ -406,24 +420,7 @@ namespace Configurator
             //MenuBar
             vbox.PackStart(CreateMenuBar(), false, false, 0);
 
-            Toolbar toolbar = new Toolbar();
-            vbox.PackStart(toolbar, false, false, 0);
-
-            MenuToolButton menuToolButton = new MenuToolButton(Stock.New) { Label = "Додати", IsImportant = true };
-            menuToolButton.Menu = CreateAddMenu();
-            toolbar.Add(menuToolButton);
-
-            ToolButton refreshButton = new ToolButton(Stock.Refresh) { Label = "Обновити", IsImportant = true };
-            refreshButton.Clicked += OnRefreshClick;
-            toolbar.Add(refreshButton);
-
-            ToolButton deleteButton = new ToolButton(Stock.Clear) { Label = "Видалити", IsImportant = true };
-            deleteButton.Clicked += OnDeleteClick;
-            toolbar.Add(deleteButton);
-
-            ToolButton copyButton = new ToolButton(Stock.Copy) { Label = "Копіювати", IsImportant = true };
-            copyButton.Clicked += OnCopyClick;
-            toolbar.Add(copyButton);
+            vbox.PackStart(CreateToolbar(), false, false, 0);
 
             hPaned = new HPaned();
             hPaned.Position = 200;
@@ -453,42 +450,52 @@ namespace Configurator
             vbox.PackStart(hPaned, true, true, 0);
 
             statusBar = new Statusbar();
-            statusBar.Push(1, "Ready");
             vbox.PackStart(statusBar, false, false, 0);
 
             ShowAll();
         }
 
+        Toolbar CreateToolbar()
+        {
+            Toolbar toolbar = new Toolbar();
+
+            MenuToolButton menuToolButton = new MenuToolButton(Stock.New) { Label = "Додати", IsImportant = true };
+            menuToolButton.Menu = CreateAddMenu();
+            toolbar.Add(menuToolButton);
+
+            ToolButton refreshButton = new ToolButton(Stock.Refresh) { Label = "Обновити", IsImportant = true };
+            refreshButton.Clicked += OnRefreshClick;
+            toolbar.Add(refreshButton);
+
+            ToolButton deleteButton = new ToolButton(Stock.Clear) { Label = "Видалити", IsImportant = true };
+            deleteButton.Clicked += OnDeleteClick;
+            toolbar.Add(deleteButton);
+
+            ToolButton copyButton = new ToolButton(Stock.Copy) { Label = "Копіювати", IsImportant = true };
+            copyButton.Clicked += OnCopyClick;
+            toolbar.Add(copyButton);
+
+            return toolbar;
+        }
         VBox CreateMenuBar()
         {
             MenuBar mb = new MenuBar();
 
-            Menu filemenu = new Menu();
-            MenuItem file = new MenuItem("File");
-            file.Submenu = filemenu;
+            Menu confMenu = new Menu();
+            MenuItem configurationItem = new MenuItem("Конфігурація");
+            configurationItem.Submenu = confMenu;
 
-            Menu viewmenu = new Menu();
-            MenuItem view = new MenuItem("View");
-            view.Submenu = viewmenu;
-
-            CheckMenuItem stat = new CheckMenuItem("View Statusbar");
-            stat.Toggle();
-            //stat.Toggled += OnStatusView;
-            viewmenu.Append(stat);
-
-            MenuItem exit = new MenuItem("Exit");
+            MenuItem saveConfiguration = new MenuItem("Зберегти конфігурацію");
             //exit.Activated += OnActivated;
-            filemenu.Append(exit);
+            confMenu.Append(saveConfiguration);
 
-            mb.Append(file);
-            mb.Append(view);
+            mb.Append(configurationItem);
 
             VBox vbox = new VBox(false, 2);
             vbox.PackStart(mb, false, false, 0);
 
             return vbox;
         }
-
         Menu CreateAddMenu()
         {
             Menu Menu = new Menu();
@@ -526,6 +533,8 @@ namespace Configurator
             return Menu;
         }
 
+        #region Notebook Page
+
         public void CloseCurrentPageNotebook()
         {
             topNotebook.RemovePage(topNotebook.CurrentPage);
@@ -550,6 +559,10 @@ namespace Configurator
 
             topNotebook.CurrentPage = numPage;
         }
+
+        #endregion
+
+        #region Event
 
         void OnRowActivated(object sender, RowActivatedArgs args)
         {
@@ -1784,6 +1797,8 @@ namespace Configurator
 
             LoadTree();
         }
+
+        #endregion
 
         #region Add Menu
 
