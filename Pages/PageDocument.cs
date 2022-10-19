@@ -91,7 +91,7 @@ namespace Configurator
             //Заголовок списку регістрів
             HBox hBoxAllowRegAcummInfo = new HBox() { Halign = Align.Center };
             vBox.PackStart(hBoxAllowRegAcummInfo, false, false, 5);
-            hBoxAllowRegAcummInfo.PackStart(new Label("Робить рухи по регістрах"), false, false, 5);
+            hBoxAllowRegAcummInfo.PackStart(new Label("Регістри які використовує документ"), false, false, 5);
 
             //Робить рухи по регістрах
             HBox hBoxAllowRegAcumm = new HBox() { Halign = Align.End };

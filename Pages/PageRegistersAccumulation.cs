@@ -18,12 +18,14 @@ namespace Configurator
         public FormConfigurator? GeneralForm { get; set; }
         public bool IsNew { get; set; } = true;
 
+        ListBox listBoxAllowDocumentSpend = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxDimensionFields = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxResourcesFields = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxPropertyFields = new ListBox() { SelectionMode = SelectionMode.Single };
         Entry entryName = new Entry() { WidthRequest = 500 };
         Entry entryTable = new Entry() { WidthRequest = 500 };
         TextView textViewDesc = new TextView();
+        ComboBoxText comboBoxTypeReg = new ComboBoxText();
 
         public PageRegistersAccumulation() : base()
         {
@@ -84,6 +86,16 @@ namespace Configurator
             hBoxTable.PackStart(new Label("Таблиця:"), false, false, 5);
             hBoxTable.PackStart(entryTable, false, false, 5);
 
+            //Тип
+            HBox hBoxTypeReg = new HBox() { Halign = Align.End };
+            vBox.PackStart(hBoxTypeReg, false, false, 5);
+
+            comboBoxTypeReg.Append(TypeRegistersAccumulation.Residues.ToString(), "Залишки");
+            comboBoxTypeReg.Append(TypeRegistersAccumulation.Turnover.ToString(), "Обороти");
+
+            hBoxTypeReg.PackStart(new Label("Вид регістру:"), false, false, 5);
+            hBoxTypeReg.PackStart(comboBoxTypeReg, false, false, 5);
+
             //Опис
             HBox hBoxDesc = new HBox() { Halign = Align.End };
             vBox.PackStart(hBoxDesc, false, false, 5);
@@ -95,6 +107,22 @@ namespace Configurator
             scrollTextView.Add(textViewDesc);
 
             hBoxDesc.PackStart(scrollTextView, false, false, 5);
+
+            //Заголовок списку документів
+            HBox hBoxAllowDocumentSpendCaption = new HBox() { Halign = Align.Center };
+            vBox.PackStart(hBoxAllowDocumentSpendCaption, false, false, 5);
+            hBoxAllowDocumentSpendCaption.PackStart(new Label("Документи які використовують цей регістр"), false, false, 5);
+
+            //Список документів
+            HBox hBoxAllowDocumentSpend = new HBox() { Halign = Align.End };
+            vBox.PackStart(hBoxAllowDocumentSpend, false, false, 5);
+
+            ScrolledWindow scrollAllowDocumentSpend = new ScrolledWindow() { ShadowType = ShadowType.In };
+            scrollAllowDocumentSpend.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+            scrollAllowDocumentSpend.SetSizeRequest(500, 200);
+
+            scrollAllowDocumentSpend.Add(listBoxAllowDocumentSpend);
+            hBoxAllowDocumentSpend.PackStart(scrollAllowDocumentSpend, true, true, 5);
 
             hPaned.Pack1(vBox, false, false);
         }
@@ -233,6 +261,7 @@ namespace Configurator
 
         public void SetValue()
         {
+            FillAllowDocumentSpend();
             FillDimensionFields();
             FillResourcesFields();
             FillPropertyFields();
@@ -244,7 +273,18 @@ namespace Configurator
             else
                 entryTable.Text = ConfRegister.Table;
 
+            comboBoxTypeReg.ActiveId = ConfRegister.TypeRegistersAccumulation.ToString();
+
+            if (comboBoxTypeReg.Active == -1)
+                comboBoxTypeReg.Active = 0;
+
             textViewDesc.Buffer.Text = ConfRegister.Desc;
+        }
+
+        void FillAllowDocumentSpend()
+        {
+            foreach (string field in ConfRegister.AllowDocumentSpend)
+                listBoxAllowDocumentSpend.Add(new Label(field) { Name = field, Halign = Align.Start });
         }
 
         void FillDimensionFields()
@@ -269,6 +309,7 @@ namespace Configurator
         {
             ConfRegister.Name = entryName.Text;
             ConfRegister.Table = entryTable.Text;
+            ConfRegister.TypeRegistersAccumulation = Enum.Parse<TypeRegistersAccumulation>(comboBoxTypeReg.ActiveId);
             ConfRegister.Desc = textViewDesc.Buffer.Text;
         }
 
@@ -282,7 +323,7 @@ namespace Configurator
 
             if (errorList.Length > 0)
             {
-                Message.Error(GeneralForm,$"{errorList}");
+                Message.Error(GeneralForm, $"{errorList}");
                 return;
             }
 
@@ -290,7 +331,7 @@ namespace Configurator
             {
                 if (Conf!.RegistersAccumulation.ContainsKey(entryName.Text))
                 {
-                    Message.Error(GeneralForm,$"Назва регістру не унікальна");
+                    Message.Error(GeneralForm, $"Назва регістру не унікальна");
                     return;
                 }
             }
@@ -300,7 +341,7 @@ namespace Configurator
                 {
                     if (Conf!.RegistersAccumulation.ContainsKey(entryName.Text))
                     {
-                        Message.Error(GeneralForm,$"Назва регістру не унікальна");
+                        Message.Error(GeneralForm, $"Назва регістру не унікальна");
                         return;
                     }
                 }
