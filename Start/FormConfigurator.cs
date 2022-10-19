@@ -21,6 +21,7 @@ namespace Configurator
         TreeView treeConfiguration;
         TreeStore treeStore;
         Notebook topNotebook;
+        Statusbar statusBar;
 
         #region LoadTreeConfiguration
 
@@ -402,10 +403,13 @@ namespace Configurator
             VBox vbox = new VBox();
             Add(vbox);
 
+            //MenuBar
+            vbox.PackStart(CreateMenuBar(), false, false, 0);
+
             Toolbar toolbar = new Toolbar();
             vbox.PackStart(toolbar, false, false, 0);
 
-            MenuToolButton menuToolButton = new MenuToolButton(Stock.Add) { Label = "Додати", IsImportant = true };
+            MenuToolButton menuToolButton = new MenuToolButton(Stock.New) { Label = "Додати", IsImportant = true };
             menuToolButton.Menu = CreateAddMenu();
             toolbar.Add(menuToolButton);
 
@@ -413,7 +417,7 @@ namespace Configurator
             refreshButton.Clicked += OnRefreshClick;
             toolbar.Add(refreshButton);
 
-            ToolButton deleteButton = new ToolButton(Stock.Delete) { Label = "Видалити", IsImportant = true };
+            ToolButton deleteButton = new ToolButton(Stock.Clear) { Label = "Видалити", IsImportant = true };
             deleteButton.Clicked += OnDeleteClick;
             toolbar.Add(deleteButton);
 
@@ -447,7 +451,42 @@ namespace Configurator
             hPaned.Pack2(topNotebook, false, true);
 
             vbox.PackStart(hPaned, true, true, 0);
+
+            statusBar = new Statusbar();
+            statusBar.Push(1, "Ready");
+            vbox.PackStart(statusBar, false, false, 0);
+
             ShowAll();
+        }
+
+        VBox CreateMenuBar()
+        {
+            MenuBar mb = new MenuBar();
+
+            Menu filemenu = new Menu();
+            MenuItem file = new MenuItem("File");
+            file.Submenu = filemenu;
+
+            Menu viewmenu = new Menu();
+            MenuItem view = new MenuItem("View");
+            view.Submenu = viewmenu;
+
+            CheckMenuItem stat = new CheckMenuItem("View Statusbar");
+            stat.Toggle();
+            //stat.Toggled += OnStatusView;
+            viewmenu.Append(stat);
+
+            MenuItem exit = new MenuItem("Exit");
+            //exit.Activated += OnActivated;
+            filemenu.Append(exit);
+
+            mb.Append(file);
+            mb.Append(view);
+
+            VBox vbox = new VBox(false, 2);
+            vbox.PackStart(mb, false, false, 0);
+
+            return vbox;
         }
 
         Menu CreateAddMenu()
@@ -456,31 +495,31 @@ namespace Configurator
 
             MenuItem AddConstantBlock = new MenuItem("Блок констант");
             AddConstantBlock.Activated += OnAddConstantBlock;
-            Menu.Add(AddConstantBlock);
+            Menu.Append(AddConstantBlock);
 
             MenuItem AddConstant = new MenuItem("Константу");
             AddConstant.Activated += OnAddConstant;
-            Menu.Add(AddConstant);
+            Menu.Append(AddConstant);
 
             MenuItem AddDirectory = new MenuItem("Довідник");
             AddDirectory.Activated += OnAddDirectory;
-            Menu.Add(AddDirectory);
+            Menu.Append(AddDirectory);
 
             MenuItem AddDocument = new MenuItem("Документ");
             AddDocument.Activated += OnAddDocument;
-            Menu.Add(AddDocument);
+            Menu.Append(AddDocument);
 
             MenuItem AddEnum = new MenuItem("Перелічення");
             AddEnum.Activated += OnAddEnum;
-            Menu.Add(AddEnum);
+            Menu.Append(AddEnum);
 
             MenuItem AddRegistersInformation = new MenuItem("Регістр інформації");
             AddRegistersInformation.Activated += OnAddRegisterInformation;
-            Menu.Add(AddRegistersInformation);
+            Menu.Append(AddRegistersInformation);
 
             MenuItem AddRegistersAccumulation = new MenuItem("Регістр накопичення");
             AddRegistersAccumulation.Activated += OnAddRegisterAccumulation;
-            Menu.Add(AddRegistersAccumulation);
+            Menu.Append(AddRegistersAccumulation);
 
             Menu.ShowAll();
 

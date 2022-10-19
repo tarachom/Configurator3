@@ -73,7 +73,7 @@ namespace Configurator
             HBox hBoxColumn = new HBox() { Halign = Align.End };
             vBox.PackStart(hBoxColumn, false, false, 5);
 
-            hBoxColumn.PackStart(new Label("Назва в таблиці:"), false, false, 5);
+            hBoxColumn.PackStart(new Label("Поле в таблиці:"), false, false, 5);
             hBoxColumn.PackStart(entryColumn, false, false, 5);
 
             //Тип

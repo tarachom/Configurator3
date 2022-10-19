@@ -112,7 +112,7 @@ namespace Configurator
             Toolbar toolbar = new Toolbar();
             vBox.PackStart(toolbar, false, false, 0);
 
-            ToolButton buttonAdd = new ToolButton(Stock.Add) { Label = "Додати", IsImportant = true };
+            ToolButton buttonAdd = new ToolButton(Stock.New) { Label = "Додати", IsImportant = true };
             buttonAdd.Clicked += OnDimensionFieldsAddClick;
             toolbar.Add(buttonAdd);
 
@@ -124,7 +124,7 @@ namespace Configurator
             buttonRefresh.Clicked += OnDimensionFieldsRefreshClick;
             toolbar.Add(buttonRefresh);
 
-            ToolButton buttonDelete = new ToolButton(Stock.Delete) { Label = "Видалити", IsImportant = true };
+            ToolButton buttonDelete = new ToolButton(Stock.Clear) { Label = "Видалити", IsImportant = true };
             buttonDelete.Clicked += OnDimensionFieldsRemoveClick;
             toolbar.Add(buttonDelete);
 
@@ -154,7 +154,7 @@ namespace Configurator
             Toolbar toolbar = new Toolbar();
             vBox.PackStart(toolbar, false, false, 0);
 
-            ToolButton buttonAdd = new ToolButton(Stock.Add) { Label = "Додати", IsImportant = true };
+            ToolButton buttonAdd = new ToolButton(Stock.New) { Label = "Додати", IsImportant = true };
             buttonAdd.Clicked += OnResourcesFieldsAddClick;
             toolbar.Add(buttonAdd);
 
@@ -166,7 +166,7 @@ namespace Configurator
             buttonRefresh.Clicked += OnResourcesFieldsRefreshClick;
             toolbar.Add(buttonRefresh);
 
-            ToolButton buttonDelete = new ToolButton(Stock.Delete) { Label = "Видалити", IsImportant = true };
+            ToolButton buttonDelete = new ToolButton(Stock.Clear) { Label = "Видалити", IsImportant = true };
             buttonDelete.Clicked += OnResourcesFieldsRemoveClick;
             toolbar.Add(buttonDelete);
 
@@ -196,7 +196,7 @@ namespace Configurator
             Toolbar toolbar = new Toolbar();
             vBox.PackStart(toolbar, false, false, 0);
 
-            ToolButton buttonAdd = new ToolButton(Stock.Add) { Label = "Додати", IsImportant = true };
+            ToolButton buttonAdd = new ToolButton(Stock.New) { Label = "Додати", IsImportant = true };
             buttonAdd.Clicked += OnPropertyFieldsAddClick;
             toolbar.Add(buttonAdd);
 
@@ -208,7 +208,7 @@ namespace Configurator
             buttonRefresh.Clicked += OnPropertyFieldsRefreshClick;
             toolbar.Add(buttonRefresh);
 
-            ToolButton buttonDelete = new ToolButton(Stock.Delete) { Label = "Видалити", IsImportant = true };
+            ToolButton buttonDelete = new ToolButton(Stock.Clear) { Label = "Видалити", IsImportant = true };
             buttonDelete.Clicked += OnPropertyFieldsRemoveClick;
             toolbar.Add(buttonDelete);
 

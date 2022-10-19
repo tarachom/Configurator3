@@ -176,7 +176,7 @@ namespace Configurator
             Toolbar toolbar = new Toolbar();
             vBox.PackStart(toolbar, false, false, 0);
 
-            ToolButton buttonAdd = new ToolButton(Stock.Add) { Label = "Додати", IsImportant = true };
+            ToolButton buttonAdd = new ToolButton(Stock.New) { Label = "Додати", IsImportant = true };
             buttonAdd.Clicked += OnFieldsAddClick;
             toolbar.Add(buttonAdd);
 
@@ -188,7 +188,7 @@ namespace Configurator
             buttonRefresh.Clicked += OnFieldsRefreshClick;
             toolbar.Add(buttonRefresh);
 
-            ToolButton buttonDelete = new ToolButton(Stock.Delete) { Label = "Видалити", IsImportant = true };
+            ToolButton buttonDelete = new ToolButton(Stock.Clear) { Label = "Видалити", IsImportant = true };
             buttonDelete.Clicked += OnFieldsRemoveClick;
             toolbar.Add(buttonDelete);
 
@@ -218,7 +218,7 @@ namespace Configurator
             Toolbar toolbar = new Toolbar();
             vBox.PackStart(toolbar, false, false, 0);
 
-            ToolButton buttonAdd = new ToolButton(Stock.Add) { Label = "Додати", IsImportant = true };
+            ToolButton buttonAdd = new ToolButton(Stock.New) { Label = "Додати", IsImportant = true };
             buttonAdd.Clicked += OnTabularPartsAddClick;
             toolbar.Add(buttonAdd);
 
@@ -230,7 +230,7 @@ namespace Configurator
             buttonRefresh.Clicked += OnTabularPartsRefreshClick;
             toolbar.Add(buttonRefresh);
 
-            ToolButton buttonDelete = new ToolButton(Stock.Delete) { Label = "Видалити", IsImportant = true };
+            ToolButton buttonDelete = new ToolButton(Stock.Clear) { Label = "Видалити", IsImportant = true };
             buttonDelete.Clicked += OnTabularPartsRemoveClick;
             toolbar.Add(buttonDelete);
 

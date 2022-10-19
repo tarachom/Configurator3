@@ -81,7 +81,7 @@ namespace Configurator
             HBox hBox = new HBox() { Halign = Align.Fill };
             vBox.PackStart(hBox, false, false, 5);
 
-            Button bAddConst = new Button("Додати нову константу");
+            Button bAddConst = new Button("Додати константу");
             bAddConst.Clicked += OnAddConstClick;
 
             hBox.PackStart(bAddConst, false, false, 10);
