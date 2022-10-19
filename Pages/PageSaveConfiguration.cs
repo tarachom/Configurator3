@@ -20,7 +20,12 @@ namespace Configurator
 
         string PathToXsltTemplate = AppContext.BaseDirectory;
 
-        //TextView textViewDesc = new TextView();
+        #region Event
+
+        // delegate void ThreadButtonSensitiveHandler(bool sensitive);
+        // event ThreadButtonSensitiveHandler? ButtonSensitiveNotify;
+
+        #endregion
 
         Button bAnalize;
         Button bAnalizeAndCreateSQL;
@@ -53,7 +58,7 @@ namespace Configurator
 
             PackStart(hBox, false, false, 10);
 
-            //Termainal
+            //Terminal
             HBox hBoxTerminal = new HBox();
             PackStart(hBoxTerminal, true, true, 5);
 
@@ -64,28 +69,54 @@ namespace Configurator
 
             hBoxTerminal.PackStart(scrollListBoxTerminal, true, true, 5);
 
+            //ButtonSensitiveNotify += ButtonSensitive;
+
             ShowAll();
         }
 
         void OnAnalizeClick(object? sender, EventArgs args)
         {
-            Thread thread = new Thread(new ThreadStart(SaveAndAnalize));
-            thread.Start();
+            ButtonSensitive(false);
+
+            ClearListBoxTerminal();
+
+            Task a = new Task(SaveAndAnalize);
+            a.Start();
+
+            Task.WaitAll();
+
+            ButtonSensitive(true);
         }
 
         void OnAnalizeAndCreateSQLClick(object? sender, EventArgs args)
         {
-            Thread thread = new Thread(new ThreadStart(SaveAnalizeAndCreateSQL));
-            thread.Start();
+            ButtonSensitive(false);
+
+            ClearListBoxTerminal();
+
+            Task a = new Task(SaveAnalizeAndCreateSQL);
+            a.Start();
+
+            Task.WaitAll();
+
+            ButtonSensitive(true);
         }
 
         void OnExecuteSQLAndGenerateCodeClick(object? sender, EventArgs args)
         {
-            Thread thread = new Thread(new ThreadStart(ExecuteSQLAndGenerateCode));
-            thread.Start();
+            ButtonSensitive(false);
+
+            ClearListBoxTerminal();
+
+            Task a = new Task(ExecuteSQLAndGenerateCode);
+            a.Start();
+
+            Task.WaitAll();
+
+            ButtonSensitive(true);
         }
 
-        void CallBack1(bool sensitive)
+        public void ButtonSensitive(bool sensitive)
         {
             bAnalize.Sensitive = sensitive;
             bAnalizeAndCreateSQL.Sensitive = sensitive;
@@ -148,8 +179,6 @@ namespace Configurator
 
         void SaveAndAnalize()
         {
-            ClearListBoxTerminal();
-
             ApendLine("[ КОНФІГУРАЦІЯ ]");
 
             ApendLine("1. Створення копії файлу конфігурації");
@@ -382,8 +411,6 @@ namespace Configurator
 
         void SaveAnalizeAndCreateSQL()
         {
-            ClearListBoxTerminal();
-
             ApendLine("[ АНАЛІЗ ]");
 
             string replacementColumn = "yes"; //(checkBoxReplacement.Checked ? "yes" : "no");
@@ -459,14 +486,10 @@ namespace Configurator
             {
                 ApendLine("Нова база даних");
             }
-
-            // CallBack1(true);
         }
 
         void ExecuteSQLAndGenerateCode()
         {
-            ClearListBoxTerminal();
-
             //Read SQL
             List<string> SqlList = Configuration.ListComparisonSql(
                System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf!.PathToXmlFileConfiguration)!, "ComparisonAnalize.xml"));
@@ -497,7 +520,8 @@ namespace Configurator
             Configuration.RewriteConfigurationFileFromTempFile(
                 Conf.PathToXmlFileConfiguration,
                 Conf.PathToTempXmlFileConfiguration,
-                Conf.PathToCopyXmlFileConfiguration);
+                 System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, Conf.PathToCopyXmlFileConfiguration)
+            );
 
             if (File.Exists(System.IO.Path.Combine(PathToXsltTemplate, "CodeGeneration.xslt")))
             {
