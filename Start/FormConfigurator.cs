@@ -365,7 +365,7 @@ namespace Configurator
 
             treeConfiguration.AppendColumn(new TreeViewColumn("Конфігурація", new CellRendererText(), "text", 0));
             treeConfiguration.AppendColumn(new TreeViewColumn("Тип", new CellRendererText(), "text", 1));
-            treeConfiguration.AppendColumn(new TreeViewColumn("Ключ", new CellRendererText(), "text", 2) { /*Visible = false*/ });
+            treeConfiguration.AppendColumn(new TreeViewColumn("Ключ", new CellRendererText(), "text", 2) { Visible = false });
             treeConfiguration.Model = treeStore;
 
             return treeStore;
@@ -486,7 +486,7 @@ namespace Configurator
             configurationItem.Submenu = confMenu;
 
             MenuItem saveConfiguration = new MenuItem("Зберегти конфігурацію");
-            //exit.Activated += OnActivated;
+            saveConfiguration.Activated += OnSaveConfigurationClick;
             confMenu.Append(saveConfiguration);
 
             mb.Append(configurationItem);
@@ -562,7 +562,24 @@ namespace Configurator
 
         #endregion
 
-        #region Event
+        #region Event MenuBar
+
+        void OnSaveConfigurationClick(object? sender, EventArgs args)
+        {
+            CreateNotebookPage("Збереження конфігурації", () =>
+            {
+                PageSaveConfiguration page = new PageSaveConfiguration()
+                {
+                    GeneralForm = this
+                };
+
+                return page;
+            });
+        }
+
+        #endregion
+
+        #region Event Tree, ToolBar
 
         void OnRowActivated(object sender, RowActivatedArgs args)
         {
