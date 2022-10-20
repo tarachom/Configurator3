@@ -355,7 +355,7 @@ namespace Configurator
 
             IsNew = false;
 
-            GeneralForm?.LoadTree();
+            GeneralForm?.LoadTreeAsync();
             GeneralForm?.RenameCurrentPageNotebook($"Регістр: {ConfRegister.Name}");
         }
 
@@ -428,7 +428,7 @@ namespace Configurator
 
                 DimensionFieldsRefreshList();
 
-                GeneralForm?.LoadTree();
+                GeneralForm?.LoadTreeAsync();
             }
         }
 
@@ -456,7 +456,7 @@ namespace Configurator
 
                 DimensionFieldsRefreshList();
 
-                GeneralForm?.LoadTree();
+                GeneralForm?.LoadTreeAsync();
             }
         }
 
@@ -536,7 +536,7 @@ namespace Configurator
 
                 ResourcesFieldsRefreshList();
 
-                GeneralForm?.LoadTree();
+                GeneralForm?.LoadTreeAsync();
             }
         }
 
@@ -564,7 +564,7 @@ namespace Configurator
 
                 ResourcesFieldsRefreshList();
 
-                GeneralForm?.LoadTree();
+                GeneralForm?.LoadTreeAsync();
             }
         }
 
@@ -645,7 +645,7 @@ namespace Configurator
 
                 PropertyFieldsRefreshList();
 
-                GeneralForm?.LoadTree();
+                GeneralForm?.LoadTreeAsync();
             }
         }
 
@@ -673,7 +673,7 @@ namespace Configurator
 
                 PropertyFieldsRefreshList();
 
-                GeneralForm?.LoadTree();
+                GeneralForm?.LoadTreeAsync();
             }
         }
 

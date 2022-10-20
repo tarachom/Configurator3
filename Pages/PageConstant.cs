@@ -300,7 +300,7 @@ namespace Configurator
 
             IsNew = false;
 
-            GeneralForm?.LoadTree();
+            GeneralForm?.LoadTreeAsync();
             GeneralForm?.RenameCurrentPageNotebook($"Константа: {ConfConstants.Name}");
         }
 
@@ -369,7 +369,7 @@ namespace Configurator
 
                 OnTabularPartsRefreshClick(null, new EventArgs());
 
-                GeneralForm?.LoadTree();
+                GeneralForm?.LoadTreeAsync();
             }
         }
 
@@ -397,7 +397,7 @@ namespace Configurator
 
                 OnTabularPartsRefreshClick(null, new EventArgs());
 
-                GeneralForm?.LoadTree();
+                GeneralForm?.LoadTreeAsync();
             }
         }
 

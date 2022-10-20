@@ -304,7 +304,7 @@ namespace Configurator
 
             IsNew = false;
 
-            GeneralForm?.LoadTree();
+            GeneralForm?.LoadTreeAsync();
             GeneralForm?.RenameCurrentPageNotebook($"Довідник: {ConfDirectory.Name}");
         }
 
@@ -379,7 +379,7 @@ namespace Configurator
 
                 FieldsRefreshList();
 
-                GeneralForm?.LoadTree();
+                GeneralForm?.LoadTreeAsync();
             }
         }
 
@@ -407,7 +407,7 @@ namespace Configurator
 
                 FieldsRefreshList();
 
-                GeneralForm?.LoadTree();
+                GeneralForm?.LoadTreeAsync();
             }
         }
 
@@ -488,7 +488,7 @@ namespace Configurator
 
                 TabularPartsRefreshList();
 
-                GeneralForm?.LoadTree();
+                GeneralForm?.LoadTreeAsync();
             }
         }
 
@@ -516,7 +516,7 @@ namespace Configurator
 
                 TabularPartsRefreshList();
 
-                GeneralForm?.LoadTree();
+                GeneralForm?.LoadTreeAsync();
             }
         }
 

@@ -26,7 +26,7 @@ limitations under the License.
  *
  * Конфігурації "Зберігання та Торгівля"
  * Автор Тарахомин Юрій Іванович, accounting.org.ua
- * Дата конфігурації: 20.10.2022 15:10:27
+ * Дата конфігурації: 20.10.2022 17:14:38
  *
  */
 
@@ -9575,39 +9575,24 @@ namespace StorageAndTrade_1_0.Довідники
    
     #endregion
     
-    #region DIRECTORY "Організації_phfem"
+    #region DIRECTORY "dsgsdgs"
     
-    public static class Організації_phfem_Const
+    public static class dsgsdgs_Const
     {
         public const string TABLE = "tab_b24";
         
-        public const string Назва = "col_a1";
-        public const string Код = "col_a2";
-        public const string НазваПовна = "col_a3";
-        public const string НазваСкорочена = "col_a4";
-        public const string ДатаРеєстрації = "col_a5";
-        public const string КраїнаРеєстрації = "col_a6";
-        public const string СвідоцтвоСеріяНомер = "col_a7";
-        public const string СвідоцтвоДатаВидачі = "col_a8";
+        public const string Код = "col_a1";
+        public const string Назва = "col_a2";
     }
 	
     
-    public class Організації_phfem_Objest : DirectoryObject
+    public class dsgsdgs_Objest : DirectoryObject
     {
-        public Організації_phfem_Objest() : base(Config.Kernel, "tab_b24",
-             new string[] { "col_a1", "col_a2", "col_a3", "col_a4", "col_a5", "col_a6", "col_a7", "col_a8" }) 
+        public dsgsdgs_Objest() : base(Config.Kernel, "tab_b24",
+             new string[] { "col_a1", "col_a2" }) 
         {
-            Назва = "";
             Код = "";
-            НазваПовна = "";
-            НазваСкорочена = "";
-            ДатаРеєстрації = DateTime.MinValue;
-            КраїнаРеєстрації = "";
-            СвідоцтвоСеріяНомер = "";
-            СвідоцтвоДатаВидачі = "";
-            
-            //Табличні частини
-            Контакти_TablePart = new Організації_phfem_Контакти_TablePart(this);
+            Назва = "";
             
         }
         
@@ -9615,14 +9600,8 @@ namespace StorageAndTrade_1_0.Довідники
         {
             if (BaseRead(uid))
             {
-                Назва = base.FieldValue["col_a1"].ToString();
-                Код = base.FieldValue["col_a2"].ToString();
-                НазваПовна = base.FieldValue["col_a3"].ToString();
-                НазваСкорочена = base.FieldValue["col_a4"].ToString();
-                ДатаРеєстрації = (base.FieldValue["col_a5"] != DBNull.Value) ? DateTime.Parse(base.FieldValue["col_a5"].ToString()) : DateTime.MinValue;
-                КраїнаРеєстрації = base.FieldValue["col_a6"].ToString();
-                СвідоцтвоСеріяНомер = base.FieldValue["col_a7"].ToString();
-                СвідоцтвоДатаВидачі = base.FieldValue["col_a8"].ToString();
+                Код = base.FieldValue["col_a1"].ToString();
+                Назва = base.FieldValue["col_a2"].ToString();
                 
                 BaseClear();
                 return true;
@@ -9633,31 +9612,19 @@ namespace StorageAndTrade_1_0.Довідники
         
         public void Save()
         {
-		    base.FieldValue["col_a1"] = Назва;
-            base.FieldValue["col_a2"] = Код;
-            base.FieldValue["col_a3"] = НазваПовна;
-            base.FieldValue["col_a4"] = НазваСкорочена;
-            base.FieldValue["col_a5"] = ДатаРеєстрації;
-            base.FieldValue["col_a6"] = КраїнаРеєстрації;
-            base.FieldValue["col_a7"] = СвідоцтвоСеріяНомер;
-            base.FieldValue["col_a8"] = СвідоцтвоДатаВидачі;
+		    base.FieldValue["col_a1"] = Код;
+            base.FieldValue["col_a2"] = Назва;
             
             BaseSave();
 			
         }
 		
-        public Організації_phfem_Objest Copy()
+        public dsgsdgs_Objest Copy()
         {
-            Організації_phfem_Objest copy = new Організації_phfem_Objest();
+            dsgsdgs_Objest copy = new dsgsdgs_Objest();
 			copy.New();
-            copy.Назва = Назва;
-			copy.Код = Код;
-			copy.НазваПовна = НазваПовна;
-			copy.НазваСкорочена = НазваСкорочена;
-			copy.ДатаРеєстрації = ДатаРеєстрації;
-			copy.КраїнаРеєстрації = КраїнаРеєстрації;
-			copy.СвідоцтвоСеріяНомер = СвідоцтвоСеріяНомер;
-			copy.СвідоцтвоДатаВидачі = СвідоцтвоДатаВидачі;
+            copy.Код = Код;
+			copy.Назва = Назва;
 			
 			return copy;
         }
@@ -9665,200 +9632,87 @@ namespace StorageAndTrade_1_0.Довідники
         public void Delete()
         {
             
-			base.BaseDelete(new string[] { "tab_b25" });
+			base.BaseDelete(new string[] {  });
         }
         
-        public Організації_phfem_Pointer GetDirectoryPointer()
+        public dsgsdgs_Pointer GetDirectoryPointer()
         {
-            Організації_phfem_Pointer directoryPointer = new Організації_phfem_Pointer(UnigueID.UGuid);
+            dsgsdgs_Pointer directoryPointer = new dsgsdgs_Pointer(UnigueID.UGuid);
             return directoryPointer;
         }
         
-        public string Назва { get; set; }
         public string Код { get; set; }
-        public string НазваПовна { get; set; }
-        public string НазваСкорочена { get; set; }
-        public DateTime ДатаРеєстрації { get; set; }
-        public string КраїнаРеєстрації { get; set; }
-        public string СвідоцтвоСеріяНомер { get; set; }
-        public string СвідоцтвоДатаВидачі { get; set; }
-        
-        //Табличні частини
-        public Організації_phfem_Контакти_TablePart Контакти_TablePart { get; set; }
+        public string Назва { get; set; }
         
     }
     
     
-    public class Організації_phfem_Pointer : DirectoryPointer
+    public class dsgsdgs_Pointer : DirectoryPointer
     {
-        public Організації_phfem_Pointer(object uid = null) : base(Config.Kernel, "tab_b24")
+        public dsgsdgs_Pointer(object uid = null) : base(Config.Kernel, "tab_b24")
         {
             base.Init(new UnigueID(uid), null);
         }
         
-        public Організації_phfem_Pointer(UnigueID uid, Dictionary<string, object> fields = null) : base(Config.Kernel, "tab_b24")
+        public dsgsdgs_Pointer(UnigueID uid, Dictionary<string, object> fields = null) : base(Config.Kernel, "tab_b24")
         {
             base.Init(uid, fields);
         }
         
-        public Організації_phfem_Objest GetDirectoryObject()
+        public dsgsdgs_Objest GetDirectoryObject()
         {
             if (this.IsEmpty()) return null;
-            Організації_phfem_Objest Організації_phfemObjestItem = new Організації_phfem_Objest();
-            return Організації_phfemObjestItem.Read(base.UnigueID) ? Організації_phfemObjestItem : null;
+            dsgsdgs_Objest dsgsdgsObjestItem = new dsgsdgs_Objest();
+            return dsgsdgsObjestItem.Read(base.UnigueID) ? dsgsdgsObjestItem : null;
         }
 		
-        public Організації_phfem_Pointer GetNewDirectoryPointer()
+        public dsgsdgs_Pointer GetNewDirectoryPointer()
         {
-            return new Організації_phfem_Pointer(base.UnigueID);
+            return new dsgsdgs_Pointer(base.UnigueID);
         }
 		
 		public string GetPresentation()
         {
 		    return base.BasePresentation(
-			    new string[] { "col_a1" }
+			    new string[] {  }
 			);
         }
 		
-        public Організації_phfem_Pointer GetEmptyPointer()
+        public dsgsdgs_Pointer GetEmptyPointer()
         {
-            return new Організації_phfem_Pointer();
+            return new dsgsdgs_Pointer();
         }
     }
     
     
-    public class Організації_phfem_Select : DirectorySelect
+    public class dsgsdgs_Select : DirectorySelect
     {
-        public Організації_phfem_Select() : base(Config.Kernel, "tab_b24") { }        
+        public dsgsdgs_Select() : base(Config.Kernel, "tab_b24") { }        
         public bool Select() { return base.BaseSelect(); }
         
         public bool SelectSingle() { if (base.BaseSelectSingle()) { MoveNext(); return true; } else { Current = null; return false; } }
         
-        public bool MoveNext() { if (MoveToPosition()) { Current = new Організації_phfem_Pointer(base.DirectoryPointerPosition.UnigueID, base.DirectoryPointerPosition.Fields); return true; } else { Current = null; return false; } }
+        public bool MoveNext() { if (MoveToPosition()) { Current = new dsgsdgs_Pointer(base.DirectoryPointerPosition.UnigueID, base.DirectoryPointerPosition.Fields); return true; } else { Current = null; return false; } }
 
-        public Організації_phfem_Pointer Current { get; private set; }
+        public dsgsdgs_Pointer Current { get; private set; }
         
-        public Організації_phfem_Pointer FindByField(string name, object value)
+        public dsgsdgs_Pointer FindByField(string name, object value)
         {
-            Організації_phfem_Pointer itemPointer = new Організації_phfem_Pointer();
+            dsgsdgs_Pointer itemPointer = new dsgsdgs_Pointer();
             DirectoryPointer directoryPointer = base.BaseFindByField(name, value);
             if (!directoryPointer.IsEmpty()) itemPointer.Init(directoryPointer.UnigueID);
             return itemPointer;
         }
         
-        public List<Організації_phfem_Pointer> FindListByField(string name, object value, int limit = 0, int offset = 0)
+        public List<dsgsdgs_Pointer> FindListByField(string name, object value, int limit = 0, int offset = 0)
         {
-            List<Організації_phfem_Pointer> directoryPointerList = new List<Організації_phfem_Pointer>();
+            List<dsgsdgs_Pointer> directoryPointerList = new List<dsgsdgs_Pointer>();
             foreach (DirectoryPointer directoryPointer in base.BaseFindListByField(name, value, limit, offset)) 
-                directoryPointerList.Add(new Організації_phfem_Pointer(directoryPointer.UnigueID));
+                directoryPointerList.Add(new dsgsdgs_Pointer(directoryPointer.UnigueID));
             return directoryPointerList;
         }
     }
     
-      
-    public class Організації_phfem_Контакти_TablePart : DirectoryTablePart
-    {
-        public Організації_phfem_Контакти_TablePart(Організації_phfem_Objest owner) : base(Config.Kernel, "tab_b25",
-             new string[] { "col_a9", "col_a4", "col_a5", "col_a1", "col_a6", "col_a2", "col_a3" }) 
-        {
-            if (owner == null) throw new Exception("owner null");
-            
-            Owner = owner;
-            Records = new List<Record>();
-        }
-        
-        public const string Тип = "col_a9";
-        public const string Телефон = "col_a4";
-        public const string ЕлектроннаПошта = "col_a5";
-        public const string Країна = "col_a1";
-        public const string Область = "col_a6";
-        public const string Район = "col_a2";
-        public const string Місто = "col_a3";
-
-        public Організації_phfem_Objest Owner { get; private set; }
-        
-        public List<Record> Records { get; set; }
-        
-        public void Read()
-        {
-            Records.Clear();
-            base.BaseRead(Owner.UnigueID);
-
-            foreach (Dictionary<string, object> fieldValue in base.FieldValueList) 
-            {
-                Record record = new Record();
-                record.UID = (Guid)fieldValue["uid"];
-                
-                record.Тип = (fieldValue["col_a9"] != DBNull.Value) ? (Перелічення.ТипиКонтактноїІнформації)fieldValue["col_a9"] : 0;
-                record.Телефон = fieldValue["col_a4"].ToString();
-                record.ЕлектроннаПошта = fieldValue["col_a5"].ToString();
-                record.Країна = fieldValue["col_a1"].ToString();
-                record.Область = fieldValue["col_a6"].ToString();
-                record.Район = fieldValue["col_a2"].ToString();
-                record.Місто = fieldValue["col_a3"].ToString();
-                
-                Records.Add(record);
-            }
-            
-            base.BaseClear();
-        }
-        
-        public void Save(bool clear_all_before_save /*= true*/) 
-        {
-            base.BaseBeginTransaction();
-                
-            if (clear_all_before_save)
-                base.BaseDelete(Owner.UnigueID);
-
-            foreach (Record record in Records)
-            {
-                Dictionary<string, object> fieldValue = new Dictionary<string, object>();
-
-                fieldValue.Add("col_a9", (int)record.Тип);
-                fieldValue.Add("col_a4", record.Телефон);
-                fieldValue.Add("col_a5", record.ЕлектроннаПошта);
-                fieldValue.Add("col_a1", record.Країна);
-                fieldValue.Add("col_a6", record.Область);
-                fieldValue.Add("col_a2", record.Район);
-                fieldValue.Add("col_a3", record.Місто);
-                
-                base.BaseSave(record.UID, Owner.UnigueID, fieldValue);
-            }
-                
-            base.BaseCommitTransaction();
-        }
-        
-        public void Delete()
-        {
-            base.BaseBeginTransaction();
-            base.BaseDelete(Owner.UnigueID);
-            base.BaseCommitTransaction();
-        }
-        
-        
-        public class Record : DirectoryTablePartRecord
-        {
-            public Record()
-            {
-                Тип = 0;
-                Телефон = "";
-                ЕлектроннаПошта = "";
-                Країна = "";
-                Область = "";
-                Район = "";
-                Місто = "";
-                
-            }
-            public Перелічення.ТипиКонтактноїІнформації Тип { get; set; }
-            public string Телефон { get; set; }
-            public string ЕлектроннаПошта { get; set; }
-            public string Країна { get; set; }
-            public string Область { get; set; }
-            public string Район { get; set; }
-            public string Місто { get; set; }
-            
-        }
-    }
       
    
     #endregion

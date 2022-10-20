@@ -145,7 +145,7 @@ namespace Configurator
 
             IsNew = false;
 
-            GeneralForm?.LoadTree();
+            GeneralForm?.LoadTreeAsync();
             GeneralForm?.RenameCurrentPageNotebook($"Блок констант: {ConfConstantsBlock.BlockName}");
         }
 

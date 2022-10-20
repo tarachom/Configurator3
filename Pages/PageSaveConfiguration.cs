@@ -26,7 +26,6 @@ namespace Configurator
         Button bClose;
 
         ScrolledWindow scrollListBoxTerminal;
-        //ListBox listBoxTerminal;
 
         TextView textTerminal;
 
@@ -60,7 +59,7 @@ namespace Configurator
             scrollListBoxTerminal = new ScrolledWindow();
             scrollListBoxTerminal.KineticScrolling = true;
             scrollListBoxTerminal.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-            scrollListBoxTerminal.Add(textTerminal = new TextView()); //
+            scrollListBoxTerminal.Add(textTerminal = new TextView());
 
             hBoxTerminal.PackStart(scrollListBoxTerminal, true, true, 5);
 
@@ -69,7 +68,8 @@ namespace Configurator
 
         void OnCloseClick(object? sender, EventArgs args)
         {
-            string fullPathToCopyXmlFileConguratifion = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf!.PathToXmlFileConfiguration)!, Conf.PathToCopyXmlFileConfiguration);
+            string fullPathToCopyXmlFileConguratifion = 
+                System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf!.PathToXmlFileConfiguration)!, Conf.PathToCopyXmlFileConfiguration);
 
             if (File.Exists(fullPathToCopyXmlFileConguratifion))
                 File.Delete(fullPathToCopyXmlFileConguratifion);

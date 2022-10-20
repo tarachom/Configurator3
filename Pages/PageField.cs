@@ -263,7 +263,7 @@ namespace Configurator
 
             IsNew = false;
 
-            GeneralForm?.LoadTree();
+            GeneralForm?.LoadTreeAsync();
             GeneralForm?.RenameCurrentPageNotebook($"Поле: {Field.Name}");
 
             if (CallBack_RefreshList != null)

@@ -6,7 +6,7 @@ namespace Configurator
 {
     class FormConfigurator : Window
     {
-        public object locked = new Object();
+        readonly object loked = new Object();
         public ConfigurationParam? OpenConfigurationParam { get; set; }
         Configuration? Conf
         {
@@ -321,35 +321,40 @@ namespace Configurator
                 treeConfiguration.ExpandToPath(path);
         }
 
-        public void LoadTree()
+        void LoadTree()
         {
-            lock (locked)
+            lock (loked)
             {
-                treeStore.Clear();
+                Gtk.Application.Invoke(
+                    delegate
+                    {
+                        treeStore.Clear();
 
-                TreeIter contantsIter = treeStore.AppendValues("Константи");
-                LoadConstants(contantsIter);
-                IsExpand(contantsIter);
+                        TreeIter contantsIter = treeStore.AppendValues("Константи");
+                        LoadConstants(contantsIter);
+                        IsExpand(contantsIter);
 
-                TreeIter directoriesIter = treeStore.AppendValues("Довідники");
-                LoadDirectories(directoriesIter);
-                IsExpand(directoriesIter);
+                        TreeIter directoriesIter = treeStore.AppendValues("Довідники");
+                        LoadDirectories(directoriesIter);
+                        IsExpand(directoriesIter);
 
-                TreeIter documentsIter = treeStore.AppendValues("Документи");
-                LoadDocuments(documentsIter);
-                IsExpand(documentsIter);
+                        TreeIter documentsIter = treeStore.AppendValues("Документи");
+                        LoadDocuments(documentsIter);
+                        IsExpand(documentsIter);
 
-                TreeIter enumsIter = treeStore.AppendValues("Перелічення");
-                LoadEnums(enumsIter);
-                IsExpand(enumsIter);
+                        TreeIter enumsIter = treeStore.AppendValues("Перелічення");
+                        LoadEnums(enumsIter);
+                        IsExpand(enumsIter);
 
-                TreeIter registersInformationIter = treeStore.AppendValues("Регістри інформації");
-                LoadRegistersInformation(registersInformationIter);
-                IsExpand(registersInformationIter);
+                        TreeIter registersInformationIter = treeStore.AppendValues("Регістри інформації");
+                        LoadRegistersInformation(registersInformationIter);
+                        IsExpand(registersInformationIter);
 
-                TreeIter registersAccumulationIter = treeStore.AppendValues("Регістри накопичення");
-                LoadRegistersAccumulation(registersAccumulationIter);
-                IsExpand(registersAccumulationIter);
+                        TreeIter registersAccumulationIter = treeStore.AppendValues("Регістри накопичення");
+                        LoadRegistersAccumulation(registersAccumulationIter);
+                        IsExpand(registersAccumulationIter);
+                    }
+                );
             }
         }
 
@@ -489,6 +494,14 @@ namespace Configurator
             saveConfiguration.Activated += OnSaveConfigurationClick;
             confMenu.Append(saveConfiguration);
 
+            MenuItem uploadConfigurationToFile = new MenuItem("Вигрузити конфігурацію в файл");
+            uploadConfigurationToFile.Activated += OnUploadConfigurationToFileClick;
+            confMenu.Append(uploadConfigurationToFile);
+
+            MenuItem loadConfigurationFromFile = new MenuItem("Загрузити конфігурацію з файлу");
+            loadConfigurationFromFile.Activated += OnLoadConfigurationFromFileClick;
+            confMenu.Append(loadConfigurationFromFile);
+
             mb.Append(configurationItem);
 
             VBox vbox = new VBox(false, 2);
@@ -575,6 +588,62 @@ namespace Configurator
 
                 return page;
             });
+        }
+
+        void OnUploadConfigurationToFileClick(object? sender, EventArgs args)
+        {
+            string folderSave = "";
+            string fileConfName = "Confa_" + Conf!.NameSpace + "_" + DateTime.Now.ToString("dd_MM_yyyy") + ".xml";
+            bool saveOk = false;
+
+            FileChooserDialog fc = new FileChooserDialog("Виберіть каталог для вигрузки конфігурації", this,
+                FileChooserAction.SelectFolder, "Закрити", ResponseType.Cancel, "Вибрати", ResponseType.Accept);
+
+            if (fc.Run() == (int)ResponseType.Accept)
+            {
+                if (!String.IsNullOrEmpty(fc.CurrentFolder))
+                {
+                    string fileConf = System.IO.Path.Combine(fc.CurrentFolder, fileConfName);
+                    Configuration.Save(fileConf, Conf!);
+
+                    folderSave = fc.CurrentFolder;
+                    saveOk = true;
+                }
+            }
+
+            fc.Destroy();
+
+            if (saveOk)
+                Message.Info(this, "Конфігурацію вигружено в файл: " + fileConfName + "\n\nКаталог: " + folderSave);
+        }
+
+        void OnLoadConfigurationFromFileClick(object? sender, EventArgs args)
+        {
+            bool loadOk = false;
+
+            FileChooserDialog fc = new FileChooserDialog("Виберіть файл для загрузки конфігурації", this,
+                            FileChooserAction.Open, "Закрити", ResponseType.Cancel, "Вибрати", ResponseType.Accept);
+
+            fc.Filter = new FileFilter();
+            fc.Filter.AddPattern("*.xml");
+
+            if (fc.Run() == (int)ResponseType.Accept)
+            {
+                if (!String.IsNullOrEmpty(fc.Filename))
+                {
+                    Configuration openConf;
+                    Configuration.Load(fc.Filename, out openConf);
+
+                    Program.Kernel!.Conf = openConf;
+
+                    loadOk = true;
+                }
+            }
+
+            fc.Destroy();
+
+            if (loadOk)
+                LoadTreeAsync();
         }
 
         #endregion
@@ -1100,7 +1169,7 @@ namespace Configurator
 
         void OnRefreshClick(object? sender, EventArgs args)
         {
-            LoadTree();
+            LoadTreeAsync();
         }
 
         void OnDeleteClick(object? sender, EventArgs args)
@@ -1405,7 +1474,7 @@ namespace Configurator
             if (TreeRowExpanded.Contains(pathRemove.ToString()))
                 TreeRowExpanded.Remove(pathRemove.ToString());
 
-            LoadTree();
+            LoadTreeAsync();
         }
 
         void OnCopyClick(object? sender, EventArgs args)
@@ -1812,7 +1881,7 @@ namespace Configurator
             if (TreeRowExpanded.Contains(pathRemove.ToString()))
                 TreeRowExpanded.Remove(pathRemove.ToString());
 
-            LoadTree();
+            LoadTreeAsync();
         }
 
         #endregion

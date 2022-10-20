@@ -193,7 +193,7 @@ namespace Configurator
 
             IsNew = false;
 
-            GeneralForm?.LoadTree();
+            GeneralForm?.LoadTreeAsync();
             GeneralForm?.RenameCurrentPageNotebook($"Перелічення: {ConfEnum.Name}");
         }
 
@@ -267,7 +267,7 @@ namespace Configurator
 
                 FieldsRefreshList();
 
-                GeneralForm?.LoadTree();
+                GeneralForm?.LoadTreeAsync();
             }
         }
 
@@ -295,7 +295,7 @@ namespace Configurator
 
                 FieldsRefreshList();
 
-                GeneralForm?.LoadTree();
+                GeneralForm?.LoadTreeAsync();
             }
         }
 
