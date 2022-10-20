@@ -43,12 +43,12 @@ namespace Configurator
             bAnalizeAndCreateSQL.Clicked += OnAnalizeAndCreateSQLClick;
             hBox.PackStart(bAnalizeAndCreateSQL, false, false, 10);
 
-            bExecuteSQLAndGenerateCode = new Button("Виконання команд та генерація коду. Крок 2");
+            bExecuteSQLAndGenerateCode = new Button("Збереження змін. Крок 2");
             bExecuteSQLAndGenerateCode.Clicked += OnExecuteSQLAndGenerateCodeClick;
             hBox.PackStart(bExecuteSQLAndGenerateCode, false, false, 10);
 
             bClose = new Button("Закрити");
-            bClose.Clicked += (object? sender, EventArgs args) => { GeneralForm?.CloseCurrentPageNotebook(); };
+            bClose.Clicked += OnCloseClick;
             hBox.PackStart(bClose, false, false, 10);
 
             PackStart(hBox, false, false, 10);
@@ -65,6 +65,19 @@ namespace Configurator
             hBoxTerminal.PackStart(scrollListBoxTerminal, true, true, 5);
 
             ShowAll();
+        }
+
+        void OnCloseClick(object? sender, EventArgs args)
+        {
+            string fullPathToCopyXmlFileConguratifion = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf!.PathToXmlFileConfiguration)!, Conf.PathToCopyXmlFileConfiguration);
+
+            if (File.Exists(fullPathToCopyXmlFileConguratifion))
+                File.Delete(fullPathToCopyXmlFileConguratifion);
+
+            if (File.Exists(Conf!.PathToTempXmlFileConfiguration))
+                File.Delete(Conf!.PathToTempXmlFileConfiguration);
+
+            GeneralForm?.CloseCurrentPageNotebook();
         }
 
         void OnAnalizeClick(object? sender, EventArgs args)
@@ -171,12 +184,12 @@ namespace Configurator
             ApendLine("[ КОНФІГУРАЦІЯ ]\n");
 
             ApendLine("1. Створення копії файлу конфігурації");
-            Conf!.PathToCopyXmlFileConfiguration = Configuration.CreateCopyConfigurationFile(Conf.PathToXmlFileConfiguration);
+            Conf!.PathToCopyXmlFileConfiguration = Configuration.CreateCopyConfigurationFile(Conf.PathToXmlFileConfiguration, Conf.PathToCopyXmlFileConfiguration);
             ApendLine(" --> " + Conf.PathToCopyXmlFileConfiguration + "\n");
 
             string fullPathToCopyXmlFileConguratifion = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, Conf.PathToCopyXmlFileConfiguration);
 
-            Conf!.PathToTempXmlFileConfiguration = Configuration.GetTempPathToConfigurationFile(Conf.PathToXmlFileConfiguration);
+            Conf!.PathToTempXmlFileConfiguration = Configuration.GetTempPathToConfigurationFile(Conf.PathToXmlFileConfiguration, Conf!.PathToTempXmlFileConfiguration);
 
             ApendLine("2. Збереження конфігурації у тимчасовий файл");
             Configuration.Save(Conf.PathToTempXmlFileConfiguration, Conf);
@@ -416,14 +429,14 @@ namespace Configurator
                 ApendLine("Нова база даних");
             }
 
-            ApendLine("2. Видалення копії файлу конфігурації");
+            ApendLine("\nВидалення копії файлу конфігурації");
             if (File.Exists(fullPathToCopyXmlFileConguratifion))
             {
                 File.Delete(fullPathToCopyXmlFileConguratifion);
                 ApendLine(" --> " + fullPathToCopyXmlFileConguratifion + "\n");
             }
 
-            ApendLine("2. Видалення тимчасового файлу");
+            ApendLine("Видалення тимчасового файлу");
             if (File.Exists(Conf!.PathToTempXmlFileConfiguration))
             {
                 File.Delete(Conf!.PathToTempXmlFileConfiguration);
@@ -439,19 +452,21 @@ namespace Configurator
 
             ClearListBoxTerminal();
 
-            ApendLine("[ АНАЛІЗ ]");
+            ApendLine("[ АНАЛІЗ ]\n");
 
             string replacementColumn = "yes"; //(checkBoxReplacement.Checked ? "yes" : "no");
 
             ApendLine("1. Створення копії файлу конфігурації");
             Conf!.PathToCopyXmlFileConfiguration = Configuration.CreateCopyConfigurationFile(Conf.PathToXmlFileConfiguration, Conf.PathToCopyXmlFileConfiguration);
-            ApendLine(" --> " + Conf.PathToCopyXmlFileConfiguration);
+            ApendLine(" --> " + Conf.PathToCopyXmlFileConfiguration + "\n");
+
+            string fullPathToCopyXmlFileConguratifion = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, Conf.PathToCopyXmlFileConfiguration);
 
             Conf.PathToTempXmlFileConfiguration = Configuration.GetTempPathToConfigurationFile(Conf.PathToXmlFileConfiguration, Conf.PathToTempXmlFileConfiguration);
 
             ApendLine("2. Збереження конфігурації у тимчасовий файл");
             Configuration.Save(Conf.PathToTempXmlFileConfiguration, Conf);
-            ApendLine(" --> " + Conf.PathToTempXmlFileConfiguration);
+            ApendLine(" --> " + Conf.PathToTempXmlFileConfiguration + "\n");
 
             ApendLine("2. Отримання структури бази даних");
             ConfigurationInformationSchema informationSchema = Program.Kernel!.DataBase.SelectInformationSchema();
@@ -462,7 +477,7 @@ namespace Configurator
             Configuration.CreateOneFileForComparison(
                 System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, "InformationSchema.xml"),
                 Conf.PathToTempXmlFileConfiguration,
-                System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, Conf.PathToCopyXmlFileConfiguration),
+                fullPathToCopyXmlFileConguratifion,
                 System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, "ComparisonAllData.xml")
             );
 
@@ -481,6 +496,8 @@ namespace Configurator
 
             if (informationSchema.Tables.Count > 0)
             {
+                ApendLine("");
+
                 XPathDocument xPathDoc = new XPathDocument(
                     System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, "ComparisonAnalize.xml")
                 );
@@ -497,7 +514,7 @@ namespace Configurator
                         ApendLine(nodeInfo?.Current?.Value ?? "");
                     }
 
-                ApendLine("[ Команди SQL ]");
+                ApendLine("\n[ Команди SQL ]\n");
 
                 XPathNodeIterator nodeSQL = xPathDocNavigator.Select("/root/sql");
                 if (nodeSQL.Count == 0)
@@ -505,10 +522,14 @@ namespace Configurator
                     ApendLine("Команди відсутні!");
                 }
                 else
+                {
                     while (nodeSQL!.MoveNext())
                     {
                         ApendLine(" - " + nodeSQL?.Current?.Value);
                     }
+
+                    ApendLine("\n Для внесення змін - натисніть \"Збереження змін. Крок 2\"\n");
+                }
             }
             else
             {
@@ -524,42 +545,54 @@ namespace Configurator
 
             ClearListBoxTerminal();
 
-            //Read SQL
-            List<string> SqlList = Configuration.ListComparisonSql(
-               System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf!.PathToXmlFileConfiguration)!, "ComparisonAnalize.xml"));
+            string pathToSqlCommandFile = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf!.PathToXmlFileConfiguration)!, "ComparisonAnalize.xml");
 
-            ApendLine("[ Виконання SQL ]");
-
-            if (SqlList.Count == 0)
+            if (File.Exists(pathToSqlCommandFile))
             {
-                ApendLine("Команди відсутні!");
-            }
-            else
-                //Execute
-                foreach (string sqlText in SqlList)
-                {
-                    ApendLine(" --> " + sqlText);
+                //Read SQL
+                List<string> SqlList = Configuration.ListComparisonSql(pathToSqlCommandFile);
 
-                    try
+                ApendLine("[ Виконання SQL ]\n");
+
+                if (SqlList.Count == 0)
+                {
+                    ApendLine("Команди відсутні!");
+                }
+                else
+                {
+                    //Execute
+                    foreach (string sqlText in SqlList)
                     {
-                        Program.Kernel!.DataBase.ExecuteSQL(sqlText);
-                    }
-                    catch (Exception ex)
-                    {
-                        ApendLine("Помилка: " + ex.Message);
+                        ApendLine(" --> " + sqlText);
+
+                        try
+                        {
+                            Program.Kernel!.DataBase.ExecuteSQL(sqlText);
+                        }
+                        catch (Exception ex)
+                        {
+                            ApendLine("Помилка: " + ex.Message);
+                        }
                     }
                 }
 
-            ApendLine("Збереження конфігурації та видалення тимчасових файлів");
-            Configuration.RewriteConfigurationFileFromTempFile(
-                Conf.PathToXmlFileConfiguration,
-                Conf.PathToTempXmlFileConfiguration,
-                 System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, Conf.PathToCopyXmlFileConfiguration)
-            );
+                ApendLine("\nВидалення файлу команд " + pathToSqlCommandFile + "\n");
+                File.Delete(pathToSqlCommandFile);
+            }
+
+            if (File.Exists(Conf.PathToTempXmlFileConfiguration))
+            {
+                ApendLine("Збереження конфігурації та видалення тимчасових файлів");
+                Configuration.RewriteConfigurationFileFromTempFile(
+                    Conf.PathToXmlFileConfiguration,
+                    Conf.PathToTempXmlFileConfiguration,
+                    System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, Conf.PathToCopyXmlFileConfiguration)
+                );
+            }
 
             if (File.Exists(System.IO.Path.Combine(PathToXsltTemplate, "CodeGeneration.xslt")))
             {
-                ApendLine("[ Генерування коду ]");
+                ApendLine("\n[ Генерування коду ]\n");
                 Configuration.GenerationCode(Conf.PathToXmlFileConfiguration,
                     System.IO.Path.Combine(PathToXsltTemplate, "CodeGeneration.xslt"),
                     System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, "CodeGeneration.cs"));

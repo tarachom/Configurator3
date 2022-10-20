@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<root>
-  <info>Видалити таблицю ПоступленняТоварівТаПослуг_jktse (tab_b36)</info>
-  <sql>DROP TABLE tab_b36;</sql>
-  <info>Видалити таблицю Товари (tab_b37)</info>
-  <sql>DROP TABLE tab_b37;</sql>
-</root>

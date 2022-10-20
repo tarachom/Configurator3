@@ -215,6 +215,7 @@ namespace Configurator
         void GetValue()
         {
             ConfConstants.Name = entryName.Text;
+            ConfConstants.NameInTable = entryColumn.Text;
             ConfConstants.Desc = textViewDesc.Buffer.Text;
             ConfConstants.Block = Conf!.ConstantsBlock[comboBoxBlock.ActiveId];
             ConfConstants.Type = comboBoxType.ActiveId;
