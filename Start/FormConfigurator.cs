@@ -460,6 +460,46 @@ namespace Configurator
             ShowAll();
         }
 
+        VBox CreateMenuBar()
+        {
+            MenuBar mb = new MenuBar();
+
+            //1
+            Menu СonfMenu = new Menu();
+            MenuItem configurationItem = new MenuItem("Конфігурація");
+            configurationItem.Submenu = СonfMenu;
+
+            MenuItem saveConfiguration = new MenuItem("Зберегти конфігурацію");
+            saveConfiguration.Activated += OnSaveConfigurationClick;
+            СonfMenu.Append(saveConfiguration);
+
+            mb.Append(configurationItem);
+
+            //2
+            Menu UploadAndLoadMenu = new Menu();
+            MenuItem uploadAndLoadDataMenuItem = new MenuItem("Вигрузка та загрузка");
+            uploadAndLoadDataMenuItem.Submenu = UploadAndLoadMenu;
+
+            MenuItem uploadConfigurationToFile = new MenuItem("Вигрузити конфігурацію в файл");
+            uploadConfigurationToFile.Activated += OnUploadConfigurationToFileClick;
+            UploadAndLoadMenu.Append(uploadConfigurationToFile);
+
+            MenuItem loadConfigurationFromFile = new MenuItem("Загрузити конфігурацію з файлу");
+            loadConfigurationFromFile.Activated += OnLoadConfigurationFromFileClick;
+            UploadAndLoadMenu.Append(loadConfigurationFromFile);
+
+            MenuItem uploadAndLoadData = new MenuItem("Вигрузка та загрузка даних");
+            uploadAndLoadData.Activated += OnUnloadingAndLoadingData;
+            UploadAndLoadMenu.Append(uploadAndLoadData);
+
+            mb.Append(uploadAndLoadDataMenuItem);
+
+            VBox vbox = new VBox(false, 2);
+            vbox.PackStart(mb, false, false, 0);
+
+            return vbox;
+        }
+
         Toolbar CreateToolbar()
         {
             Toolbar toolbar = new Toolbar();
@@ -482,33 +522,7 @@ namespace Configurator
 
             return toolbar;
         }
-        VBox CreateMenuBar()
-        {
-            MenuBar mb = new MenuBar();
 
-            Menu confMenu = new Menu();
-            MenuItem configurationItem = new MenuItem("Конфігурація");
-            configurationItem.Submenu = confMenu;
-
-            MenuItem saveConfiguration = new MenuItem("Зберегти конфігурацію");
-            saveConfiguration.Activated += OnSaveConfigurationClick;
-            confMenu.Append(saveConfiguration);
-
-            MenuItem uploadConfigurationToFile = new MenuItem("Вигрузити конфігурацію в файл");
-            uploadConfigurationToFile.Activated += OnUploadConfigurationToFileClick;
-            confMenu.Append(uploadConfigurationToFile);
-
-            MenuItem loadConfigurationFromFile = new MenuItem("Загрузити конфігурацію з файлу");
-            loadConfigurationFromFile.Activated += OnLoadConfigurationFromFileClick;
-            confMenu.Append(loadConfigurationFromFile);
-
-            mb.Append(configurationItem);
-
-            VBox vbox = new VBox(false, 2);
-            vbox.PackStart(mb, false, false, 0);
-
-            return vbox;
-        }
         Menu CreateAddMenu()
         {
             Menu Menu = new Menu();
@@ -644,6 +658,19 @@ namespace Configurator
 
             if (loadOk)
                 LoadTreeAsync();
+        }
+
+        void OnUnloadingAndLoadingData(object? sender, EventArgs args)
+        {
+            CreateNotebookPage("Вигрузка та загрузка даних", () =>
+            {
+                PageUnloadingAndLoadingData page = new PageUnloadingAndLoadingData()
+                {
+                    GeneralForm = this
+                };
+
+                return page;
+            });
         }
 
         #endregion

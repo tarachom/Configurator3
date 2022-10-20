@@ -1,41 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <InformationSchema>
   <Table>
-    <Name>tab_constants</Name>
-    <Column>
-      <Name>col_h6</Name>
-      <DataType>boolean</DataType>
-      <UdtName>bool</UdtName>
-    </Column>
+    <Name>tab_a94</Name>
     <Column>
       <Name>uid</Name>
       <DataType>uuid</DataType>
       <UdtName>uuid</UdtName>
     </Column>
     <Column>
-      <Name>col_a1</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
+      <Name>spend</Name>
+      <DataType>boolean</DataType>
+      <UdtName>bool</UdtName>
     </Column>
     <Column>
-      <Name>col_a2</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
+      <Name>spend_date</Name>
+      <DataType>timestamp without time zone</DataType>
+      <UdtName>timestamp</UdtName>
     </Column>
     <Column>
-      <Name>col_a3</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a4</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a5</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
+      <Name>docdate</Name>
+      <DataType>timestamp without time zone</DataType>
+      <UdtName>timestamp</UdtName>
     </Column>
     <Column>
       <Name>col_a6</Name>
@@ -48,292 +33,22 @@
       <UdtName>uuid</UdtName>
     </Column>
     <Column>
-      <Name>col_g4</Name>
+      <Name>col_a4</Name>
       <DataType>uuid</DataType>
       <UdtName>uuid</UdtName>
     </Column>
     <Column>
-      <Name>col_g5</Name>
+      <Name>col_b1</Name>
       <DataType>uuid</DataType>
       <UdtName>uuid</UdtName>
     </Column>
     <Column>
-      <Name>col_g9</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
+      <Name>col_a1</Name>
+      <DataType>numeric</DataType>
+      <UdtName>numeric</UdtName>
     </Column>
     <Column>
-      <Name>col_g6</Name>
-      <DataType>boolean</DataType>
-      <UdtName>bool</UdtName>
-    </Column>
-    <Column>
-      <Name>col_b7</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_b9</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_c1</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_c2</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_c4</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_c5</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_c6</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_c7</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_c8</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_c9</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_f6</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_f7</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_f8</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_f9</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_g1</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_g2</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_h1</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_h2</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_b8</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_d1</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_d2</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_d3</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_d4</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_d5</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_d6</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_d7</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_d8</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_d9</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_e1</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_e2</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_e3</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_e4</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_e5</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_e6</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_e7</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_e8</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_e9</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_f1</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_f2</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_f3</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_f4</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_f5</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_h3</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_h4</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_h7</Name>
-      <DataType>boolean</DataType>
-      <UdtName>bool</UdtName>
-    </Column>
-    <Column>
-      <Name>col_b3</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
-      <Name>col_b4</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
-      <Name>col_b2</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
-      <Name>col_b5</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
-      <Name>col_b6</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
-      <Name>col_c3</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
-      <Name>col_g3</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
-      <Name>col_g8</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
-      <Name>col_h5</Name>
+      <Name>docnomer</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
@@ -343,31 +58,35 @@
       <UdtName>text</UdtName>
     </Column>
     <Column>
-      <Name>col_a9</Name>
+      <Name>col_a5</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
     <Column>
-      <Name>col_h8</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
-      <Name>col_g7</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
-      <Name>col_b1</Name>
+      <Name>docname</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
     <Index>
-      <Name>tab_constants_pkey</Name>
+      <Name>tab_a94_pkey</Name>
+    </Index>
+    <Index>
+      <Name>tab_a94_docdate_idx</Name>
+    </Index>
+    <Index>
+      <Name>tab_a94_docnomer_idx</Name>
+    </Index>
+    <Index>
+      <Name>tab_a94_spend_idx</Name>
     </Index>
   </Table>
   <Table>
     <Name>tab_a98</Name>
+    <Column>
+      <Name>uid</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
     <Column>
       <Name>col_a1</Name>
       <DataType>date</DataType>
@@ -392,11 +111,6 @@
       <Name>col_a5</Name>
       <DataType>numeric</DataType>
       <UdtName>numeric</UdtName>
-    </Column>
-    <Column>
-      <Name>uid</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
     </Column>
     <Index>
       <Name>tab_a98_pkey</Name>
@@ -841,22 +555,22 @@
       <UdtName>int4</UdtName>
     </Column>
     <Column>
-      <Name>col_b7</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
-      <Name>col_b2</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
       <Name>docname</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
     <Column>
       <Name>docnomer</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_b7</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_b2</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
@@ -1078,17 +792,17 @@
       <UdtName>uuid</UdtName>
     </Column>
     <Column>
-      <Name>col_c1</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
       <Name>docname</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
     <Column>
       <Name>docnomer</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_c1</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
@@ -1687,16 +1401,403 @@
     </Index>
   </Table>
   <Table>
-    <Name>tab_a01</Name>
+    <Name>tab_constants</Name>
     <Column>
       <Name>uid</Name>
       <DataType>uuid</DataType>
       <UdtName>uuid</UdtName>
     </Column>
     <Column>
+      <Name>col_a1</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a2</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a3</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a4</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a5</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a6</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a7</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>col_g4</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>col_g5</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>col_g9</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>col_g6</Name>
+      <DataType>boolean</DataType>
+      <UdtName>bool</UdtName>
+    </Column>
+    <Column>
+      <Name>col_b7</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_b9</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_c1</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_c2</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_c4</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_c5</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_c6</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_c7</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_c8</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_c9</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_f6</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_f7</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_f8</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_f9</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_g1</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_g2</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_h1</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_h2</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_b8</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_d1</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_d2</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_d3</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_d4</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_d5</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_d6</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_d7</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_d8</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_d9</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_e1</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_e2</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_e3</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_e4</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_e5</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_e6</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_e7</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_e8</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_e9</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_f1</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_f2</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_f3</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_f4</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_f5</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_h3</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_h4</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_h7</Name>
+      <DataType>boolean</DataType>
+      <UdtName>bool</UdtName>
+    </Column>
+    <Column>
+      <Name>col_h6</Name>
+      <DataType>boolean</DataType>
+      <UdtName>bool</UdtName>
+    </Column>
+    <Column>
+      <Name>col_b4</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_b2</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_b5</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_b6</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_c3</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_g3</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_g8</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_h5</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_h8</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a8</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a9</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_g7</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_b1</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_b3</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Index>
+      <Name>tab_constants_pkey</Name>
+    </Index>
+  </Table>
+  <Table>
+    <Name>tab_b24</Name>
+    <Column>
+      <Name>uid</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a2</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a1</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Index>
+      <Name>tab_b24_pkey</Name>
+    </Index>
+  </Table>
+  <Table>
+    <Name>tab_a01</Name>
+    <Column>
       <Name>col_a5</Name>
       <DataType>date</DataType>
       <UdtName>date</UdtName>
+    </Column>
+    <Column>
+      <Name>uid</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
     </Column>
     <Column>
       <Name>col_a1</Name>
@@ -3036,16 +3137,6 @@
       <UdtName>uuid</UdtName>
     </Column>
     <Column>
-      <Name>col_m8</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
-      <Name>col_m9</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
       <Name>col_o1</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
@@ -3092,6 +3183,16 @@
     </Column>
     <Column>
       <Name>col_m7</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_m8</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_m9</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
@@ -6875,17 +6976,17 @@
       <UdtName>int4</UdtName>
     </Column>
     <Column>
+      <Name>col_a1</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
       <Name>docname</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
     <Column>
       <Name>docnomer</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a1</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
@@ -7473,17 +7574,17 @@
       <UdtName>uuid</UdtName>
     </Column>
     <Column>
-      <Name>col_i5</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
       <Name>docname</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
     <Column>
       <Name>docnomer</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_i5</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
@@ -7552,86 +7653,6 @@
     </Index>
     <Index>
       <Name>tab_a93_owner_idx</Name>
-    </Index>
-  </Table>
-  <Table>
-    <Name>tab_a94</Name>
-    <Column>
-      <Name>uid</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
-    </Column>
-    <Column>
-      <Name>spend</Name>
-      <DataType>boolean</DataType>
-      <UdtName>bool</UdtName>
-    </Column>
-    <Column>
-      <Name>spend_date</Name>
-      <DataType>timestamp without time zone</DataType>
-      <UdtName>timestamp</UdtName>
-    </Column>
-    <Column>
-      <Name>docdate</Name>
-      <DataType>timestamp without time zone</DataType>
-      <UdtName>timestamp</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a6</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a7</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a4</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
-    </Column>
-    <Column>
-      <Name>col_b1</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a1</Name>
-      <DataType>numeric</DataType>
-      <UdtName>numeric</UdtName>
-    </Column>
-    <Column>
-      <Name>docname</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
-      <Name>docnomer</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a8</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a5</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Index>
-      <Name>tab_a94_pkey</Name>
-    </Index>
-    <Index>
-      <Name>tab_a94_docdate_idx</Name>
-    </Index>
-    <Index>
-      <Name>tab_a94_docnomer_idx</Name>
-    </Index>
-    <Index>
-      <Name>tab_a94_spend_idx</Name>
     </Index>
   </Table>
   <Table>

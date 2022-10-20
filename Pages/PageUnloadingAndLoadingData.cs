@@ -25,7 +25,6 @@ namespace Configurator
         Button bClose;
 
         ScrolledWindow scrollListBoxTerminal;
-
         TextView textTerminal;
 
         public PageUnloadingAndLoadingData() : base()
@@ -65,7 +64,7 @@ namespace Configurator
         {
 
         }
-        
+
         void OnLoadingClick(object? sender, EventArgs args)
         {
 
