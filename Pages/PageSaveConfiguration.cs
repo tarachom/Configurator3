@@ -1,5 +1,5 @@
 using Gtk;
-using System.IO;
+
 using System.Xml.XPath;
 
 using AccountingSoftware;
@@ -68,7 +68,7 @@ namespace Configurator
 
         void OnCloseClick(object? sender, EventArgs args)
         {
-            string fullPathToCopyXmlFileConguratifion = 
+            string fullPathToCopyXmlFileConguratifion =
                 System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf!.PathToXmlFileConfiguration)!, Conf.PathToCopyXmlFileConfiguration);
 
             if (File.Exists(fullPathToCopyXmlFileConguratifion))
@@ -106,6 +106,7 @@ namespace Configurator
                 {
                     bAnalize.Sensitive = sensitive;
                     bAnalizeAndCreateSQL.Sensitive = sensitive;
+                    bExecuteSQLAndGenerateCode.Sensitive = sensitive;
                     bClose.Sensitive = sensitive;
                 }
             );
