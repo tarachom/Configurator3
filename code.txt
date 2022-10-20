@@ -38,3 +38,9 @@
             // if(combo.GetActiveIter(out iter))
             // positionMask = (int) combo.Model.GetValue(iter,1);
         }
+
+
+        *****************************
+
+        // delegate void AddLineHandler(string message);
+        // event AddLineHandler? AddLineNotify;

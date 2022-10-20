@@ -1,2 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<root />
+<root>
+  <info>Створити таблицю ЗамовленняПостачальнику_hbpfd (tab_b32)</info>
+  <sql>CREATE TABLE IF NOT EXISTS tab_b32 (uid uuid NOT NULL, spend bool NOT NULL, spend_date timestamp without time zone NOT NULL,  "docname" text,  "docnomer" text,  "docdate" timestamp without time zone,  "col_k2" uuid,  "col_k3" uuid,  "col_k4" uuid,  "col_k5" uuid,  "col_k6" numeric,  "col_k7" uuid,  "col_a1" uuid,  "col_a3" uuid,  "col_a4" uuid,  "col_a5" uuid,  "col_a7" date,  "col_a8" text,  "col_a9" boolean,  "col_b1" integer,  "col_b2" time without time zone,  "col_b3" time without time zone,  "col_b4" text,  "col_a6" integer,  "col_b5" integer,  "col_b6" integer,  "col_b7" uuid,  "col_b8" uuidtext,  "col_a2" text, PRIMARY KEY(uid));</sql>
+  <sql>CREATE INDEX IF NOT EXISTS tab_b32_docnomer_idx ON tab_b32 (docnomer);</sql>
+  <sql>CREATE INDEX IF NOT EXISTS tab_b32_docdate_idx ON tab_b32 (docdate);</sql>
+  <sql>CREATE INDEX IF NOT EXISTS tab_b32_spend_idx ON tab_b32 (spend);</sql>
+  <info>Створити таблицю Товари (tab_b33)</info>
+  <sql>CREATE TABLE IF NOT EXISTS tab_b33 (uid uuid NOT NULL, owner uuid NOT NULL, "col_b2" integer, "col_o4" uuid, "col_a1" uuid, "col_a2" uuid, "col_a3" integer, "col_a4" numeric, "col_a5" date, "col_a6" numeric, "col_a7" numeric, "col_a8" numeric, "col_a9" uuid, "col_b1" uuid, PRIMARY KEY(uid));</sql>
+  <sql>CREATE INDEX IF NOT EXISTS tab_b33_owner_idx ON tab_b33 (owner);</sql>
+  <info>Створити таблицю ПоступленняТоварівТаПослуг_hronu (tab_b34)</info>
+  <sql>CREATE TABLE IF NOT EXISTS tab_b34 (uid uuid NOT NULL, spend bool NOT NULL, spend_date timestamp without time zone NOT NULL,  "docname" text,  "docnomer" text,  "docdate" timestamp without time zone,  "col_a3" uuid,  "col_a4" integer,  "col_a5" uuid,  "col_a6" uuid,  "col_a7" uuid,  "col_a8" numeric,  "col_a9" uuid,  "col_b2" date,  "col_b3" integer,  "col_b4" boolean,  "col_b5" uuid,  "col_b6" text,  "col_b7" date,  "col_b8" uuid,  "col_b9" uuid,  "col_c1" uuid,  "col_c2" boolean,  "col_c3" date,  "col_c4" integer,  "col_c5" uuid,  "col_c6" numeric,  "col_c7" integer,  "col_c8" time without time zone,  "col_c9" time without time zone,  "col_d1" uuid,  "col_d2" uuid,  "col_d3" uuid,  "col_a1" uuidtext,  "col_b1" text, PRIMARY KEY(uid));</sql>
+  <sql>CREATE INDEX IF NOT EXISTS tab_b34_docnomer_idx ON tab_b34 (docnomer);</sql>
+  <sql>CREATE INDEX IF NOT EXISTS tab_b34_docdate_idx ON tab_b34 (docdate);</sql>
+  <sql>CREATE INDEX IF NOT EXISTS tab_b34_spend_idx ON tab_b34 (spend);</sql>
+  <info>Створити таблицю Товари (tab_b35)</info>
+  <sql>CREATE TABLE IF NOT EXISTS tab_b35 (uid uuid NOT NULL, owner uuid NOT NULL, "col_b3" integer, "col_a9" uuid, "col_b1" uuid, "col_b4" uuid, "col_a1" uuid, "col_a2" integer, "col_a3" numeric, "col_a4" numeric, "col_a5" numeric, "col_a6" uuid, "col_a7" uuid, "col_a8" numeric, "col_b2" uuid, PRIMARY KEY(uid));</sql>
+  <sql>CREATE INDEX IF NOT EXISTS tab_b35_owner_idx ON tab_b35 (owner);</sql>
+</root>

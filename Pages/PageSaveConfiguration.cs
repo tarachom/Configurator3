@@ -20,20 +20,15 @@ namespace Configurator
 
         string PathToXsltTemplate = AppContext.BaseDirectory;
 
-        #region Event
-
-        // delegate void ThreadButtonSensitiveHandler(bool sensitive);
-        // event ThreadButtonSensitiveHandler? ButtonSensitiveNotify;
-
-        #endregion
-
         Button bAnalize;
         Button bAnalizeAndCreateSQL;
         Button bExecuteSQLAndGenerateCode;
         Button bClose;
 
         ScrolledWindow scrollListBoxTerminal;
-        ListBox listBoxTerminal;
+        //ListBox listBoxTerminal;
+
+        TextView textTerminal;
 
         public PageSaveConfiguration() : base()
         {
@@ -65,77 +60,67 @@ namespace Configurator
             scrollListBoxTerminal = new ScrolledWindow();
             scrollListBoxTerminal.KineticScrolling = true;
             scrollListBoxTerminal.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-            scrollListBoxTerminal.Add(listBoxTerminal = new ListBox() { SelectionMode = SelectionMode.None });
+            scrollListBoxTerminal.Add(textTerminal = new TextView()); //
 
             hBoxTerminal.PackStart(scrollListBoxTerminal, true, true, 5);
-
-            //ButtonSensitiveNotify += ButtonSensitive;
 
             ShowAll();
         }
 
         void OnAnalizeClick(object? sender, EventArgs args)
         {
-            ButtonSensitive(false);
-
-            ClearListBoxTerminal();
-
-            Task a = new Task(SaveAndAnalize);
-            a.Start();
-
-            Task.WaitAll();
-
-            ButtonSensitive(true);
+            Thread thread = new Thread(new ThreadStart(SaveAndAnalize));
+            thread.Start();
         }
 
         void OnAnalizeAndCreateSQLClick(object? sender, EventArgs args)
         {
-            ButtonSensitive(false);
-
-            ClearListBoxTerminal();
-
-            Task a = new Task(SaveAnalizeAndCreateSQL);
-            a.Start();
-
-            Task.WaitAll();
-
-            ButtonSensitive(true);
+            Thread thread = new Thread(new ThreadStart(SaveAnalizeAndCreateSQL));
+            thread.Start();
         }
 
         void OnExecuteSQLAndGenerateCodeClick(object? sender, EventArgs args)
         {
-            ButtonSensitive(false);
-
-            ClearListBoxTerminal();
-
-            Task a = new Task(ExecuteSQLAndGenerateCode);
-            a.Start();
-
-            Task.WaitAll();
-
-            ButtonSensitive(true);
+            Thread thread = new Thread(new ThreadStart(ExecuteSQLAndGenerateCode));
+            thread.Start();
         }
 
-        public void ButtonSensitive(bool sensitive)
+        void ButtonSensitive(bool sensitive)
         {
-            bAnalize.Sensitive = sensitive;
-            bAnalizeAndCreateSQL.Sensitive = sensitive;
-            bClose.Sensitive = sensitive;
+            Gtk.Application.Invoke
+            (
+                delegate
+                {
+                    bAnalize.Sensitive = sensitive;
+                    bAnalizeAndCreateSQL.Sensitive = sensitive;
+                    bClose.Sensitive = sensitive;
+                }
+            );
         }
 
         void ApendLine(string text)
         {
-            listBoxTerminal.Add(new Label(text) { Halign = Align.Start });
-            listBoxTerminal.ShowAll();
-
-            //scrollListBoxTerminal.Vadjustment.ChangeValue();
-            //scrollListBoxTerminal.Vadjustment.Value = scrollListBoxTerminal.Vadjustment.PageSize;
+            Gtk.Application.Invoke
+            (
+                delegate
+                {
+                    textTerminal.Buffer.Text += text + "\n";
+                    TextMark end = textTerminal.Buffer.CreateMark("end", textTerminal.Buffer.GetIterAtLine(textTerminal.Buffer.LineCount), false);
+                    textTerminal.ScrollToMark(end, 0, true, 0, 0);
+                    textTerminal.Buffer.DeleteMark(end);
+                }
+            );
         }
 
         void ClearListBoxTerminal()
         {
-            foreach (var item in listBoxTerminal.Children)
-                listBoxTerminal.Remove(item);
+            Gtk.Application.Invoke
+            (
+                delegate
+                {
+                    textTerminal.Buffer.Text = "";
+                }
+            );
         }
 
         string GetNameFromType(string Type)
@@ -179,6 +164,10 @@ namespace Configurator
 
         void SaveAndAnalize()
         {
+            ButtonSensitive(false);
+
+            ClearListBoxTerminal();
+
             ApendLine("[ КОНФІГУРАЦІЯ ]");
 
             ApendLine("1. Створення копії файлу конфігурації");
@@ -407,10 +396,16 @@ namespace Configurator
             {
                 ApendLine("Нова база даних");
             }
+
+            ButtonSensitive(true);
         }
 
         void SaveAnalizeAndCreateSQL()
         {
+            ButtonSensitive(false);
+
+            ClearListBoxTerminal();
+
             ApendLine("[ АНАЛІЗ ]");
 
             string replacementColumn = "yes"; //(checkBoxReplacement.Checked ? "yes" : "no");
@@ -486,10 +481,16 @@ namespace Configurator
             {
                 ApendLine("Нова база даних");
             }
+
+            ButtonSensitive(true);
         }
 
         void ExecuteSQLAndGenerateCode()
         {
+            ButtonSensitive(false);
+
+            ClearListBoxTerminal();
+
             //Read SQL
             List<string> SqlList = Configuration.ListComparisonSql(
                System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf!.PathToXmlFileConfiguration)!, "ComparisonAnalize.xml"));
@@ -532,6 +533,8 @@ namespace Configurator
             }
 
             ApendLine("ГОТОВО!");
+
+            ButtonSensitive(true);
         }
 
         private void InfoTableCreateFieldCreate(XPathNavigator? xPathNavigator, string tab)
