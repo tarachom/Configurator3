@@ -20,18 +20,57 @@ namespace Configurator
 
         string PathToXsltTemplate = AppContext.BaseDirectory;
 
+        CheckButton checkButtonIsGenerate = new CheckButton("Генерувати код");
+        Entry entryGenerateCodePath = new Entry() { WidthRequest = 300 };
+        Button bSaveParam;
+
         Button bAnalize;
         Button bAnalizeAndCreateSQL;
         Button bExecuteSQLAndGenerateCode;
         Button bClose;
 
         ScrolledWindow scrollListBoxTerminal;
-
         TextView textTerminal;
 
         public PageSaveConfiguration() : base()
         {
             new VBox();
+
+            //Заголовок блоку Параметри
+            HBox hBoxParamInfo = new HBox() { Halign = Align.Start };
+            PackStart(hBoxParamInfo, false, false, 10);
+            hBoxParamInfo.PackStart(new Label("ПАРАМЕТРИ"), false, false, 10);
+
+            //Параметри 1
+            HBox hBoxParamIsGenerate = new HBox();
+            PackStart(hBoxParamIsGenerate, false, false, 5);
+
+            hBoxParamIsGenerate.PackStart(checkButtonIsGenerate, false, false, 5);
+
+            //Параметри 2
+            HBox hBoxParamPath = new HBox();
+            PackStart(hBoxParamPath, false, false, 5);
+
+            hBoxParamPath.PackStart(new Label("Шлях до папки куди генерувати код:"), false, false, 10);
+            hBoxParamPath.PackStart(entryGenerateCodePath, false, false, 5);
+
+            Button bSelectFolder = new Button("...");
+            bSelectFolder.Clicked += OnSelectFolder;
+            hBoxParamPath.PackStart(bSelectFolder, false, false, 5);
+
+            hBoxParamPath.PackStart(new Label("За замовчуванням код генерується в каталог програми"), false, false, 5);
+
+            //Save
+            HBox hBoxSaveParam = new HBox();
+            PackStart(hBoxSaveParam, false, false, 5);
+
+            bSaveParam = new Button("Зберегти параметри");
+            bSaveParam.Clicked += OnSaveParam;
+            hBoxSaveParam.PackStart(bSaveParam, false, false, 5);
+
+            PackStart(new Separator(Orientation.Horizontal), false, false, 10);
+
+            //Кнопки
             HBox hBox = new HBox();
 
             bAnalize = new Button("Аналіз змін");
@@ -64,6 +103,49 @@ namespace Configurator
             hBoxTerminal.PackStart(scrollListBoxTerminal, true, true, 5);
 
             ShowAll();
+        }
+
+        public void SetValue()
+        {
+            if (GeneralForm != null)
+            {
+                if (GeneralForm.OpenConfigurationParam!.OtherParam.ContainsKey("IsGenerateCode"))
+                    checkButtonIsGenerate.Active = GeneralForm.OpenConfigurationParam.OtherParam["IsGenerateCode"] == "True";
+
+                if (GeneralForm.OpenConfigurationParam!.OtherParam.ContainsKey("GenerateCodePath"))
+                    entryGenerateCodePath.Text = GeneralForm.OpenConfigurationParam.OtherParam["GenerateCodePath"];
+            }
+        }
+
+        void OnSelectFolder(object? sender, EventArgs arg)
+        {
+            FileChooserDialog fc = new FileChooserDialog("Виберіть каталог", GeneralForm,
+                FileChooserAction.SelectFolder, "Закрити", ResponseType.Cancel, "Вибрати", ResponseType.Accept);
+
+            if (fc.Run() == (int)ResponseType.Accept)
+            {
+                entryGenerateCodePath.Text = fc.CurrentFolder;
+            }
+
+            fc.Destroy();
+        }
+
+        void OnSaveParam(object? sender, EventArgs arg)
+        {
+            if (GeneralForm != null)
+            {
+                if (GeneralForm.OpenConfigurationParam!.OtherParam.ContainsKey("IsGenerateCode"))
+                    GeneralForm.OpenConfigurationParam!.OtherParam["IsGenerateCode"] = checkButtonIsGenerate.Active.ToString();
+                else
+                    GeneralForm.OpenConfigurationParam!.OtherParam.Add("IsGenerateCode", checkButtonIsGenerate.Active.ToString());
+
+                if (GeneralForm.OpenConfigurationParam!.OtherParam.ContainsKey("GenerateCodePath"))
+                    GeneralForm.OpenConfigurationParam!.OtherParam["GenerateCodePath"] = entryGenerateCodePath.Text;
+                else
+                    GeneralForm.OpenConfigurationParam!.OtherParam.Add("GenerateCodePath", entryGenerateCodePath.Text);
+
+                ConfigurationParamCollection.SaveConfigurationParamFromXML(ConfigurationParamCollection.PathToXML);
+            }
         }
 
         void OnCloseClick(object? sender, EventArgs args)

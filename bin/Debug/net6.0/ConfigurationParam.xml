@@ -9,7 +9,8 @@
     <Password>1</Password>
     <BaseName>storage_and_trade</BaseName>
     <OtherParam>
-      <Param name="test">test</Param>
+      <Param name="IsGenerateCode">True</Param>
+      <Param name="GenerateCodePath">/home/tarachom/Projects/DATA</Param>
     </OtherParam>
   </Configuration>
   <Configuration Select="False">

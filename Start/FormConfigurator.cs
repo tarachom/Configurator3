@@ -407,7 +407,7 @@ namespace Configurator
                 statusBar.Add(new Label($" База даних: {OpenConfigurationParam.DataBaseBaseName} "));
                 statusBar.ShowAll();
 
-                Console.WriteLine(OpenConfigurationParam.OtherParam.Count);
+                //Console.WriteLine(OpenConfigurationParam.OtherParam.Count);
                 //   OpenConfigurationParam.OtherParam.Add("test", "test");
                 //   ConfigurationParamCollection.SaveConfigurationParamFromXML(ConfigurationParamCollection.PathToXML);
             }
@@ -627,6 +627,8 @@ namespace Configurator
                 {
                     GeneralForm = this
                 };
+
+                page.SetValue();
 
                 return page;
             });
