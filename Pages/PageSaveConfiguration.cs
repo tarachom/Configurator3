@@ -675,13 +675,25 @@ namespace Configurator
                 );
             }
 
-            if (File.Exists(System.IO.Path.Combine(PathToXsltTemplate, "CodeGeneration.xslt")))
-            {
-                ApendLine("\n[ Генерування коду ]\n");
-                Configuration.GenerationCode(Conf.PathToXmlFileConfiguration,
-                    System.IO.Path.Combine(PathToXsltTemplate, "CodeGeneration.xslt"),
-                    System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, "CodeGeneration.cs"));
-            }
+            if (checkButtonIsGenerate.Active)
+                if (File.Exists(System.IO.Path.Combine(PathToXsltTemplate, "CodeGeneration.xslt")))
+                {
+                    string folderGenerateCode = String.IsNullOrEmpty(entryGenerateCodePath.Text) ?
+                       System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)! :
+                       entryGenerateCodePath.Text;
+
+                    if (System.IO.Directory.Exists(folderGenerateCode))
+                    {
+                        ApendLine("\n[ Генерування коду ]\n");
+                        Configuration.GenerationCode(Conf.PathToXmlFileConfiguration,
+                            System.IO.Path.Combine(PathToXsltTemplate, "CodeGeneration.xslt"),
+                            System.IO.Path.Combine(folderGenerateCode, "CodeGeneration.cs"));
+
+                        ApendLine("Код згенерований в папку " + folderGenerateCode + "\n");
+                    }
+                    else
+                        ApendLine("\nError: Не знайдена папка " + folderGenerateCode + "\nКод не згенерований\n");
+                }
 
             ApendLine("ГОТОВО!");
 

@@ -10,7 +10,8 @@
     <BaseName>storage_and_trade</BaseName>
     <OtherParam>
       <Param name="IsGenerateCode">True</Param>
-      <Param name="GenerateCodePath">/home/tarachom/Projects/DATA</Param>
+      <Param name="GenerateCodePath">
+      </Param>
     </OtherParam>
   </Configuration>
   <Configuration Select="False">
