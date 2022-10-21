@@ -37,6 +37,19 @@ namespace Configurator
                     ItemConfigurationParam.DataBasePassword = currentNode?.SelectSingleNode("Password")?.Value ?? "";
                     ItemConfigurationParam.DataBaseBaseName = currentNode?.SelectSingleNode("BaseName")?.Value ?? "";
 
+                    XPathNodeIterator? otherItemParamNodeList = currentNode?.Select("OtherParam/Param");
+
+                    if (otherItemParamNodeList != null)
+                        while (otherItemParamNodeList.MoveNext())
+                        {
+                            XPathNavigator? currentItemParamNode = otherItemParamNodeList.Current;
+                            string paramName = currentItemParamNode?.GetAttribute("name", "") ?? "";
+                            string paramValue = currentItemParamNode?.Value ?? "";
+
+                            if (!String.IsNullOrEmpty(paramName))
+                                ItemConfigurationParam.OtherParam.Add(paramName, paramValue);
+                        }
+
                     ListConfigurationParam.Add(ItemConfigurationParam);
                 }
             }
@@ -86,6 +99,17 @@ namespace Configurator
                 XmlElement nodeBaseName = xmlConfParamDocument.CreateElement("BaseName");
                 nodeBaseName.InnerText = ItemConfigurationParam.DataBaseBaseName;
                 configurationNode.AppendChild(nodeBaseName);
+
+                XmlElement nodeOtherParam = xmlConfParamDocument.CreateElement("OtherParam");
+                configurationNode.AppendChild(nodeOtherParam);
+
+                foreach (KeyValuePair<string, string> itemParam in ItemConfigurationParam.OtherParam)
+                {
+                    XmlElement nodeItemParam = xmlConfParamDocument.CreateElement("Param");
+                    nodeItemParam.SetAttribute("name", itemParam.Key);
+                    nodeItemParam.InnerText = itemParam.Value;
+                    nodeOtherParam.AppendChild(nodeItemParam);
+                }
             }
 
             xmlConfParamDocument.Save(pathToXML);
@@ -153,6 +177,7 @@ namespace Configurator
             DataBasePassword = "";
             DataBaseBaseName = "";
             Select = false;
+            OtherParam = new Dictionary<string, string>();
         }
 
         public string ConfigurationKey { get; set; }
@@ -171,9 +196,11 @@ namespace Configurator
 
         public bool Select { get; set; }
 
+        public Dictionary<string, string> OtherParam { get; set; }
+
         public override string ToString()
         {
-            return String.IsNullOrWhiteSpace(ConfigurationName) ? "<>" : ConfigurationName;
+            return String.IsNullOrWhiteSpace(ConfigurationName) ? "[]" : ConfigurationName;
         }
 
         public static ConfigurationParam New()
@@ -195,6 +222,7 @@ namespace Configurator
             configurationParam.DataBasePassword = DataBasePassword;
             configurationParam.DataBaseBaseName = DataBaseBaseName;
             configurationParam.DataBasePort = DataBasePort;
+            configurationParam.OtherParam = OtherParam;
 
             return configurationParam;
         }

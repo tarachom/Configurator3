@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <Configuration Select="False">
+  <Configuration Select="True">
     <Key>6b4ef58d-4b62-4885-8059-eb6f43c51c2d</Key>
     <Name>Зберігання та торгівля для України</Name>
     <Server>localhost</Server>
@@ -8,8 +8,11 @@
     <Login>postgres</Login>
     <Password>1</Password>
     <BaseName>storage_and_trade</BaseName>
+    <OtherParam>
+      <Param name="test">test</Param>
+    </OtherParam>
   </Configuration>
-  <Configuration Select="True">
+  <Configuration Select="False">
     <Key>0435a731-85b1-41dd-a6a8-05f6f7b08f11</Key>
     <Name>Зберігання та торгівля для України - Копія</Name>
     <Server>localhost</Server>
@@ -17,6 +20,7 @@
     <Login>postgres</Login>
     <Password>1</Password>
     <BaseName>storage_and_trade2</BaseName>
+    <OtherParam />
   </Configuration>
   <Configuration Select="False">
     <Key>5a37bea7-8467-41fc-b89c-58490542ca93</Key>
@@ -26,5 +30,6 @@
     <Login>postgres</Login>
     <Password>1</Password>
     <BaseName>storage_and_trade3</BaseName>
+    <OtherParam />
   </Configuration>
 </root>
