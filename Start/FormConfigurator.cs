@@ -400,7 +400,7 @@ namespace Configurator
             if (OpenConfigurationParam != null)
             {
                 statusBar.Halign = Align.Start;
-                statusBar.Add(new Label($"Конфігурація: {OpenConfigurationParam.ConfigurationName} "));
+                statusBar.Add(new Label($"Конфігурація: {Conf!.Name} "));
                 statusBar.Add(new Separator(Orientation.Vertical));
                 statusBar.Add(new Label($" Сервер: {OpenConfigurationParam.DataBaseServer} "));
                 statusBar.Add(new Separator(Orientation.Vertical));
@@ -423,8 +423,9 @@ namespace Configurator
             Add(vbox);
 
             //MenuBar
-            vbox.PackStart(CreateMenuBar(), false, false, 0);
+            vbox.PackStart(CreateMenuBar(), false, false, 2);
 
+            //Toolbar
             vbox.PackStart(CreateToolbar(), false, false, 0);
 
             hPaned = new HPaned();
@@ -473,6 +474,10 @@ namespace Configurator
             saveConfiguration.Activated += OnSaveConfigurationClick;
             СonfMenu.Append(saveConfiguration);
 
+            MenuItem editConfigurationInfo = new MenuItem("Параметри конфігурації");
+            editConfigurationInfo.Activated += OnConfigurationInfo;
+            СonfMenu.Append(editConfigurationInfo);
+
             mb.Append(configurationItem);
 
             //2
@@ -492,7 +497,26 @@ namespace Configurator
             uploadAndLoadData.Activated += OnUnloadingAndLoadingData;
             UploadAndLoadMenu.Append(uploadAndLoadData);
 
+            MenuItem maintenanceItem = new MenuItem("Оптимізація таблиць");
+            maintenanceItem.Activated += OnMaintenance;
+            UploadAndLoadMenu.Append(maintenanceItem);
+
             mb.Append(uploadAndLoadDataMenuItem);
+
+            //3
+            Menu AboutMenu = new Menu();
+            MenuItem aboutMenuItem = new MenuItem("Про програму");
+            aboutMenuItem.Submenu = AboutMenu;
+
+            MenuItem aboutMenuInfoItem = new MenuItem("Інформація");
+            aboutMenuInfoItem.Activated += OnAboutMenuInfo;
+            AboutMenu.Append(aboutMenuInfoItem);
+
+            MenuItem aboutMenuHelpItem = new MenuItem("Допомога");
+            //aboutMenuInfoItem.Activated += OnUploadConfigurationToFileClick;
+            AboutMenu.Append(aboutMenuHelpItem);
+
+            mb.Append(aboutMenuItem);
 
             VBox vbox = new VBox(false, 2);
             vbox.PackStart(mb, false, false, 0);
@@ -604,6 +628,21 @@ namespace Configurator
             });
         }
 
+        void OnConfigurationInfo(object? sender, EventArgs args)
+        {
+            CreateNotebookPage("Параметри конфігурації", () =>
+            {
+                PageConfigurationInfo page = new PageConfigurationInfo()
+                {
+                    GeneralForm = this
+                };
+
+                page.SetValue();
+
+                return page;
+            });
+        }
+
         void OnUploadConfigurationToFileClick(object? sender, EventArgs args)
         {
             string folderSave = "";
@@ -636,7 +675,7 @@ namespace Configurator
             bool loadOk = false;
 
             FileChooserDialog fc = new FileChooserDialog("Виберіть файл для загрузки конфігурації", this,
-                            FileChooserAction.Open, "Закрити", ResponseType.Cancel, "Вибрати", ResponseType.Accept);
+                FileChooserAction.Open, "Закрити", ResponseType.Cancel, "Вибрати", ResponseType.Accept);
 
             fc.Filter = new FileFilter();
             fc.Filter.AddPattern("*.xml");
@@ -647,6 +686,8 @@ namespace Configurator
                 {
                     Configuration openConf;
                     Configuration.Load(fc.Filename, out openConf);
+
+                    openConf.PathToXmlFileConfiguration = Conf!.PathToXmlFileConfiguration;
 
                     Program.Kernel!.Conf = openConf;
 
@@ -671,6 +712,32 @@ namespace Configurator
 
                 return page;
             });
+        }
+
+        void OnMaintenance(object? sender, EventArgs args)
+        {
+            CreateNotebookPage("Оптимізація таблиць", () =>
+            {
+                PageMaintenance page = new PageMaintenance()
+                {
+                    GeneralForm = this
+                };
+
+                return page;
+            });
+        }
+
+        void OnAboutMenuInfo(object? sender, EventArgs args)
+        {
+            AboutDialog about = new AboutDialog() { Title = "Конфігуратор" };
+            about.ProgramName = "Конфігуратор";
+            about.Version = "Версія 3.0";
+            about.Copyright = "(c) Тарахомин Юрій Іванович";
+            about.Comments = @"Проектування бази даних PostgreSQL";
+            about.Website = "https://accounting.org.ua";
+            about.Logo = new Gdk.Pixbuf("logo.jpg");
+            about.Run();
+            about.Destroy();
         }
 
         #endregion
@@ -2026,6 +2093,5 @@ namespace Configurator
         }
 
         #endregion
-
     }
 }

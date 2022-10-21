@@ -24,9 +24,9 @@ limitations under the License.
   
 /*
  *
- * Конфігурації "Зберігання та Торгівля"
+ * Конфігурації "Зберігання та Торгівля 3.0"
  * Автор Тарахомин Юрій Іванович, accounting.org.ua
- * Дата конфігурації: 20.10.2022 17:14:38
+ * Дата конфігурації: 20.10.2022 21:20:06
  *
  */
 
@@ -3992,14 +3992,13 @@ namespace StorageAndTrade_1_0.Довідники
         public const string ОдиницяВиміру = "col_a4";
         public const string Папка = "col_a5";
         public const string ОсновнаКартинкаФайл = "col_a7";
-        public const string Назва_hfgxp = "col_a6";
     }
 	
     
     public class Номенклатура_Objest : DirectoryObject
     {
         public Номенклатура_Objest() : base(Config.Kernel, "tab_a03",
-             new string[] { "col_b1", "col_b2", "col_b4", "col_a1", "col_b3", "col_b5", "col_a2", "col_a3", "col_a4", "col_a5", "col_a7", "col_a6" }) 
+             new string[] { "col_b1", "col_b2", "col_b4", "col_a1", "col_b3", "col_b5", "col_a2", "col_a3", "col_a4", "col_a5", "col_a7" }) 
         {
             Назва = "";
             Код = "";
@@ -4012,7 +4011,6 @@ namespace StorageAndTrade_1_0.Довідники
             ОдиницяВиміру = new Довідники.ПакуванняОдиниціВиміру_Pointer();
             Папка = new Довідники.Номенклатура_Папки_Pointer();
             ОсновнаКартинкаФайл = new Довідники.Файли_Pointer();
-            Назва_hfgxp = "";
             
             //Табличні частини
             Файли_TablePart = new Номенклатура_Файли_TablePart(this);
@@ -4034,7 +4032,6 @@ namespace StorageAndTrade_1_0.Довідники
                 ОдиницяВиміру = new Довідники.ПакуванняОдиниціВиміру_Pointer(base.FieldValue["col_a4"]);
                 Папка = new Довідники.Номенклатура_Папки_Pointer(base.FieldValue["col_a5"]);
                 ОсновнаКартинкаФайл = new Довідники.Файли_Pointer(base.FieldValue["col_a7"]);
-                Назва_hfgxp = base.FieldValue["col_a6"].ToString();
                 
                 BaseClear();
                 return true;
@@ -4057,7 +4054,6 @@ namespace StorageAndTrade_1_0.Довідники
             base.FieldValue["col_a4"] = ОдиницяВиміру.UnigueID.UGuid;
             base.FieldValue["col_a5"] = Папка.UnigueID.UGuid;
             base.FieldValue["col_a7"] = ОсновнаКартинкаФайл.UnigueID.UGuid;
-            base.FieldValue["col_a6"] = Назва_hfgxp;
             
             BaseSave();
 			Номенклатура_Triggers.AfterRecording(this);
@@ -4078,7 +4074,6 @@ namespace StorageAndTrade_1_0.Довідники
 			copy.ОдиницяВиміру = ОдиницяВиміру;
 			copy.Папка = Папка;
 			copy.ОсновнаКартинкаФайл = ОсновнаКартинкаФайл;
-			copy.Назва_hfgxp = Назва_hfgxp;
 			
 			return copy;
         }
@@ -4106,7 +4101,6 @@ namespace StorageAndTrade_1_0.Довідники
         public Довідники.ПакуванняОдиниціВиміру_Pointer ОдиницяВиміру { get; set; }
         public Довідники.Номенклатура_Папки_Pointer Папка { get; set; }
         public Довідники.Файли_Pointer ОсновнаКартинкаФайл { get; set; }
-        public string Назва_hfgxp { get; set; }
         
         //Табличні частини
         public Номенклатура_Файли_TablePart Файли_TablePart { get; set; }
@@ -4141,7 +4135,7 @@ namespace StorageAndTrade_1_0.Довідники
 		public string GetPresentation()
         {
 		    return base.BasePresentation(
-			    new string[] { "col_b1", "col_a6" }
+			    new string[] { "col_b1" }
 			);
         }
 		
@@ -9567,148 +9561,6 @@ namespace StorageAndTrade_1_0.Довідники
             List<АналітикаПартійКомпозит_Pointer> directoryPointerList = new List<АналітикаПартійКомпозит_Pointer>();
             foreach (DirectoryPointer directoryPointer in base.BaseFindListByField(name, value, limit, offset)) 
                 directoryPointerList.Add(new АналітикаПартійКомпозит_Pointer(directoryPointer.UnigueID));
-            return directoryPointerList;
-        }
-    }
-    
-      
-   
-    #endregion
-    
-    #region DIRECTORY "dsgsdgs"
-    
-    public static class dsgsdgs_Const
-    {
-        public const string TABLE = "tab_b24";
-        
-        public const string Код = "col_a1";
-        public const string Назва = "col_a2";
-    }
-	
-    
-    public class dsgsdgs_Objest : DirectoryObject
-    {
-        public dsgsdgs_Objest() : base(Config.Kernel, "tab_b24",
-             new string[] { "col_a1", "col_a2" }) 
-        {
-            Код = "";
-            Назва = "";
-            
-        }
-        
-        public bool Read(UnigueID uid)
-        {
-            if (BaseRead(uid))
-            {
-                Код = base.FieldValue["col_a1"].ToString();
-                Назва = base.FieldValue["col_a2"].ToString();
-                
-                BaseClear();
-                return true;
-            }
-            else
-                return false;
-        }
-        
-        public void Save()
-        {
-		    base.FieldValue["col_a1"] = Код;
-            base.FieldValue["col_a2"] = Назва;
-            
-            BaseSave();
-			
-        }
-		
-        public dsgsdgs_Objest Copy()
-        {
-            dsgsdgs_Objest copy = new dsgsdgs_Objest();
-			copy.New();
-            copy.Код = Код;
-			copy.Назва = Назва;
-			
-			return copy;
-        }
-
-        public void Delete()
-        {
-            
-			base.BaseDelete(new string[] {  });
-        }
-        
-        public dsgsdgs_Pointer GetDirectoryPointer()
-        {
-            dsgsdgs_Pointer directoryPointer = new dsgsdgs_Pointer(UnigueID.UGuid);
-            return directoryPointer;
-        }
-        
-        public string Код { get; set; }
-        public string Назва { get; set; }
-        
-    }
-    
-    
-    public class dsgsdgs_Pointer : DirectoryPointer
-    {
-        public dsgsdgs_Pointer(object uid = null) : base(Config.Kernel, "tab_b24")
-        {
-            base.Init(new UnigueID(uid), null);
-        }
-        
-        public dsgsdgs_Pointer(UnigueID uid, Dictionary<string, object> fields = null) : base(Config.Kernel, "tab_b24")
-        {
-            base.Init(uid, fields);
-        }
-        
-        public dsgsdgs_Objest GetDirectoryObject()
-        {
-            if (this.IsEmpty()) return null;
-            dsgsdgs_Objest dsgsdgsObjestItem = new dsgsdgs_Objest();
-            return dsgsdgsObjestItem.Read(base.UnigueID) ? dsgsdgsObjestItem : null;
-        }
-		
-        public dsgsdgs_Pointer GetNewDirectoryPointer()
-        {
-            return new dsgsdgs_Pointer(base.UnigueID);
-        }
-		
-		public string GetPresentation()
-        {
-		    return base.BasePresentation(
-			    new string[] {  }
-			);
-        }
-		
-        public dsgsdgs_Pointer GetEmptyPointer()
-        {
-            return new dsgsdgs_Pointer();
-        }
-    }
-    
-    
-    public class dsgsdgs_Select : DirectorySelect
-    {
-        public dsgsdgs_Select() : base(Config.Kernel, "tab_b24") { }        
-        public bool Select() { return base.BaseSelect(); }
-        
-        public bool SelectSingle() { if (base.BaseSelectSingle()) { MoveNext(); return true; } else { Current = null; return false; } }
-        
-        public bool MoveNext() { if (MoveToPosition()) { Current = new dsgsdgs_Pointer(base.DirectoryPointerPosition.UnigueID, base.DirectoryPointerPosition.Fields); return true; } else { Current = null; return false; } }
-
-        public dsgsdgs_Pointer Current { get; private set; }
-        
-        public dsgsdgs_Pointer FindByField(string name, object value)
-        {
-            dsgsdgs_Pointer itemPointer = new dsgsdgs_Pointer();
-            DirectoryPointer directoryPointer = base.BaseFindByField(name, value);
-            if (!directoryPointer.IsEmpty()) itemPointer.Init(directoryPointer.UnigueID);
-            return itemPointer;
-        }
-        
-        public List<dsgsdgs_Pointer> FindListByField(string name, object value, int limit = 0, int offset = 0)
-        {
-            List<dsgsdgs_Pointer> directoryPointerList = new List<dsgsdgs_Pointer>();
-            foreach (DirectoryPointer directoryPointer in base.BaseFindListByField(name, value, limit, offset)) 
-                directoryPointerList.Add(new dsgsdgs_Pointer(directoryPointer.UnigueID));
             return directoryPointerList;
         }
     }
