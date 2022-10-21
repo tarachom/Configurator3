@@ -695,7 +695,7 @@ namespace Configurator
                         ApendLine("\nError: Не знайдена папка " + folderGenerateCode + "\nКод не згенерований\n");
                 }
 
-            ApendLine("ГОТОВО!");
+            ApendLine("\nГОТОВО!");
 
             ButtonSensitive(true);
         }
