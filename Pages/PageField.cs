@@ -136,10 +136,30 @@ namespace Configurator
         {
             VBox vBox = new VBox();
 
-            HBox hBox = new HBox() { Halign = Align.Fill };
-            vBox.PackStart(hBox, false, false, 5);
+            List<string> helpList = new List<string>();
+            helpList.Add("\t\t Типи даних та їх відповідники в C#:");
+            helpList.Add("integer -> int \t Від -2,147,483,648 до 2,147,483,647");
+            helpList.Add("numeric -> decimal \t Число з комою");
+            helpList.Add("boolean -> bool \t true - false");
+            helpList.Add("date -> DateTime \t 01.01.2022");
+            helpList.Add("datetime -> DateTime  \t 01.01.2022 00:00:00");
+            helpList.Add("time -> TimeSpan  \t 00:00:00");
+            helpList.Add("enum -> enum  \t В базі зберігається як ціле число");
+            helpList.Add("pointer -> Довідник.Номенклатура() \t Вказівник");
+            helpList.Add("empty-pointer -> EmptyPointer()");
+            helpList.Add("any-pointer -> Guid() \t 291a4809-adf8-4d8a-8272-53d0ecac4898 ");
+            helpList.Add("composite-pointer -> UuidAndText() \t Guid + Текст");
+            helpList.Add("byte -> byte[] \t Масив байт");
+            helpList.Add("string[] \t Масив стрічок");
+            helpList.Add("integer[] -> int[] \t Масив цілих чисел");
+            helpList.Add("numeric[] -> decimal[] \t Масив чисел з комою");
 
-            hBox.PackStart(new Label("help"), false, false, 5);
+            foreach (var item in helpList)
+            {
+                HBox hBox = new HBox() { Halign = Align.Fill };
+                vBox.PackStart(hBox, false, false, 5);
+                hBox.PackStart(new Label(item), false, false, 5);
+            }
 
             hPaned.Pack2(vBox, false, false);
         }

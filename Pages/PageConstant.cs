@@ -346,6 +346,8 @@ namespace Configurator
                     CallBack_RefreshList = TabularPartsRefreshList
                 };
 
+                page.SetValue();
+
                 return page;
             });
         }

@@ -928,6 +928,19 @@
         <Coincide>yes</Coincide>
       </Type>
     </Control_Field>
+    <Control_Field>
+      <Name>erter</Name>
+      <NameInTable>col_h9</NameInTable>
+      <Index></Index>
+      <IndexExist />
+      <IsExist>yes</IsExist>
+      <Type>
+        <ConfType>string</ConfType>
+        <DataType>text</DataType>
+        <UdtName>text</UdtName>
+        <Coincide>yes</Coincide>
+      </Type>
+    </Control_Field>
     <Control_TabularParts>
       <Name>Журнал</Name>
       <Table>tab_a69</Table>
@@ -3047,6 +3060,36 @@
         </Type>
       </Control_Field>
     </Control_TabularParts>
+    <Control_TabularParts>
+      <Name>erterterte</Name>
+      <Table>tab_b24</Table>
+      <IsCreateOwner>no</IsCreateOwner>
+      <IsExist>yes</IsExist>
+      <Control_Field>
+        <Name>erterter</Name>
+        <NameInTable>col_a1</NameInTable>
+        <Index>0</Index>
+        <IndexExist />
+        <IsExist>yes</IsExist>
+        <Type>
+          <ConfType>string</ConfType>
+          <DataType>text</DataType>
+          <UdtName>text</UdtName>
+          <Coincide>yes</Coincide>
+        </Type>
+      </Control_Field>
+    </Control_TabularParts>
+  </Control_Table>
+  <Control_Table>
+    <Type>Constants</Type>
+    <Name>Константи</Name>
+    <Table>tab_constants</Table>
+    <IsExist>yes</IsExist>
+    <Control_Field>
+      <Name>drwerwe</Name>
+      <NameInTable>col_i1</NameInTable>
+      <IsExist>delete</IsExist>
+    </Control_Field>
   </Control_Table>
   <Control_Table>
     <Type>Directory</Type>
