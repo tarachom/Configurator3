@@ -5,7 +5,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>22.10.2022 13:26:55</DateTimeSave>
+  <DateTimeSave>22.10.2022 21:30:10</DateTimeSave>
   <ConstantsBlocks>
     <ConstantsBlock>
       <Name>ЗначенняЗаЗамовчуванням</Name>
@@ -2279,6 +2279,21 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+            </Field>
+            <Field>
+              <Name>Код</Name>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -2424,6 +2439,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
+      <TabularLists />
       <TriggerFunctions>
         <BeforeSave>Номенклатура_Triggers.BeforeRecording</BeforeSave>
         <AfterSave>Номенклатура_Triggers.AfterRecording</AfterSave>
@@ -2453,6 +2469,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
+      <TabularLists />
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -2514,6 +2531,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
+      <TabularLists />
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -2564,6 +2582,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
+      <TabularLists />
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -2613,6 +2632,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
+      <TabularLists />
       <TriggerFunctions>
         <BeforeSave>Валюти_Triggers.BeforeRecording</BeforeSave>
         <AfterSave>Валюти_Triggers.AfterRecording</AfterSave>
@@ -2762,6 +2782,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
+      <TabularLists />
       <TriggerFunctions>
         <BeforeSave>Контрагенти_Triggers.BeforeRecording</BeforeSave>
         <AfterSave>Контрагенти_Triggers.AfterRecording</AfterSave>
@@ -2907,6 +2928,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
+      <TabularLists />
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -2949,6 +2971,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
+      <TabularLists />
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -2991,6 +3014,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
+      <TabularLists />
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -3108,6 +3132,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
+      <TabularLists />
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -3234,6 +3259,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
+      <TabularLists />
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -3276,6 +3302,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
+      <TabularLists />
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -3317,6 +3344,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
+      <TabularLists />
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -3385,6 +3413,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
+      <TabularLists />
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -3436,6 +3465,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
+      <TabularLists />
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -3478,6 +3508,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
+      <TabularLists />
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -3518,6 +3549,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
+      <TabularLists />
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -3558,6 +3590,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
+      <TabularLists />
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -3609,6 +3642,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
+      <TabularLists />
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -3743,6 +3777,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
+      <TabularLists />
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -3945,6 +3980,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
+      <TabularLists />
       <TriggerFunctions>
         <BeforeSave>ДоговориКонтрагентів_Triggers.BeforeRecording</BeforeSave>
         <AfterSave>ДоговориКонтрагентів_Triggers.AfterRecording</AfterSave>
@@ -4093,6 +4129,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
+      <TabularLists />
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -4171,6 +4208,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
+      <TabularLists />
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -4214,6 +4252,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
+      <TabularLists />
       <TriggerFunctions>
         <BeforeSave>СеріїНоменклатури_Triggers.BeforeRecording</BeforeSave>
         <AfterSave>СеріїНоменклатури_Triggers.AfterRecording</AfterSave>
@@ -4283,6 +4322,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
+      <TabularLists />
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -4358,6 +4398,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
+      <TabularLists />
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -4431,6 +4472,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
+      <TabularLists />
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -4495,6 +4537,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
+      <TabularLists />
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -4549,6 +4592,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
+      <TabularLists />
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -4584,6 +4628,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
+      <TabularLists />
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>

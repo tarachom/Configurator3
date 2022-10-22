@@ -329,17 +329,17 @@ limitations under the License.
  *
  */
 
-using System;
-using System.Collections.Generic;
+<!-- using System;
+using System.Collections.Generic; -->
 using AccountingSoftware;
 
 namespace <xsl:value-of select="Configuration/NameSpace"/>
 {
     public static class Config
     {
-        public static Kernel? Kernel { get; set; } //
-        public static Kernel? KernelBackgroundTask { get; set; } //
-        public static Kernel? KernelParalelWork { get; set; } //
+        public static Kernel? Kernel { get; set; }
+        public static Kernel? KernelBackgroundTask { get; set; }
+        public static Kernel? KernelParalelWork { get; set; }
 		
         public static void ReadAllConstants()
         {

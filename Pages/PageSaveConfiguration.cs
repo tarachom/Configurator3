@@ -676,24 +676,37 @@ namespace Configurator
             }
 
             if (checkButtonIsGenerate.Active)
-                if (File.Exists(System.IO.Path.Combine(PathToXsltTemplate, "CodeGeneration.xslt")))
-                {
-                    string folderGenerateCode = String.IsNullOrEmpty(entryGenerateCodePath.Text) ?
+            {
+                string folderGenerateCode = String.IsNullOrEmpty(entryGenerateCodePath.Text) ?
                        System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)! :
                        entryGenerateCodePath.Text;
 
-                    if (System.IO.Directory.Exists(folderGenerateCode))
+                if (System.IO.Directory.Exists(folderGenerateCode))
+                {
+                    ApendLine("\n[ Генерування коду ]\n");
+                    ApendLine("Папка: " + folderGenerateCode + "\n");
+
+                    if (File.Exists(System.IO.Path.Combine(PathToXsltTemplate, "CodeGeneration.xslt")))
                     {
-                        ApendLine("\n[ Генерування коду ]\n");
                         Configuration.GenerationCode(Conf.PathToXmlFileConfiguration,
                             System.IO.Path.Combine(PathToXsltTemplate, "CodeGeneration.xslt"),
                             System.IO.Path.Combine(folderGenerateCode, "CodeGeneration.cs"));
 
-                        ApendLine("Код згенерований в папку " + folderGenerateCode + "\n");
+                        ApendLine("Файл 'CodeGeneration.cs' згенерований\n");
                     }
-                    else
-                        ApendLine("\nError: Не знайдена папка " + folderGenerateCode + "\nКод не згенерований\n");
+
+                    if (File.Exists(System.IO.Path.Combine(PathToXsltTemplate, "Gtk.xslt")))
+                    {
+                        Configuration.GenerationCode(Conf.PathToXmlFileConfiguration,
+                            System.IO.Path.Combine(PathToXsltTemplate, "Gtk.xslt"),
+                            System.IO.Path.Combine(folderGenerateCode, "CodeGenerationGtk.cs"));
+
+                        ApendLine("Файл 'CodeGenerationGtk.cs' згенерований\n");
+                    }
                 }
+                else
+                    ApendLine("\nError: Не знайдена папка " + folderGenerateCode + "\nКод не згенерований\n");
+            }
 
             ApendLine("\nГОТОВО!");
 
