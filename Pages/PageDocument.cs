@@ -297,7 +297,7 @@ namespace Configurator
         void FillFields()
         {
             foreach (ConfigurationObjectField field in ConfDocument.Fields.Values)
-                listBoxFields.Add(new Label(field.Name) { Name = field.Name, Halign = Align.Start });
+                listBoxFields.Add(new Label(field.Name + (field.IsPresentation ? " [ представлення ]" : "")) { Name = field.Name, Halign = Align.Start });
         }
 
         void FillTabularParts()

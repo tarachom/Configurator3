@@ -3081,17 +3081,6 @@
     </Control_TabularParts>
   </Control_Table>
   <Control_Table>
-    <Type>Constants</Type>
-    <Name>Константи</Name>
-    <Table>tab_constants</Table>
-    <IsExist>yes</IsExist>
-    <Control_Field>
-      <Name>drwerwe</Name>
-      <NameInTable>col_i1</NameInTable>
-      <IsExist>delete</IsExist>
-    </Control_Field>
-  </Control_Table>
-  <Control_Table>
     <Type>Directory</Type>
     <Name>Організації</Name>
     <Table>tab_a01</Table>
