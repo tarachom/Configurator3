@@ -15,6 +15,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники.Т
     
       <xsl:for-each select="TabularLists/TabularList">
         <xsl:variable name="TabularListName" select="Name"/>
+        <xsl:variable name="CountFields" select="count(Fields/Field)"/>
     public class <xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularListName"/>
     {
         public string Image = "doc.png";
@@ -57,13 +58,11 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники.Т
                 new string[]
                 {
                     <xsl:for-each select="Fields/Field">
-                      <xsl:if test="position() != 1">
-                        <xsl:text>, </xsl:text>
-                      </xsl:if>
                       <xsl:text>Довідники.</xsl:text>
                       <xsl:value-of select="$DirectoryName"/>
                       <xsl:text>_Const.</xsl:text>
                       <xsl:value-of select="Name"/>
+                      <xsl:if test="position() &lt; $CountFields">,</xsl:if> //
                     </xsl:for-each>
                 });
 
@@ -76,7 +75,6 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники.Т
                     Store.AppendValues(new <xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularListName"/>
                     {
                         ID = cur.UnigueID.ToString(),
-                        <xsl:variable name="CountFields" select="count(Fields/Field)"/>
                         <xsl:for-each select="Fields/Field">
                           <xsl:value-of select="Name"/>
                           <xsl:text> = cur.Fields?[Довідники.</xsl:text>
