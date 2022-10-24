@@ -132,7 +132,6 @@ namespace Configurator
             rendererTextSortNum.Edited += EditedSortNum;
 
             treeViewFields.AppendColumn(new TreeViewColumn("Порядок", rendererTextSortNum, "text", 4));
-
             listStore.SetSortColumnId(4, SortType.Ascending);
 
             treeViewFields.AppendColumn(new TreeViewColumn("Тип", new CellRendererText(), "text", 5));
@@ -214,11 +213,6 @@ namespace Configurator
 
             entryName.Text = TabularList.Name;
             textViewDesc.Buffer.Text = TabularList.Desc;
-        }
-
-        string GetTypeInfo(string ConfType, string Pointer)
-        {
-            return ConfType == "pointer" || ConfType == "enum" ? Pointer : ConfType;
         }
 
         void FillTreeView()
