@@ -21,6 +21,9 @@ namespace Configurator
         public System.Action? CallBack_RefreshList { get; set; }
         public bool IsNew { get; set; } = true;
 
+        ListStore listStore = new ListStore(typeof(bool), typeof(string), typeof(string), typeof(string));
+        TreeView treeViewFields;
+
         ListBox listBoxFields = new ListBox() { SelectionMode = SelectionMode.Single };
         Entry entryName = new Entry() { WidthRequest = 500 };
         TextView textViewDesc = new TextView();
@@ -42,6 +45,9 @@ namespace Configurator
 
             PackStart(hBox, false, false, 10);
 
+            treeViewFields = new TreeView(listStore);
+            AddColumnTreeViewFields();
+
             HPaned hPaned = new HPaned() { BorderWidth = 5 };
 
             CreatePack1(hPaned);
@@ -52,9 +58,89 @@ namespace Configurator
             ShowAll();
         }
 
+        void AddColumnTreeViewFields()
+        {
+            CellRendererToggle rendererToggle = new CellRendererToggle();
+            rendererToggle.Toggled += new ToggledHandler(FixedToggled);
+
+            treeViewFields.AppendColumn(new TreeViewColumn("Виводити", rendererToggle, "active", 0));
+            treeViewFields.AppendColumn(new TreeViewColumn("Назва", new CellRendererText(), "text", 1));
+
+            CellRendererText rendererText = new CellRendererText() { Editable = true };
+            rendererText.Edited += new EditedHandler(EditedCaption);
+
+            treeViewFields.AppendColumn(new TreeViewColumn("Заголовок", rendererText, "text", 2));
+
+            ListStore liststore_manufacturers = new Gtk.ListStore(typeof(string));
+            var manufacturers = new List<string> { "Sony", "LG", "Panasonic", "Toshiba", "Nokia", "Samsung" };
+            foreach (var item in manufacturers)
+            {
+                liststore_manufacturers.AppendValues(item);
+            }
+
+            CellRendererCombo rendererCombo = new CellRendererCombo();
+            rendererCombo.Editable = true;
+            rendererCombo.Model = liststore_manufacturers;
+            rendererCombo.TextColumn = 0;
+            rendererCombo.Edited += new EditedHandler(ComboChanged);
+
+            treeViewFields.AppendColumn(new TreeViewColumn("Заголовок", rendererCombo, "text", 3));
+        }
+
+        void ComboChanged(object o, EditedArgs args)
+        {
+            // TreeSelection selection = treeview.Selection;
+            // TreeIter iter;
+            // if (!selection.GetSelected(out iter))
+            // {
+            //     return;
+            // }
+            // liststore_hardware.SetValue(iter, 1, args.NewText);
+
+            Gtk.TreeIter iter;
+            if (listStore.GetIterFromString(out iter, args.Path))
+            {
+                listStore.SetValue(iter, 3, args.NewText);
+            }
+        }
+
+        private void EditedCaption(object o, EditedArgs args)
+        {
+            Gtk.TreeIter iter;
+            if (listStore.GetIterFromString(out iter, args.Path))
+            {
+                listStore.SetValue(iter, 2, args.NewText);
+            }
+        }
+
+        private void FixedToggled(object o, ToggledArgs args)
+        {
+            Gtk.TreeIter iter;
+            if (listStore.GetIterFromString(out iter, args.Path))
+            {
+                bool val = (bool)listStore.GetValue(iter, 0);
+                listStore.SetValue(iter, 0, !val);
+            }
+        }
+
+
         void CreatePack2(HPaned hPaned)
         {
             VBox vBox = new VBox();
+
+            HBox hBoxTreeView = new HBox();
+            hBoxTreeView.PackStart(new Label("Поля:"), false, false, 5);
+            vBox.PackStart(hBoxTreeView, false, false, 5);
+
+            HBox hBoxScrollTreeView = new HBox();
+            ScrolledWindow scrollTreeView = new ScrolledWindow() { ShadowType = ShadowType.In };
+            scrollTreeView.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+            scrollTreeView.SetSizeRequest(0, 300);
+
+            scrollTreeView.Add(treeViewFields);
+            hBoxScrollTreeView.PackStart(scrollTreeView, true, true, 5);
+
+            vBox.PackStart(hBoxScrollTreeView, false, false, 0);
 
             HBox hBox = new HBox();
             hBox.PackStart(new Label("Поля:"), false, false, 5);
@@ -103,9 +189,16 @@ namespace Configurator
         public void SetValue()
         {
             FillTabularParts();
+            FillTreeView();
 
             entryName.Text = TabularList.Name;
             textViewDesc.Buffer.Text = TabularList.Desc;
+        }
+
+        void FillTreeView()
+        {
+            foreach (ConfigurationObjectField field in Fields.Values)
+                listStore.AppendValues(TabularList.Fields.ContainsKey(field.Name), field.Name, field.Name);
         }
 
         void FillTabularParts()
