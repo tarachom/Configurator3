@@ -3189,6 +3189,19 @@
         <Coincide>yes</Coincide>
       </Type>
     </Control_Field>
+    <Control_Field>
+      <Name>Склад</Name>
+      <NameInTable>col_a9</NameInTable>
+      <Index>0</Index>
+      <IndexExist />
+      <IsExist>yes</IsExist>
+      <Type>
+        <ConfType>pointer</ConfType>
+        <DataType>uuid</DataType>
+        <UdtName>uuid</UdtName>
+        <Coincide>yes</Coincide>
+      </Type>
+    </Control_Field>
     <Control_TabularParts>
       <Name>Контакти</Name>
       <Table>tab_a02</Table>
@@ -3432,6 +3445,19 @@
         <ConfType>pointer</ConfType>
         <DataType>uuid</DataType>
         <UdtName>uuid</UdtName>
+        <Coincide>yes</Coincide>
+      </Type>
+    </Control_Field>
+    <Control_Field>
+      <Name>Suma</Name>
+      <NameInTable>col_a6</NameInTable>
+      <Index>0</Index>
+      <IndexExist />
+      <IsExist>yes</IsExist>
+      <Type>
+        <ConfType>integer</ConfType>
+        <DataType>integer</DataType>
+        <UdtName>int4</UdtName>
         <Coincide>yes</Coincide>
       </Type>
     </Control_Field>

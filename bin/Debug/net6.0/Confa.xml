@@ -5,7 +5,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>22.10.2022 22:05:21</DateTimeSave>
+  <DateTimeSave>24.10.2022 09:37:12</DateTimeSave>
   <ConstantsBlocks>
     <ConstantsBlock>
       <Name>ЗначенняЗаЗамовчуванням</Name>
@@ -2211,6 +2211,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
         </Field>
+        <Field>
+          <Name>Склад</Name>
+          <NameInTable>col_a9</NameInTable>
+          <Type>pointer</Type>
+          <Pointer>Довідники.Склади</Pointer>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+        </Field>
       </Fields>
       <TabularParts>
         <TablePart>
@@ -2290,6 +2300,9 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
             </Field>
             <Field>
               <Name>Код</Name>
+            </Field>
+            <Field>
+              <Name>Склад</Name>
             </Field>
           </Fields>
         </TabularList>
@@ -2411,6 +2424,15 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
         </Field>
+        <Field>
+          <Name>Suma</Name>
+          <NameInTable>col_a6</NameInTable>
+          <Type>integer</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+        </Field>
       </Fields>
       <TabularParts>
         <TablePart>
@@ -2455,7 +2477,25 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
               <Name>Артикул</Name>
             </Field>
             <Field>
+              <Name>ТипНоменклатури</Name>
+            </Field>
+            <Field>
+              <Name>Виробник</Name>
+            </Field>
+            <Field>
+              <Name>ВидНоменклатури</Name>
+            </Field>
+            <Field>
               <Name>ОдиницяВиміру</Name>
+            </Field>
+            <Field>
+              <Name>Папка</Name>
+            </Field>
+            <Field>
+              <Name>ОсновнаКартинкаФайл</Name>
+            </Field>
+            <Field>
+              <Name>Suma</Name>
             </Field>
           </Fields>
         </TabularList>
@@ -2819,7 +2859,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <NameInTable>col_d9</NameInTable>
           <Type>string</Type>
           <Desc>Назва</Desc>
-          <IsPresentation>1</IsPresentation>
+          <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
         </Field>
         <Field>
@@ -2827,7 +2867,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <NameInTable>col_e1</NameInTable>
           <Type>string</Type>
           <Desc>Код</Desc>
-          <IsPresentation>0</IsPresentation>
+          <IsPresentation>1</IsPresentation>
           <IsIndex>0</IsIndex>
         </Field>
         <Field>
