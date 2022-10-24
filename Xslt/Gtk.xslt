@@ -308,7 +308,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.Т
                     new NameValue&lt;string&gt;(
                       <xsl:value-of select="$DocumentCurrentField/Pointer"/>_Const.TABLE + "." + <xsl:value-of select="$DocumentCurrentField/Pointer"/>_Const.<xsl:value-of select="$PointerField"/>, "join_<xsl:value-of select="position()"/>"));
                   <xsl:value-of select="$DocumentName"/>_Select.QuerySelect.Joins.Add(
-                    new Join(<xsl:value-of select="$DocumentCurrentField/Pointer"/>_Const.TABLE, Довідники.<xsl:value-of select="$DocumentName"/>_Const.<xsl:value-of select="$FieldName"/>, <xsl:value-of select="$DocumentName"/>_Select.QuerySelect.Table));
+                    new Join(<xsl:value-of select="$DocumentCurrentField/Pointer"/>_Const.TABLE, Документи.<xsl:value-of select="$DocumentName"/>_Const.<xsl:value-of select="$FieldName"/>, <xsl:value-of select="$DocumentName"/>_Select.QuerySelect.Table));
                 </xsl:when>
               </xsl:choose>
             </xsl:for-each>

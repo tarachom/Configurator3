@@ -5,7 +5,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>24.10.2022 19:44:44</DateTimeSave>
+  <DateTimeSave>24.10.2022 21:54:07</DateTimeSave>
   <ConstantsBlocks>
     <ConstantsBlock>
       <Name>ЗначенняЗаЗамовчуванням</Name>
@@ -2955,7 +2955,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <NameInTable>col_d9</NameInTable>
           <Type>string</Type>
           <Desc>Назва</Desc>
-          <IsPresentation>0</IsPresentation>
+          <IsPresentation>1</IsPresentation>
           <IsIndex>0</IsIndex>
         </Field>
         <Field>
@@ -2963,7 +2963,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <NameInTable>col_e1</NameInTable>
           <Type>string</Type>
           <Desc>Код</Desc>
-          <IsPresentation>1</IsPresentation>
+          <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
         </Field>
         <Field>
@@ -6240,19 +6240,55 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
               <Name>Назва</Name>
               <Caption>Назва</Caption>
               <Size>0</Size>
-              <SortNum>100</SortNum>
+              <SortNum>1</SortNum>
             </Field>
             <Field>
               <Name>НомерДок</Name>
-              <Caption>НомерДок</Caption>
+              <Caption>Номер</Caption>
               <Size>0</Size>
-              <SortNum>100</SortNum>
+              <SortNum>2</SortNum>
             </Field>
             <Field>
               <Name>ДатаДок</Name>
-              <Caption>ДатаДок</Caption>
+              <Caption>Дата</Caption>
               <Size>0</Size>
-              <SortNum>100</SortNum>
+              <SortNum>3</SortNum>
+            </Field>
+            <Field>
+              <Name>Організація</Name>
+              <Caption>Організація</Caption>
+              <Size>0</Size>
+              <SortNum>4</SortNum>
+            </Field>
+            <Field>
+              <Name>Контрагент</Name>
+              <Caption>Контрагент</Caption>
+              <Size>0</Size>
+              <SortNum>5</SortNum>
+            </Field>
+            <Field>
+              <Name>Склад</Name>
+              <Caption>Склад</Caption>
+              <Size>0</Size>
+              <SortNum>6</SortNum>
+            </Field>
+            <Field>
+              <Name>Валюта</Name>
+              <Caption>Валюта</Caption>
+              <Size>0</Size>
+              <SortNum>7</SortNum>
+            </Field>
+            <Field>
+              <Name>СумаДокументу</Name>
+              <Caption>Сума</Caption>
+              <Size>0</Size>
+              <SortNum>8</SortNum>
+            </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <Caption>Коментар</Caption>
+              <Size>0</Size>
+              <SortNum>9</SortNum>
             </Field>
           </Fields>
         </TabularList>
@@ -6701,7 +6737,75 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+              <Caption>Назва</Caption>
+              <Size>0</Size>
+              <SortNum>1</SortNum>
+            </Field>
+            <Field>
+              <Name>НомерДок</Name>
+              <Caption>Номер</Caption>
+              <Size>0</Size>
+              <SortNum>2</SortNum>
+            </Field>
+            <Field>
+              <Name>ДатаДок</Name>
+              <Caption>Дата</Caption>
+              <Size>0</Size>
+              <SortNum>3</SortNum>
+            </Field>
+            <Field>
+              <Name>Організація</Name>
+              <Caption>Організація</Caption>
+              <Size>0</Size>
+              <SortNum>4</SortNum>
+            </Field>
+            <Field>
+              <Name>Склад</Name>
+              <Caption>Склад</Caption>
+              <Size>0</Size>
+              <SortNum>5</SortNum>
+            </Field>
+            <Field>
+              <Name>Контрагент</Name>
+              <Caption>Контрагент</Caption>
+              <Size>0</Size>
+              <SortNum>6</SortNum>
+            </Field>
+            <Field>
+              <Name>Валюта</Name>
+              <Caption>Валюта</Caption>
+              <Size>0</Size>
+              <SortNum>7</SortNum>
+            </Field>
+            <Field>
+              <Name>Каса</Name>
+              <Caption>Каса</Caption>
+              <Size>0</Size>
+              <SortNum>8</SortNum>
+            </Field>
+            <Field>
+              <Name>СумаДокументу</Name>
+              <Caption>Сума</Caption>
+              <Size>0</Size>
+              <SortNum>9</SortNum>
+            </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <Caption>Коментар</Caption>
+              <Size>0</Size>
+              <SortNum>99</SortNum>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <AllowRegisterAccumulation>
         <Name>ТовариНаСкладах</Name>
         <Name>ВільніЗалишки</Name>
@@ -7095,7 +7199,75 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+              <Caption>Назва</Caption>
+              <Size>0</Size>
+              <SortNum>1</SortNum>
+            </Field>
+            <Field>
+              <Name>НомерДок</Name>
+              <Caption>Номер</Caption>
+              <Size>0</Size>
+              <SortNum>2</SortNum>
+            </Field>
+            <Field>
+              <Name>ДатаДок</Name>
+              <Caption>Дата</Caption>
+              <Size>0</Size>
+              <SortNum>3</SortNum>
+            </Field>
+            <Field>
+              <Name>Організація</Name>
+              <Caption>Організація</Caption>
+              <Size>0</Size>
+              <SortNum>4</SortNum>
+            </Field>
+            <Field>
+              <Name>Контрагент</Name>
+              <Caption>Контрагент</Caption>
+              <Size>0</Size>
+              <SortNum>5</SortNum>
+            </Field>
+            <Field>
+              <Name>Валюта</Name>
+              <Caption>Валюта</Caption>
+              <Size>0</Size>
+              <SortNum>6</SortNum>
+            </Field>
+            <Field>
+              <Name>Каса</Name>
+              <Caption>Каса</Caption>
+              <Size>0</Size>
+              <SortNum>7</SortNum>
+            </Field>
+            <Field>
+              <Name>Склад</Name>
+              <Caption>Склад</Caption>
+              <Size>0</Size>
+              <SortNum>8</SortNum>
+            </Field>
+            <Field>
+              <Name>СумаДокументу</Name>
+              <Caption>Сума</Caption>
+              <Size>0</Size>
+              <SortNum>9</SortNum>
+            </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <Caption>Коментар</Caption>
+              <Size>0</Size>
+              <SortNum>99</SortNum>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <AllowRegisterAccumulation>
         <Name>ЗамовленняКлієнтів</Name>
         <Name>ВільніЗалишки</Name>
@@ -7531,7 +7703,75 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+              <Caption>Назва</Caption>
+              <Size>0</Size>
+              <SortNum>1</SortNum>
+            </Field>
+            <Field>
+              <Name>НомерДок</Name>
+              <Caption>Номер</Caption>
+              <Size>0</Size>
+              <SortNum>2</SortNum>
+            </Field>
+            <Field>
+              <Name>ДатаДок</Name>
+              <Caption>Дата</Caption>
+              <Size>0</Size>
+              <SortNum>3</SortNum>
+            </Field>
+            <Field>
+              <Name>Організація</Name>
+              <Caption>Організація</Caption>
+              <Size>0</Size>
+              <SortNum>4</SortNum>
+            </Field>
+            <Field>
+              <Name>Контрагент</Name>
+              <Caption>Контрагент</Caption>
+              <Size>0</Size>
+              <SortNum>5</SortNum>
+            </Field>
+            <Field>
+              <Name>Валюта</Name>
+              <Caption>Валюта</Caption>
+              <Size>0</Size>
+              <SortNum>6</SortNum>
+            </Field>
+            <Field>
+              <Name>Каса</Name>
+              <Caption>Каса</Caption>
+              <Size>0</Size>
+              <SortNum>7</SortNum>
+            </Field>
+            <Field>
+              <Name>Склад</Name>
+              <Caption>Склад</Caption>
+              <Size>0</Size>
+              <SortNum>8</SortNum>
+            </Field>
+            <Field>
+              <Name>СумаДокументу</Name>
+              <Caption>Сума</Caption>
+              <Size>0</Size>
+              <SortNum>9</SortNum>
+            </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <Caption>Коментар</Caption>
+              <Size>0</Size>
+              <SortNum>99</SortNum>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <AllowRegisterAccumulation>
         <Name>ТовариНаСкладах</Name>
         <Name>ЗамовленняКлієнтів</Name>
@@ -7684,7 +7924,57 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+              <Caption>Назва</Caption>
+              <Size>0</Size>
+              <SortNum>1</SortNum>
+            </Field>
+            <Field>
+              <Name>НомерДок</Name>
+              <Caption>Номер</Caption>
+              <Size>0</Size>
+              <SortNum>2</SortNum>
+            </Field>
+            <Field>
+              <Name>ДатаДок</Name>
+              <Caption>Дата</Caption>
+              <Size>0</Size>
+              <SortNum>3</SortNum>
+            </Field>
+            <Field>
+              <Name>Організація</Name>
+              <Caption>Організація</Caption>
+              <Size>0</Size>
+              <SortNum>4</SortNum>
+            </Field>
+            <Field>
+              <Name>Валюта</Name>
+              <Caption>Валюта</Caption>
+              <Size>0</Size>
+              <SortNum>5</SortNum>
+            </Field>
+            <Field>
+              <Name>ВидЦіни</Name>
+              <Caption>Вид ціни</Caption>
+              <Size>0</Size>
+              <SortNum>6</SortNum>
+            </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <Caption>Коментар</Caption>
+              <Size>0</Size>
+              <SortNum>99</SortNum>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <AllowRegisterAccumulation />
       <TriggerFunctions>
         <BeforeSave>ВстановленняЦінНоменклатури_Triggers.BeforeRecording</BeforeSave>
@@ -7917,7 +8207,69 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+              <Caption>Назва</Caption>
+              <Size>0</Size>
+              <SortNum>1</SortNum>
+            </Field>
+            <Field>
+              <Name>НомерДок</Name>
+              <Caption>Номер</Caption>
+              <Size>0</Size>
+              <SortNum>2</SortNum>
+            </Field>
+            <Field>
+              <Name>ДатаДок</Name>
+              <Caption>Дата</Caption>
+              <Size>0</Size>
+              <SortNum>3</SortNum>
+            </Field>
+            <Field>
+              <Name>Організація</Name>
+              <Caption>Організація</Caption>
+              <Size>0</Size>
+              <SortNum>4</SortNum>
+            </Field>
+            <Field>
+              <Name>Валюта</Name>
+              <Caption>Валюта</Caption>
+              <Size>0</Size>
+              <SortNum>5</SortNum>
+            </Field>
+            <Field>
+              <Name>Каса</Name>
+              <Caption>Каса</Caption>
+              <Size>0</Size>
+              <SortNum>6</SortNum>
+            </Field>
+            <Field>
+              <Name>Контрагент</Name>
+              <Caption>Контрагент</Caption>
+              <Size>0</Size>
+              <SortNum>7</SortNum>
+            </Field>
+            <Field>
+              <Name>СумаДокументу</Name>
+              <Caption>Сума</Caption>
+              <Size>0</Size>
+              <SortNum>9</SortNum>
+            </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <Caption>Коментар</Caption>
+              <Size>0</Size>
+              <SortNum>99</SortNum>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <AllowRegisterAccumulation>
         <Name>РозрахункиЗКлієнтами</Name>
         <Name>РозрахункиЗПостачальниками</Name>
@@ -8180,7 +8532,69 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+              <Caption>Назва</Caption>
+              <Size>0</Size>
+              <SortNum>1</SortNum>
+            </Field>
+            <Field>
+              <Name>НомерДок</Name>
+              <Caption>Номер</Caption>
+              <Size>0</Size>
+              <SortNum>2</SortNum>
+            </Field>
+            <Field>
+              <Name>ДатаДок</Name>
+              <Caption>Дата</Caption>
+              <Size>0</Size>
+              <SortNum>3</SortNum>
+            </Field>
+            <Field>
+              <Name>Організація</Name>
+              <Caption>Організація</Caption>
+              <Size>0</Size>
+              <SortNum>4</SortNum>
+            </Field>
+            <Field>
+              <Name>Контрагент</Name>
+              <Caption>Контрагент</Caption>
+              <Size>0</Size>
+              <SortNum>5</SortNum>
+            </Field>
+            <Field>
+              <Name>Валюта</Name>
+              <Caption>Валюта</Caption>
+              <Size>0</Size>
+              <SortNum>6</SortNum>
+            </Field>
+            <Field>
+              <Name>Каса</Name>
+              <Caption>Каса</Caption>
+              <Size>0</Size>
+              <SortNum>7</SortNum>
+            </Field>
+            <Field>
+              <Name>СумаДокументу</Name>
+              <Caption>Сума</Caption>
+              <Size>0</Size>
+              <SortNum>8</SortNum>
+            </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <Caption>Коментар</Caption>
+              <Size>0</Size>
+              <SortNum>99</SortNum>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <AllowRegisterAccumulation>
         <Name>РозрахункиЗКлієнтами</Name>
         <Name>РозрахункиЗПостачальниками</Name>
@@ -8445,7 +8859,51 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+              <Caption>Назва</Caption>
+              <Size>0</Size>
+              <SortNum>1</SortNum>
+            </Field>
+            <Field>
+              <Name>НомерДок</Name>
+              <Caption>Номер</Caption>
+              <Size>0</Size>
+              <SortNum>2</SortNum>
+            </Field>
+            <Field>
+              <Name>ДатаДок</Name>
+              <Caption>Дата</Caption>
+              <Size>0</Size>
+              <SortNum>3</SortNum>
+            </Field>
+            <Field>
+              <Name>Організація</Name>
+              <Caption>Організація</Caption>
+              <Size>0</Size>
+              <SortNum>4</SortNum>
+            </Field>
+            <Field>
+              <Name>СкладВідправник</Name>
+              <Caption>СкладВідправник</Caption>
+              <Size>0</Size>
+              <SortNum>5</SortNum>
+            </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <Caption>Коментар</Caption>
+              <Size>0</Size>
+              <SortNum>99</SortNum>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <AllowRegisterAccumulation>
         <Name>ТовариНаСкладах</Name>
         <Name>ВільніЗалишки</Name>
@@ -8753,7 +9211,75 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+              <Caption>Назва</Caption>
+              <Size>0</Size>
+              <SortNum>1</SortNum>
+            </Field>
+            <Field>
+              <Name>НомерДок</Name>
+              <Caption>Номер</Caption>
+              <Size>0</Size>
+              <SortNum>2</SortNum>
+            </Field>
+            <Field>
+              <Name>ДатаДок</Name>
+              <Caption>Дата</Caption>
+              <Size>0</Size>
+              <SortNum>3</SortNum>
+            </Field>
+            <Field>
+              <Name>Організація</Name>
+              <Caption>Організація</Caption>
+              <Size>0</Size>
+              <SortNum>4</SortNum>
+            </Field>
+            <Field>
+              <Name>Контрагент</Name>
+              <Caption>Контрагент</Caption>
+              <Size>0</Size>
+              <SortNum>5</SortNum>
+            </Field>
+            <Field>
+              <Name>Валюта</Name>
+              <Caption>Валюта</Caption>
+              <Size>0</Size>
+              <SortNum>6</SortNum>
+            </Field>
+            <Field>
+              <Name>Каса</Name>
+              <Caption>Каса</Caption>
+              <Size>0</Size>
+              <SortNum>7</SortNum>
+            </Field>
+            <Field>
+              <Name>Склад</Name>
+              <Caption>Склад</Caption>
+              <Size>0</Size>
+              <SortNum>8</SortNum>
+            </Field>
+            <Field>
+              <Name>СумаДокументу</Name>
+              <Caption>Сума</Caption>
+              <Size>0</Size>
+              <SortNum>9</SortNum>
+            </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <Caption>Коментар</Caption>
+              <Size>0</Size>
+              <SortNum>99</SortNum>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <AllowRegisterAccumulation>
         <Name>ТовариНаСкладах</Name>
         <Name>ВільніЗалишки</Name>
@@ -9042,7 +9568,75 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+              <Caption>Назва</Caption>
+              <Size>0</Size>
+              <SortNum>1</SortNum>
+            </Field>
+            <Field>
+              <Name>НомерДок</Name>
+              <Caption>Номер</Caption>
+              <Size>0</Size>
+              <SortNum>2</SortNum>
+            </Field>
+            <Field>
+              <Name>ДатаДок</Name>
+              <Caption>Дата</Caption>
+              <Size>0</Size>
+              <SortNum>3</SortNum>
+            </Field>
+            <Field>
+              <Name>Організація</Name>
+              <Caption>Організація</Caption>
+              <Size>0</Size>
+              <SortNum>4</SortNum>
+            </Field>
+            <Field>
+              <Name>Валюта</Name>
+              <Caption>Валюта</Caption>
+              <Size>0</Size>
+              <SortNum>5</SortNum>
+            </Field>
+            <Field>
+              <Name>Каса</Name>
+              <Caption>Каса</Caption>
+              <Size>0</Size>
+              <SortNum>6</SortNum>
+            </Field>
+            <Field>
+              <Name>Контрагент</Name>
+              <Caption>Контрагент</Caption>
+              <Size>0</Size>
+              <SortNum>7</SortNum>
+            </Field>
+            <Field>
+              <Name>Склад</Name>
+              <Caption>Склад</Caption>
+              <Size>0</Size>
+              <SortNum>8</SortNum>
+            </Field>
+            <Field>
+              <Name>СумаДокументу</Name>
+              <Caption>Сума</Caption>
+              <Size>0</Size>
+              <SortNum>9</SortNum>
+            </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <Caption>Коментар</Caption>
+              <Size>0</Size>
+              <SortNum>99</SortNum>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <AllowRegisterAccumulation>
         <Name>ТовариНаСкладах</Name>
         <Name>РозрахункиЗКлієнтами</Name>
@@ -9261,7 +9855,69 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+              <Caption>Назва</Caption>
+              <Size>0</Size>
+              <SortNum>1</SortNum>
+            </Field>
+            <Field>
+              <Name>НомерДок</Name>
+              <Caption>Номер</Caption>
+              <Size>0</Size>
+              <SortNum>2</SortNum>
+            </Field>
+            <Field>
+              <Name>ДатаДок</Name>
+              <Caption>Дата</Caption>
+              <Size>0</Size>
+              <SortNum>3</SortNum>
+            </Field>
+            <Field>
+              <Name>Організація</Name>
+              <Caption>Організація</Caption>
+              <Size>0</Size>
+              <SortNum>4</SortNum>
+            </Field>
+            <Field>
+              <Name>Валюта</Name>
+              <Caption>Валюта</Caption>
+              <Size>0</Size>
+              <SortNum>5</SortNum>
+            </Field>
+            <Field>
+              <Name>Каса</Name>
+              <Caption>Каса</Caption>
+              <Size>0</Size>
+              <SortNum>6</SortNum>
+            </Field>
+            <Field>
+              <Name>Контрагент</Name>
+              <Caption>Контрагент</Caption>
+              <Size>0</Size>
+              <SortNum>7</SortNum>
+            </Field>
+            <Field>
+              <Name>СумаДокументу</Name>
+              <Caption>Сума</Caption>
+              <Size>0</Size>
+              <SortNum>8</SortNum>
+            </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <Caption>Коментар</Caption>
+              <Size>0</Size>
+              <SortNum>99</SortNum>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <AllowRegisterAccumulation>
         <Name>РозрахункиЗКлієнтами</Name>
       </AllowRegisterAccumulation>
@@ -9392,7 +10048,8 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <NameInTable>col_a2</NameInTable>
           <Type>pointer</Type>
           <Pointer>Довідники.ПартіяТоварівКомпозит</Pointer>
-          <Desc>ПартіяТоварівКомпозит це вказівник на композитний тип в який входить декілька документів</Desc>
+          <Desc>!!! Видалити
+ПартіяТоварівКомпозит це вказівник на композитний тип в який входить декілька документів</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
         </Field>
@@ -9591,7 +10248,63 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+              <Caption>Назва</Caption>
+              <Size>0</Size>
+              <SortNum>1</SortNum>
+            </Field>
+            <Field>
+              <Name>НомерДок</Name>
+              <Caption>НомерДок</Caption>
+              <Size>0</Size>
+              <SortNum>2</SortNum>
+            </Field>
+            <Field>
+              <Name>ДатаДок</Name>
+              <Caption>ДатаДок</Caption>
+              <Size>0</Size>
+              <SortNum>3</SortNum>
+            </Field>
+            <Field>
+              <Name>Організація</Name>
+              <Caption>Організація</Caption>
+              <Size>0</Size>
+              <SortNum>4</SortNum>
+            </Field>
+            <Field>
+              <Name>Склад</Name>
+              <Caption>Склад</Caption>
+              <Size>0</Size>
+              <SortNum>5</SortNum>
+            </Field>
+            <Field>
+              <Name>Контрагент</Name>
+              <Caption>Контрагент</Caption>
+              <Size>0</Size>
+              <SortNum>6</SortNum>
+            </Field>
+            <Field>
+              <Name>Валюта</Name>
+              <Caption>Валюта</Caption>
+              <Size>0</Size>
+              <SortNum>7</SortNum>
+            </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <Caption>Коментар</Caption>
+              <Size>0</Size>
+              <SortNum>99</SortNum>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <AllowRegisterAccumulation>
         <Name>ТовариНаСкладах</Name>
         <Name>ВільніЗалишки</Name>
@@ -9743,7 +10456,51 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+              <Caption>Назва</Caption>
+              <Size>0</Size>
+              <SortNum>1</SortNum>
+            </Field>
+            <Field>
+              <Name>НомерДок</Name>
+              <Caption>Номер</Caption>
+              <Size>0</Size>
+              <SortNum>2</SortNum>
+            </Field>
+            <Field>
+              <Name>ДатаДок</Name>
+              <Caption>Дата</Caption>
+              <Size>0</Size>
+              <SortNum>3</SortNum>
+            </Field>
+            <Field>
+              <Name>Організація</Name>
+              <Caption>Організація</Caption>
+              <Size>0</Size>
+              <SortNum>4</SortNum>
+            </Field>
+            <Field>
+              <Name>Склад</Name>
+              <Caption>Склад</Caption>
+              <Size>0</Size>
+              <SortNum>5</SortNum>
+            </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <Caption>Коментар</Caption>
+              <Size>0</Size>
+              <SortNum>99</SortNum>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <AllowRegisterAccumulation />
       <TriggerFunctions>
         <BeforeSave>
@@ -9895,7 +10652,51 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+              <Caption>Назва</Caption>
+              <Size>0</Size>
+              <SortNum>1</SortNum>
+            </Field>
+            <Field>
+              <Name>НомерДок</Name>
+              <Caption>НомерДок</Caption>
+              <Size>0</Size>
+              <SortNum>2</SortNum>
+            </Field>
+            <Field>
+              <Name>ДатаДок</Name>
+              <Caption>ДатаДок</Caption>
+              <Size>0</Size>
+              <SortNum>3</SortNum>
+            </Field>
+            <Field>
+              <Name>Організація</Name>
+              <Caption>Організація</Caption>
+              <Size>0</Size>
+              <SortNum>4</SortNum>
+            </Field>
+            <Field>
+              <Name>Склад</Name>
+              <Caption>Склад</Caption>
+              <Size>0</Size>
+              <SortNum>5</SortNum>
+            </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <Caption>Коментар</Caption>
+              <Size>0</Size>
+              <SortNum>99</SortNum>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <AllowRegisterAccumulation />
       <TriggerFunctions>
         <BeforeSave>
@@ -10044,7 +10845,45 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+              <Caption>Назва</Caption>
+              <Size>0</Size>
+              <SortNum>1</SortNum>
+            </Field>
+            <Field>
+              <Name>НомерДок</Name>
+              <Caption>Номер</Caption>
+              <Size>0</Size>
+              <SortNum>2</SortNum>
+            </Field>
+            <Field>
+              <Name>ДатаДок</Name>
+              <Caption>Дата</Caption>
+              <Size>0</Size>
+              <SortNum>3</SortNum>
+            </Field>
+            <Field>
+              <Name>Склад</Name>
+              <Caption>Склад</Caption>
+              <Size>0</Size>
+              <SortNum>4</SortNum>
+            </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <Caption>Коментар</Caption>
+              <Size>0</Size>
+              <SortNum>99</SortNum>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <AllowRegisterAccumulation />
       <TriggerFunctions>
         <BeforeSave>
@@ -10248,7 +11087,57 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+              <Caption>Назва</Caption>
+              <Size>0</Size>
+              <SortNum>1</SortNum>
+            </Field>
+            <Field>
+              <Name>НомерДок</Name>
+              <Caption>Номер</Caption>
+              <Size>0</Size>
+              <SortNum>2</SortNum>
+            </Field>
+            <Field>
+              <Name>ДатаДок</Name>
+              <Caption>Дата</Caption>
+              <Size>0</Size>
+              <SortNum>3</SortNum>
+            </Field>
+            <Field>
+              <Name>Організація</Name>
+              <Caption>Організація</Caption>
+              <Size>0</Size>
+              <SortNum>4</SortNum>
+            </Field>
+            <Field>
+              <Name>Склад</Name>
+              <Caption>Склад</Caption>
+              <Size>0</Size>
+              <SortNum>5</SortNum>
+            </Field>
+            <Field>
+              <Name>СумаДокументу</Name>
+              <Caption>Сума</Caption>
+              <Size>0</Size>
+              <SortNum>6</SortNum>
+            </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <Caption>Коментар</Caption>
+              <Size>0</Size>
+              <SortNum>99</SortNum>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <AllowRegisterAccumulation>
         <Name>ТовариНаСкладах</Name>
         <Name>ВільніЗалишки</Name>
@@ -10471,7 +11360,63 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+              <Caption>Назва</Caption>
+              <Size>0</Size>
+              <SortNum>1</SortNum>
+            </Field>
+            <Field>
+              <Name>НомерДок</Name>
+              <Caption>Номер</Caption>
+              <Size>0</Size>
+              <SortNum>2</SortNum>
+            </Field>
+            <Field>
+              <Name>ДатаДок</Name>
+              <Caption>Дата</Caption>
+              <Size>0</Size>
+              <SortNum>3</SortNum>
+            </Field>
+            <Field>
+              <Name>Організація</Name>
+              <Caption>Організація</Caption>
+              <Size>0</Size>
+              <SortNum>4</SortNum>
+            </Field>
+            <Field>
+              <Name>Склад</Name>
+              <Caption>Склад</Caption>
+              <Size>0</Size>
+              <SortNum>5</SortNum>
+            </Field>
+            <Field>
+              <Name>Валюта</Name>
+              <Caption>Валюта</Caption>
+              <Size>0</Size>
+              <SortNum>6</SortNum>
+            </Field>
+            <Field>
+              <Name>СумаДокументу</Name>
+              <Caption>Сума</Caption>
+              <Size>0</Size>
+              <SortNum>7</SortNum>
+            </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <Caption>Коментар</Caption>
+              <Size>0</Size>
+              <SortNum>99</SortNum>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <AllowRegisterAccumulation>
         <Name>ТовариНаСкладах</Name>
         <Name>ВільніЗалишки</Name>
@@ -10771,7 +11716,75 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+              <Caption>Назва</Caption>
+              <Size>0</Size>
+              <SortNum>1</SortNum>
+            </Field>
+            <Field>
+              <Name>НомерДок</Name>
+              <Caption>Номер</Caption>
+              <Size>0</Size>
+              <SortNum>2</SortNum>
+            </Field>
+            <Field>
+              <Name>ДатаДок</Name>
+              <Caption>Дата</Caption>
+              <Size>0</Size>
+              <SortNum>3</SortNum>
+            </Field>
+            <Field>
+              <Name>Організація</Name>
+              <Caption>Організація</Caption>
+              <Size>0</Size>
+              <SortNum>4</SortNum>
+            </Field>
+            <Field>
+              <Name>Контрагент</Name>
+              <Caption>Контрагент</Caption>
+              <Size>0</Size>
+              <SortNum>5</SortNum>
+            </Field>
+            <Field>
+              <Name>Валюта</Name>
+              <Caption>Валюта</Caption>
+              <Size>0</Size>
+              <SortNum>6</SortNum>
+            </Field>
+            <Field>
+              <Name>Каса</Name>
+              <Caption>Каса</Caption>
+              <Size>0</Size>
+              <SortNum>7</SortNum>
+            </Field>
+            <Field>
+              <Name>Склад</Name>
+              <Caption>Склад</Caption>
+              <Size>0</Size>
+              <SortNum>8</SortNum>
+            </Field>
+            <Field>
+              <Name>СумаДокументу</Name>
+              <Caption>Сума</Caption>
+              <Size>0</Size>
+              <SortNum>9</SortNum>
+            </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <Caption>Коментар</Caption>
+              <Size>0</Size>
+              <SortNum>99</SortNum>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <AllowRegisterAccumulation>
         <Name>ВільніЗалишки</Name>
       </AllowRegisterAccumulation>
