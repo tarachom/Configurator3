@@ -3686,20 +3686,6 @@
         <Coincide>yes</Coincide>
       </Type>
     </Control_Field>
-    <Control_Field>
-      <Name>Dok</Name>
-      <NameInTable>col_a3</NameInTable>
-      <Index>0</Index>
-      <IndexExist />
-      <IsExist>no</IsExist>
-      <FieldCreate>
-        <Name>Dok</Name>
-        <NameInTable>col_a3</NameInTable>
-        <ConfType>pointer</ConfType>
-        <DataType>uuid</DataType>
-        <Index>0</Index>
-      </FieldCreate>
-    </Control_Field>
   </Control_Table>
   <Control_Table>
     <Type>Directory</Type>
@@ -6121,17 +6107,6 @@
         <UdtName>uuid</UdtName>
         <Coincide>yes</Coincide>
       </Type>
-    </Control_Field>
-  </Control_Table>
-  <Control_Table>
-    <Type>Directory</Type>
-    <Name>Номенклатура</Name>
-    <Table>tab_a03</Table>
-    <IsExist>yes</IsExist>
-    <Control_Field>
-      <Name>Dok</Name>
-      <NameInTable>col_a6</NameInTable>
-      <IsExist>delete</IsExist>
     </Control_Field>
   </Control_Table>
   <Control_Table>

@@ -3,7 +3,7 @@
   <Table>
     <Name>tab_a30</Name>
     <Column>
-      <Name>col_a9</Name>
+      <Name>col_b1</Name>
       <DataType>uuid</DataType>
       <UdtName>uuid</UdtName>
     </Column>
@@ -68,7 +68,7 @@
       <UdtName>numeric</UdtName>
     </Column>
     <Column>
-      <Name>col_b1</Name>
+      <Name>col_a9</Name>
       <DataType>uuid</DataType>
       <UdtName>uuid</UdtName>
     </Column>
@@ -1857,43 +1857,6 @@
     </Index>
   </Table>
   <Table>
-    <Name>tab_a07</Name>
-    <Column>
-      <Name>uid</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
-    </Column>
-    <Column>
-      <Name>col_c5</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
-      <Name>col_c6</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a1</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a2</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Index>
-      <Name>tab_a07_pkey</Name>
-    </Index>
-    <Index>
-      <Name>tab_a07_col_a1_idx</Name>
-    </Index>
-    <Index>
-      <Name>tab_a07_col_a2_idx</Name>
-    </Index>
-  </Table>
-  <Table>
     <Name>tab_a08</Name>
     <Column>
       <Name>uid</Name>
@@ -2320,6 +2283,43 @@
     </Index>
   </Table>
   <Table>
+    <Name>tab_a07</Name>
+    <Column>
+      <Name>uid</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>col_c5</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_c6</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a1</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a2</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Index>
+      <Name>tab_a07_pkey</Name>
+    </Index>
+    <Index>
+      <Name>tab_a07_col_a1_idx</Name>
+    </Index>
+    <Index>
+      <Name>tab_a07_col_a2_idx</Name>
+    </Index>
+  </Table>
+  <Table>
     <Name>tab_a03</Name>
     <Column>
       <Name>uid</Name>
@@ -2353,11 +2353,6 @@
     </Column>
     <Column>
       <Name>col_a7</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a6</Name>
       <DataType>uuid</DataType>
       <UdtName>uuid</UdtName>
     </Column>
@@ -4480,11 +4475,6 @@
       <UdtName>int4</UdtName>
     </Column>
     <Column>
-      <Name>col_i9</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
       <Name>col_j1</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
@@ -4496,6 +4486,11 @@
     </Column>
     <Column>
       <Name>col_i8</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_i9</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
