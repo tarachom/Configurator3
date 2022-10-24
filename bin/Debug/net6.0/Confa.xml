@@ -5,7 +5,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>24.10.2022 17:24:26</DateTimeSave>
+  <DateTimeSave>24.10.2022 19:44:44</DateTimeSave>
   <ConstantsBlocks>
     <ConstantsBlock>
       <Name>ЗначенняЗаЗамовчуванням</Name>
@@ -2528,7 +2528,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
             <Field>
               <Name>Код</Name>
               <Caption>Код</Caption>
-              <Size>0</Size>
+              <Size>100</Size>
               <SortNum>1</SortNum>
             </Field>
             <Field>
@@ -4158,32 +4158,22 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Desc>
           <Fields>
             <Field>
-              <Name>Назва</Name>
-              <Caption>
-              </Caption>
-              <Size>0</Size>
-              <SortNum>0</SortNum>
+              <Name>Код</Name>
+              <Caption>Код</Caption>
+              <Size>100</Size>
+              <SortNum>1</SortNum>
             </Field>
             <Field>
-              <Name>Код</Name>
-              <Caption>
-              </Caption>
+              <Name>Назва</Name>
+              <Caption>Назва</Caption>
               <Size>0</Size>
-              <SortNum>0</SortNum>
+              <SortNum>2</SortNum>
             </Field>
             <Field>
               <Name>Валюта</Name>
-              <Caption>
-              </Caption>
+              <Caption>Валюта</Caption>
               <Size>0</Size>
-              <SortNum>0</SortNum>
-            </Field>
-            <Field>
-              <Name>Організація</Name>
-              <Caption>
-              </Caption>
-              <Size>0</Size>
-              <SortNum>0</SortNum>
+              <SortNum>3</SortNum>
             </Field>
           </Fields>
         </TabularList>
@@ -4397,32 +4387,28 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Desc>
           <Fields>
             <Field>
-              <Name>Назва</Name>
-              <Caption>
-              </Caption>
-              <Size>0</Size>
-              <SortNum>0</SortNum>
+              <Name>Код</Name>
+              <Caption>Код</Caption>
+              <Size>100</Size>
+              <SortNum>1</SortNum>
             </Field>
             <Field>
-              <Name>Код</Name>
-              <Caption>
-              </Caption>
+              <Name>Назва</Name>
+              <Caption>Назва</Caption>
               <Size>0</Size>
-              <SortNum>0</SortNum>
+              <SortNum>2</SortNum>
             </Field>
             <Field>
               <Name>Контрагент</Name>
-              <Caption>
-              </Caption>
+              <Caption>Контрагент</Caption>
               <Size>0</Size>
-              <SortNum>0</SortNum>
+              <SortNum>3</SortNum>
             </Field>
             <Field>
               <Name>ТипДоговору</Name>
-              <Caption>
-              </Caption>
+              <Caption>ТипДоговору</Caption>
               <Size>0</Size>
-              <SortNum>0</SortNum>
+              <SortNum>4</SortNum>
             </Field>
           </Fields>
         </TabularList>
@@ -4582,18 +4568,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Desc>
           <Fields>
             <Field>
-              <Name>Назва</Name>
-              <Caption>
-              </Caption>
-              <Size>0</Size>
-              <SortNum>0</SortNum>
+              <Name>Код</Name>
+              <Caption>Код</Caption>
+              <Size>100</Size>
+              <SortNum>1</SortNum>
             </Field>
             <Field>
-              <Name>Код</Name>
-              <Caption>
-              </Caption>
+              <Name>Назва</Name>
+              <Caption>Назва</Caption>
               <Size>0</Size>
-              <SortNum>0</SortNum>
+              <SortNum>2</SortNum>
             </Field>
           </Fields>
         </TabularList>
@@ -4750,22 +4734,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <Fields>
             <Field>
               <Name>Номер</Name>
-              <Caption>
-              </Caption>
-              <Size>0</Size>
-              <SortNum>0</SortNum>
-            </Field>
-            <Field>
-              <Name>Коментар</Name>
-              <Caption>
-              </Caption>
-              <Size>0</Size>
-              <SortNum>0</SortNum>
-            </Field>
-            <Field>
-              <Name>ДатаСтворення</Name>
-              <Caption>
-              </Caption>
+              <Caption>Номер</Caption>
               <Size>0</Size>
               <SortNum>0</SortNum>
             </Field>
@@ -4849,36 +4818,31 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <Fields>
             <Field>
               <Name>Назва</Name>
-              <Caption>
-              </Caption>
+              <Caption>Назва</Caption>
               <Size>0</Size>
               <SortNum>0</SortNum>
             </Field>
             <Field>
               <Name>Дата</Name>
-              <Caption>
-              </Caption>
+              <Caption>Дата</Caption>
               <Size>0</Size>
               <SortNum>0</SortNum>
             </Field>
             <Field>
               <Name>ТипДокументу</Name>
-              <Caption>
-              </Caption>
+              <Caption>ТипДокументу</Caption>
               <Size>0</Size>
               <SortNum>0</SortNum>
             </Field>
             <Field>
               <Name>ПоступленняТоварівТаПослуг</Name>
-              <Caption>
-              </Caption>
+              <Caption>ПоступленняТоварівТаПослуг</Caption>
               <Size>0</Size>
               <SortNum>0</SortNum>
             </Field>
             <Field>
               <Name>ВведенняЗалишків</Name>
-              <Caption>
-              </Caption>
+              <Caption>ВведенняЗалишків</Caption>
               <Size>0</Size>
               <SortNum>0</SortNum>
             </Field>
@@ -6266,6 +6230,33 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+              <Caption>Назва</Caption>
+              <Size>0</Size>
+              <SortNum>100</SortNum>
+            </Field>
+            <Field>
+              <Name>НомерДок</Name>
+              <Caption>НомерДок</Caption>
+              <Size>0</Size>
+              <SortNum>100</SortNum>
+            </Field>
+            <Field>
+              <Name>ДатаДок</Name>
+              <Caption>ДатаДок</Caption>
+              <Size>0</Size>
+              <SortNum>100</SortNum>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <AllowRegisterAccumulation>
         <Name>ЗамовленняПостачальникам</Name>
       </AllowRegisterAccumulation>
@@ -6710,6 +6701,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
+      <TabularLists />
       <AllowRegisterAccumulation>
         <Name>ТовариНаСкладах</Name>
         <Name>ВільніЗалишки</Name>
@@ -7103,6 +7095,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
+      <TabularLists />
       <AllowRegisterAccumulation>
         <Name>ЗамовленняКлієнтів</Name>
         <Name>ВільніЗалишки</Name>
@@ -7538,6 +7531,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
+      <TabularLists />
       <AllowRegisterAccumulation>
         <Name>ТовариНаСкладах</Name>
         <Name>ЗамовленняКлієнтів</Name>
@@ -7690,6 +7684,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
+      <TabularLists />
       <AllowRegisterAccumulation />
       <TriggerFunctions>
         <BeforeSave>ВстановленняЦінНоменклатури_Triggers.BeforeRecording</BeforeSave>
@@ -7922,6 +7917,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
+      <TabularLists />
       <AllowRegisterAccumulation>
         <Name>РозрахункиЗКлієнтами</Name>
         <Name>РозрахункиЗПостачальниками</Name>
@@ -8184,6 +8180,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
+      <TabularLists />
       <AllowRegisterAccumulation>
         <Name>РозрахункиЗКлієнтами</Name>
         <Name>РозрахункиЗПостачальниками</Name>
@@ -8448,6 +8445,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
+      <TabularLists />
       <AllowRegisterAccumulation>
         <Name>ТовариНаСкладах</Name>
         <Name>ВільніЗалишки</Name>
@@ -8755,6 +8753,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
+      <TabularLists />
       <AllowRegisterAccumulation>
         <Name>ТовариНаСкладах</Name>
         <Name>ВільніЗалишки</Name>
@@ -9043,6 +9042,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
+      <TabularLists />
       <AllowRegisterAccumulation>
         <Name>ТовариНаСкладах</Name>
         <Name>РозрахункиЗКлієнтами</Name>
@@ -9261,6 +9261,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
+      <TabularLists />
       <AllowRegisterAccumulation>
         <Name>РозрахункиЗКлієнтами</Name>
       </AllowRegisterAccumulation>
@@ -9590,6 +9591,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
+      <TabularLists />
       <AllowRegisterAccumulation>
         <Name>ТовариНаСкладах</Name>
         <Name>ВільніЗалишки</Name>
@@ -9741,6 +9743,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
+      <TabularLists />
       <AllowRegisterAccumulation />
       <TriggerFunctions>
         <BeforeSave>
@@ -9892,6 +9895,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
+      <TabularLists />
       <AllowRegisterAccumulation />
       <TriggerFunctions>
         <BeforeSave>
@@ -10040,6 +10044,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
+      <TabularLists />
       <AllowRegisterAccumulation />
       <TriggerFunctions>
         <BeforeSave>
@@ -10243,6 +10248,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
+      <TabularLists />
       <AllowRegisterAccumulation>
         <Name>ТовариНаСкладах</Name>
         <Name>ВільніЗалишки</Name>
@@ -10465,6 +10471,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
+      <TabularLists />
       <AllowRegisterAccumulation>
         <Name>ТовариНаСкладах</Name>
         <Name>ВільніЗалишки</Name>
@@ -10764,6 +10771,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
+      <TabularLists />
       <AllowRegisterAccumulation>
         <Name>ВільніЗалишки</Name>
       </AllowRegisterAccumulation>
