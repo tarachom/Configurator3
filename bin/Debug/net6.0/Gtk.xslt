@@ -19,12 +19,12 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники.Т
         <xsl:variable name="CountFields" select="count(Fields/Field)"/>
     public class <xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularListName"/>
     {
-        public string Image = "doc.png";
-        public string ID = "";
+        string Image = "doc.png";
+        string ID = "";
         <xsl:for-each select="Fields/Field">
-        public string <xsl:value-of select="Name"/> = "";</xsl:for-each>
+        string <xsl:value-of select="Name"/> = "";</xsl:for-each>
 
-        public Array ToArray()
+        Array ToArray()
         {
             return new object[] { new Gdk.Pixbuf(Image), ID 
             /* */ <xsl:for-each select="Fields/Field">

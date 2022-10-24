@@ -5,7 +5,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>24.10.2022 09:37:12</DateTimeSave>
+  <DateTimeSave>24.10.2022 10:06:54</DateTimeSave>
   <ConstantsBlocks>
     <ConstantsBlock>
       <Name>ЗначенняЗаЗамовчуванням</Name>
@@ -2211,16 +2211,6 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
         </Field>
-        <Field>
-          <Name>Склад</Name>
-          <NameInTable>col_a9</NameInTable>
-          <Type>pointer</Type>
-          <Pointer>Довідники.Склади</Pointer>
-          <Desc>
-          </Desc>
-          <IsPresentation>0</IsPresentation>
-          <IsIndex>0</IsIndex>
-        </Field>
       </Fields>
       <TabularParts>
         <TablePart>
@@ -2300,9 +2290,6 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
             </Field>
             <Field>
               <Name>Код</Name>
-            </Field>
-            <Field>
-              <Name>Склад</Name>
             </Field>
           </Fields>
         </TabularList>
@@ -2424,15 +2411,6 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
         </Field>
-        <Field>
-          <Name>Suma</Name>
-          <NameInTable>col_a6</NameInTable>
-          <Type>integer</Type>
-          <Desc>
-          </Desc>
-          <IsPresentation>0</IsPresentation>
-          <IsIndex>0</IsIndex>
-        </Field>
       </Fields>
       <TabularParts>
         <TablePart>
@@ -2473,30 +2451,6 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
             <Field>
               <Name>Код</Name>
             </Field>
-            <Field>
-              <Name>Артикул</Name>
-            </Field>
-            <Field>
-              <Name>ТипНоменклатури</Name>
-            </Field>
-            <Field>
-              <Name>Виробник</Name>
-            </Field>
-            <Field>
-              <Name>ВидНоменклатури</Name>
-            </Field>
-            <Field>
-              <Name>ОдиницяВиміру</Name>
-            </Field>
-            <Field>
-              <Name>Папка</Name>
-            </Field>
-            <Field>
-              <Name>ОсновнаКартинкаФайл</Name>
-            </Field>
-            <Field>
-              <Name>Suma</Name>
-            </Field>
           </Fields>
         </TabularList>
       </TabularLists>
@@ -2529,7 +2483,21 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+            </Field>
+            <Field>
+              <Name>Код</Name>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -2591,7 +2559,21 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+            </Field>
+            <Field>
+              <Name>Код</Name>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -2642,7 +2624,21 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+            </Field>
+            <Field>
+              <Name>Код</Name>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -2692,7 +2688,24 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+            </Field>
+            <Field>
+              <Name>КороткаНазва</Name>
+            </Field>
+            <Field>
+              <Name>Код</Name>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <TriggerFunctions>
         <BeforeSave>Валюти_Triggers.BeforeRecording</BeforeSave>
         <AfterSave>Валюти_Triggers.AfterRecording</AfterSave>
@@ -2842,7 +2855,21 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+            </Field>
+            <Field>
+              <Name>Код</Name>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <TriggerFunctions>
         <BeforeSave>Контрагенти_Triggers.BeforeRecording</BeforeSave>
         <AfterSave>Контрагенти_Triggers.AfterRecording</AfterSave>
@@ -2988,7 +3015,21 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+            </Field>
+            <Field>
+              <Name>Код</Name>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -3031,7 +3072,24 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+            </Field>
+            <Field>
+              <Name>Код</Name>
+            </Field>
+            <Field>
+              <Name>Валюта</Name>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -3074,7 +3132,21 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+            </Field>
+            <Field>
+              <Name>Код</Name>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -3192,7 +3264,21 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+            </Field>
+            <Field>
+              <Name>Код</Name>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -3319,7 +3405,21 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+            </Field>
+            <Field>
+              <Name>Код</Name>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -3362,7 +3462,21 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+            </Field>
+            <Field>
+              <Name>Код</Name>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -3404,7 +3518,21 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+            </Field>
+            <Field>
+              <Name>Код</Name>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -3473,7 +3601,30 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Код</Name>
+            </Field>
+            <Field>
+              <Name>Назва</Name>
+            </Field>
+            <Field>
+              <Name>НазваФайлу</Name>
+            </Field>
+            <Field>
+              <Name>Розмір</Name>
+            </Field>
+            <Field>
+              <Name>ДатаСтворення</Name>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -3525,7 +3676,24 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+            </Field>
+            <Field>
+              <Name>Код</Name>
+            </Field>
+            <Field>
+              <Name>Номенклатура</Name>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -3568,7 +3736,21 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+            </Field>
+            <Field>
+              <Name>Код</Name>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -3650,7 +3832,21 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+            </Field>
+            <Field>
+              <Name>Код</Name>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -3702,7 +3898,24 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+            </Field>
+            <Field>
+              <Name>Код</Name>
+            </Field>
+            <Field>
+              <Name>Валюта</Name>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -3837,7 +4050,27 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+            </Field>
+            <Field>
+              <Name>Код</Name>
+            </Field>
+            <Field>
+              <Name>Валюта</Name>
+            </Field>
+            <Field>
+              <Name>Організація</Name>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -4040,7 +4273,27 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+            </Field>
+            <Field>
+              <Name>Код</Name>
+            </Field>
+            <Field>
+              <Name>Контрагент</Name>
+            </Field>
+            <Field>
+              <Name>ТипДоговору</Name>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <TriggerFunctions>
         <BeforeSave>ДоговориКонтрагентів_Triggers.BeforeRecording</BeforeSave>
         <AfterSave>ДоговориКонтрагентів_Triggers.AfterRecording</AfterSave>
@@ -4189,7 +4442,21 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+            </Field>
+            <Field>
+              <Name>Код</Name>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -4268,7 +4535,21 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TablePart>
       </TabularParts>
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+            </Field>
+            <Field>
+              <Name>Код</Name>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -4312,7 +4593,24 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Номер</Name>
+            </Field>
+            <Field>
+              <Name>Коментар</Name>
+            </Field>
+            <Field>
+              <Name>ДатаСтворення</Name>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <TriggerFunctions>
         <BeforeSave>СеріїНоменклатури_Triggers.BeforeRecording</BeforeSave>
         <AfterSave>СеріїНоменклатури_Triggers.AfterRecording</AfterSave>
@@ -4330,7 +4628,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <Type>string</Type>
           <Desc>
           </Desc>
-          <IsPresentation>0</IsPresentation>
+          <IsPresentation>1</IsPresentation>
           <IsIndex>0</IsIndex>
         </Field>
         <Field>
@@ -4382,7 +4680,30 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+            </Field>
+            <Field>
+              <Name>Дата</Name>
+            </Field>
+            <Field>
+              <Name>ТипДокументу</Name>
+            </Field>
+            <Field>
+              <Name>ПоступленняТоварівТаПослуг</Name>
+            </Field>
+            <Field>
+              <Name>ВведенняЗалишків</Name>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -4403,7 +4724,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <NameInTable>col_a5</NameInTable>
           <Type>string</Type>
           <Desc>Назва</Desc>
-          <IsPresentation>0</IsPresentation>
+          <IsPresentation>1</IsPresentation>
           <IsIndex>0</IsIndex>
         </Field>
         <Field>
@@ -4458,7 +4779,18 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -4478,7 +4810,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <NameInTable>col_b4</NameInTable>
           <Type>string</Type>
           <Desc>Назва</Desc>
-          <IsPresentation>0</IsPresentation>
+          <IsPresentation>1</IsPresentation>
           <IsIndex>0</IsIndex>
         </Field>
         <Field>
@@ -4532,7 +4864,18 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -4552,7 +4895,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <NameInTable>col_a1</NameInTable>
           <Type>string</Type>
           <Desc>Назва</Desc>
-          <IsPresentation>0</IsPresentation>
+          <IsPresentation>1</IsPresentation>
           <IsIndex>0</IsIndex>
         </Field>
         <Field>
@@ -4597,7 +4940,18 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -4652,7 +5006,18 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
@@ -4688,7 +5053,18 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <TabularParts />
-      <TabularLists />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>

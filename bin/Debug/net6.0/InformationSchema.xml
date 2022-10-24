@@ -3,9 +3,9 @@
   <Table>
     <Name>tab_a30</Name>
     <Column>
-      <Name>col_a8</Name>
-      <DataType>numeric</DataType>
-      <UdtName>numeric</UdtName>
+      <Name>col_b1</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
     </Column>
     <Column>
       <Name>uid</Name>
@@ -63,12 +63,12 @@
       <UdtName>numeric</UdtName>
     </Column>
     <Column>
-      <Name>col_a9</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
+      <Name>col_a8</Name>
+      <DataType>numeric</DataType>
+      <UdtName>numeric</UdtName>
     </Column>
     <Column>
-      <Name>col_b1</Name>
+      <Name>col_a9</Name>
       <DataType>uuid</DataType>
       <UdtName>uuid</UdtName>
     </Column>
@@ -2281,11 +2281,6 @@
       <UdtName>date</UdtName>
     </Column>
     <Column>
-      <Name>col_a9</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
-    </Column>
-    <Column>
       <Name>col_a1</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
@@ -2360,11 +2355,6 @@
       <Name>col_a7</Name>
       <DataType>uuid</DataType>
       <UdtName>uuid</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a6</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
     </Column>
     <Column>
       <Name>col_b1</Name>
@@ -3829,11 +3819,6 @@
       <UdtName>uuidtext</UdtName>
     </Column>
     <Column>
-      <Name>col_b1</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
       <Name>docname</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
@@ -3845,6 +3830,11 @@
     </Column>
     <Column>
       <Name>col_b6</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_b1</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
@@ -4485,11 +4475,6 @@
       <UdtName>int4</UdtName>
     </Column>
     <Column>
-      <Name>col_i9</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
       <Name>col_j1</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
@@ -4501,6 +4486,11 @@
     </Column>
     <Column>
       <Name>col_i8</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_i9</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
