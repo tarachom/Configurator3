@@ -45,7 +45,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники.Т
             /* */
             <xsl:for-each select="Fields/Field">
               <xsl:text>treeView.AppendColumn(new TreeViewColumn("</xsl:text>
-              <xsl:value-of select="Name"/>
+              <xsl:value-of select="normalize-space(Caption)"/>
               <xsl:text>", new CellRendererText(), "text", </xsl:text>
               <xsl:value-of select="position() + 1"/>
               <xsl:text>))</xsl:text>;

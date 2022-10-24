@@ -21,10 +21,13 @@ namespace Configurator
         public System.Action? CallBack_RefreshList { get; set; }
         public bool IsNew { get; set; } = true;
 
-        ListStore listStore = new ListStore(typeof(bool), typeof(string), typeof(string), typeof(string));
+        ListStore listStore = new ListStore(
+            typeof(bool),   //Visible
+            typeof(string), //Name
+            typeof(string), //Caption
+            typeof(int)     //Size
+        );
         TreeView treeViewFields;
-
-        ListBox listBoxFields = new ListBox() { SelectionMode = SelectionMode.Single };
         Entry entryName = new Entry() { WidthRequest = 500 };
         TextView textViewDesc = new TextView();
 
@@ -58,54 +61,69 @@ namespace Configurator
             ShowAll();
         }
 
+        #region TreeView
+
         void AddColumnTreeViewFields()
         {
             CellRendererToggle rendererToggle = new CellRendererToggle();
-            rendererToggle.Toggled += new ToggledHandler(FixedToggled);
-
+            rendererToggle.Toggled += EditedVisible;
             treeViewFields.AppendColumn(new TreeViewColumn("Виводити", rendererToggle, "active", 0));
+
             treeViewFields.AppendColumn(new TreeViewColumn("Назва", new CellRendererText(), "text", 1));
 
-            CellRendererText rendererText = new CellRendererText() { Editable = true };
-            rendererText.Edited += new EditedHandler(EditedCaption);
+            CellRendererText rendererTextCaption = new CellRendererText() { Editable = true };
+            rendererTextCaption.Edited += EditedCaption;
+            treeViewFields.AppendColumn(new TreeViewColumn("Заголовок", rendererTextCaption, "text", 2));
 
-            treeViewFields.AppendColumn(new TreeViewColumn("Заголовок", rendererText, "text", 2));
+            CellRendererText rendererTextSize = new CellRendererText() { Editable = true };
+            rendererTextSize.Edited += EditedSize;
+            treeViewFields.AppendColumn(new TreeViewColumn("Розмір", rendererTextSize, "text", 3));
 
-            ListStore liststore_manufacturers = new ListStore(typeof(string));
-            var manufacturers = new List<string> { "Sony", "LG", "Panasonic", "Toshiba", "Nokia", "Samsung" };
-            foreach (var item in manufacturers)
-            {
-                liststore_manufacturers.AppendValues(item);
-            }
+            // ListStore liststore_manufacturers = new ListStore(typeof(string));
+            // var manufacturers = new List<string> { "Sony", "LG", "Panasonic", "Toshiba", "Nokia", "Samsung" };
+            // foreach (var item in manufacturers)
+            // {
+            //     liststore_manufacturers.AppendValues(item);
+            // }
 
-            CellRendererCombo rendererCombo = new CellRendererCombo();
-            rendererCombo.Editable = true;
-            rendererCombo.Model = liststore_manufacturers;
-            rendererCombo.TextColumn = 0;
-            rendererCombo.Edited += new EditedHandler(ComboChanged);
+            // CellRendererCombo rendererCombo = new CellRendererCombo();
+            // rendererCombo.Editable = true;
+            // rendererCombo.Model = liststore_manufacturers;
+            // rendererCombo.TextColumn = 0;
+            // rendererCombo.Edited += new EditedHandler(ComboChanged);
 
-            treeViewFields.AppendColumn(new TreeViewColumn("Поле", rendererCombo, "text", 3));
+            // treeViewFields.AppendColumn(new TreeViewColumn("Поле", rendererCombo, "text", 3));
         }
 
-        void ComboChanged(object o, EditedArgs args)
-        {
-            Gtk.TreeIter iter;
-            if (listStore.GetIterFromString(out iter, args.Path))
-            {
-                listStore.SetValue(iter, 3, args.NewText);
-            }
-        }
+        // void ComboChanged(object o, EditedArgs args)
+        // {
+        //     Gtk.TreeIter iter;
+        //     if (listStore.GetIterFromString(out iter, args.Path))
+        //     {
+        //         listStore.SetValue(iter, 3, args.NewText);
+        //     }
+        // }
 
         private void EditedCaption(object o, EditedArgs args)
         {
             Gtk.TreeIter iter;
             if (listStore.GetIterFromString(out iter, args.Path))
-            {
                 listStore.SetValue(iter, 2, args.NewText);
+        }
+
+        private void EditedSize(object o, EditedArgs args)
+        {
+            Gtk.TreeIter iter;
+            if (listStore.GetIterFromString(out iter, args.Path))
+            {
+                int size;
+                int.TryParse(args.NewText, out size);
+
+                listStore.SetValue(iter, 2, size);
             }
         }
 
-        private void FixedToggled(object o, ToggledArgs args)
+        private void EditedVisible(object o, ToggledArgs args)
         {
             Gtk.TreeIter iter;
             if (listStore.GetIterFromString(out iter, args.Path))
@@ -115,6 +133,7 @@ namespace Configurator
             }
         }
 
+        #endregion
 
         void CreatePack2(HPaned hPaned)
         {
@@ -133,20 +152,6 @@ namespace Configurator
             hBoxScrollTreeView.PackStart(scrollTreeView, true, true, 5);
 
             vBox.PackStart(hBoxScrollTreeView, false, false, 0);
-
-            HBox hBox = new HBox();
-            hBox.PackStart(new Label("Поля:"), false, false, 5);
-            vBox.PackStart(hBox, false, false, 5);
-
-            HBox hBoxScroll = new HBox();
-            ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
-            scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-            scrollList.SetSizeRequest(0, 300);
-
-            scrollList.Add(listBoxFields);
-            hBoxScroll.PackStart(scrollList, true, true, 5);
-
-            vBox.PackStart(hBoxScroll, false, false, 0);
             hPaned.Pack2(vBox, true, false);
         }
 
@@ -180,7 +185,6 @@ namespace Configurator
 
         public void SetValue()
         {
-            FillTabularParts();
             FillTreeView();
 
             entryName.Text = TabularList.Name;
@@ -192,24 +196,13 @@ namespace Configurator
             foreach (ConfigurationObjectField field in Fields.Values)
             {
                 bool isExistField = TabularList.Fields.ContainsKey(field.Name);
-                
+
                 string caption = isExistField ?
                     (!String.IsNullOrEmpty(TabularList.Fields[field.Name].Caption) ?
                         TabularList.Fields[field.Name].Caption : field.Name) : field.Name;
 
                 listStore.AppendValues(isExistField, field.Name, caption);
             }
-        }
-
-        void FillTabularParts()
-        {
-            foreach (ConfigurationObjectField field in Fields.Values)
-                listBoxFields.Add(
-                    new CheckButton(field.Name)
-                    {
-                        Name = field.Name,
-                        Active = TabularList.Fields.ContainsKey(field.Name)
-                    });
         }
 
         void GetValue()
