@@ -48,7 +48,13 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники.Т
               <xsl:value-of select="normalize-space(Caption)"/>
               <xsl:text>", new CellRendererText(), "text", </xsl:text>
               <xsl:value-of select="position() + 1"/>
-              <xsl:text>))</xsl:text>;
+              <xsl:text>) { SortColumnId = </xsl:text>
+              <xsl:value-of select="position() + 1"/>
+              <xsl:if test="Size != '0'">
+                <xsl:text>, FixedWidth = </xsl:text>
+                <xsl:value-of select="Size"/>
+              </xsl:if>
+              <xsl:text> } )</xsl:text>;
             </xsl:for-each>
         }
 

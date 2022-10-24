@@ -25,10 +25,12 @@ namespace Configurator
             typeof(bool),   //Visible
             typeof(string), //Name
             typeof(string), //Caption
-            typeof(int)     //Size
+            typeof(uint),   //Size
+            typeof(int),    //SortNum
+            typeof(string)  //Type
         );
         TreeView treeViewFields;
-        Entry entryName = new Entry() { WidthRequest = 500 };
+        Entry entryName = new Entry() { WidthRequest = 250 };
         TextView textViewDesc = new TextView();
 
         public PageTabularList() : base()
@@ -61,13 +63,60 @@ namespace Configurator
             ShowAll();
         }
 
+        void CreatePack2(HPaned hPaned)
+        {
+            VBox vBox = new VBox();
+
+            HBox hBoxTreeView = new HBox();
+            hBoxTreeView.PackStart(new Label("Поля:"), false, false, 5);
+            vBox.PackStart(hBoxTreeView, false, false, 5);
+
+            HBox hBoxScrollTreeView = new HBox();
+            ScrolledWindow scrollTreeView = new ScrolledWindow() { ShadowType = ShadowType.In };
+            scrollTreeView.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+            scrollTreeView.SetSizeRequest(0, 500);
+
+            scrollTreeView.Add(treeViewFields);
+            hBoxScrollTreeView.PackStart(scrollTreeView, true, true, 5);
+
+            vBox.PackStart(hBoxScrollTreeView, false, false, 0);
+            hPaned.Pack2(vBox, true, false);
+        }
+
+        void CreatePack1(HPaned hPaned)
+        {
+            VBox vBox = new VBox();
+
+            //Назва
+            HBox hBoxName = new HBox() { Halign = Align.End };
+            vBox.PackStart(hBoxName, false, false, 5);
+
+            hBoxName.PackStart(new Label("Назва:"), false, false, 5);
+            hBoxName.PackStart(entryName, false, false, 5);
+
+            //Опис
+            HBox hBoxDesc = new HBox() { Halign = Align.End };
+            vBox.PackStart(hBoxDesc, false, false, 5);
+
+            hBoxDesc.PackStart(new Label("Опис:") { Valign = Align.Start }, false, false, 5);
+
+            ScrolledWindow scrollTextView = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 250, HeightRequest = 100 };
+            scrollTextView.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+            scrollTextView.Add(textViewDesc);
+
+            hBoxDesc.PackStart(scrollTextView, false, false, 5);
+
+            hPaned.Pack1(vBox, false, false);
+        }
+
+
         #region TreeView
 
         void AddColumnTreeViewFields()
         {
             CellRendererToggle rendererToggle = new CellRendererToggle();
             rendererToggle.Toggled += EditedVisible;
-            treeViewFields.AppendColumn(new TreeViewColumn("Виводити", rendererToggle, "active", 0));
+            treeViewFields.AppendColumn(new TreeViewColumn("", rendererToggle, "active", 0));
 
             treeViewFields.AppendColumn(new TreeViewColumn("Назва", new CellRendererText(), "text", 1));
 
@@ -78,6 +127,15 @@ namespace Configurator
             CellRendererText rendererTextSize = new CellRendererText() { Editable = true };
             rendererTextSize.Edited += EditedSize;
             treeViewFields.AppendColumn(new TreeViewColumn("Розмір", rendererTextSize, "text", 3));
+
+            CellRendererText rendererTextSortNum = new CellRendererText() { Editable = true };
+            rendererTextSortNum.Edited += EditedSortNum;
+
+            treeViewFields.AppendColumn(new TreeViewColumn("Порядок", rendererTextSortNum, "text", 4));
+
+            listStore.SetSortColumnId(4, SortType.Ascending);
+
+            treeViewFields.AppendColumn(new TreeViewColumn("Тип", new CellRendererText(), "text", 5));
 
             // ListStore liststore_manufacturers = new ListStore(typeof(string));
             // var manufacturers = new List<string> { "Sony", "LG", "Panasonic", "Toshiba", "Nokia", "Samsung" };
@@ -104,6 +162,16 @@ namespace Configurator
         //     }
         // }
 
+        private void EditedVisible(object o, ToggledArgs args)
+        {
+            Gtk.TreeIter iter;
+            if (listStore.GetIterFromString(out iter, args.Path))
+            {
+                bool val = (bool)listStore.GetValue(iter, 0);
+                listStore.SetValue(iter, 0, !val);
+            }
+        }
+
         private void EditedCaption(object o, EditedArgs args)
         {
             Gtk.TreeIter iter;
@@ -116,70 +184,27 @@ namespace Configurator
             Gtk.TreeIter iter;
             if (listStore.GetIterFromString(out iter, args.Path))
             {
-                int size;
-                int.TryParse(args.NewText, out size);
+                uint size;
+                uint.TryParse(args.NewText, out size);
 
-                listStore.SetValue(iter, 2, size);
+                listStore.SetValue(iter, 3, size);
             }
         }
 
-        private void EditedVisible(object o, ToggledArgs args)
+        private void EditedSortNum(object o, EditedArgs args)
         {
             Gtk.TreeIter iter;
             if (listStore.GetIterFromString(out iter, args.Path))
             {
-                bool val = (bool)listStore.GetValue(iter, 0);
-                listStore.SetValue(iter, 0, !val);
+                uint sortNum;
+                uint.TryParse(args.NewText, out sortNum);
+
+                listStore.SetValue(iter, 4, sortNum);
             }
         }
 
         #endregion
 
-        void CreatePack2(HPaned hPaned)
-        {
-            VBox vBox = new VBox();
-
-            HBox hBoxTreeView = new HBox();
-            hBoxTreeView.PackStart(new Label("Поля:"), false, false, 5);
-            vBox.PackStart(hBoxTreeView, false, false, 5);
-
-            HBox hBoxScrollTreeView = new HBox();
-            ScrolledWindow scrollTreeView = new ScrolledWindow() { ShadowType = ShadowType.In };
-            scrollTreeView.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-            scrollTreeView.SetSizeRequest(0, 300);
-
-            scrollTreeView.Add(treeViewFields);
-            hBoxScrollTreeView.PackStart(scrollTreeView, true, true, 5);
-
-            vBox.PackStart(hBoxScrollTreeView, false, false, 0);
-            hPaned.Pack2(vBox, true, false);
-        }
-
-        void CreatePack1(HPaned hPaned)
-        {
-            VBox vBox = new VBox();
-
-            //Назва
-            HBox hBoxName = new HBox() { Halign = Align.End };
-            vBox.PackStart(hBoxName, false, false, 5);
-
-            hBoxName.PackStart(new Label("Назва:"), false, false, 5);
-            hBoxName.PackStart(entryName, false, false, 5);
-
-            //Опис
-            HBox hBoxDesc = new HBox() { Halign = Align.End };
-            vBox.PackStart(hBoxDesc, false, false, 5);
-
-            hBoxDesc.PackStart(new Label("Опис:") { Valign = Align.Start }, false, false, 5);
-
-            ScrolledWindow scrollTextView = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 500, HeightRequest = 100 };
-            scrollTextView.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-            scrollTextView.Add(textViewDesc);
-
-            hBoxDesc.PackStart(scrollTextView, false, false, 5);
-
-            hPaned.Pack1(vBox, false, false);
-        }
 
         #region Присвоєння / зчитування значень віджетів
 
@@ -189,6 +214,11 @@ namespace Configurator
 
             entryName.Text = TabularList.Name;
             textViewDesc.Buffer.Text = TabularList.Desc;
+        }
+
+        string GetTypeInfo(string ConfType, string Pointer)
+        {
+            return ConfType == "pointer" || ConfType == "enum" ? Pointer : ConfType;
         }
 
         void FillTreeView()
@@ -201,7 +231,11 @@ namespace Configurator
                     (!String.IsNullOrEmpty(TabularList.Fields[field.Name].Caption) ?
                         TabularList.Fields[field.Name].Caption : field.Name) : field.Name;
 
-                listStore.AppendValues(isExistField, field.Name, caption);
+                uint size = isExistField ? TabularList.Fields[field.Name].Size : 0;
+                int sortNum = isExistField ? TabularList.Fields[field.Name].SortNum : 100;
+                string sType = field.Type == "pointer" || field.Type == "enum" ? field.Pointer : field.Type;
+
+                listStore.AppendValues(isExistField, field.Name, caption, size, sortNum, sType);
             }
         }
 
@@ -222,9 +256,11 @@ namespace Configurator
                 {
                     string name = (string)listStore.GetValue(iter, 1);
                     string caption = (string)listStore.GetValue(iter, 2);
+                    uint size = (uint)listStore.GetValue(iter, 3);
+                    int sortNum = (int)listStore.GetValue(iter, 4);
 
                     ConfigurationObjectField field = Fields[name];
-                    TabularList.AppendField(new ConfigurationTabularListField(field.Name, caption));
+                    TabularList.AppendField(new ConfigurationTabularListField(field.Name, caption, size, sortNum));
                 }
             }
             while (listStore.IterNext(ref iter));
