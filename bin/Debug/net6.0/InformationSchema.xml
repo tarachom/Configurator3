@@ -3,7 +3,7 @@
   <Table>
     <Name>tab_a30</Name>
     <Column>
-      <Name>col_b1</Name>
+      <Name>col_a9</Name>
       <DataType>uuid</DataType>
       <UdtName>uuid</UdtName>
     </Column>
@@ -68,7 +68,7 @@
       <UdtName>numeric</UdtName>
     </Column>
     <Column>
-      <Name>col_a9</Name>
+      <Name>col_b1</Name>
       <DataType>uuid</DataType>
       <UdtName>uuid</UdtName>
     </Column>
@@ -2357,6 +2357,11 @@
       <UdtName>uuid</UdtName>
     </Column>
     <Column>
+      <Name>col_a6</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
       <Name>col_b1</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
@@ -4475,6 +4480,11 @@
       <UdtName>int4</UdtName>
     </Column>
     <Column>
+      <Name>col_i9</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
       <Name>col_j1</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
@@ -4486,11 +4496,6 @@
     </Column>
     <Column>
       <Name>col_i8</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
-      <Name>col_i9</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
