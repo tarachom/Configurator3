@@ -71,7 +71,7 @@ namespace Configurator
 
             treeViewFields.AppendColumn(new TreeViewColumn("Заголовок", rendererText, "text", 2));
 
-            ListStore liststore_manufacturers = new Gtk.ListStore(typeof(string));
+            ListStore liststore_manufacturers = new ListStore(typeof(string));
             var manufacturers = new List<string> { "Sony", "LG", "Panasonic", "Toshiba", "Nokia", "Samsung" };
             foreach (var item in manufacturers)
             {
@@ -84,19 +84,11 @@ namespace Configurator
             rendererCombo.TextColumn = 0;
             rendererCombo.Edited += new EditedHandler(ComboChanged);
 
-            treeViewFields.AppendColumn(new TreeViewColumn("Заголовок", rendererCombo, "text", 3));
+            treeViewFields.AppendColumn(new TreeViewColumn("Поле", rendererCombo, "text", 3));
         }
 
         void ComboChanged(object o, EditedArgs args)
         {
-            // TreeSelection selection = treeview.Selection;
-            // TreeIter iter;
-            // if (!selection.GetSelected(out iter))
-            // {
-            //     return;
-            // }
-            // liststore_hardware.SetValue(iter, 1, args.NewText);
-
             Gtk.TreeIter iter;
             if (listStore.GetIterFromString(out iter, args.Path))
             {
@@ -198,7 +190,15 @@ namespace Configurator
         void FillTreeView()
         {
             foreach (ConfigurationObjectField field in Fields.Values)
-                listStore.AppendValues(TabularList.Fields.ContainsKey(field.Name), field.Name, field.Name);
+            {
+                bool isExistField = TabularList.Fields.ContainsKey(field.Name);
+                
+                string caption = isExistField ?
+                    (!String.IsNullOrEmpty(TabularList.Fields[field.Name].Caption) ?
+                        TabularList.Fields[field.Name].Caption : field.Name) : field.Name;
+
+                listStore.AppendValues(isExistField, field.Name, caption);
+            }
         }
 
         void FillTabularParts()
@@ -220,15 +220,21 @@ namespace Configurator
             //Доспупні поля
             TabularList.Fields.Clear();
 
-            foreach (ListBoxRow item in listBoxFields.Children)
+            TreeIter iter;
+            listStore.GetIterFirst(out iter);
+
+            do
             {
-                CheckButton cb = (CheckButton)item.Child;
-                if (cb.Active)
+                if ((bool)listStore.GetValue(iter, 0))
                 {
-                    ConfigurationObjectField field = Fields[cb.Name];
-                    TabularList.AppendField(new ConfigurationTabularListField(field.Name));
+                    string name = (string)listStore.GetValue(iter, 1);
+                    string caption = (string)listStore.GetValue(iter, 2);
+
+                    ConfigurationObjectField field = Fields[name];
+                    TabularList.AppendField(new ConfigurationTabularListField(field.Name, caption));
                 }
             }
+            while (listStore.IterNext(ref iter));
         }
 
         #endregion
