@@ -73,22 +73,24 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники.Т
                     </xsl:for-each>
                 });
 
-            /* ORDER */
             <xsl:for-each select="Fields/Field[SortField = 'True' and Type != 'pointer']">
-                <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Order.Add(Довідники.<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="Name"/>, SelectOrder.ASC);
+              /* ORDER */
+              <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Order.Add(Довідники.<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="Name"/>, SelectOrder.ASC);
             </xsl:for-each>
 
             <xsl:for-each select="Fields/Field[Type = 'pointer']">
                 /* Join Table */
                 <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Joins.Add(
                     new Join(<xsl:value-of select="Join/table"/>, Довідники.<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="Join/field"/>, <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Table, "<xsl:value-of select="Join/alias"/>"));
-                /* Field */
                 <xsl:for-each select="FieldAndAlias">
+                  /* Field */
                   <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.FieldAndAlias.Add(
                     new NameValue&lt;string&gt;("<xsl:value-of select="table"/>." + <xsl:value-of select="field"/>, "<xsl:value-of select="table"/>_field_<xsl:value-of select="position()"/>"));
-
+                  <xsl:if test="../SortField = 'True'">
+                    /* ORDER */
+                    <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Order.Add("<xsl:value-of select="table"/>_field_<xsl:value-of select="position()"/>", SelectOrder.ASC);
+                  </xsl:if>
                 </xsl:for-each>
-                
             </xsl:for-each>
 
             /* SELECT */
@@ -186,13 +188,12 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.Т
               <xsl:value-of select="normalize-space(Caption)"/>
               <xsl:text>", new CellRendererText(), "text", </xsl:text>
               <xsl:value-of select="position() + 1"/>
-              <xsl:text>) { SortColumnId = </xsl:text>
-              <xsl:value-of select="position() + 1"/>
+              <xsl:text>)</xsl:text>
               <xsl:if test="Size != '0'">
-                <xsl:text>, FixedWidth = </xsl:text>
+                <xsl:text> { FixedWidth = </xsl:text>
                 <xsl:value-of select="Size"/>
-              </xsl:if>
-              <xsl:text> } )</xsl:text>;
+                <xsl:text> } </xsl:text>
+              </xsl:if>);
             </xsl:for-each>
         }
 
@@ -213,15 +214,23 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.Т
                     </xsl:for-each>
                 });
 
+            <xsl:for-each select="Fields/Field[SortField = 'True' and Type != 'pointer']">
+              /* ORDER */
+              <xsl:value-of select="$DocumentName"/>_Select.QuerySelect.Order.Add(Документи.<xsl:value-of select="$DocumentName"/>_Const.<xsl:value-of select="Name"/>, SelectOrder.ASC);
+            </xsl:for-each>
+
             <xsl:for-each select="Fields/Field[Type = 'pointer']">
                 /* Join Table */
                 <xsl:value-of select="$DocumentName"/>_Select.QuerySelect.Joins.Add(
                     new Join(<xsl:value-of select="Join/table"/>, Документи.<xsl:value-of select="$DocumentName"/>_Const.<xsl:value-of select="Join/field"/>, <xsl:value-of select="$DocumentName"/>_Select.QuerySelect.Table, "<xsl:value-of select="Join/alias"/>"));
-                /* Field */
                 <xsl:for-each select="FieldAndAlias">
+                  /* Field */
                   <xsl:value-of select="$DocumentName"/>_Select.QuerySelect.FieldAndAlias.Add(
                     new NameValue&lt;string&gt;("<xsl:value-of select="table"/>." + <xsl:value-of select="field"/>, "<xsl:value-of select="table"/>_field_<xsl:value-of select="position()"/>"));
-
+                  <xsl:if test="../SortField = 'True'">
+                    /* ORDER */
+                    <xsl:value-of select="$DocumentName"/>_Select.QuerySelect.Order.Add("<xsl:value-of select="table"/>_field_<xsl:value-of select="position()"/>", SelectOrder.ASC);
+                  </xsl:if>
                 </xsl:for-each>
             </xsl:for-each>
 
