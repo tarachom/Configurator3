@@ -85,6 +85,11 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники.Т
                 </xsl:for-each>
             </xsl:for-each>
 
+            /* ORDER */
+            <xsl:for-each select="Fields/Field[SortField = 'True' and Type != 'pointer']">
+                <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Order.Add(Довідники.<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="Name"/>, SelectOrder.ASC);
+            </xsl:for-each>
+
             /* SELECT */
             <xsl:value-of select="$DirectoryName"/>_Select.Select();
             while (<xsl:value-of select="$DirectoryName"/>_Select.MoveNext())

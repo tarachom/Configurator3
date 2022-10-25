@@ -73,6 +73,11 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники.Т
                     </xsl:for-each>
                 });
 
+            /* ORDER */
+            <xsl:for-each select="Fields/Field[SortField = 'True' and Type != 'pointer']">
+                <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Order.Add(Довідники.<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="Name"/>, SelectOrder.ASC);
+            </xsl:for-each>
+
             <xsl:for-each select="Fields/Field[Type = 'pointer']">
                 /* Join Table */
                 <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Joins.Add(
@@ -83,6 +88,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники.Т
                     new NameValue&lt;string&gt;("<xsl:value-of select="table"/>." + <xsl:value-of select="field"/>, "<xsl:value-of select="table"/>_field_<xsl:value-of select="position()"/>"));
 
                 </xsl:for-each>
+                
             </xsl:for-each>
 
             /* SELECT */

@@ -27,6 +27,7 @@ namespace Configurator
             typeof(string), //Caption
             typeof(uint),   //Size
             typeof(int),    //SortNum
+            typeof(bool),   //SortField
             typeof(string)  //Type
         );
         TreeView treeViewFields;
@@ -114,27 +115,31 @@ namespace Configurator
 
         void AddColumnTreeViewFields()
         {
-            CellRendererToggle rendererToggle = new CellRendererToggle();
-            rendererToggle.Toggled += EditedVisible;
-            treeViewFields.AppendColumn(new TreeViewColumn("", rendererToggle, "active", 0));
+            CellRendererToggle visibleField = new CellRendererToggle();
+            visibleField.Toggled += EditedVisible;
+            treeViewFields.AppendColumn(new TreeViewColumn("", visibleField, "active", 0));
 
             treeViewFields.AppendColumn(new TreeViewColumn("Назва", new CellRendererText(), "text", 1));
 
-            CellRendererText rendererTextCaption = new CellRendererText() { Editable = true };
-            rendererTextCaption.Edited += EditedCaption;
-            treeViewFields.AppendColumn(new TreeViewColumn("Заголовок", rendererTextCaption, "text", 2));
+            CellRendererText textCaption = new CellRendererText() { Editable = true };
+            textCaption.Edited += EditedCaption;
+            treeViewFields.AppendColumn(new TreeViewColumn("Заголовок", textCaption, "text", 2));
 
-            CellRendererText rendererTextSize = new CellRendererText() { Editable = true };
-            rendererTextSize.Edited += EditedSize;
-            treeViewFields.AppendColumn(new TreeViewColumn("Розмір", rendererTextSize, "text", 3));
+            CellRendererText textSize = new CellRendererText() { Editable = true };
+            textSize.Edited += EditedSize;
+            treeViewFields.AppendColumn(new TreeViewColumn("Розмір", textSize, "text", 3));
 
-            CellRendererText rendererTextSortNum = new CellRendererText() { Editable = true };
-            rendererTextSortNum.Edited += EditedSortNum;
+            CellRendererText textSortNum = new CellRendererText() { Editable = true };
+            textSortNum.Edited += EditedSortNum;
 
-            treeViewFields.AppendColumn(new TreeViewColumn("Порядок", rendererTextSortNum, "text", 4));
+            treeViewFields.AppendColumn(new TreeViewColumn("Порядок", textSortNum, "text", 4));
             listStore.SetSortColumnId(4, SortType.Ascending);
 
-            treeViewFields.AppendColumn(new TreeViewColumn("Тип", new CellRendererText(), "text", 5));
+            CellRendererToggle sortField = new CellRendererToggle();
+            sortField.Toggled += EditedSortField;
+            treeViewFields.AppendColumn(new TreeViewColumn("Сортувати", sortField, "active", 5));
+
+            treeViewFields.AppendColumn(new TreeViewColumn("Тип", new CellRendererText(), "text", 6));
 
             // ListStore liststore_manufacturers = new ListStore(typeof(string));
             // var manufacturers = new List<string> { "Sony", "LG", "Panasonic", "Toshiba", "Nokia", "Samsung" };
@@ -168,6 +173,16 @@ namespace Configurator
             {
                 bool val = (bool)listStore.GetValue(iter, 0);
                 listStore.SetValue(iter, 0, !val);
+            }
+        }
+
+        private void EditedSortField(object o, ToggledArgs args)
+        {
+            Gtk.TreeIter iter;
+            if (listStore.GetIterFromString(out iter, args.Path))
+            {
+                bool val = (bool)listStore.GetValue(iter, 5);
+                listStore.SetValue(iter, 5, !val);
             }
         }
 
@@ -227,9 +242,10 @@ namespace Configurator
 
                 uint size = isExistField ? TabularList.Fields[field.Name].Size : 0;
                 int sortNum = isExistField ? TabularList.Fields[field.Name].SortNum : 100;
+                bool sortField = isExistField ? TabularList.Fields[field.Name].SortField : false;
                 string sType = field.Type == "pointer" || field.Type == "enum" ? field.Pointer : field.Type;
 
-                listStore.AppendValues(isExistField, field.Name, caption, size, sortNum, sType);
+                listStore.AppendValues(isExistField, field.Name, caption, size, sortNum, sortField, sType);
             }
         }
 
@@ -252,9 +268,10 @@ namespace Configurator
                     string caption = (string)listStore.GetValue(iter, 2);
                     uint size = (uint)listStore.GetValue(iter, 3);
                     int sortNum = (int)listStore.GetValue(iter, 4);
+                    bool sortField = (bool)listStore.GetValue(iter, 5);
 
                     ConfigurationObjectField field = Fields[name];
-                    TabularList.AppendField(new ConfigurationTabularListField(field.Name, caption, size, sortNum));
+                    TabularList.AppendField(new ConfigurationTabularListField(field.Name, caption, size, sortNum, sortField));
                 }
             }
             while (listStore.IterNext(ref iter));
