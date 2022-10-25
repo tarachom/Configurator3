@@ -10,13 +10,11 @@ using AccountingSoftware;
 namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники.ТабличніСписки
 {
     <xsl:for-each select="Configuration/Directories/Directory">
-      <xsl:variable name="DirectoryCurrent" select="."/>
       <xsl:variable name="DirectoryName" select="Name"/>
     #region DIRECTORY "<xsl:value-of select="$DirectoryName"/>"
     
       <xsl:for-each select="TabularLists/TabularList">
         <xsl:variable name="TabularListName" select="Name"/>
-        <xsl:variable name="CountFields" select="count(Fields/Field)"/>
     public class <xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularListName"/>
     {
         string Image = "doc.png";
@@ -66,72 +64,24 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники.Т
             <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Field.AddRange(
                 new string[]
                 {
-                    <xsl:for-each select="Fields/Field">
-                      <xsl:variable name="FieldName" select="Name"/>
-                      <xsl:variable name="DirectoryCurrentField" select="$DirectoryCurrent/Fields/Field[Name = $FieldName]"/>
-
-                      <xsl:choose>
-                        <xsl:when test="$DirectoryCurrentField/Type != 'pointer'">
-                          <xsl:if test="position() &gt; 1">, </xsl:if>
-                          <xsl:text>Довідники.</xsl:text>
-                          <xsl:value-of select="$DirectoryName"/>
-                          <xsl:text>_Const.</xsl:text>
-                          <xsl:value-of select="Name"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                          <xsl:text>/* </xsl:text>
-                          <xsl:if test="position() &gt; 1">, </xsl:if>
-                          <xsl:text>Довідники.</xsl:text>
-                          <xsl:value-of select="$DirectoryName"/>
-                          <xsl:text>_Const.</xsl:text>
-                          <xsl:value-of select="Name"/>
-                          <xsl:text> */</xsl:text>
-                        </xsl:otherwise>
-                      </xsl:choose> // [ pos = <xsl:value-of select="position()"/>, type = <xsl:value-of select="$DirectoryCurrentField/Type"/> ]
+                    <xsl:for-each select="Fields/Field[Type != 'pointer']">
+                        <xsl:if test="position() &gt; 1">, </xsl:if>
+                        <xsl:text>Довідники.</xsl:text>
+                        <xsl:value-of select="$DirectoryName"/>
+                        <xsl:text>_Const.</xsl:text>
+                        <xsl:value-of select="Name"/> /* <xsl:value-of select="position()"/> */
                     </xsl:for-each>
                 });
 
-            <xsl:for-each select="Fields/Field">
-              <xsl:variable name="FieldName" select="Name"/>
-              <xsl:variable name="DirectoryCurrentField" select="$DirectoryCurrent/Fields/Field[Name = $FieldName]"/>
-              <xsl:choose>
-                <xsl:when test="$DirectoryCurrentField/Type = 'pointer'">
-                  <xsl:variable name="groupPointer" select="substring-before($DirectoryCurrentField/Pointer, '.')" />
-                  <xsl:variable name="namePointer" select="substring-after($DirectoryCurrentField/Pointer, '.')" />
-                  <xsl:variable name="PointerField">
-                    <xsl:choose>
-                      <xsl:when test="$groupPointer = 'Довідники'">
-                        <xsl:variable name="CurrPointer" select="/Configuration/Directories/Directory[Name = $namePointer]" />
-                        <xsl:choose>
-                          <xsl:when test="count($CurrPointer/Fields/Field[IsPresentation = '1']) != 0">
-                            <xsl:value-of select="$CurrPointer/Fields/Field[IsPresentation = '1']/Name" />
-                          </xsl:when>
-                          <xsl:otherwise>
-                            <xsl:value-of select="$CurrPointer/Fields/Field/Name" />
-                          </xsl:otherwise>
-                        </xsl:choose>
-                      </xsl:when>
-                      <xsl:when test="$groupPointer = 'Документи'">
-                        <xsl:variable name="CurrPointer" select="/Configuration/Documents/Document[Name = $namePointer]" />
-                        <xsl:choose>
-                          <xsl:when test="count($CurrPointer/Fields/Field[IsPresentation = '1']) != 0">
-                            <xsl:value-of select="$CurrPointer/Fields/Field[IsPresentation = '1']/Name" />
-                          </xsl:when>
-                          <xsl:otherwise>
-                            <xsl:value-of select="$CurrPointer/Fields/Field/Name" />
-                          </xsl:otherwise>
-                        </xsl:choose>
-                      </xsl:when>
-                    </xsl:choose>
-                  </xsl:variable>
-                  /* JOIN <xsl:value-of select="position()"/> */
+            <xsl:for-each select="Fields/Field[Type = 'pointer']">
+                <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Joins.Add(
+                    new Join(<xsl:value-of select="Join/table"/>, Довідники.<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="Join/field"/>, <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Table, "<xsl:value-of select="Join/alias"/>"));
+
+                <xsl:for-each select="FieldAndAlias">
                   <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.FieldAndAlias.Add(
-                    new NameValue&lt;string&gt;(
-                      <xsl:value-of select="$DirectoryCurrentField/Pointer"/>_Const.TABLE + "." + <xsl:value-of select="$DirectoryCurrentField/Pointer"/>_Const.<xsl:value-of select="$PointerField"/>, "join_<xsl:value-of select="position()"/>"));
-                  <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Joins.Add(
-                    new Join(<xsl:value-of select="$DirectoryCurrentField/Pointer"/>_Const.TABLE, Довідники.<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="$FieldName"/>, <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Table));
-                </xsl:when>
-              </xsl:choose>
+                    new NameValue&lt;string&gt;("<xsl:value-of select="table"/>." + <xsl:value-of select="field"/>, "<xsl:value-of select="table"/>_field_<xsl:value-of select="position()"/>"));
+
+                </xsl:for-each>
             </xsl:for-each>
 
             /* SELECT */
@@ -144,22 +94,26 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники.Т
                     Store.AppendValues(new <xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularListName"/>
                     {
                         ID = cur.UnigueID.ToString(),
-                        <xsl:for-each select="Fields/Field">
-                          <xsl:variable name="FieldName" select="Name"/>
-                          <xsl:variable name="DirectoryCurrentField" select="$DirectoryCurrent/Fields/Field[Name = $FieldName]"/>
-
+                        <xsl:variable name="CountPointer" select="count(Fields/Field[Type = 'pointer'])"/>
+                        <xsl:variable name="CountNotPointer" select="count(Fields/Field[Type != 'pointer'])"/>
+                        <xsl:for-each select="Fields/Field[Type = 'pointer']">
                           <xsl:value-of select="Name"/>
                           <xsl:text> = </xsl:text>
-
+                          <xsl:variable name="CountAlias" select="count(FieldAndAlias)"/>
+                          <xsl:for-each select="FieldAndAlias">
+                            <xsl:if test="position() &gt; 1"> + " " + </xsl:if>
+                            <xsl:text>cur.Fields?[</xsl:text>"<xsl:value-of select="table"/>_field_<xsl:value-of select="position()"/><xsl:text>"]?.ToString()</xsl:text>
+                            <xsl:if test="$CountAlias = 1"> ?? ""</xsl:if>
+                          </xsl:for-each>
+                          <xsl:if test="$CountNotPointer != 0 or position() != $CountPointer">,</xsl:if> /**/
+                        </xsl:for-each>
+                        <xsl:for-each select="Fields/Field[Type != 'pointer']">
+                          <xsl:value-of select="Name"/>
+                          <xsl:text> = </xsl:text>
                           <xsl:choose>
-                            <xsl:when test="$DirectoryCurrentField/Type = 'pointer'">
-                              <xsl:text>cur.Fields?["join_</xsl:text>
-                              <xsl:value-of select="position()"/>
-                              <xsl:text>"]?.ToString() ?? ""</xsl:text>
-                            </xsl:when>
-                            <xsl:when test="$DirectoryCurrentField/Type = 'enum'">
+                            <xsl:when test="Type = 'enum'">
                               <xsl:text>((</xsl:text>
-                              <xsl:value-of select="$DirectoryCurrentField/Pointer"/>
+                              <xsl:value-of select="Pointer"/>
                               <xsl:text>)</xsl:text>
                               <xsl:text>int.Parse(cur.Fields?[</xsl:text>
                               <xsl:value-of select="$DirectoryName"/>
@@ -175,7 +129,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники.Т
                               <xsl:text>]?.ToString() ?? ""</xsl:text>
                             </xsl:otherwise>
                           </xsl:choose>
-                          <xsl:if test="position() &lt; $CountFields">,</xsl:if> // [ pos = <xsl:value-of select="position()"/>, type = <xsl:value-of select="$DirectoryCurrentField/Type"/> ]
+                          <xsl:if test="position() != $CountNotPointer">,</xsl:if> /**/
                         </xsl:for-each>
                     }.ToArray());
             }
@@ -189,13 +143,11 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники.Т
 namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.ТабличніСписки
 {
     <xsl:for-each select="Configuration/Documents/Document">
-      <xsl:variable name="DocumentCurrent" select="."/>
       <xsl:variable name="DocumentName" select="Name"/>
     #region DOCUMENT "<xsl:value-of select="$DocumentName"/>"
     
       <xsl:for-each select="TabularLists/TabularList">
         <xsl:variable name="TabularListName" select="Name"/>
-        <xsl:variable name="CountFields" select="count(Fields/Field)"/>
     public class <xsl:value-of select="$DocumentName"/>_<xsl:value-of select="$TabularListName"/>
     {
         string Image = "doc.png";
@@ -245,72 +197,24 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.Т
             <xsl:value-of select="$DocumentName"/>_Select.QuerySelect.Field.AddRange(
                 new string[]
                 {
-                    <xsl:for-each select="Fields/Field">
-                      <xsl:variable name="FieldName" select="Name"/>
-                      <xsl:variable name="DocumentCurrentField" select="$DocumentCurrent/Fields/Field[Name = $FieldName]"/>
-
-                      <xsl:choose>
-                        <xsl:when test="$DocumentCurrentField/Type != 'pointer'">
-                          <xsl:if test="position() &gt; 1">, </xsl:if>
-                          <xsl:text>Документи.</xsl:text>
-                          <xsl:value-of select="$DocumentName"/>
-                          <xsl:text>_Const.</xsl:text>
-                          <xsl:value-of select="Name"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                          <xsl:text>/* </xsl:text>
-                          <xsl:if test="position() &gt; 1">, </xsl:if>
-                          <xsl:text>Документи.</xsl:text>
-                          <xsl:value-of select="$DocumentName"/>
-                          <xsl:text>_Const.</xsl:text>
-                          <xsl:value-of select="Name"/>
-                          <xsl:text> */</xsl:text>
-                        </xsl:otherwise>
-                      </xsl:choose> // [ pos = <xsl:value-of select="position()"/>, type = <xsl:value-of select="$DocumentCurrentField/Type"/> ]
+                    <xsl:for-each select="Fields/Field[Type != 'pointer']">
+                        <xsl:if test="position() &gt; 1">, </xsl:if>
+                        <xsl:text>Документи.</xsl:text>
+                        <xsl:value-of select="$DocumentName"/>
+                        <xsl:text>_Const.</xsl:text>
+                        <xsl:value-of select="Name"/> /* <xsl:value-of select="position()"/> */
                     </xsl:for-each>
                 });
 
-            <xsl:for-each select="Fields/Field">
-              <xsl:variable name="FieldName" select="Name"/>
-              <xsl:variable name="DocumentCurrentField" select="$DocumentCurrent/Fields/Field[Name = $FieldName]"/>
-              <xsl:choose>
-                <xsl:when test="$DocumentCurrentField/Type = 'pointer'">
-                  <xsl:variable name="groupPointer" select="substring-before($DocumentCurrentField/Pointer, '.')" />
-                  <xsl:variable name="namePointer" select="substring-after($DocumentCurrentField/Pointer, '.')" />
-                  <xsl:variable name="PointerField">
-                    <xsl:choose>
-                      <xsl:when test="$groupPointer = 'Довідники'">
-                        <xsl:variable name="CurrPointer" select="/Configuration/Directories/Directory[Name = $namePointer]" />
-                        <xsl:choose>
-                          <xsl:when test="count($CurrPointer/Fields/Field[IsPresentation = '1']) != 0">
-                            <xsl:value-of select="$CurrPointer/Fields/Field[IsPresentation = '1']/Name" />
-                          </xsl:when>
-                          <xsl:otherwise>
-                            <xsl:value-of select="$CurrPointer/Fields/Field/Name" />
-                          </xsl:otherwise>
-                        </xsl:choose>
-                      </xsl:when>
-                      <xsl:when test="$groupPointer = 'Документи'">
-                        <xsl:variable name="CurrPointer" select="/Configuration/Documents/Document[Name = $namePointer]" />
-                        <xsl:choose>
-                          <xsl:when test="count($CurrPointer/Fields/Field[IsPresentation = '1']) != 0">
-                            <xsl:value-of select="$CurrPointer/Fields/Field[IsPresentation = '1']/Name" />
-                          </xsl:when>
-                          <xsl:otherwise>
-                            <xsl:value-of select="$CurrPointer/Fields/Field/Name" />
-                          </xsl:otherwise>
-                        </xsl:choose>
-                      </xsl:when>
-                    </xsl:choose>
-                  </xsl:variable>
-                  /* JOIN <xsl:value-of select="position()"/> */
+            <xsl:for-each select="Fields/Field[Type = 'pointer']">
+                <xsl:value-of select="$DocumentName"/>_Select.QuerySelect.Joins.Add(
+                    new Join(<xsl:value-of select="Join/table"/>, Документи.<xsl:value-of select="$DocumentName"/>_Const.<xsl:value-of select="Join/field"/>, <xsl:value-of select="$DocumentName"/>_Select.QuerySelect.Table, "<xsl:value-of select="Join/alias"/>"));
+
+                <xsl:for-each select="FieldAndAlias">
                   <xsl:value-of select="$DocumentName"/>_Select.QuerySelect.FieldAndAlias.Add(
-                    new NameValue&lt;string&gt;(
-                      <xsl:value-of select="$DocumentCurrentField/Pointer"/>_Const.TABLE + "." + <xsl:value-of select="$DocumentCurrentField/Pointer"/>_Const.<xsl:value-of select="$PointerField"/>, "join_<xsl:value-of select="position()"/>"));
-                  <xsl:value-of select="$DocumentName"/>_Select.QuerySelect.Joins.Add(
-                    new Join(<xsl:value-of select="$DocumentCurrentField/Pointer"/>_Const.TABLE, Документи.<xsl:value-of select="$DocumentName"/>_Const.<xsl:value-of select="$FieldName"/>, <xsl:value-of select="$DocumentName"/>_Select.QuerySelect.Table));
-                </xsl:when>
-              </xsl:choose>
+                    new NameValue&lt;string&gt;("<xsl:value-of select="table"/>." + <xsl:value-of select="field"/>, "<xsl:value-of select="table"/>_field_<xsl:value-of select="position()"/>"));
+
+                </xsl:for-each>
             </xsl:for-each>
 
             /* SELECT */
@@ -323,22 +227,26 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.Т
                     Store.AppendValues(new <xsl:value-of select="$DocumentName"/>_<xsl:value-of select="$TabularListName"/>
                     {
                         ID = cur.UnigueID.ToString(),
-                        <xsl:for-each select="Fields/Field">
-                          <xsl:variable name="FieldName" select="Name"/>
-                          <xsl:variable name="DocumentCurrentField" select="$DocumentCurrent/Fields/Field[Name = $FieldName]"/>
-
+                        <xsl:variable name="CountPointer" select="count(Fields/Field[Type = 'pointer'])"/>
+                        <xsl:variable name="CountNotPointer" select="count(Fields/Field[Type != 'pointer'])"/>
+                        <xsl:for-each select="Fields/Field[Type = 'pointer']">
                           <xsl:value-of select="Name"/>
                           <xsl:text> = </xsl:text>
-
+                          <xsl:variable name="CountAlias" select="count(FieldAndAlias)"/>
+                          <xsl:for-each select="FieldAndAlias">
+                            <xsl:if test="position() &gt; 1"> + " " + </xsl:if>
+                            <xsl:text>cur.Fields?[</xsl:text>"<xsl:value-of select="table"/>_field_<xsl:value-of select="position()"/><xsl:text>"]?.ToString()</xsl:text>
+                            <xsl:if test="$CountAlias = 1"> ?? ""</xsl:if>
+                          </xsl:for-each>
+                          <xsl:if test="$CountNotPointer != 0 or position() != $CountPointer">,</xsl:if> /**/
+                        </xsl:for-each>
+                        <xsl:for-each select="Fields/Field[Type != 'pointer']">
+                          <xsl:value-of select="Name"/>
+                          <xsl:text> = </xsl:text>
                           <xsl:choose>
-                            <xsl:when test="$DocumentCurrentField/Type = 'pointer'">
-                              <xsl:text>cur.Fields?["join_</xsl:text>
-                              <xsl:value-of select="position()"/>
-                              <xsl:text>"]?.ToString() ?? ""</xsl:text>
-                            </xsl:when>
-                            <xsl:when test="$DocumentCurrentField/Type = 'enum'">
+                            <xsl:when test="Type = 'enum'">
                               <xsl:text>((</xsl:text>
-                              <xsl:value-of select="$DocumentCurrentField/Pointer"/>
+                              <xsl:value-of select="Pointer"/>
                               <xsl:text>)</xsl:text>
                               <xsl:text>int.Parse(cur.Fields?[</xsl:text>
                               <xsl:value-of select="$DocumentName"/>
@@ -354,7 +262,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.Т
                               <xsl:text>]?.ToString() ?? ""</xsl:text>
                             </xsl:otherwise>
                           </xsl:choose>
-                          <xsl:if test="position() &lt; $CountFields">,</xsl:if> // [ pos = <xsl:value-of select="position()"/>, type = <xsl:value-of select="$DocumentCurrentField/Type"/> ]
+                          <xsl:if test="position() != $CountNotPointer">,</xsl:if> /**/
                         </xsl:for-each>
                     }.ToArray());
             }
