@@ -5,7 +5,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>25.10.2022 12:45:46</DateTimeSave>
+  <DateTimeSave>25.10.2022 12:55:37</DateTimeSave>
   <ConstantsBlocks>
     <ConstantsBlock>
       <Name>ЗначенняЗаЗамовчуванням</Name>
@@ -2508,10 +2508,6 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
                 <table>join_tab_2</table>
                 <field>Довідники.Виробники_Const.Назва</field>
               </FieldAndAlias>
-              <FieldAndAlias>
-                <table>join_tab_2</table>
-                <field>Довідники.Виробники_Const.Код</field>
-              </FieldAndAlias>
             </Field>
             <Field>
               <Name>ТипНоменклатури</Name>
@@ -2565,7 +2561,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <NameInTable>col_b7</NameInTable>
           <Type>string</Type>
           <Desc>Код</Desc>
-          <IsPresentation>1</IsPresentation>
+          <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
         </Field>
       </Fields>
@@ -8879,19 +8875,36 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
               </FieldAndAlias>
             </Field>
             <Field>
+              <Name>КасаВідправник</Name>
+              <Caption>Каса відправник</Caption>
+              <Size>0</Size>
+              <SortNum>7</SortNum>
+              <Type>pointer</Type>
+              <Pointer>Довідники.Каси</Pointer>
+              <Join>
+                <table>Довідники.Каси_Const.TABLE</table>
+                <field>КасаВідправник</field>
+                <alias>join_tab_4</alias>
+              </Join>
+              <FieldAndAlias>
+                <table>join_tab_4</table>
+                <field>Довідники.Каси_Const.Назва</field>
+              </FieldAndAlias>
+            </Field>
+            <Field>
               <Name>Контрагент</Name>
               <Caption>Контрагент</Caption>
               <Size>0</Size>
-              <SortNum>7</SortNum>
+              <SortNum>8</SortNum>
               <Type>pointer</Type>
               <Pointer>Довідники.Контрагенти</Pointer>
               <Join>
                 <table>Довідники.Контрагенти_Const.TABLE</table>
                 <field>Контрагент</field>
-                <alias>join_tab_4</alias>
+                <alias>join_tab_5</alias>
               </Join>
               <FieldAndAlias>
-                <table>join_tab_4</table>
+                <table>join_tab_5</table>
                 <field>Довідники.Контрагенти_Const.Назва</field>
               </FieldAndAlias>
             </Field>
@@ -9280,10 +9293,27 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
               </FieldAndAlias>
             </Field>
             <Field>
+              <Name>КасаОтримувач</Name>
+              <Caption>Каса отримувач</Caption>
+              <Size>0</Size>
+              <SortNum>8</SortNum>
+              <Type>pointer</Type>
+              <Pointer>Довідники.Каси</Pointer>
+              <Join>
+                <table>Довідники.Каси_Const.TABLE</table>
+                <field>КасаОтримувач</field>
+                <alias>join_tab_5</alias>
+              </Join>
+              <FieldAndAlias>
+                <table>join_tab_5</table>
+                <field>Довідники.Каси_Const.Назва</field>
+              </FieldAndAlias>
+            </Field>
+            <Field>
               <Name>СумаДокументу</Name>
               <Caption>Сума</Caption>
               <Size>0</Size>
-              <SortNum>8</SortNum>
+              <SortNum>9</SortNum>
               <Type>numeric</Type>
               <Pointer>
               </Pointer>
@@ -9616,7 +9646,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
             </Field>
             <Field>
               <Name>СкладВідправник</Name>
-              <Caption>СкладВідправник</Caption>
+              <Caption>Склад відправник</Caption>
               <Size>0</Size>
               <SortNum>5</SortNum>
               <Type>pointer</Type>
@@ -9628,6 +9658,23 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
               </Join>
               <FieldAndAlias>
                 <table>join_tab_2</table>
+                <field>Довідники.Склади_Const.Назва</field>
+              </FieldAndAlias>
+            </Field>
+            <Field>
+              <Name>СкладОтримувач</Name>
+              <Caption>Склад отримувач</Caption>
+              <Size>0</Size>
+              <SortNum>6</SortNum>
+              <Type>pointer</Type>
+              <Pointer>Довідники.Склади</Pointer>
+              <Join>
+                <table>Довідники.Склади_Const.TABLE</table>
+                <field>СкладОтримувач</field>
+                <alias>join_tab_3</alias>
+              </Join>
+              <FieldAndAlias>
+                <table>join_tab_3</table>
                 <field>Довідники.Склади_Const.Назва</field>
               </FieldAndAlias>
             </Field>
