@@ -739,7 +739,6 @@ namespace Configurator
             listBoxTabularList.ShowAll();
         }
 
-
         void OnTabularListRemoveClick(object? sender, EventArgs args)
         {
             ListBoxRow[] selectedRows = listBoxTabularList.SelectedRows;
