@@ -112,6 +112,16 @@ namespace Configurator
             hBoxTrigerBeforeDelete.PackStart(new Label("Перед видален.:"), false, false, 5);
             hBoxTrigerBeforeDelete.PackStart(entryBeforeDelete, false, false, 5);
 
+            vBox.PackStart(new Separator(Orientation.Horizontal), false, false, 20);
+
+            //Заголовок блоку Forms
+            HBox hBoxInterfaceCreateInfo = new HBox() { Halign = Align.Center };
+            vBox.PackStart(hBoxInterfaceCreateInfo, false, false, 5);
+            hBoxInterfaceCreateInfo.PackStart(new Label("Форми"), false, false, 5);
+
+            //Табличні списки
+            CreateTabularList(vBox);
+
             hPaned.Pack1(vBox, false, false);
         }
 
@@ -124,9 +134,6 @@ namespace Configurator
 
             //Табличні частини
             CreateTablePartList(vBox);
-
-            //Табличні списки
-            CreateTabularList(vBox);
 
             hPaned.Pack2(vBox, true, false);
         }
