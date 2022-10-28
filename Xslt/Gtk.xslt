@@ -52,7 +52,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники.Т
                 <xsl:text>, FixedWidth = </xsl:text>
                 <xsl:value-of select="Size"/>
               </xsl:if>
-              <xsl:text> } )</xsl:text>;
+              <xsl:text> } )</xsl:text>; /*<xsl:value-of select="Name"/>*/
             </xsl:for-each>
         }
 
@@ -124,11 +124,11 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники.Т
                               <xsl:text>((</xsl:text>
                               <xsl:value-of select="Pointer"/>
                               <xsl:text>)</xsl:text>
-                              <xsl:text>int.Parse(cur.Fields?[</xsl:text>
+                              <xsl:text>(cur.Fields?[</xsl:text>
                               <xsl:value-of select="$DirectoryName"/>
                               <xsl:text>_Const.</xsl:text>
                               <xsl:value-of select="Name"/>
-                              <xsl:text>]?.ToString() ?? "0")).ToString()</xsl:text>
+                              <xsl:text>]!)).ToString()</xsl:text>
                             </xsl:when>
                             <xsl:otherwise>
                               <xsl:text>cur.Fields?[</xsl:text>
@@ -195,7 +195,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.Т
                 <xsl:text> { FixedWidth = </xsl:text>
                 <xsl:value-of select="Size"/>
                 <xsl:text> } </xsl:text>
-              </xsl:if>);
+              </xsl:if>); /*<xsl:value-of select="Name"/>*/
             </xsl:for-each>
         }
 
@@ -268,11 +268,11 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.Т
                               <xsl:text>((</xsl:text>
                               <xsl:value-of select="Pointer"/>
                               <xsl:text>)</xsl:text>
-                              <xsl:text>int.Parse(cur.Fields?[</xsl:text>
+                              <xsl:text>(cur.Fields?[</xsl:text>
                               <xsl:value-of select="$DocumentName"/>
                               <xsl:text>_Const.</xsl:text>
                               <xsl:value-of select="Name"/>
-                              <xsl:text>]?.ToString() ?? "0")).ToString()</xsl:text>
+                              <xsl:text>]!)).ToString()</xsl:text>
                             </xsl:when>
                             <xsl:otherwise>
                               <xsl:text>cur.Fields?[</xsl:text>
