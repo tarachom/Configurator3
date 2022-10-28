@@ -2,8 +2,41 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xsl:output method="text" indent="yes" />
 
-  <xsl:template match="/">
+  <xsl:template name="License">
+/*
+Copyright (C) 2019-2022 TARAKHOMYN YURIY IVANOVYCH
+All rights reserved.
 
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+/*
+Автор:    Тарахомин Юрій Іванович
+Адреса:   Україна, м. Львів
+Сайт:     accounting.org.ua
+*/
+  </xsl:template>
+
+  <xsl:template match="/">
+    <xsl:call-template name="License" />
+/*
+ *
+ * Конфігурації "<xsl:value-of select="Configuration/Name"/>"
+ * Автор <xsl:value-of select="Configuration/Author"/>
+ * Дата конфігурації: <xsl:value-of select="Configuration/DateTimeSave"/>
+ *
+ */
+ 
 using Gtk;
 using AccountingSoftware;
 
@@ -38,13 +71,13 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники.Т
 
         public static void AddColumns(TreeView treeView)
         {
-            treeView.AppendColumn(new TreeViewColumn("", new CellRendererPixbuf() { Ypad = 5 }, "pixbuf", 0));
+            treeView.AppendColumn(new TreeViewColumn("", new CellRendererPixbuf() { Ypad = 4 }, "pixbuf", 0));
             treeView.AppendColumn(new TreeViewColumn("ID", new CellRendererText(), "text", 1) { Visible = false });
             /* */
             <xsl:for-each select="Fields/Field">
               <xsl:text>treeView.AppendColumn(new TreeViewColumn("</xsl:text>
               <xsl:value-of select="normalize-space(Caption)"/>
-              <xsl:text>", new CellRendererText() { Xpad = 5 }, "text", </xsl:text>
+              <xsl:text>", new CellRendererText() { Xpad = 4 }, "text", </xsl:text>
               <xsl:value-of select="position() + 1"/>
               <xsl:text>) { SortColumnId = </xsl:text>
               <xsl:value-of select="position() + 1"/>
@@ -181,14 +214,14 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.Т
 
         public static void AddColumns(TreeView treeView)
         {
-            treeView.AppendColumn(new TreeViewColumn("", new CellRendererPixbuf() { Ypad = 5 }, "pixbuf", 0)); /*Image*/
+            treeView.AppendColumn(new TreeViewColumn("", new CellRendererPixbuf() { Ypad = 4 }, "pixbuf", 0)); /*Image*/
             treeView.AppendColumn(new TreeViewColumn("ID", new CellRendererText(), "text", 1) { Visible = false }); /*UID*/
             treeView.AppendColumn(new TreeViewColumn("", new CellRendererToggle(), "active", 2)); /*Проведений документ*/
             /* */
             <xsl:for-each select="Fields/Field">
               <xsl:text>treeView.AppendColumn(new TreeViewColumn("</xsl:text>
               <xsl:value-of select="normalize-space(Caption)"/>
-              <xsl:text>", new CellRendererText() { Xpad = 5 }, "text", </xsl:text>
+              <xsl:text>", new CellRendererText() { Xpad = 4 }, "text", </xsl:text>
               <xsl:value-of select="position() + 2"/>
               <xsl:text>)</xsl:text>
               <xsl:if test="Size != '0'">
