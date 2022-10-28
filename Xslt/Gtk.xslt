@@ -160,34 +160,36 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.Т
     public class <xsl:value-of select="$DocumentName"/>_<xsl:value-of select="$TabularListName"/>
     {
         string Image = "doc.png";
+        bool Spend = false;
         string ID = "";
         <xsl:for-each select="Fields/Field">
         string <xsl:value-of select="Name"/> = "";</xsl:for-each>
 
         Array ToArray()
         {
-            return new object[] { new Gdk.Pixbuf(Image), ID 
+            return new object[] { new Gdk.Pixbuf(Image), ID, Spend /*Проведений документ*/
             /* */ <xsl:for-each select="Fields/Field">
               <xsl:text>, </xsl:text>
               <xsl:value-of select="Name"/>
             </xsl:for-each> };
         }
 
-        public static ListStore Store = new ListStore(typeof(Gdk.Pixbuf) /* Image */, typeof(string) /* ID */
+        public static ListStore Store = new ListStore(typeof(Gdk.Pixbuf) /* Image */, typeof(string) /* ID */, typeof(bool) /* Spend Проведений документ*/
             <xsl:for-each select="Fields/Field">
               <xsl:text>, typeof(string)</xsl:text> /* <xsl:value-of select="Name"/> */
             </xsl:for-each>);
 
         public static void AddColumns(TreeView treeView)
         {
-            treeView.AppendColumn(new TreeViewColumn("", new CellRendererPixbuf(), "pixbuf", 0));
-            treeView.AppendColumn(new TreeViewColumn("ID", new CellRendererText(), "text", 1) { Visible = false });
+            treeView.AppendColumn(new TreeViewColumn("", new CellRendererPixbuf(), "pixbuf", 0)); /*Image*/
+            treeView.AppendColumn(new TreeViewColumn("ID", new CellRendererText(), "text", 1) { Visible = false }); /*UID*/
+            treeView.AppendColumn(new TreeViewColumn("П", new CellRendererToggle(), "active", 2)); /*Проведений документ*/
             /* */
             <xsl:for-each select="Fields/Field">
               <xsl:text>treeView.AppendColumn(new TreeViewColumn("</xsl:text>
               <xsl:value-of select="normalize-space(Caption)"/>
               <xsl:text>", new CellRendererText(), "text", </xsl:text>
-              <xsl:value-of select="position() + 1"/>
+              <xsl:value-of select="position() + 2"/>
               <xsl:text>)</xsl:text>
               <xsl:if test="Size != '0'">
                 <xsl:text> { FixedWidth = </xsl:text>
@@ -204,9 +206,9 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.Т
             Документи.<xsl:value-of select="$DocumentName"/>_Select <xsl:value-of select="$DocumentName"/>_Select = new Документи.<xsl:value-of select="$DocumentName"/>_Select();
             <xsl:value-of select="$DocumentName"/>_Select.QuerySelect.Field.AddRange(
                 new string[]
-                {
+                { "spend" /*Проведений документ*/
                     <xsl:for-each select="Fields/Field[Type != 'pointer']">
-                        <xsl:if test="position() &gt; 1">, </xsl:if>
+                        <xsl:text>, </xsl:text>
                         <xsl:text>Документи.</xsl:text>
                         <xsl:value-of select="$DocumentName"/>
                         <xsl:text>_Const.</xsl:text>
@@ -244,6 +246,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.Т
                     Store.AppendValues(new <xsl:value-of select="$DocumentName"/>_<xsl:value-of select="$TabularListName"/>
                     {
                         ID = cur.UnigueID.ToString(),
+                        Spend = (bool)cur.Fields?["spend"]!, /*Проведений документ*/
                         <xsl:variable name="CountPointer" select="count(Fields/Field[Type = 'pointer'])"/>
                         <xsl:variable name="CountNotPointer" select="count(Fields/Field[Type != 'pointer'])"/>
                         <xsl:for-each select="Fields/Field[Type = 'pointer']">
