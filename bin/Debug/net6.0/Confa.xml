@@ -5,7 +5,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>28.10.2022 16:05:44</DateTimeSave>
+  <DateTimeSave>28.10.2022 16:54:01</DateTimeSave>
   <ConstantsBlocks>
     <ConstantsBlock>
       <Name>ЗначенняЗаЗамовчуванням</Name>
@@ -2256,7 +2256,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
             <Field>
               <Name>Код</Name>
               <Caption>Код</Caption>
-              <Size>100</Size>
+              <Size>0</Size>
               <SortNum>1</SortNum>
               <SortField>False</SortField>
               <Type>string</Type>
@@ -2430,7 +2430,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
             <Field>
               <Name>Код</Name>
               <Caption>Код</Caption>
-              <Size>100</Size>
+              <Size>0</Size>
               <SortNum>1</SortNum>
               <SortField>False</SortField>
               <Type>string</Type>
@@ -2551,7 +2551,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
             <Field>
               <Name>Код</Name>
               <Caption>Код</Caption>
-              <Size>100</Size>
+              <Size>0</Size>
               <SortNum>1</SortNum>
               <SortField>False</SortField>
               <Type>string</Type>
@@ -2641,7 +2641,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
             <Field>
               <Name>Код</Name>
               <Caption>Код</Caption>
-              <Size>100</Size>
+              <Size>0</Size>
               <SortNum>1</SortNum>
               <SortField>False</SortField>
               <Type>string</Type>
@@ -2720,7 +2720,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
             <Field>
               <Name>Код</Name>
               <Caption>Код</Caption>
-              <Size>100</Size>
+              <Size>0</Size>
               <SortNum>1</SortNum>
               <SortField>False</SortField>
               <Type>string</Type>
@@ -2798,7 +2798,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
             <Field>
               <Name>Код</Name>
               <Caption>Код</Caption>
-              <Size>100</Size>
+              <Size>0</Size>
               <SortNum>1</SortNum>
               <SortField>True</SortField>
               <Type>string</Type>
@@ -2986,7 +2986,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
             <Field>
               <Name>Код</Name>
               <Caption>Код</Caption>
-              <Size>100</Size>
+              <Size>0</Size>
               <SortNum>1</SortNum>
               <SortField>False</SortField>
               <Type>string</Type>
@@ -3160,7 +3160,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
             <Field>
               <Name>Код</Name>
               <Caption>Код</Caption>
-              <Size>100</Size>
+              <Size>0</Size>
               <SortNum>1</SortNum>
               <SortField>False</SortField>
               <Type>string</Type>
@@ -3231,7 +3231,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
             <Field>
               <Name>Код</Name>
               <Caption>Код</Caption>
-              <Size>100</Size>
+              <Size>0</Size>
               <SortNum>1</SortNum>
               <SortField>False</SortField>
               <Type>string</Type>
@@ -3320,7 +3320,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
             <Field>
               <Name>Код</Name>
               <Caption>Код</Caption>
-              <Size>100</Size>
+              <Size>0</Size>
               <SortNum>1</SortNum>
               <SortField>False</SortField>
               <Type>string</Type>
@@ -3466,7 +3466,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
             <Field>
               <Name>Код</Name>
               <Caption>Код</Caption>
-              <Size>100</Size>
+              <Size>0</Size>
               <SortNum>1</SortNum>
               <SortField>False</SortField>
               <Type>string</Type>
@@ -3621,7 +3621,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
             <Field>
               <Name>Код</Name>
               <Caption>Код</Caption>
-              <Size>100</Size>
+              <Size>0</Size>
               <SortNum>1</SortNum>
               <SortField>False</SortField>
               <Type>string</Type>
@@ -3692,7 +3692,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
             <Field>
               <Name>Код</Name>
               <Caption>Код</Caption>
-              <Size>100</Size>
+              <Size>0</Size>
               <SortNum>1</SortNum>
               <SortField>False</SortField>
               <Type>string</Type>
@@ -3762,7 +3762,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
             <Field>
               <Name>Код</Name>
               <Caption>Код</Caption>
-              <Size>100</Size>
+              <Size>0</Size>
               <SortNum>1</SortNum>
               <SortField>False</SortField>
               <Type>string</Type>
@@ -3859,7 +3859,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
             <Field>
               <Name>Код</Name>
               <Caption>Код</Caption>
-              <Size>100</Size>
+              <Size>0</Size>
               <SortNum>1</SortNum>
               <SortField>False</SortField>
               <Type>string</Type>
@@ -3939,7 +3939,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
             <Field>
               <Name>Код</Name>
               <Caption>Код</Caption>
-              <Size>100</Size>
+              <Size>0</Size>
               <SortNum>1</SortNum>
               <SortField>False</SortField>
               <Type>string</Type>
@@ -4162,7 +4162,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
             <Field>
               <Name>Код</Name>
               <Caption>Код</Caption>
-              <Size>100</Size>
+              <Size>0</Size>
               <SortNum>1</SortNum>
               <SortField>False</SortField>
               <Type>string</Type>
@@ -4343,7 +4343,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
             <Field>
               <Name>Код</Name>
               <Caption>Код</Caption>
-              <Size>100</Size>
+              <Size>0</Size>
               <SortNum>1</SortNum>
               <SortField>False</SortField>
               <Type>string</Type>
@@ -4592,7 +4592,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
             <Field>
               <Name>Код</Name>
               <Caption>Код</Caption>
-              <Size>100</Size>
+              <Size>0</Size>
               <SortNum>1</SortNum>
               <SortField>False</SortField>
               <Type>string</Type>
@@ -4796,7 +4796,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
             <Field>
               <Name>Код</Name>
               <Caption>Код</Caption>
-              <Size>100</Size>
+              <Size>0</Size>
               <SortNum>1</SortNum>
               <SortField>False</SortField>
               <Type>string</Type>
@@ -7108,7 +7108,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
             <Field>
               <Name>Назва</Name>
               <Caption>Назва</Caption>
-              <Size>450</Size>
+              <Size>0</Size>
               <SortNum>1</SortNum>
               <SortField>False</SortField>
               <Type>string</Type>
@@ -7118,7 +7118,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
             <Field>
               <Name>НомерДок</Name>
               <Caption>Номер</Caption>
-              <Size>100</Size>
+              <Size>0</Size>
               <SortNum>2</SortNum>
               <SortField>False</SortField>
               <Type>string</Type>
@@ -7128,7 +7128,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
             <Field>
               <Name>ДатаДок</Name>
               <Caption>Дата</Caption>
-              <Size>160</Size>
+              <Size>0</Size>
               <SortNum>3</SortNum>
               <SortField>True</SortField>
               <Type>datetime</Type>

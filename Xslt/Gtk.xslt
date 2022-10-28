@@ -38,13 +38,13 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники.Т
 
         public static void AddColumns(TreeView treeView)
         {
-            treeView.AppendColumn(new TreeViewColumn("", new CellRendererPixbuf(), "pixbuf", 0));
+            treeView.AppendColumn(new TreeViewColumn("", new CellRendererPixbuf() { Ypad = 5 }, "pixbuf", 0));
             treeView.AppendColumn(new TreeViewColumn("ID", new CellRendererText(), "text", 1) { Visible = false });
             /* */
             <xsl:for-each select="Fields/Field">
               <xsl:text>treeView.AppendColumn(new TreeViewColumn("</xsl:text>
               <xsl:value-of select="normalize-space(Caption)"/>
-              <xsl:text>", new CellRendererText(), "text", </xsl:text>
+              <xsl:text>", new CellRendererText() { Xpad = 5 }, "text", </xsl:text>
               <xsl:value-of select="position() + 1"/>
               <xsl:text>) { SortColumnId = </xsl:text>
               <xsl:value-of select="position() + 1"/>
@@ -181,14 +181,14 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.Т
 
         public static void AddColumns(TreeView treeView)
         {
-            treeView.AppendColumn(new TreeViewColumn("", new CellRendererPixbuf(), "pixbuf", 0)); /*Image*/
+            treeView.AppendColumn(new TreeViewColumn("", new CellRendererPixbuf() { Ypad = 5 }, "pixbuf", 0)); /*Image*/
             treeView.AppendColumn(new TreeViewColumn("ID", new CellRendererText(), "text", 1) { Visible = false }); /*UID*/
-            treeView.AppendColumn(new TreeViewColumn("П", new CellRendererToggle(), "active", 2)); /*Проведений документ*/
+            treeView.AppendColumn(new TreeViewColumn("", new CellRendererToggle(), "active", 2)); /*Проведений документ*/
             /* */
             <xsl:for-each select="Fields/Field">
               <xsl:text>treeView.AppendColumn(new TreeViewColumn("</xsl:text>
               <xsl:value-of select="normalize-space(Caption)"/>
-              <xsl:text>", new CellRendererText(), "text", </xsl:text>
+              <xsl:text>", new CellRendererText() { Xpad = 5 }, "text", </xsl:text>
               <xsl:value-of select="position() + 2"/>
               <xsl:text>)</xsl:text>
               <xsl:if test="Size != '0'">
