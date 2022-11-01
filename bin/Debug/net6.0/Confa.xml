@@ -5,7 +5,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>01.11.2022 19:31:22</DateTimeSave>
+  <DateTimeSave>01.11.2022 19:51:30</DateTimeSave>
   <ConstantsBlocks>
     <ConstantsBlock>
       <Name>ЗначенняЗаЗамовчуванням</Name>
@@ -6110,12 +6110,12 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         <Field>
           <Name>ЗПочаткуРоку</Name>
           <Value>2</Value>
-          <Desc>Рік</Desc>
+          <Desc>Рік (з початку року)</Desc>
         </Field>
         <Field>
           <Name>Квартал</Name>
           <Value>6</Value>
-          <Desc>Квартал</Desc>
+          <Desc>Квартал (3 місяці)</Desc>
         </Field>
         <Field>
           <Name>ЗМинулогоМісяця</Name>
@@ -6125,7 +6125,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         <Field>
           <Name>ЗПочаткуМісяця</Name>
           <Value>3</Value>
-          <Desc>Місяць</Desc>
+          <Desc>Місяць (з початку місяця)</Desc>
         </Field>
         <Field>
           <Name>ЗПочаткуТижня</Name>
