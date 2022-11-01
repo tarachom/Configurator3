@@ -40,6 +40,13 @@ limitations under the License.
 using Gtk;
 using AccountingSoftware;
 
+/*
+namespace <xsl:value-of select="Configuration/NameSpace"/>.ТабличніСписки
+{
+    //
+}
+*/
+
 namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники.ТабличніСписки
 {
     <xsl:for-each select="Configuration/Directories/Directory">
@@ -89,6 +96,8 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники.Т
             </xsl:for-each>
         }
 
+        public static List&lt;Where&gt; Where { get; set; } = new List&lt;Where&gt;(); 
+
         public static void LoadRecords()
         {
             Store.Clear();
@@ -105,6 +114,9 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники.Т
                         <xsl:value-of select="Name"/> /* <xsl:value-of select="position()"/> */
                     </xsl:for-each>
                 });
+
+            /* Where */
+            <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where = Where;
 
             <xsl:for-each select="Fields/Field[SortField = 'True' and Type != 'pointer']">
               /* ORDER */
@@ -184,6 +196,64 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники.Т
 
 namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.ТабличніСписки
 {
+    public static class Інтерфейс
+    {
+        public static ComboBoxText СписокВідбірПоПеріоду()
+        {
+            ComboBoxText сomboBox = new ComboBoxText();
+
+            if (Config.Kernel != null)
+            {
+                ConfigurationEnums ТипПеріодуДляЖурналівДокументів = Config.Kernel.Conf.Enums["ТипПеріодуДляЖурналівДокументів"];
+
+                foreach (ConfigurationEnumField field in ТипПеріодуДляЖурналівДокументів.Fields.Values)
+                    сomboBox.Append(field.Name, field.Desc);
+            }
+
+            return сomboBox;
+        }
+
+        public static void ДодатиВідбірПоПеріоду(List&lt;Where&gt; Where, string fieldWhere, Перелічення.ТипПеріодуДляЖурналівДокументів типПеріоду)
+        {
+            switch (типПеріоду)
+            {
+                case Перелічення.ТипПеріодуДляЖурналівДокументів.ЗПочаткуРоку:
+                {
+                    Where.Add(new Where(fieldWhere, Comparison.QT_EQ, new DateTime(DateTime.Now.Year, 1, 1)));
+                    break;
+                }
+                case Перелічення.ТипПеріодуДляЖурналівДокументів.Квартал:
+                {
+                    DateTime ДатаТриМісцяНазад = DateTime.Now.AddMonths(-3);
+                    Where.Add(new Where(fieldWhere, Comparison.QT_EQ, new DateTime(ДатаТриМісцяНазад.Year, ДатаТриМісцяНазад.Month, 1)));
+                    break;
+                }
+                case Перелічення.ТипПеріодуДляЖурналівДокументів.ЗМинулогоМісяця:
+                {
+                    DateTime ДатаМісцьНазад = DateTime.Now.AddMonths(-1);
+                    Where.Add(new Where(fieldWhere, Comparison.QT_EQ, new DateTime(ДатаМісцьНазад.Year, ДатаМісцьНазад.Month, 1)));
+                    break;
+                }
+                case Перелічення.ТипПеріодуДляЖурналівДокументів.ЗПочаткуМісяця:
+                {
+                    Where.Add(new Where(fieldWhere, Comparison.QT_EQ, new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1)));
+                    break;
+                }
+                case Перелічення.ТипПеріодуДляЖурналівДокументів.ЗПочаткуТижня:
+                {
+                    DateTime СімДнівНазад = DateTime.Now.AddDays(-7);
+                    Where.Add(new Where(fieldWhere, Comparison.QT_EQ, new DateTime(СімДнівНазад.Year, СімДнівНазад.Month, СімДнівНазад.Day)));
+                    break;
+                }
+                case Перелічення.ТипПеріодуДляЖурналівДокументів.ПоточнийДень:
+                {
+                    Where.Add(new Where(fieldWhere, Comparison.QT_EQ, new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day)));
+                    break;
+                }
+            }
+        }
+    }
+
     <xsl:for-each select="Configuration/Documents/Document">
       <xsl:variable name="DocumentName" select="Name"/>
     #region DOCUMENT "<xsl:value-of select="$DocumentName"/>"
@@ -232,7 +302,13 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.Т
             </xsl:for-each>
         }
 
-        public static List&lt;Where&gt; Where { get; set; } = new List&lt;Where&gt;(); 
+        public static List&lt;Where&gt; Where { get; set; } = new List&lt;Where&gt;();
+
+        public static void ДодатиВідбірПоПеріоду(Перелічення.ТипПеріодуДляЖурналівДокументів типПеріоду)
+        {
+            Where.Clear();
+            Інтерфейс.ДодатиВідбірПоПеріоду(Where, Документи.<xsl:value-of select="$DocumentName"/>_Const.ДатаДок, типПеріоду);
+        }
 
         public static void LoadRecords()
         {
