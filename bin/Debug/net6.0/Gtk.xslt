@@ -232,6 +232,8 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.Т
             </xsl:for-each>
         }
 
+        public static List&lt;Where&gt; Where { get; set; } = new List&lt;Where&gt;(); 
+
         public static void LoadRecords()
         {
             Store.Clear();
@@ -248,6 +250,9 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.Т
                         <xsl:value-of select="Name"/> /* <xsl:value-of select="position()"/> */
                     </xsl:for-each>
                 });
+
+            /* Where */
+            <xsl:value-of select="$DocumentName"/>_Select.QuerySelect.Where = Where;
 
             <xsl:for-each select="Fields/Field[SortField = 'True' and Type != 'pointer']">
               /* ORDER */
