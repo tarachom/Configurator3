@@ -137,22 +137,22 @@ namespace Configurator
             VBox vBox = new VBox();
 
             List<string> helpList = new List<string>();
-            helpList.Add("\t\t Типи даних та їх відповідники в C#:");
-            helpList.Add("integer -> int \t Від -2,147,483,648 до 2,147,483,647");
-            helpList.Add("numeric -> decimal \t Число з комою");
-            helpList.Add("boolean -> bool \t true - false");
-            helpList.Add("date -> DateTime \t 01.01.2022");
-            helpList.Add("datetime -> DateTime  \t 01.01.2022 00:00:00");
-            helpList.Add("time -> TimeSpan  \t 00:00:00");
-            helpList.Add("enum -> enum  \t В базі зберігається як ціле число");
-            helpList.Add("pointer -> Довідник.Номенклатура() \t Вказівник");
+            helpList.Add("Типи даних та їх відповідники в C#:");
+            helpList.Add("integer -> int");
+            helpList.Add("numeric -> decimal");
+            helpList.Add("boolean -> bool");
+            helpList.Add("date -> DateTime");
+            helpList.Add("datetime -> DateTime");
+            helpList.Add("time -> TimeSpan");
+            helpList.Add("enum -> enum");
+            helpList.Add("pointer -> Довідник.Номенклатура()");
             helpList.Add("empty-pointer -> EmptyPointer()");
-            helpList.Add("any-pointer -> Guid() \t 291a4809-adf8-4d8a-8272-53d0ecac4898 ");
-            helpList.Add("composite-pointer -> UuidAndText() \t Guid + Текст");
-            helpList.Add("byte -> byte[] \t Масив байт");
-            helpList.Add("string[] \t Масив стрічок");
-            helpList.Add("integer[] -> int[] \t Масив цілих чисел");
-            helpList.Add("numeric[] -> decimal[] \t Масив чисел з комою");
+            helpList.Add("any-pointer -> Guid()");
+            helpList.Add("composite-pointer -> UuidAndText()");
+            helpList.Add("byte -> byte[]");
+            helpList.Add("string[] -> string[]");
+            helpList.Add("integer[] -> int[]");
+            helpList.Add("numeric[] -> decimal[]");
 
             foreach (var item in helpList)
             {

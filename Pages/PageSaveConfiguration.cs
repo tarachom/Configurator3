@@ -203,9 +203,6 @@ namespace Configurator
                 delegate
                 {
                     textTerminal.Buffer.InsertAtCursor(text + "\n");
-                    // TextMark end = textTerminal.Buffer.CreateMark("end", textTerminal.Buffer.GetIterAtLine(textTerminal.Buffer.LineCount), false);
-                    // textTerminal.ScrollToMark(end, 0, true, 0, 0);
-                    // textTerminal.Buffer.DeleteMark(end);
                 }
             );
         }

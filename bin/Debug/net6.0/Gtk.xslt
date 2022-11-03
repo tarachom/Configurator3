@@ -96,7 +96,12 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники.Т
             </xsl:for-each>
         }
 
-        public static List&lt;Where&gt; Where { get; set; } = new List&lt;Where&gt;(); 
+        public static List&lt;Where&gt; Where { get; set; } = new List&lt;Where&gt;();
+
+        public static Довідники.<xsl:value-of select="$DirectoryName"/>_Pointer? DirectoryPointerItem { get; set; }
+        public static Довідники.<xsl:value-of select="$DirectoryName"/>_Pointer? SelectPointerItem { get; set; }
+        public static TreePath? SelectPath;
+        public static TreePath? CurrentPath;
 
         public static void LoadRecords()
         {
@@ -145,7 +150,8 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники.Т
                 Довідники.<xsl:value-of select="$DirectoryName"/>_Pointer? cur = <xsl:value-of select="$DirectoryName"/>_Select.Current;
 
                 if (cur != null)
-                    Store.AppendValues(new <xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularListName"/>
+                {
+                    <xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularListName"/> Record = new <xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularListName"/>
                     {
                         ID = cur.UnigueID.ToString(),
                         <xsl:variable name="CountPointer" select="count(Fields/Field[Type = 'pointer'])"/>
@@ -185,7 +191,19 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники.Т
                           </xsl:choose>
                           <xsl:if test="position() != $CountNotPointer">,</xsl:if> /**/
                         </xsl:for-each>
-                    }.ToArray());
+                    };
+
+                    TreeIter CurrentIter = Store.AppendValues(Record.ToArray());
+                    CurrentPath = Store.GetPath(CurrentIter);
+
+                    if (DirectoryPointerItem != null || SelectPointerItem != null)
+                    {
+                        string UidSelect = SelectPointerItem != null ? SelectPointerItem.UnigueID.ToString() : DirectoryPointerItem!.UnigueID.ToString();
+
+                        if (Record.ID == UidSelect)
+                            SelectPath = CurrentPath;
+                    }
+                }
             }
         }
     }
@@ -310,6 +328,11 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.Т
             Інтерфейс.ДодатиВідбірПоПеріоду(Where, Документи.<xsl:value-of select="$DocumentName"/>_Const.ДатаДок, типПеріоду);
         }
 
+        public static Документи.<xsl:value-of select="$DocumentName"/>_Pointer? DocumentPointerItem { get; set; }
+        public static Документи.<xsl:value-of select="$DocumentName"/>_Pointer? SelectPointerItem { get; set; }
+        public static TreePath? SelectPath;
+        public static TreePath? CurrentPath;
+
         public static void LoadRecords()
         {
             Store.Clear();
@@ -357,7 +380,8 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.Т
                 Документи.<xsl:value-of select="$DocumentName"/>_Pointer? cur = <xsl:value-of select="$DocumentName"/>_Select.Current;
 
                 if (cur != null)
-                    Store.AppendValues(new <xsl:value-of select="$DocumentName"/>_<xsl:value-of select="$TabularListName"/>
+                {
+                    <xsl:value-of select="$DocumentName"/>_<xsl:value-of select="$TabularListName"/> Record = new <xsl:value-of select="$DocumentName"/>_<xsl:value-of select="$TabularListName"/>
                     {
                         ID = cur.UnigueID.ToString(),
                         Spend = (bool)cur.Fields?["spend"]!, /*Проведений документ*/
@@ -398,7 +422,19 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.Т
                           </xsl:choose>
                           <xsl:if test="position() != $CountNotPointer">,</xsl:if> /**/
                         </xsl:for-each>
-                    }.ToArray());
+                    };
+
+                    TreeIter CurrentIter = Store.AppendValues(Record.ToArray());
+                    CurrentPath = Store.GetPath(CurrentIter);
+
+                    if (DocumentPointerItem != null || SelectPointerItem != null)
+                    {
+                        string UidSelect = SelectPointerItem != null ? SelectPointerItem.UnigueID.ToString() : DocumentPointerItem!.UnigueID.ToString();
+
+                        if (Record.ID == UidSelect)
+                            SelectPath = CurrentPath;
+                    }
+                }
             }
         }
     }
