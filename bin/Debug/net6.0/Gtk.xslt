@@ -106,6 +106,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники.Т
         public static void LoadRecords()
         {
             Store.Clear();
+            SelectPath = null;
 
             Довідники.<xsl:value-of select="$DirectoryName"/>_Select <xsl:value-of select="$DirectoryName"/>_Select = new Довідники.<xsl:value-of select="$DirectoryName"/>_Select();
             <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Field.AddRange(

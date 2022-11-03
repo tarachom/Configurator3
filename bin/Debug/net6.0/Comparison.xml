@@ -3157,6 +3157,19 @@
         <Coincide>yes</Coincide>
       </Type>
     </Control_Field>
+    <Control_Field>
+      <Name>Холдинг</Name>
+      <NameInTable>col_a9</NameInTable>
+      <Index>0</Index>
+      <IndexExist />
+      <IsExist>yes</IsExist>
+      <Type>
+        <ConfType>pointer</ConfType>
+        <DataType>uuid</DataType>
+        <UdtName>uuid</UdtName>
+        <Coincide>yes</Coincide>
+      </Type>
+    </Control_Field>
     <Control_TabularParts>
       <Name>Контакти</Name>
       <Table>tab_a02</Table>
