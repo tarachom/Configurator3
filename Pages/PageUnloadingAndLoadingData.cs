@@ -654,6 +654,7 @@ namespace Configurator
         public bool ExecuteSqlList(string fileStepSQL)
         {
             int counter = 0;
+            int iter = 0;
 
             XPathDocument xPathDoc = new XPathDocument(fileStepSQL);
             XPathNavigator xPathDocNavigator = xPathDoc.CreateNavigator();
@@ -765,7 +766,13 @@ namespace Configurator
 
                 int result = Program.Kernel!.DataBase.ExecuteSQL(sqlText, param);
 
-                ApendInfo(".");
+                if (iter > 100)
+                {
+                    ApendInfo(".");
+                    iter = 0;
+
+                    counter++;
+                }
 
                 if (counter > 300)
                 {
@@ -773,7 +780,7 @@ namespace Configurator
                     counter = 0;
                 }
 
-                counter++;
+                iter++;
             }
 
             return true;
