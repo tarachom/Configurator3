@@ -337,6 +337,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.Т
         public static void LoadRecords()
         {
             Store.Clear();
+            SelectPath = null;
 
             Документи.<xsl:value-of select="$DocumentName"/>_Select <xsl:value-of select="$DocumentName"/>_Select = new Документи.<xsl:value-of select="$DocumentName"/>_Select();
             <xsl:value-of select="$DocumentName"/>_Select.QuerySelect.Field.AddRange(
