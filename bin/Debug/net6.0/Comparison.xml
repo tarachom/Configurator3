@@ -3865,14 +3865,13 @@
         <NameInTable>col_a1</NameInTable>
         <Index>0</Index>
         <IndexExist />
-        <IsExist>no</IsExist>
-        <FieldCreate>
-          <Name>Значення</Name>
-          <NameInTable>col_a1</NameInTable>
+        <IsExist>yes</IsExist>
+        <Type>
           <ConfType>string</ConfType>
           <DataType>text</DataType>
-          <Index>0</Index>
-        </FieldCreate>
+          <UdtName>text</UdtName>
+          <Coincide>yes</Coincide>
+        </Type>
       </Control_Field>
     </Control_TabularParts>
     <Control_TabularParts>
@@ -4086,6 +4085,20 @@
           <UdtName>text</UdtName>
           <Coincide>yes</Coincide>
         </Type>
+      </Control_Field>
+      <Control_Field>
+        <Name>Значення</Name>
+        <NameInTable>col_a1</NameInTable>
+        <Index>0</Index>
+        <IndexExist />
+        <IsExist>no</IsExist>
+        <FieldCreate>
+          <Name>Значення</Name>
+          <NameInTable>col_a1</NameInTable>
+          <ConfType>string</ConfType>
+          <DataType>text</DataType>
+          <Index>0</Index>
+        </FieldCreate>
       </Control_Field>
     </Control_TabularParts>
   </Control_Table>

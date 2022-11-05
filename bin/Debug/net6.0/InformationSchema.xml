@@ -51,6 +51,11 @@
   <Table>
     <Name>tab_a95</Name>
     <Column>
+      <Name>col_b5</Name>
+      <DataType>numeric</DataType>
+      <UdtName>numeric</UdtName>
+    </Column>
+    <Column>
       <Name>col_a2</Name>
       <DataType>numeric</DataType>
       <UdtName>numeric</UdtName>
@@ -97,11 +102,6 @@
     </Column>
     <Column>
       <Name>col_b4</Name>
-      <DataType>numeric</DataType>
-      <UdtName>numeric</UdtName>
-    </Column>
-    <Column>
-      <Name>col_b5</Name>
       <DataType>numeric</DataType>
       <UdtName>numeric</UdtName>
     </Column>
@@ -2234,6 +2234,65 @@
     </Index>
   </Table>
   <Table>
+    <Name>tab_a09</Name>
+    <Column>
+      <Name>uid</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>owner</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>col_d2</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_d8</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_d7</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_d3</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_d5</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_d4</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_d6</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a1</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Index>
+      <Name>tab_a09_pkey</Name>
+    </Index>
+    <Index>
+      <Name>tab_a09_owner_idx</Name>
+    </Index>
+  </Table>
+  <Table>
     <Name>tab_a03</Name>
     <Column>
       <Name>uid</Name>
@@ -2469,60 +2528,6 @@
     </Index>
     <Index>
       <Name>tab_a08_col_a1_idx</Name>
-    </Index>
-  </Table>
-  <Table>
-    <Name>tab_a09</Name>
-    <Column>
-      <Name>uid</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
-    </Column>
-    <Column>
-      <Name>owner</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
-    </Column>
-    <Column>
-      <Name>col_d2</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_d8</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
-      <Name>col_d7</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
-      <Name>col_d3</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
-      <Name>col_d5</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
-      <Name>col_d4</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
-      <Name>col_d6</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Index>
-      <Name>tab_a09_pkey</Name>
-    </Index>
-    <Index>
-      <Name>tab_a09_owner_idx</Name>
     </Index>
   </Table>
   <Table>

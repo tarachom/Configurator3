@@ -136,6 +136,9 @@ namespace Configurator
         {
             VBox vBox = new VBox();
 
+            Expander expanderHelp = new Expander("Довідка");
+            expanderHelp.Add(vBox);
+
             List<string> helpList = new List<string>();
             helpList.Add("Типи даних та їх відповідники в C#:");
             helpList.Add("integer -> int");
@@ -161,7 +164,7 @@ namespace Configurator
                 hBox.PackStart(new Label(item), false, false, 5);
             }
 
-            hPaned.Pack2(vBox, false, false);
+            hPaned.Pack2(expanderHelp, false, false);
         }
 
         #region Присвоєння / зчитування значень віджетів

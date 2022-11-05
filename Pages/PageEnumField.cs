@@ -88,12 +88,15 @@ namespace Configurator
         {
             VBox vBox = new VBox();
 
+            Expander expanderHelp = new Expander("Довідка");
+            expanderHelp.Add(vBox);
+
             HBox hBox = new HBox() { Halign = Align.Fill };
             vBox.PackStart(hBox, false, false, 5);
 
-            hBox.PackStart(new Label("help"), false, false, 5);
+            hBox.PackStart(new Label("В базі даних перелічення зберігається як ціле число"), false, false, 5);
 
-            hPaned.Pack2(vBox, false, false);
+            hPaned.Pack2(expanderHelp, false, false);
         }
 
         #region Присвоєння / зчитування значень віджетів
@@ -122,7 +125,7 @@ namespace Configurator
 
             if (errorList.Length > 0)
             {
-                Message.Error(GeneralForm,$"{errorList}");
+                Message.Error(GeneralForm, $"{errorList}");
                 return;
             }
 
@@ -130,7 +133,7 @@ namespace Configurator
             {
                 if (Fields.ContainsKey(entryName.Text))
                 {
-                    Message.Error(GeneralForm,$"Назва поля не унікальна");
+                    Message.Error(GeneralForm, $"Назва поля не унікальна");
                     return;
                 }
             }
@@ -140,7 +143,7 @@ namespace Configurator
                 {
                     if (Fields.ContainsKey(entryName.Text))
                     {
-                        Message.Error(GeneralForm,$"Назва поля не унікальна");
+                        Message.Error(GeneralForm, $"Назва поля не унікальна");
                         return;
                     }
                 }
