@@ -258,23 +258,22 @@ namespace Configurator
             TabularList.Fields.Clear();
 
             TreeIter iter;
-            listStore.GetIterFirst(out iter);
-
-            do
-            {
-                if ((bool)listStore.GetValue(iter, 0))
+            if (listStore.GetIterFirst(out iter))
+                do
                 {
-                    string name = (string)listStore.GetValue(iter, 1);
-                    string caption = (string)listStore.GetValue(iter, 2);
-                    uint size = (uint)listStore.GetValue(iter, 3);
-                    int sortNum = (int)listStore.GetValue(iter, 4);
-                    bool sortField = (bool)listStore.GetValue(iter, 5);
+                    if ((bool)listStore.GetValue(iter, 0))
+                    {
+                        string name = (string)listStore.GetValue(iter, 1);
+                        string caption = (string)listStore.GetValue(iter, 2);
+                        uint size = (uint)listStore.GetValue(iter, 3);
+                        int sortNum = (int)listStore.GetValue(iter, 4);
+                        bool sortField = (bool)listStore.GetValue(iter, 5);
 
-                    ConfigurationObjectField field = Fields[name];
-                    TabularList.AppendField(new ConfigurationTabularListField(field.Name, caption, size, sortNum, sortField));
+                        ConfigurationObjectField field = Fields[name];
+                        TabularList.AppendField(new ConfigurationTabularListField(field.Name, caption, size, sortNum, sortField));
+                    }
                 }
-            }
-            while (listStore.IterNext(ref iter));
+                while (listStore.IterNext(ref iter));
         }
 
         #endregion
