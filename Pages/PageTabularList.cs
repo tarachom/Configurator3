@@ -21,6 +21,8 @@ namespace Configurator
         public System.Action? CallBack_RefreshList { get; set; }
         public bool IsNew { get; set; } = true;
 
+        #region Fields
+
         ListStore listStore = new ListStore(
             typeof(bool),   //Visible
             typeof(string), //Name
@@ -33,6 +35,8 @@ namespace Configurator
         TreeView treeViewFields;
         Entry entryName = new Entry() { WidthRequest = 250 };
         TextView textViewDesc = new TextView();
+
+        #endregion
 
         public PageTabularList() : base()
         {
@@ -140,31 +144,7 @@ namespace Configurator
             treeViewFields.AppendColumn(new TreeViewColumn("Сортувати", sortField, "active", 5));
 
             treeViewFields.AppendColumn(new TreeViewColumn("Тип", new CellRendererText(), "text", 6));
-
-            // ListStore liststore_manufacturers = new ListStore(typeof(string));
-            // var manufacturers = new List<string> { "Sony", "LG", "Panasonic", "Toshiba", "Nokia", "Samsung" };
-            // foreach (var item in manufacturers)
-            // {
-            //     liststore_manufacturers.AppendValues(item);
-            // }
-
-            // CellRendererCombo rendererCombo = new CellRendererCombo();
-            // rendererCombo.Editable = true;
-            // rendererCombo.Model = liststore_manufacturers;
-            // rendererCombo.TextColumn = 0;
-            // rendererCombo.Edited += new EditedHandler(ComboChanged);
-
-            // treeViewFields.AppendColumn(new TreeViewColumn("Поле", rendererCombo, "text", 3));
         }
-
-        // void ComboChanged(object o, EditedArgs args)
-        // {
-        //     Gtk.TreeIter iter;
-        //     if (listStore.GetIterFromString(out iter, args.Path))
-        //     {
-        //         listStore.SetValue(iter, 3, args.NewText);
-        //     }
-        // }
 
         private void EditedVisible(object o, ToggledArgs args)
         {
@@ -318,7 +298,6 @@ namespace Configurator
 
             IsNew = false;
 
-            //GeneralForm?.LoadTreeAsync();
             GeneralForm?.RenameCurrentPageNotebook($"Табличний список: {TabularList.Name}");
 
             if (CallBack_RefreshList != null)

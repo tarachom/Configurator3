@@ -18,6 +18,8 @@ namespace Configurator
         public FormConfigurator? GeneralForm { get; set; }
         public bool IsNew { get; set; } = true;
 
+        #region Fields
+
         ListBox listBoxAllowDocumentSpend = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxDimensionFields = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxResourcesFields = new ListBox() { SelectionMode = SelectionMode.Single };
@@ -26,6 +28,8 @@ namespace Configurator
         Entry entryTable = new Entry() { WidthRequest = 500 };
         TextView textViewDesc = new TextView();
         ComboBoxText comboBoxTypeReg = new ComboBoxText();
+
+        #endregion
 
         public PageRegistersAccumulation() : base()
         {

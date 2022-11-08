@@ -18,8 +18,12 @@ namespace Configurator
         public FormConfigurator? GeneralForm { get; set; }
         public bool IsNew { get; set; } = true;
 
+        #region Fields
+
         Entry entryName = new Entry() { WidthRequest = 500 };
         TextView textViewDesc = new TextView();
+
+        #endregion
 
         public PageConstantBlock() : base()
         {

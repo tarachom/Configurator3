@@ -40,13 +40,6 @@ limitations under the License.
 using Gtk;
 using AccountingSoftware;
 
-/*
-namespace <xsl:value-of select="Configuration/NameSpace"/>.ТабличніСписки
-{
-    //
-}
-*/
-
 namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники.ТабличніСписки
 {
     <xsl:for-each select="Configuration/Directories/Directory">
@@ -57,7 +50,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники.Т
         <xsl:variable name="TabularListName" select="Name"/>
     public class <xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularListName"/>
     {
-        string Image = "doc.png";
+        string Image = "images/doc.png";
         string ID = "";
         <xsl:for-each select="Fields/Field">
         string <xsl:value-of select="Name"/> = "";</xsl:for-each>
@@ -281,7 +274,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.Т
         <xsl:variable name="TabularListName" select="Name"/>
     public class <xsl:value-of select="$DocumentName"/>_<xsl:value-of select="$TabularListName"/>
     {
-        string Image = "doc.png";
+        string Image = "images/doc.png";
         bool Spend = false;
         string ID = "";
         <xsl:for-each select="Fields/Field">

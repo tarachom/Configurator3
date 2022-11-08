@@ -18,12 +18,16 @@ namespace Configurator
         public FormConfigurator? GeneralForm { get; set; }
         public bool IsNew { get; set; } = true;
 
+        #region Fields
+
         ListBox listBoxDimensionFields = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxResourcesFields = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxPropertyFields = new ListBox() { SelectionMode = SelectionMode.Single };
         Entry entryName = new Entry() { WidthRequest = 500 };
         Entry entryTable = new Entry() { WidthRequest = 500 };
         TextView textViewDesc = new TextView();
+
+        #endregion
 
         public PageRegisterInformation() : base()
         {
@@ -282,7 +286,7 @@ namespace Configurator
 
             if (errorList.Length > 0)
             {
-                Message.Error(GeneralForm,$"{errorList}");
+                Message.Error(GeneralForm, $"{errorList}");
                 return;
             }
 
@@ -290,7 +294,7 @@ namespace Configurator
             {
                 if (Conf!.RegistersInformation.ContainsKey(entryName.Text))
                 {
-                    Message.Error(GeneralForm,$"Назва регістру не унікальна");
+                    Message.Error(GeneralForm, $"Назва регістру не унікальна");
                     return;
                 }
             }
@@ -300,7 +304,7 @@ namespace Configurator
                 {
                     if (Conf!.RegistersInformation.ContainsKey(entryName.Text))
                     {
-                        Message.Error(GeneralForm,$"Назва регістру не унікальна");
+                        Message.Error(GeneralForm, $"Назва регістру не унікальна");
                         return;
                     }
                 }

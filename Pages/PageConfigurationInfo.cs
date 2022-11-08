@@ -15,10 +15,15 @@ namespace Configurator
         }
 
         public FormConfigurator? GeneralForm { get; set; }
+
+        #region Fields
+        
         Entry entryName = new Entry() { WidthRequest = 500 };
         Entry entryNameSpace = new Entry() { WidthRequest = 500 };
         Entry entryAutor = new Entry() { WidthRequest = 500 };
         TextView textViewDesc = new TextView();
+
+        #endregion
 
         public PageConfigurationInfo() : base()
         {

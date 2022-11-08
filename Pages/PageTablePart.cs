@@ -20,10 +20,14 @@ namespace Configurator
         public System.Action? CallBack_RefreshList { get; set; }
         public bool IsNew { get; set; } = true;
 
+        #region Fields
+
         ListBox listBoxFields = new ListBox() { SelectionMode = SelectionMode.Single };
         Entry entryName = new Entry() { WidthRequest = 500 };
         Entry entryTable = new Entry() { WidthRequest = 500 };
         TextView textViewDesc = new TextView();
+
+        #endregion
 
         public PageTablePart() : base()
         {
@@ -165,7 +169,7 @@ namespace Configurator
 
             if (errorList.Length > 0)
             {
-                Message.Error(GeneralForm,$"{errorList}");
+                Message.Error(GeneralForm, $"{errorList}");
                 return;
             }
 
@@ -173,7 +177,7 @@ namespace Configurator
             {
                 if (TabularParts.ContainsKey(entryName.Text))
                 {
-                    Message.Error(GeneralForm,$"Назва табличної частини не унікальна");
+                    Message.Error(GeneralForm, $"Назва табличної частини не унікальна");
                     return;
                 }
             }
@@ -183,7 +187,7 @@ namespace Configurator
                 {
                     if (TabularParts.ContainsKey(entryName.Text))
                     {
-                        Message.Error(GeneralForm,$"Назва табличної частини не унікальна");
+                        Message.Error(GeneralForm, $"Назва табличної частини не унікальна");
                         return;
                     }
                 }

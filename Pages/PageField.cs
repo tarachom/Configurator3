@@ -22,6 +22,8 @@ namespace Configurator
         public System.Action? CallBack_RefreshList { get; set; }
         public bool IsNew { get; set; } = true;
 
+        #region Fields
+
         Entry entryName = new Entry() { WidthRequest = 500 };
         Entry entryColumn = new Entry() { WidthRequest = 500 };
         TextView textViewDesc = new TextView();
@@ -30,6 +32,8 @@ namespace Configurator
         ComboBoxText comboBoxEnum = new ComboBoxText();
         CheckButton checkButtonIndex = new CheckButton("Індексувати");
         CheckButton checkButtonPresentation = new CheckButton("Використовувати для представлення");
+
+        #endregion
 
         public PageField() : base()
         {

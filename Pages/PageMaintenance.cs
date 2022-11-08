@@ -17,12 +17,16 @@ namespace Configurator
         public FormConfigurator? GeneralForm { get; set; }
         CancellationTokenSource? CancellationTokenThread { get; set; }
 
+        #region Fields
+
         Button bOk;
         Button bStop;
         Button bClose;
 
         ScrolledWindow scrollListBoxTerminal;
         TextView textTerminal;
+
+        #endregion
 
         public PageMaintenance() : base()
         {

@@ -18,6 +18,8 @@ namespace Configurator
         public FormConfigurator? GeneralForm { get; set; }
         public bool IsNew { get; set; } = true;
 
+        #region Fields
+
         ListBox listBoxFields = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxTableParts = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxTabularList = new ListBox() { SelectionMode = SelectionMode.Single };
@@ -31,6 +33,8 @@ namespace Configurator
         Entry entryAfterSave = new Entry() { WidthRequest = 500 };
         Entry entryBeforeDelete = new Entry() { WidthRequest = 500 };
         TextView textViewDesc = new TextView();
+
+        #endregion
 
         public PageDocument() : base()
         {

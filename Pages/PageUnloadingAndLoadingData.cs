@@ -23,6 +23,8 @@ namespace Configurator
         string PathToXsltTemplate = AppContext.BaseDirectory;
         CancellationTokenSource? CancellationTokenThread { get; set; }
 
+        #region Fields
+
         Button bUnloading;
         Button bLoading;
         Button bStop;
@@ -30,6 +32,8 @@ namespace Configurator
 
         ScrolledWindow scrollListBoxTerminal;
         TextView textTerminal;
+
+        #endregion
 
         public PageUnloadingAndLoadingData() : base()
         {

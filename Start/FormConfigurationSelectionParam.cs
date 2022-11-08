@@ -6,12 +6,17 @@ namespace Configurator
 {
     class FormConfigurationSelectionParam : Window
     {
+
+        #region Fields
+
         Entry ConfName = new Entry();
         Entry Server = new Entry();
         Entry Port = new Entry();
         Entry Login = new Entry();
         Entry Password = new Entry();
         Entry Basename = new Entry();
+
+        #endregion
 
         public FormConfigurationSelectionParam() : base("Параметри підключення PostgreSQL")
         {

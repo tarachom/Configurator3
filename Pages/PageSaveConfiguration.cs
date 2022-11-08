@@ -20,6 +20,8 @@ namespace Configurator
 
         string PathToXsltTemplate = AppContext.BaseDirectory;
 
+        #region Fields
+
         CheckButton checkButtonIsGenerate = new CheckButton("Генерувати код");
         Entry entryGenerateCodePath = new Entry() { WidthRequest = 300 };
         Button bSaveParam;
@@ -31,6 +33,8 @@ namespace Configurator
 
         ScrolledWindow scrollListBoxTerminal;
         TextView textTerminal;
+
+        #endregion
 
         public PageSaveConfiguration() : base()
         {

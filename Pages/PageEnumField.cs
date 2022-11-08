@@ -20,9 +20,13 @@ namespace Configurator
         public System.Action? CallBack_RefreshList { get; set; }
         public bool IsNew { get; set; } = true;
 
+        #region Fields
+
         Entry entryName = new Entry() { WidthRequest = 500 };
         Entry entryValue = new Entry() { WidthRequest = 500, Sensitive = false };
         TextView textViewDesc = new TextView();
+
+        #endregion
 
         public PageEnumField() : base()
         {

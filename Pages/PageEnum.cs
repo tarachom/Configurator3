@@ -18,9 +18,13 @@ namespace Configurator
         public FormConfigurator? GeneralForm { get; set; }
         public bool IsNew { get; set; } = true;
 
+        #region Fields
+
         ListBox listBoxFields = new ListBox() { SelectionMode = SelectionMode.Single };
         Entry entryName = new Entry() { WidthRequest = 500 };
         TextView textViewDesc = new TextView();
+
+        #endregion
 
         public PageEnum() : base()
         {
@@ -159,7 +163,7 @@ namespace Configurator
 
             if (errorList.Length > 0)
             {
-                Message.Error(GeneralForm,$"{errorList}");
+                Message.Error(GeneralForm, $"{errorList}");
                 return;
             }
 
@@ -169,7 +173,7 @@ namespace Configurator
             {
                 if (Conf!.Enums.ContainsKey(entryName.Text))
                 {
-                    Message.Error(GeneralForm,$"Назва перелічення не унікальна");
+                    Message.Error(GeneralForm, $"Назва перелічення не унікальна");
                     return;
                 }
             }
@@ -179,7 +183,7 @@ namespace Configurator
                 {
                     if (Conf!.Directories.ContainsKey(entryName.Text))
                     {
-                        Message.Error(GeneralForm,$"Назва перелічення не унікальна");
+                        Message.Error(GeneralForm, $"Назва перелічення не унікальна");
                         return;
                     }
                 }

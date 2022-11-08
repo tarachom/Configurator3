@@ -18,6 +18,8 @@ namespace Configurator
         public FormConfigurator? GeneralForm { get; set; }
         public bool IsNew { get; set; } = true;
 
+        #region Fields
+
         ListBox listBoxTableParts = new ListBox() { SelectionMode = SelectionMode.Single };
         Entry entryName = new Entry() { WidthRequest = 500 };
         Entry entryColumn = new Entry() { WidthRequest = 500 };
@@ -26,6 +28,8 @@ namespace Configurator
         ComboBoxText comboBoxType = new ComboBoxText();
         ComboBoxText comboBoxPointer = new ComboBoxText();
         ComboBoxText comboBoxEnum = new ComboBoxText();
+
+        #endregion
 
         public PageConstant() : base()
         {
