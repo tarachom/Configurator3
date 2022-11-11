@@ -10856,19 +10856,6 @@
       </Type>
     </Control_Field>
     <Control_Field>
-      <Name>ПартіяТоварівКомпозит</Name>
-      <NameInTable>col_a2</NameInTable>
-      <Index>0</Index>
-      <IndexExist />
-      <IsExist>yes</IsExist>
-      <Type>
-        <ConfType>pointer</ConfType>
-        <DataType>uuid</DataType>
-        <UdtName>uuid</UdtName>
-        <Coincide>yes</Coincide>
-      </Type>
-    </Control_Field>
-    <Control_Field>
       <Name>Автор</Name>
       <NameInTable>col_a3</NameInTable>
       <Index>0</Index>

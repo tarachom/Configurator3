@@ -1567,11 +1567,6 @@
       <UdtName>bool</UdtName>
     </Column>
     <Column>
-      <Name>col_b1</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
       <Name>col_b3</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
@@ -1633,6 +1628,11 @@
     </Column>
     <Column>
       <Name>col_g7</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_b1</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
@@ -6773,11 +6773,6 @@
       <Name>col_a1</Name>
       <DataType>integer</DataType>
       <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a2</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
     </Column>
     <Column>
       <Name>col_a3</Name>
