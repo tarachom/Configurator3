@@ -201,6 +201,32 @@
       </Type>
     </Control_Field>
     <Control_Field>
+      <Name>ВестиОблікПоСеріяхНоменклатури</Name>
+      <NameInTable>col_h9</NameInTable>
+      <Index></Index>
+      <IndexExist />
+      <IsExist>yes</IsExist>
+      <Type>
+        <ConfType>boolean</ConfType>
+        <DataType>boolean</DataType>
+        <UdtName>bool</UdtName>
+        <Coincide>yes</Coincide>
+      </Type>
+    </Control_Field>
+    <Control_Field>
+      <Name>ВестиОблікПоХарактеристикахНоменклатури</Name>
+      <NameInTable>col_i1</NameInTable>
+      <Index></Index>
+      <IndexExist />
+      <IsExist>yes</IsExist>
+      <Type>
+        <ConfType>boolean</ConfType>
+        <DataType>boolean</DataType>
+        <UdtName>bool</UdtName>
+        <Coincide>yes</Coincide>
+      </Type>
+    </Control_Field>
+    <Control_Field>
       <Name>ЗамовленняКлієнтів</Name>
       <NameInTable>col_b1</NameInTable>
       <Index></Index>
@@ -6810,7 +6836,7 @@
       </Type>
     </Control_Field>
     <Control_Field>
-      <Name>БанківськийрахунокОрганізації</Name>
+      <Name>БанківськийРахунокОрганізації</Name>
       <NameInTable>col_b5</NameInTable>
       <Index>0</Index>
       <IndexExist />
@@ -6849,7 +6875,7 @@
       </Type>
     </Control_Field>
     <Control_Field>
-      <Name>БанківськийрахунокКонтрагента</Name>
+      <Name>БанківськийРахунокКонтрагента</Name>
       <NameInTable>col_b8</NameInTable>
       <Index>0</Index>
       <IndexExist />
@@ -6888,7 +6914,7 @@
       </Type>
     </Control_Field>
     <Control_Field>
-      <Name>ВернутиТару</Name>
+      <Name>ПовернутиТару</Name>
       <NameInTable>col_c2</NameInTable>
       <Index>0</Index>
       <IndexExist />
@@ -7601,6 +7627,19 @@
         <Coincide>yes</Coincide>
       </Type>
     </Control_Field>
+    <Control_Field>
+      <Name>Менеджер</Name>
+      <NameInTable>col_b2</NameInTable>
+      <Index>0</Index>
+      <IndexExist />
+      <IsExist>yes</IsExist>
+      <Type>
+        <ConfType>pointer</ConfType>
+        <DataType>uuid</DataType>
+        <UdtName>uuid</UdtName>
+        <Coincide>yes</Coincide>
+      </Type>
+    </Control_Field>
     <Control_TabularParts>
       <Name>Товари</Name>
       <Table>tab_a35</Table>
@@ -8146,6 +8185,19 @@
         <Coincide>yes</Coincide>
       </Type>
     </Control_Field>
+    <Control_Field>
+      <Name>Менеджер</Name>
+      <NameInTable>col_c9</NameInTable>
+      <Index>0</Index>
+      <IndexExist />
+      <IsExist>yes</IsExist>
+      <Type>
+        <ConfType>pointer</ConfType>
+        <DataType>uuid</DataType>
+        <UdtName>uuid</UdtName>
+        <Coincide>yes</Coincide>
+      </Type>
+    </Control_Field>
     <Control_TabularParts>
       <Name>Товари</Name>
       <Table>tab_a37</Table>
@@ -8428,6 +8480,19 @@
         <ConfType>string</ConfType>
         <DataType>text</DataType>
         <UdtName>text</UdtName>
+        <Coincide>yes</Coincide>
+      </Type>
+    </Control_Field>
+    <Control_Field>
+      <Name>Автор</Name>
+      <NameInTable>col_a4</NameInTable>
+      <Index>0</Index>
+      <IndexExist />
+      <IsExist>yes</IsExist>
+      <Type>
+        <ConfType>pointer</ConfType>
+        <DataType>uuid</DataType>
+        <UdtName>uuid</UdtName>
         <Coincide>yes</Coincide>
       </Type>
     </Control_Field>
@@ -8726,6 +8791,19 @@
         <ConfType>string</ConfType>
         <DataType>text</DataType>
         <UdtName>text</UdtName>
+        <Coincide>yes</Coincide>
+      </Type>
+    </Control_Field>
+    <Control_Field>
+      <Name>Автор</Name>
+      <NameInTable>col_a5</NameInTable>
+      <Index>0</Index>
+      <IndexExist />
+      <IsExist>yes</IsExist>
+      <Type>
+        <ConfType>pointer</ConfType>
+        <DataType>uuid</DataType>
+        <UdtName>uuid</UdtName>
         <Coincide>yes</Coincide>
       </Type>
     </Control_Field>
@@ -9050,6 +9128,19 @@
         <ConfType>string</ConfType>
         <DataType>text</DataType>
         <UdtName>text</UdtName>
+        <Coincide>yes</Coincide>
+      </Type>
+    </Control_Field>
+    <Control_Field>
+      <Name>Автор</Name>
+      <NameInTable>col_a6</NameInTable>
+      <Index>0</Index>
+      <IndexExist />
+      <IsExist>yes</IsExist>
+      <Type>
+        <ConfType>pointer</ConfType>
+        <DataType>uuid</DataType>
+        <UdtName>uuid</UdtName>
         <Coincide>yes</Coincide>
       </Type>
     </Control_Field>
@@ -9387,6 +9478,19 @@
         <ConfType>string</ConfType>
         <DataType>text</DataType>
         <UdtName>text</UdtName>
+        <Coincide>yes</Coincide>
+      </Type>
+    </Control_Field>
+    <Control_Field>
+      <Name>Автор</Name>
+      <NameInTable>col_a1</NameInTable>
+      <Index>0</Index>
+      <IndexExist />
+      <IsExist>yes</IsExist>
+      <Type>
+        <ConfType>pointer</ConfType>
+        <DataType>uuid</DataType>
+        <UdtName>uuid</UdtName>
         <Coincide>yes</Coincide>
       </Type>
     </Control_Field>
@@ -9753,6 +9857,32 @@
         <Coincide>yes</Coincide>
       </Type>
     </Control_Field>
+    <Control_Field>
+      <Name>Автор</Name>
+      <NameInTable>col_a3</NameInTable>
+      <Index>0</Index>
+      <IndexExist />
+      <IsExist>yes</IsExist>
+      <Type>
+        <ConfType>pointer</ConfType>
+        <DataType>uuid</DataType>
+        <UdtName>uuid</UdtName>
+        <Coincide>yes</Coincide>
+      </Type>
+    </Control_Field>
+    <Control_Field>
+      <Name>Менеджер</Name>
+      <NameInTable>col_a4</NameInTable>
+      <Index>0</Index>
+      <IndexExist />
+      <IsExist>yes</IsExist>
+      <Type>
+        <ConfType>pointer</ConfType>
+        <DataType>uuid</DataType>
+        <UdtName>uuid</UdtName>
+        <Coincide>yes</Coincide>
+      </Type>
+    </Control_Field>
     <Control_TabularParts>
       <Name>Товари</Name>
       <Table>tab_a52</Table>
@@ -10116,6 +10246,19 @@
         <Coincide>yes</Coincide>
       </Type>
     </Control_Field>
+    <Control_Field>
+      <Name>Автор</Name>
+      <NameInTable>col_a3</NameInTable>
+      <Index>0</Index>
+      <IndexExist />
+      <IsExist>yes</IsExist>
+      <Type>
+        <ConfType>pointer</ConfType>
+        <DataType>uuid</DataType>
+        <UdtName>uuid</UdtName>
+        <Coincide>yes</Coincide>
+      </Type>
+    </Control_Field>
     <Control_TabularParts>
       <Name>Товари</Name>
       <Table>tab_a54</Table>
@@ -10453,6 +10596,32 @@
         <Coincide>yes</Coincide>
       </Type>
     </Control_Field>
+    <Control_Field>
+      <Name>Автор</Name>
+      <NameInTable>col_a7</NameInTable>
+      <Index>0</Index>
+      <IndexExist />
+      <IsExist>yes</IsExist>
+      <Type>
+        <ConfType>pointer</ConfType>
+        <DataType>uuid</DataType>
+        <UdtName>uuid</UdtName>
+        <Coincide>yes</Coincide>
+      </Type>
+    </Control_Field>
+    <Control_Field>
+      <Name>Менеджер</Name>
+      <NameInTable>col_a8</NameInTable>
+      <Index>0</Index>
+      <IndexExist />
+      <IsExist>yes</IsExist>
+      <Type>
+        <ConfType>pointer</ConfType>
+        <DataType>uuid</DataType>
+        <UdtName>uuid</UdtName>
+        <Coincide>yes</Coincide>
+      </Type>
+    </Control_Field>
     <Control_TabularParts>
       <Name>Послуги</Name>
       <Table>tab_a82</Table>
@@ -10689,6 +10858,19 @@
     <Control_Field>
       <Name>ПартіяТоварівКомпозит</Name>
       <NameInTable>col_a2</NameInTable>
+      <Index>0</Index>
+      <IndexExist />
+      <IsExist>yes</IsExist>
+      <Type>
+        <ConfType>pointer</ConfType>
+        <DataType>uuid</DataType>
+        <UdtName>uuid</UdtName>
+        <Coincide>yes</Coincide>
+      </Type>
+    </Control_Field>
+    <Control_Field>
+      <Name>Автор</Name>
+      <NameInTable>col_a3</NameInTable>
       <Index>0</Index>
       <IndexExist />
       <IsExist>yes</IsExist>
@@ -11080,6 +11262,19 @@
         <Coincide>yes</Coincide>
       </Type>
     </Control_Field>
+    <Control_Field>
+      <Name>Автор</Name>
+      <NameInTable>col_a1</NameInTable>
+      <Index>0</Index>
+      <IndexExist />
+      <IsExist>yes</IsExist>
+      <Type>
+        <ConfType>pointer</ConfType>
+        <DataType>uuid</DataType>
+        <UdtName>uuid</UdtName>
+        <Coincide>yes</Coincide>
+      </Type>
+    </Control_Field>
     <Control_TabularParts>
       <Name>Товари</Name>
       <Table>tab_a89</Table>
@@ -11261,6 +11456,19 @@
         <Coincide>yes</Coincide>
       </Type>
     </Control_Field>
+    <Control_Field>
+      <Name>Автор</Name>
+      <NameInTable>col_a1</NameInTable>
+      <Index>0</Index>
+      <IndexExist />
+      <IsExist>yes</IsExist>
+      <Type>
+        <ConfType>pointer</ConfType>
+        <DataType>uuid</DataType>
+        <UdtName>uuid</UdtName>
+        <Coincide>yes</Coincide>
+      </Type>
+    </Control_Field>
     <Control_TabularParts>
       <Name>Товари</Name>
       <Table>tab_a91</Table>
@@ -11413,6 +11621,19 @@
         <ConfType>string</ConfType>
         <DataType>text</DataType>
         <UdtName>text</UdtName>
+        <Coincide>yes</Coincide>
+      </Type>
+    </Control_Field>
+    <Control_Field>
+      <Name>Автор</Name>
+      <NameInTable>col_a1</NameInTable>
+      <Index>0</Index>
+      <IndexExist />
+      <IsExist>yes</IsExist>
+      <Type>
+        <ConfType>pointer</ConfType>
+        <DataType>uuid</DataType>
+        <UdtName>uuid</UdtName>
         <Coincide>yes</Coincide>
       </Type>
     </Control_Field>
@@ -11646,6 +11867,19 @@
         <ConfType>string</ConfType>
         <DataType>text</DataType>
         <UdtName>text</UdtName>
+        <Coincide>yes</Coincide>
+      </Type>
+    </Control_Field>
+    <Control_Field>
+      <Name>Автор</Name>
+      <NameInTable>col_a2</NameInTable>
+      <Index>0</Index>
+      <IndexExist />
+      <IsExist>yes</IsExist>
+      <Type>
+        <ConfType>pointer</ConfType>
+        <DataType>uuid</DataType>
+        <UdtName>uuid</UdtName>
         <Coincide>yes</Coincide>
       </Type>
     </Control_Field>
@@ -12294,6 +12528,19 @@
         <ConfType>string</ConfType>
         <DataType>text</DataType>
         <UdtName>text</UdtName>
+        <Coincide>yes</Coincide>
+      </Type>
+    </Control_Field>
+    <Control_Field>
+      <Name>Менеджер</Name>
+      <NameInTable>col_a2</NameInTable>
+      <Index>0</Index>
+      <IndexExist />
+      <IsExist>yes</IsExist>
+      <Type>
+        <ConfType>pointer</ConfType>
+        <DataType>uuid</DataType>
+        <UdtName>uuid</UdtName>
         <Coincide>yes</Coincide>
       </Type>
     </Control_Field>
