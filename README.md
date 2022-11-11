@@ -1,6 +1,6 @@
 # Конфігуратор 3
 
-<img src="https://accounting.org.ua/images/configuration.png" /> <b>Програма для проектування бази даних PostgreSQL</b> | .net 6, Linux, Windows <br/>
+<img src="https://accounting.org.ua/images/configuration.png?v=3" /> <b>Програма для проектування бази даних PostgreSQL</b> | .net 6, Linux, Windows <br/>
     
  <b>Можливості:</b>
     
