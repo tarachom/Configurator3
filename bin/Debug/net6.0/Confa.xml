@@ -5,7 +5,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>11.11.2022 16:37:32</DateTimeSave>
+  <DateTimeSave>12.11.2022 22:08:03</DateTimeSave>
   <ConstantsBlocks>
     <ConstantsBlock>
       <Name>ЗначенняЗаЗамовчуванням</Name>
@@ -22,7 +22,7 @@ https://accounting.org.ua/storage_and_trade.html</Desc>
           <TabularParts />
         </Constant>
         <Constant>
-          <Name>ОснонийСклад</Name>
+          <Name>ОсновнийСклад</Name>
           <NameInTable>col_a2</NameInTable>
           <Desc>
           </Desc>
@@ -5655,6 +5655,176 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Fields>
         </TabularList>
       </TabularLists>
+      <TriggerFunctions>
+        <BeforeSave>
+        </BeforeSave>
+        <AfterSave>
+        </AfterSave>
+        <BeforeDelete>
+        </BeforeDelete>
+      </TriggerFunctions>
+    </Directory>
+    <Directory>
+      <Name>Організації_copy</Name>
+      <Table>tab_b24</Table>
+      <Desc>Юридичні особи та підприємці нашої організації</Desc>
+      <Fields>
+        <Field>
+          <Name>Назва</Name>
+          <NameInTable>col_a1</NameInTable>
+          <Type>string</Type>
+          <Desc>Назва</Desc>
+          <IsPresentation>1</IsPresentation>
+          <IsIndex>0</IsIndex>
+        </Field>
+        <Field>
+          <Name>Код</Name>
+          <NameInTable>col_a2</NameInTable>
+          <Type>string</Type>
+          <Desc>Код</Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+        </Field>
+        <Field>
+          <Name>НазваПовна</Name>
+          <NameInTable>col_a3</NameInTable>
+          <Type>string</Type>
+          <Desc>Повна назва</Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+        </Field>
+        <Field>
+          <Name>НазваСкорочена</Name>
+          <NameInTable>col_a4</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+        </Field>
+        <Field>
+          <Name>ДатаРеєстрації</Name>
+          <NameInTable>col_a5</NameInTable>
+          <Type>date</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+        </Field>
+        <Field>
+          <Name>КраїнаРеєстрації</Name>
+          <NameInTable>col_a6</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+        </Field>
+        <Field>
+          <Name>СвідоцтвоСеріяНомер</Name>
+          <NameInTable>col_a7</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+        </Field>
+        <Field>
+          <Name>СвідоцтвоДатаВидачі</Name>
+          <NameInTable>col_a8</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+        </Field>
+        <Field>
+          <Name>Холдинг</Name>
+          <NameInTable>col_a9</NameInTable>
+          <Type>pointer</Type>
+          <Pointer>Довідники.Організації</Pointer>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+        </Field>
+      </Fields>
+      <TabularParts>
+        <TablePart>
+          <Name>Контакти</Name>
+          <Table>tab_b25</Table>
+          <Desc>
+          </Desc>
+          <Fields>
+            <Field>
+              <Name>Тип</Name>
+              <NameInTable>col_a9</NameInTable>
+              <Type>enum</Type>
+              <Pointer>Перелічення.ТипиКонтактноїІнформації</Pointer>
+              <Desc>
+              </Desc>
+              <IsIndex>0</IsIndex>
+            </Field>
+            <Field>
+              <Name>Телефон</Name>
+              <NameInTable>col_a4</NameInTable>
+              <Type>string</Type>
+              <Desc>
+              </Desc>
+              <IsIndex>0</IsIndex>
+            </Field>
+            <Field>
+              <Name>ЕлектроннаПошта</Name>
+              <NameInTable>col_a5</NameInTable>
+              <Type>string</Type>
+              <Desc>
+              </Desc>
+              <IsIndex>0</IsIndex>
+            </Field>
+            <Field>
+              <Name>Країна</Name>
+              <NameInTable>col_a1</NameInTable>
+              <Type>string</Type>
+              <Desc>
+              </Desc>
+              <IsIndex>0</IsIndex>
+            </Field>
+            <Field>
+              <Name>Область</Name>
+              <NameInTable>col_a6</NameInTable>
+              <Type>string</Type>
+              <Desc>
+              </Desc>
+              <IsIndex>0</IsIndex>
+            </Field>
+            <Field>
+              <Name>Район</Name>
+              <NameInTable>col_a2</NameInTable>
+              <Type>string</Type>
+              <Desc>
+              </Desc>
+              <IsIndex>0</IsIndex>
+            </Field>
+            <Field>
+              <Name>Місто</Name>
+              <NameInTable>col_a3</NameInTable>
+              <Type>string</Type>
+              <Desc>
+              </Desc>
+              <IsIndex>0</IsIndex>
+            </Field>
+            <Field>
+              <Name>Значення</Name>
+              <NameInTable>col_a8</NameInTable>
+              <Type>string</Type>
+              <Desc>
+              </Desc>
+              <IsIndex>0</IsIndex>
+            </Field>
+          </Fields>
+        </TablePart>
+      </TabularParts>
+      <TabularLists />
       <TriggerFunctions>
         <BeforeSave>
         </BeforeSave>
