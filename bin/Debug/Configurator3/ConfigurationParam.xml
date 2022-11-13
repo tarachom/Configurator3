@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <Configuration Select="False">
+    <Key>c12bf2f0-576a-4dd8-a34b-4eab28cd193c</Key>
+    <Name>Зберігання та торгівля для України</Name>
+    <Server>localhost</Server>
+    <Port>5432</Port>
+    <Login>postgres</Login>
+    <Password>1</Password>
+    <BaseName>storage_and_trade</BaseName>
+    <OtherParam />
+  </Configuration>
+  <Configuration Select="True">
+    <Key>12709ce9-7ddc-4d3e-a51c-edf97f20959f</Key>
+    <Name>Зберігання та торгівля для України - Demo</Name>
+    <Server>localhost</Server>
+    <Port>5432</Port>
+    <Login>postgres</Login>
+    <Password>1</Password>
+    <BaseName>storage_and_trade_demo</BaseName>
+    <OtherParam />
+  </Configuration>
+</root>

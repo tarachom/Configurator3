@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <Configuration Select="False">
+  <Configuration Select="True">
     <Key>6b4ef58d-4b62-4885-8059-eb6f43c51c2d</Key>
     <Name>Зберігання та торгівля для України</Name>
     <Server>localhost</Server>
@@ -13,7 +13,7 @@
       <Param name="GenerateCodePath">/home/tarachom/Projects/StorageAndTrade3/Configurator</Param>
     </OtherParam>
   </Configuration>
-  <Configuration Select="True">
+  <Configuration Select="False">
     <Key>a494e6e5-0ced-4d33-b9f3-fc58fd65d436</Key>
     <Name>Зберігання та торгівля для України-Demo</Name>
     <Server>localhost</Server>
