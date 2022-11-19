@@ -26,4 +26,17 @@
       <Param name="GenerateCodePath">/home/tarachom/Projects/StorageAndTrade3/Configurator</Param>
     </OtherParam>
   </Configuration>
+  <Configuration Select="False">
+    <Key>88af4990-c473-4dc3-a74b-5394945525ec</Key>
+    <Name>Зберігання та торгівля для України-test</Name>
+    <Server>localhost</Server>
+    <Port>5432</Port>
+    <Login>postgres</Login>
+    <Password>1</Password>
+    <BaseName>storage_and_trade_test</BaseName>
+    <OtherParam>
+      <Param name="IsGenerateCode">True</Param>
+      <Param name="GenerateCodePath">/home/tarachom/Projects/StorageAndTrade3/Configurator</Param>
+    </OtherParam>
+  </Configuration>
 </root>
