@@ -955,6 +955,12 @@ limitations under the License.
             </xsl:otherwise>
           </xsl:choose>
 
+          <xsl:call-template name="TabularPartsControl">
+            <xsl:with-param name="ConfigurationTablePartList" select="TabularParts/TablePart" />
+            <xsl:with-param name="InfoSchemaTableList" select="$InfoSchemaTableList" />
+            <xsl:with-param name="IsCreateOwner">no</xsl:with-param>
+          </xsl:call-template>
+
         </Control_Table>
 		  
 		<xsl:call-template name="SecondConfigurationFields">

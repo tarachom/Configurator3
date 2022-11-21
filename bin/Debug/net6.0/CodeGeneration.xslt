@@ -1610,6 +1610,112 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.РегістриНа�
         }
     }
     
+    <xsl:for-each select="TabularParts/TablePart">
+        <!-- TableParts -->
+        <xsl:variable name="TablePartName" select="Name"/>
+        <xsl:variable name="TablePartFullName" select="concat($RegisterName, '_', $TablePartName)"/>
+        
+    <!--<xsl:call-template name="CommentSummary" />-->
+    public class <xsl:value-of select="$TablePartFullName"/>_TablePart : RegisterAccumulationTablePart
+    {
+        public <xsl:value-of select="$TablePartFullName"/>_TablePart() : base(Config.Kernel!, "<xsl:value-of select="Table"/>",
+              <xsl:text>new string[] { </xsl:text>
+              <xsl:for-each select="Fields/Field">
+                <xsl:if test="position() != 1">
+                  <xsl:text>, </xsl:text>
+                </xsl:if>
+                <xsl:text>"</xsl:text><xsl:value-of select="NameInTable"/><xsl:text>"</xsl:text>
+              </xsl:for-each> }) 
+        {
+            Records = new List&lt;Record&gt;();
+        }
+        
+        public const string TABLE = "<xsl:value-of select="Table"/>";
+        <xsl:for-each select="Fields/Field">
+        public const string <xsl:value-of select="Name"/> = "<xsl:value-of select="NameInTable"/>";</xsl:for-each>
+        public List&lt;Record&gt; Records { get; set; }
+    
+        public void Read()
+        {
+            Records.Clear();
+            base.BaseRead();
+
+            foreach (Dictionary&lt;string, object&gt; fieldValue in base.FieldValueList) 
+            {
+                Record record = new Record();
+                record.UID = (Guid)fieldValue["uid"];
+                
+                <xsl:for-each select="Fields/Field">
+                  <xsl:text>record.</xsl:text>
+                  <xsl:value-of select="Name"/>
+                  <xsl:text> = </xsl:text>
+                  <xsl:call-template name="ReadFieldValue">
+                    <xsl:with-param name="BaseFieldContainer">fieldValue</xsl:with-param>
+                  </xsl:call-template>;
+                </xsl:for-each>
+                Records.Add(record);
+            }
+        
+            base.BaseClear();
+        }
+    
+        public void Save(bool clear_all_before_save /*= true*/) 
+        {
+            base.BaseBeginTransaction();
+            
+            if (clear_all_before_save)
+                base.BaseDelete();
+
+            foreach (Record record in Records)
+            {
+                Dictionary&lt;string, object&gt; fieldValue = new Dictionary&lt;string, object&gt;();
+
+                <xsl:for-each select="Fields/Field">
+                    <xsl:text>fieldValue.Add("</xsl:text>
+                    <xsl:value-of select="NameInTable"/><xsl:text>", </xsl:text>
+        <xsl:if test="Type = 'enum'">
+            <xsl:text>(int)</xsl:text>
+          </xsl:if>
+        <xsl:text>record.</xsl:text><xsl:value-of select="Name"/>
+                    <xsl:choose>
+                    <xsl:when test="Type = 'pointer' or Type = 'empty_pointer'">
+                        <xsl:text>.UnigueID.UGuid</xsl:text>
+                    </xsl:when>
+                    </xsl:choose>
+                    <xsl:text>)</xsl:text>;
+                </xsl:for-each>
+                base.BaseSave(record.UID, fieldValue);
+            }
+            
+            base.BaseCommitTransaction();
+        }
+    
+        public void Delete()
+        {
+            base.BaseDelete();
+        }
+        
+        public class Record : RegisterAccumulationTablePartRecord
+        {
+            public Record()
+            {
+                <xsl:for-each select="Fields/Field">
+                  <xsl:value-of select="Name"/>
+                  <xsl:text> = </xsl:text>
+                  <xsl:call-template name="DefaultFieldValue" />;
+                </xsl:for-each>
+            }
+            <xsl:for-each select="Fields/Field">
+              <xsl:text>public </xsl:text>
+              <xsl:call-template name="FieldType" />
+              <xsl:text> </xsl:text>
+              <xsl:value-of select="Name"/>
+              <xsl:text> { get; set; </xsl:text>}
+            </xsl:for-each>
+        }            
+    }
+        </xsl:for-each> <!-- TableParts -->
+
     #endregion
   </xsl:for-each>
 }

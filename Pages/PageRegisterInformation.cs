@@ -319,7 +319,7 @@ namespace Configurator
             IsNew = false;
 
             GeneralForm?.LoadTreeAsync();
-            GeneralForm?.RenameCurrentPageNotebook($"Регістр: {ConfRegister.Name}");
+            GeneralForm?.RenameCurrentPageNotebook($"Регістер інформації: {ConfRegister.Name}");
         }
 
         #region Dimension Fields

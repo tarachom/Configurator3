@@ -116,7 +116,7 @@ namespace Configurator
             //Заголовок списку документів
             HBox hBoxAllowDocumentSpendCaption = new HBox() { Halign = Align.Center };
             vBox.PackStart(hBoxAllowDocumentSpendCaption, false, false, 5);
-            hBoxAllowDocumentSpendCaption.PackStart(new Label("Документи які використовують цей регістр"), false, false, 5);
+            hBoxAllowDocumentSpendCaption.PackStart(new Label("Документи які використовують цей регістер"), false, false, 5);
 
             //Список документів
             HBox hBoxAllowDocumentSpend = new HBox() { Halign = Align.End };
@@ -315,6 +315,7 @@ namespace Configurator
             FillDimensionFields();
             FillResourcesFields();
             FillPropertyFields();
+            FillTabularParts();
 
             entryName.Text = ConfRegister.Name;
 
@@ -412,7 +413,7 @@ namespace Configurator
             IsNew = false;
 
             GeneralForm?.LoadTreeAsync();
-            GeneralForm?.RenameCurrentPageNotebook($"Регістр: {ConfRegister.Name}");
+            GeneralForm?.RenameCurrentPageNotebook($"Регістер накопичення: {ConfRegister.Name}");
         }
 
         #region Dimension Fields

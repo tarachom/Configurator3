@@ -140,14 +140,13 @@
       <NameInTable>col_i2</NameInTable>
       <Index></Index>
       <IndexExist />
-      <IsExist>no</IsExist>
-      <FieldCreate>
-        <Name>ОсновнийВидНоменклатури</Name>
-        <NameInTable>col_i2</NameInTable>
+      <IsExist>yes</IsExist>
+      <Type>
         <ConfType>pointer</ConfType>
         <DataType>uuid</DataType>
-        <Index></Index>
-      </FieldCreate>
+        <UdtName>uuid</UdtName>
+        <Coincide>yes</Coincide>
+      </Type>
     </Control_Field>
     <Control_Field>
       <Name>ЖурналРеєстрації</Name>
@@ -12984,6 +12983,200 @@
         <Coincide>yes</Coincide>
       </Type>
     </Control_Field>
+    <Control_TabularParts>
+      <Name>День</Name>
+      <Table>tab_b24</Table>
+      <IsCreateOwner>no</IsCreateOwner>
+      <IsExist>yes</IsExist>
+      <Control_Field>
+        <Name>Номенклатура</Name>
+        <NameInTable>col_a1</NameInTable>
+        <Index>1</Index>
+        <IndexExist>yes</IndexExist>
+        <IsExist>yes</IsExist>
+        <Type>
+          <ConfType>pointer</ConfType>
+          <DataType>uuid</DataType>
+          <UdtName>uuid</UdtName>
+          <Coincide>yes</Coincide>
+        </Type>
+      </Control_Field>
+      <Control_Field>
+        <Name>ХарактеристикаНоменклатури</Name>
+        <NameInTable>col_a2</NameInTable>
+        <Index>1</Index>
+        <IndexExist>yes</IndexExist>
+        <IsExist>yes</IsExist>
+        <Type>
+          <ConfType>pointer</ConfType>
+          <DataType>uuid</DataType>
+          <UdtName>uuid</UdtName>
+          <Coincide>yes</Coincide>
+        </Type>
+      </Control_Field>
+      <Control_Field>
+        <Name>Склад</Name>
+        <NameInTable>col_a3</NameInTable>
+        <Index>1</Index>
+        <IndexExist>yes</IndexExist>
+        <IsExist>yes</IsExist>
+        <Type>
+          <ConfType>pointer</ConfType>
+          <DataType>uuid</DataType>
+          <UdtName>uuid</UdtName>
+          <Coincide>yes</Coincide>
+        </Type>
+      </Control_Field>
+      <Control_Field>
+        <Name>Серія</Name>
+        <NameInTable>col_a4</NameInTable>
+        <Index>1</Index>
+        <IndexExist>yes</IndexExist>
+        <IsExist>yes</IsExist>
+        <Type>
+          <ConfType>pointer</ConfType>
+          <DataType>uuid</DataType>
+          <UdtName>uuid</UdtName>
+          <Coincide>yes</Coincide>
+        </Type>
+      </Control_Field>
+      <Control_Field>
+        <Name>Період</Name>
+        <NameInTable>col_a5</NameInTable>
+        <Index>1</Index>
+        <IndexExist>yes</IndexExist>
+        <IsExist>yes</IsExist>
+        <Type>
+          <ConfType>date</ConfType>
+          <DataType>date</DataType>
+          <UdtName>date</UdtName>
+          <Coincide>yes</Coincide>
+        </Type>
+      </Control_Field>
+      <Control_Field>
+        <Name>ВНаявності</Name>
+        <NameInTable>col_a6</NameInTable>
+        <Index>0</Index>
+        <IndexExist />
+        <IsExist>yes</IsExist>
+        <Type>
+          <ConfType>numeric</ConfType>
+          <DataType>numeric</DataType>
+          <UdtName>numeric</UdtName>
+          <Coincide>yes</Coincide>
+        </Type>
+      </Control_Field>
+      <Control_Field>
+        <Name>ДоВідвантаження</Name>
+        <NameInTable>col_a7</NameInTable>
+        <Index>0</Index>
+        <IndexExist />
+        <IsExist>yes</IsExist>
+        <Type>
+          <ConfType>numeric</ConfType>
+          <DataType>numeric</DataType>
+          <UdtName>numeric</UdtName>
+          <Coincide>yes</Coincide>
+        </Type>
+      </Control_Field>
+    </Control_TabularParts>
+    <Control_TabularParts>
+      <Name>Місяць</Name>
+      <Table>tab_b25</Table>
+      <IsCreateOwner>no</IsCreateOwner>
+      <IsExist>yes</IsExist>
+      <Control_Field>
+        <Name>Номенклатура</Name>
+        <NameInTable>col_a1</NameInTable>
+        <Index>1</Index>
+        <IndexExist>yes</IndexExist>
+        <IsExist>yes</IsExist>
+        <Type>
+          <ConfType>pointer</ConfType>
+          <DataType>uuid</DataType>
+          <UdtName>uuid</UdtName>
+          <Coincide>yes</Coincide>
+        </Type>
+      </Control_Field>
+      <Control_Field>
+        <Name>ХарактеристикаНоменклатури</Name>
+        <NameInTable>col_a2</NameInTable>
+        <Index>1</Index>
+        <IndexExist>yes</IndexExist>
+        <IsExist>yes</IsExist>
+        <Type>
+          <ConfType>pointer</ConfType>
+          <DataType>uuid</DataType>
+          <UdtName>uuid</UdtName>
+          <Coincide>yes</Coincide>
+        </Type>
+      </Control_Field>
+      <Control_Field>
+        <Name>Склад</Name>
+        <NameInTable>col_a3</NameInTable>
+        <Index>1</Index>
+        <IndexExist>yes</IndexExist>
+        <IsExist>yes</IsExist>
+        <Type>
+          <ConfType>pointer</ConfType>
+          <DataType>uuid</DataType>
+          <UdtName>uuid</UdtName>
+          <Coincide>yes</Coincide>
+        </Type>
+      </Control_Field>
+      <Control_Field>
+        <Name>Серія</Name>
+        <NameInTable>col_a4</NameInTable>
+        <Index>1</Index>
+        <IndexExist>yes</IndexExist>
+        <IsExist>yes</IsExist>
+        <Type>
+          <ConfType>pointer</ConfType>
+          <DataType>uuid</DataType>
+          <UdtName>uuid</UdtName>
+          <Coincide>yes</Coincide>
+        </Type>
+      </Control_Field>
+      <Control_Field>
+        <Name>Період</Name>
+        <NameInTable>col_a5</NameInTable>
+        <Index>1</Index>
+        <IndexExist>yes</IndexExist>
+        <IsExist>yes</IsExist>
+        <Type>
+          <ConfType>date</ConfType>
+          <DataType>date</DataType>
+          <UdtName>date</UdtName>
+          <Coincide>yes</Coincide>
+        </Type>
+      </Control_Field>
+      <Control_Field>
+        <Name>ВНаявності</Name>
+        <NameInTable>col_a6</NameInTable>
+        <Index>0</Index>
+        <IndexExist />
+        <IsExist>yes</IsExist>
+        <Type>
+          <ConfType>numeric</ConfType>
+          <DataType>numeric</DataType>
+          <UdtName>numeric</UdtName>
+          <Coincide>yes</Coincide>
+        </Type>
+      </Control_Field>
+      <Control_Field>
+        <Name>ДоВідвантаження</Name>
+        <NameInTable>col_a7</NameInTable>
+        <Index>0</Index>
+        <IndexExist />
+        <IsExist>yes</IsExist>
+        <Type>
+          <ConfType>numeric</ConfType>
+          <DataType>numeric</DataType>
+          <UdtName>numeric</UdtName>
+          <Coincide>yes</Coincide>
+        </Type>
+      </Control_Field>
+    </Control_TabularParts>
   </Control_Table>
   <Control_Table>
     <Type>RegisterAccumulation</Type>
@@ -14024,5 +14217,11 @@
         <Coincide>yes</Coincide>
       </Type>
     </Control_Field>
+  </Control_Table>
+  <Control_Table>
+    <Type>RegisterAccumulation.TablePart</Type>
+    <Name>Рік</Name>
+    <Table>tab_b30</Table>
+    <IsExist>delete</IsExist>
   </Control_Table>
 </root>
