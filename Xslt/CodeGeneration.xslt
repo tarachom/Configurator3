@@ -1714,7 +1714,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.РегістриНа�
             </xsl:for-each>
         }            
     }
-        </xsl:for-each> <!-- TableParts -->
+    </xsl:for-each> <!-- TableParts -->
 
     #endregion
   </xsl:for-each>
