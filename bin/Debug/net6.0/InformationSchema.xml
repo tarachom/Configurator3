@@ -246,17 +246,17 @@
       <UdtName>uuid</UdtName>
     </Column>
     <Column>
+      <Name>docnomer</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
       <Name>col_h6</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
     <Column>
       <Name>docname</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
-      <Name>docnomer</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
@@ -654,6 +654,11 @@
       <UdtName>int4</UdtName>
     </Column>
     <Column>
+      <Name>col_b2</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
       <Name>docname</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
@@ -665,11 +670,6 @@
     </Column>
     <Column>
       <Name>col_b7</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
-      <Name>col_b2</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
@@ -1881,6 +1881,16 @@
       <UdtName>date</UdtName>
     </Column>
     <Column>
+      <Name>col_a1</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a2</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
       <Name>col_a3</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
@@ -1902,16 +1912,6 @@
     </Column>
     <Column>
       <Name>col_a8</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a1</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a2</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
@@ -4962,17 +4962,6 @@
     </Index>
   </Table>
   <Table>
-    <Name>tab_b30</Name>
-    <Column>
-      <Name>uid</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
-    </Column>
-    <Index>
-      <Name>tab_b30_pkey</Name>
-    </Index>
-  </Table>
-  <Table>
     <Name>tab_a56</Name>
     <Column>
       <Name>uid</Name>
@@ -6094,6 +6083,54 @@
     </Index>
     <Index>
       <Name>tab_a55_period_idx</Name>
+    </Index>
+  </Table>
+  <Table>
+    <Name>tab_b30</Name>
+    <Column>
+      <Name>uid</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a1</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a2</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a3</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a4</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a6</Name>
+      <DataType>numeric</DataType>
+      <UdtName>numeric</UdtName>
+    </Column>
+    <Index>
+      <Name>tab_b30_pkey</Name>
+    </Index>
+    <Index>
+      <Name>tab_b30_col_a1_idx</Name>
+    </Index>
+    <Index>
+      <Name>tab_b30_col_a2_idx</Name>
+    </Index>
+    <Index>
+      <Name>tab_b30_col_a3_idx</Name>
+    </Index>
+    <Index>
+      <Name>tab_b30_col_a4_idx</Name>
     </Index>
   </Table>
   <Table>
@@ -7253,17 +7290,17 @@
       <UdtName>uuid</UdtName>
     </Column>
     <Column>
+      <Name>col_a1</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
       <Name>docname</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
     <Column>
       <Name>docnomer</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a1</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
