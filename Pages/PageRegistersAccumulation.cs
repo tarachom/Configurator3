@@ -24,6 +24,7 @@ namespace Configurator
         ListBox listBoxDimensionFields = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxResourcesFields = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxPropertyFields = new ListBox() { SelectionMode = SelectionMode.Single };
+        ListBox listBoxTableParts = new ListBox() { SelectionMode = SelectionMode.Single };
         Entry entryName = new Entry() { WidthRequest = 500 };
         Entry entryTable = new Entry() { WidthRequest = 500 };
         TextView textViewDesc = new TextView();
@@ -127,6 +128,9 @@ namespace Configurator
 
             scrollAllowDocumentSpend.Add(listBoxAllowDocumentSpend);
             hBoxAllowDocumentSpend.PackStart(scrollAllowDocumentSpend, true, true, 5);
+
+            //Табличні частини
+            CreateTablePartList(vBox);
 
             hPaned.Pack1(vBox, false, false);
         }
@@ -259,6 +263,48 @@ namespace Configurator
             vBoxContainer.PackStart(vBox, false, false, 0);
         }
 
+        void CreateTablePartList(VBox vBoxContainer)
+        {
+            VBox vBox = new VBox();
+
+            HBox hBox = new HBox();
+            hBox.PackStart(new Label("Табличні частини:"), false, false, 5);
+            vBox.PackStart(hBox, false, false, 5);
+
+            Toolbar toolbar = new Toolbar();
+            vBox.PackStart(toolbar, false, false, 0);
+
+            ToolButton buttonAdd = new ToolButton(Stock.New) { Label = "Додати", IsImportant = true };
+            buttonAdd.Clicked += OnTabularPartsAddClick;
+            toolbar.Add(buttonAdd);
+
+            ToolButton buttonCopy = new ToolButton(Stock.Copy) { Label = "Копіювати", IsImportant = true };
+            buttonCopy.Clicked += OnTabularPartsCopyClick;
+            toolbar.Add(buttonCopy);
+
+            ToolButton buttonRefresh = new ToolButton(Stock.Refresh) { Label = "Обновити", IsImportant = true };
+            buttonRefresh.Clicked += OnTabularPartsRefreshClick;
+            toolbar.Add(buttonRefresh);
+
+            ToolButton buttonDelete = new ToolButton(Stock.Clear) { Label = "Видалити", IsImportant = true };
+            buttonDelete.Clicked += OnTabularPartsRemoveClick;
+            toolbar.Add(buttonDelete);
+
+            HBox hBoxScroll = new HBox();
+            ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
+            scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+            scrollList.SetSizeRequest(0, 100);
+
+            listBoxTableParts.ButtonPressEvent += OnTabularPartsButtonPress;
+
+            scrollList.Add(listBoxTableParts);
+            hBoxScroll.PackStart(scrollList, true, true, 5);
+
+            vBox.PackStart(hBoxScroll, false, false, 0);
+
+            vBoxContainer.PackStart(vBox, false, false, 0);
+        }
+
         #endregion
 
         #region Присвоєння / зчитування значень віджетів
@@ -307,6 +353,12 @@ namespace Configurator
         {
             foreach (ConfigurationObjectField field in ConfRegister.PropertyFields.Values)
                 listBoxPropertyFields.Add(new Label(field.Name) { Name = field.Name, Halign = Align.Start });
+        }
+
+        void FillTabularParts()
+        {
+            foreach (ConfigurationObjectTablePart tablePart in ConfRegister.TabularParts.Values)
+                listBoxTableParts.Add(new Label(tablePart.Name) { Name = tablePart.Name, Halign = Align.Start });
         }
 
         void GetValue()
@@ -684,6 +736,115 @@ namespace Configurator
         void PropertyFieldsRefreshList()
         {
             OnPropertyFieldsRefreshClick(null, new EventArgs());
+        }
+
+        #endregion
+
+        #region TabularParts
+
+        void OnTabularPartsButtonPress(object? sender, ButtonPressEventArgs args)
+        {
+            if (args.Event.Type == Gdk.EventType.DoubleButtonPress)
+            {
+                ListBoxRow[] selectedRows = listBoxTableParts.SelectedRows;
+
+                if (selectedRows.Length != 0)
+                {
+                    ListBoxRow curRow = selectedRows[0];
+
+                    if (ConfRegister.TabularParts.ContainsKey(curRow.Child.Name))
+                        GeneralForm?.CreateNotebookPage($"Таблична частина: {curRow.Child.Name}", () =>
+                        {
+                            PageTablePart page = new PageTablePart()
+                            {
+                                TabularParts = ConfRegister.TabularParts,
+                                TablePart = ConfRegister.TabularParts[curRow.Child.Name],
+                                IsNew = false,
+                                GeneralForm = GeneralForm,
+                                CallBack_RefreshList = TabularPartsRefreshList
+                            };
+
+                            page.SetValue();
+
+                            return page;
+                        });
+                }
+            }
+        }
+
+        void OnTabularPartsAddClick(object? sender, EventArgs args)
+        {
+            GeneralForm?.CreateNotebookPage("Таблична частина *", () =>
+            {
+                PageTablePart page = new PageTablePart()
+                {
+                    TabularParts = ConfRegister.TabularParts,
+                    IsNew = true,
+                    GeneralForm = GeneralForm,
+                    CallBack_RefreshList = TabularPartsRefreshList
+                };
+
+                page.SetValue();
+
+                return page;
+            });
+        }
+
+        void OnTabularPartsCopyClick(object? sender, EventArgs args)
+        {
+            ListBoxRow[] selectedRows = listBoxTableParts.SelectedRows;
+
+            if (selectedRows.Length != 0)
+            {
+                foreach (ListBoxRow row in selectedRows)
+                {
+                    if (ConfRegister.TabularParts.ContainsKey(row.Child.Name))
+                    {
+                        ConfigurationObjectTablePart newTablePart = ConfRegister.TabularParts[row.Child.Name].Copy();
+                        newTablePart.Name += GenerateName.GetNewName();
+                        newTablePart.Table = Configuration.GetNewUnigueTableName(Program.Kernel!);
+
+                        ConfRegister.AppendTablePart(newTablePart);
+                    }
+                }
+
+                TabularPartsRefreshList();
+
+                GeneralForm?.LoadTreeAsync();
+            }
+        }
+
+        void OnTabularPartsRefreshClick(object? sender, EventArgs args)
+        {
+            foreach (Widget item in listBoxTableParts.Children)
+                listBoxTableParts.Remove(item);
+
+            FillTabularParts();
+
+            listBoxTableParts.ShowAll();
+        }
+
+        void OnTabularPartsRemoveClick(object? sender, EventArgs args)
+        {
+            ListBoxRow[] selectedRows = listBoxTableParts.SelectedRows;
+
+            if (selectedRows.Length != 0)
+            {
+                foreach (ListBoxRow row in selectedRows)
+                {
+                    if (ConfRegister.TabularParts.ContainsKey(row.Child.Name))
+                        ConfRegister.TabularParts.Remove(row.Child.Name);
+                }
+
+                TabularPartsRefreshList();
+
+                GeneralForm?.LoadTreeAsync();
+            }
+        }
+
+        void TabularPartsRefreshList()
+        {
+            OnTabularPartsRefreshClick(null, new EventArgs());
         }
 
         #endregion

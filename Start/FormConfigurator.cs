@@ -306,6 +306,30 @@ namespace Configurator
 
             IsExpand(propertyFieldsIter);
 
+            if (confRegisterAccumulation.TabularParts.Count > 0)
+            {
+                TreeIter registerAccumulationTabularPartsIter = treeStore.AppendValues(registerAccumulationIter, "[ Табличні частини ]");
+
+                foreach (KeyValuePair<string, ConfigurationObjectTablePart> ConfTablePart in confRegisterAccumulation.TabularParts)
+                {
+                    string keyTablePart = $"{key}/{ConfTablePart.Value.Name}";
+
+                    TreeIter registerAccumulationTablePartIter = treeStore.AppendValues(registerAccumulationTabularPartsIter, ConfTablePart.Value.Name, "", keyTablePart);
+
+                    foreach (KeyValuePair<string, ConfigurationObjectField> ConfTablePartFields in ConfTablePart.Value.Fields)
+                    {
+                        string info = GetTypeInfo(ConfTablePartFields.Value.Type, ConfTablePartFields.Value.Pointer);
+                        string keyField = $"{keyTablePart}/{ConfTablePartFields.Value.Name}";
+
+                        treeStore.AppendValues(registerAccumulationTablePartIter, ConfTablePartFields.Value.Name, info, keyField);
+                    }
+
+                    IsExpand(registerAccumulationTablePartIter);
+                }
+
+                IsExpand(registerAccumulationTabularPartsIter);
+            }
+
             IsExpand(registerAccumulationIter);
         }
 
@@ -374,7 +398,7 @@ namespace Configurator
 
             treeConfiguration.AppendColumn(new TreeViewColumn("Конфігурація", new CellRendererText(), "text", 0));
             treeConfiguration.AppendColumn(new TreeViewColumn("Тип", new CellRendererText(), "text", 1));
-            treeConfiguration.AppendColumn(new TreeViewColumn("Ключ", new CellRendererText(), "text", 2) { Visible = false });
+            treeConfiguration.AppendColumn(new TreeViewColumn("Ключ", new CellRendererText(), "text", 2) { /*Visible = false*/ });
             treeConfiguration.Model = treeStore;
 
             return treeStore;
@@ -1155,47 +1179,92 @@ namespace Configurator
                                 }
                             case 2:
                                 {
-                                    string[] typeAndField = registerPath[1].Split(":");
-                                    string typeName = typeAndField[0];
-                                    string fieldName = typeAndField[1];
+                                    if (registerPath[1].IndexOf(":") != -1)
+                                    {
+                                        string[] typeAndField = registerPath[1].Split(":");
+                                        string typeName = typeAndField[0];
+                                        string fieldName = typeAndField[1];
+
+                                        CreateNotebookPage($"Поле: {fieldName}", () =>
+                                        {
+                                            Dictionary<string, ConfigurationObjectField> AllFields = new Dictionary<string, ConfigurationObjectField>();
+
+                                            foreach (ConfigurationObjectField item in Conf!.RegistersAccumulation[register].DimensionFields.Values)
+                                                AllFields.Add(item.Name, item);
+
+                                            foreach (ConfigurationObjectField item in Conf!.RegistersAccumulation[register].ResourcesFields.Values)
+                                                AllFields.Add(item.Name, item);
+
+                                            foreach (ConfigurationObjectField item in Conf!.RegistersAccumulation[register].PropertyFields.Values)
+                                                AllFields.Add(item.Name, item);
+
+                                            Dictionary<string, ConfigurationObjectField> Fields;
+                                            ConfigurationObjectField Field;
+
+                                            if (typeName == "Dimension")
+                                            {
+                                                Fields = Conf!.RegistersAccumulation[register].DimensionFields;
+                                                Field = Conf!.RegistersAccumulation[register].DimensionFields[fieldName];
+                                            }
+                                            else if (typeName == "Resources")
+                                            {
+                                                Fields = Conf!.RegistersAccumulation[register].ResourcesFields;
+                                                Field = Conf!.RegistersAccumulation[register].ResourcesFields[fieldName];
+                                            }
+                                            else
+                                            {
+                                                Fields = Conf!.RegistersAccumulation[register].PropertyFields;
+                                                Field = Conf!.RegistersAccumulation[register].PropertyFields[fieldName];
+                                            }
+
+                                            PageField page = new PageField()
+                                            {
+                                                AllFields = AllFields,
+                                                Fields = Fields,
+                                                Field = Field,
+                                                IsNew = false,
+                                                GeneralForm = this
+                                            };
+
+                                            page.SetValue();
+
+                                            return page;
+                                        });
+                                    }
+                                    else
+                                    {
+                                        string nameTablePart = registerPath[1];
+
+                                        CreateNotebookPage($"Таблична частина: {nameTablePart}", () =>
+                                        {
+                                            PageTablePart page = new PageTablePart()
+                                            {
+                                                GeneralForm = this,
+                                                TabularParts = Conf!.RegistersAccumulation[register].TabularParts,
+                                                TablePart = Conf!.RegistersAccumulation[register].TabularParts[nameTablePart],
+                                                IsNew = false
+                                            };
+
+                                            page.SetValue();
+
+                                            return page;
+                                        });
+                                        break;
+                                    }
+
+                                    break;
+                                }
+                            case 3:
+                                {
+                                    string nameTablePart = registerPath[1];
+                                    string fieldName = registerPath[2];
 
                                     CreateNotebookPage($"Поле: {fieldName}", () =>
                                     {
-                                        Dictionary<string, ConfigurationObjectField> AllFields = new Dictionary<string, ConfigurationObjectField>();
-
-                                        foreach (ConfigurationObjectField item in Conf!.RegistersAccumulation[register].DimensionFields.Values)
-                                            AllFields.Add(item.Name, item);
-
-                                        foreach (ConfigurationObjectField item in Conf!.RegistersAccumulation[register].ResourcesFields.Values)
-                                            AllFields.Add(item.Name, item);
-
-                                        foreach (ConfigurationObjectField item in Conf!.RegistersAccumulation[register].PropertyFields.Values)
-                                            AllFields.Add(item.Name, item);
-
-                                        Dictionary<string, ConfigurationObjectField> Fields;
-                                        ConfigurationObjectField Field;
-
-                                        if (typeName == "Dimension")
-                                        {
-                                            Fields = Conf!.RegistersAccumulation[register].DimensionFields;
-                                            Field = Conf!.RegistersAccumulation[register].DimensionFields[fieldName];
-                                        }
-                                        else if (typeName == "Resources")
-                                        {
-                                            Fields = Conf!.RegistersAccumulation[register].ResourcesFields;
-                                            Field = Conf!.RegistersAccumulation[register].ResourcesFields[fieldName];
-                                        }
-                                        else
-                                        {
-                                            Fields = Conf!.RegistersAccumulation[register].PropertyFields;
-                                            Field = Conf!.RegistersAccumulation[register].PropertyFields[fieldName];
-                                        }
-
                                         PageField page = new PageField()
                                         {
-                                            AllFields = AllFields,
-                                            Fields = Fields,
-                                            Field = Field,
+                                            Fields = Conf!.RegistersAccumulation[register].TabularParts[nameTablePart].Fields,
+                                            Field = Conf!.RegistersAccumulation[register].TabularParts[nameTablePart].Fields[fieldName],
                                             IsNew = false,
                                             GeneralForm = this
                                         };
@@ -1204,7 +1273,6 @@ namespace Configurator
 
                                         return page;
                                     });
-
                                     break;
                                 }
                         }
@@ -1528,6 +1596,7 @@ namespace Configurator
 
                                         reloadTree = true;
                                     }
+
                                     break;
                                 }
                         }
@@ -1552,21 +1621,48 @@ namespace Configurator
                                 }
                             case 2:
                                 {
-                                    string[] typeAndField = registerPath[1].Split(":");
-                                    string typeName = typeAndField[0];
-                                    string fieldName = typeAndField[1];
+                                    if (registerPath[1].IndexOf(":") != -1)
+                                    {
+                                        string[] typeAndField = registerPath[1].Split(":");
+                                        string typeName = typeAndField[0];
+                                        string fieldName = typeAndField[1];
+
+                                        if (Message.Request(this, "Видалити?") == ResponseType.Yes)
+                                        {
+                                            if (typeName == "Dimension")
+                                                Conf!.RegistersAccumulation[register].DimensionFields.Remove(fieldName);
+                                            else if (typeName == "Resources")
+                                                Conf!.RegistersAccumulation[register].ResourcesFields.Remove(fieldName);
+                                            else
+                                                Conf!.RegistersAccumulation[register].PropertyFields.Remove(fieldName);
+
+                                            reloadTree = true;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        string nameTablePart = registerPath[1];
+
+                                        if (Message.Request(this, "Видалити?") == ResponseType.Yes)
+                                        {
+                                            Conf!.RegistersAccumulation[register].TabularParts.Remove(nameTablePart);
+                                            reloadTree = true;
+                                        }
+                                    }
+
+                                    break;
+                                }
+                            case 3:
+                                {
+                                    string nameTablePart = registerPath[1];
+                                    string nameField = registerPath[2];
 
                                     if (Message.Request(this, "Видалити?") == ResponseType.Yes)
                                     {
-                                        if (typeName == "Dimension")
-                                            Conf!.RegistersAccumulation[register].DimensionFields.Remove(fieldName);
-                                        else if (typeName == "Resources")
-                                            Conf!.RegistersAccumulation[register].ResourcesFields.Remove(fieldName);
-                                        else
-                                            Conf!.RegistersAccumulation[register].PropertyFields.Remove(fieldName);
-
+                                        Conf!.RegistersAccumulation[register].TabularParts[nameTablePart].Fields.Remove(nameField);
                                         reloadTree = true;
                                     }
+
                                     break;
                                 }
                         }
@@ -1780,7 +1876,9 @@ namespace Configurator
 
                                     ConfigurationObjectField newField = Conf!.Directories[directory].TabularParts[nameTablePart].Fields[nameField].Copy();
                                     newField.Name += GenerateName.GetNewName();
-                                    newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!, Conf!.Directories[directory].Table, Conf!.Directories[directory].Fields);
+                                    newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!,
+                                        Conf!.Directories[directory].TabularParts[nameTablePart].Table,
+                                        Conf!.Directories[directory].TabularParts[nameTablePart].Fields);
 
                                     if (!Conf!.Directories[directory].TabularParts[nameTablePart].Fields.ContainsKey(newField.Name))
                                         Conf!.Directories[directory].TabularParts[nameTablePart].AppendField(newField);
@@ -1849,7 +1947,9 @@ namespace Configurator
 
                                     ConfigurationObjectField newField = Conf!.Documents[document].TabularParts[nameTablePart].Fields[nameField].Copy();
                                     newField.Name += GenerateName.GetNewName();
-                                    newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!, Conf!.Documents[document].Table, Conf!.Documents[document].Fields);
+                                    newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!,
+                                        Conf!.Documents[document].TabularParts[nameTablePart].Table,
+                                        Conf!.Documents[document].TabularParts[nameTablePart].Fields);
 
                                     if (!Conf!.Documents[document].TabularParts[nameTablePart].Fields.ContainsKey(newField.Name))
                                         Conf!.Documents[document].TabularParts[nameTablePart].AppendField(newField);
@@ -1949,48 +2049,78 @@ namespace Configurator
                                 }
                             case 2:
                                 {
-                                    string[] typeAndField = registerPath[1].Split(":");
-                                    string typeName = typeAndField[0];
-                                    string fieldName = typeAndField[1];
+                                    if (registerPath[1].IndexOf(":") != -1)
+                                    {
+                                        string[] typeAndField = registerPath[1].Split(":");
+                                        string typeName = typeAndField[0];
+                                        string fieldName = typeAndField[1];
 
-                                    Dictionary<string, ConfigurationObjectField> AllFields = new Dictionary<string, ConfigurationObjectField>();
+                                        Dictionary<string, ConfigurationObjectField> AllFields = new Dictionary<string, ConfigurationObjectField>();
 
-                                    foreach (ConfigurationObjectField item in Conf!.RegistersAccumulation[register].DimensionFields.Values)
-                                        AllFields.Add(item.Name, item);
+                                        foreach (ConfigurationObjectField item in Conf!.RegistersAccumulation[register].DimensionFields.Values)
+                                            AllFields.Add(item.Name, item);
 
-                                    foreach (ConfigurationObjectField item in Conf!.RegistersAccumulation[register].ResourcesFields.Values)
-                                        AllFields.Add(item.Name, item);
+                                        foreach (ConfigurationObjectField item in Conf!.RegistersAccumulation[register].ResourcesFields.Values)
+                                            AllFields.Add(item.Name, item);
 
-                                    foreach (ConfigurationObjectField item in Conf!.RegistersAccumulation[register].PropertyFields.Values)
-                                        AllFields.Add(item.Name, item);
+                                        foreach (ConfigurationObjectField item in Conf!.RegistersAccumulation[register].PropertyFields.Values)
+                                            AllFields.Add(item.Name, item);
 
-                                    ConfigurationObjectField newField;
+                                        ConfigurationObjectField newField;
 
-                                    if (typeName == "Dimension")
-                                        newField = Conf!.RegistersAccumulation[register].DimensionFields[fieldName].Copy();
-                                    else if (typeName == "Resources")
-                                        newField = Conf!.RegistersAccumulation[register].ResourcesFields[fieldName].Copy();
+                                        if (typeName == "Dimension")
+                                            newField = Conf!.RegistersAccumulation[register].DimensionFields[fieldName].Copy();
+                                        else if (typeName == "Resources")
+                                            newField = Conf!.RegistersAccumulation[register].ResourcesFields[fieldName].Copy();
+                                        else
+                                            newField = Conf!.RegistersAccumulation[register].PropertyFields[fieldName].Copy();
+
+                                        newField.Name += GenerateName.GetNewName();
+                                        newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!, Conf!.RegistersAccumulation[register].Table, AllFields);
+
+                                        if (typeName == "Dimension")
+                                        {
+                                            if (!Conf!.RegistersAccumulation[register].DimensionFields.ContainsKey(newField.Name))
+                                                Conf!.RegistersAccumulation[register].AppendDimensionField(newField);
+                                        }
+                                        else if (typeName == "Resources")
+                                        {
+                                            if (!Conf!.RegistersAccumulation[register].ResourcesFields.ContainsKey(newField.Name))
+                                                Conf!.RegistersAccumulation[register].AppendResourcesField(newField);
+                                        }
+                                        else
+                                        {
+                                            if (!Conf!.RegistersAccumulation[register].PropertyFields.ContainsKey(newField.Name))
+                                                Conf!.RegistersAccumulation[register].AppendPropertyField(newField);
+                                        }
+                                    }
                                     else
-                                        newField = Conf!.RegistersAccumulation[register].PropertyFields[fieldName].Copy();
+                                    {
+                                        string nameTablePart = registerPath[1];
 
+                                        ConfigurationObjectTablePart newTablePart = Conf!.RegistersAccumulation[register].TabularParts[nameTablePart].Copy();
+                                        newTablePart.Name += GenerateName.GetNewName();
+                                        newTablePart.Table = Configuration.GetNewUnigueTableName(Program.Kernel!);
+
+                                        if (!Conf!.RegistersAccumulation[register].TabularParts.ContainsKey(newTablePart.Name))
+                                            Conf!.RegistersAccumulation[register].AppendTablePart(newTablePart);
+                                    }
+
+                                    break;
+                                }
+                            case 3:
+                                {
+                                    string nameTablePart = registerPath[1];
+                                    string nameField = registerPath[2];
+
+                                    ConfigurationObjectField newField = Conf!.RegistersAccumulation[register].TabularParts[nameTablePart].Fields[nameField].Copy();
                                     newField.Name += GenerateName.GetNewName();
-                                    newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!, Conf!.RegistersAccumulation[register].Table, AllFields);
+                                    newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!,
+                                        Conf!.RegistersAccumulation[register].TabularParts[nameTablePart].Table,
+                                        Conf!.RegistersAccumulation[register].TabularParts[nameTablePart].Fields);
 
-                                    if (typeName == "Dimension")
-                                    {
-                                        if (!Conf!.RegistersAccumulation[register].DimensionFields.ContainsKey(newField.Name))
-                                            Conf!.RegistersAccumulation[register].AppendDimensionField(newField);
-                                    }
-                                    else if (typeName == "Resources")
-                                    {
-                                        if (!Conf!.RegistersAccumulation[register].ResourcesFields.ContainsKey(newField.Name))
-                                            Conf!.RegistersAccumulation[register].AppendResourcesField(newField);
-                                    }
-                                    else
-                                    {
-                                        if (!Conf!.RegistersAccumulation[register].PropertyFields.ContainsKey(newField.Name))
-                                            Conf!.RegistersAccumulation[register].AppendPropertyField(newField);
-                                    }
+                                    if (!Conf!.RegistersAccumulation[register].TabularParts[nameTablePart].Fields.ContainsKey(newField.Name))
+                                        Conf!.RegistersAccumulation[register].TabularParts[nameTablePart].AppendField(newField);
 
                                     break;
                                 }
