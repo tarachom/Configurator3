@@ -129,6 +129,18 @@ namespace Configurator
             scrollAllowDocumentSpend.Add(listBoxAllowDocumentSpend);
             hBoxAllowDocumentSpend.PackStart(scrollAllowDocumentSpend, true, true, 5);
 
+            //Separator
+            vBox.PackStart(new Separator(Orientation.Horizontal), false, false, 5);
+
+            //VirtualTable
+            HBox hBoxButtonCreateVirtualTable = new HBox();
+            vBox.PackStart(hBoxButtonCreateVirtualTable, false, false, 5);
+
+            Button bCreateVirtualTable = new Button("Створити");
+            bCreateVirtualTable.Clicked += OnCreateVirtualTableClick;
+
+            hBoxButtonCreateVirtualTable.PackStart(bCreateVirtualTable, false, false, 5);
+
             //Табличні частини
             CreateTablePartList(vBox);
 
@@ -268,7 +280,7 @@ namespace Configurator
             VBox vBox = new VBox();
 
             HBox hBox = new HBox();
-            hBox.PackStart(new Label("Табличні частини:"), false, false, 5);
+            hBox.PackStart(new Label("Віртуальні таблиці:"), false, false, 5);
             vBox.PackStart(hBox, false, false, 5);
 
             Toolbar toolbar = new Toolbar();
@@ -293,7 +305,7 @@ namespace Configurator
             HBox hBoxScroll = new HBox();
             ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
             scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-            scrollList.SetSizeRequest(0, 100);
+            scrollList.SetSizeRequest(0, 150);
 
             listBoxTableParts.ButtonPressEvent += OnTabularPartsButtonPress;
 
@@ -846,6 +858,11 @@ namespace Configurator
         void TabularPartsRefreshList()
         {
             OnTabularPartsRefreshClick(null, new EventArgs());
+        }
+
+        void OnCreateVirtualTableClick(object? sender, EventArgs args)
+        {
+            
         }
 
         #endregion
