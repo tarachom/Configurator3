@@ -59,20 +59,6 @@ namespace Configurator
             ShowAll();
         }
 
-        void CreatePack2(HPaned hPaned)
-        {
-            VBox vBox = new VBox();
-
-            //Поля
-            CreateDimensionFieldList(vBox);
-
-            CreateResourcesFieldList(vBox);
-
-            CreatePropertyFieldList(vBox);
-
-            hPaned.Pack2(vBox, true, false);
-        }
-
         void CreatePack1(HPaned hPaned)
         {
             VBox vBox = new VBox();
@@ -145,6 +131,20 @@ namespace Configurator
             CreateTablePartList(vBox);
 
             hPaned.Pack1(vBox, false, false);
+        }
+
+        void CreatePack2(HPaned hPaned)
+        {
+            VBox vBox = new VBox();
+
+            //Поля
+            CreateDimensionFieldList(vBox);
+
+            CreateResourcesFieldList(vBox);
+
+            CreatePropertyFieldList(vBox);
+
+            hPaned.Pack2(vBox, true, false);
         }
 
         #region Fields
@@ -427,6 +427,103 @@ namespace Configurator
             GeneralForm?.LoadTreeAsync();
             GeneralForm?.RenameCurrentPageNotebook($"Регістер накопичення: {ConfRegister.Name}");
         }
+
+        #region VirtualTable
+
+        void CreateVirtualTable_Залишки()
+        {
+            ConfigurationObjectTablePart TablePart = CreateVirtualTable_Table("Залишки");
+
+            CreateVirtualTable_Field(TablePart, new ConfigurationObjectField("Період", "", "date", "", "", false, true));
+
+            //Виміри
+            foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
+                CreateVirtualTable_Field(TablePart, field);
+
+            //Ресурси
+            foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
+                CreateVirtualTable_Field(TablePart, field);
+        }
+
+        void CreateVirtualTable_Обороти()
+        {
+            ConfigurationObjectTablePart TablePart = CreateVirtualTable_Table("Обороти");
+
+            //Виміри
+            foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
+                CreateVirtualTable_Field(TablePart, field);
+
+            //Ресурси
+            foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
+            {
+                CreateVirtualTable_Field(TablePart, field, "Прихід");
+                CreateVirtualTable_Field(TablePart, field, "Розхід");
+            }
+        }
+
+        void CreateVirtualTable_ЗалишкиТаОбороти()
+        {
+            ConfigurationObjectTablePart TablePart = CreateVirtualTable_Table("ЗалишкиТаОбороти");
+
+            CreateVirtualTable_Field(TablePart, new ConfigurationObjectField("Період", "", "date", "", "", false, true));
+
+            //Виміри
+            foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
+                CreateVirtualTable_Field(TablePart, field);
+
+            //Ресурси
+            foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
+            {
+                CreateVirtualTable_Field(TablePart, field, "ПочатковийЗалишок");
+                CreateVirtualTable_Field(TablePart, field, "Прихід");
+                CreateVirtualTable_Field(TablePart, field, "Розхід");
+                CreateVirtualTable_Field(TablePart, field, "КінцевийЗалишок");
+            }
+        }
+
+        ConfigurationObjectTablePart CreateVirtualTable_Table(string tableName)
+        {
+            if (!ConfRegister.TabularParts.ContainsKey(tableName))
+            {
+                string table = Configuration.GetNewUnigueTableName(Program.Kernel!);
+                ConfRegister.AppendTablePart(new ConfigurationObjectTablePart(tableName, table, "Віртуальна таблиця"));
+            }
+
+            return ConfRegister.TabularParts[tableName];
+        }
+
+        void CreateVirtualTable_Field(ConfigurationObjectTablePart TablePart, ConfigurationObjectField field, string prefixName = "")
+        {
+            if (!TablePart.Fields.ContainsKey(field.Name + prefixName))
+            {
+                string fieldColumnName = Configuration.GetNewUnigueColumnName(Program.Kernel!, TablePart.Table, TablePart.Fields);
+                TablePart.AppendField(new ConfigurationObjectField(field.Name + prefixName, fieldColumnName, field.Type, field.Pointer, field.Desc, false, field.IsIndex));
+            }
+        }
+
+        void OnCreateVirtualTableClick(object? sender, EventArgs args)
+        {
+            switch (ConfRegister.TypeRegistersAccumulation)
+            {
+                case TypeRegistersAccumulation.Residues: /* Залишки */
+                    {
+                        CreateVirtualTable_Залишки();
+                        CreateVirtualTable_Обороти();
+                        CreateVirtualTable_ЗалишкиТаОбороти();
+
+                        break;
+                    }
+                case TypeRegistersAccumulation.Turnover: /* Обороти */
+                    {
+                        CreateVirtualTable_Обороти();
+                        break;
+                    }
+            }
+
+            TabularPartsRefreshList();
+        }
+
+        #endregion
 
         #region Dimension Fields
 
@@ -860,11 +957,7 @@ namespace Configurator
             OnTabularPartsRefreshClick(null, new EventArgs());
         }
 
-        void OnCreateVirtualTableClick(object? sender, EventArgs args)
-        {
-            
-        }
-
         #endregion
+
     }
 }

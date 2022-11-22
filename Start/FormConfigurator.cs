@@ -398,7 +398,7 @@ namespace Configurator
 
             treeConfiguration.AppendColumn(new TreeViewColumn("Конфігурація", new CellRendererText(), "text", 0));
             treeConfiguration.AppendColumn(new TreeViewColumn("Тип", new CellRendererText(), "text", 1));
-            treeConfiguration.AppendColumn(new TreeViewColumn("Ключ", new CellRendererText(), "text", 2) { /*Visible = false*/ });
+            treeConfiguration.AppendColumn(new TreeViewColumn("Ключ", new CellRendererText(), "text", 2) { Visible = false });
             treeConfiguration.Model = treeStore;
 
             return treeStore;
@@ -441,7 +441,7 @@ namespace Configurator
 
         public FormConfigurator() : base("Конфігуратор")
         {
-            SetDefaultSize(1000, 600);
+            SetDefaultSize(1500, 900);
             SetPosition(WindowPosition.Center);
             SetDefaultIconFromFile("configurator.ico");
 
