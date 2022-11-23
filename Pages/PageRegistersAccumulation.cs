@@ -25,6 +25,7 @@ namespace Configurator
         ListBox listBoxResourcesFields = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxPropertyFields = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxTableParts = new ListBox() { SelectionMode = SelectionMode.Single };
+        ListBox listBoxQuery = new ListBox() { SelectionMode = SelectionMode.Single };
         Entry entryName = new Entry() { WidthRequest = 500 };
         Entry entryTable = new Entry() { WidthRequest = 500 };
         TextView textViewDesc = new TextView();
@@ -129,6 +130,8 @@ namespace Configurator
 
             //Табличні частини
             CreateTablePartList(vBox);
+
+
 
             hPaned.Pack1(vBox, false, false);
         }
@@ -317,6 +320,48 @@ namespace Configurator
             vBoxContainer.PackStart(vBox, false, false, 0);
         }
 
+        void CreateQueryList(VBox vBoxContainer)
+        {
+            VBox vBox = new VBox();
+
+            HBox hBox = new HBox();
+            hBox.PackStart(new Label("Запити:"), false, false, 5);
+            vBox.PackStart(hBox, false, false, 5);
+
+            Toolbar toolbar = new Toolbar();
+            vBox.PackStart(toolbar, false, false, 0);
+
+            ToolButton buttonAdd = new ToolButton(Stock.New) { Label = "Додати", IsImportant = true };
+            buttonAdd.Clicked += OnQueryListAddClick;
+            toolbar.Add(buttonAdd);
+
+            ToolButton buttonCopy = new ToolButton(Stock.Copy) { Label = "Копіювати", IsImportant = true };
+            buttonCopy.Clicked += OnQueryListCopyClick;
+            toolbar.Add(buttonCopy);
+
+            ToolButton buttonRefresh = new ToolButton(Stock.Refresh) { Label = "Обновити", IsImportant = true };
+            buttonRefresh.Clicked += OnQueryListRefreshClick;
+            toolbar.Add(buttonRefresh);
+
+            ToolButton buttonDelete = new ToolButton(Stock.Clear) { Label = "Видалити", IsImportant = true };
+            buttonDelete.Clicked += OnQueryListRemoveClick;
+            toolbar.Add(buttonDelete);
+
+            HBox hBoxScroll = new HBox();
+            ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
+            scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+            scrollList.SetSizeRequest(0, 150);
+
+            listBoxQuery.ButtonPressEvent += OnQueryListButtonPress;
+
+            scrollList.Add(listBoxQuery);
+            hBoxScroll.PackStart(scrollList, true, true, 5);
+
+            vBox.PackStart(hBoxScroll, false, false, 0);
+
+            vBoxContainer.PackStart(vBox, false, false, 0);
+        }
+
         #endregion
 
         #region Присвоєння / зчитування значень віджетів
@@ -443,6 +488,12 @@ namespace Configurator
             //Ресурси
             foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
                 CreateVirtualTable_Field(TablePart, field);
+
+            ConfigurationObjectQuery queryBlock = new ConfigurationObjectQuery();
+            ConfRegister.QueryList.Add(queryBlock);
+
+            queryBlock.Query.Add(1, @$"DELETE FROM {TablePart.Table}");
+            queryBlock.Query.Add(2, @$"SELECT * FROM {ConfRegister.Table}");
         }
 
         void CreateVirtualTable_Обороти()
@@ -459,6 +510,12 @@ namespace Configurator
                 CreateVirtualTable_Field(TablePart, field, "Прихід");
                 CreateVirtualTable_Field(TablePart, field, "Розхід");
             }
+
+            ConfigurationObjectQuery queryBlock = new ConfigurationObjectQuery();
+            ConfRegister.QueryList.Add(queryBlock);
+
+            queryBlock.Query.Add(1, @$"DELETE FROM {TablePart.Table}");
+            queryBlock.Query.Add(2, @$"SELECT * FROM {ConfRegister.Table}");
         }
 
         void CreateVirtualTable_ЗалишкиТаОбороти()
@@ -479,6 +536,12 @@ namespace Configurator
                 CreateVirtualTable_Field(TablePart, field, "Розхід");
                 CreateVirtualTable_Field(TablePart, field, "КінцевийЗалишок");
             }
+
+            ConfigurationObjectQuery queryBlock = new ConfigurationObjectQuery();
+            ConfRegister.QueryList.Add(queryBlock);
+
+            queryBlock.Query.Add(1, @$"DELETE FROM {TablePart.Table}");
+            queryBlock.Query.Add(2, @$"SELECT 8 FROM {ConfRegister.Table}");
         }
 
         ConfigurationObjectTablePart CreateVirtualTable_Table(string tableName)
@@ -503,6 +566,8 @@ namespace Configurator
 
         void OnCreateVirtualTableClick(object? sender, EventArgs args)
         {
+            ConfRegister.QueryList.Clear();
+
             switch (ConfRegister.TypeRegistersAccumulation)
             {
                 case TypeRegistersAccumulation.Residues: /* Залишки */

@@ -308,7 +308,7 @@ namespace Configurator
 
             if (confRegisterAccumulation.TabularParts.Count > 0)
             {
-                TreeIter registerAccumulationTabularPartsIter = treeStore.AppendValues(registerAccumulationIter, "[ Табличні частини ]");
+                TreeIter registerAccumulationTabularPartsIter = treeStore.AppendValues(registerAccumulationIter, "[ Віртуальні таблиці ]");
 
                 foreach (KeyValuePair<string, ConfigurationObjectTablePart> ConfTablePart in confRegisterAccumulation.TabularParts)
                 {
