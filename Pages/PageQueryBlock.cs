@@ -24,8 +24,6 @@ namespace Configurator
 
         ListBox listBoxQuery = new ListBox() { SelectionMode = SelectionMode.Single };
         Entry entryName = new Entry() { WidthRequest = 500 };
-        Entry entryTable = new Entry() { WidthRequest = 500 };
-        TextView textViewDesc = new TextView();
 
         #endregion
 
@@ -135,6 +133,12 @@ namespace Configurator
 
         void OnSaveClick(object? sender, EventArgs args)
         {
+            if (String.IsNullOrEmpty(entryName.Text))
+            {
+                Message.Error(GeneralForm, $"Назва не задана");
+                return;
+            }
+
             if (IsNew)
             {
                 if (QueryBlockList.ContainsKey(entryName.Text))
@@ -169,6 +173,8 @@ namespace Configurator
                 CallBack_RefreshList.Invoke();
         }
 
+        #region QueryList
+
         void OnQueryListButtonPress(object? sender, ButtonPressEventArgs args)
         {
             if (args.Event.Type == Gdk.EventType.DoubleButtonPress)
@@ -179,22 +185,22 @@ namespace Configurator
                 {
                     ListBoxRow curRow = selectedRows[0];
 
-                    // if (TablePart.Fields.ContainsKey(curRow.Child.Name))
-                    //     GeneralForm?.CreateNotebookPage($"Поле: {curRow.Child.Name}", () =>
-                    //     {
-                    //         PageField page = new PageField()
-                    //         {
-                    //             Fields = TablePart.Fields,
-                    //             Field = TablePart.Fields[curRow.Child.Name],
-                    //             IsNew = false,
-                    //             GeneralForm = GeneralForm,
-                    //             CallBack_RefreshList = TabularPartsRefreshList
-                    //         };
+                    if (QueryBlock.Query.ContainsKey(int.Parse(curRow.Child.Name)))
+                        GeneralForm?.CreateNotebookPage($"Query: {curRow.Child.Name}", () =>
+                        {
+                            PageQuery page = new PageQuery()
+                            {
+                                QueryBlock = QueryBlock,
+                                PositionQuery = int.Parse(curRow.Child.Name),
+                                IsNew = false,
+                                GeneralForm = GeneralForm,
+                                CallBack_RefreshList = QueryListRefreshList
+                            };
 
-                    //         page.SetValue();
+                            page.SetValue();
 
-                    //         return page;
-                    //     });
+                            return page;
+                        });
                 }
             }
         }
@@ -271,5 +277,7 @@ namespace Configurator
         {
             OnQueryListRefreshClick(null, new EventArgs());
         }
+
+        #endregion
     }
 }

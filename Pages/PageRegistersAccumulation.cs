@@ -549,7 +549,7 @@ namespace Configurator
             ConfRegister.AppendQueryBlockList(queryBlock);
 
             queryBlock.Query.Add(1, @$"DELETE FROM {TablePart.Table}");
-            queryBlock.Query.Add(2, @$"SELECT 8 FROM {ConfRegister.Table}");
+            queryBlock.Query.Add(2, @$"SELECT * FROM {ConfRegister.Table}");
         }
 
         ConfigurationObjectTablePart CreateVirtualTable_Table(string tableName)
@@ -594,6 +594,7 @@ namespace Configurator
             }
 
             TabularPartsRefreshList();
+            QueryListRefreshList();
         }
 
         #endregion
@@ -1066,20 +1067,20 @@ namespace Configurator
 
         void OnQueryListAddClick(object? sender, EventArgs args)
         {
-            // GeneralForm?.CreateNotebookPage("Таблична частина *", () =>
-            // {
-            //     PageTablePart page = new PageTablePart()
-            //     {
-            //         TabularParts = ConfRegister.TabularParts,
-            //         IsNew = true,
-            //         GeneralForm = GeneralForm,
-            //         CallBack_RefreshList = TabularPartsRefreshList
-            //     };
+            GeneralForm?.CreateNotebookPage($"Query: *", () =>
+            {
+                PageQueryBlock page = new PageQueryBlock()
+                {
+                    QueryBlockList = ConfRegister.QueryBlockList,
+                    IsNew = true,
+                    GeneralForm = GeneralForm,
+                    CallBack_RefreshList = QueryListRefreshList
+                };
 
-            //     page.SetValue();
+                page.SetValue();
 
-            //     return page;
-            // });
+                return page;
+            });
         }
 
         void OnQueryListCopyClick(object? sender, EventArgs args)
