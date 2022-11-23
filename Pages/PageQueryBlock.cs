@@ -81,6 +81,14 @@ namespace Configurator
             buttonDelete.Clicked += OnQueryListRemoveClick;
             toolbar.Add(buttonDelete);
 
+            ToolButton buttonGoUp = new ToolButton(Stock.GoUp) { Label = "Вверх", IsImportant = true };
+            buttonGoUp.Clicked += OnQueryListGoUpClick;
+            toolbar.Add(buttonGoUp);
+
+            ToolButton buttonGoDown = new ToolButton(Stock.GoDown) { Label = "Вверх", IsImportant = true };
+            buttonGoDown.Clicked += OnQueryListGoDownClick;
+            toolbar.Add(buttonGoDown);
+
             HBox hBoxScroll = new HBox();
             ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
             scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
@@ -120,8 +128,8 @@ namespace Configurator
 
         void FillQueryList()
         {
-            foreach (KeyValuePair<int, string> query in QueryBlock.Query)
-                listBoxQuery.Add(new Label(query.Key.ToString()) { Name = query.Key.ToString(), Halign = Align.Start });
+            foreach (KeyValuePair<string, string> query in QueryBlock.Query)
+                listBoxQuery.Add(new Label(query.Key) { Name = query.Key.ToString(), Halign = Align.Start });
         }
 
         void GetValue()
@@ -185,13 +193,13 @@ namespace Configurator
                 {
                     ListBoxRow curRow = selectedRows[0];
 
-                    if (QueryBlock.Query.ContainsKey(int.Parse(curRow.Child.Name)))
+                    if (QueryBlock.Query.ContainsKey(curRow.Child.Name))
                         GeneralForm?.CreateNotebookPage($"Query: {curRow.Child.Name}", () =>
                         {
                             PageQuery page = new PageQuery()
                             {
                                 QueryBlock = QueryBlock,
-                                PositionQuery = int.Parse(curRow.Child.Name),
+                                Key = curRow.Child.Name,
                                 IsNew = false,
                                 GeneralForm = GeneralForm,
                                 CallBack_RefreshList = QueryListRefreshList
@@ -207,21 +215,20 @@ namespace Configurator
 
         void OnQueryListAddClick(object? sender, EventArgs args)
         {
-            // GeneralForm?.CreateNotebookPage("Поле: *", () =>
-            // {
-            //     PageField page = new PageField()
-            //     {
-            //         Table = TablePart.Table,
-            //         Fields = TablePart.Fields,
-            //         IsNew = true,
-            //         GeneralForm = GeneralForm,
-            //         CallBack_RefreshList = TabularPartsRefreshList
-            //     };
+            GeneralForm?.CreateNotebookPage($"Query: *", () =>
+            {
+                PageQuery page = new PageQuery()
+                {
+                    QueryBlock = QueryBlock,
+                    IsNew = true,
+                    GeneralForm = GeneralForm,
+                    CallBack_RefreshList = QueryListRefreshList
+                };
 
-            //     page.SetValue();
+                page.SetValue();
 
-            //     return page;
-            // });
+                return page;
+            });
         }
 
         void OnQueryListCopyClick(object? sender, EventArgs args)
@@ -232,12 +239,12 @@ namespace Configurator
             {
                 foreach (ListBoxRow row in selectedRows)
                 {
-                    if (QueryBlockList.ContainsKey(row.Child.Name))
+                    if (QueryBlock.Query.ContainsKey(row.Child.Name))
                     {
-                        ConfigurationObjectQueryBlock newQueryBlock = QueryBlockList[row.Child.Name].Copy();
-                        newQueryBlock.Name += GenerateName.GetNewName();
+                        string query = QueryBlock.Query[row.Child.Name];
+                        string newKey = row.Child.Name + GenerateName.GetNewName();
 
-                        QueryBlockList.Add(newQueryBlock.Name, newQueryBlock);
+                        QueryBlock.Query.Add(newKey, query);
                     }
                 }
 
@@ -265,11 +272,63 @@ namespace Configurator
             {
                 foreach (ListBoxRow row in selectedRows)
                 {
-                    if (QueryBlockList.ContainsKey(row.Child.Name))
-                        QueryBlockList.Remove(row.Child.Name);
+                    if (QueryBlock.Query.ContainsKey(row.Child.Name))
+                        QueryBlock.Query.Remove(row.Child.Name);
                 }
 
                 QueryListRefreshList();
+            }
+        }
+
+        void OnQueryListGoUpClick(object? sender, EventArgs args)
+        {
+            ListBoxRow[] selectedRows = listBoxQuery.SelectedRows;
+
+            if (selectedRows.Length != 0)
+            {
+                ListBoxRow curRow = selectedRows[0];
+                int index = curRow.Index;
+
+                if (curRow.Index > 0)
+                {
+                    List<KeyValuePair<string, string>> list = QueryBlock.Query.ToList<KeyValuePair<string, string>>();
+                    KeyValuePair<string, string> itemIndex = list[index];
+                    list.RemoveAt(index);
+                    list.Insert(index - 1, itemIndex);
+
+                    QueryBlock.Query.Clear();
+
+                    foreach (KeyValuePair<string, string> item in list)
+                        QueryBlock.Query.Add(item.Key, item.Value);
+
+                    QueryListRefreshList();
+                }
+            }
+        }
+
+        void OnQueryListGoDownClick(object? sender, EventArgs args)
+        {
+            ListBoxRow[] selectedRows = listBoxQuery.SelectedRows;
+
+            if (selectedRows.Length != 0)
+            {
+                ListBoxRow curRow = selectedRows[0];
+                int index = curRow.Index;
+
+                if (curRow.Index < listBoxQuery.Children.Length - 1)
+                {
+                    List<KeyValuePair<string, string>> list = QueryBlock.Query.ToList<KeyValuePair<string, string>>();
+                    KeyValuePair<string, string> itemIndex = list[index];
+                    list.RemoveAt(index);
+                    list.Insert(index + 1, itemIndex);
+
+                    QueryBlock.Query.Clear();
+
+                    foreach (KeyValuePair<string, string> item in list)
+                        QueryBlock.Query.Add(item.Key, item.Value);
+
+                    QueryListRefreshList();
+                }
             }
         }
 

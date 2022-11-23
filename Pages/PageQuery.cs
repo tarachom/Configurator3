@@ -15,13 +15,14 @@ namespace Configurator
         }
 
         public ConfigurationObjectQueryBlock QueryBlock { get; set; } = new ConfigurationObjectQueryBlock();
-        public int PositionQuery { get; set; }
+        public string Key { get; set; } = "";
         public FormConfigurator? GeneralForm { get; set; }
         public System.Action? CallBack_RefreshList { get; set; }
         public bool IsNew { get; set; } = true;
 
         #region Fields
 
+        Entry entryKey = new Entry() { WidthRequest = 800 };
         TextView textViewQuery = new TextView();
 
         #endregion
@@ -57,6 +58,13 @@ namespace Configurator
         {
             VBox vBox = new VBox();
 
+            //Ключ
+            HBox hBoxKey = new HBox() { Halign = Align.End };
+            vBox.PackStart(hBoxKey, false, false, 5);
+
+            hBoxKey.PackStart(new Label("Ключ:"), false, false, 5);
+            hBoxKey.PackStart(entryKey, false, false, 5);
+
             //Query
             HBox hBoxQuery = new HBox() { Halign = Align.End };
             vBox.PackStart(hBoxQuery, false, false, 5);
@@ -90,56 +98,61 @@ namespace Configurator
 
         public void SetValue()
         {
-            textViewQuery.Buffer.Text = QueryBlock.Query[PositionQuery];
+            if (!IsNew)
+                textViewQuery.Buffer.Text = QueryBlock.Query[Key];
+
+            entryKey.Text = Key;
         }
 
         void GetValue()
         {
-            QueryBlock.Query[PositionQuery] = textViewQuery.Buffer.Text;
+            Key = entryKey.Text;
         }
 
         #endregion
 
         void OnSaveClick(object? sender, EventArgs args)
         {
-            // if (String.IsNullOrEmpty(entryName.Text))
-            // {
-            //     Message.Error(GeneralForm, $"Назва не задана");
-            //     return;
-            // }
+            entryKey.Text = entryKey.Text.Trim();
 
-            // if (IsNew)
-            // {
-            //     if (QueryBlockList.ContainsKey(entryName.Text))
-            //     {
-            //         Message.Error(GeneralForm, $"Назва не унікальна");
-            //         return;
-            //     }
-            // }
-            // else
-            // {
-            //     if (QueryBlock.Name != entryName.Text)
-            //     {
-            //         if (QueryBlockList.ContainsKey(entryName.Text))
-            //         {
-            //             Message.Error(GeneralForm, $"Назва не унікальна");
-            //             return;
-            //         }
-            //     }
+            if (String.IsNullOrEmpty(entryKey.Text))
+            {
+                Message.Error(GeneralForm, $"Назва не задана");
+                return;
+            }
 
-            //     QueryBlockList.Remove(QueryBlock.Name);
-            // }
+            if (IsNew)
+            {
+                if (QueryBlock.Query.ContainsKey(entryKey.Text))
+                {
+                    Message.Error(GeneralForm, $"Назва не унікальна");
+                    return;
+                }
+            }
+            else
+            {
+                if (Key != entryKey.Text)
+                {
+                    if (QueryBlock.Query.ContainsKey(entryKey.Text))
+                    {
+                        Message.Error(GeneralForm, $"Назва не унікальна");
+                        return;
+                    }
+                }
 
-            // GetValue();
+                QueryBlock.Query.Remove(Key);
+            }
 
-            // QueryBlockList.Add(QueryBlock.Name, QueryBlock);
+            GetValue();
 
-            // IsNew = false;
+            QueryBlock.Query.Add(Key, textViewQuery.Buffer.Text);
 
-            // GeneralForm?.RenameCurrentPageNotebook($"Query: {QueryBlock.Name}");
+            IsNew = false;
 
-            // if (CallBack_RefreshList != null)
-            //     CallBack_RefreshList.Invoke();
+            GeneralForm?.RenameCurrentPageNotebook($"Query: {Key}");
+
+            if (CallBack_RefreshList != null)
+                CallBack_RefreshList.Invoke();
         }
     }
 }

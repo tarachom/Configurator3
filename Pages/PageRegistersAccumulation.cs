@@ -500,8 +500,8 @@ namespace Configurator
             ConfigurationObjectQueryBlock queryBlock = new ConfigurationObjectQueryBlock("Залишки");
             ConfRegister.AppendQueryBlockList(queryBlock);
 
-            queryBlock.Query.Add(1, @$"DELETE FROM {TablePart.Table}");
-            queryBlock.Query.Add(2, @$"SELECT * FROM {ConfRegister.Table}");
+            queryBlock.Query.Add("DELETE", @$"DELETE FROM {TablePart.Table}");
+            queryBlock.Query.Add("SELECT", @$"SELECT * FROM {ConfRegister.Table}");
         }
 
         void CreateVirtualTable_Обороти()
@@ -522,8 +522,8 @@ namespace Configurator
             ConfigurationObjectQueryBlock queryBlock = new ConfigurationObjectQueryBlock("Обороти");
             ConfRegister.AppendQueryBlockList(queryBlock);
 
-            queryBlock.Query.Add(1, @$"DELETE FROM {TablePart.Table}");
-            queryBlock.Query.Add(2, @$"SELECT * FROM {ConfRegister.Table}");
+            queryBlock.Query.Add("DELETE", @$"DELETE FROM {TablePart.Table}");
+            queryBlock.Query.Add("SELECT", @$"SELECT * FROM {ConfRegister.Table}");
         }
 
         void CreateVirtualTable_ЗалишкиТаОбороти()
@@ -548,8 +548,8 @@ namespace Configurator
             ConfigurationObjectQueryBlock queryBlock = new ConfigurationObjectQueryBlock("ЗалишкиТаОбороти");
             ConfRegister.AppendQueryBlockList(queryBlock);
 
-            queryBlock.Query.Add(1, @$"DELETE FROM {TablePart.Table}");
-            queryBlock.Query.Add(2, @$"SELECT * FROM {ConfRegister.Table}");
+            queryBlock.Query.Add("DELETE", @$"DELETE FROM {TablePart.Table}");
+            queryBlock.Query.Add("SELECT", @$"SELECT * FROM {ConfRegister.Table}");
         }
 
         ConfigurationObjectTablePart CreateVirtualTable_Table(string tableName)
