@@ -23,7 +23,7 @@ namespace Configurator
         #region Fields
 
         ListBox listBoxQuery = new ListBox() { SelectionMode = SelectionMode.Single };
-        Entry entryName = new Entry() { WidthRequest = 500 };
+        Entry entryName = new Entry() { WidthRequest = 800 };
 
         #endregion
 
@@ -44,7 +44,7 @@ namespace Configurator
 
             PackStart(hBox, false, false, 10);
 
-            HPaned hPaned = new HPaned() { BorderWidth = 5 };
+            HPaned hPaned = new HPaned() { BorderWidth = 5, Position = 800 };
 
             CreatePack1(hPaned);
             CreatePack2(hPaned);
@@ -54,10 +54,18 @@ namespace Configurator
             ShowAll();
         }
 
-        void CreatePack2(HPaned hPaned)
+        void CreatePack1(HPaned hPaned)
         {
             VBox vBox = new VBox();
 
+            //Назва
+            HBox hBoxName = new HBox() { Halign = Align.End };
+            vBox.PackStart(hBoxName, false, false, 5);
+
+            hBoxName.PackStart(new Label("Назва:"), false, false, 5);
+            hBoxName.PackStart(entryName, false, false, 5);
+
+            //Список
             HBox hBox = new HBox();
             hBox.PackStart(new Label("Поля:"), false, false, 5);
             vBox.PackStart(hBox, false, false, 5);
@@ -85,7 +93,7 @@ namespace Configurator
             buttonGoUp.Clicked += OnQueryListGoUpClick;
             toolbar.Add(buttonGoUp);
 
-            ToolButton buttonGoDown = new ToolButton(Stock.GoDown) { Label = "Вверх", IsImportant = true };
+            ToolButton buttonGoDown = new ToolButton(Stock.GoDown) { Label = "Вниз", IsImportant = true };
             buttonGoDown.Clicked += OnQueryListGoDownClick;
             toolbar.Add(buttonGoDown);
 
@@ -100,21 +108,23 @@ namespace Configurator
             hBoxScroll.PackStart(scrollList, true, true, 5);
 
             vBox.PackStart(hBoxScroll, false, false, 0);
-            hPaned.Pack2(vBox, true, false);
+
+            hPaned.Pack1(vBox, false, false);
         }
 
-        void CreatePack1(HPaned hPaned)
+        void CreatePack2(HPaned hPaned)
         {
             VBox vBox = new VBox();
 
-            //Назва
-            HBox hBoxName = new HBox() { Halign = Align.End };
-            vBox.PackStart(hBoxName, false, false, 5);
+            Expander expanderHelp = new Expander("Довідка");
+            expanderHelp.Add(vBox);
 
-            hBoxName.PackStart(new Label("Назва:"), false, false, 5);
-            hBoxName.PackStart(entryName, false, false, 5);
+            HBox hBox = new HBox() { Halign = Align.Fill };
+            vBox.PackStart(hBox, false, false, 5);
 
-            hPaned.Pack1(vBox, false, false);
+            hBox.PackStart(new Label("help"), false, false, 5);
+
+            hPaned.Pack2(expanderHelp, false, false);
         }
 
         #region Присвоєння / зчитування значень віджетів

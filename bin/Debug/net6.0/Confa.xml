@@ -5,7 +5,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>23.11.2022 20:01:12</DateTimeSave>
+  <DateTimeSave>23.11.2022 21:12:53</DateTimeSave>
   <ConstantsBlocks>
     <ConstantsBlock>
       <Name>ЗначенняЗаЗамовчуванням</Name>
@@ -14074,12 +14074,8 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <QueryBlockList>
         <QueryBlock>
           <Name>Залишки</Name>
-          <Query position="0" key="DELETE2">DELETE FROM tab_b31</Query>
+          <Query position="0" key="DELETE">DELETE FROM tab_b31</Query>
           <Query position="1" key="SELECT">SELECT * FROM tab_a38</Query>
-          <Query position="2" key="Delete2">
-          </Query>
-          <Query position="3" key="Delete">
-          </Query>
         </QueryBlock>
         <QueryBlock>
           <Name>Обороти</Name>

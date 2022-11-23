@@ -44,7 +44,7 @@ namespace Configurator
 
             PackStart(hBox, false, false, 10);
 
-            HPaned hPaned = new HPaned() { BorderWidth = 5, Position = 500 };
+            HPaned hPaned = new HPaned() { BorderWidth = 5, Position = 800 };
 
             CreatePack1(hPaned);
             CreatePack2(hPaned);
