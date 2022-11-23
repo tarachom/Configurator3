@@ -149,7 +149,7 @@ namespace Configurator
 
             IsNew = false;
 
-            GeneralForm?.RenameCurrentPageNotebook($"Query: {Key}");
+            GeneralForm?.RenameCurrentPageNotebook($"Запит: {Key}");
 
             if (CallBack_RefreshList != null)
                 CallBack_RefreshList.Invoke();

@@ -326,7 +326,7 @@ namespace Configurator
             VBox vBox = new VBox();
 
             HBox hBox = new HBox();
-            hBox.PackStart(new Label("Запити:"), false, false, 5);
+            hBox.PackStart(new Label("Блоки запитів:"), false, false, 5);
             vBox.PackStart(hBox, false, false, 5);
 
             Toolbar toolbar = new Toolbar();
@@ -1046,7 +1046,7 @@ namespace Configurator
                     ListBoxRow curRow = selectedRows[0];
 
                     if (ConfRegister.QueryBlockList.ContainsKey(curRow.Child.Name))
-                        GeneralForm?.CreateNotebookPage($"Query: {curRow.Child.Name}", () =>
+                        GeneralForm?.CreateNotebookPage($"Блок запитів: {curRow.Child.Name}", () =>
                         {
                             PageQueryBlock page = new PageQueryBlock()
                             {
@@ -1067,7 +1067,7 @@ namespace Configurator
 
         void OnQueryListAddClick(object? sender, EventArgs args)
         {
-            GeneralForm?.CreateNotebookPage($"Query: *", () =>
+            GeneralForm?.CreateNotebookPage($"Блок запитів: *", () =>
             {
                 PageQueryBlock page = new PageQueryBlock()
                 {

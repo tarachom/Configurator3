@@ -204,7 +204,7 @@ namespace Configurator
                     ListBoxRow curRow = selectedRows[0];
 
                     if (QueryBlock.Query.ContainsKey(curRow.Child.Name))
-                        GeneralForm?.CreateNotebookPage($"Query: {curRow.Child.Name}", () =>
+                        GeneralForm?.CreateNotebookPage($"Запит: {curRow.Child.Name}", () =>
                         {
                             PageQuery page = new PageQuery()
                             {
@@ -225,7 +225,7 @@ namespace Configurator
 
         void OnQueryListAddClick(object? sender, EventArgs args)
         {
-            GeneralForm?.CreateNotebookPage($"Query: *", () =>
+            GeneralForm?.CreateNotebookPage($"Запит: *", () =>
             {
                 PageQuery page = new PageQuery()
                 {
