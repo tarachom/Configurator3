@@ -5,7 +5,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>21.11.2022 23:37:57</DateTimeSave>
+  <DateTimeSave>22.11.2022 19:43:39</DateTimeSave>
   <ConstantsBlocks>
     <ConstantsBlock>
       <Name>ЗначенняЗаЗамовчуванням</Name>
@@ -13814,10 +13814,124 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       </AllowDocumentSpend>
       <TabularParts>
         <TablePart>
-          <Name>День</Name>
-          <Table>tab_b24</Table>
-          <Desc>
-          </Desc>
+          <Name>ЗалишкиТаОбороти</Name>
+          <Table>tab_b33</Table>
+          <Desc>Віртуальна таблиця</Desc>
+          <Fields>
+            <Field>
+              <Name>Період</Name>
+              <NameInTable>col_a1</NameInTable>
+              <Type>date</Type>
+              <Desc>
+              </Desc>
+              <IsIndex>1</IsIndex>
+            </Field>
+            <Field>
+              <Name>Номенклатура</Name>
+              <NameInTable>col_a2</NameInTable>
+              <Type>pointer</Type>
+              <Pointer>Довідники.Номенклатура</Pointer>
+              <Desc>
+              </Desc>
+              <IsIndex>1</IsIndex>
+            </Field>
+            <Field>
+              <Name>ХарактеристикаНоменклатури</Name>
+              <NameInTable>col_a3</NameInTable>
+              <Type>pointer</Type>
+              <Pointer>Довідники.ХарактеристикиНоменклатури</Pointer>
+              <Desc>
+              </Desc>
+              <IsIndex>1</IsIndex>
+            </Field>
+            <Field>
+              <Name>Склад</Name>
+              <NameInTable>col_a4</NameInTable>
+              <Type>pointer</Type>
+              <Pointer>Довідники.Склади</Pointer>
+              <Desc>
+              </Desc>
+              <IsIndex>1</IsIndex>
+            </Field>
+            <Field>
+              <Name>Серія</Name>
+              <NameInTable>col_a5</NameInTable>
+              <Type>pointer</Type>
+              <Pointer>Довідники.СеріїНоменклатури</Pointer>
+              <Desc>
+              </Desc>
+              <IsIndex>1</IsIndex>
+            </Field>
+            <Field>
+              <Name>ВНаявностіПочатковийЗалишок</Name>
+              <NameInTable>col_a6</NameInTable>
+              <Type>numeric</Type>
+              <Desc>
+              </Desc>
+              <IsIndex>0</IsIndex>
+            </Field>
+            <Field>
+              <Name>ВНаявностіПрихід</Name>
+              <NameInTable>col_a7</NameInTable>
+              <Type>numeric</Type>
+              <Desc>
+              </Desc>
+              <IsIndex>0</IsIndex>
+            </Field>
+            <Field>
+              <Name>ВНаявностіРозхід</Name>
+              <NameInTable>col_a8</NameInTable>
+              <Type>numeric</Type>
+              <Desc>
+              </Desc>
+              <IsIndex>0</IsIndex>
+            </Field>
+            <Field>
+              <Name>ВНаявностіКінцевийЗалишок</Name>
+              <NameInTable>col_a9</NameInTable>
+              <Type>numeric</Type>
+              <Desc>
+              </Desc>
+              <IsIndex>0</IsIndex>
+            </Field>
+            <Field>
+              <Name>ДоВідвантаженняПочатковийЗалишок</Name>
+              <NameInTable>col_b1</NameInTable>
+              <Type>numeric</Type>
+              <Desc>
+              </Desc>
+              <IsIndex>0</IsIndex>
+            </Field>
+            <Field>
+              <Name>ДоВідвантаженняПрихід</Name>
+              <NameInTable>col_b2</NameInTable>
+              <Type>numeric</Type>
+              <Desc>
+              </Desc>
+              <IsIndex>0</IsIndex>
+            </Field>
+            <Field>
+              <Name>ДоВідвантаженняРозхід</Name>
+              <NameInTable>col_b3</NameInTable>
+              <Type>numeric</Type>
+              <Desc>
+              </Desc>
+              <IsIndex>0</IsIndex>
+            </Field>
+            <Field>
+              <Name>ДоВідвантаженняКінцевийЗалишок</Name>
+              <NameInTable>col_b4</NameInTable>
+              <Type>numeric</Type>
+              <Desc>
+              </Desc>
+              <IsIndex>0</IsIndex>
+            </Field>
+          </Fields>
+        </TablePart>
+        <TablePart>
+          <Name>Обороти</Name>
+          <Table>tab_b32</Table>
+          <Desc>Віртуальна таблиця</Desc>
           <Fields>
             <Field>
               <Name>Номенклатура</Name>
@@ -13856,9 +13970,84 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
               <IsIndex>1</IsIndex>
             </Field>
             <Field>
-              <Name>Період</Name>
+              <Name>ВНаявностіПрихід</Name>
               <NameInTable>col_a5</NameInTable>
+              <Type>numeric</Type>
+              <Desc>
+              </Desc>
+              <IsIndex>0</IsIndex>
+            </Field>
+            <Field>
+              <Name>ВНаявностіРозхід</Name>
+              <NameInTable>col_a6</NameInTable>
+              <Type>numeric</Type>
+              <Desc>
+              </Desc>
+              <IsIndex>0</IsIndex>
+            </Field>
+            <Field>
+              <Name>ДоВідвантаженняПрихід</Name>
+              <NameInTable>col_a7</NameInTable>
+              <Type>numeric</Type>
+              <Desc>
+              </Desc>
+              <IsIndex>0</IsIndex>
+            </Field>
+            <Field>
+              <Name>ДоВідвантаженняРозхід</Name>
+              <NameInTable>col_a8</NameInTable>
+              <Type>numeric</Type>
+              <Desc>
+              </Desc>
+              <IsIndex>0</IsIndex>
+            </Field>
+          </Fields>
+        </TablePart>
+        <TablePart>
+          <Name>Залишки</Name>
+          <Table>tab_b31</Table>
+          <Desc>Віртуальна таблиця</Desc>
+          <Fields>
+            <Field>
+              <Name>Період</Name>
+              <NameInTable>col_a1</NameInTable>
               <Type>date</Type>
+              <Desc>
+              </Desc>
+              <IsIndex>1</IsIndex>
+            </Field>
+            <Field>
+              <Name>Номенклатура</Name>
+              <NameInTable>col_a2</NameInTable>
+              <Type>pointer</Type>
+              <Pointer>Довідники.Номенклатура</Pointer>
+              <Desc>
+              </Desc>
+              <IsIndex>1</IsIndex>
+            </Field>
+            <Field>
+              <Name>ХарактеристикаНоменклатури</Name>
+              <NameInTable>col_a3</NameInTable>
+              <Type>pointer</Type>
+              <Pointer>Довідники.ХарактеристикиНоменклатури</Pointer>
+              <Desc>
+              </Desc>
+              <IsIndex>1</IsIndex>
+            </Field>
+            <Field>
+              <Name>Склад</Name>
+              <NameInTable>col_a4</NameInTable>
+              <Type>pointer</Type>
+              <Pointer>Довідники.Склади</Pointer>
+              <Desc>
+              </Desc>
+              <IsIndex>1</IsIndex>
+            </Field>
+            <Field>
+              <Name>Серія</Name>
+              <NameInTable>col_a5</NameInTable>
+              <Type>pointer</Type>
+              <Pointer>Довідники.СеріїНоменклатури</Pointer>
               <Desc>
               </Desc>
               <IsIndex>1</IsIndex>
@@ -13874,126 +14063,6 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
             <Field>
               <Name>ДоВідвантаження</Name>
               <NameInTable>col_a7</NameInTable>
-              <Type>numeric</Type>
-              <Desc>
-              </Desc>
-              <IsIndex>0</IsIndex>
-            </Field>
-          </Fields>
-        </TablePart>
-        <TablePart>
-          <Name>Місяць</Name>
-          <Table>tab_b25</Table>
-          <Desc>
-          </Desc>
-          <Fields>
-            <Field>
-              <Name>Номенклатура</Name>
-              <NameInTable>col_a1</NameInTable>
-              <Type>pointer</Type>
-              <Pointer>Довідники.Номенклатура</Pointer>
-              <Desc>
-              </Desc>
-              <IsIndex>1</IsIndex>
-            </Field>
-            <Field>
-              <Name>ХарактеристикаНоменклатури</Name>
-              <NameInTable>col_a2</NameInTable>
-              <Type>pointer</Type>
-              <Pointer>Довідники.ХарактеристикиНоменклатури</Pointer>
-              <Desc>
-              </Desc>
-              <IsIndex>1</IsIndex>
-            </Field>
-            <Field>
-              <Name>Склад</Name>
-              <NameInTable>col_a3</NameInTable>
-              <Type>pointer</Type>
-              <Pointer>Довідники.Склади</Pointer>
-              <Desc>
-              </Desc>
-              <IsIndex>1</IsIndex>
-            </Field>
-            <Field>
-              <Name>Серія</Name>
-              <NameInTable>col_a4</NameInTable>
-              <Type>pointer</Type>
-              <Pointer>Довідники.СеріїНоменклатури</Pointer>
-              <Desc>
-              </Desc>
-              <IsIndex>1</IsIndex>
-            </Field>
-            <Field>
-              <Name>Період</Name>
-              <NameInTable>col_a5</NameInTable>
-              <Type>date</Type>
-              <Desc>
-              </Desc>
-              <IsIndex>1</IsIndex>
-            </Field>
-            <Field>
-              <Name>ВНаявності</Name>
-              <NameInTable>col_a6</NameInTable>
-              <Type>numeric</Type>
-              <Desc>
-              </Desc>
-              <IsIndex>0</IsIndex>
-            </Field>
-            <Field>
-              <Name>ДоВідвантаження</Name>
-              <NameInTable>col_a7</NameInTable>
-              <Type>numeric</Type>
-              <Desc>
-              </Desc>
-              <IsIndex>0</IsIndex>
-            </Field>
-          </Fields>
-        </TablePart>
-        <TablePart>
-          <Name>Підсумок</Name>
-          <Table>tab_b30</Table>
-          <Desc>Підсумки. Використовуються для відображення в таб. частнанах  
-наприклад довідника Номенклатура</Desc>
-          <Fields>
-            <Field>
-              <Name>Номенклатура</Name>
-              <NameInTable>col_a1</NameInTable>
-              <Type>pointer</Type>
-              <Pointer>Довідники.Номенклатура</Pointer>
-              <Desc>
-              </Desc>
-              <IsIndex>1</IsIndex>
-            </Field>
-            <Field>
-              <Name>ХарактеристикаНоменклатури</Name>
-              <NameInTable>col_a2</NameInTable>
-              <Type>pointer</Type>
-              <Pointer>Довідники.ХарактеристикиНоменклатури</Pointer>
-              <Desc>
-              </Desc>
-              <IsIndex>1</IsIndex>
-            </Field>
-            <Field>
-              <Name>Склад</Name>
-              <NameInTable>col_a3</NameInTable>
-              <Type>pointer</Type>
-              <Pointer>Довідники.Склади</Pointer>
-              <Desc>
-              </Desc>
-              <IsIndex>1</IsIndex>
-            </Field>
-            <Field>
-              <Name>Серія</Name>
-              <NameInTable>col_a4</NameInTable>
-              <Type>pointer</Type>
-              <Pointer>Довідники.СеріїНоменклатури</Pointer>
-              <Desc>
-              </Desc>
-              <IsIndex>1</IsIndex>
-            </Field>
-            <Field>
-              <Name>ВНаявності</Name>
-              <NameInTable>col_a6</NameInTable>
               <Type>numeric</Type>
               <Desc>
               </Desc>
@@ -14111,7 +14180,58 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         <Fields />
       </PropertyFields>
       <AllowDocumentSpend />
-      <TabularParts />
+      <TabularParts>
+        <TablePart>
+          <Name>Обороти</Name>
+          <Table>tab_b34</Table>
+          <Desc>Віртуальна таблиця</Desc>
+          <Fields>
+            <Field>
+              <Name>Номенклатура</Name>
+              <NameInTable>col_a1</NameInTable>
+              <Type>pointer</Type>
+              <Pointer>Довідники.Номенклатура</Pointer>
+              <Desc>
+              </Desc>
+              <IsIndex>1</IsIndex>
+            </Field>
+            <Field>
+              <Name>ХарактеристикаНоменклатури</Name>
+              <NameInTable>col_a2</NameInTable>
+              <Type>pointer</Type>
+              <Pointer>Довідники.ХарактеристикиНоменклатури</Pointer>
+              <Desc>
+              </Desc>
+              <IsIndex>1</IsIndex>
+            </Field>
+            <Field>
+              <Name>Склад</Name>
+              <NameInTable>col_a3</NameInTable>
+              <Type>pointer</Type>
+              <Pointer>Довідники.Склади</Pointer>
+              <Desc>
+              </Desc>
+              <IsIndex>1</IsIndex>
+            </Field>
+            <Field>
+              <Name>КількістьПрихід</Name>
+              <NameInTable>col_a4</NameInTable>
+              <Type>numeric</Type>
+              <Desc>
+              </Desc>
+              <IsIndex>0</IsIndex>
+            </Field>
+            <Field>
+              <Name>КількістьРозхід</Name>
+              <NameInTable>col_a5</NameInTable>
+              <Type>numeric</Type>
+              <Desc>
+              </Desc>
+              <IsIndex>0</IsIndex>
+            </Field>
+          </Fields>
+        </TablePart>
+      </TabularParts>
     </RegisterAccumulation>
     <RegisterAccumulation>
       <Name>ЗамовленняКлієнтів</Name>
