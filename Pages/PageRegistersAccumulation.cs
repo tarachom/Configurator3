@@ -25,7 +25,7 @@ namespace Configurator
         ListBox listBoxResourcesFields = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxPropertyFields = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxTableParts = new ListBox() { SelectionMode = SelectionMode.Single };
-        ListBox listBoxQuery = new ListBox() { SelectionMode = SelectionMode.Single };
+        ListBox listBoxQueryBlock = new ListBox() { SelectionMode = SelectionMode.Single };
         Entry entryName = new Entry() { WidthRequest = 500 };
         Entry entryTable = new Entry() { WidthRequest = 500 };
         TextView textViewDesc = new TextView();
@@ -131,7 +131,8 @@ namespace Configurator
             //Табличні частини
             CreateTablePartList(vBox);
 
-
+            //Запити
+            CreateQueryList(vBox);
 
             hPaned.Pack1(vBox, false, false);
         }
@@ -352,9 +353,9 @@ namespace Configurator
             scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
             scrollList.SetSizeRequest(0, 150);
 
-            listBoxQuery.ButtonPressEvent += OnQueryListButtonPress;
+            listBoxQueryBlock.ButtonPressEvent += OnQueryListButtonPress;
 
-            scrollList.Add(listBoxQuery);
+            scrollList.Add(listBoxQueryBlock);
             hBoxScroll.PackStart(scrollList, true, true, 5);
 
             vBox.PackStart(hBoxScroll, false, false, 0);
@@ -373,6 +374,7 @@ namespace Configurator
             FillResourcesFields();
             FillPropertyFields();
             FillTabularParts();
+            FillQueryBlockList();
 
             entryName.Text = ConfRegister.Name;
 
@@ -417,6 +419,12 @@ namespace Configurator
         {
             foreach (ConfigurationObjectTablePart tablePart in ConfRegister.TabularParts.Values)
                 listBoxTableParts.Add(new Label(tablePart.Name) { Name = tablePart.Name, Halign = Align.Start });
+        }
+
+        void FillQueryBlockList()
+        {
+            foreach (ConfigurationObjectQueryBlock queryBlock in ConfRegister.QueryBlockList.Values)
+                listBoxQueryBlock.Add(new Label(queryBlock.Name) { Name = queryBlock.Name, Halign = Align.Start });
         }
 
         void GetValue()
@@ -489,8 +497,8 @@ namespace Configurator
             foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
                 CreateVirtualTable_Field(TablePart, field);
 
-            ConfigurationObjectQuery queryBlock = new ConfigurationObjectQuery();
-            ConfRegister.QueryList.Add(queryBlock);
+            ConfigurationObjectQueryBlock queryBlock = new ConfigurationObjectQueryBlock("Залишки");
+            ConfRegister.AppendQueryBlockList(queryBlock);
 
             queryBlock.Query.Add(1, @$"DELETE FROM {TablePart.Table}");
             queryBlock.Query.Add(2, @$"SELECT * FROM {ConfRegister.Table}");
@@ -511,8 +519,8 @@ namespace Configurator
                 CreateVirtualTable_Field(TablePart, field, "Розхід");
             }
 
-            ConfigurationObjectQuery queryBlock = new ConfigurationObjectQuery();
-            ConfRegister.QueryList.Add(queryBlock);
+            ConfigurationObjectQueryBlock queryBlock = new ConfigurationObjectQueryBlock("Обороти");
+            ConfRegister.AppendQueryBlockList(queryBlock);
 
             queryBlock.Query.Add(1, @$"DELETE FROM {TablePart.Table}");
             queryBlock.Query.Add(2, @$"SELECT * FROM {ConfRegister.Table}");
@@ -537,8 +545,8 @@ namespace Configurator
                 CreateVirtualTable_Field(TablePart, field, "КінцевийЗалишок");
             }
 
-            ConfigurationObjectQuery queryBlock = new ConfigurationObjectQuery();
-            ConfRegister.QueryList.Add(queryBlock);
+            ConfigurationObjectQueryBlock queryBlock = new ConfigurationObjectQueryBlock("ЗалишкиТаОбороти");
+            ConfRegister.AppendQueryBlockList(queryBlock);
 
             queryBlock.Query.Add(1, @$"DELETE FROM {TablePart.Table}");
             queryBlock.Query.Add(2, @$"SELECT 8 FROM {ConfRegister.Table}");
@@ -566,7 +574,7 @@ namespace Configurator
 
         void OnCreateVirtualTableClick(object? sender, EventArgs args)
         {
-            ConfRegister.QueryList.Clear();
+            ConfRegister.QueryBlockList.Clear();
 
             switch (ConfRegister.TypeRegistersAccumulation)
             {
@@ -1020,6 +1028,110 @@ namespace Configurator
         void TabularPartsRefreshList()
         {
             OnTabularPartsRefreshClick(null, new EventArgs());
+        }
+
+        #endregion
+
+        #region QueryList
+
+        void OnQueryListButtonPress(object? sender, ButtonPressEventArgs args)
+        {
+            if (args.Event.Type == Gdk.EventType.DoubleButtonPress)
+            {
+                ListBoxRow[] selectedRows = listBoxQueryBlock.SelectedRows;
+
+                if (selectedRows.Length != 0)
+                {
+                    ListBoxRow curRow = selectedRows[0];
+
+                    // if (ConfRegister.TabularParts.ContainsKey(curRow.Child.Name))
+                    //     GeneralForm?.CreateNotebookPage($"Таблична частина: {curRow.Child.Name}", () =>
+                    //     {
+                    //         PageTablePart page = new PageTablePart()
+                    //         {
+                    //             TabularParts = ConfRegister.TabularParts,
+                    //             TablePart = ConfRegister.TabularParts[curRow.Child.Name],
+                    //             IsNew = false,
+                    //             GeneralForm = GeneralForm,
+                    //             CallBack_RefreshList = TabularPartsRefreshList
+                    //         };
+
+                    //         page.SetValue();
+
+                    //         return page;
+                    //     });
+                }
+            }
+        }
+
+        void OnQueryListAddClick(object? sender, EventArgs args)
+        {
+            // GeneralForm?.CreateNotebookPage("Таблична частина *", () =>
+            // {
+            //     PageTablePart page = new PageTablePart()
+            //     {
+            //         TabularParts = ConfRegister.TabularParts,
+            //         IsNew = true,
+            //         GeneralForm = GeneralForm,
+            //         CallBack_RefreshList = TabularPartsRefreshList
+            //     };
+
+            //     page.SetValue();
+
+            //     return page;
+            // });
+        }
+
+        void OnQueryListCopyClick(object? sender, EventArgs args)
+        {
+            ListBoxRow[] selectedRows = listBoxQueryBlock.SelectedRows;
+
+            if (selectedRows.Length != 0)
+            {
+                foreach (ListBoxRow row in selectedRows)
+                {
+                    if (ConfRegister.QueryBlockList.ContainsKey(row.Child.Name))
+                    {
+                        ConfigurationObjectQueryBlock newQueryBlock = ConfRegister.QueryBlockList[row.Child.Name].Copy();
+                        newQueryBlock.Name += GenerateName.GetNewName();
+
+                        ConfRegister.AppendQueryBlockList(newQueryBlock);
+                    }
+                }
+
+                QueryListRefreshList();
+            }
+        }
+
+        void OnQueryListRefreshClick(object? sender, EventArgs args)
+        {
+            foreach (Widget item in listBoxQueryBlock.Children)
+                listBoxQueryBlock.Remove(item);
+
+            FillQueryBlockList();
+
+            listBoxQueryBlock.ShowAll();
+        }
+
+        void OnQueryListRemoveClick(object? sender, EventArgs args)
+        {
+            ListBoxRow[] selectedRows = listBoxQueryBlock.SelectedRows;
+
+            if (selectedRows.Length != 0)
+            {
+                foreach (ListBoxRow row in selectedRows)
+                {
+                    if (ConfRegister.QueryBlockList.ContainsKey(row.Child.Name))
+                        ConfRegister.QueryBlockList.Remove(row.Child.Name);
+                }
+
+                QueryListRefreshList();
+            }
+        }
+
+        void QueryListRefreshList()
+        {
+            OnQueryListRefreshClick(null, new EventArgs());
         }
 
         #endregion
