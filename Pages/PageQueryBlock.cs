@@ -68,19 +68,19 @@ namespace Configurator
             vBox.PackStart(toolbar, false, false, 0);
 
             ToolButton buttonAdd = new ToolButton(Stock.New) { Label = "Додати", IsImportant = true };
-            buttonAdd.Clicked += OnTabularPartsAddClick;
+            buttonAdd.Clicked += OnQueryListAddClick;
             toolbar.Add(buttonAdd);
 
             ToolButton buttonCopy = new ToolButton(Stock.Copy) { Label = "Копіювати", IsImportant = true };
-            buttonCopy.Clicked += OnTabularPartsCopyClick;
+            buttonCopy.Clicked += OnQueryListCopyClick;
             toolbar.Add(buttonCopy);
 
             ToolButton buttonRefresh = new ToolButton(Stock.Refresh) { Label = "Обновити", IsImportant = true };
-            buttonRefresh.Clicked += OnTabularPartsRefreshClick;
+            buttonRefresh.Clicked += OnQueryListRefreshClick;
             toolbar.Add(buttonRefresh);
 
             ToolButton buttonDelete = new ToolButton(Stock.Clear) { Label = "Видалити", IsImportant = true };
-            buttonDelete.Clicked += OnTabularPartsRemoveClick;
+            buttonDelete.Clicked += OnQueryListRemoveClick;
             toolbar.Add(buttonDelete);
 
             HBox hBoxScroll = new HBox();
@@ -88,9 +88,9 @@ namespace Configurator
             scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
             scrollList.SetSizeRequest(0, 300);
 
-            listBoxFields.ButtonPressEvent += OnTabularPartsButtonPress;
+            listBoxQuery.ButtonPressEvent += OnQueryListButtonPress;
 
-            scrollList.Add(listBoxFields);
+            scrollList.Add(listBoxQuery);
             hBoxScroll.PackStart(scrollList, true, true, 5);
 
             vBox.PackStart(hBoxScroll, false, false, 0);
@@ -108,25 +108,6 @@ namespace Configurator
             hBoxName.PackStart(new Label("Назва:"), false, false, 5);
             hBoxName.PackStart(entryName, false, false, 5);
 
-            //Таблиця
-            HBox hBoxTable = new HBox() { Halign = Align.End };
-            vBox.PackStart(hBoxTable, false, false, 5);
-
-            hBoxTable.PackStart(new Label("Таблиця:"), false, false, 5);
-            hBoxTable.PackStart(entryTable, false, false, 5);
-
-            //Опис
-            HBox hBoxDesc = new HBox() { Halign = Align.End };
-            vBox.PackStart(hBoxDesc, false, false, 5);
-
-            hBoxDesc.PackStart(new Label("Опис:") { Valign = Align.Start }, false, false, 5);
-
-            ScrolledWindow scrollTextView = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 500, HeightRequest = 100 };
-            scrollTextView.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-            scrollTextView.Add(textViewDesc);
-
-            hBoxDesc.PackStart(scrollTextView, false, false, 5);
-
             hPaned.Pack1(vBox, false, false);
         }
 
@@ -134,183 +115,161 @@ namespace Configurator
 
         public void SetValue()
         {
-            FillTabularParts();
+            FillQueryList();
 
-            entryName.Text = TablePart.Name;
-
-            if (IsNew)
-                entryTable.Text = Configuration.GetNewUnigueTableName(Program.Kernel!);
-            else
-                entryTable.Text = TablePart.Table;
-
-            textViewDesc.Buffer.Text = TablePart.Desc;
+            entryName.Text = QueryBlock.Name;
         }
 
-        void FillTabularParts()
+        void FillQueryList()
         {
-            foreach (ConfigurationObjectField field in TablePart.Fields.Values)
-                listBoxFields.Add(new Label(field.Name) { Name = field.Name, Halign = Align.Start });
+            foreach (KeyValuePair<int, string> query in QueryBlock.Query)
+                listBoxQuery.Add(new Label(query.Key.ToString()) { Name = query.Key.ToString(), Halign = Align.Start });
         }
 
         void GetValue()
         {
-            TablePart.Name = entryName.Text;
-            TablePart.Table = entryTable.Text;
-            TablePart.Desc = textViewDesc.Buffer.Text;
+            QueryBlock.Name = entryName.Text;
         }
 
         #endregion
 
         void OnSaveClick(object? sender, EventArgs args)
         {
-            string name = entryName.Text;
-            string errorList = Configuration.ValidateConfigurationObjectName(Program.Kernel!, ref name);
-            entryName.Text = name;
-
-            if (errorList.Length > 0)
-            {
-                Message.Error(GeneralForm, $"{errorList}");
-                return;
-            }
-
             if (IsNew)
             {
-                if (TabularParts.ContainsKey(entryName.Text))
+                if (QueryBlockList.ContainsKey(entryName.Text))
                 {
-                    Message.Error(GeneralForm, $"Назва табличної частини не унікальна");
+                    Message.Error(GeneralForm, $"Назва не унікальна");
                     return;
                 }
             }
             else
             {
-                if (TablePart.Name != entryName.Text)
+                if (QueryBlock.Name != entryName.Text)
                 {
-                    if (TabularParts.ContainsKey(entryName.Text))
+                    if (QueryBlockList.ContainsKey(entryName.Text))
                     {
-                        Message.Error(GeneralForm, $"Назва табличної частини не унікальна");
+                        Message.Error(GeneralForm, $"Назва не унікальна");
                         return;
                     }
                 }
 
-                TabularParts.Remove(TablePart.Name);
+                QueryBlockList.Remove(QueryBlock.Name);
             }
 
             GetValue();
 
-            TabularParts.Add(TablePart.Name, TablePart);
+            QueryBlockList.Add(QueryBlock.Name, QueryBlock);
 
             IsNew = false;
 
-            GeneralForm?.LoadTreeAsync();
-            GeneralForm?.RenameCurrentPageNotebook($"Таблична частина: {TablePart.Name}");
+            GeneralForm?.RenameCurrentPageNotebook($"Query: {QueryBlock.Name}");
 
             if (CallBack_RefreshList != null)
                 CallBack_RefreshList.Invoke();
         }
 
-        void OnTabularPartsButtonPress(object? sender, ButtonPressEventArgs args)
+        void OnQueryListButtonPress(object? sender, ButtonPressEventArgs args)
         {
             if (args.Event.Type == Gdk.EventType.DoubleButtonPress)
             {
-                ListBoxRow[] selectedRows = listBoxFields.SelectedRows;
+                ListBoxRow[] selectedRows = listBoxQuery.SelectedRows;
 
                 if (selectedRows.Length != 0)
                 {
                     ListBoxRow curRow = selectedRows[0];
 
-                    if (TablePart.Fields.ContainsKey(curRow.Child.Name))
-                        GeneralForm?.CreateNotebookPage($"Поле: {curRow.Child.Name}", () =>
-                        {
-                            PageField page = new PageField()
-                            {
-                                Fields = TablePart.Fields,
-                                Field = TablePart.Fields[curRow.Child.Name],
-                                IsNew = false,
-                                GeneralForm = GeneralForm,
-                                CallBack_RefreshList = TabularPartsRefreshList
-                            };
+                    // if (TablePart.Fields.ContainsKey(curRow.Child.Name))
+                    //     GeneralForm?.CreateNotebookPage($"Поле: {curRow.Child.Name}", () =>
+                    //     {
+                    //         PageField page = new PageField()
+                    //         {
+                    //             Fields = TablePart.Fields,
+                    //             Field = TablePart.Fields[curRow.Child.Name],
+                    //             IsNew = false,
+                    //             GeneralForm = GeneralForm,
+                    //             CallBack_RefreshList = TabularPartsRefreshList
+                    //         };
 
-                            page.SetValue();
+                    //         page.SetValue();
 
-                            return page;
-                        });
+                    //         return page;
+                    //     });
                 }
             }
         }
 
-        void OnTabularPartsAddClick(object? sender, EventArgs args)
+        void OnQueryListAddClick(object? sender, EventArgs args)
         {
-            GeneralForm?.CreateNotebookPage("Поле: *", () =>
-            {
-                PageField page = new PageField()
-                {
-                    Table = TablePart.Table,
-                    Fields = TablePart.Fields,
-                    IsNew = true,
-                    GeneralForm = GeneralForm,
-                    CallBack_RefreshList = TabularPartsRefreshList
-                };
+            // GeneralForm?.CreateNotebookPage("Поле: *", () =>
+            // {
+            //     PageField page = new PageField()
+            //     {
+            //         Table = TablePart.Table,
+            //         Fields = TablePart.Fields,
+            //         IsNew = true,
+            //         GeneralForm = GeneralForm,
+            //         CallBack_RefreshList = TabularPartsRefreshList
+            //     };
 
-                page.SetValue();
+            //     page.SetValue();
 
-                return page;
-            });
+            //     return page;
+            // });
         }
 
-        void OnTabularPartsCopyClick(object? sender, EventArgs args)
+        void OnQueryListCopyClick(object? sender, EventArgs args)
         {
-            ListBoxRow[] selectedRows = listBoxFields.SelectedRows;
+            ListBoxRow[] selectedRows = listBoxQuery.SelectedRows;
 
             if (selectedRows.Length != 0)
             {
                 foreach (ListBoxRow row in selectedRows)
                 {
-                    if (TablePart.Fields.ContainsKey(row.Child.Name))
+                    if (QueryBlockList.ContainsKey(row.Child.Name))
                     {
-                        ConfigurationObjectField newField = TablePart.Fields[row.Child.Name].Copy();
-                        newField.Name += GenerateName.GetNewName();
+                        ConfigurationObjectQueryBlock newQueryBlock = QueryBlockList[row.Child.Name].Copy();
+                        newQueryBlock.Name += GenerateName.GetNewName();
 
-                        TablePart.AppendField(newField);
+                        QueryBlockList.Add(newQueryBlock.Name, newQueryBlock);
                     }
                 }
 
-                OnTabularPartsRefreshClick(null, new EventArgs());
+                QueryListRefreshList();
 
                 GeneralForm?.LoadTreeAsync();
             }
         }
 
-        void OnTabularPartsRefreshClick(object? sender, EventArgs args)
+        void OnQueryListRefreshClick(object? sender, EventArgs args)
         {
-            foreach (Widget item in listBoxFields.Children)
-                listBoxFields.Remove(item);
+            foreach (Widget item in listBoxQuery.Children)
+                listBoxQuery.Remove(item);
 
-            FillTabularParts();
+            FillQueryList();
 
-            listBoxFields.ShowAll();
+            listBoxQuery.ShowAll();
         }
 
-        void OnTabularPartsRemoveClick(object? sender, EventArgs args)
+        void OnQueryListRemoveClick(object? sender, EventArgs args)
         {
-            ListBoxRow[] selectedRows = listBoxFields.SelectedRows;
+            ListBoxRow[] selectedRows = listBoxQuery.SelectedRows;
 
             if (selectedRows.Length != 0)
             {
                 foreach (ListBoxRow row in selectedRows)
                 {
-                    if (TablePart.Fields.ContainsKey(row.Child.Name))
-                        TablePart.Fields.Remove(row.Child.Name);
+                    if (QueryBlockList.ContainsKey(row.Child.Name))
+                        QueryBlockList.Remove(row.Child.Name);
                 }
 
-                OnTabularPartsRefreshClick(null, new EventArgs());
-
-                GeneralForm?.LoadTreeAsync();
+                QueryListRefreshList();
             }
         }
 
-        void TabularPartsRefreshList()
+        void QueryListRefreshList()
         {
-            OnTabularPartsRefreshClick(null, new EventArgs());
+            OnQueryListRefreshClick(null, new EventArgs());
         }
     }
 }

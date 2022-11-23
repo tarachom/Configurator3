@@ -1044,22 +1044,22 @@ namespace Configurator
                 {
                     ListBoxRow curRow = selectedRows[0];
 
-                    // if (ConfRegister.TabularParts.ContainsKey(curRow.Child.Name))
-                    //     GeneralForm?.CreateNotebookPage($"Таблична частина: {curRow.Child.Name}", () =>
-                    //     {
-                    //         PageTablePart page = new PageTablePart()
-                    //         {
-                    //             TabularParts = ConfRegister.TabularParts,
-                    //             TablePart = ConfRegister.TabularParts[curRow.Child.Name],
-                    //             IsNew = false,
-                    //             GeneralForm = GeneralForm,
-                    //             CallBack_RefreshList = TabularPartsRefreshList
-                    //         };
+                    if (ConfRegister.QueryBlockList.ContainsKey(curRow.Child.Name))
+                        GeneralForm?.CreateNotebookPage($"Query: {curRow.Child.Name}", () =>
+                        {
+                            PageQueryBlock page = new PageQueryBlock()
+                            {
+                                QueryBlockList = ConfRegister.QueryBlockList,
+                                QueryBlock = ConfRegister.QueryBlockList[curRow.Child.Name],
+                                IsNew = false,
+                                GeneralForm = GeneralForm,
+                                CallBack_RefreshList = QueryListRefreshList
+                            };
 
-                    //         page.SetValue();
+                            page.SetValue();
 
-                    //         return page;
-                    //     });
+                            return page;
+                        });
                 }
             }
         }
