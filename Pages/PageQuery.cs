@@ -69,9 +69,9 @@ namespace Configurator
             HBox hBoxQuery = new HBox() { Halign = Align.End };
             vBox.PackStart(hBoxQuery, false, false, 5);
 
-            hBoxQuery.PackStart(new Label("Query:") { Valign = Align.Start }, false, false, 5);
+            hBoxQuery.PackStart(new Label("SQL:") { Valign = Align.Start }, false, false, 5);
 
-            ScrolledWindow scrollTextView = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 800, HeightRequest = 500 };
+            ScrolledWindow scrollTextView = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 1000, HeightRequest = 700 };
             scrollTextView.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
             scrollTextView.Add(textViewQuery);
 

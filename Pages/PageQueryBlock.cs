@@ -185,7 +185,7 @@ namespace Configurator
 
             IsNew = false;
 
-            GeneralForm?.RenameCurrentPageNotebook($"Query: {QueryBlock.Name}");
+            GeneralForm?.RenameCurrentPageNotebook($"Блок запитів: {QueryBlock.Name}");
 
             if (CallBack_RefreshList != null)
                 CallBack_RefreshList.Invoke();
