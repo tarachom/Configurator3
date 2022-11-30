@@ -207,6 +207,7 @@ namespace Configurator
                 delegate
                 {
                     textTerminal.Buffer.InsertAtCursor(text + "\n");
+                    scrollListBoxTerminal.Vadjustment.Value = scrollListBoxTerminal.Vadjustment.Upper;
                 }
             );
         }

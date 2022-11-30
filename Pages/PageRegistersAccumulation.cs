@@ -490,7 +490,12 @@ namespace Configurator
             string regName = $"{ConfRegister.Name}";
             string tablePartName = $"{ConfRegister.Name}_{TablePart.Name}_TablePart";
 
-            queryBlock.Query.Add("DELETE", @$"DELETE FROM {{{tablePartName}.TABLE}}");
+            queryBlock.Query.Add("DELETE", @$"
+
+DELETE FROM {{{tablePartName}.TABLE}}
+WHERE date_trunc('day', Рег_{regName}.period::timestamp) = @ПеріодДеньВідбір
+
+");
 
             string query = "\n";
 
@@ -532,7 +537,7 @@ FROM
     {{{regName}_Const.TABLE}} AS Рег_{regName}
 
 WHERE
-    date_trunc('day', Рег_{regName}.period::timestamp) = @ПеріодВідбір
+    date_trunc('day', Рег_{regName}.period::timestamp) = @ПеріодДеньВідбір
 
 GROUP BY
     Період";
