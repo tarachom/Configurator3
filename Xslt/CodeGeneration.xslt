@@ -338,8 +338,6 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>
     public static class Config
     {
         public static Kernel? Kernel { get; set; }
-        public static Kernel? KernelBackgroundTask { get; set; }
-        public static Kernel? KernelParalelWork { get; set; }
 		
         public static void ReadAllConstants()
         {
@@ -841,9 +839,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники
         
         public void Delete()
         {
-            base.BaseBeginTransaction();
             base.BaseDelete(Owner.UnigueID);
-            base.BaseCommitTransaction();
         }
         
         <!--<xsl:call-template name="CommentSummary" />-->
@@ -1196,9 +1192,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи
         
         public void Delete()
         {
-            base.BaseBeginTransaction();
             base.BaseDelete(Owner.UnigueID);
-            base.BaseCommitTransaction();
         }
 
         public List&lt;Record&gt; Copy()
@@ -1375,9 +1369,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.РегістриВі�
         
         public void Delete(Guid owner)
         {
-            base.BaseBeginTransaction();
             base.BaseDelete(owner);
-            base.BaseCommitTransaction();
         }
 
         <!--<xsl:call-template name="CommentSummary" />-->
@@ -1571,7 +1563,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.РегістриНа�
                     <xsl:if test="Type = 'enum'">
                         <xsl:text>(int)</xsl:text>      
                     </xsl:if>
-					<xsl:text>record.</xsl:text><xsl:value-of select="Name"/>
+					          <xsl:text>record.</xsl:text><xsl:value-of select="Name"/>
                     <xsl:if test="Type = 'pointer' or Type = 'empty_pointer'">
                     <xsl:text>.UnigueID.UGuid</xsl:text>
                     </xsl:if>
@@ -1584,9 +1576,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.РегістриНа�
 
         public void Delete(Guid owner)
         {
-            base.BaseBeginTransaction();
             base.BaseDelete(owner);
-            base.BaseCommitTransaction();
         }
         
         <!--<xsl:call-template name="CommentSummary" />-->
