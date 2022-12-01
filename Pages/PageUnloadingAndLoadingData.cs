@@ -570,24 +570,25 @@ namespace Configurator
             {
                 ApendLine("Виконання команд: ");
 
+                byte TransactionID = Program.Kernel!.DataBase.BeginTransaction();
+                bool resultat = false;
+
                 try
                 {
-                    Program.Kernel!.DataBase.BeginTransaction();
-
-                    bool resultat = ExecuteSqlList(pathToXmlResultStepSQL);
-
-                    if (resultat)
-                        Program.Kernel.DataBase.CommitTransaction();
-                    else
-                        Program.Kernel.DataBase.RollbackTransaction();
+                    resultat = ExecuteSqlList(pathToXmlResultStepSQL, TransactionID);
                 }
                 catch (Exception ex)
                 {
                     ApendLine("Помилка: " + ex.Message);
 
-                    Program.Kernel!.DataBase.RollbackTransaction();
+                    Program.Kernel!.DataBase.RollbackTransaction(TransactionID);
                     return;
                 }
+
+                if (resultat)
+                    Program.Kernel.DataBase.CommitTransaction(TransactionID);
+                else
+                    Program.Kernel.DataBase.RollbackTransaction(TransactionID);
             }
 
             //Видалення тимчасових файлів
@@ -654,7 +655,7 @@ namespace Configurator
         /// Виконання SQL запитів
         /// </summary>
         /// <param name="fileStepSQL">Файл з запитами</param>
-        public bool ExecuteSqlList(string fileStepSQL)
+        public bool ExecuteSqlList(string fileStepSQL, byte transactionID)
         {
             int counter = 0;
             int iter = 0;
@@ -767,7 +768,7 @@ namespace Configurator
                     param.Add(paramName, paramObj);
                 }
 
-                int result = Program.Kernel!.DataBase.ExecuteSQL(sqlText, param);
+                int result = Program.Kernel!.DataBase.ExecuteSQL(sqlText, param, transactionID);
 
                 if (iter > 100)
                 {
