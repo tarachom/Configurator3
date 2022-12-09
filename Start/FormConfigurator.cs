@@ -477,7 +477,11 @@ namespace Configurator
             topNotebook = new Notebook() { Scrollable = true, EnablePopup = true, BorderWidth = 0, ShowBorder = false };
             topNotebook.TabPos = PositionType.Top;
 
-            CreateNotebookPage("Стартова", null);
+            CreateNotebookPage("Стартова", () =>
+            {
+                PageHome page = new PageHome();
+                return page;
+            });
 
             hPaned.Pack2(topNotebook, false, true);
 

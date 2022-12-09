@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <info>Додати колонку tttt (col_i3, тип uuidtext)  в таблицю Константи (tab_constants)</info>
+  <sql>ALTER TABLE tab_constants ADD COLUMN "col_i3" uuidtext;</sql>
+</root>

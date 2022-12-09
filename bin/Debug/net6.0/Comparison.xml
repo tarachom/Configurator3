@@ -240,6 +240,20 @@
       </Type>
     </Control_Field>
     <Control_Field>
+      <Name>tttt</Name>
+      <NameInTable>col_i3</NameInTable>
+      <Index></Index>
+      <IndexExist />
+      <IsExist>no</IsExist>
+      <FieldCreate>
+        <Name>tttt</Name>
+        <NameInTable>col_i3</NameInTable>
+        <ConfType>composite_pointer</ConfType>
+        <DataType>uuidtext</DataType>
+        <Index></Index>
+      </FieldCreate>
+    </Control_Field>
+    <Control_Field>
       <Name>ЗамовленняКлієнтів</Name>
       <NameInTable>col_b1</NameInTable>
       <Index></Index>
@@ -14023,47 +14037,5 @@
         <Coincide>yes</Coincide>
       </Type>
     </Control_Field>
-  </Control_Table>
-  <Control_Table>
-    <Type>RegisterAccumulation.TablePart</Type>
-    <Name>ЗалишкиТаОбороти</Name>
-    <Table>tab_b33</Table>
-    <IsExist>delete</IsExist>
-  </Control_Table>
-  <Control_Table>
-    <Type>RegisterAccumulation.TablePart</Type>
-    <Name>Обороти</Name>
-    <Table>tab_b32</Table>
-    <IsExist>delete</IsExist>
-  </Control_Table>
-  <Control_Table>
-    <Type>RegisterAccumulation.TablePart</Type>
-    <Name>Залишки</Name>
-    <Table>tab_b31</Table>
-    <IsExist>delete</IsExist>
-  </Control_Table>
-  <Control_Table>
-    <Type>RegisterAccumulation.TablePart</Type>
-    <Name>Обороти</Name>
-    <Table>tab_b34</Table>
-    <IsExist>delete</IsExist>
-  </Control_Table>
-  <Control_Table>
-    <Type>RegisterAccumulation.TablePart</Type>
-    <Name>Залишки</Name>
-    <Table>tab_b24</Table>
-    <IsExist>delete</IsExist>
-  </Control_Table>
-  <Control_Table>
-    <Type>RegisterAccumulation.TablePart</Type>
-    <Name>Обороти</Name>
-    <Table>tab_b25</Table>
-    <IsExist>delete</IsExist>
-  </Control_Table>
-  <Control_Table>
-    <Type>RegisterAccumulation.TablePart</Type>
-    <Name>ЗалишкиТаОбороти</Name>
-    <Table>tab_b30</Table>
-    <IsExist>delete</IsExist>
   </Control_Table>
 </root>
