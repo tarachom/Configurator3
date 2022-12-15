@@ -533,6 +533,10 @@ namespace Configurator
             maintenanceItem.Activated += OnMaintenance;
             UploadAndLoadMenu.Append(maintenanceItem);
 
+            MenuItem shemaItem = new MenuItem("Схема бази даних");
+            shemaItem.Activated += OnShema;
+            UploadAndLoadMenu.Append(shemaItem);
+
             mb.Append(uploadAndLoadDataMenuItem);
 
             //3
@@ -756,6 +760,21 @@ namespace Configurator
                 {
                     GeneralForm = this
                 };
+
+                return page;
+            });
+        }
+
+        void OnShema(object? sender, EventArgs args)
+        {
+            CreateNotebookPage("Схема бази даних", () =>
+            {
+                PageShema page = new PageShema()
+                {
+                    GeneralForm = this
+                };
+
+                page.LoadShema();
 
                 return page;
             });

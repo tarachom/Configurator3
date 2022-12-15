@@ -1,5 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <info>Додати колонку tttt (col_i3, тип uuidtext)  в таблицю Константи (tab_constants)</info>
-  <sql>ALTER TABLE tab_constants ADD COLUMN "col_i3" uuidtext;</sql>
+  <sql>CREATE INDEX IF NOT EXISTS tab_a01_col_a3_idx ON tab_a01 (col_a3);</sql>
 </root>

@@ -240,20 +240,6 @@
       </Type>
     </Control_Field>
     <Control_Field>
-      <Name>tttt</Name>
-      <NameInTable>col_i3</NameInTable>
-      <Index></Index>
-      <IndexExist />
-      <IsExist>no</IsExist>
-      <FieldCreate>
-        <Name>tttt</Name>
-        <NameInTable>col_i3</NameInTable>
-        <ConfType>composite_pointer</ConfType>
-        <DataType>uuidtext</DataType>
-        <Index></Index>
-      </FieldCreate>
-    </Control_Field>
-    <Control_Field>
       <Name>ЗамовленняКлієнтів</Name>
       <NameInTable>col_b1</NameInTable>
       <Index></Index>
@@ -3135,7 +3121,7 @@
     <Control_Field>
       <Name>НазваПовна</Name>
       <NameInTable>col_a3</NameInTable>
-      <Index>0</Index>
+      <Index>1</Index>
       <IndexExist />
       <IsExist>yes</IsExist>
       <Type>
