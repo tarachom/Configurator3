@@ -20,6 +20,8 @@ namespace Configurator
             Button bClose = new Button("Закрити");
             bClose.Clicked += (object? sender, EventArgs args) => { GeneralForm?.CloseCurrentPageNotebook(); };
 
+            hBox.PackStart(bClose, false, false, 10);
+
             Button bShema = new Button("Завантажити схему");
             bShema.Clicked += OnShema;
 
