@@ -385,10 +385,10 @@ limitations under the License.
             <IsExist>yes</IsExist>
 
             <xsl:call-template name="FieldsControl">
-			  <xsl:with-param name="TableName" select="$ConfTablePartTable" />
+			        <xsl:with-param name="TableName" select="$ConfTablePartTable" />
               <xsl:with-param name="ConfigurationFieldList" select="Fields/Field" />
               <xsl:with-param name="InfoSchemaFieldList" select="$InfoSchemaTableList[Name = $ConfTablePartTable]/Column" />
-			  <xsl:with-param name="InfoSchemaIndexList" select="$InfoSchemaTableList[Name = $ConfTablePartTable]/Index" />
+			        <xsl:with-param name="InfoSchemaIndexList" select="$InfoSchemaTableList[Name = $ConfTablePartTable]/Index" />
             </xsl:call-template>
 
           </xsl:when>
@@ -402,7 +402,7 @@ limitations under the License.
                   <xsl:with-param name="ConfFieldName" select="Name" />
                   <xsl:with-param name="ConfFieldNameInTable" select="NameInTable" />
                   <xsl:with-param name="ConfFieldType" select="Type" />
-				  <xsl:with-param name="ConfFieldIndex" select="IsIndex" />
+				          <xsl:with-param name="ConfFieldIndex" select="IsIndex" />
                 </xsl:call-template>
               </xsl:for-each>
 

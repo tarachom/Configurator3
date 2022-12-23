@@ -885,7 +885,7 @@ limitations under the License.
 			    </xsl:for-each>
                 <xsl:if test="$IsCreateOwnerField = 'yes'">
                   <sql>
-					<xsl:value-of select="concat('CREATE INDEX IF NOT EXISTS ', $TabularParts_TableName, '_owner_idx ON ', $TabularParts_TableName, ' (owner);')"/>
+					          <xsl:value-of select="concat('CREATE INDEX IF NOT EXISTS ', $TabularParts_TableName, '_owner_idx ON ', $TabularParts_TableName, ' (owner);')"/>
                   </sql>
                 </xsl:if>
               </xsl:for-each>
