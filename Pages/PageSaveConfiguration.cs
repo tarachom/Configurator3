@@ -23,7 +23,8 @@ namespace Configurator
         #region Fields
 
         CheckButton checkButtonIsGenerate = new CheckButton("Генерувати код");
-        Entry entryGenerateCodePath = new Entry() { WidthRequest = 300 };
+        Entry entryGenerateCodePath = new Entry() { WidthRequest = 500 };
+        Entry entryCompileProgramPath = new Entry() { WidthRequest = 500 };
         Button bSaveParam;
 
         Button bAnalize;
@@ -58,11 +59,24 @@ namespace Configurator
             hBoxParamPath.PackStart(new Label("Шлях до папки куди генерувати код:"), false, false, 10);
             hBoxParamPath.PackStart(entryGenerateCodePath, false, false, 5);
 
-            Button bSelectFolder = new Button("...");
-            bSelectFolder.Clicked += OnSelectFolder;
-            hBoxParamPath.PackStart(bSelectFolder, false, false, 5);
+            Button bSelectFolderGenerateCode = new Button("...");
+            bSelectFolderGenerateCode.Clicked += OnSelectFolderGenerateCode;
+            hBoxParamPath.PackStart(bSelectFolderGenerateCode, false, false, 5);
 
             hBoxParamPath.PackStart(new Label("За замовчуванням код генерується в каталог програми"), false, false, 5);
+
+            //Параметри 3
+            HBox hBoxParamCompileProgram = new HBox();
+            PackStart(hBoxParamCompileProgram, false, false, 5);
+
+            hBoxParamCompileProgram.PackStart(new Label("Шлях до папки скомпільованої програми:"), false, false, 10);
+            hBoxParamCompileProgram.PackStart(entryCompileProgramPath, false, false, 5);
+
+            Button bSelectFolderCompileProgram = new Button("...");
+            bSelectFolderCompileProgram.Clicked += OnSelectFolderCompileProgram;
+            hBoxParamCompileProgram.PackStart(bSelectFolderCompileProgram, false, false, 5);
+
+            hBoxParamCompileProgram.PackStart(new Label("Наприклад bin/Debug/net6.0"), false, false, 5);
 
             //Save
             HBox hBoxSaveParam = new HBox();
@@ -113,15 +127,21 @@ namespace Configurator
         {
             if (GeneralForm != null)
             {
+                //1
                 if (GeneralForm.OpenConfigurationParam!.OtherParam.ContainsKey("IsGenerateCode"))
                     checkButtonIsGenerate.Active = GeneralForm.OpenConfigurationParam.OtherParam["IsGenerateCode"] == "True";
 
+                //2
                 if (GeneralForm.OpenConfigurationParam!.OtherParam.ContainsKey("GenerateCodePath"))
                     entryGenerateCodePath.Text = GeneralForm.OpenConfigurationParam.OtherParam["GenerateCodePath"];
+
+                //3
+                if (GeneralForm.OpenConfigurationParam!.OtherParam.ContainsKey("CompileProgramPath"))
+                    entryCompileProgramPath.Text = GeneralForm.OpenConfigurationParam.OtherParam["CompileProgramPath"];
             }
         }
 
-        void OnSelectFolder(object? sender, EventArgs arg)
+        void OnSelectFolderGenerateCode(object? sender, EventArgs arg)
         {
             FileChooserDialog fc = new FileChooserDialog("Виберіть каталог", GeneralForm,
                 FileChooserAction.SelectFolder, "Закрити", ResponseType.Cancel, "Вибрати", ResponseType.Accept);
@@ -129,6 +149,25 @@ namespace Configurator
             if (fc.Run() == (int)ResponseType.Accept)
             {
                 entryGenerateCodePath.Text = fc.CurrentFolder;
+
+                if (entryGenerateCodePath.Text.Substring(entryGenerateCodePath.Text.Length - 1, 1) != "/")
+                    entryGenerateCodePath.Text += "/";
+            }
+
+            fc.Destroy();
+        }
+
+        void OnSelectFolderCompileProgram(object? sender, EventArgs arg)
+        {
+            FileChooserDialog fc = new FileChooserDialog("Виберіть каталог", GeneralForm,
+                FileChooserAction.SelectFolder, "Закрити", ResponseType.Cancel, "Вибрати", ResponseType.Accept);
+
+            if (fc.Run() == (int)ResponseType.Accept)
+            {
+                entryCompileProgramPath.Text = fc.CurrentFolder;
+
+                if (entryCompileProgramPath.Text.Substring(entryCompileProgramPath.Text.Length - 1, 1) != "/")
+                    entryCompileProgramPath.Text += "/";
             }
 
             fc.Destroy();
@@ -138,15 +177,23 @@ namespace Configurator
         {
             if (GeneralForm != null)
             {
+                //1
                 if (GeneralForm.OpenConfigurationParam!.OtherParam.ContainsKey("IsGenerateCode"))
                     GeneralForm.OpenConfigurationParam!.OtherParam["IsGenerateCode"] = checkButtonIsGenerate.Active.ToString();
                 else
                     GeneralForm.OpenConfigurationParam!.OtherParam.Add("IsGenerateCode", checkButtonIsGenerate.Active.ToString());
 
+                //2
                 if (GeneralForm.OpenConfigurationParam!.OtherParam.ContainsKey("GenerateCodePath"))
                     GeneralForm.OpenConfigurationParam!.OtherParam["GenerateCodePath"] = entryGenerateCodePath.Text;
                 else
                     GeneralForm.OpenConfigurationParam!.OtherParam.Add("GenerateCodePath", entryGenerateCodePath.Text);
+
+                //3
+                if (GeneralForm.OpenConfigurationParam!.OtherParam.ContainsKey("CompileProgramPath"))
+                    GeneralForm.OpenConfigurationParam!.OtherParam["CompileProgramPath"] = entryCompileProgramPath.Text;
+                else
+                    GeneralForm.OpenConfigurationParam!.OtherParam.Add("CompileProgramPath", entryCompileProgramPath.Text);
 
                 ConfigurationParamCollection.SaveConfigurationParamFromXML(ConfigurationParamCollection.PathToXML);
             }
@@ -675,6 +722,23 @@ namespace Configurator
                     Conf.PathToTempXmlFileConfiguration,
                     System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, Conf.PathToCopyXmlFileConfiguration)
                 );
+            }
+
+            //Копіювання файлу конфігурації Confa.xml в каталог зкомпільованої програми
+            if (!String.IsNullOrEmpty(entryCompileProgramPath.Text))
+            {
+                if (entryCompileProgramPath.Text.Substring(entryCompileProgramPath.Text.Length - 1, 1) != "/")
+                    entryCompileProgramPath.Text += "/";
+
+                string folderCompileProgramPath = System.IO.Path.GetDirectoryName(entryCompileProgramPath.Text)!;
+
+                if (System.IO.Directory.Exists(folderCompileProgramPath))
+                {
+                    File.Copy(Conf.PathToXmlFileConfiguration,
+                        System.IO.Path.Combine(folderCompileProgramPath, "Confa.xml"), true);
+
+                    ApendLine("\nСкопійований файл 'Confa.xml' в каталог " + folderCompileProgramPath);
+                }
             }
 
             if (checkButtonIsGenerate.Active)

@@ -3121,7 +3121,7 @@
     <Control_Field>
       <Name>НазваПовна</Name>
       <NameInTable>col_a3</NameInTable>
-      <Index>1</Index>
+      <Index>0</Index>
       <IndexExist />
       <IsExist>yes</IsExist>
       <Type>
