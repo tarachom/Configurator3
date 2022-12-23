@@ -754,7 +754,7 @@ limitations under the License.
 
         <xsl:variable name="DirectoryName" select="Name" />
         <xsl:variable name="TableName" select="Table" />
-	    <xsl:variable name="TableType" select="Type" />
+	      <xsl:variable name="TableType" select="Type" />
 		  
         <xsl:choose>
           <xsl:when test="IsExist = 'yes'">
@@ -885,7 +885,7 @@ limitations under the License.
 			    </xsl:for-each>
                 <xsl:if test="$IsCreateOwnerField = 'yes'">
                   <sql>
-					<xsl:value-of select="concat('CREATE INDEX IF NOT EXISTS ', $TabularParts_TableName, '_owner_idx ON ', $TabularParts_TableName, ' (owner);')"/>
+					          <xsl:value-of select="concat('CREATE INDEX IF NOT EXISTS ', $TabularParts_TableName, '_owner_idx ON ', $TabularParts_TableName, ' (owner);')"/>
                   </sql>
                 </xsl:if>
               </xsl:for-each>

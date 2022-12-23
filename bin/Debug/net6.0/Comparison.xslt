@@ -385,10 +385,10 @@ limitations under the License.
             <IsExist>yes</IsExist>
 
             <xsl:call-template name="FieldsControl">
-			  <xsl:with-param name="TableName" select="$ConfTablePartTable" />
+			        <xsl:with-param name="TableName" select="$ConfTablePartTable" />
               <xsl:with-param name="ConfigurationFieldList" select="Fields/Field" />
               <xsl:with-param name="InfoSchemaFieldList" select="$InfoSchemaTableList[Name = $ConfTablePartTable]/Column" />
-			  <xsl:with-param name="InfoSchemaIndexList" select="$InfoSchemaTableList[Name = $ConfTablePartTable]/Index" />
+			        <xsl:with-param name="InfoSchemaIndexList" select="$InfoSchemaTableList[Name = $ConfTablePartTable]/Index" />
             </xsl:call-template>
 
           </xsl:when>
@@ -402,7 +402,7 @@ limitations under the License.
                   <xsl:with-param name="ConfFieldName" select="Name" />
                   <xsl:with-param name="ConfFieldNameInTable" select="NameInTable" />
                   <xsl:with-param name="ConfFieldType" select="Type" />
-				  <xsl:with-param name="ConfFieldIndex" select="IsIndex" />
+				          <xsl:with-param name="ConfFieldIndex" select="IsIndex" />
                 </xsl:call-template>
               </xsl:for-each>
 
@@ -636,7 +636,7 @@ limitations under the License.
       <xsl:variable name="InfoSchemaTableList" select="root/InformationSchema/Table" />
       <xsl:variable name="documentConfiguration" select="root/NewConfiguration" />
       <xsl:variable name="documentSecondConfiguration" select="root/SecondConfiguration" />
-
+      
       <xsl:for-each select="$documentConfiguration/Configuration/ConstantsBlocks">
         <xsl:variable name="ConfObjName">Константи</xsl:variable>
         <xsl:variable name="ConfObjTable">tab_constants</xsl:variable>
@@ -655,10 +655,10 @@ limitations under the License.
               <IsExist>yes</IsExist>
 
               <xsl:call-template name="FieldsControl">
-				<xsl:with-param name="TableName" select="$ConfObjTable" />
+				        <xsl:with-param name="TableName" select="$ConfObjTable" />
                 <xsl:with-param name="ConfigurationFieldList" select="ConstantsBlock/./Constants/Constant" />
                 <xsl:with-param name="InfoSchemaFieldList" select="$InfoSchemaTableList[Name = $ConfObjTable]/Column" />
-				<xsl:with-param name="InfoSchemaIndexList" select="$InfoSchemaTableList[Name = $ConfObjTable]/Index" />
+				        <xsl:with-param name="InfoSchemaIndexList" select="$InfoSchemaTableList[Name = $ConfObjTable]/Index" />
               </xsl:call-template>
 
             </xsl:when>
@@ -672,8 +672,8 @@ limitations under the License.
                     <xsl:with-param name="ConfFieldName" select="Name" />
                     <xsl:with-param name="ConfFieldNameInTable" select="NameInTable" />
                     <xsl:with-param name="ConfFieldType" select="Type" />
-					<xsl:with-param name="ConfFieldIndex" select="IsIndex" />
-				  </xsl:call-template>
+					          <xsl:with-param name="ConfFieldIndex" select="IsIndex" />
+				          </xsl:call-template>
                 </xsl:for-each>
 
               </TableCreate>

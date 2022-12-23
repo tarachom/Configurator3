@@ -1477,10 +1477,10 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.РегістриВі�
 }
 
 namespace <xsl:value-of select="Configuration/NameSpace"/>.РегістриНакопичення
-{
+{  
     <xsl:for-each select="Configuration/RegistersAccumulation/RegisterAccumulation">
-	   <xsl:variable name="Documents" select="../../Documents"/>
-       <xsl:variable name="RegisterName" select="Name"/>
+	    <xsl:variable name="Documents" select="../../Documents"/>
+      <xsl:variable name="RegisterName" select="Name"/>
     #region REGISTER "<xsl:value-of select="$RegisterName"/>"
     <!--<xsl:call-template name="CommentSummary" />-->
     public static class <xsl:value-of select="$RegisterName"/>_Const
@@ -1571,6 +1571,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.РегістриНа�
                 </xsl:for-each>
                 base.BaseSave(record.UID, period, record.Income, owner, fieldValue);
             }
+            base.BaseSpetialTableRegAccumTrigerAdd(period, owner, "<xsl:value-of select="$RegisterName"/>");
             base.BaseCommitTransaction();
         }
 
@@ -1708,6 +1709,21 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.РегістриНа�
 
     #endregion
   </xsl:for-each>
+}
+
+namespace <xsl:value-of select="Configuration/NameSpace"/>.РегістриНакопичення.Розрахунок
+{
+    public static class Service
+    {
+        public static void Work()
+        {
+            <xsl:for-each select="Configuration/RegistersAccumulation/RegisterAccumulation">
+                <xsl:for-each select="QueryBlockList/QueryBlock">
+                    //<xsl:value-of select="Name"/>
+                </xsl:for-each>
+            </xsl:for-each>
+        }
+    }
 }
   </xsl:template>
 </xsl:stylesheet>

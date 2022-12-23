@@ -754,7 +754,7 @@ limitations under the License.
 
         <xsl:variable name="DirectoryName" select="Name" />
         <xsl:variable name="TableName" select="Table" />
-	    <xsl:variable name="TableType" select="Type" />
+	      <xsl:variable name="TableType" select="Type" />
 		  
         <xsl:choose>
           <xsl:when test="IsExist = 'yes'">
