@@ -64,20 +64,21 @@ namespace Configurator
         {
             new VBox();
 
-            //Заголовок блоку Параметри
-            HBox hBoxParamInfo = new HBox() { Halign = Align.Start };
-            PackStart(hBoxParamInfo, false, false, 10);
-            hBoxParamInfo.PackStart(new Label("ПАРАМЕТРИ"), false, false, 10);
+            Expander expanderParams = new Expander("Параметри та додаткові налаштування");
+            PackStart(expanderParams, false, false, 10);
+
+            VBox vBoxParams = new VBox();
+            expanderParams.Add(vBoxParams);
 
             //Параметри 1
             HBox hBoxParamIsGenerate = new HBox();
-            PackStart(hBoxParamIsGenerate, false, false, 5);
+            vBoxParams.PackStart(hBoxParamIsGenerate, false, false, 5);
 
             hBoxParamIsGenerate.PackStart(checkButtonIsGenerate, false, false, 5);
 
             //Параметри 2
             HBox hBoxParamPath = new HBox();
-            PackStart(hBoxParamPath, false, false, 5);
+            vBoxParams.PackStart(hBoxParamPath, false, false, 5);
 
             hBoxParamPath.PackStart(new Label("Шлях до папки куди генерувати код:"), false, false, 10);
             hBoxParamPath.PackStart(entryGenerateCodePath, false, false, 5);
@@ -90,7 +91,7 @@ namespace Configurator
 
             //Параметри 3
             HBox hBoxParamCompileProgram = new HBox();
-            PackStart(hBoxParamCompileProgram, false, false, 5);
+            vBoxParams.PackStart(hBoxParamCompileProgram, false, false, 5);
 
             hBoxParamCompileProgram.PackStart(new Label("Шлях до папки скомпільованої програми:"), false, false, 10);
             hBoxParamCompileProgram.PackStart(entryCompileProgramPath, false, false, 5);
@@ -99,11 +100,11 @@ namespace Configurator
             bSelectFolderCompileProgram.Clicked += OnSelectFolderCompileProgram;
             hBoxParamCompileProgram.PackStart(bSelectFolderCompileProgram, false, false, 5);
 
-            hBoxParamCompileProgram.PackStart(new Label("Наприклад bin/Debug/net6.0/"), false, false, 5);
+            hBoxParamCompileProgram.PackStart(new Label("Наприклад bin/Debug/net6.0/ \nВ цю папку буде скопійований файл Confa.xml"), false, false, 5);
 
             //Save
             HBox hBoxSaveParam = new HBox();
-            PackStart(hBoxSaveParam, false, false, 5);
+            vBoxParams.PackStart(hBoxSaveParam, false, false, 5);
 
             bSaveParam = new Button("Зберегти параметри");
             bSaveParam.Clicked += OnSaveParam;
