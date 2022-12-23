@@ -76,7 +76,7 @@ namespace Configurator
             bSelectFolderCompileProgram.Clicked += OnSelectFolderCompileProgram;
             hBoxParamCompileProgram.PackStart(bSelectFolderCompileProgram, false, false, 5);
 
-            hBoxParamCompileProgram.PackStart(new Label("Наприклад bin/Debug/net6.0"), false, false, 5);
+            hBoxParamCompileProgram.PackStart(new Label("Наприклад bin/Debug/net6.0/"), false, false, 5);
 
             //Save
             HBox hBoxSaveParam = new HBox();
@@ -779,7 +779,7 @@ namespace Configurator
             ButtonSensitive(true);
         }
 
-        private void InfoTableCreateFieldCreate(XPathNavigator? xPathNavigator, string tab)
+        void InfoTableCreateFieldCreate(XPathNavigator? xPathNavigator, string tab)
         {
             XPathNodeIterator? nodeField = xPathNavigator?.Select("TableCreate/FieldCreate");
             while (nodeField!.MoveNext())
