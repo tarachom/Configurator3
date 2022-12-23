@@ -1715,13 +1715,33 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.РегістриНа�
 {
     public static class Service
     {
-        public static void Work()
+        public static void Execute(DateTime period, string regAccumName)
         {
+            Dictionary&lt;string, object&gt; paramQuery = new Dictionary&lt;string, object&gt;();
+            paramQuery.Add("ПеріодДеньВідбір", period);
+
+            byte transactionID = Config.Kernel!.DataBase.BeginTransaction();
+            switch(regAccumName)
+            {
             <xsl:for-each select="Configuration/RegistersAccumulation/RegisterAccumulation">
-                <xsl:for-each select="QueryBlockList/QueryBlock">
-                    //<xsl:value-of select="Name"/>
-                </xsl:for-each>
+                <xsl:variable name="QueryCount" select="count(QueryBlockList/QueryBlock/Query)"/>
+                <xsl:if test="$QueryCount != 0">
+                case "<xsl:value-of select="Name"/>":
+                {
+                    <xsl:for-each select="QueryBlockList/QueryBlock">
+                        /* QueryBlock: <xsl:value-of select="Name"/> */
+                        <xsl:for-each select="Query">
+                            <xsl:sort select="@position" data-type="number" order="ascending" />
+                    Config.Kernel!.DataBase.ExecuteSQL($@"
+<xsl:value-of select="normalize-space(.)"/>", paramQuery);
+                        </xsl:for-each>
+                    </xsl:for-each>
+                    break;
+                }
+                </xsl:if>
             </xsl:for-each>
+            }
+            Config.Kernel!.DataBase.CommitTransaction(transactionID);
         }
     }
 }
