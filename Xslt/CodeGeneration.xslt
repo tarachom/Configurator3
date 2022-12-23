@@ -1729,7 +1729,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.РегістриНа�
                 case "<xsl:value-of select="Name"/>":
                 {
                     <xsl:for-each select="QueryBlockList/QueryBlock">
-                        /* QueryBlock: <xsl:value-of select="Name"/> */
+                    /* QueryBlock: <xsl:value-of select="Name"/> */
                         <xsl:for-each select="Query">
                             <xsl:sort select="@position" data-type="number" order="ascending" />
                     Config.Kernel!.DataBase.ExecuteSQL($@"
