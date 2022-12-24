@@ -177,7 +177,7 @@ namespace Configurator
                     сonfigurator.Show();
 
                     сonfigurator.SetValue();
-                    
+
                     сonfigurator.LoadTreeAsync();
 
                     Hide();

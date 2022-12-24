@@ -1732,8 +1732,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.РегістриНа�
                     /* QueryBlock: <xsl:value-of select="Name"/> */
                         <xsl:for-each select="Query">
                             <xsl:sort select="@position" data-type="number" order="ascending" />
-                    Config.Kernel!.DataBase.ExecuteSQL($@"
-<xsl:value-of select="normalize-space(.)"/>", paramQuery);
+                    Config.Kernel!.DataBase.ExecuteSQL($@"<xsl:value-of select="normalize-space(.)"/>", paramQuery);
                         </xsl:for-each>
                     </xsl:for-each>
                     break;
