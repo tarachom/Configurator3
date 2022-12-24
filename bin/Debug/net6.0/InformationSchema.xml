@@ -3,26 +3,6 @@
   <Table>
     <Name>tab_a94</Name>
     <Column>
-      <Name>spend</Name>
-      <DataType>boolean</DataType>
-      <UdtName>bool</UdtName>
-    </Column>
-    <Column>
-      <Name>docdate</Name>
-      <DataType>timestamp without time zone</DataType>
-      <UdtName>timestamp</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a6</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a7</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
-    </Column>
-    <Column>
       <Name>col_a4</Name>
       <DataType>uuid</DataType>
       <UdtName>uuid</UdtName>
@@ -48,9 +28,29 @@
       <UdtName>uuid</UdtName>
     </Column>
     <Column>
+      <Name>spend</Name>
+      <DataType>boolean</DataType>
+      <UdtName>bool</UdtName>
+    </Column>
+    <Column>
       <Name>spend_date</Name>
       <DataType>timestamp without time zone</DataType>
       <UdtName>timestamp</UdtName>
+    </Column>
+    <Column>
+      <Name>docdate</Name>
+      <DataType>timestamp without time zone</DataType>
+      <UdtName>timestamp</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a6</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a7</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
     </Column>
     <Column>
       <Name>docname</Name>
@@ -349,17 +349,17 @@
       <UdtName>uuid</UdtName>
     </Column>
     <Column>
+      <Name>col_c1</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
       <Name>docname</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
     <Column>
       <Name>docnomer</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
-      <Name>col_c1</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
@@ -552,6 +552,47 @@
     </Index>
     <Index>
       <Name>tab_b09_col_a4_idx</Name>
+    </Index>
+  </Table>
+  <Table>
+    <Name>tab_special_regaccum_triger</Name>
+    <Column>
+      <Name>uid</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>datewrite</Name>
+      <DataType>timestamp without time zone</DataType>
+      <UdtName>timestamp</UdtName>
+    </Column>
+    <Column>
+      <Name>period</Name>
+      <DataType>timestamp without time zone</DataType>
+      <UdtName>timestamp</UdtName>
+    </Column>
+    <Column>
+      <Name>document</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>execute</Name>
+      <DataType>boolean</DataType>
+      <UdtName>bool</UdtName>
+    </Column>
+    <Column>
+      <Name>regname</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>info</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Index>
+      <Name>tab_special_regaccum_triger_pkey</Name>
     </Index>
   </Table>
   <Table>
@@ -1034,6 +1075,11 @@
       <UdtName>int4</UdtName>
     </Column>
     <Column>
+      <Name>col_a3</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
       <Name>col_a4</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
@@ -1055,11 +1101,6 @@
     </Column>
     <Column>
       <Name>col_a2</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a3</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
@@ -1907,17 +1948,17 @@
       <UdtName>uuid</UdtName>
     </Column>
     <Column>
-      <Name>col_f6</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
       <Name>col_f7</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
     <Column>
       <Name>col_g6</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_f6</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
@@ -1938,17 +1979,17 @@
       <UdtName>uuid</UdtName>
     </Column>
     <Column>
-      <Name>col_i7</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
       <Name>col_i8</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
     <Column>
       <Name>col_i9</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_i7</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
@@ -5431,17 +5472,17 @@
       <UdtName>uuid</UdtName>
     </Column>
     <Column>
-      <Name>col_a3</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
       <Name>docname</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
     <Column>
       <Name>docnomer</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a3</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
@@ -6039,42 +6080,6 @@
     </Index>
     <Index>
       <Name>tab_a55_period_idx</Name>
-    </Index>
-  </Table>
-  <Table>
-    <Name>tab_special_regaccum_triger</Name>
-    <Column>
-      <Name>uid</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
-    </Column>
-    <Column>
-      <Name>datewrite</Name>
-      <DataType>time without time zone</DataType>
-      <UdtName>time</UdtName>
-    </Column>
-    <Column>
-      <Name>period</Name>
-      <DataType>time without time zone</DataType>
-      <UdtName>time</UdtName>
-    </Column>
-    <Column>
-      <Name>document</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
-    </Column>
-    <Column>
-      <Name>execute</Name>
-      <DataType>boolean</DataType>
-      <UdtName>bool</UdtName>
-    </Column>
-    <Column>
-      <Name>regname</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Index>
-      <Name>tab_special_regaccum_triger_pkey</Name>
     </Index>
   </Table>
   <Table>
