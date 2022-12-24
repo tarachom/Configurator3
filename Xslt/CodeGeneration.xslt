@@ -1506,7 +1506,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.РегістриНа�
     <!--<xsl:call-template name="CommentSummary" />-->
     public class <xsl:value-of select="$RegisterName"/>_RecordsSet : RegisterAccumulationRecordsSet
     {
-        public <xsl:value-of select="$RegisterName"/>_RecordsSet() : base(Config.Kernel!, "<xsl:value-of select="Table"/>",
+        public <xsl:value-of select="$RegisterName"/>_RecordsSet() : base(Config.Kernel!, "<xsl:value-of select="Table"/>", "<xsl:value-of select="$RegisterName"/>",
              <xsl:text>new string[] { </xsl:text>
              <xsl:for-each select="(DimensionFields|ResourcesFields|PropertyFields)/Fields/Field">
                <xsl:if test="position() != 1">
@@ -1571,7 +1571,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.РегістриНа�
                 </xsl:for-each>
                 base.BaseSave(record.UID, period, record.Income, owner, fieldValue);
             }
-            base.BaseSpetialTableRegAccumTrigerAdd(period, owner, "<xsl:value-of select="$RegisterName"/>");
+            base.BaseSpetialTableRegAccumTrigerAdd(period, owner);
             base.BaseCommitTransaction();
         }
 
