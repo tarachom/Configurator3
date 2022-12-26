@@ -1571,7 +1571,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.РегістриНа�
                 </xsl:for-each>
                 base.BaseSave(record.UID, period, record.Income, owner, fieldValue);
             }
-            base.BaseSpetialTableRegAccumTrigerAdd(period, owner);
+            base.BaseTrigerAdd(period, owner);
             base.BaseCommitTransaction();
         }
 
