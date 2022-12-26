@@ -521,7 +521,7 @@ namespace Configurator
 DELETE FROM 
     {{{tablePartName}.TABLE}}
 WHERE 
-    {{{tablePartName}.TABLE}}.Період = @ПеріодДеньВідбір
+    {{{tablePartName}.TABLE}}.{{{tablePartName}.Період}} = @ПеріодДеньВідбір
 ");
 
             //
@@ -615,7 +615,7 @@ HAVING";
 DELETE FROM 
     {{{tablePartName}.TABLE}}
 WHERE 
-    {{{tablePartName}.TABLE}}.Період = @ПеріодДеньВідбір
+    {{{tablePartName}.TABLE}}.{{{tablePartName}.Період}} = @ПеріодДеньВідбір
 ");
 
             //
@@ -711,7 +711,7 @@ HAVING";
 DELETE FROM 
     {{{tablePartName}.TABLE}}
 WHERE 
-    {{{tablePartName}.TABLE}}.Період = @ПеріодДеньВідбір
+    {{{tablePartName}.TABLE}}.{{{tablePartName}.Період}} = @ПеріодДеньВідбір
 ");
 
             //

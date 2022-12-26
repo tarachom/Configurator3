@@ -1478,6 +1478,38 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.РегістриВі�
 
 namespace <xsl:value-of select="Configuration/NameSpace"/>.РегістриНакопичення
 {  
+    /*  */
+    public static class VirtualTablesСalculation
+    {
+        public static void Execute(DateTime period, string regAccumName)
+        {
+            Dictionary&lt;string, object&gt; paramQuery = new Dictionary&lt;string, object&gt;();
+            paramQuery.Add("ПеріодДеньВідбір", period);
+
+            byte transactionID = Config.Kernel!.DataBase.BeginTransaction();
+            switch(regAccumName)
+            {
+            <xsl:for-each select="Configuration/RegistersAccumulation/RegisterAccumulation">
+                <xsl:variable name="QueryCount" select="count(QueryBlockList/QueryBlock/Query)"/>
+                <xsl:if test="$QueryCount != 0">
+                case "<xsl:value-of select="Name"/>":
+                {
+                    <xsl:for-each select="QueryBlockList/QueryBlock">
+                    /* QueryBlock: <xsl:value-of select="Name"/> */
+                        <xsl:for-each select="Query">
+                            <xsl:sort select="@position" data-type="number" order="ascending" />
+                    Config.Kernel!.DataBase.ExecuteSQL($@"<xsl:value-of select="normalize-space(.)"/>", paramQuery, transactionID);
+                        </xsl:for-each>
+                    </xsl:for-each>
+                    break;
+                }
+                </xsl:if>
+            </xsl:for-each>
+            }
+            Config.Kernel!.DataBase.CommitTransaction(transactionID);
+        }
+    }
+
     <xsl:for-each select="Configuration/RegistersAccumulation/RegisterAccumulation">
 	    <xsl:variable name="Documents" select="../../Documents"/>
       <xsl:variable name="RegisterName" select="Name"/>
@@ -1551,6 +1583,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.РегістриНа�
         public void Save(DateTime period, Guid owner) 
         {
             base.BaseBeginTransaction();
+            base.BaseSelectPeriodForOwner(owner, period);
             base.BaseDelete(owner);
             foreach (Record record in Records)
             {
@@ -1577,6 +1610,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.РегістриНа�
 
         public void Delete(Guid owner)
         {
+            base.BaseSelectPeriodForOwner(owner);
             base.BaseDelete(owner);
         }
         
@@ -1706,43 +1740,8 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.РегістриНа�
         }            
     }
     </xsl:for-each> <!-- TableParts -->
-
     #endregion
   </xsl:for-each>
-}
-
-namespace <xsl:value-of select="Configuration/NameSpace"/>.РегістриНакопичення.Розрахунок
-{
-    public static class Service
-    {
-        public static void Execute(DateTime period, string regAccumName)
-        {
-            Dictionary&lt;string, object&gt; paramQuery = new Dictionary&lt;string, object&gt;();
-            paramQuery.Add("ПеріодДеньВідбір", period);
-
-            byte transactionID = Config.Kernel!.DataBase.BeginTransaction();
-            switch(regAccumName)
-            {
-            <xsl:for-each select="Configuration/RegistersAccumulation/RegisterAccumulation">
-                <xsl:variable name="QueryCount" select="count(QueryBlockList/QueryBlock/Query)"/>
-                <xsl:if test="$QueryCount != 0">
-                case "<xsl:value-of select="Name"/>":
-                {
-                    <xsl:for-each select="QueryBlockList/QueryBlock">
-                    /* QueryBlock: <xsl:value-of select="Name"/> */
-                        <xsl:for-each select="Query">
-                            <xsl:sort select="@position" data-type="number" order="ascending" />
-                    Config.Kernel!.DataBase.ExecuteSQL($@"<xsl:value-of select="normalize-space(.)"/>", paramQuery);
-                        </xsl:for-each>
-                    </xsl:for-each>
-                    break;
-                }
-                </xsl:if>
-            </xsl:for-each>
-            }
-            Config.Kernel!.DataBase.CommitTransaction(transactionID);
-        }
-    }
 }
   </xsl:template>
 </xsl:stylesheet>
