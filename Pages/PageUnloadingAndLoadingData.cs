@@ -404,6 +404,20 @@ namespace Configurator
 
                     WriteQuerySelect(xmlWriter, $@"SELECT uid, period, income, owner{query_fields} FROM {configurationRegistersAccumulation.Table}");
 
+                    foreach (ConfigurationObjectTablePart tablePart in configurationRegistersAccumulation.TabularParts.Values)
+                    {
+                        if (CancellationTokenThread.IsCancellationRequested)
+                            break;
+
+                        xmlWriter.WriteStartElement("TablePart");
+                        xmlWriter.WriteAttributeString("name", tablePart.Name);
+                        xmlWriter.WriteAttributeString("tab", tablePart.Table);
+
+                        WriteQuerySelect(xmlWriter, $@"SELECT uid{GetAllFields(tablePart.Fields)} FROM {tablePart.Table}");
+
+                        xmlWriter.WriteEndElement();
+                    }
+
                     xmlWriter.WriteEndElement(); //Register
                 }
                 xmlWriter.WriteEndElement(); //RegistersAccumulation
