@@ -535,8 +535,7 @@ WHERE
             //
 
             string query = @$"
-INSERT INTO 
-    {{{tablePartName}.TABLE}} 
+INSERT INTO {{{tablePartName}.TABLE}} 
 (
     uid,";
 
@@ -550,32 +549,32 @@ INSERT INTO
 )
 SELECT
     uuid_generate_v4(),
-    date_trunc('day', Рег_{regName}.period::timestamp) AS Період,";
+    date_trunc('day', {regName}.period::timestamp) AS Період,";
 
             counter = 0;
 
             //Виміри
             foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
                 query += @$"
-    Рег_{regName}.{{{regName}_Const.{field.Name}}} AS {field.Name},";
+    {regName}.{{{regName}_Const.{field.Name}}} AS {field.Name},";
 
             //Ресурси
             foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
                 query += @$"
 
     /* {field.Name} */
-    SUM(CASE WHEN Рег_{regName}.income = true THEN 
-        Рег_{regName}.{{{regName}_Const.{field.Name}}} ELSE 
-        -Рег_{regName}.{{{regName}_Const.{field.Name}}} END) AS {field.Name}" +
+    SUM(CASE WHEN {regName}.income = true THEN 
+        {regName}.{{{regName}_Const.{field.Name}}} ELSE 
+        -{regName}.{{{regName}_Const.{field.Name}}} END) AS {field.Name}" +
         (++counter < ConfRegister.ResourcesFields.Count ? "," : "");
 
             query += @$"
 
 FROM
-    {{{regName}_Const.TABLE}} AS Рег_{regName}
+    {{{regName}_Const.TABLE}} AS {regName}
 
 WHERE
-    date_trunc('day', Рег_{regName}.period::timestamp) = @ПеріодДеньВідбір
+    date_trunc('day', {regName}.period::timestamp) = @ПеріодДеньВідбір
 
 GROUP BY
     Період";
@@ -595,9 +594,9 @@ HAVING";
                 query += @$"
 
     /* {field.Name} */
-    SUM(CASE WHEN Рег_{regName}.income = true THEN 
-        Рег_{regName}.{{{regName}_Const.{field.Name}}} ELSE 
-        -Рег_{regName}.{{{regName}_Const.{field.Name}}} END) != 0 " +
+    SUM(CASE WHEN {regName}.income = true THEN 
+        {regName}.{{{regName}_Const.{field.Name}}} ELSE 
+        -{regName}.{{{regName}_Const.{field.Name}}} END) != 0 " +
         (++counter < ConfRegister.ResourcesFields.Count ? "\n OR \n" : "");
 
             query += "\n\n\n\n\n";
@@ -629,8 +628,7 @@ WHERE
             //
 
             string query = @$"
-INSERT INTO 
-    {{{tablePartName}.TABLE}} 
+INSERT INTO {{{tablePartName}.TABLE}} 
 (
     uid,";
 
@@ -644,33 +642,33 @@ INSERT INTO
 )
 SELECT
     uuid_generate_v4(),
-    date_trunc('day', Рег_{regName}.period::timestamp) AS Період,";
+    date_trunc('day', {regName}.period::timestamp) AS Період,";
 
             counter = 0;
 
             //Виміри
             foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
                 query += @$"
-    Рег_{regName}.{{{regName}_Const.{field.Name}}} AS {field.Name},";
+    {regName}.{{{regName}_Const.{field.Name}}} AS {field.Name},";
 
             //Ресурси
             foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
                 query += @$"
 
     /* {field.Name} */
-    SUM(CASE WHEN Рег_{regName}.income = true THEN 
-        Рег_{regName}.{{{regName}_Const.{field.Name}}} ELSE 0 END) AS {field.Name}Прихід,
-    SUM(CASE WHEN Рег_{regName}.income = false THEN 
-        Рег_{regName}.{{{regName}_Const.{field.Name}}} ELSE 0 END) AS {field.Name}Розхід" +
+    SUM(CASE WHEN {regName}.income = true THEN 
+        {regName}.{{{regName}_Const.{field.Name}}} ELSE 0 END) AS {field.Name}Прихід,
+    SUM(CASE WHEN {regName}.income = false THEN 
+        {regName}.{{{regName}_Const.{field.Name}}} ELSE 0 END) AS {field.Name}Розхід" +
         (++counter < ConfRegister.ResourcesFields.Count ? "," : "");
 
             query += @$"
 
 FROM
-    {{{regName}_Const.TABLE}} AS Рег_{regName}
+    {{{regName}_Const.TABLE}} AS {regName}
 
 WHERE
-    date_trunc('day', Рег_{regName}.period::timestamp) = @ПеріодДеньВідбір
+    date_trunc('day', {regName}.period::timestamp) = @ПеріодДеньВідбір
 
 GROUP BY
     Період";
@@ -690,10 +688,10 @@ HAVING";
                 query += @$"
 
     /* {field.Name} */
-    SUM(CASE WHEN Рег_{regName}.income = true THEN 
-        Рег_{regName}.{{{regName}_Const.{field.Name}}} ELSE 0 END) != 0 OR 
-    SUM(CASE WHEN Рег_{regName}.income = false THEN 
-        Рег_{regName}.{{{regName}_Const.{field.Name}}} ELSE 0 END) != 0 " +
+    SUM(CASE WHEN {regName}.income = true THEN 
+        {regName}.{{{regName}_Const.{field.Name}}} ELSE 0 END) != 0 OR 
+    SUM(CASE WHEN {regName}.income = false THEN 
+        {regName}.{{{regName}_Const.{field.Name}}} ELSE 0 END) != 0 " +
         (++counter < ConfRegister.ResourcesFields.Count ? "\n OR \n" : "");
 
             query += "\n\n\n\n\n";
@@ -725,8 +723,7 @@ WHERE
             //
 
             string query = @$"
-INSERT INTO 
-    {{{tablePartName}.TABLE}} 
+INSERT INTO {{{tablePartName}.TABLE}} 
 (
     uid,";
 
@@ -740,36 +737,36 @@ INSERT INTO
 )
 SELECT
     uuid_generate_v4(),
-    date_trunc('day', Рег_{regName}.period::timestamp) AS Період,";
+    date_trunc('day', {regName}.period::timestamp) AS Період,";
 
             counter = 0;
 
             //Виміри
             foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
                 query += @$"
-    Рег_{regName}.{{{regName}_Const.{field.Name}}} AS {field.Name},";
+    {regName}.{{{regName}_Const.{field.Name}}} AS {field.Name},";
 
             //Ресурси
             foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
                 query += @$"
 
     /* {field.Name} */
-    SUM(CASE WHEN Рег_{regName}.income = true THEN 
-        Рег_{regName}.{{{regName}_Const.{field.Name}}} ELSE 0 END) AS {field.Name}Прихід,
-    SUM(CASE WHEN Рег_{regName}.income = false THEN 
-        Рег_{regName}.{{{regName}_Const.{field.Name}}} ELSE 0 END) AS {field.Name}Розхід,
-    SUM(CASE WHEN Рег_{regName}.income = true THEN 
-        Рег_{regName}.{{{regName}_Const.{field.Name}}} ELSE 
-        -Рег_{regName}.{{{regName}_Const.{field.Name}}} END) AS {field.Name}Залишок" +
+    SUM(CASE WHEN {regName}.income = true THEN 
+        {regName}.{{{regName}_Const.{field.Name}}} ELSE 0 END) AS {field.Name}Прихід,
+    SUM(CASE WHEN {regName}.income = false THEN 
+        {regName}.{{{regName}_Const.{field.Name}}} ELSE 0 END) AS {field.Name}Розхід,
+    SUM(CASE WHEN {regName}.income = true THEN 
+        {regName}.{{{regName}_Const.{field.Name}}} ELSE 
+        -{regName}.{{{regName}_Const.{field.Name}}} END) AS {field.Name}Залишок" +
         (++counter < ConfRegister.ResourcesFields.Count ? "," : "");
 
             query += @$"
 
 FROM
-    {{{regName}_Const.TABLE}} AS Рег_{regName}
+    {{{regName}_Const.TABLE}} AS {regName}
 
 WHERE
-    date_trunc('day', Рег_{regName}.period::timestamp) = @ПеріодДеньВідбір
+    date_trunc('day', {regName}.period::timestamp) = @ПеріодДеньВідбір
 
 GROUP BY
     Період";
@@ -789,13 +786,13 @@ HAVING";
                 query += @$"
 
     /* {field.Name} */
-    SUM(CASE WHEN Рег_{regName}.income = true THEN 
-        Рег_{regName}.{{{regName}_Const.{field.Name}}} ELSE 0 END) != 0 OR 
-    SUM(CASE WHEN Рег_{regName}.income = false THEN 
-        Рег_{regName}.{{{regName}_Const.{field.Name}}} ELSE 0 END) != 0 OR
-    SUM(CASE WHEN Рег_{regName}.income = true THEN 
-        Рег_{regName}.{{{regName}_Const.{field.Name}}} ELSE 
-        -Рег_{regName}.{{{regName}_Const.{field.Name}}} END) != 0 " +
+    SUM(CASE WHEN {regName}.income = true THEN 
+        {regName}.{{{regName}_Const.{field.Name}}} ELSE 0 END) != 0 OR 
+    SUM(CASE WHEN {regName}.income = false THEN 
+        {regName}.{{{regName}_Const.{field.Name}}} ELSE 0 END) != 0 OR
+    SUM(CASE WHEN {regName}.income = true THEN 
+        {regName}.{{{regName}_Const.{field.Name}}} ELSE 
+        -{regName}.{{{regName}_Const.{field.Name}}} END) != 0 " +
         (++counter < ConfRegister.ResourcesFields.Count ? "\n OR \n" : "");
 
             query += "\n\n\n\n\n";

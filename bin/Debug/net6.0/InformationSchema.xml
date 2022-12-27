@@ -41,7 +41,144 @@
     </Index>
   </Table>
   <Table>
+    <Name>tab_b12</Name>
+    <Column>
+      <Name>col_a2</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a4</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a5</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a6</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a7</Name>
+      <DataType>integer</DataType>
+      <UdtName>int4</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a9</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>col_b4</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>col_b6</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a8</Name>
+      <DataType>numeric</DataType>
+      <UdtName>numeric</UdtName>
+    </Column>
+    <Column>
+      <Name>col_b2</Name>
+      <DataType>numeric</DataType>
+      <UdtName>numeric</UdtName>
+    </Column>
+    <Column>
+      <Name>col_b3</Name>
+      <DataType>numeric</DataType>
+      <UdtName>numeric</UdtName>
+    </Column>
+    <Column>
+      <Name>col_b5</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>uid</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>period</Name>
+      <DataType>timestamp without time zone</DataType>
+      <UdtName>timestamp</UdtName>
+    </Column>
+    <Column>
+      <Name>income</Name>
+      <DataType>boolean</DataType>
+      <UdtName>bool</UdtName>
+    </Column>
+    <Column>
+      <Name>owner</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a1</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Index>
+      <Name>tab_b12_pkey</Name>
+    </Index>
+    <Index>
+      <Name>tab_b12_col_a1_idx</Name>
+    </Index>
+    <Index>
+      <Name>tab_b12_col_a2_idx</Name>
+    </Index>
+    <Index>
+      <Name>tab_b12_col_a4_idx</Name>
+    </Index>
+    <Index>
+      <Name>tab_b12_col_a5_idx</Name>
+    </Index>
+    <Index>
+      <Name>tab_b12_col_a6_idx</Name>
+    </Index>
+    <Index>
+      <Name>tab_b12_col_a7_idx</Name>
+    </Index>
+    <Index>
+      <Name>tab_b12_col_a9_idx</Name>
+    </Index>
+    <Index>
+      <Name>tab_b12_col_b4_idx</Name>
+    </Index>
+    <Index>
+      <Name>tab_b12_col_b6_idx</Name>
+    </Index>
+    <Index>
+      <Name>tab_b12_income_idx</Name>
+    </Index>
+    <Index>
+      <Name>tab_b12_owner_idx</Name>
+    </Index>
+    <Index>
+      <Name>tab_b12_period_idx</Name>
+    </Index>
+  </Table>
+  <Table>
     <Name>tab_b13</Name>
+    <Column>
+      <Name>uid</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>col_b3</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
     <Column>
       <Name>col_a7</Name>
       <DataType>integer</DataType>
@@ -59,16 +196,6 @@
     </Column>
     <Column>
       <Name>col_b2</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
-    </Column>
-    <Column>
-      <Name>uid</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
-    </Column>
-    <Column>
-      <Name>col_b3</Name>
       <DataType>uuid</DataType>
       <UdtName>uuid</UdtName>
     </Column>
@@ -1180,94 +1307,6 @@
     </Index>
   </Table>
   <Table>
-    <Name>tab_b39</Name>
-    <Column>
-      <Name>uid</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a1</Name>
-      <DataType>date</DataType>
-      <UdtName>date</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a2</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a3</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a4</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a5</Name>
-      <DataType>numeric</DataType>
-      <UdtName>numeric</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a6</Name>
-      <DataType>numeric</DataType>
-      <UdtName>numeric</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a7</Name>
-      <DataType>numeric</DataType>
-      <UdtName>numeric</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a8</Name>
-      <DataType>numeric</DataType>
-      <UdtName>numeric</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a9</Name>
-      <DataType>numeric</DataType>
-      <UdtName>numeric</UdtName>
-    </Column>
-    <Column>
-      <Name>col_b1</Name>
-      <DataType>numeric</DataType>
-      <UdtName>numeric</UdtName>
-    </Column>
-    <Column>
-      <Name>col_b2</Name>
-      <DataType>numeric</DataType>
-      <UdtName>numeric</UdtName>
-    </Column>
-    <Column>
-      <Name>col_b3</Name>
-      <DataType>numeric</DataType>
-      <UdtName>numeric</UdtName>
-    </Column>
-    <Column>
-      <Name>col_b4</Name>
-      <DataType>numeric</DataType>
-      <UdtName>numeric</UdtName>
-    </Column>
-    <Index>
-      <Name>tab_b39_pkey</Name>
-    </Index>
-    <Index>
-      <Name>tab_b39_col_a1_idx</Name>
-    </Index>
-    <Index>
-      <Name>tab_b39_col_a2_idx</Name>
-    </Index>
-    <Index>
-      <Name>tab_b39_col_a3_idx</Name>
-    </Index>
-    <Index>
-      <Name>tab_b39_col_a4_idx</Name>
-    </Index>
-  </Table>
-  <Table>
     <Name>tab_b45</Name>
     <Column>
       <Name>uid</Name>
@@ -2003,6 +2042,21 @@
       <UdtName>uuid</UdtName>
     </Column>
     <Column>
+      <Name>col_g8</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_h5</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a8</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
       <Name>col_a9</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
@@ -2054,21 +2108,6 @@
     </Column>
     <Column>
       <Name>col_g3</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
-      <Name>col_g8</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
-      <Name>col_h5</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a8</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
@@ -9004,133 +9043,6 @@
     </Index>
     <Index>
       <Name>tab_b11_owner_idx</Name>
-    </Index>
-  </Table>
-  <Table>
-    <Name>tab_b12</Name>
-    <Column>
-      <Name>uid</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
-    </Column>
-    <Column>
-      <Name>period</Name>
-      <DataType>timestamp without time zone</DataType>
-      <UdtName>timestamp</UdtName>
-    </Column>
-    <Column>
-      <Name>income</Name>
-      <DataType>boolean</DataType>
-      <UdtName>bool</UdtName>
-    </Column>
-    <Column>
-      <Name>owner</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a1</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a2</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a4</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a5</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a6</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a7</Name>
-      <DataType>integer</DataType>
-      <UdtName>int4</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a9</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
-    </Column>
-    <Column>
-      <Name>col_b4</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
-    </Column>
-    <Column>
-      <Name>col_b6</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
-    </Column>
-    <Column>
-      <Name>col_a8</Name>
-      <DataType>numeric</DataType>
-      <UdtName>numeric</UdtName>
-    </Column>
-    <Column>
-      <Name>col_b2</Name>
-      <DataType>numeric</DataType>
-      <UdtName>numeric</UdtName>
-    </Column>
-    <Column>
-      <Name>col_b3</Name>
-      <DataType>numeric</DataType>
-      <UdtName>numeric</UdtName>
-    </Column>
-    <Column>
-      <Name>col_b5</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
-    </Column>
-    <Index>
-      <Name>tab_b12_pkey</Name>
-    </Index>
-    <Index>
-      <Name>tab_b12_col_a1_idx</Name>
-    </Index>
-    <Index>
-      <Name>tab_b12_col_a2_idx</Name>
-    </Index>
-    <Index>
-      <Name>tab_b12_col_a4_idx</Name>
-    </Index>
-    <Index>
-      <Name>tab_b12_col_a5_idx</Name>
-    </Index>
-    <Index>
-      <Name>tab_b12_col_a6_idx</Name>
-    </Index>
-    <Index>
-      <Name>tab_b12_col_a7_idx</Name>
-    </Index>
-    <Index>
-      <Name>tab_b12_col_a9_idx</Name>
-    </Index>
-    <Index>
-      <Name>tab_b12_col_b4_idx</Name>
-    </Index>
-    <Index>
-      <Name>tab_b12_col_b6_idx</Name>
-    </Index>
-    <Index>
-      <Name>tab_b12_income_idx</Name>
-    </Index>
-    <Index>
-      <Name>tab_b12_owner_idx</Name>
-    </Index>
-    <Index>
-      <Name>tab_b12_period_idx</Name>
     </Index>
   </Table>
 </InformationSchema>
