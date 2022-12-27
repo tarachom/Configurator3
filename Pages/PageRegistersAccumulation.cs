@@ -894,7 +894,7 @@ HAVING";
                 case TypeRegistersAccumulation.Residues: /* Залишки */
                     {
                         CreateVirtualTable_Залишки();
-                        CreateVirtualTable_Обороти();
+                        //CreateVirtualTable_Обороти();
                         CreateVirtualTable_ЗалишкиТаОбороти();
 
                         break;
