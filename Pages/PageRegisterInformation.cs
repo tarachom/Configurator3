@@ -83,6 +83,12 @@ namespace Configurator
         {
             VBox vBox = new VBox();
 
+            //Стандартні поля
+            Expander expanderDefField = new Expander("Стандартні поля");
+            vBox.PackStart(expanderDefField, false, false, 5);
+
+            expanderDefField.Add(new Label(" period - дата та час запису \n owner - власник запису") { Halign = Align.Start });
+
             //Поля
             CreateDimensionFieldList(vBox);
 

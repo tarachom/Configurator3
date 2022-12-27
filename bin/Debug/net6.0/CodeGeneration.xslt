@@ -1477,10 +1477,10 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.РегістриВі�
 }
 
 namespace <xsl:value-of select="Configuration/NameSpace"/>.РегістриНакопичення
-{  
-    /*  */
+{
     public static class VirtualTablesСalculation
     {
+        /* Функція для обчислення віртуальних таблиць  */
         public static void Execute(DateTime period, string regAccumName)
         {
             Dictionary&lt;string, object&gt; paramQuery = new Dictionary&lt;string, object&gt;();
