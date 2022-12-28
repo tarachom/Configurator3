@@ -513,8 +513,16 @@ namespace Configurator
 
         void CreateQueryBlock_Залишки(ConfigurationObjectTablePart TablePart)
         {
-            ConfigurationObjectQueryBlock queryBlock = new ConfigurationObjectQueryBlock("Залишки");
-            ConfRegister.AppendQueryBlockList(queryBlock);
+            string queryBlockKey = "Залишки";
+
+            ConfigurationObjectQueryBlock queryBlock;
+            if (ConfRegister.QueryBlockList.ContainsKey(queryBlockKey))
+            {
+                queryBlock = ConfRegister.QueryBlockList[queryBlockKey];
+                queryBlock.Query.Clear();
+            }
+            else
+                ConfRegister.AppendQueryBlockList(queryBlock = new ConfigurationObjectQueryBlock(queryBlockKey));
 
             string regName = $"{ConfRegister.Name}";
             string tablePartName = $"{ConfRegister.Name}_{TablePart.Name}_TablePart";
@@ -606,8 +614,16 @@ HAVING";
 
         void CreateQueryBlock_Обороти(ConfigurationObjectTablePart TablePart)
         {
-            ConfigurationObjectQueryBlock queryBlock = new ConfigurationObjectQueryBlock("Обороти");
-            ConfRegister.AppendQueryBlockList(queryBlock);
+            string queryBlockKey = "Обороти";
+
+            ConfigurationObjectQueryBlock queryBlock;
+            if (ConfRegister.QueryBlockList.ContainsKey(queryBlockKey))
+            {
+                queryBlock = ConfRegister.QueryBlockList[queryBlockKey];
+                queryBlock.Query.Clear();
+            }
+            else
+                ConfRegister.AppendQueryBlockList(queryBlock = new ConfigurationObjectQueryBlock(queryBlockKey));
 
             string regName = $"{ConfRegister.Name}";
             string tablePartName = $"{ConfRegister.Name}_{TablePart.Name}_TablePart";
@@ -701,8 +717,16 @@ HAVING";
 
         void CreateQueryBlock_ЗалишкиТаОбороти(ConfigurationObjectTablePart TablePart)
         {
-            ConfigurationObjectQueryBlock queryBlock = new ConfigurationObjectQueryBlock("ЗалишкиТаОбороти");
-            ConfRegister.AppendQueryBlockList(queryBlock);
+            string queryBlockKey = "ЗалишкиТаОбороти";
+
+            ConfigurationObjectQueryBlock queryBlock;
+            if (ConfRegister.QueryBlockList.ContainsKey(queryBlockKey))
+            {
+                queryBlock = ConfRegister.QueryBlockList[queryBlockKey];
+                queryBlock.Query.Clear();
+            }
+            else
+                ConfRegister.AppendQueryBlockList(queryBlock = new ConfigurationObjectQueryBlock(queryBlockKey));
 
             string regName = $"{ConfRegister.Name}";
             string tablePartName = $"{ConfRegister.Name}_{TablePart.Name}_TablePart";
@@ -884,16 +908,12 @@ HAVING";
 
         void OnCreateVirtualTableClick(object? sender, EventArgs args)
         {
-            ConfRegister.QueryBlockList.Clear();
-
             switch (ConfRegister.TypeRegistersAccumulation)
             {
                 case TypeRegistersAccumulation.Residues: /* Залишки */
                     {
                         CreateVirtualTable_Залишки();
-                        //CreateVirtualTable_Обороти();
                         CreateVirtualTable_ЗалишкиТаОбороти();
-
                         break;
                     }
                 case TypeRegistersAccumulation.Turnover: /* Обороти */
