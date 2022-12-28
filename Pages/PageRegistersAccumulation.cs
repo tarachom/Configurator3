@@ -925,6 +925,9 @@ HAVING";
 
             TabularPartsRefreshList();
             QueryListRefreshList();
+
+            if (!IsNew)
+                GeneralForm?.LoadTreeAsync();
         }
 
         #endregion
