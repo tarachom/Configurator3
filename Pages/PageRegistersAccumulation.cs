@@ -509,7 +509,7 @@ namespace Configurator
             GeneralForm?.RenameCurrentPageNotebook($"Регістер накопичення: {ConfRegister.Name}");
         }
 
-        #region Query
+        #region QueryBlock
 
         void CreateQueryBlock_Залишки(ConfigurationObjectTablePart TablePart)
         {
