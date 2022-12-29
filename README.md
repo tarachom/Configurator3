@@ -10,11 +10,11 @@
     Вигрузка та загрузка даних або конфігурації
     Обслуговування бази даних
  
+<hr />
+ 
 Детальніше про програму [accounting.org.ua](https://accounting.org.ua/configurator.html)<br/>
 Середовище розробки [Visual Studio Code](https://code.visualstudio.com)<br/>
 База даних [PostgreSQL](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads)<br/>
-
-<hr />
 
 Для запуску на <b>Windows:</b>
 
