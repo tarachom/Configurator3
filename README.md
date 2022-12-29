@@ -9,14 +9,10 @@
     Генерування коду на C#
     Вигрузка та загрузка даних або конфігурації
     Обслуговування бази даних
-
- <b>Завантажити:</b>
  
-Програму [accounting.org.ua](https://accounting.org.ua/configurator.html)
-
-Середовище розробки [Visual Studio Code](https://code.visualstudio.com)
-
-База даних [PostgreSQL](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads)
+Детальніше про програму [accounting.org.ua](https://accounting.org.ua/configurator.html)<br/>
+Середовище розробки [Visual Studio Code](https://code.visualstudio.com)<br/>
+База даних [PostgreSQL](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads)<br/>
 
 <br/>
     
