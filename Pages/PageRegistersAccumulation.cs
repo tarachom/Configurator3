@@ -511,6 +511,10 @@ namespace Configurator
 
         #region QueryBlock
 
+        //
+        // Залишки
+        //
+
         void CreateQueryBlock_Залишки(ConfigurationObjectTablePart TablePart)
         {
             string queryBlockKey = "Залишки";
@@ -605,109 +609,6 @@ HAVING";
     SUM(CASE WHEN {regName}.income = true THEN 
         {regName}.{{{regName}_Const.{field.Name}}} ELSE 
         -{regName}.{{{regName}_Const.{field.Name}}} END) != 0 " +
-        (++counter < ConfRegister.ResourcesFields.Count ? "\n OR \n" : "");
-
-            query += "\n\n\n\n\n";
-
-            queryBlock.Query.Add("SELECT", query);
-        }
-
-        void CreateQueryBlock_Обороти(ConfigurationObjectTablePart TablePart)
-        {
-            string queryBlockKey = "Обороти";
-
-            ConfigurationObjectQueryBlock queryBlock;
-            if (ConfRegister.QueryBlockList.ContainsKey(queryBlockKey))
-            {
-                queryBlock = ConfRegister.QueryBlockList[queryBlockKey];
-                queryBlock.Query.Clear();
-            }
-            else
-                ConfRegister.AppendQueryBlockList(queryBlock = new ConfigurationObjectQueryBlock(queryBlockKey));
-
-            string regName = $"{ConfRegister.Name}";
-            string tablePartName = $"{ConfRegister.Name}_{TablePart.Name}_TablePart";
-
-            //
-            // DELETE
-            //
-
-            queryBlock.Query.Add("DELETE", @$"
-DELETE FROM 
-    {{{tablePartName}.TABLE}}
-WHERE 
-    {{{tablePartName}.TABLE}}.{{{tablePartName}.Період}} = @ПеріодДеньВідбір
-");
-
-            //
-            // INSERT
-            //
-
-            string query = @$"
-INSERT INTO {{{tablePartName}.TABLE}} 
-(
-    uid,";
-
-            int counter = 0;
-
-            foreach (ConfigurationObjectField field in TablePart.Fields.Values)
-                query += @$"
-    {{{tablePartName}.{field.Name}}}" + (++counter < TablePart.Fields.Count ? "," : "");
-
-            query += @$"
-)
-SELECT
-    uuid_generate_v4(),
-    date_trunc('day', {regName}.period::timestamp) AS Період,";
-
-            counter = 0;
-
-            //Виміри
-            foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
-                query += @$"
-    {regName}.{{{regName}_Const.{field.Name}}} AS {field.Name},";
-
-            //Ресурси
-            foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
-                query += @$"
-
-    /* {field.Name} */
-    SUM(CASE WHEN {regName}.income = true THEN 
-        {regName}.{{{regName}_Const.{field.Name}}} ELSE 0 END) AS {field.Name}Прихід,
-    SUM(CASE WHEN {regName}.income = false THEN 
-        {regName}.{{{regName}_Const.{field.Name}}} ELSE 0 END) AS {field.Name}Розхід" +
-        (++counter < ConfRegister.ResourcesFields.Count ? "," : "");
-
-            query += @$"
-
-FROM
-    {{{regName}_Const.TABLE}} AS {regName}
-
-WHERE
-    date_trunc('day', {regName}.period::timestamp) = @ПеріодДеньВідбір
-
-GROUP BY
-    Період";
-
-            //Виміри
-            foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
-                query += $", {field.Name}";
-
-            query += @$"
-
-HAVING";
-
-            counter = 0;
-
-            //Ресурси
-            foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
-                query += @$"
-
-    /* {field.Name} */
-    SUM(CASE WHEN {regName}.income = true THEN 
-        {regName}.{{{regName}_Const.{field.Name}}} ELSE 0 END) != 0 OR 
-    SUM(CASE WHEN {regName}.income = false THEN 
-        {regName}.{{{regName}_Const.{field.Name}}} ELSE 0 END) != 0 " +
         (++counter < ConfRegister.ResourcesFields.Count ? "\n OR \n" : "");
 
             query += "\n\n\n\n\n";
@@ -824,9 +725,123 @@ HAVING";
             queryBlock.Query.Add("SELECT", query);
         }
 
+        //
+        // Обороти
+        //
+
+        void CreateQueryBlock_Обороти(ConfigurationObjectTablePart TablePart)
+        {
+            string queryBlockKey = "Обороти";
+
+            ConfigurationObjectQueryBlock queryBlock;
+            if (ConfRegister.QueryBlockList.ContainsKey(queryBlockKey))
+            {
+                queryBlock = ConfRegister.QueryBlockList[queryBlockKey];
+                queryBlock.Query.Clear();
+            }
+            else
+                ConfRegister.AppendQueryBlockList(queryBlock = new ConfigurationObjectQueryBlock(queryBlockKey));
+
+            string regName = $"{ConfRegister.Name}";
+            string tablePartName = $"{ConfRegister.Name}_{TablePart.Name}_TablePart";
+
+            //
+            // DELETE
+            //
+
+            queryBlock.Query.Add("DELETE", @$"
+DELETE FROM 
+    {{{tablePartName}.TABLE}}
+WHERE 
+    {{{tablePartName}.TABLE}}.{{{tablePartName}.Період}} = @ПеріодДеньВідбір
+");
+
+            //
+            // INSERT
+            //
+
+            string query = @$"
+INSERT INTO {{{tablePartName}.TABLE}} 
+(
+    uid,";
+
+            int counter = 0;
+
+            foreach (ConfigurationObjectField field in TablePart.Fields.Values)
+                query += @$"
+    {{{tablePartName}.{field.Name}}}" + (++counter < TablePart.Fields.Count ? "," : "");
+
+            query += @$"
+)
+SELECT
+    uuid_generate_v4(),
+    date_trunc('day', {regName}.period::timestamp) AS Період,";
+
+            counter = 0;
+
+            //Виміри
+            foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
+                query += @$"
+    {regName}.{{{regName}_Const.{field.Name}}} AS {field.Name}" +
+        (++counter < ConfRegister.DimensionFields.Count || ConfRegister.ResourcesFields.Count != 0 || ConfRegister.PropertyFields.Count != 0 ? "," : "");
+
+            query += "\n";
+            counter = 0;
+
+            //Ресурси
+            foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
+                query += @$"
+    SUM({regName}.{{{regName}_Const.{field.Name}}}) AS {field.Name}" +
+        (++counter < ConfRegister.ResourcesFields.Count || ConfRegister.PropertyFields.Count != 0 ? "," : "");
+
+            query += "\n";
+            counter = 0;
+
+            //Реквізити
+            foreach (ConfigurationObjectField field in ConfRegister.PropertyFields.Values)
+                query += @$"
+    {regName}.{{{regName}_Const.{field.Name}}} AS {field.Name}" +
+        (++counter < ConfRegister.PropertyFields.Count ? "," : "");
+
+            query += @$"
+
+FROM
+    {{{regName}_Const.TABLE}} AS {regName}
+
+WHERE
+    date_trunc('day', {regName}.period::timestamp) = @ПеріодДеньВідбір
+
+GROUP BY
+    Період" + (ConfRegister.DimensionFields.Count != 0 || ConfRegister.PropertyFields.Count != 0 ? ", " : "");
+
+            counter = 0;
+
+            //Виміри
+            foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
+                query += $"{field.Name}" +
+                (++counter < ConfRegister.DimensionFields.Count ? ", " : "") +
+                (counter % 5 == 0 ? "\n" : "");
+
+            counter = 0;
+
+            //Реквізити
+            foreach (ConfigurationObjectField field in ConfRegister.PropertyFields.Values)
+                query += $"{field.Name}" +
+                (++counter < ConfRegister.PropertyFields.Count ? ", " : "") +
+                (counter % 5 == 0 ? "\n" : "");
+
+            query += "\n\n\n\n\n";
+
+            queryBlock.Query.Add("SELECT", query);
+        }
+
         #endregion
 
         #region VirtualTable
+
+        //
+        // Залишки
+        //
 
         void CreateVirtualTable_Залишки()
         {
@@ -843,26 +858,6 @@ HAVING";
                 CreateVirtualTable_Field(TablePart, field);
 
             CreateQueryBlock_Залишки(TablePart);
-        }
-
-        void CreateVirtualTable_Обороти()
-        {
-            ConfigurationObjectTablePart TablePart = CreateVirtualTable_Table("Обороти");
-
-            CreateVirtualTable_Field(TablePart, new ConfigurationObjectField("Період", "", "date", "", "", false, true));
-
-            //Виміри
-            foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
-                CreateVirtualTable_Field(TablePart, field);
-
-            //Ресурси
-            foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
-            {
-                CreateVirtualTable_Field(TablePart, field, "Прихід");
-                CreateVirtualTable_Field(TablePart, field, "Розхід");
-            }
-
-            CreateQueryBlock_Обороти(TablePart);
         }
 
         void CreateVirtualTable_ЗалишкиТаОбороти()
@@ -884,6 +879,31 @@ HAVING";
             }
 
             CreateQueryBlock_ЗалишкиТаОбороти(TablePart);
+        }
+
+        //
+        // Обороти
+        //
+
+        void CreateVirtualTable_Обороти()
+        {
+            ConfigurationObjectTablePart TablePart = CreateVirtualTable_Table("Обороти");
+
+            CreateVirtualTable_Field(TablePart, new ConfigurationObjectField("Період", "", "date", "", "", false, true));
+
+            //Виміри
+            foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
+                CreateVirtualTable_Field(TablePart, field);
+
+            //Ресурси
+            foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
+                CreateVirtualTable_Field(TablePart, field);
+
+            //Реквізити
+            foreach (ConfigurationObjectField field in ConfRegister.PropertyFields.Values)
+                CreateVirtualTable_Field(TablePart, field);
+
+            CreateQueryBlock_Обороти(TablePart);
         }
 
         ConfigurationObjectTablePart CreateVirtualTable_Table(string tableName)

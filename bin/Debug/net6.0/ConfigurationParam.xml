@@ -9,7 +9,7 @@
     <Password>1</Password>
     <BaseName>storage_and_trade</BaseName>
     <OtherParam>
-      <Param name="IsGenerateCode">False</Param>
+      <Param name="IsGenerateCode">True</Param>
       <Param name="GenerateCodePath">/home/tarachom/Projects/StorageAndTrade3/Configurator</Param>
       <Param name="CompileProgramPath">/home/tarachom/Projects/StorageAndTrade3/bin/Debug/net6.0/</Param>
     </OtherParam>
