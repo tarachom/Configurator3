@@ -5,7 +5,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>03.01.2023 22:05:46</DateTimeSave>
+  <DateTimeSave>03.01.2023 21:56:17</DateTimeSave>
   <ConstantsBlocks>
     <ConstantsBlock>
       <Name>ЗначенняЗаЗамовчуванням</Name>
@@ -15848,7 +15848,7 @@ GROUP BY
       <TabularParts>
         <TablePart>
           <Name>Обороти</Name>
-          <Table>tab_a68</Table>
+          <Table>tab_a63</Table>
           <Desc>Віртуальна таблиця</Desc>
           <Fields>
             <Field>

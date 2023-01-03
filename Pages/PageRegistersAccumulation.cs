@@ -979,7 +979,7 @@ HAVING";
                     if (ConfRegister.DimensionFields.ContainsKey(curRow.Child.Name))
                         GeneralForm?.CreateNotebookPage($"Поле: {curRow.Child.Name}", () =>
                         {
-                            Dictionary<string, ConfigurationObjectField> AllFields = Conf!.CombineAllFileldForRegister
+                            Dictionary<string, ConfigurationObjectField> AllFields = Conf!.CombineAllFieldForRegister
                             (
                                 ConfRegister.DimensionFields.Values,
                                 ConfRegister.ResourcesFields.Values,
@@ -1008,7 +1008,7 @@ HAVING";
         {
             GeneralForm?.CreateNotebookPage("Поле *", () =>
             {
-                Dictionary<string, ConfigurationObjectField> AllFields = Conf!.CombineAllFileldForRegister
+                Dictionary<string, ConfigurationObjectField> AllFields = Conf!.CombineAllFieldForRegister
                 (
                     ConfRegister.DimensionFields.Values,
                     ConfRegister.ResourcesFields.Values,
@@ -1104,7 +1104,7 @@ HAVING";
                     if (ConfRegister.ResourcesFields.ContainsKey(curRow.Child.Name))
                         GeneralForm?.CreateNotebookPage($"Поле: {curRow.Child.Name}", () =>
                         {
-                            Dictionary<string, ConfigurationObjectField> AllFields = Conf!.CombineAllFileldForRegister
+                            Dictionary<string, ConfigurationObjectField> AllFields = Conf!.CombineAllFieldForRegister
                             (
                                 ConfRegister.DimensionFields.Values,
                                 ConfRegister.ResourcesFields.Values,
@@ -1133,7 +1133,7 @@ HAVING";
         {
             GeneralForm?.CreateNotebookPage("Поле *", () =>
             {
-                Dictionary<string, ConfigurationObjectField> AllFields = Conf!.CombineAllFileldForRegister
+                Dictionary<string, ConfigurationObjectField> AllFields = Conf!.CombineAllFieldForRegister
                 (
                     ConfRegister.DimensionFields.Values,
                     ConfRegister.ResourcesFields.Values,
@@ -1229,7 +1229,7 @@ HAVING";
                     if (ConfRegister.PropertyFields.ContainsKey(curRow.Child.Name))
                         GeneralForm?.CreateNotebookPage($"Поле: {curRow.Child.Name}", () =>
                         {
-                            Dictionary<string, ConfigurationObjectField> AllFields = Conf!.CombineAllFileldForRegister
+                            Dictionary<string, ConfigurationObjectField> AllFields = Conf!.CombineAllFieldForRegister
                             (
                                 ConfRegister.DimensionFields.Values,
                                 ConfRegister.ResourcesFields.Values,
@@ -1258,7 +1258,7 @@ HAVING";
         {
             GeneralForm?.CreateNotebookPage("Поле *", () =>
             {
-                Dictionary<string, ConfigurationObjectField> AllFields = Conf!.CombineAllFileldForRegister
+                Dictionary<string, ConfigurationObjectField> AllFields = Conf!.CombineAllFieldForRegister
                 (
                     ConfRegister.DimensionFields.Values,
                     ConfRegister.ResourcesFields.Values,
