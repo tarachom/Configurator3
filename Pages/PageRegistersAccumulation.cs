@@ -830,6 +830,18 @@ GROUP BY
                 (++counter < ConfRegister.PropertyFields.Count ? ", " : "") +
                 (counter % 5 == 0 ? "\n" : "");
 
+            query += @$"
+
+HAVING";
+
+            counter = 0;
+
+            //Ресурси
+            foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
+                query += @$"
+    SUM({regName}.{{{regName}_Const.{field.Name}}}) != 0 " +
+        (++counter < ConfRegister.ResourcesFields.Count ? "OR" : "");
+
             query += "\n\n\n\n\n";
 
             queryBlock.Query.Add("SELECT", query);

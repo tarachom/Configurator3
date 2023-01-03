@@ -499,16 +499,6 @@
   <Table>
     <Name>tab_a38</Name>
     <Column>
-      <Name>col_e5</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
-    </Column>
-    <Column>
-      <Name>col_e6</Name>
-      <DataType>uuid</DataType>
-      <UdtName>uuid</UdtName>
-    </Column>
-    <Column>
       <Name>col_a1</Name>
       <DataType>uuid</DataType>
       <UdtName>uuid</UdtName>
@@ -545,6 +535,16 @@
     </Column>
     <Column>
       <Name>col_e4</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>col_e5</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>col_e6</Name>
       <DataType>uuid</DataType>
       <UdtName>uuid</UdtName>
     </Column>
@@ -922,6 +922,22 @@
       <DataType>numeric</DataType>
       <UdtName>numeric</UdtName>
     </Column>
+    <Column>
+      <Name>col_a1</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a2</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Index>
+      <Name>tab_a57_col_a1_idx</Name>
+    </Index>
+    <Index>
+      <Name>tab_a57_col_a2_idx</Name>
+    </Index>
     <Index>
       <Name>tab_a57_pkey</Name>
     </Index>
@@ -2514,6 +2530,88 @@
     </Index>
   </Table>
   <Table>
+    <Name>tab_a66</Name>
+    <Column>
+      <Name>uid</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a1</Name>
+      <DataType>date</DataType>
+      <UdtName>date</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a2</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a3</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a4</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a5</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a6</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a7</Name>
+      <DataType>uuid</DataType>
+      <UdtName>uuid</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a8</Name>
+      <DataType>numeric</DataType>
+      <UdtName>numeric</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a9</Name>
+      <DataType>numeric</DataType>
+      <UdtName>numeric</UdtName>
+    </Column>
+    <Column>
+      <Name>col_b1</Name>
+      <DataType>numeric</DataType>
+      <UdtName>numeric</UdtName>
+    </Column>
+    <Index>
+      <Name>tab_a66_col_a4_idx</Name>
+    </Index>
+    <Index>
+      <Name>tab_a66_col_a5_idx</Name>
+    </Index>
+    <Index>
+      <Name>tab_a66_col_a6_idx</Name>
+    </Index>
+    <Index>
+      <Name>tab_a66_col_a7_idx</Name>
+    </Index>
+    <Index>
+      <Name>tab_a66_pkey</Name>
+    </Index>
+    <Index>
+      <Name>tab_a66_col_a1_idx</Name>
+    </Index>
+    <Index>
+      <Name>tab_a66_col_a2_idx</Name>
+    </Index>
+    <Index>
+      <Name>tab_a66_col_a3_idx</Name>
+    </Index>
+  </Table>
+  <Table>
     <Name>tab_b22</Name>
     <Column>
       <Name>uid</Name>
@@ -3246,17 +3344,17 @@
       <UdtName>int4</UdtName>
     </Column>
     <Column>
-      <Name>col_a2</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
       <Name>col_g7</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
     <Column>
       <Name>col_g8</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
+      <Name>col_a2</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
@@ -5776,6 +5874,11 @@
       <UdtName>uuid</UdtName>
     </Column>
     <Column>
+      <Name>docname</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
       <Name>docnomer</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
@@ -5787,11 +5890,6 @@
     </Column>
     <Column>
       <Name>col_c8</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
-      <Name>docname</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
@@ -7031,17 +7129,17 @@
       <UdtName>uuid</UdtName>
     </Column>
     <Column>
+      <Name>col_g1</Name>
+      <DataType>text</DataType>
+      <UdtName>text</UdtName>
+    </Column>
+    <Column>
       <Name>docnomer</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
     <Column>
       <Name>docname</Name>
-      <DataType>text</DataType>
-      <UdtName>text</UdtName>
-    </Column>
-    <Column>
-      <Name>col_g1</Name>
       <DataType>text</DataType>
       <UdtName>text</UdtName>
     </Column>
