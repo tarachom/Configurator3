@@ -819,7 +819,7 @@ GROUP BY
             //Виміри
             foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
                 query += $"{field.Name}" +
-                (++counter < ConfRegister.DimensionFields.Count ? ", " : "") +
+                (++counter < ConfRegister.DimensionFields.Count || ConfRegister.PropertyFields.Count != 0 ? ", " : "") +
                 (counter % 5 == 0 ? "\n" : "");
 
             counter = 0;
@@ -979,8 +979,16 @@ HAVING";
                     if (ConfRegister.DimensionFields.ContainsKey(curRow.Child.Name))
                         GeneralForm?.CreateNotebookPage($"Поле: {curRow.Child.Name}", () =>
                         {
+                            Dictionary<string, ConfigurationObjectField> AllFields = Conf!.CombineAllFileldForRegister
+                            (
+                                ConfRegister.DimensionFields.Values,
+                                ConfRegister.ResourcesFields.Values,
+                                ConfRegister.PropertyFields.Values
+                            );
+
                             PageField page = new PageField()
                             {
+                                AllFields = AllFields,
                                 Fields = ConfRegister.DimensionFields,
                                 Field = ConfRegister.DimensionFields[curRow.Child.Name],
                                 IsNew = false,
@@ -1000,11 +1008,20 @@ HAVING";
         {
             GeneralForm?.CreateNotebookPage("Поле *", () =>
             {
+                Dictionary<string, ConfigurationObjectField> AllFields = Conf!.CombineAllFileldForRegister
+                (
+                    ConfRegister.DimensionFields.Values,
+                    ConfRegister.ResourcesFields.Values,
+                    ConfRegister.PropertyFields.Values
+                );
+
                 PageField page = new PageField()
                 {
+                    AllFields = AllFields,
                     Fields = ConfRegister.DimensionFields,
                     IsNew = true,
                     GeneralForm = GeneralForm,
+                    Table = ConfRegister.Table,
                     CallBack_RefreshList = DimensionFieldsRefreshList
                 };
 
@@ -1087,8 +1104,16 @@ HAVING";
                     if (ConfRegister.ResourcesFields.ContainsKey(curRow.Child.Name))
                         GeneralForm?.CreateNotebookPage($"Поле: {curRow.Child.Name}", () =>
                         {
+                            Dictionary<string, ConfigurationObjectField> AllFields = Conf!.CombineAllFileldForRegister
+                            (
+                                ConfRegister.DimensionFields.Values,
+                                ConfRegister.ResourcesFields.Values,
+                                ConfRegister.PropertyFields.Values
+                            );
+
                             PageField page = new PageField()
                             {
+                                AllFields = AllFields,
                                 Fields = ConfRegister.ResourcesFields,
                                 Field = ConfRegister.ResourcesFields[curRow.Child.Name],
                                 IsNew = false,
@@ -1108,11 +1133,20 @@ HAVING";
         {
             GeneralForm?.CreateNotebookPage("Поле *", () =>
             {
+                Dictionary<string, ConfigurationObjectField> AllFields = Conf!.CombineAllFileldForRegister
+                (
+                    ConfRegister.DimensionFields.Values,
+                    ConfRegister.ResourcesFields.Values,
+                    ConfRegister.PropertyFields.Values
+                );
+
                 PageField page = new PageField()
                 {
+                    AllFields = AllFields,
                     Fields = ConfRegister.ResourcesFields,
                     IsNew = true,
                     GeneralForm = GeneralForm,
+                    Table = ConfRegister.Table,
                     CallBack_RefreshList = ResourcesFieldsRefreshList
                 };
 
@@ -1195,8 +1229,16 @@ HAVING";
                     if (ConfRegister.PropertyFields.ContainsKey(curRow.Child.Name))
                         GeneralForm?.CreateNotebookPage($"Поле: {curRow.Child.Name}", () =>
                         {
+                            Dictionary<string, ConfigurationObjectField> AllFields = Conf!.CombineAllFileldForRegister
+                            (
+                                ConfRegister.DimensionFields.Values,
+                                ConfRegister.ResourcesFields.Values,
+                                ConfRegister.PropertyFields.Values
+                            );
+
                             PageField page = new PageField()
                             {
+                                AllFields = AllFields,
                                 Fields = ConfRegister.PropertyFields,
                                 Field = ConfRegister.PropertyFields[curRow.Child.Name],
                                 IsNew = false,
@@ -1216,12 +1258,20 @@ HAVING";
         {
             GeneralForm?.CreateNotebookPage("Поле *", () =>
             {
+                Dictionary<string, ConfigurationObjectField> AllFields = Conf!.CombineAllFileldForRegister
+                (
+                    ConfRegister.DimensionFields.Values,
+                    ConfRegister.ResourcesFields.Values,
+                    ConfRegister.PropertyFields.Values
+                );
+
                 PageField page = new PageField()
                 {
-                    Table = ConfRegister.Table,
+                    AllFields = AllFields,
                     Fields = ConfRegister.PropertyFields,
                     IsNew = true,
                     GeneralForm = GeneralForm,
+                    Table = ConfRegister.Table,
                     CallBack_RefreshList = PropertyFieldsRefreshList
                 };
 

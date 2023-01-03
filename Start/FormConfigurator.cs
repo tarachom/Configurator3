@@ -1148,16 +1148,12 @@ namespace Configurator
 
                                     CreateNotebookPage($"Поле: {fieldName}", () =>
                                     {
-                                        Dictionary<string, ConfigurationObjectField> AllFields = new Dictionary<string, ConfigurationObjectField>();
-
-                                        foreach (ConfigurationObjectField item in Conf!.RegistersInformation[register].DimensionFields.Values)
-                                            AllFields.Add(item.Name, item);
-
-                                        foreach (ConfigurationObjectField item in Conf!.RegistersInformation[register].ResourcesFields.Values)
-                                            AllFields.Add(item.Name, item);
-
-                                        foreach (ConfigurationObjectField item in Conf!.RegistersInformation[register].PropertyFields.Values)
-                                            AllFields.Add(item.Name, item);
+                                        Dictionary<string, ConfigurationObjectField> AllFields = Conf!.CombineAllFileldForRegister
+                                        (
+                                            Conf!.RegistersInformation[register].DimensionFields.Values,
+                                            Conf!.RegistersInformation[register].ResourcesFields.Values,
+                                            Conf!.RegistersInformation[register].PropertyFields.Values
+                                        );
 
                                         Dictionary<string, ConfigurationObjectField> Fields;
                                         ConfigurationObjectField Field;
@@ -1233,16 +1229,12 @@ namespace Configurator
 
                                         CreateNotebookPage($"Поле: {fieldName}", () =>
                                         {
-                                            Dictionary<string, ConfigurationObjectField> AllFields = new Dictionary<string, ConfigurationObjectField>();
-
-                                            foreach (ConfigurationObjectField item in Conf!.RegistersAccumulation[register].DimensionFields.Values)
-                                                AllFields.Add(item.Name, item);
-
-                                            foreach (ConfigurationObjectField item in Conf!.RegistersAccumulation[register].ResourcesFields.Values)
-                                                AllFields.Add(item.Name, item);
-
-                                            foreach (ConfigurationObjectField item in Conf!.RegistersAccumulation[register].PropertyFields.Values)
-                                                AllFields.Add(item.Name, item);
+                                            Dictionary<string, ConfigurationObjectField> AllFields = Conf!.CombineAllFileldForRegister
+                                            (
+                                                Conf!.RegistersInformation[register].DimensionFields.Values,
+                                                Conf!.RegistersInformation[register].ResourcesFields.Values,
+                                                Conf!.RegistersInformation[register].PropertyFields.Values
+                                            );
 
                                             Dictionary<string, ConfigurationObjectField> Fields;
                                             ConfigurationObjectField Field;
