@@ -21,7 +21,7 @@
     <Port>5432</Port>
     <Login>postgres</Login>
     <Password>1</Password>
-    <BaseName>storage_and_trade_demoforsyte</BaseName>
+    <BaseName>storage_and_trade_demo</BaseName>
     <OtherParam>
       <Param name="IsGenerateCode">True</Param>
       <Param name="GenerateCodePath">/home/tarachom/Projects/StorageAndTrade3/Configurator</Param>

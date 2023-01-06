@@ -88,6 +88,10 @@ limitations under the License.
 		
 		<xsl:for-each select="root/RegistersAccumulation/Register">
 			<xsl:apply-templates select="row" />
+
+			<xsl:for-each select="TablePart">			    
+			   <xsl:apply-templates select="row" />
+		    </xsl:for-each>
 		</xsl:for-each>
 		
 		</root>
