@@ -46,7 +46,7 @@ namespace Configurator
             SetDefaultSize(420, 0);
             SetPosition(WindowPosition.Center);
 
-            string ico_file_name = "configurator.ico";
+            string ico_file_name = "images/configurator.ico";
 
             if (File.Exists(ico_file_name))
                 SetDefaultIconFromFile(ico_file_name);
