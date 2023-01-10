@@ -466,7 +466,11 @@ namespace Configurator
         {
             SetDefaultSize(1500, 900);
             SetPosition(WindowPosition.Center);
-            SetDefaultIconFromFile("configurator.ico");
+
+            string ico_file_name = "configurator.ico";
+
+            if (File.Exists(ico_file_name))
+                SetDefaultIconFromFile(ico_file_name);
 
             DeleteEvent += delegate { Application.Quit(); };
 
@@ -725,6 +729,7 @@ namespace Configurator
                 }
             }
 
+            fc.Dispose();
             fc.Destroy();
 
             if (saveOk)
@@ -756,6 +761,7 @@ namespace Configurator
                 }
             }
 
+            fc.Dispose();
             fc.Destroy();
 
             if (loadOk)
@@ -811,8 +817,15 @@ namespace Configurator
             about.Copyright = "(c) Тарахомин Юрій Іванович";
             about.Comments = @"Проектування бази даних PostgreSQL";
             about.Website = "https://accounting.org.ua";
-            about.Logo = new Gdk.Pixbuf("logo.jpg");
+
+            string logo_file_name = "logo.jpg";
+
+            if (File.Exists(logo_file_name))
+                about.Logo = new Gdk.Pixbuf(logo_file_name);
+
             about.Run();
+
+            about.Dispose();
             about.Destroy();
         }
 

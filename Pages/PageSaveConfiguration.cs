@@ -178,6 +178,7 @@ namespace Configurator
                     entryGenerateCodePath.Text += "/";
             }
 
+            fc.Dispose();
             fc.Destroy();
         }
 
@@ -194,6 +195,7 @@ namespace Configurator
                     entryCompileProgramPath.Text += "/";
             }
 
+            fc.Dispose();
             fc.Destroy();
         }
 

@@ -121,6 +121,7 @@ namespace Configurator
                 }
             }
 
+            fc.Dispose();
             fc.Destroy();
 
             if (fileSelect)
@@ -150,6 +151,7 @@ namespace Configurator
                 }
             }
 
+            fc.Dispose();
             fc.Destroy();
 
             if (fileSelect)
