@@ -464,7 +464,7 @@ namespace Configurator
 
         public FormConfigurator() : base("Конфігуратор")
         {
-            SetDefaultSize(1500, 900);
+            SetDefaultSize(1200, 800);
             SetPosition(WindowPosition.Center);
 
             string ico_file_name = "configurator.ico";
