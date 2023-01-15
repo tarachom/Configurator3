@@ -47,6 +47,7 @@ namespace Configurator
 
         ListBox listBoxQuery = new ListBox() { SelectionMode = SelectionMode.Single };
         Entry entryName = new Entry() { WidthRequest = 800 };
+        CheckButton finalCalculation = new CheckButton("Для розрахунку підсумків (запити виконуються один раз, після всіх розрахунків, вкінці)");
 
         #endregion
 
@@ -87,6 +88,12 @@ namespace Configurator
 
             hBoxName.PackStart(new Label("Назва:"), false, false, 5);
             hBoxName.PackStart(entryName, false, false, 5);
+
+            //finalCalculation
+            HBox hBoxFinalCalculation = new HBox() { Halign = Align.Start };
+            vBox.PackStart(hBoxFinalCalculation, false, false, 5);
+
+            hBoxFinalCalculation.PackStart(finalCalculation, false, false, 5);
 
             //Список
             HBox hBox = new HBox();
@@ -157,6 +164,7 @@ namespace Configurator
             FillQueryList();
 
             entryName.Text = QueryBlock.Name;
+            finalCalculation.Active = QueryBlock.FinalCalculation;
         }
 
         void FillQueryList()
@@ -168,6 +176,7 @@ namespace Configurator
         void GetValue()
         {
             QueryBlock.Name = entryName.Text;
+            QueryBlock.FinalCalculation = finalCalculation.Active;
         }
 
         #endregion

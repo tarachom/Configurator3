@@ -847,6 +847,103 @@ HAVING";
             queryBlock.Query.Add("SELECT", query);
         }
 
+        //
+        // Підсумки
+        //
+
+        void CreateQueryBlock_Підсумки(ConfigurationObjectTablePart TablePart, ConfigurationObjectTablePart Залишки_TablePart)
+        {
+            string queryBlockKey = "Підсумки";
+
+            ConfigurationObjectQueryBlock queryBlock;
+            if (ConfRegister.QueryBlockList.ContainsKey(queryBlockKey))
+            {
+                queryBlock = ConfRegister.QueryBlockList[queryBlockKey];
+                queryBlock.Query.Clear();
+            }
+            else
+                ConfRegister.AppendQueryBlockList(queryBlock = new ConfigurationObjectQueryBlock(queryBlockKey));
+
+            string regName = $"{ConfRegister.Name}";
+            string tablePartName = $"{ConfRegister.Name}_{TablePart.Name}_TablePart";
+            string tablePartName_Залишки = $"{ConfRegister.Name}_{Залишки_TablePart.Name}_TablePart";
+
+            //
+            // DELETE
+            //
+
+            queryBlock.Query.Add("DELETE", @$"
+DELETE FROM {{{tablePartName}.TABLE}}
+");
+
+            //
+            // INSERT
+            //
+
+            string query = @$"
+INSERT INTO {{{tablePartName}.TABLE}} 
+(
+    uid,";
+
+            int counter = 0;
+
+            foreach (ConfigurationObjectField field in TablePart.Fields.Values)
+                query += @$"
+    {{{tablePartName}.{field.Name}}}" + (++counter < TablePart.Fields.Count ? "," : "");
+
+            query += @$"
+)
+SELECT
+    uuid_generate_v4(),";
+
+            counter = 0;
+
+            //Виміри
+            foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
+                query += @$"
+    {regName}.{{{regName}_Const.{field.Name}}} AS {field.Name},";
+
+            //Ресурси
+            foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
+                query += @$"
+
+    /* {field.Name} */
+    SUM({regName}.{{{regName}_Const.{field.Name}}} ) AS {field.Name}" +
+        (++counter < ConfRegister.ResourcesFields.Count ? "," : "");
+
+            query += @$"
+
+FROM
+    {{{tablePartName_Залишки}.TABLE}} AS {regName}
+
+GROUP BY
+";
+
+            //Виміри
+            foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
+                query += $", {field.Name}";
+
+            query += @$"
+
+HAVING";
+
+            counter = 0;
+
+            //Ресурси
+            foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
+                query += @$"
+
+    /* {field.Name} */
+    SUM(CASE WHEN {regName}.income = true THEN 
+        {regName}.{{{regName}_Const.{field.Name}}} ELSE 
+        -{regName}.{{{regName}_Const.{field.Name}}} END) != 0 " +
+        (++counter < ConfRegister.ResourcesFields.Count ? "\n OR \n" : "");
+
+            query += "\n\n\n\n\n";
+
+            queryBlock.Query.Add("SELECT", query);
+        }
+
         #endregion
 
         #region VirtualTable
@@ -855,7 +952,7 @@ HAVING";
         // Залишки
         //
 
-        void CreateVirtualTable_Залишки()
+        ConfigurationObjectTablePart CreateVirtualTable_Залишки()
         {
             ConfigurationObjectTablePart TablePart = CreateVirtualTable_Table("Залишки");
 
@@ -870,6 +967,8 @@ HAVING";
                 CreateVirtualTable_Field(TablePart, field);
 
             CreateQueryBlock_Залишки(TablePart);
+
+            return TablePart;
         }
 
         void CreateVirtualTable_ЗалишкиТаОбороти()
@@ -918,6 +1017,25 @@ HAVING";
             CreateQueryBlock_Обороти(TablePart);
         }
 
+        //
+        // Підсумки
+        //
+
+        void CreateVirtualTable_Підсумки(ConfigurationObjectTablePart Залишки_TablePart)
+        {
+            ConfigurationObjectTablePart TablePart = CreateVirtualTable_Table("Підсумки");
+
+            //Виміри
+            foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
+                CreateVirtualTable_Field(TablePart, field);
+
+            //Ресурси
+            foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
+                CreateVirtualTable_Field(TablePart, field);
+
+            CreateQueryBlock_Підсумки(TablePart, Залишки_TablePart);
+        }
+
         ConfigurationObjectTablePart CreateVirtualTable_Table(string tableName)
         {
             if (!ConfRegister.TabularParts.ContainsKey(tableName))
@@ -944,8 +1062,10 @@ HAVING";
             {
                 case TypeRegistersAccumulation.Residues: /* Залишки */
                     {
-                        CreateVirtualTable_Залишки();
+                        ConfigurationObjectTablePart Залишки_TablePart = CreateVirtualTable_Залишки();
                         CreateVirtualTable_ЗалишкиТаОбороти();
+                        CreateVirtualTable_Підсумки(Залишки_TablePart);
+
                         break;
                     }
                 case TypeRegistersAccumulation.Turnover: /* Обороти */

@@ -1480,6 +1480,12 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.РегістриНа�
 {
     public static class VirtualTablesСalculation
     {
+        /* Функція повного очищення віртуальних таблиць */
+        public static void ClearAll()
+        {
+            /*  */
+        }
+
         /* Функція для обчислення віртуальних таблиць  */
         public static void Execute(DateTime period, string regAccumName)
         {
