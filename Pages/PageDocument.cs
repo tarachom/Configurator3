@@ -525,6 +525,7 @@ namespace Configurator
                     if (ConfDocument.Fields.ContainsKey(row.Child.Name))
                     {
                         ConfigurationObjectField newField = ConfDocument.Fields[row.Child.Name].Copy();
+                        newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!, ConfDocument.Table, ConfDocument.Fields);
                         newField.Name += GenerateName.GetNewName();
 
                         ConfDocument.AppendField(newField);

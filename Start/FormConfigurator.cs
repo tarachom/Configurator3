@@ -1244,9 +1244,9 @@ namespace Configurator
                                         {
                                             Dictionary<string, ConfigurationObjectField> AllFields = Conf!.CombineAllFieldForRegister
                                             (
-                                                Conf!.RegistersInformation[register].DimensionFields.Values,
-                                                Conf!.RegistersInformation[register].ResourcesFields.Values,
-                                                Conf!.RegistersInformation[register].PropertyFields.Values
+                                                Conf!.RegistersAccumulation[register].DimensionFields.Values,
+                                                Conf!.RegistersAccumulation[register].ResourcesFields.Values,
+                                                Conf!.RegistersAccumulation[register].PropertyFields.Values
                                             );
 
                                             Dictionary<string, ConfigurationObjectField> Fields;

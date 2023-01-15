@@ -291,6 +291,7 @@ namespace Configurator
                     if (TablePart.Fields.ContainsKey(row.Child.Name))
                     {
                         ConfigurationObjectField newField = TablePart.Fields[row.Child.Name].Copy();
+                        newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!, TablePart.Table, TablePart.Fields);
                         newField.Name += GenerateName.GetNewName();
 
                         TablePart.AppendField(newField);
