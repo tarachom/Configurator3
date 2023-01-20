@@ -1489,30 +1489,67 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.РегістриНа�
         /* Функція для обчислення віртуальних таблиць  */
         public static void Execute(DateTime period, string regAccumName)
         {
+            <xsl:variable name="QueryAllCountCalculation" select="count(Configuration/RegistersAccumulation/RegisterAccumulation/QueryBlockList/QueryBlock[FinalCalculation = '0']/Query)"/>
+            <xsl:if test="$QueryAllCountCalculation != 0">
             Dictionary&lt;string, object&gt; paramQuery = new Dictionary&lt;string, object&gt;();
             paramQuery.Add("ПеріодДеньВідбір", period);
 
-            byte transactionID = Config.Kernel!.DataBase.BeginTransaction();
             switch(regAccumName)
             {
             <xsl:for-each select="Configuration/RegistersAccumulation/RegisterAccumulation">
-                <xsl:variable name="QueryCount" select="count(QueryBlockList/QueryBlock/Query)"/>
+                <xsl:variable name="QueryCount" select="count(QueryBlockList/QueryBlock[FinalCalculation = '0']/Query)"/>
                 <xsl:if test="$QueryCount != 0">
                 case "<xsl:value-of select="Name"/>":
                 {
-                    <xsl:for-each select="QueryBlockList/QueryBlock">
+                    byte transactionID = Config.Kernel!.DataBase.BeginTransaction();
+                    <xsl:for-each select="QueryBlockList/QueryBlock[FinalCalculation = '0']">
                     /* QueryBlock: <xsl:value-of select="Name"/> */
                         <xsl:for-each select="Query">
                             <xsl:sort select="@position" data-type="number" order="ascending" />
                     Config.Kernel!.DataBase.ExecuteSQL($@"<xsl:value-of select="normalize-space(.)"/>", paramQuery, transactionID);
                         </xsl:for-each>
                     </xsl:for-each>
+                    Config.Kernel!.DataBase.CommitTransaction(transactionID);
                     break;
                 }
                 </xsl:if>
             </xsl:for-each>
+                    default:
+                        break;
             }
-            Config.Kernel!.DataBase.CommitTransaction(transactionID);
+            </xsl:if>
+        }
+
+        /* Функція для обчислення підсумкових віртуальних таблиць */
+        public static void ExecuteFinalCalculation(List&lt;string&gt; regAccumNameList)
+        {
+            <xsl:variable name="QueryAllCountFinalCalculation" select="count(Configuration/RegistersAccumulation/RegisterAccumulation/QueryBlockList/QueryBlock[FinalCalculation = '1']/Query)"/>
+            <xsl:if test="$QueryAllCountFinalCalculation != 0">
+            foreach (string regAccumName in regAccumNameList)
+                switch(regAccumName)
+                {
+                <xsl:for-each select="Configuration/RegistersAccumulation/RegisterAccumulation">
+                    <xsl:variable name="QueryCount" select="count(QueryBlockList/QueryBlock[FinalCalculation = '1']/Query)"/>
+                    <xsl:if test="$QueryCount != 0">
+                    case "<xsl:value-of select="Name"/>":
+                    {
+                        byte transactionID = Config.Kernel!.DataBase.BeginTransaction();
+                        <xsl:for-each select="QueryBlockList/QueryBlock[FinalCalculation = '1']">
+                        /* QueryBlock: <xsl:value-of select="Name"/> */
+                            <xsl:for-each select="Query">
+                                <xsl:sort select="@position" data-type="number" order="ascending" />
+                        Config.Kernel!.DataBase.ExecuteSQL($@"<xsl:value-of select="normalize-space(.)"/>", null, transactionID);
+                            </xsl:for-each>
+                        </xsl:for-each>
+                        Config.Kernel!.DataBase.CommitTransaction(transactionID);
+                        break;
+                    }
+                    </xsl:if>
+                </xsl:for-each>
+                        default:
+                            break;
+                }
+            </xsl:if>
         }
     }
 

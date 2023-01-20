@@ -848,7 +848,7 @@ HAVING";
         }
 
         //
-        // Підсумки
+        // Підсумки на основі залишків
         //
 
         void CreateQueryBlock_Підсумки(ConfigurationObjectTablePart TablePart, ConfigurationObjectTablePart Залишки_TablePart)
@@ -859,10 +859,11 @@ HAVING";
             if (ConfRegister.QueryBlockList.ContainsKey(queryBlockKey))
             {
                 queryBlock = ConfRegister.QueryBlockList[queryBlockKey];
+                queryBlock.FinalCalculation = true;
                 queryBlock.Query.Clear();
             }
             else
-                ConfRegister.AppendQueryBlockList(queryBlock = new ConfigurationObjectQueryBlock(queryBlockKey));
+                ConfRegister.AppendQueryBlockList(queryBlock = new ConfigurationObjectQueryBlock(queryBlockKey, true));
 
             string regName = $"{ConfRegister.Name}";
             string tablePartName = $"{ConfRegister.Name}_{TablePart.Name}_TablePart";
@@ -900,15 +901,17 @@ SELECT
 
             //Виміри
             foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
+            {
                 query += @$"
-    {regName}.{{{regName}_Const.{field.Name}}} AS {field.Name},";
-
+    {regName}.{{{tablePartName_Залишки}.{field.Name}}} AS {field.Name},";
+            }
+            
             //Ресурси
             foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
                 query += @$"
 
     /* {field.Name} */
-    SUM({regName}.{{{regName}_Const.{field.Name}}} ) AS {field.Name}" +
+    SUM({regName}.{{{tablePartName_Залишки}.{field.Name}}}) AS {field.Name}" +
         (++counter < ConfRegister.ResourcesFields.Count ? "," : "");
 
             query += @$"
@@ -918,10 +921,12 @@ FROM
 
 GROUP BY
 ";
+            counter = 0;
 
             //Виміри
             foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
-                query += $", {field.Name}";
+                query += $"{field.Name}" +
+                (++counter < ConfRegister.DimensionFields.Count ? ", " : "");
 
             query += @$"
 
@@ -934,10 +939,8 @@ HAVING";
                 query += @$"
 
     /* {field.Name} */
-    SUM(CASE WHEN {regName}.income = true THEN 
-        {regName}.{{{regName}_Const.{field.Name}}} ELSE 
-        -{regName}.{{{regName}_Const.{field.Name}}} END) != 0 " +
-        (++counter < ConfRegister.ResourcesFields.Count ? "\n OR \n" : "");
+    SUM({regName}.{{{tablePartName_Залишки}.{field.Name}}}) != 0 " +
+        (++counter < ConfRegister.ResourcesFields.Count ? " OR " : "");
 
             query += "\n\n\n\n\n";
 

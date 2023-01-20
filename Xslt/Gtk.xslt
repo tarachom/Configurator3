@@ -406,11 +406,11 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.Т
                               <xsl:value-of select="Pointer"/>
                               <xsl:text>)</xsl:text>
                               <xsl:text>(cur.Fields?[</xsl:text>
-                              <xsl:value-of select="$DirectoryName"/>
+                              <xsl:value-of select="$DocumentName"/>
                               <xsl:text>_Const.</xsl:text>
                               <xsl:value-of select="Name"/>
                               <xsl:text>]! != DBNull.Value ? cur.Fields?[</xsl:text>
-                              <xsl:value-of select="$DirectoryName"/>
+                              <xsl:value-of select="$DocumentName"/>
                               <xsl:text>_Const.</xsl:text>
                               <xsl:value-of select="Name"/>
                               <xsl:text>]! : 0)).ToString()</xsl:text>
