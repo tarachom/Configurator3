@@ -888,6 +888,55 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Переліченн�
     }
     #endregion
     </xsl:for-each>
+
+    public static class ПсевдонімиПерелічення
+    {
+    <xsl:for-each select="Configuration/Enums/Enum">
+        <xsl:variable name="EnumName" select="Name" />
+        <xsl:variable name="CountEnumField" select="count(Fields/Field)" />
+        #region ENUM "<xsl:value-of select="$EnumName"/>"
+        public static string <xsl:value-of select="$EnumName"/>_Alias(<xsl:value-of select="$EnumName"/> value)
+        {
+            switch (value)
+            {
+                <xsl:for-each select="Fields/Field">
+                  <xsl:variable name="ReturnValue">
+                      <xsl:choose>
+                          <xsl:when test="normalize-space(Desc) != ''">
+                              <xsl:value-of select="normalize-space(Desc)"/>
+                          </xsl:when>
+                          <xsl:otherwise>
+                              <xsl:value-of select="normalize-space(Name)"/>
+                          </xsl:otherwise>
+                      </xsl:choose>
+                  </xsl:variable>
+                case <xsl:value-of select="$EnumName"/>.<xsl:value-of select="Name"/>: return "<xsl:value-of select="$ReturnValue"/>";
+                </xsl:for-each>
+                default: return "";
+            }
+        }
+
+        public static NameValue&lt;<xsl:value-of select="$EnumName"/>&gt;[] <xsl:value-of select="$EnumName"/>_Array()
+        {
+            NameValue&lt;<xsl:value-of select="$EnumName"/>&gt;[] value = new NameValue&lt;<xsl:value-of select="$EnumName"/>&gt;[<xsl:value-of select="$CountEnumField"/>];
+            <xsl:for-each select="Fields/Field">
+              <xsl:variable name="ReturnValue">
+                  <xsl:choose>
+                      <xsl:when test="normalize-space(Desc) != ''">
+                          <xsl:value-of select="normalize-space(Desc)"/>
+                      </xsl:when>
+                      <xsl:otherwise>
+                          <xsl:value-of select="normalize-space(Name)"/>
+                      </xsl:otherwise>
+                  </xsl:choose>
+              </xsl:variable>
+            value[<xsl:value-of select="position() - 1"/>] = new NameValue&lt;<xsl:value-of select="$EnumName"/>&gt;("<xsl:value-of select="$ReturnValue"/>", <xsl:value-of select="$EnumName"/>.<xsl:value-of select="Name"/>);
+            </xsl:for-each>
+            return value;
+        }
+        #endregion
+    </xsl:for-each>
+    }
 }
 
 namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи
@@ -995,10 +1044,10 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи
 		    <xsl:text>BaseSpend(false, DateTime.MinValue);</xsl:text>
 		}
 
-		public <xsl:value-of select="$DocumentName"/>_Objest Copy()
+		    public <xsl:value-of select="$DocumentName"/>_Objest Copy()
         {
             <xsl:value-of select="$DocumentName"/>_Objest copy = new <xsl:value-of select="$DocumentName"/>_Objest();
-			copy.New();
+			      copy.New();
             <xsl:for-each select="Fields/Field">
 				<xsl:text>copy.</xsl:text><xsl:value-of select="Name"/><xsl:text> = </xsl:text><xsl:value-of select="Name"/>;
 			</xsl:for-each>
@@ -1055,17 +1104,17 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи
             base.Init(uid, fields);
         }
 		
-		public string GetPresentation()
+		    public string GetPresentation()
         {
-		    return base.BasePresentation(
-				<xsl:text>new string[] { </xsl:text>
+		        return base.BasePresentation(
+				    <xsl:text>new string[] { </xsl:text>
                  <xsl:for-each select="Fields/Field[IsPresentation=1]">
                    <xsl:if test="position() != 1">
                      <xsl:text>, </xsl:text>
                    </xsl:if>
                    <xsl:text>"</xsl:text><xsl:value-of select="NameInTable"/><xsl:text>"</xsl:text>
                 </xsl:for-each> }
-			);
+			      );
         }
 		
         public <xsl:value-of select="$DocumentName"/>_Pointer GetNewDocumentPointer()
