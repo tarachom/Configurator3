@@ -466,19 +466,20 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.РегістриВі�
     {
         string Image = "images/doc.png";
         string ID = "";
+        string Період = "";
         <xsl:for-each select="Fields/Field">
         string <xsl:value-of select="Name"/> = "";</xsl:for-each>
 
         Array ToArray()
         {
-            return new object[] { new Gdk.Pixbuf(Image), ID 
+            return new object[] { new Gdk.Pixbuf(Image), ID, Період
             /* */ <xsl:for-each select="Fields/Field">
               <xsl:text>, </xsl:text>
               <xsl:value-of select="Name"/>
             </xsl:for-each> };
         }
 
-        public static ListStore Store = new ListStore(typeof(Gdk.Pixbuf) /* Image */, typeof(string) /* ID */
+        public static ListStore Store = new ListStore(typeof(Gdk.Pixbuf) /* Image */, typeof(string) /* ID */, typeof(string) /* Період */
             <xsl:for-each select="Fields/Field">
               <xsl:text>, typeof(string)</xsl:text> /* <xsl:value-of select="Name"/> */
             </xsl:for-each>);
@@ -487,14 +488,15 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.РегістриВі�
         {
             treeView.AppendColumn(new TreeViewColumn("", new CellRendererPixbuf() { Ypad = 4 }, "pixbuf", 0));
             treeView.AppendColumn(new TreeViewColumn("ID", new CellRendererText(), "text", 1) { Visible = false });
+            treeView.AppendColumn(new TreeViewColumn("Період", new CellRendererText(), "text", 2));
             /* */
             <xsl:for-each select="Fields/Field">
               <xsl:text>treeView.AppendColumn(new TreeViewColumn("</xsl:text>
               <xsl:value-of select="normalize-space(Caption)"/>
               <xsl:text>", new CellRendererText() { Xpad = 4 }, "text", </xsl:text>
-              <xsl:value-of select="position() + 1"/>
+              <xsl:value-of select="position() + 2"/>
               <xsl:text>) { SortColumnId = </xsl:text>
-              <xsl:value-of select="position() + 1"/>
+              <xsl:value-of select="position() + 2"/>
               <xsl:if test="Size != '0'">
                 <xsl:text>, FixedWidth = </xsl:text>
                 <xsl:value-of select="Size"/>
@@ -505,120 +507,92 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.РегістриВі�
 
         public static List&lt;Where&gt; Where { get; set; } = new List&lt;Where&gt;();
 
-        public static РегістриВідомостей.<xsl:value-of select="$RegisterName"/>_Pointer? SelectPointerItem { get; set; }
         public static TreePath? SelectPath;
         public static TreePath? CurrentPath;
 
         public static void LoadRecords()
         {
             Store.Clear();
-            SelectPath = null;
 
-            РегістриВідомостей.<xsl:value-of select="$RegisterName"/>_Select <xsl:value-of select="$RegisterName"/>_Select = new РегістриВідомостей.<xsl:value-of select="$RegisterName"/>_Select();
-            <xsl:value-of select="$RegisterName"/>_Select.QuerySelect.Field.AddRange(
-                new string[]
-                {
-                    <xsl:for-each select="Fields/Field[Type != 'pointer']">
-                        <xsl:if test="position() &gt; 1">, </xsl:if>
-                        <xsl:text>РегістриВідомостей.</xsl:text>
-                        <xsl:value-of select="$RegisterName"/>
-                        <xsl:text>_Const.</xsl:text>
-                        <xsl:value-of select="Name"/> /* <xsl:value-of select="position()"/> */
-                    </xsl:for-each>
-                });
+            РегістриВідомостей.<xsl:value-of select="$RegisterName"/>_RecordsSet <xsl:value-of select="$RegisterName"/>_RecordsSet = new РегістриВідомостей.<xsl:value-of select="$RegisterName"/>_RecordsSet();
 
             /* Where */
-            <xsl:value-of select="$RegisterName"/>_Select.QuerySelect.Where = Where;
+            <xsl:value-of select="$RegisterName"/>_RecordsSet.QuerySelect.Where = Where;
+
+            /* DEFAULT ORDER */
+            <xsl:value-of select="$RegisterName"/>_RecordsSet.QuerySelect.Order.Add("period", SelectOrder.ASC);
 
             <xsl:for-each select="Fields/Field[SortField = 'True' and Type != 'pointer']">
               /* ORDER */
-              <xsl:value-of select="$RegisterName"/>_Select.QuerySelect.Order.Add(РегістриВідомостей.<xsl:value-of select="$RegisterName"/>_Const.<xsl:value-of select="Name"/>, SelectOrder.ASC);
+              <xsl:value-of select="$RegisterName"/>_RecordsSet.QuerySelect.Order.Add(РегістриВідомостей.<xsl:value-of select="$RegisterName"/>_Const.<xsl:value-of select="Name"/>, SelectOrder.ASC);
             </xsl:for-each>
 
             <xsl:for-each select="Fields/Field[Type = 'pointer']">
                 /* Join Table */
-                <xsl:value-of select="$RegisterName"/>_Select.QuerySelect.Joins.Add(
-                    new Join(<xsl:value-of select="Join/table"/>, РегістриВідомостей.<xsl:value-of select="$RegisterName"/>_Const.<xsl:value-of select="Join/field"/>, <xsl:value-of select="$RegisterName"/>_Select.QuerySelect.Table, "<xsl:value-of select="Join/alias"/>"));
+                <xsl:value-of select="$RegisterName"/>_RecordsSet.QuerySelect.Joins.Add(
+                    new Join(<xsl:value-of select="Join/table"/>, РегістриВідомостей.<xsl:value-of select="$RegisterName"/>_Const.<xsl:value-of select="Join/field"/>, <xsl:value-of select="$RegisterName"/>_RecordsSet.QuerySelect.Table, "<xsl:value-of select="Join/alias"/>"));
                 <xsl:for-each select="FieldAndAlias">
                   /* Field */
-                  <xsl:value-of select="$RegisterName"/>_Select.QuerySelect.FieldAndAlias.Add(
+                  <xsl:value-of select="$RegisterName"/>_RecordsSet.QuerySelect.FieldAndAlias.Add(
                     new NameValue&lt;string&gt;("<xsl:value-of select="table"/>." + <xsl:value-of select="field"/>, "<xsl:value-of select="table"/>_field_<xsl:value-of select="position()"/>"));
                   <xsl:if test="../SortField = 'True'">
                     /* ORDER */
-                    <xsl:value-of select="$RegisterName"/>_Select.QuerySelect.Order.Add("<xsl:value-of select="table"/>_field_<xsl:value-of select="position()"/>", SelectOrder.ASC);
+                    <xsl:value-of select="$RegisterName"/>_RecordsSet.QuerySelect.Order.Add("<xsl:value-of select="table"/>_field_<xsl:value-of select="position()"/>", SelectOrder.ASC);
                   </xsl:if>
                 </xsl:for-each>
             </xsl:for-each>
 
-            /* SELECT */
-            <xsl:value-of select="$RegisterName"/>_Select.Select();
-            while (<xsl:value-of select="$RegisterName"/>_Select.MoveNext())
+            /* Read */
+            <xsl:value-of select="$RegisterName"/>_RecordsSet.Read();
+            foreach (<xsl:value-of select="$RegisterName"/>_RecordsSet.Record record in <xsl:value-of select="$RegisterName"/>_RecordsSet.Records)
             {
-                РегістриВідомостей.<xsl:value-of select="$RegisterName"/>_Pointer? cur = <xsl:value-of select="$RegisterName"/>_Select.Current;
-
-                if (cur != null)
+                <xsl:value-of select="$RegisterName"/>_<xsl:value-of select="$TabularListName"/> Record = new <xsl:value-of select="$RegisterName"/>_<xsl:value-of select="$TabularListName"/>
                 {
-                    <xsl:value-of select="$RegisterName"/>_<xsl:value-of select="$TabularListName"/> Record = new <xsl:value-of select="$RegisterName"/>_<xsl:value-of select="$TabularListName"/>
-                    {
-                        ID = cur.UnigueID.ToString(),
-                        <xsl:variable name="CountPointer" select="count(Fields/Field[Type = 'pointer'])"/>
-                        <xsl:variable name="CountNotPointer" select="count(Fields/Field[Type != 'pointer'])"/>
-                        <xsl:for-each select="Fields/Field[Type = 'pointer']">
+                    ID = record.UID.ToString(),
+                    Період = record.Period.ToString(),
+                    <xsl:variable name="CountPointer" select="count(Fields/Field[Type = 'pointer'])"/>
+                    <xsl:variable name="CountNotPointer" select="count(Fields/Field[Type != 'pointer'])"/>
+                    <xsl:for-each select="Fields/Field[Type = 'pointer']">
+                      <xsl:value-of select="Name"/>
+                      <xsl:text> = </xsl:text>
+                      <xsl:variable name="CountAlias" select="count(FieldAndAlias)"/>
+                      <xsl:for-each select="FieldAndAlias">
+                        <xsl:if test="position() &gt; 1"> + " " + </xsl:if>
+                        <xsl:value-of select="$RegisterName"/>_RecordsSet.JoinValue[record.UID.ToString()]["<xsl:value-of select="table"/>_field_<xsl:value-of select="position()"/><xsl:text>"].ToString()</xsl:text>
+                        <xsl:if test="$CountAlias = 1"> ?? ""</xsl:if>
+                      </xsl:for-each>
+                      <xsl:if test="$CountNotPointer != 0 or position() != $CountPointer">,</xsl:if> /**/
+                    </xsl:for-each>
+                    <xsl:for-each select="Fields/Field[Type != 'pointer']">
+                      <xsl:value-of select="Name"/>
+                      <xsl:text> = </xsl:text>
+                      <xsl:choose>
+                        <xsl:when test="Type = 'enum'">
+                          <xsl:variable name="namePointer" select="substring-after(Pointer, '.')" />
+                          <xsl:text>Перелічення.ПсевдонімиПерелічення.</xsl:text>
+                          <xsl:value-of select="$namePointer"/>
+                          <xsl:text>_Alias( </xsl:text>
+                          <xsl:text>((</xsl:text>
+                          <xsl:value-of select="Pointer"/>
+                          <xsl:text>)</xsl:text>
+                          <xsl:text>(record.</xsl:text>
                           <xsl:value-of select="Name"/>
-                          <xsl:text> = </xsl:text>
-                          <xsl:variable name="CountAlias" select="count(FieldAndAlias)"/>
-                          <xsl:for-each select="FieldAndAlias">
-                            <xsl:if test="position() &gt; 1"> + " " + </xsl:if>
-                            <xsl:text>cur.Fields?[</xsl:text>"<xsl:value-of select="table"/>_field_<xsl:value-of select="position()"/><xsl:text>"]?.ToString()</xsl:text>
-                            <xsl:if test="$CountAlias = 1"> ?? ""</xsl:if>
-                          </xsl:for-each>
-                          <xsl:if test="$CountNotPointer != 0 or position() != $CountPointer">,</xsl:if> /**/
-                        </xsl:for-each>
-                        <xsl:for-each select="Fields/Field[Type != 'pointer']">
+                          <xsl:text> != DBNull.Value ? record.</xsl:text>
                           <xsl:value-of select="Name"/>
-                          <xsl:text> = </xsl:text>
-                          <xsl:choose>
-                            <xsl:when test="Type = 'enum'">
-                              <xsl:variable name="namePointer" select="substring-after(Pointer, '.')" />
-                              <xsl:text>Перелічення.ПсевдонімиПерелічення.</xsl:text>
-                              <xsl:value-of select="$namePointer"/>
-                              <xsl:text>_Alias( </xsl:text>
-                              <xsl:text>((</xsl:text>
-                              <xsl:value-of select="Pointer"/>
-                              <xsl:text>)</xsl:text>
-                              <xsl:text>(cur.Fields?[</xsl:text>
-                              <xsl:value-of select="$RegisterName"/>
-                              <xsl:text>_Const.</xsl:text>
-                              <xsl:value-of select="Name"/>
-                              <xsl:text>]! != DBNull.Value ? cur.Fields?[</xsl:text>
-                              <xsl:value-of select="$RegisterName"/>
-                              <xsl:text>_Const.</xsl:text>
-                              <xsl:value-of select="Name"/>
-                              <xsl:text>]! : 0)) )</xsl:text>
-                            </xsl:when>
-                            <xsl:otherwise>
-                              <xsl:text>cur.Fields?[</xsl:text>
-                              <xsl:value-of select="$RegisterName"/>
-                              <xsl:text>_Const.</xsl:text>
-                              <xsl:value-of select="Name"/>
-                              <xsl:text>]?.ToString() ?? ""</xsl:text>
-                            </xsl:otherwise>
-                          </xsl:choose>
-                          <xsl:if test="position() != $CountNotPointer">,</xsl:if> /**/
-                        </xsl:for-each>
-                    };
+                          <xsl:text> : 0)) )</xsl:text>
+                        </xsl:when>
+                        <xsl:otherwise>
+                          <xsl:text>record.</xsl:text>
+                          <xsl:value-of select="Name"/>
+                          <xsl:text>.ToString() ?? ""</xsl:text>
+                        </xsl:otherwise>
+                      </xsl:choose>
+                      <xsl:if test="position() != $CountNotPointer">,</xsl:if> /**/
+                    </xsl:for-each>
+                };
 
-                    TreeIter CurrentIter = Store.AppendValues(Record.ToArray());
-                    CurrentPath = Store.GetPath(CurrentIter);
-
-                    if (SelectPointerItem != null)
-                    {
-                        string UidSelect = SelectPointerItem.UnigueID.ToString();
-
-                        if (Record.ID == UidSelect)
-                            SelectPath = CurrentPath;
-                    }
-                }
+                TreeIter CurrentIter = Store.AppendValues(Record.ToArray());
+                CurrentPath = Store.GetPath(CurrentIter);
             }
         }
     }
