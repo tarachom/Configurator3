@@ -113,41 +113,57 @@ namespace Configurator
 
             hBoxDesc.PackStart(scrollTextView, false, false, 5);
 
-            //Заголовок блоку Тригери
-            HBox hBoxTrigerInfo = new HBox() { Halign = Align.Center };
-            vBox.PackStart(hBoxTrigerInfo, false, false, 5);
-            hBoxTrigerInfo.PackStart(new Label("Тригери"), false, false, 5);
+            //Функції та тригери
+            {
+                Expander expanderTriger = new Expander("Тригери");
+                vBox.PackStart(expanderTriger, false, false, 5);
 
-            //Перед записом
-            HBox hBoxTrigerBeforeSave = new HBox() { Halign = Align.End };
-            vBox.PackStart(hBoxTrigerBeforeSave, false, false, 5);
+                VBox vBoxTriger = new VBox();
+                expanderTriger.Add(vBoxTriger);
 
-            hBoxTrigerBeforeSave.PackStart(new Label("Перед записом:"), false, false, 5);
-            hBoxTrigerBeforeSave.PackStart(entryBeforeSave, false, false, 5);
+                //Заголовок блоку Тригери
+                HBox hBoxTrigerInfo = new HBox() { Halign = Align.Center };
+                vBoxTriger.PackStart(hBoxTrigerInfo, false, false, 5);
+                hBoxTrigerInfo.PackStart(new Label("Тригери"), false, false, 5);
 
-            //Після запису
-            HBox hBoxTrigerAfterSave = new HBox() { Halign = Align.End };
-            vBox.PackStart(hBoxTrigerAfterSave, false, false, 5);
+                //Перед записом
+                HBox hBoxTrigerBeforeSave = new HBox() { Halign = Align.End };
+                vBoxTriger.PackStart(hBoxTrigerBeforeSave, false, false, 5);
 
-            hBoxTrigerAfterSave.PackStart(new Label("Після запису:"), false, false, 5);
-            hBoxTrigerAfterSave.PackStart(entryAfterSave, false, false, 5);
+                hBoxTrigerBeforeSave.PackStart(new Label("Перед записом:"), false, false, 5);
+                hBoxTrigerBeforeSave.PackStart(entryBeforeSave, false, false, 5);
 
-            //Перед видаленням
-            HBox hBoxTrigerBeforeDelete = new HBox() { Halign = Align.End };
-            vBox.PackStart(hBoxTrigerBeforeDelete, false, false, 5);
+                //Після запису
+                HBox hBoxTrigerAfterSave = new HBox() { Halign = Align.End };
+                vBoxTriger.PackStart(hBoxTrigerAfterSave, false, false, 5);
 
-            hBoxTrigerBeforeDelete.PackStart(new Label("Перед видален.:"), false, false, 5);
-            hBoxTrigerBeforeDelete.PackStart(entryBeforeDelete, false, false, 5);
+                hBoxTrigerAfterSave.PackStart(new Label("Після запису:"), false, false, 5);
+                hBoxTrigerAfterSave.PackStart(entryAfterSave, false, false, 5);
 
-            vBox.PackStart(new Separator(Orientation.Horizontal), false, false, 20);
+                //Перед видаленням
+                HBox hBoxTrigerBeforeDelete = new HBox() { Halign = Align.End };
+                vBoxTriger.PackStart(hBoxTrigerBeforeDelete, false, false, 5);
 
-            //Заголовок блоку Forms
-            HBox hBoxInterfaceCreateInfo = new HBox() { Halign = Align.Center };
-            vBox.PackStart(hBoxInterfaceCreateInfo, false, false, 5);
-            hBoxInterfaceCreateInfo.PackStart(new Label("Форми"), false, false, 5);
+                hBoxTrigerBeforeDelete.PackStart(new Label("Перед видален.:"), false, false, 5);
+                hBoxTrigerBeforeDelete.PackStart(entryBeforeDelete, false, false, 5);
+            }
 
-            //Табличні списки
-            CreateTabularList(vBox);
+            //Списки та форми
+            {
+                Expander expanderForm = new Expander("Табличні списки та форми");
+                vBox.PackStart(expanderForm, false, false, 5);
+
+                VBox vBoxForm = new VBox();
+                expanderForm.Add(vBoxForm);
+
+                //Заголовок блоку Forms
+                HBox hBoxInterfaceCreateInfo = new HBox() { Halign = Align.Center };
+                vBoxForm.PackStart(hBoxInterfaceCreateInfo, false, false, 5);
+                hBoxInterfaceCreateInfo.PackStart(new Label("Табличні списки"), false, false, 5);
+
+                //Табличні списки
+                CreateTabularList(vBoxForm);
+            }
 
             hPaned.Pack1(vBox, false, false);
         }

@@ -116,76 +116,101 @@ namespace Configurator
 
             hBoxDesc.PackStart(scrollTextView, false, false, 5);
 
-            //Заголовок списку регістрів
-            HBox hBoxAllowRegAcummInfo = new HBox() { Halign = Align.Center };
-            vBox.PackStart(hBoxAllowRegAcummInfo, false, false, 5);
-            hBoxAllowRegAcummInfo.PackStart(new Label("Регістри накопичення"), false, false, 5);
+            //Регістри накопичення
+            {
+                Expander expanderRegAccum = new Expander("Регістри накопичення");
+                vBox.PackStart(expanderRegAccum, false, false, 5);
 
-            //Робить рухи по регістрах
-            HBox hBoxAllowRegAcumm = new HBox() { Halign = Align.End };
-            vBox.PackStart(hBoxAllowRegAcumm, false, false, 5);
+                VBox vBoxRegAccum = new VBox();
+                expanderRegAccum.Add(vBoxRegAccum);
 
-            ScrolledWindow scrollAllowList = new ScrolledWindow() { ShadowType = ShadowType.In };
-            scrollAllowList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-            scrollAllowList.SetSizeRequest(500, 200);
+                //Заголовок списку регістрів
+                HBox hBoxAllowRegAcummInfo = new HBox() { Halign = Align.Center };
+                vBoxRegAccum.PackStart(hBoxAllowRegAcummInfo, false, false, 5);
+                hBoxAllowRegAcummInfo.PackStart(new Label("Регістри накопичення які використовує документ"), false, false, 5);
 
-            scrollAllowList.Add(listBoxAllowRegAccum);
-            hBoxAllowRegAcumm.PackStart(scrollAllowList, true, true, 5);
+                //Робить рухи по регістрах
+                HBox hBoxAllowRegAcumm = new HBox() { Halign = Align.End };
+                vBoxRegAccum.PackStart(hBoxAllowRegAcumm, false, false, 5);
 
-            //Заголовок блоку Функції
-            HBox hBoxSpendInfo = new HBox() { Halign = Align.Center };
-            vBox.PackStart(hBoxSpendInfo, false, false, 5);
-            hBoxSpendInfo.PackStart(new Label("Функції"), false, false, 5);
+                ScrolledWindow scrollAllowList = new ScrolledWindow() { ShadowType = ShadowType.In };
+                scrollAllowList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+                scrollAllowList.SetSizeRequest(500, 500);
 
-            //Проведення
-            HBox hBoxSpend = new HBox() { Halign = Align.End };
-            vBox.PackStart(hBoxSpend, false, false, 5);
+                scrollAllowList.Add(listBoxAllowRegAccum);
+                hBoxAllowRegAcumm.PackStart(scrollAllowList, true, true, 5);
+            }
 
-            hBoxSpend.PackStart(new Label("Проведення:"), false, false, 5);
-            hBoxSpend.PackStart(entrySpend, false, false, 5);
+            //Функції та тригери
+            {
+                Expander expanderFuncAndTriger = new Expander("Функції та тригери");
+                vBox.PackStart(expanderFuncAndTriger, false, false, 5);
 
-            //Очищення
-            HBox hBoxClearSpend = new HBox() { Halign = Align.End };
-            vBox.PackStart(hBoxClearSpend, false, false, 5);
+                VBox vBoxFunc = new VBox();
+                expanderFuncAndTriger.Add(vBoxFunc);
 
-            hBoxClearSpend.PackStart(new Label("Очищення:"), false, false, 5);
-            hBoxClearSpend.PackStart(entryClearSpend, false, false, 5);
+                //Заголовок блоку Функції
+                HBox hBoxSpendInfo = new HBox() { Halign = Align.Center };
+                vBoxFunc.PackStart(hBoxSpendInfo, false, false, 5);
+                hBoxSpendInfo.PackStart(new Label("Функції"), false, false, 5);
 
-            //Заголовок блоку Тригери
-            HBox hBoxTrigerInfo = new HBox() { Halign = Align.Center };
-            vBox.PackStart(hBoxTrigerInfo, false, false, 5);
-            hBoxTrigerInfo.PackStart(new Label("Тригери"), false, false, 5);
+                //Проведення
+                HBox hBoxSpend = new HBox() { Halign = Align.End };
+                vBoxFunc.PackStart(hBoxSpend, false, false, 5);
 
-            //Перед записом
-            HBox hBoxTrigerBeforeSave = new HBox() { Halign = Align.End };
-            vBox.PackStart(hBoxTrigerBeforeSave, false, false, 5);
+                hBoxSpend.PackStart(new Label("Проведення:"), false, false, 5);
+                hBoxSpend.PackStart(entrySpend, false, false, 5);
 
-            hBoxTrigerBeforeSave.PackStart(new Label("Перед записом:"), false, false, 5);
-            hBoxTrigerBeforeSave.PackStart(entryBeforeSave, false, false, 5);
+                //Очищення
+                HBox hBoxClearSpend = new HBox() { Halign = Align.End };
+                vBoxFunc.PackStart(hBoxClearSpend, false, false, 5);
 
-            //Після запису
-            HBox hBoxTrigerAfterSave = new HBox() { Halign = Align.End };
-            vBox.PackStart(hBoxTrigerAfterSave, false, false, 5);
+                hBoxClearSpend.PackStart(new Label("Очищення:"), false, false, 5);
+                hBoxClearSpend.PackStart(entryClearSpend, false, false, 5);
 
-            hBoxTrigerAfterSave.PackStart(new Label("Після запису:"), false, false, 5);
-            hBoxTrigerAfterSave.PackStart(entryAfterSave, false, false, 5);
+                //Заголовок блоку Тригери
+                HBox hBoxTrigerInfo = new HBox() { Halign = Align.Center };
+                vBoxFunc.PackStart(hBoxTrigerInfo, false, false, 5);
+                hBoxTrigerInfo.PackStart(new Label("Тригери"), false, false, 5);
 
-            //Перед видаленням
-            HBox hBoxTrigerBeforeDelete = new HBox() { Halign = Align.End };
-            vBox.PackStart(hBoxTrigerBeforeDelete, false, false, 5);
+                //Перед записом
+                HBox hBoxTrigerBeforeSave = new HBox() { Halign = Align.End };
+                vBoxFunc.PackStart(hBoxTrigerBeforeSave, false, false, 5);
 
-            hBoxTrigerBeforeDelete.PackStart(new Label("Перед видален.:"), false, false, 5);
-            hBoxTrigerBeforeDelete.PackStart(entryBeforeDelete, false, false, 5);
+                hBoxTrigerBeforeSave.PackStart(new Label("Перед записом:"), false, false, 5);
+                hBoxTrigerBeforeSave.PackStart(entryBeforeSave, false, false, 5);
 
-            vBox.PackStart(new Separator(Orientation.Horizontal), false, false, 20);
+                //Після запису
+                HBox hBoxTrigerAfterSave = new HBox() { Halign = Align.End };
+                vBoxFunc.PackStart(hBoxTrigerAfterSave, false, false, 5);
 
-            //Заголовок блоку Forms
-            HBox hBoxInterfaceCreateInfo = new HBox() { Halign = Align.Center };
-            vBox.PackStart(hBoxInterfaceCreateInfo, false, false, 5);
-            hBoxInterfaceCreateInfo.PackStart(new Label("Форми"), false, false, 5);
+                hBoxTrigerAfterSave.PackStart(new Label("Після запису:"), false, false, 5);
+                hBoxTrigerAfterSave.PackStart(entryAfterSave, false, false, 5);
 
-            //Табличні списки
-            CreateTabularList(vBox);
+                //Перед видаленням
+                HBox hBoxTrigerBeforeDelete = new HBox() { Halign = Align.End };
+                vBoxFunc.PackStart(hBoxTrigerBeforeDelete, false, false, 5);
+
+                hBoxTrigerBeforeDelete.PackStart(new Label("Перед видален.:"), false, false, 5);
+                hBoxTrigerBeforeDelete.PackStart(entryBeforeDelete, false, false, 5);
+            }
+
+            //Списки та форми
+            {
+                Expander expanderForm = new Expander("Табличні списки та форми");
+                vBox.PackStart(expanderForm, false, false, 5);
+
+                VBox vBoxForm = new VBox();
+                expanderForm.Add(vBoxForm);
+
+                //Заголовок блоку Forms
+                HBox hBoxInterfaceCreateInfo = new HBox() { Halign = Align.Center };
+                vBoxForm.PackStart(hBoxInterfaceCreateInfo, false, false, 5);
+                hBoxInterfaceCreateInfo.PackStart(new Label("Табличні списки"), false, false, 5);
+
+                //Табличні списки
+                CreateTabularList(vBoxForm);
+            }
 
             hPaned.Pack1(vBox, false, false);
         }

@@ -46,6 +46,7 @@ namespace Configurator
         ListBox listBoxDimensionFields = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxResourcesFields = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxPropertyFields = new ListBox() { SelectionMode = SelectionMode.Single };
+        ListBox listBoxTabularList = new ListBox() { SelectionMode = SelectionMode.Single };
         Entry entryName = new Entry() { WidthRequest = 500 };
         Entry entryTable = new Entry() { WidthRequest = 500 };
         TextView textViewDesc = new TextView();
@@ -128,6 +129,23 @@ namespace Configurator
             scrollTextView.Add(textViewDesc);
 
             hBoxDesc.PackStart(scrollTextView, false, false, 5);
+
+            //Списки та форми
+            {
+                Expander expanderForm = new Expander("Табличні списки та форми");
+                vBox.PackStart(expanderForm, false, false, 5);
+
+                VBox vBoxForm = new VBox();
+                expanderForm.Add(vBoxForm);
+
+                //Заголовок блоку Forms
+                HBox hBoxInterfaceCreateInfo = new HBox() { Halign = Align.Center };
+                vBoxForm.PackStart(hBoxInterfaceCreateInfo, false, false, 5);
+                hBoxInterfaceCreateInfo.PackStart(new Label("Табличні списки"), false, false, 5);
+
+                //Табличні списки
+                CreateTabularList(vBoxForm);
+            }
 
             hPaned.Pack1(vBox, false, false);
         }
@@ -260,6 +278,48 @@ namespace Configurator
             vBoxContainer.PackStart(vBox, false, false, 0);
         }
 
+        void CreateTabularList(VBox vBoxContainer)
+        {
+            VBox vBox = new VBox();
+
+            HBox hBox = new HBox();
+            hBox.PackStart(new Label("Табличні списки:"), false, false, 5);
+            vBox.PackStart(hBox, false, false, 5);
+
+            Toolbar toolbar = new Toolbar();
+            vBox.PackStart(toolbar, false, false, 0);
+
+            ToolButton buttonAdd = new ToolButton(Stock.New) { Label = "Додати", IsImportant = true };
+            buttonAdd.Clicked += OnTabularListAddClick;
+            toolbar.Add(buttonAdd);
+
+            ToolButton buttonCopy = new ToolButton(Stock.Copy) { Label = "Копіювати", IsImportant = true };
+            buttonCopy.Clicked += OnTabularListCopyClick;
+            toolbar.Add(buttonCopy);
+
+            ToolButton buttonRefresh = new ToolButton(Stock.Refresh) { Label = "Обновити", IsImportant = true };
+            buttonRefresh.Clicked += OnTabularListRefreshClick;
+            toolbar.Add(buttonRefresh);
+
+            ToolButton buttonDelete = new ToolButton(Stock.Clear) { Label = "Видалити", IsImportant = true };
+            buttonDelete.Clicked += OnTabularListRemoveClick;
+            toolbar.Add(buttonDelete);
+
+            HBox hBoxScroll = new HBox();
+            ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
+            scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+            scrollList.SetSizeRequest(0, 100);
+
+            listBoxTabularList.ButtonPressEvent += OnTabularListButtonPress;
+
+            scrollList.Add(listBoxTabularList);
+            hBoxScroll.PackStart(scrollList, true, true, 5);
+
+            vBox.PackStart(hBoxScroll, false, false, 0);
+
+            vBoxContainer.PackStart(vBox, false, false, 0);
+        }
+
         #endregion
 
         #region Присвоєння / зчитування значень віджетів
@@ -269,6 +329,7 @@ namespace Configurator
             FillDimensionFields();
             FillResourcesFields();
             FillPropertyFields();
+            FillTabularList();
 
             entryName.Text = ConfRegister.Name;
 
@@ -296,6 +357,12 @@ namespace Configurator
         {
             foreach (ConfigurationObjectField field in ConfRegister.PropertyFields.Values)
                 listBoxPropertyFields.Add(new Label(field.Name) { Name = field.Name, Halign = Align.Start });
+        }
+
+        void FillTabularList()
+        {
+            foreach (ConfigurationTabularList tableList in ConfRegister.TabularList.Values)
+                listBoxTabularList.Add(new Label(tableList.Name) { Name = tableList.Name, Halign = Align.Start });
         }
 
         void GetValue()
@@ -722,6 +789,131 @@ namespace Configurator
         void PropertyFieldsRefreshList()
         {
             OnPropertyFieldsRefreshClick(null, new EventArgs());
+        }
+
+        #endregion
+
+        #region TabularList
+
+        void OnTabularListButtonPress(object? sender, ButtonPressEventArgs args)
+        {
+            if (args.Event.Type == Gdk.EventType.DoubleButtonPress)
+            {
+                ListBoxRow[] selectedRows = listBoxTabularList.SelectedRows;
+
+                if (selectedRows.Length != 0)
+                {
+                    ListBoxRow curRow = selectedRows[0];
+
+                    if (ConfRegister.TabularList.ContainsKey(curRow.Child.Name))
+                        GeneralForm?.CreateNotebookPage($"Табличний список: {curRow.Child.Name}", () =>
+                        {
+                            Dictionary<string, ConfigurationObjectField> AllFields = Conf!.CombineAllFieldForRegister
+                            (
+                                ConfRegister.DimensionFields.Values,
+                                ConfRegister.ResourcesFields.Values,
+                                ConfRegister.PropertyFields.Values
+                            );
+
+                            PageTabularList page = new PageTabularList()
+                            {
+                                Fields = AllFields,
+                                TabularLists = ConfRegister.TabularList,
+                                TabularList = ConfRegister.TabularList[curRow.Child.Name],
+                                IsNew = false,
+                                GeneralForm = GeneralForm,
+                                CallBack_RefreshList = TabularListRefreshList
+                            };
+
+                            page.SetValue();
+
+                            return page;
+                        });
+                }
+            }
+        }
+
+        void OnTabularListAddClick(object? sender, EventArgs args)
+        {
+            GeneralForm?.CreateNotebookPage("Табличний список *", () =>
+            {
+                Dictionary<string, ConfigurationObjectField> AllFields = Conf!.CombineAllFieldForRegister
+                (
+                    ConfRegister.DimensionFields.Values,
+                    ConfRegister.ResourcesFields.Values,
+                    ConfRegister.PropertyFields.Values
+                );
+
+                PageTabularList page = new PageTabularList()
+                {
+                    Fields = AllFields,
+                    TabularLists = ConfRegister.TabularList,
+                    IsNew = true,
+                    GeneralForm = GeneralForm,
+                    CallBack_RefreshList = TabularListRefreshList
+                };
+
+                page.SetValue();
+
+                return page;
+            });
+        }
+
+        void OnTabularListCopyClick(object? sender, EventArgs args)
+        {
+            ListBoxRow[] selectedRows = listBoxTabularList.SelectedRows;
+
+            if (selectedRows.Length != 0)
+            {
+                foreach (ListBoxRow row in selectedRows)
+                {
+                    if (ConfRegister.TabularList.ContainsKey(row.Child.Name))
+                    {
+                        ConfigurationTabularList newTableList = ConfRegister.TabularList[row.Child.Name].Copy();
+                        newTableList.Name += GenerateName.GetNewName();
+
+                        ConfRegister.AppendTableList(newTableList);
+                    }
+                }
+
+                TabularListRefreshList();
+
+                GeneralForm?.LoadTreeAsync();
+            }
+        }
+
+        void OnTabularListRefreshClick(object? sender, EventArgs args)
+        {
+            foreach (Widget item in listBoxTabularList.Children)
+                listBoxTabularList.Remove(item);
+
+            FillTabularList();
+
+            listBoxTabularList.ShowAll();
+        }
+
+
+        void OnTabularListRemoveClick(object? sender, EventArgs args)
+        {
+            ListBoxRow[] selectedRows = listBoxTabularList.SelectedRows;
+
+            if (selectedRows.Length != 0)
+            {
+                foreach (ListBoxRow row in selectedRows)
+                {
+                    if (ConfRegister.TabularList.ContainsKey(row.Child.Name))
+                        ConfRegister.TabularList.Remove(row.Child.Name);
+                }
+
+                TabularListRefreshList();
+
+                GeneralForm?.LoadTreeAsync();
+            }
+        }
+
+        void TabularListRefreshList()
+        {
+            OnTabularListRefreshClick(null, new EventArgs());
         }
 
         #endregion
