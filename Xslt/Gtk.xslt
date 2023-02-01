@@ -87,6 +87,8 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники.Т
               </xsl:if>
               <xsl:text> } )</xsl:text>; /*<xsl:value-of select="Name"/>*/
             </xsl:for-each>
+            //Пустишка
+            treeView.AppendColumn(new TreeViewColumn());
         }
 
         public static List&lt;Where&gt; Where { get; set; } = new List&lt;Where&gt;();
@@ -320,6 +322,8 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.Т
                 <xsl:text> } </xsl:text>
               </xsl:if>); /*<xsl:value-of select="Name"/>*/
             </xsl:for-each>
+            //Пустишка
+            treeView.AppendColumn(new TreeViewColumn());
         }
 
         public static List&lt;Where&gt; Where { get; set; } = new List&lt;Where&gt;();
@@ -503,6 +507,8 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.РегістриВі�
               </xsl:if>
               <xsl:text> } )</xsl:text>; /*<xsl:value-of select="Name"/>*/
             </xsl:for-each>
+            //Пустишка
+            treeView.AppendColumn(new TreeViewColumn());
         }
 
         public static List&lt;Where&gt; Where { get; set; } = new List&lt;Where&gt;();
