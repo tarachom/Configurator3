@@ -601,9 +601,9 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники
         
         public void Save()
         {
-		    <xsl:if test="normalize-space(TriggerFunctions/BeforeSave) != ''">
+            <xsl:if test="normalize-space(TriggerFunctions/BeforeSave) != ''">
                 <xsl:value-of select="TriggerFunctions/BeforeSave"/><xsl:text>(this)</xsl:text>;
-			</xsl:if>
+            </xsl:if>
             <xsl:for-each select="Fields/Field">
               <xsl:text>base.FieldValue["</xsl:text><xsl:value-of select="NameInTable"/><xsl:text>"] = </xsl:text>
               <xsl:if test="Type = 'enum'">
@@ -617,30 +617,19 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники
               </xsl:choose>;
             </xsl:for-each>
             BaseSave();
-			<xsl:if test="normalize-space(TriggerFunctions/AfterSave) != ''">
+            <xsl:if test="normalize-space(TriggerFunctions/AfterSave) != ''">
                 <xsl:value-of select="TriggerFunctions/AfterSave"/><xsl:text>(this);</xsl:text>      
             </xsl:if>
         }
-		<!--
-        public string Serialize(string root = "<xsl:value-of select="$DirectoryName"/>")
-        {
-            return 
-            "&lt;" + root + "&gt;" +
-               <xsl:text>"&lt;uid&gt;" + base.UnigueID.ToString() + "&lt;/uid&gt;"</xsl:text> +
-               <xsl:for-each select="Fields/Field">
-                 <xsl:call-template name="SerializeFieldValue" /> +
-               </xsl:for-each>
-            <xsl:text>"&lt;/" + root + "&gt;"</xsl:text>;
-        }
-        -->
+
         public <xsl:value-of select="$DirectoryName"/>_Objest Copy()
         {
             <xsl:value-of select="$DirectoryName"/>_Objest copy = new <xsl:value-of select="$DirectoryName"/>_Objest();
-			copy.New();
+            copy.New();
             <xsl:for-each select="Fields/Field">
-				<xsl:text>copy.</xsl:text><xsl:value-of select="Name"/><xsl:text> = </xsl:text><xsl:value-of select="Name"/>;
-			</xsl:for-each>
-			return copy;
+              <xsl:text>copy.</xsl:text><xsl:value-of select="Name"/><xsl:text> = </xsl:text><xsl:value-of select="Name"/>;
+            </xsl:for-each>
+            return copy;
         }
 
         public void Delete()
@@ -648,13 +637,13 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники
             <xsl:if test="normalize-space(TriggerFunctions/BeforeDelete) != ''">
                 <xsl:value-of select="TriggerFunctions/BeforeDelete"/><xsl:text>(this);</xsl:text>      
             </xsl:if>
-			base.BaseDelete(<xsl:text>new string[] { </xsl:text>
-             <xsl:for-each select="TabularParts/TablePart">
+            base.BaseDelete(<xsl:text>new string[] { </xsl:text>
+            <xsl:for-each select="TabularParts/TablePart">
                <xsl:if test="position() != 1">
                  <xsl:text>, </xsl:text>
                </xsl:if>
                <xsl:text>"</xsl:text><xsl:value-of select="Table"/><xsl:text>"</xsl:text>
-             </xsl:for-each> });
+            </xsl:for-each> });
         }
         
         public <xsl:value-of select="$DirectoryName"/>_Pointer GetDirectoryPointer()
@@ -699,23 +688,25 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники
             <xsl:value-of select="$DirectoryName"/>_Objest <xsl:value-of select="$DirectoryName"/>ObjestItem = new <xsl:value-of select="$DirectoryName"/>_Objest();
             return <xsl:value-of select="$DirectoryName"/>ObjestItem.Read(base.UnigueID) ? <xsl:value-of select="$DirectoryName"/>ObjestItem : null;
         }
-		
+
         public <xsl:value-of select="$DirectoryName"/>_Pointer GetNewDirectoryPointer()
         {
             return new <xsl:value-of select="$DirectoryName"/>_Pointer(base.UnigueID);
         }
-		
-		public string GetPresentation()
+
+        public string Presentation { get; set; } = "";
+
+        public string GetPresentation()
         {
-		    return base.BasePresentation(
-			    <xsl:text>new string[] { </xsl:text>
-                 <xsl:for-each select="Fields/Field[IsPresentation=1]">
-                   <xsl:if test="position() != 1">
-                     <xsl:text>, </xsl:text>
-                   </xsl:if>
-                   <xsl:text>"</xsl:text><xsl:value-of select="NameInTable"/><xsl:text>"</xsl:text>
-                 </xsl:for-each> }
-			);
+            return Presentation = base.BasePresentation(
+              <xsl:text>new string[] { </xsl:text>
+              <xsl:for-each select="Fields/Field[IsPresentation=1]">
+                <xsl:if test="position() != 1">
+                  <xsl:text>, </xsl:text>
+                </xsl:if>
+                <xsl:text>"</xsl:text><xsl:value-of select="NameInTable"/><xsl:text>"</xsl:text>
+              </xsl:for-each> }
+            );
         }
 		
         public <xsl:value-of select="$DirectoryName"/>_Pointer GetEmptyPointer()
@@ -1098,7 +1089,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи
         {
             <xsl:if test="normalize-space(TriggerFunctions/BeforeSave) != ''">
                 <xsl:value-of select="TriggerFunctions/BeforeSave"/><xsl:text>(this)</xsl:text>;
-			</xsl:if>
+            </xsl:if>
             <xsl:for-each select="Fields/Field">
               <xsl:text>base.FieldValue["</xsl:text><xsl:value-of select="NameInTable"/><xsl:text>"] = </xsl:text>
               <xsl:if test="Type = 'enum'">
@@ -1112,7 +1103,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи
               </xsl:choose>;
             </xsl:for-each>
             BaseSave();
-			<xsl:if test="normalize-space(TriggerFunctions/AfterSave) != ''">
+            <xsl:if test="normalize-space(TriggerFunctions/AfterSave) != ''">
                 <xsl:value-of select="TriggerFunctions/AfterSave"/><xsl:text>(this);</xsl:text>      
             </xsl:if>
 		}
@@ -1201,17 +1192,19 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи
             base.Init(uid, fields);
         }
 		
-		    public string GetPresentation()
+        public string Presentation { get; set; } = "";
+
+        public string GetPresentation()
         {
-		        return base.BasePresentation(
-				    <xsl:text>new string[] { </xsl:text>
-                 <xsl:for-each select="Fields/Field[IsPresentation=1]">
-                   <xsl:if test="position() != 1">
-                     <xsl:text>, </xsl:text>
-                   </xsl:if>
-                   <xsl:text>"</xsl:text><xsl:value-of select="NameInTable"/><xsl:text>"</xsl:text>
-                </xsl:for-each> }
-			      );
+            return Presentation = base.BasePresentation(
+              <xsl:text>new string[] { </xsl:text>
+              <xsl:for-each select="Fields/Field[IsPresentation=1]">
+                <xsl:if test="position() != 1">
+                  <xsl:text>, </xsl:text>
+                </xsl:if>
+                <xsl:text>"</xsl:text><xsl:value-of select="NameInTable"/><xsl:text>"</xsl:text>
+              </xsl:for-each> }
+            );
         }
 		
         public <xsl:value-of select="$DocumentName"/>_Pointer GetNewDocumentPointer()
