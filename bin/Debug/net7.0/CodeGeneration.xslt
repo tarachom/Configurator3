@@ -694,11 +694,11 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники
             return new <xsl:value-of select="$DirectoryName"/>_Pointer(base.UnigueID);
         }
 
-        public string Presentation { get; set; } = "";
+        public string Назва { get; set; } = "";
 
         public string GetPresentation()
         {
-            return Presentation = base.BasePresentation(
+            return Назва = base.BasePresentation(
               <xsl:text>new string[] { </xsl:text>
               <xsl:for-each select="Fields/Field[IsPresentation=1]">
                 <xsl:if test="position() != 1">
@@ -1192,11 +1192,11 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи
             base.Init(uid, fields);
         }
 		
-        public string Presentation { get; set; } = "";
+        public string Назва { get; set; } = "";
 
         public string GetPresentation()
         {
-            return Presentation = base.BasePresentation(
+            return Назва = base.BasePresentation(
               <xsl:text>new string[] { </xsl:text>
               <xsl:for-each select="Fields/Field[IsPresentation=1]">
                 <xsl:if test="position() != 1">
