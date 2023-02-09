@@ -653,6 +653,23 @@ namespace Configurator
 
                     Program.Kernel!.DataBase.RollbackTransaction(TransactionID);
 
+                    //Очистка тмп файлів
+                    {
+                        if (System.IO.File.Exists(pathToXmlResultStepOne))
+                            try
+                            {
+                                System.IO.File.Delete(pathToXmlResultStepOne);
+                            }
+                            catch { }
+
+                        if (System.IO.File.Exists(pathToXmlResultStepSQL))
+                            try
+                            {
+                                System.IO.File.Delete(pathToXmlResultStepSQL);
+                            }
+                            catch { }
+                    }
+
                     ButtonSensitive(true);
                     return;
                 }
