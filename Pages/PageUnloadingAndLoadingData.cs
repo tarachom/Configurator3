@@ -233,8 +233,20 @@ namespace Configurator
             ApendLine("Файл вигрузки: " + fileExportPath + "\n\n");
 
             XmlWriterSettings? settings = new XmlWriterSettings() { Indent = true, Encoding = System.Text.Encoding.UTF8 };
+            XmlWriter xmlWriter;
 
-            XmlWriter xmlWriter = XmlWriter.Create(fileExportPath, settings);
+            try
+            {
+                xmlWriter = XmlWriter.Create(fileExportPath, settings);
+            }
+            catch (Exception ex)
+            {
+                ApendLine("Помилка створення файлу:\n" + ex.Message);
+                ButtonSensitive(true);
+
+                return;
+            }
+
             xmlWriter.WriteStartDocument();
             xmlWriter.WriteStartElement("root");
 
@@ -595,6 +607,12 @@ namespace Configurator
             {
                 ApendLine(" --> Крок 1");
                 pathToXmlResultStepOne = TransformXmlDataStepOne(fileImportPath);
+
+                if (String.IsNullOrEmpty(pathToXmlResultStepOne) && !System.IO.File.Exists(pathToXmlResultStepOne))
+                {
+                    ButtonSensitive(true);
+                    return;
+                }
             }
 
             string pathToXmlResultStepSQL = "";
@@ -603,6 +621,19 @@ namespace Configurator
             {
                 ApendLine(" --> Крок 2");
                 pathToXmlResultStepSQL = TransformStepOneToStepSQL(fileImportPath, pathToXmlResultStepOne);
+
+                if (String.IsNullOrEmpty(pathToXmlResultStepSQL) && !System.IO.File.Exists(pathToXmlResultStepSQL))
+                {
+                    if (System.IO.File.Exists(pathToXmlResultStepOne))
+                        try
+                        {
+                            System.IO.File.Delete(pathToXmlResultStepOne);
+                        }
+                        catch { }
+
+                    ButtonSensitive(true);
+                    return;
+                }
             }
 
             if (!CancellationTokenThread.IsCancellationRequested)
@@ -621,13 +652,13 @@ namespace Configurator
                     ApendLine("Помилка: " + ex.Message);
 
                     Program.Kernel!.DataBase.RollbackTransaction(TransactionID);
+
+                    ButtonSensitive(true);
                     return;
                 }
 
                 if (resultat)
                     Program.Kernel.DataBase.CommitTransaction(TransactionID);
-                else
-                    Program.Kernel.DataBase.RollbackTransaction(TransactionID);
             }
 
             //Видалення тимчасових файлів
@@ -655,7 +686,17 @@ namespace Configurator
 
             XsltArgumentList xsltArgumentList = new XsltArgumentList();
 
-            FileStream fileStream = new FileStream(pathToXmlResult, FileMode.Create);
+            FileStream fileStream;
+
+            try
+            {
+                fileStream = new FileStream(pathToXmlResult, FileMode.Create);
+            }
+            catch (Exception ex)
+            {
+                ApendLine("Помилка створення файлу:\n" + ex.Message);
+                return "";
+            }
 
             xsltCodeGnerator.Transform(fileImport, xsltArgumentList, fileStream);
 
@@ -681,7 +722,17 @@ namespace Configurator
 
             XsltArgumentList xsltArgumentList = new XsltArgumentList();
 
-            FileStream fileStream = new FileStream(pathToXmlResult, FileMode.Create);
+            FileStream fileStream;
+
+            try
+            {
+                fileStream = new FileStream(pathToXmlResult, FileMode.Create);
+            }
+            catch (Exception ex)
+            {
+                ApendLine("Помилка створення файлу:\n" + ex.Message);
+                return "";
+            }
 
             xsltCodeGnerator.Transform(fileStepOne, xsltArgumentList, fileStream);
 
