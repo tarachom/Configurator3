@@ -604,6 +604,9 @@ namespace Configurator
             }
 
             ButtonSensitive(true);
+
+            Thread.Sleep(1000);
+            ApendLine("\n\n\n");
         }
 
         void SaveAnalizeAndCreateSQL()
@@ -697,6 +700,9 @@ namespace Configurator
             }
 
             ButtonSensitive(true);
+
+            Thread.Sleep(1000);
+            ApendLine("\n\n\n");
         }
 
         void ExecuteSQLAndGenerateCode()
@@ -803,6 +809,9 @@ namespace Configurator
             ApendLine("\nГОТОВО!");
 
             ButtonSensitive(true);
+
+            Thread.Sleep(1000);
+            ApendLine("\n\n\n");
         }
 
         void InfoTableCreateFieldCreate(XPathNavigator? xPathNavigator, string tab)

@@ -167,6 +167,9 @@ namespace Configurator
             ApendLine("Готово!");
 
             ButtonSensitive(true);
+
+            Thread.Sleep(1000);
+            ApendLine("\n\n\n");
         }
     }
 }
