@@ -27,7 +27,7 @@ using AccountingSoftware;
 
 namespace Configurator
 {
-    class PageEnum : VBox
+    class PageJournal : VBox
     {
         Configuration? Conf
         {
@@ -37,7 +37,7 @@ namespace Configurator
             }
         }
 
-        public ConfigurationEnums ConfEnum { get; set; } = new ConfigurationEnums();
+        public ConfigurationJournals ConfJournals { get; set; } = new ConfigurationJournals();
         public FormConfigurator? GeneralForm { get; set; }
         public bool IsNew { get; set; } = true;
 
@@ -49,7 +49,7 @@ namespace Configurator
 
         #endregion
 
-        public PageEnum() : base()
+        public PageJournal() : base()
         {
             new VBox();
             HBox hBox = new HBox();
@@ -160,20 +160,20 @@ namespace Configurator
         {
             FillFields();
 
-            entryName.Text = ConfEnum.Name;
-            textViewDesc.Buffer.Text = ConfEnum.Desc;
+            entryName.Text = ConfJournals.Name;
+            textViewDesc.Buffer.Text = ConfJournals.Desc;
         }
 
         void FillFields()
         {
-            foreach (ConfigurationEnumField field in ConfEnum.Fields.Values)
-                listBoxFields.Add(new Label($"{field.Name} = {field.Value}") { Name = field.Name, Halign = Align.Start });
+            foreach (ConfigurationJournalField field in ConfJournals.Fields.Values)
+                listBoxFields.Add(new Label($"{field.Name}") { Name = field.Name, Halign = Align.Start });
         }
 
         void GetValue()
         {
-            ConfEnum.Name = entryName.Text;
-            ConfEnum.Desc = textViewDesc.Buffer.Text;
+            ConfJournals.Name = entryName.Text;
+            ConfJournals.Desc = textViewDesc.Buffer.Text;
         }
 
         #endregion
@@ -189,37 +189,37 @@ namespace Configurator
                 Message.Error(GeneralForm, $"{errorList}");
                 return;
             }
-            
+
             if (IsNew)
             {
                 if (Conf!.Enums.ContainsKey(entryName.Text))
                 {
-                    Message.Error(GeneralForm, $"Назва перелічення не унікальна");
+                    Message.Error(GeneralForm, $"Назва журналу не унікальна");
                     return;
                 }
             }
             else
             {
-                if (ConfEnum.Name != entryName.Text)
+                if (ConfJournals.Name != entryName.Text)
                 {
-                    if (Conf!.Enums.ContainsKey(entryName.Text))
+                    if (Conf!.Journals.ContainsKey(entryName.Text))
                     {
-                        Message.Error(GeneralForm, $"Назва перелічення не унікальна");
+                        Message.Error(GeneralForm, $"Назва журналу не унікальна");
                         return;
                     }
                 }
 
-                Conf!.Enums.Remove(ConfEnum.Name);
+                Conf!.Journals.Remove(ConfJournals.Name);
             }
 
             GetValue();
 
-            Conf!.AppendEnum(ConfEnum);
+            Conf!.AppendJournal(ConfJournals);
 
             IsNew = false;
 
             GeneralForm?.LoadTreeAsync();
-            GeneralForm?.RenameCurrentPageNotebook($"Перелічення: {ConfEnum.Name}");
+            GeneralForm?.RenameCurrentPageNotebook($"Журнал: {ConfJournals.Name}");
         }
 
         #region Fields
@@ -234,13 +234,13 @@ namespace Configurator
                 {
                     ListBoxRow curRow = selectedRows[0];
 
-                    if (ConfEnum.Fields.ContainsKey(curRow.Child.Name))
+                    if (ConfJournals.Fields.ContainsKey(curRow.Child.Name))
                         GeneralForm?.CreateNotebookPage($"Поле: {curRow.Child.Name}", () =>
                         {
-                            PageEnumField page = new PageEnumField()
+                            PageJournalField page = new PageJournalField()
                             {
-                                Fields = ConfEnum.Fields,
-                                Field = ConfEnum.Fields[curRow.Child.Name],
+                                Fields = ConfJournals.Fields,
+                                Field = ConfJournals.Fields[curRow.Child.Name],
                                 IsNew = false,
                                 GeneralForm = GeneralForm,
                                 CallBack_RefreshList = FieldsRefreshList
@@ -258,10 +258,10 @@ namespace Configurator
         {
             GeneralForm?.CreateNotebookPage("Поле *", () =>
             {
-                PageEnumField page = new PageEnumField()
+                PageJournalField page = new PageJournalField()
                 {
-                    Fields = ConfEnum.Fields,
-                    Field = new ConfigurationEnumField("", ++ConfEnum.SerialNumber),
+                    Fields = ConfJournals.Fields,
+                    Field = new ConfigurationJournalField(),
                     IsNew = true,
                     GeneralForm = GeneralForm,
                     CallBack_RefreshList = FieldsRefreshList
@@ -281,12 +281,12 @@ namespace Configurator
             {
                 foreach (ListBoxRow row in selectedRows)
                 {
-                    if (ConfEnum.Fields.ContainsKey(row.Child.Name))
+                    if (ConfJournals.Fields.ContainsKey(row.Child.Name))
                     {
-                        ConfigurationEnumField newField = ConfEnum.Fields[row.Child.Name].Copy(++ConfEnum.SerialNumber);
+                        ConfigurationJournalField newField = ConfJournals.Fields[row.Child.Name].Copy();
                         newField.Name += GenerateName.GetNewName();
 
-                        ConfEnum.AppendField(newField);
+                        ConfJournals.AppendField(newField);
                     }
                 }
 
@@ -314,8 +314,8 @@ namespace Configurator
             {
                 foreach (ListBoxRow row in selectedRows)
                 {
-                    if (ConfEnum.Fields.ContainsKey(row.Child.Name))
-                        ConfEnum.Fields.Remove(row.Child.Name);
+                    if (ConfJournals.Fields.ContainsKey(row.Child.Name))
+                        ConfJournals.Fields.Remove(row.Child.Name);
                 }
 
                 FieldsRefreshList();

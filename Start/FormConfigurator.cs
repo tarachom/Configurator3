@@ -228,6 +228,30 @@ namespace Configurator
             }
         }
 
+        void LoadJournal(TreeIter rootIter, ConfigurationJournals confJournal)
+        {
+            string key = $"Журнал.{confJournal.Name}";
+
+            TreeIter journalIter = treeStore.AppendValues(rootIter, confJournal.Name, "", key);
+
+            foreach (KeyValuePair<string, ConfigurationJournalField> ConfEnumFields in confJournal.Fields)
+            {
+                string keyField = $"{key}:{ConfEnumFields.Value.Name}";
+
+                treeStore.AppendValues(journalIter, ConfEnumFields.Value.Name, "", keyField);
+            }
+
+            IsExpand(journalIter);
+        }
+
+        void LoadJournals(TreeIter rootIter)
+        {
+            foreach (ConfigurationJournals ConfJournal in Conf!.Journals.Values)
+            {
+                LoadJournal(rootIter, ConfJournal);
+            }
+        }
+
         void LoadRegisterInformation(TreeIter rootIter, ConfigurationRegistersInformation confRegisterInformation)
         {
             string key = $"РегістриІнформації.{confRegisterInformation.Name}";
@@ -396,6 +420,10 @@ namespace Configurator
                         TreeIter enumsIter = treeStore.AppendValues("Перелічення");
                         LoadEnums(enumsIter);
                         IsExpand(enumsIter);
+
+                        TreeIter journalsIter = treeStore.AppendValues("Журнали");
+                        LoadJournals(journalsIter);
+                        IsExpand(journalsIter);
 
                         TreeIter registersInformationIter = treeStore.AppendValues("Регістри інформації");
                         LoadRegistersInformation(registersInformationIter);
@@ -633,6 +661,10 @@ namespace Configurator
             MenuItem AddEnum = new MenuItem("Перелічення");
             AddEnum.Activated += OnAddEnum;
             Menu.Append(AddEnum);
+
+            MenuItem AddJournal = new MenuItem("Журнал");
+            AddJournal.Activated += OnAddJournal;
+            Menu.Append(AddJournal);
 
             MenuItem AddRegistersInformation = new MenuItem("Регістр інформації");
             AddRegistersInformation.Activated += OnAddRegisterInformation;
@@ -1371,6 +1403,48 @@ namespace Configurator
                         }
                         break;
                     }
+                case "Журнал":
+                    {
+                        if (name.IndexOf(":") != -1)
+                        {
+                            string[] journalAndField = name.Split(":");
+                            string journalName = journalAndField[0];
+                            string fieldName = journalAndField[1];
+
+                            CreateNotebookPage($"Поле: {fieldName}", () =>
+                            {
+                                PageJournalField page = new PageJournalField()
+                                {
+                                    Fields = Conf!.Journals[journalName].Fields,
+                                    Field = Conf!.Journals[journalName].Fields[fieldName],
+                                    IsNew = false,
+                                    GeneralForm = this
+                                };
+
+                                page.SetValue();
+
+                                return page;
+                            });
+                        }
+                        else
+                        {
+                            CreateNotebookPage($"Журнал: {name}", () =>
+                            {
+                                PageJournal page = new PageJournal()
+                                {
+                                    ConfJournals = Conf!.Journals[name],
+                                    IsNew = false,
+                                    GeneralForm = this
+                                };
+
+                                page.SetValue();
+
+                                return page;
+                            });
+                        }
+                        break;
+                    }
+
             }
         }
 
@@ -1756,6 +1830,31 @@ namespace Configurator
                                 textListPointer += "\nВидалитити неможливо";
 
                                 Message.Error(this, textListPointer);
+                            }
+                        }
+
+                        break;
+                    }
+                case "Журнал":
+                    {
+                        if (name.IndexOf(":") != -1)
+                        {
+                            string[] journalAndField = name.Split(":");
+                            string journalName = journalAndField[0];
+                            string fieldName = journalAndField[1];
+
+                            if (Message.Request(this, "Видалити?") == ResponseType.Yes)
+                            {
+                                Conf!.Journals[journalName].Fields.Remove(fieldName);
+                                reloadTree = true;
+                            }
+                        }
+                        else
+                        {
+                            if (Message.Request(this, "Видалити?") == ResponseType.Yes)
+                            {
+                                Conf!.Journals.Remove(name);
+                                reloadTree = true;
                             }
                         }
 
@@ -2202,6 +2301,31 @@ namespace Configurator
 
                         break;
                     }
+                case "Журнал":
+                    {
+                        if (name.IndexOf(":") != -1)
+                        {
+                            string[] journalAndField = name.Split(":");
+                            string journalName = journalAndField[0];
+                            string fieldName = journalAndField[1];
+
+                            ConfigurationJournalField newField = Conf!.Journals[journalName].Fields[fieldName].Copy();
+                            newField.Name += GenerateName.GetNewName();
+
+                            if (!Conf!.Journals[journalName].Fields.ContainsKey(newField.Name))
+                                Conf!.Journals[journalName].AppendField(newField);
+                        }
+                        else
+                        {
+                            ConfigurationJournals newJournal = Conf!.Journals[name].Copy();
+                            newJournal.Name += GenerateName.GetNewName();
+
+                            if (!Conf!.Journals.ContainsKey(newJournal.Name))
+                                Conf!.AppendJournal(newJournal);
+                        }
+
+                        break;
+                    }
             }
 
             if (TreeRowExpanded.Contains(pathRemove.ToString()))
@@ -2281,6 +2405,22 @@ namespace Configurator
             CreateNotebookPage($"Перелічення: *", () =>
             {
                 PageEnum page = new PageEnum()
+                {
+                    IsNew = true,
+                    GeneralForm = this
+                };
+
+                page.SetValue();
+
+                return page;
+            });
+        }
+
+        void OnAddJournal(object? sender, EventArgs args)
+        {
+            CreateNotebookPage($"Журнал: *", () =>
+            {
+                PageJournal page = new PageJournal()
                 {
                     IsNew = true,
                     GeneralForm = this
