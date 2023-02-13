@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <Configuration Select="False">
+  <Configuration Select="True">
     <Key>6b4ef58d-4b62-4885-8059-eb6f43c51c2d</Key>
     <Name>"Зберігання та Торгівля" для України</Name>
     <Server>localhost</Server>
@@ -14,7 +14,7 @@
       <Param name="CompileProgramPath">/home/tarachom/Projects/StorageAndTrade3/bin/Debug/net7.0/</Param>
     </OtherParam>
   </Configuration>
-  <Configuration Select="True">
+  <Configuration Select="False">
     <Key>1bb63218-2ba6-4cfe-9b3d-b737543f6d6c</Key>
     <Name>"Зберігання та Торгівля" для України - Демо</Name>
     <Server>localhost</Server>
