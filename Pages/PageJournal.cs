@@ -44,6 +44,7 @@ namespace Configurator
         #region Fields
 
         ListBox listBoxFields = new ListBox() { SelectionMode = SelectionMode.Single };
+        ListBox listBoxDocuments = new ListBox() { SelectionMode = SelectionMode.Single };
         Entry entryName = new Entry() { WidthRequest = 500 };
         TextView textViewDesc = new TextView();
 
@@ -98,6 +99,25 @@ namespace Configurator
             scrollTextView.Add(textViewDesc);
 
             hBoxDesc.PackStart(scrollTextView, false, false, 5);
+
+            //Документи
+            {
+                Expander expanderDocuments = new Expander("Документи");
+                vBox.PackStart(expanderDocuments, false, false, 5);
+
+                VBox vBoxDocument = new VBox();
+                expanderDocuments.Add(vBoxDocument);
+
+                HBox hBoxDocument = new HBox() { Halign = Align.End };
+                vBoxDocument.PackStart(hBoxDocument, false, false, 5);
+
+                ScrolledWindow scrollAllowList = new ScrolledWindow() { ShadowType = ShadowType.In };
+                scrollAllowList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+                scrollAllowList.SetSizeRequest(500, 500);
+
+                scrollAllowList.Add(listBoxDocuments);
+                hBoxDocument.PackStart(scrollAllowList, true, true, 5);
+            }
 
             hPaned.Pack1(vBox, false, false);
         }
@@ -159,6 +179,7 @@ namespace Configurator
         public void SetValue()
         {
             FillFields();
+            FillDocuments();
 
             entryName.Text = ConfJournals.Name;
             textViewDesc.Buffer.Text = ConfJournals.Desc;
@@ -170,10 +191,31 @@ namespace Configurator
                 listBoxFields.Add(new Label($"{field.Name}") { Name = field.Name, Halign = Align.Start });
         }
 
+        void FillDocuments()
+        {
+            foreach (ConfigurationDocuments doc in Conf!.Documents.Values)
+                listBoxDocuments.Add(
+                    new CheckButton(doc.Name)
+                    {
+                        Name = doc.Name,
+                        Active = ConfJournals.AllowDocuments.Contains(doc.Name)
+                    });
+        }
+
         void GetValue()
         {
             ConfJournals.Name = entryName.Text;
             ConfJournals.Desc = textViewDesc.Buffer.Text;
+
+            //Доспупні документи
+            ConfJournals.AllowDocuments.Clear();
+
+            foreach (ListBoxRow item in listBoxDocuments.Children)
+            {
+                CheckButton cb = (CheckButton)item.Child;
+                if (cb.Active)
+                    ConfJournals.AllowDocuments.Add(cb.Name);
+            }
         }
 
         #endregion
