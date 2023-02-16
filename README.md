@@ -45,6 +45,8 @@
     
     sudo apt install git
 
+<br/>
+
  <b>Збірка програми</b>
     
     git clone https://github.com/tarachom/Configurator3.git
