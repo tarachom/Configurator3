@@ -2,7 +2,7 @@
 
 <img src="https://accounting.org.ua/images/configuration.png?v=3" /> <b>Програма для проектування бази даних PostgreSQL</b> | .net 7, Linux, Windows <br/>
     
- <b>Можливості:</b>
+ <b>Можливості</b>
     
     Легке проектування бази даних
     Структура конфігурації на українській мові
@@ -10,7 +10,17 @@
     Вигрузка та загрузка даних або конфігурації
     Обслуговування бази даних
 
- <b>Збірка для Linux:</b>
+ <b>net 7.0 для Ubuntu 22.10</b>
+ 
+ [Install the .NET SDK or the .NET Runtime on Ubuntu](https://learn.microsoft.com/uk-ua/dotnet/core/install/linux-ubuntu)<br/>
+ 
+    wget https://packages.microsoft.com/config/ubuntu/22.10/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+    sudo dpkg -i packages-microsoft-prod.deb
+    rm packages-microsoft-prod.deb
+    
+    sudo apt-get update && sudo apt-get install -y dotnet-sdk-7.0
+
+ <b>Збірка для Linux</b>
     
     git clone https://github.com/tarachom/Configurator3.git
     git clone https://github.com/tarachom/AccountingSoftwareLib.git
