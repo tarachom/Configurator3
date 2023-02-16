@@ -5,6 +5,8 @@
 
 <hr />
 
+<br/>
+
  <b>Встановлення dotnet-sdk для Ubuntu 22.10</b>
  
  Детальніше - [Install the .NET SDK or the .NET Runtime on Ubuntu](https://learn.microsoft.com/uk-ua/dotnet/core/install/linux-ubuntu)<br/>
@@ -14,6 +16,8 @@
     rm packages-microsoft-prod.deb
     
     sudo apt-get update && sudo apt-get install -y dotnet-sdk-7.0
+
+<br/>
 
  <b>Встановлення PostgreSQL для Ubuntu</b>
  
@@ -35,6 +39,8 @@
     # Встановлення пароля для postgres
     sudo -u postgres psql
     \password postgres
+
+<br/>
 
  <b>Збірка</b>
     
