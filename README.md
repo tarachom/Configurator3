@@ -3,8 +3,7 @@
 <img src="https://accounting.org.ua/images/configuration.png?v=3" /> <b>Проектування бази даних PostgreSQL</b> | .net 7, Linux, Windows <br/><br/>
 <img src="https://accounting.org.ua/images/configurator1.png" />
 
-<hr />
-
+<br/>
 <br/>
 
  <b>Встановлення dotnet-sdk для Ubuntu 22.10</b>
