@@ -10,14 +10,14 @@
     Вигрузка та загрузка даних або конфігурації
     Обслуговування бази даних
 
- <b>Встановлення:</b>
+ <b>Linux:</b>
     
     git clone https://github.com/tarachom/Configurator3.git
     git clone https://github.com/tarachom/AccountingSoftwareLib.git
     
     dotnet build Configurator3 --output Configurator3/bin/Debug/net7.0
     
-    mkdir bin
+    mkdir -p bin
     cp -r Configurator3/bin/Debug/net7.0/* bin
 
 <hr />
