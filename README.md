@@ -16,8 +16,13 @@
     git clone https://github.com/tarachom/AccountingSoftwareLib.git
     
     cd Configurator3
-    dotnet build
+    dotnet build --output bin/Debug/net7.0
     
+    cd ..
+    
+    mkdir bin
+    cp -r Configurator3/bin/Debug/net7.0/* bin
+
 <hr />
  
 Детальніше про програму [accounting.org.ua](https://accounting.org.ua/configurator.html)<br/>
