@@ -10,6 +10,8 @@
     Вигрузка та загрузка даних або конфігурації
     Обслуговування бази даних
 
+<img src="https://accounting.org.ua/images/configurator1.png" />
+
 <hr />
 
  <b>Встановлення dotnet-sdk для Ubuntu 22.10</b>
