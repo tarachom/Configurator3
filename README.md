@@ -10,9 +10,9 @@
     Вигрузка та загрузка даних або конфігурації
     Обслуговування бази даних
 
- <b>net 7.0 для Ubuntu 22.10</b>
+ <b>Встановлення .NET SDK для Ubuntu 22.10</b>
  
- [Install the .NET SDK or the .NET Runtime on Ubuntu](https://learn.microsoft.com/uk-ua/dotnet/core/install/linux-ubuntu)<br/>
+ Детальніше - [Install the .NET SDK or the .NET Runtime on Ubuntu](https://learn.microsoft.com/uk-ua/dotnet/core/install/linux-ubuntu)<br/>
  
     wget https://packages.microsoft.com/config/ubuntu/22.10/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
     sudo dpkg -i packages-microsoft-prod.deb
