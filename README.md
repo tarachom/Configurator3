@@ -1,13 +1,6 @@
 # Конфігуратор 3
 
 <img src="https://accounting.org.ua/images/configuration.png?v=3" /> <b>Програма для проектування бази даних PostgreSQL</b> | .net 7, Linux, Windows <br/>
-    
- <b>Можливості</b>
-    
-    Проектування бази даних та генерування коду
-    Схема бази даних
-    Вигрузка та загрузка даних або конфігурації, обслуговування бази даних
-
 <img src="https://accounting.org.ua/images/configurator1.png" />
 
 <hr />
