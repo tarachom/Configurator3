@@ -10,7 +10,7 @@
     Вигрузка та загрузка даних або конфігурації
     Обслуговування бази даних
 
- <b>Встановлення .NET SDK для Ubuntu 22.10</b>
+ <b>Встановлення .net sdk для Ubuntu 22.10</b>
  
  Детальніше - [Install the .NET SDK or the .NET Runtime on Ubuntu](https://learn.microsoft.com/uk-ua/dotnet/core/install/linux-ubuntu)<br/>
  
@@ -20,7 +20,28 @@
     
     sudo apt-get update && sudo apt-get install -y dotnet-sdk-7.0
 
- <b>Збірка для Linux</b>
+ <b>Встановлення PostgreSQL для Ubuntu</b>
+ 
+ Детальніше - [PostgreSQL](https://www.postgresql.org/download/linux/ubuntu/)<br/>
+ 
+    # Create the file repository configuration:
+    sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+    
+    # Import the repository signing key:
+    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+    
+    # Update the package lists:
+    sudo apt-get update
+    
+    # Install the latest version of PostgreSQL.
+    # If you want a specific version, use 'postgresql-12' or similar instead of 'postgresql':
+    sudo apt-get -y install postgresql
+
+    # Встановлення пароля для postgres
+    sudo -u postgres psql
+    password postgres
+
+ <b>Збірка</b>
     
     git clone https://github.com/tarachom/Configurator3.git
     git clone https://github.com/tarachom/AccountingSoftwareLib.git
