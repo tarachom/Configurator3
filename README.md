@@ -15,6 +15,9 @@
     rm packages-microsoft-prod.deb
     
     sudo apt-get update && sudo apt-get install -y dotnet-sdk-7.0
+    
+    # Переглянути детальну інформацію про встановлені версії sdk і runtimes
+    dotnet --list-sdks && dotnet --list-runtimes
 
 <br/>
 
@@ -31,13 +34,15 @@
     # Update the package lists:
     sudo apt-get update
     
-    # Install the latest version of PostgreSQL.
-    # If you want a specific version, use 'postgresql-12' or similar instead of 'postgresql':
+    # Install the latest version of PostgreSQL
     sudo apt-get -y install postgresql
 
     # Встановлення пароля для postgres
     sudo -u postgres psql
     \password postgres
+    
+    # Переглянути детальну інформацію про встановлену програму postgresql
+    dpkg -l | grep postgresql
 
 <br/>
 
