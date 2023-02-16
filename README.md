@@ -10,7 +10,7 @@
     Вигрузка та загрузка даних або конфігурації
     Обслуговування бази даних
 
- <b>Linux:</b>
+ <b>Збірка для Linux:</b>
     
     git clone https://github.com/tarachom/Configurator3.git
     git clone https://github.com/tarachom/AccountingSoftwareLib.git
