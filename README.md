@@ -15,10 +15,7 @@
     git clone https://github.com/tarachom/Configurator3.git
     git clone https://github.com/tarachom/AccountingSoftwareLib.git
     
-    cd Configurator3
-    dotnet build --output bin/Debug/net7.0
-    
-    cd ..
+    dotnet build Configurator3 --output Configurator3/bin/Debug/net7.0
     
     mkdir bin
     cp -r Configurator3/bin/Debug/net7.0/* bin
