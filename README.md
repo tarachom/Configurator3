@@ -9,7 +9,15 @@
     Генерування коду на C#
     Вигрузка та загрузка даних або конфігурації
     Обслуговування бази даних
- 
+
+ <b>Встановлення:</b>
+    
+    git clone https://github.com/tarachom/Configurator3.git
+    git clone https://github.com/tarachom/AccountingSoftwareLib.git
+    
+    cd Configurator3
+    dotnet build
+    
 <hr />
  
 Детальніше про програму [accounting.org.ua](https://accounting.org.ua/configurator.html)<br/>
