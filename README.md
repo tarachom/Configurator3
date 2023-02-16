@@ -10,7 +10,7 @@
     Вигрузка та загрузка даних або конфігурації
     Обслуговування бази даних
 
- <b>Встановлення .net sdk для Ubuntu 22.10</b>
+ <b>Встановлення dotnet-sdk для Ubuntu 22.10</b>
  
  Детальніше - [Install the .NET SDK or the .NET Runtime on Ubuntu](https://learn.microsoft.com/uk-ua/dotnet/core/install/linux-ubuntu)<br/>
  
