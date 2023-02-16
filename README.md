@@ -41,7 +41,11 @@
 
 <br/>
 
- <b>Збірка</b>
+ <b>Встановлення Git</b>
+    
+    sudo apt install git
+
+ <b>Збірка програми</b>
     
     git clone https://github.com/tarachom/Configurator3.git
     git clone https://github.com/tarachom/AccountingSoftwareLib.git
