@@ -1,0 +1,3 @@
+[submodule "AccountingSoftwareLib"]
+	path = AccountingSoftwareLib
+	url = https://github.com/tarachom/AccountingSoftwareLib
