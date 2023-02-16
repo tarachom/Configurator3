@@ -34,7 +34,7 @@
 
     # Встановлення пароля для postgres
     sudo -u postgres psql
-    password postgres
+    \password postgres
 
  <b>Збірка</b>
     
