@@ -71,7 +71,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники.Т
 
         public static void AddColumns(TreeView treeView)
         {
-            treeView.AppendColumn(new TreeViewColumn("", new CellRendererPixbuf() { Ypad = 4 }, "pixbuf", 0));
+            treeView.AppendColumn(new TreeViewColumn("", new CellRendererPixbuf(), "pixbuf", 0)); /* { Ypad = 4 } */
             treeView.AppendColumn(new TreeViewColumn("ID", new CellRendererText(), "text", 1) { Visible = false });
             /* */
             <xsl:for-each select="Fields/Field">
@@ -306,7 +306,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.Т
 
         public static void AddColumns(TreeView treeView)
         {
-            treeView.AppendColumn(new TreeViewColumn("", new CellRendererPixbuf() { Ypad = 4 }, "pixbuf", 0)); /*Image*/
+            treeView.AppendColumn(new TreeViewColumn("", new CellRendererPixbuf(), "pixbuf", 0)); /*Image*/ /* { Ypad = 0 } */
             treeView.AppendColumn(new TreeViewColumn("ID", new CellRendererText(), "text", 1) { Visible = false }); /*UID*/
             treeView.AppendColumn(new TreeViewColumn("", new CellRendererToggle(), "active", 2)); /*Проведений документ*/
             /* */
@@ -490,7 +490,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.РегістриВі�
 
         public static void AddColumns(TreeView treeView)
         {
-            treeView.AppendColumn(new TreeViewColumn("", new CellRendererPixbuf() { Ypad = 4 }, "pixbuf", 0));
+            treeView.AppendColumn(new TreeViewColumn("", new CellRendererPixbuf(), "pixbuf", 0)); /* { Ypad = 0 } */
             treeView.AppendColumn(new TreeViewColumn("ID", new CellRendererText(), "text", 1) { Visible = false });
             treeView.AppendColumn(new TreeViewColumn("Період", new CellRendererText(), "text", 2));
             /* */
