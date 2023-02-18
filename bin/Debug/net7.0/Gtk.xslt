@@ -232,6 +232,8 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.Т
                     сomboBox.Append(field.Name, field.Desc);
             }
 
+            сomboBox.Active = 0;
+
             return сomboBox;
         }
 
@@ -254,6 +256,11 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.Т
                 {
                     DateTime ДатаМісцьНазад = DateTime.Now.AddMonths(-1);
                     Where.Add(new Where(fieldWhere, Comparison.QT_EQ, new DateTime(ДатаМісцьНазад.Year, ДатаМісцьНазад.Month, 1)));
+                    break;
+                }
+                case Перелічення.ТипПеріодуДляЖурналівДокументів.Місяць:
+                {
+                    Where.Add(new Where(fieldWhere, Comparison.QT_EQ, DateTime.Now.AddMonths(-1)));
                     break;
                 }
                 case Перелічення.ТипПеріодуДляЖурналівДокументів.ЗПочаткуМісяця:
