@@ -185,6 +185,17 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники.Т
                               <xsl:value-of select="Name"/>
                               <xsl:text>]! : 0)) )</xsl:text>
                             </xsl:when>
+                            <xsl:when test="Type = 'boolean'">
+                              <xsl:text>(cur.Fields?[</xsl:text>
+                              <xsl:value-of select="$DirectoryName"/>
+                              <xsl:text>_Const.</xsl:text>
+                              <xsl:value-of select="Name"/>
+                              <xsl:text>]! != DBNull.Value ? (bool)cur.Fields?[</xsl:text>
+                              <xsl:value-of select="$DirectoryName"/>
+                              <xsl:text>_Const.</xsl:text>
+                              <xsl:value-of select="Name"/>
+                              <xsl:text>]! : false) ? "Так" : ""</xsl:text>
+                            </xsl:when>
                             <xsl:otherwise>
                               <xsl:text>cur.Fields?[</xsl:text>
                               <xsl:value-of select="$DirectoryName"/>
@@ -433,6 +444,17 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.Т
                               <xsl:text>_Const.</xsl:text>
                               <xsl:value-of select="Name"/>
                               <xsl:text>]! : 0)) )</xsl:text>
+                            </xsl:when>
+                            <xsl:when test="Type = 'boolean'">
+                              <xsl:text>(cur.Fields?[</xsl:text>
+                              <xsl:value-of select="$DocumentName"/>
+                              <xsl:text>_Const.</xsl:text>
+                              <xsl:value-of select="Name"/>
+                              <xsl:text>]! != DBNull.Value ? (bool)cur.Fields?[</xsl:text>
+                              <xsl:value-of select="$DocumentName"/>
+                              <xsl:text>_Const.</xsl:text>
+                              <xsl:value-of select="Name"/>
+                              <xsl:text>]! : false) ? "Так" : ""</xsl:text>
                             </xsl:when>
                             <xsl:otherwise>
                               <xsl:text>cur.Fields?[</xsl:text>
