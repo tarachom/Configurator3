@@ -36,6 +36,7 @@ namespace Configurator
         {
             SetDefaultSize(660, 320);
             SetPosition(WindowPosition.Center);
+            Resizable = false;
 
             string ico_file_name = "images/configurator.ico";
 
@@ -245,6 +246,9 @@ namespace Configurator
             if (selectedRows.Length != 0)
             {
                 FormConfigurationSelectionParam configurationSelectionParam = new FormConfigurationSelectionParam();
+                configurationSelectionParam.Modal = true;
+                configurationSelectionParam.TransientFor = this;
+                configurationSelectionParam.Resizable = false;
                 configurationSelectionParam.OpenConfigurationParam = ConfigurationParamCollection.GetConfigurationParam(selectedRows[0].Name);
                 configurationSelectionParam.CallBackUpdate = CallBackUpdate;
                 configurationSelectionParam.Show();
