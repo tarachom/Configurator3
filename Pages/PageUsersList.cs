@@ -68,7 +68,8 @@ namespace Configurator
 
             TreeViewGrid = new TreeView(Store);
             TreeViewGrid.Selection.Mode = SelectionMode.Multiple;
-            TreeViewGrid.ActivateOnSingleClick = true;
+            TreeViewGrid.ActivateOnSingleClick = false;
+            TreeViewGrid.RowActivated += OnRowActivated;
 
             AddColumn();
 
@@ -124,10 +125,6 @@ namespace Configurator
             upButton.Clicked += OnEditClick;
             toolbar.Add(upButton);
 
-            ToolButton copyButton = new ToolButton(Stock.Copy) { TooltipText = "Копіювати" };
-            copyButton.Clicked += OnCopyClick;
-            toolbar.Add(copyButton);
-
             ToolButton deleteButton = new ToolButton(Stock.Delete) { TooltipText = "Видалити" };
             deleteButton.Clicked += OnDeleteClick;
             toolbar.Add(deleteButton);
@@ -161,7 +158,17 @@ namespace Configurator
 
         void OnAddClick(object? sender, EventArgs args)
         {
+            GeneralForm?.CreateNotebookPage("Користувач *", () =>
+            {
+                PageUser page = new PageUser()
+                {
+                    IsNew = true,
+                    GeneralForm = GeneralForm,
+                    CallBack_RefreshList = LoadRecords
+                };
 
+                return page;
+            });
         }
 
         void OnEditClick(object? sender, EventArgs args)
@@ -171,10 +178,30 @@ namespace Configurator
                 TreeIter iter;
                 if (TreeViewGrid.Model.GetIter(out iter, TreeViewGrid.Selection.GetSelectedRows()[0]))
                 {
-                    string uid = (string)TreeViewGrid.Model.GetValue(iter, 1);
+                    string uid = (string)TreeViewGrid.Model.GetValue(iter, (int)Columns.UID);
+                    string fullName = (string)TreeViewGrid.Model.GetValue(iter, (int)Columns.FullName);
 
+                    GeneralForm?.CreateNotebookPage($"Користувач: {fullName}", () =>
+                    {
+                        PageUser page = new PageUser()
+                        {
+                            IsNew = false,
+                            UID = Guid.Parse(uid),
+                            GeneralForm = GeneralForm,
+                            CallBack_RefreshList = LoadRecords
+                        };
+
+                        page.SetValue();
+
+                        return page;
+                    });
                 }
             }
+        }
+
+        void OnRowActivated(object sender, RowActivatedArgs args)
+        {
+            OnEditClick(sender, new EventArgs());
         }
 
         void OnRefreshClick(object? sender, EventArgs args)
@@ -196,31 +223,10 @@ namespace Configurator
                         TreeViewGrid.Model.GetIter(out iter, itemPath);
 
                         string uid = (string)TreeViewGrid.Model.GetValue(iter, 1);
+                        string name = (string)TreeViewGrid.Model.GetValue(iter, (int)Columns.Name);
 
-
-                    }
-
-                    LoadRecords();
-                }
-            }
-        }
-
-        void OnCopyClick(object? sender, EventArgs args)
-        {
-            if (TreeViewGrid.Selection.CountSelectedRows() != 0)
-            {
-                if (Message.Request(GeneralForm, "Копіювати?") == ResponseType.Yes)
-                {
-                    TreePath[] selectionRows = TreeViewGrid.Selection.GetSelectedRows();
-
-                    foreach (TreePath itemPath in selectionRows)
-                    {
-                        TreeIter iter;
-                        TreeViewGrid.Model.GetIter(out iter, itemPath);
-
-                        string uid = (string)TreeViewGrid.Model.GetValue(iter, 1);
-
-
+                        if (!Program.Kernel!.DataBase.SpetialTableUsersDelete(Guid.Parse(uid), name))
+                            Message.Error(GeneralForm, "Не вдалось видалити користувача");
                     }
 
                     LoadRecords();
