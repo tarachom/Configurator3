@@ -568,6 +568,17 @@ namespace Configurator
             mb.Append(configurationItem);
 
             //2
+            Menu UsersMenu = new Menu();
+            MenuItem usersItem = new MenuItem("Користувачі");
+            usersItem.Submenu = UsersMenu;
+
+            MenuItem usersList = new MenuItem("Список користувачів");
+            usersList.Activated += OnUsersListClick;
+            UsersMenu.Append(usersList);
+
+            mb.Append(usersItem);
+
+            //3
             Menu UploadAndLoadMenu = new Menu();
             MenuItem uploadAndLoadDataMenuItem = new MenuItem("Вигрузка та загрузка");
             uploadAndLoadDataMenuItem.Submenu = UploadAndLoadMenu;
@@ -594,7 +605,7 @@ namespace Configurator
 
             mb.Append(uploadAndLoadDataMenuItem);
 
-            //3
+            //4
             Menu AboutMenu = new Menu();
             MenuItem aboutMenuItem = new MenuItem("Про програму");
             aboutMenuItem.Submenu = AboutMenu;
@@ -798,6 +809,21 @@ namespace Configurator
 
             if (loadOk)
                 LoadTreeAsync();
+        }
+
+        void OnUsersListClick(object? sender, EventArgs args)
+        {
+            CreateNotebookPage("Список користувачів", () =>
+            {
+                PageUsersList page = new PageUsersList()
+                {
+                    GeneralForm = this
+                };
+
+                page.LoadRecords();
+
+                return page;
+            });
         }
 
         void OnUnloadingAndLoadingData(object? sender, EventArgs args)

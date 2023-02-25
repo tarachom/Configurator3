@@ -122,7 +122,7 @@ namespace Configurator
             HBox hBox = new HBox() { Halign = Align.Fill };
             vBox.PackStart(hBox, false, false, 5);
 
-            hBox.PackStart(new Label("help"), false, false, 5);
+            hBox.PackStart(new Label("Загальна інформація про конфігурацію"), false, false, 5);
 
             hPaned.Pack2(vBox, false, false);
         }
