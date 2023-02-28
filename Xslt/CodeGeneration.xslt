@@ -346,6 +346,60 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>
                    <xsl:text>Константи.</xsl:text><xsl:value-of select="Name"/>.ReadAll();
             </xsl:for-each>
         }
+        
+        /*
+        
+        */
+        public static string GetBasisObjectPresentation(UuidAndText uuidAndText, out string pointer, out string type)
+        {
+            pointer = type = "";
+
+            if (uuidAndText.IsEmpty() || String.IsNullOrEmpty(uuidAndText.Text) || uuidAndText.Text.IndexOf(".") == -1)
+                return "";
+
+            string[] pointer_and_type = uuidAndText.Text.Split(".", StringSplitOptions.None);
+
+            if (pointer_and_type.Length == 2)
+            {
+                pointer = pointer_and_type[0];
+                type = pointer_and_type[1];
+
+                if (pointer == "Документи")
+                {
+                    <xsl:variable name="DocCount" select="count(Configuration/Documents/Document)"/>
+                    <xsl:if test="$DocCount != 0">
+                    switch (type)
+                    {
+                        <xsl:for-each select="Configuration/Documents/Document">
+                            <xsl:variable name="DocumentName" select="Name"/>
+                        case "<xsl:value-of select="$DocumentName"/>": return new Документи.<xsl:value-of select="$DocumentName"/>_Pointer(uuidAndText.Uuid).GetPresentation();
+                        </xsl:for-each>
+                    }
+                    </xsl:if>
+                    <xsl:if test="$DocCount = 0">
+                    return "";
+                    </xsl:if>
+                }
+                else if (pointer == "Довідники")
+                {
+                    <xsl:variable name="DirCount" select="count(Configuration/Directories/Directory)"/>
+                    <xsl:if test="$DirCount != 0">
+                    switch (type)
+                    {
+                        <xsl:for-each select="Configuration/Directories/Directory">
+                            <xsl:variable name="DirectoryName" select="Name"/>
+                        case "<xsl:value-of select="$DirectoryName"/>": return new Довідники.<xsl:value-of select="$DirectoryName"/>_Pointer(uuidAndText.Uuid).GetPresentation();
+                        </xsl:for-each>
+                    }
+                    </xsl:if>
+                    <xsl:if test="$DirCount = 0">
+                    return "";
+                    </xsl:if>
+                }
+            }
+
+            return "";
+        }
     }
 }
 
@@ -648,8 +702,12 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники
         
         public <xsl:value-of select="$DirectoryName"/>_Pointer GetDirectoryPointer()
         {
-            <xsl:value-of select="$DirectoryName"/>_Pointer directoryPointer = new <xsl:value-of select="$DirectoryName"/>_Pointer(UnigueID.UGuid);
-            return directoryPointer;
+            return new <xsl:value-of select="$DirectoryName"/>_Pointer(UnigueID.UGuid);
+        }
+
+        public UuidAndText GetBasis()
+        {
+            return new UuidAndText(UnigueID.UGuid, "Довідники.<xsl:value-of select="$DirectoryName"/>");
         }
         
         <xsl:for-each select="Fields/Field">
@@ -712,6 +770,11 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники
         public <xsl:value-of select="$DirectoryName"/>_Pointer GetEmptyPointer()
         {
             return new <xsl:value-of select="$DirectoryName"/>_Pointer();
+        }
+
+        public UuidAndText GetBasis()
+        {
+            return new UuidAndText(UnigueID.UGuid, "Довідники.<xsl:value-of select="$DirectoryName"/>");
         }
     }
     
@@ -1158,8 +1221,12 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи
         
         public <xsl:value-of select="$DocumentName"/>_Pointer GetDocumentPointer()
         {
-            <xsl:value-of select="$DocumentName"/>_Pointer directoryPointer = new <xsl:value-of select="$DocumentName"/>_Pointer(UnigueID.UGuid);
-            return directoryPointer;
+            return new <xsl:value-of select="$DocumentName"/>_Pointer(UnigueID.UGuid);
+        }
+
+        public UuidAndText GetBasis()
+        {
+            return new UuidAndText(UnigueID.UGuid, "Документи.<xsl:value-of select="$DocumentName"/>");
         }
         
         <xsl:for-each select="Fields/Field">
@@ -1215,6 +1282,11 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи
         public <xsl:value-of select="$DocumentName"/>_Pointer GetEmptyPointer()
         {
             return new <xsl:value-of select="$DocumentName"/>_Pointer();
+        }
+
+        public UuidAndText GetBasis()
+        {
+            return new UuidAndText(UnigueID.UGuid, "Документи.<xsl:value-of select="$DocumentName"/>");
         }
 		
         public <xsl:value-of select="$DocumentName"/>_Objest GetDocumentObject(bool readAllTablePart = false)
