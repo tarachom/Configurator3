@@ -45,6 +45,7 @@ namespace Configurator
 
         ListBox listBoxFields = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxDocuments = new ListBox() { SelectionMode = SelectionMode.Single };
+        ListBox listBoxTabularList = new ListBox() { SelectionMode = SelectionMode.Single };
         Entry entryName = new Entry() { WidthRequest = 500 };
         TextView textViewDesc = new TextView();
 
@@ -102,7 +103,7 @@ namespace Configurator
 
             //Документи
             {
-                Expander expanderDocuments = new Expander("Документи");
+                Expander expanderDocuments = new Expander("Документи які входять в журнал");
                 vBox.PackStart(expanderDocuments, false, false, 5);
 
                 VBox vBoxDocument = new VBox();
@@ -117,6 +118,32 @@ namespace Configurator
 
                 scrollAllowList.Add(listBoxDocuments);
                 hBoxDocument.PackStart(scrollAllowList, true, true, 5);
+
+                //Заповнити
+                HBox hBoxFillDoc = new HBox() { Halign = Align.End };
+                vBoxDocument.PackStart(hBoxFillDoc, false, false, 5);
+
+                Button bFillDoc = new Button("Заповнити список налаштування");
+                bFillDoc.Clicked += OnFillDocumentsClick;
+
+                hBoxFillDoc.PackStart(bFillDoc, false, false, 10);
+            }
+
+            //Списки та форми
+            {
+                Expander expanderForm = new Expander("Налаштування для документів") { Expanded = true };
+                vBox.PackStart(expanderForm, false, false, 5);
+
+                VBox vBoxForm = new VBox();
+                expanderForm.Add(vBoxForm);
+
+                //Заголовок блоку Forms
+                HBox hBoxInterfaceCreateInfo = new HBox() { Halign = Align.Center };
+                vBoxForm.PackStart(hBoxInterfaceCreateInfo, false, false, 5);
+                hBoxInterfaceCreateInfo.PackStart(new Label("Документи"), false, false, 5);
+
+                //Табличні списки
+                CreateTabularList(vBoxForm);
             }
 
             hPaned.Pack1(vBox, false, false);
@@ -174,12 +201,39 @@ namespace Configurator
             vBoxContainer.PackStart(vBox, false, false, 0);
         }
 
+        void CreateTabularList(VBox vBoxContainer)
+        {
+            VBox vBox = new VBox();
+
+            Toolbar toolbar = new Toolbar();
+            vBox.PackStart(toolbar, false, false, 0);
+
+            ToolButton buttonDelete = new ToolButton(Stock.Clear) { Label = "Видалити", IsImportant = true };
+            buttonDelete.Clicked += OnTabularListRemoveClick;
+            toolbar.Add(buttonDelete);
+
+            HBox hBoxScroll = new HBox();
+            ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
+            scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+            scrollList.SetSizeRequest(0, 500);
+
+            listBoxTabularList.ButtonPressEvent += OnTabularListButtonPress;
+
+            scrollList.Add(listBoxTabularList);
+            hBoxScroll.PackStart(scrollList, true, true, 5);
+
+            vBox.PackStart(hBoxScroll, false, false, 0);
+
+            vBoxContainer.PackStart(vBox, false, false, 0);
+        }
+
         #region Присвоєння / зчитування значень віджетів
 
         public void SetValue()
         {
             FillFields();
             FillDocuments();
+            FillTabularList();
 
             entryName.Text = ConfJournals.Name;
             textViewDesc.Buffer.Text = ConfJournals.Desc;
@@ -188,7 +242,7 @@ namespace Configurator
         void FillFields()
         {
             foreach (ConfigurationJournalField field in ConfJournals.Fields.Values)
-                listBoxFields.Add(new Label($"{field.Name}") { Name = field.Name, Halign = Align.Start });
+                listBoxFields.Add(new Label($"{field.Name}" + (field.SortField ? " [Order]" : "") + (field.WherePeriod ? " [WherePeriod]" : "")) { Name = field.Name, Halign = Align.Start });
         }
 
         void FillDocuments()
@@ -200,6 +254,12 @@ namespace Configurator
                         Name = doc.Name,
                         Active = ConfJournals.AllowDocuments.Contains(doc.Name)
                     });
+        }
+
+        void FillTabularList()
+        {
+            foreach (ConfigurationTabularList tableList in ConfJournals.TabularList.Values)
+                listBoxTabularList.Add(new Label(tableList.Name) { Name = tableList.Name, Halign = Align.Start });
         }
 
         void GetValue()
@@ -219,6 +279,28 @@ namespace Configurator
         }
 
         #endregion
+
+        void OnFillDocumentsClick(object? sender, EventArgs args)
+        {
+            //Ключі
+            List<string> Keys = ConfJournals.TabularList.Keys.ToList();
+
+            foreach (ListBoxRow item in listBoxDocuments.Children)
+            {
+                CheckButton cb = (CheckButton)item.Child;
+                if (cb.Active)
+                {
+                    if (!Keys.Contains(cb.Name))
+                        ConfJournals.AppendTableList(new ConfigurationTabularList(cb.Name, ""));
+                }
+                else
+                {
+                    //Delete
+                }
+            }
+
+            TabularListRefreshList();
+        }
 
         void OnSaveClick(object? sender, EventArgs args)
         {
@@ -372,5 +454,68 @@ namespace Configurator
         }
 
         #endregion
+
+        #region TabularList
+
+        void OnTabularListButtonPress(object? sender, ButtonPressEventArgs args)
+        {
+            if (args.Event.Type == Gdk.EventType.DoubleButtonPress)
+            {
+                ListBoxRow[] selectedRows = listBoxTabularList.SelectedRows;
+
+                if (selectedRows.Length != 0)
+                {
+                    ListBoxRow curRow = selectedRows[0];
+
+                    if (ConfJournals.TabularList.ContainsKey(curRow.Child.Name))
+                        GeneralForm?.CreateNotebookPage($"Налаштування: {curRow.Child.Name}", () =>
+                        {
+                            PageJournalTabularList page = new PageJournalTabularList()
+                            {
+                                Fields = ConfJournals.Fields,
+                                TabularLists = ConfJournals.TabularList,
+                                TabularList = ConfJournals.TabularList[curRow.Child.Name],
+                                GeneralForm = GeneralForm,
+                                CallBack_RefreshList = TabularListRefreshList
+                            };
+
+                            page.SetValue();
+
+                            return page;
+                        });
+                }
+            }
+        }
+
+        void OnTabularListRemoveClick(object? sender, EventArgs args)
+        {
+            ListBoxRow[] selectedRows = listBoxTabularList.SelectedRows;
+
+            if (selectedRows.Length != 0)
+            {
+                foreach (ListBoxRow row in selectedRows)
+                {
+                    if (ConfJournals.TabularList.ContainsKey(row.Child.Name))
+                        ConfJournals.TabularList.Remove(row.Child.Name);
+                }
+
+                TabularListRefreshList();
+
+                GeneralForm?.LoadTreeAsync();
+            }
+        }
+
+        void TabularListRefreshList()
+        {
+            foreach (Widget item in listBoxTabularList.Children)
+                listBoxTabularList.Remove(item);
+
+            FillTabularList();
+
+            listBoxTabularList.ShowAll();
+        }
+
+        #endregion
+
     }
 }

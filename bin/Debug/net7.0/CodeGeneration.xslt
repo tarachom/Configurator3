@@ -346,7 +346,10 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>
                    <xsl:text>Константи.</xsl:text><xsl:value-of select="Name"/>.ReadAll();
             </xsl:for-each>
         }
-
+        
+        /*
+        
+        */
         public static string GetBasisObjectPresentation(UuidAndText uuidAndText, out string pointer, out string type)
         {
             pointer = type = "";

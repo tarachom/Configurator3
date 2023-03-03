@@ -485,6 +485,195 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.Т
 	    </xsl:for-each>
     #endregion
     </xsl:for-each>
+
+    //
+    // Журнали
+    //
+
+    <xsl:for-each select="Configuration/Journals/Journal">
+      <xsl:variable name="JournalName" select="Name"/>
+      <xsl:variable name="AllowDocument" select="AllowDocument"/>
+    #region JOURNAL "<xsl:value-of select="$JournalName"/>"
+    
+    public class Журнали_<xsl:value-of select="$JournalName"/>
+    {
+        string Image = "images/doc.png";
+        bool Spend = false;
+        string ID = "";
+        <xsl:for-each select="Fields/Field">
+        string <xsl:value-of select="Name"/> = "";</xsl:for-each>
+
+        Array ToArray()
+        {
+            return new object[] { new Gdk.Pixbuf(Image), ID, Spend /*Проведений документ*/
+            /* */ <xsl:for-each select="Fields/Field">
+              <xsl:text>, </xsl:text>
+              <xsl:value-of select="Name"/>
+            </xsl:for-each> };
+        }
+
+        public static ListStore Store = new ListStore(typeof(Gdk.Pixbuf) /* Image */, typeof(string) /* ID */, typeof(bool) /* Spend Проведений документ*/
+            <xsl:for-each select="Fields/Field">
+              <xsl:text>, typeof(string)</xsl:text> /* <xsl:value-of select="Name"/> */
+            </xsl:for-each>);
+
+        public static void AddColumns(TreeView treeView)
+        {
+            treeView.AppendColumn(new TreeViewColumn("", new CellRendererPixbuf(), "pixbuf", 0)); /*Image*/ /* { Ypad = 0 } */
+            treeView.AppendColumn(new TreeViewColumn("ID", new CellRendererText(), "text", 1) { Visible = false }); /*UID*/
+            treeView.AppendColumn(new TreeViewColumn("", new CellRendererToggle(), "active", 2)); /*Проведений документ*/
+            /* */
+            <xsl:for-each select="Fields/Field">
+              <xsl:text>treeView.AppendColumn(new TreeViewColumn("</xsl:text>
+              <xsl:value-of select="normalize-space(Name)"/>
+              <xsl:text>", new CellRendererText() { Xpad = 4 }, "text", </xsl:text>
+              <xsl:value-of select="position() + 2"/>
+              <xsl:text>)</xsl:text>); /*<xsl:value-of select="Name"/>*/
+            </xsl:for-each>
+            //Пустишка
+            treeView.AppendColumn(new TreeViewColumn());
+        }
+
+        public static Dictionary&lt;string, List&lt;Where&gt;&gt; Where { get; set; } = new Dictionary&lt;string, List&lt;Where&gt;&gt;();
+
+        public static void ДодатиВідбірПоПеріоду(Перелічення.ТипПеріодуДляЖурналівДокументів типПеріоду)
+        {
+            Where.Clear();
+            <xsl:for-each select="$AllowDocument/Name">
+              <xsl:variable name="AllowName" select="text()"/>
+              <xsl:variable name="DocField" select="../../TabularLists/TabularList[Name = $AllowName]/Fields/Field[WherePeriod = '1']/DocField" />
+              <xsl:if test="normalize-space($DocField) != ''">
+            {
+                List&lt;Where&gt; where = new List&lt;Where&gt;();
+                Where.Add(<xsl:text>"</xsl:text>
+                  <xsl:value-of select="text()"/>
+                  <xsl:text>"</xsl:text>, where);
+                Інтерфейс.ДодатиВідбірПоПеріоду(where, <xsl:value-of select="text()"/>_Const.<xsl:value-of select="$DocField"/>, типПеріоду);
+            }
+              </xsl:if>
+            </xsl:for-each>
+        }
+
+        public static string[] AllowDocument()
+        {
+            return new string[] 
+            {
+                <xsl:for-each select="$AllowDocument/Name">
+                    <xsl:if test="position() != 1">
+                        <xsl:text>, </xsl:text>
+                    </xsl:if>
+                    <xsl:text>"</xsl:text>
+                    <xsl:value-of select="text()"/>
+                    <xsl:text>"</xsl:text> /* */
+                </xsl:for-each>
+            };
+        }
+
+        public static UnigueID? SelectPointerItem { get; set; }
+        public static TreePath? SelectPath;
+        public static TreePath? CurrentPath;
+
+        public static void LoadRecords()
+        {
+            Store.Clear();
+            List&lt;string&gt; allQuery = new List&lt;string&gt;();
+            Dictionary&lt;string, object&gt; paramQuery = new Dictionary&lt;string, object&gt;();
+
+            <xsl:for-each select="TabularLists/TabularList">
+              <xsl:variable name="DocumentName" select="Name"/>
+              <xsl:variable name="Table" select="Table"/>
+              
+              <xsl:if test="count($AllowDocument/Name[text() = $DocumentName]) = 1">
+              {
+                  Query query = new Query("<xsl:value-of select="$Table"/>");
+                  if (Where.ContainsKey("<xsl:value-of select="$DocumentName"/>") &amp;&amp; Where["<xsl:value-of select="$DocumentName"/>"].Count != 0) {
+                      query.Where = Where["<xsl:value-of select="$DocumentName"/>"];
+                      foreach(Where field in query.Where)
+                          paramQuery.Add(field.Alias, field.Value);
+                  }
+
+                  query.Field.Add("spend");
+                  <xsl:for-each select="Fields/Field">
+                      <xsl:variable name="SqlType">
+                          <xsl:if test="normalize-space(SqlType) != ''">
+                              <xsl:text> + "::</xsl:text>
+                              <xsl:value-of select="normalize-space(SqlType)"/>
+                              <xsl:text>"</xsl:text>
+                          </xsl:if>
+                      </xsl:variable>
+                      <xsl:choose>
+                        <xsl:when test="normalize-space(DocField) != ''">
+                          <xsl:choose>
+                            <xsl:when test="Type = 'pointer'">
+                              /* Join Table */
+                              query.Joins.Add(
+                                  new Join(<xsl:value-of select="Join/table"/>, Документи.<xsl:value-of select="$DocumentName"/>_Const.<xsl:value-of select="Join/field"/>, query.Table, "<xsl:value-of select="Join/alias"/>"));
+                              <xsl:for-each select="FieldAndAlias">
+                                /* Field */
+                                query.FieldAndAlias.Add(
+                                  new NameValue&lt;string&gt;("<xsl:value-of select="table"/>." + <xsl:value-of select="field"/><xsl:value-of select="$SqlType"/>, "<xsl:value-of select="../Name"/>"));
+                              </xsl:for-each>
+                            </xsl:when>
+                            <xsl:otherwise>
+                              query.FieldAndAlias.Add(
+                                  new NameValue&lt;string&gt;(Документи.<xsl:value-of select="$DocumentName"/>_Const.TABLE + "." + Документи.<xsl:value-of select="$DocumentName"/>_Const.<xsl:value-of select="DocField"/><xsl:value-of select="$SqlType"/>, "<xsl:value-of select="Name"/>"));
+                            </xsl:otherwise>
+                          </xsl:choose>
+                        </xsl:when>
+                        <xsl:otherwise>
+                          /* Empty Field */
+                          query.FieldAndAlias.Add(new NameValue&lt;string&gt;("''", "<xsl:value-of select="Name"/>"));
+                        </xsl:otherwise>
+                      </xsl:choose>
+                  </xsl:for-each>
+
+                  allQuery.Add(query.Construct());
+              }
+              </xsl:if>
+            </xsl:for-each>
+
+            string unionAllQuery = string.Join("\nUNION\n", allQuery);
+
+            <xsl:if test="count(Fields/Field[SortField = '1']) != 0">
+                <xsl:text>unionAllQuery += "\nORDER BY </xsl:text>
+                <xsl:for-each select="Fields/Field[SortField = '1']">
+                    <xsl:if test="position() != 1">
+                        <xsl:text>, </xsl:text>
+                    </xsl:if>
+                    <xsl:value-of select="Name"/>
+                </xsl:for-each>
+                <xsl:text>";</xsl:text>
+            </xsl:if>
+
+            //Console.WriteLine(unionAllQuery);
+
+            string[] columnsName;
+            List&lt;Dictionary&lt;string, object&gt;&gt; listRow;
+
+            Config.Kernel!.DataBase.SelectRequest(unionAllQuery, paramQuery, out columnsName, out listRow);
+
+            foreach (Dictionary&lt;string, object&gt; row in listRow)
+            {
+                Журнали_<xsl:value-of select="$JournalName"/> record = new Журнали_<xsl:value-of select="$JournalName"/>();
+                record.ID = row["uid"]?.ToString() ?? "";
+                record.Spend = (bool)row["spend"];
+                <xsl:for-each select="Fields/Field">
+                    record.<xsl:value-of select="Name"/> = row["<xsl:value-of select="Name"/>"] != DBNull.Value ? (row["<xsl:value-of select="Name"/>"]?.ToString() ?? "") : "";
+                </xsl:for-each>
+
+                TreeIter CurrentIter = Store.AppendValues(record.ToArray());
+                CurrentPath = Store.GetPath(CurrentIter);
+
+                if (SelectPointerItem != null)
+                {
+                    if (record.ID == SelectPointerItem.ToString())
+                        SelectPath = CurrentPath;
+                }
+            }
+        }
+    }
+    #endregion
+    </xsl:for-each>
 }
 
 namespace <xsl:value-of select="Configuration/NameSpace"/>.РегістриВідомостей.ТабличніСписки

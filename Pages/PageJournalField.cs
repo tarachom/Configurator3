@@ -47,6 +47,9 @@ namespace Configurator
 
         Entry entryName = new Entry() { WidthRequest = 500 };
         TextView textViewDesc = new TextView();
+        Entry entryType = new Entry();
+        CheckButton checkButtonSort = new CheckButton("Сортувати");
+        CheckButton checkButtonWherePeriod = new CheckButton("Відбір по періоду");
 
         #endregion
 
@@ -100,6 +103,20 @@ namespace Configurator
 
             hBoxDesc.PackStart(scrollTextView, false, false, 5);
 
+            //Тип
+            HBox hBoxType = new HBox() { Halign = Align.End };
+            vBox.PackStart(hBoxType, false, false, 5);
+
+            hBoxType.PackStart(new Label("SQL Тип:"), false, false, 5);
+            hBoxType.PackStart(entryType, false, false, 5);
+
+            //Сортувати
+            HBox hBoxOrder = new HBox() { Halign = Align.End };
+            vBox.PackStart(hBoxOrder, false, false, 5);
+
+            hBoxOrder.PackStart(checkButtonSort, false, false, 5);
+            hBoxOrder.PackStart(checkButtonWherePeriod, false, false, 5);
+
             hPaned.Pack1(vBox, false, false);
         }
 
@@ -124,12 +141,18 @@ namespace Configurator
         {
             entryName.Text = Field.Name;
             textViewDesc.Buffer.Text = Field.Desc;
+            entryType.Text = Field.Type;
+            checkButtonSort.Active = Field.SortField;
+            checkButtonWherePeriod.Active = Field.WherePeriod;
         }
 
         void GetValue()
         {
             Field.Name = entryName.Text;
             Field.Desc = textViewDesc.Buffer.Text;
+            Field.Type = entryType.Text;
+            Field.SortField = checkButtonSort.Active;
+            Field.WherePeriod = checkButtonWherePeriod.Active;
         }
 
         #endregion
