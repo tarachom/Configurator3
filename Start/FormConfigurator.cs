@@ -495,7 +495,7 @@ namespace Configurator
             SetDefaultSize(1200, 800);
             SetPosition(WindowPosition.Center);
 
-            string ico_file_name = "images/configurator.ico";
+            string ico_file_name = AppContext.BaseDirectory + "images/configurator.ico";
 
             if (File.Exists(ico_file_name))
                 SetDefaultIconFromFile(ico_file_name);
@@ -876,7 +876,7 @@ namespace Configurator
             about.Comments = @"Проектування бази даних PostgreSQL";
             about.Website = "https://accounting.org.ua";
 
-            string logo_file_name = "images/logo.jpg";
+            string logo_file_name = AppContext.BaseDirectory + "images/logo.jpg";
 
             if (File.Exists(logo_file_name))
                 about.Logo = new Gdk.Pixbuf(logo_file_name);

@@ -38,7 +38,7 @@ namespace Configurator
             SetPosition(WindowPosition.Center);
             Resizable = false;
 
-            string ico_file_name = "images/configurator.ico";
+            string ico_file_name = AppContext.BaseDirectory + "images/configurator.ico";
 
             if (File.Exists(ico_file_name))
                 SetDefaultIconFromFile(ico_file_name);

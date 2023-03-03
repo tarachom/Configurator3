@@ -99,7 +99,7 @@ namespace Configurator
             foreach (Dictionary<string, object> record in listRow)
             {
                 Store.AppendValues(
-                    new Gdk.Pixbuf("images/doc.png"),
+                    new Gdk.Pixbuf(AppContext.BaseDirectory + "images/doc.png"),
                     record["uid"].ToString(),
                     record["name"].ToString(),
                     record["fullname"].ToString(),

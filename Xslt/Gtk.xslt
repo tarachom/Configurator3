@@ -50,7 +50,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники.Т
         <xsl:variable name="TabularListName" select="Name"/>
     public class <xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularListName"/>
     {
-        string Image = "images/doc.png";
+        string Image = AppContext.BaseDirectory + "images/doc.png";
         string ID = "";
         <xsl:for-each select="Fields/Field">
         string <xsl:value-of select="Name"/> = "";</xsl:for-each>
@@ -302,7 +302,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.Т
         <xsl:variable name="TabularListName" select="Name"/>
     public class <xsl:value-of select="$DocumentName"/>_<xsl:value-of select="$TabularListName"/>
     {
-        string Image = "images/doc.png";
+        string Image = AppContext.BaseDirectory + "images/doc.png";
         bool Spend = false;
         string ID = "";
         <xsl:for-each select="Fields/Field">
@@ -497,45 +497,56 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.Т
     
     public class Журнали_<xsl:value-of select="$JournalName"/>
     {
-        string Image = "images/doc.png";
+        string Image = AppContext.BaseDirectory + "images/doc.png";
         bool Spend = false;
         string ID = "";
+        string Type = ""; //Тип документу
         <xsl:for-each select="Fields/Field">
         string <xsl:value-of select="Name"/> = "";</xsl:for-each>
 
+        // Масив для запису стрічки в Store
         Array ToArray()
         {
-            return new object[] { new Gdk.Pixbuf(Image), ID, Spend /*Проведений документ*/
+            return new object[] { new Gdk.Pixbuf(Image), ID, Type, Spend /*Проведений документ*/
             /* */ <xsl:for-each select="Fields/Field">
               <xsl:text>, </xsl:text>
               <xsl:value-of select="Name"/>
             </xsl:for-each> };
         }
 
-        public static ListStore Store = new ListStore(typeof(Gdk.Pixbuf) /* Image */, typeof(string) /* ID */, typeof(bool) /* Spend Проведений документ*/
+        // Джерело даних для списку
+        public static ListStore Store = new ListStore(
+          typeof(Gdk.Pixbuf) /* Image */, 
+          typeof(string) /* ID */, 
+          typeof(string) /* Type */, 
+          typeof(bool) /* Spend Проведений документ*/
             <xsl:for-each select="Fields/Field">
               <xsl:text>, typeof(string)</xsl:text> /* <xsl:value-of select="Name"/> */
             </xsl:for-each>);
 
+        // Добавлення колонок в список
         public static void AddColumns(TreeView treeView)
         {
             treeView.AppendColumn(new TreeViewColumn("", new CellRendererPixbuf(), "pixbuf", 0)); /*Image*/ /* { Ypad = 0 } */
             treeView.AppendColumn(new TreeViewColumn("ID", new CellRendererText(), "text", 1) { Visible = false }); /*UID*/
-            treeView.AppendColumn(new TreeViewColumn("", new CellRendererToggle(), "active", 2)); /*Проведений документ*/
+            treeView.AppendColumn(new TreeViewColumn("Type", new CellRendererText(), "text", 2) { Visible = false }); /*Type*/
+            treeView.AppendColumn(new TreeViewColumn("", new CellRendererToggle(), "active", 3)); /*Проведений документ*/
             /* */
             <xsl:for-each select="Fields/Field">
               <xsl:text>treeView.AppendColumn(new TreeViewColumn("</xsl:text>
               <xsl:value-of select="normalize-space(Name)"/>
               <xsl:text>", new CellRendererText() { Xpad = 4 }, "text", </xsl:text>
-              <xsl:value-of select="position() + 2"/>
+              <xsl:value-of select="position() + 3"/> <!-- УВАГА! Коефіціент зміщення нумерації колонок -->
               <xsl:text>)</xsl:text>); /*<xsl:value-of select="Name"/>*/
             </xsl:for-each>
             //Пустишка
             treeView.AppendColumn(new TreeViewColumn());
         }
 
+        // Словник з відборами, ключ це Тип документу
         public static Dictionary&lt;string, List&lt;Where&gt;&gt; Where { get; set; } = new Dictionary&lt;string, List&lt;Where&gt;&gt;();
 
+        // Добавляє відбір по періоду в словник відборів
         public static void ДодатиВідбірПоПеріоду(Перелічення.ТипПеріодуДляЖурналівДокументів типПеріоду)
         {
             Where.Clear();
@@ -554,6 +565,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.Т
             </xsl:for-each>
         }
 
+        // Масив документів які входять в журнал
         public static string[] AllowDocument()
         {
             return new string[] 
@@ -573,6 +585,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.Т
         public static TreePath? SelectPath;
         public static TreePath? CurrentPath;
 
+        // Завантаження даних
         public static void LoadRecords()
         {
             Store.Clear();
@@ -585,15 +598,19 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.Т
               
               <xsl:if test="count($AllowDocument/Name[text() = $DocumentName]) = 1">
               {
-                  Query query = new Query("<xsl:value-of select="$Table"/>");
+                  Query query = new Query(Документи.<xsl:value-of select="$DocumentName"/>_Const.TABLE);
+
+                  // Встановлення відбору для даного типу документу
                   if (Where.ContainsKey("<xsl:value-of select="$DocumentName"/>") &amp;&amp; Where["<xsl:value-of select="$DocumentName"/>"].Count != 0) {
                       query.Where = Where["<xsl:value-of select="$DocumentName"/>"];
                       foreach(Where field in query.Where)
                           paramQuery.Add(field.Alias, field.Value);
                   }
 
+                  query.FieldAndAlias.Add(new NameValue&lt;string&gt;("'<xsl:value-of select="$DocumentName"/>'", "type"));
                   query.Field.Add("spend");
                   <xsl:for-each select="Fields/Field">
+                      <!-- Приведення даних в запиті до певного типу -->
                       <xsl:variable name="SqlType">
                           <xsl:if test="normalize-space(SqlType) != ''">
                               <xsl:text> + "::</xsl:text>
@@ -645,8 +662,6 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.Т
                 <xsl:text>";</xsl:text>
             </xsl:if>
 
-            //Console.WriteLine(unionAllQuery);
-
             string[] columnsName;
             List&lt;Dictionary&lt;string, object&gt;&gt; listRow;
 
@@ -656,6 +671,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.Т
             {
                 Журнали_<xsl:value-of select="$JournalName"/> record = new Журнали_<xsl:value-of select="$JournalName"/>();
                 record.ID = row["uid"]?.ToString() ?? "";
+                record.Type = row["type"]?.ToString() ?? "";
                 record.Spend = (bool)row["spend"];
                 <xsl:for-each select="Fields/Field">
                     record.<xsl:value-of select="Name"/> = row["<xsl:value-of select="Name"/>"] != DBNull.Value ? (row["<xsl:value-of select="Name"/>"]?.ToString() ?? "") : "";
@@ -686,7 +702,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.РегістриВі�
         <xsl:variable name="TabularListName" select="Name"/>
     public class <xsl:value-of select="$RegisterName"/>_<xsl:value-of select="$TabularListName"/>
     {
-        string Image = "images/doc.png";
+        string Image = AppContext.BaseDirectory + "images/doc.png";
         string ID = "";
         string Період = "";
         <xsl:for-each select="Fields/Field">
