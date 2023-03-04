@@ -98,13 +98,14 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники.Т
 
         public static Довідники.<xsl:value-of select="$DirectoryName"/>_Pointer? DirectoryPointerItem { get; set; }
         public static Довідники.<xsl:value-of select="$DirectoryName"/>_Pointer? SelectPointerItem { get; set; }
+        public static TreePath? FirstPath;
         public static TreePath? SelectPath;
         public static TreePath? CurrentPath;
 
         public static void LoadRecords()
         {
             Store.Clear();
-            SelectPath = null;
+            SelectPath = FirstPath = null;
 
             Довідники.<xsl:value-of select="$DirectoryName"/>_Select <xsl:value-of select="$DirectoryName"/>_Select = new Довідники.<xsl:value-of select="$DirectoryName"/>_Select();
             <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Field.AddRange(
@@ -213,6 +214,9 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники.Т
 
                     TreeIter CurrentIter = Store.AppendValues(Record.ToArray());
                     CurrentPath = Store.GetPath(CurrentIter);
+
+                    if (FirstPath == null)
+                        FirstPath = CurrentPath;
 
                     if (DirectoryPointerItem != null || SelectPointerItem != null)
                     {
@@ -357,13 +361,14 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.Т
 
         public static Документи.<xsl:value-of select="$DocumentName"/>_Pointer? DocumentPointerItem { get; set; }
         public static Документи.<xsl:value-of select="$DocumentName"/>_Pointer? SelectPointerItem { get; set; }
+        public static TreePath? FirstPath;
         public static TreePath? SelectPath;
         public static TreePath? CurrentPath;
 
         public static void LoadRecords()
         {
             Store.Clear();
-            SelectPath = null;
+            SelectPath = FirstPath = null;
 
             Документи.<xsl:value-of select="$DocumentName"/>_Select <xsl:value-of select="$DocumentName"/>_Select = new Документи.<xsl:value-of select="$DocumentName"/>_Select();
             <xsl:value-of select="$DocumentName"/>_Select.QuerySelect.Field.AddRange(
@@ -473,6 +478,9 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи.Т
 
                     TreeIter CurrentIter = Store.AppendValues(Record.ToArray());
                     CurrentPath = Store.GetPath(CurrentIter);
+
+                    if (FirstPath == null)
+                        FirstPath = CurrentPath;
 
                     if (DocumentPointerItem != null || SelectPointerItem != null)
                     {
@@ -750,12 +758,14 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.РегістриВі�
 
         public static List&lt;Where&gt; Where { get; set; } = new List&lt;Where&gt;();
 
+        public static TreePath? FirstPath;
         public static TreePath? SelectPath;
         public static TreePath? CurrentPath;
 
         public static void LoadRecords()
         {
             Store.Clear();
+            FirstPath = null;
 
             РегістриВідомостей.<xsl:value-of select="$RegisterName"/>_RecordsSet <xsl:value-of select="$RegisterName"/>_RecordsSet = new РегістриВідомостей.<xsl:value-of select="$RegisterName"/>_RecordsSet();
 
@@ -836,6 +846,9 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.РегістриВі�
 
                 TreeIter CurrentIter = Store.AppendValues(Record.ToArray());
                 CurrentPath = Store.GetPath(CurrentIter);
+
+                if (FirstPath == null)
+                    FirstPath = CurrentPath;
             }
         }
     }
