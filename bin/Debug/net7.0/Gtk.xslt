@@ -35,8 +35,11 @@ limitations under the License.
  * Автор <xsl:value-of select="Configuration/Author"/>
  * Дата конфігурації: <xsl:value-of select="Configuration/DateTimeSave"/>
  *
+ *
+ * Цей код згенерований в Конфігураторі 3. Шаблон Gtk.xslt
+ *
  */
- 
+
 using Gtk;
 using AccountingSoftware;
 
