@@ -700,7 +700,7 @@ namespace Configurator
         /// <returns>Файл трансформації</returns>
         string TransformXmlDataStepOne(string fileImport)
         {
-            string pathToTemplate = System.IO.Path.Combine(PathToXsltTemplate, "UnloadingAndLoadingDataXML.xslt");
+            string pathToTemplate = System.IO.Path.Combine(PathToXsltTemplate, "xslt/UnloadingAndLoadingDataXML.xslt");
             string pathToDirFileImport = System.IO.Path.GetDirectoryName(fileImport)!;
             string pathToXmlResult = System.IO.Path.Combine(pathToDirFileImport, "stepone_" + Guid.NewGuid().ToString().Replace("-", "") + ".xml");
 
@@ -736,7 +736,7 @@ namespace Configurator
         /// <returns>Файл трансформації</returns>
         string TransformStepOneToStepSQL(string fileImport, string fileStepOne)
         {
-            string pathToTemplate = System.IO.Path.Combine(PathToXsltTemplate, "UnloadingAndLoadingDataSQL.xslt");
+            string pathToTemplate = System.IO.Path.Combine(PathToXsltTemplate, "xslt/UnloadingAndLoadingDataSQL.xslt");
             string pathToDirFileImport = System.IO.Path.GetDirectoryName(fileImport)!;
             string pathToXmlResult = System.IO.Path.Combine(pathToDirFileImport, "stepsql_" + Guid.NewGuid().ToString().Replace("-", "") + ".xml");
 

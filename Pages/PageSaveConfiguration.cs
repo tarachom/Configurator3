@@ -385,7 +385,7 @@ namespace Configurator
                 {
                     Configuration.Comparison(
                         oneFileForComparison,
-                        System.IO.Path.Combine(PathToXsltTemplate, "Comparison.xslt"),
+                        System.IO.Path.Combine(PathToXsltTemplate, "xslt/Comparison.xslt"),
                         comparisonFile
                     );
                 }
@@ -647,14 +647,14 @@ namespace Configurator
             ApendLine("4. Порівняння конфігурації та бази даних");
             Configuration.Comparison(
                 System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, "ComparisonAllData.xml"),
-                System.IO.Path.Combine(PathToXsltTemplate, "Comparison.xslt"),
+                System.IO.Path.Combine(PathToXsltTemplate, "xslt/Comparison.xslt"),
                 System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, "Comparison.xml")
             );
 
             ApendLine("5. Створення команд SQL");
             Configuration.ComparisonAnalizeGeneration(
                 System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, "Comparison.xml"),
-                System.IO.Path.Combine(PathToXsltTemplate, "ComparisonAnalize.xslt"),
+                System.IO.Path.Combine(PathToXsltTemplate, "xslt/ComparisonAnalize.xslt"),
                 System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, "ComparisonAnalize.xml"), replacementColumn);
 
             if (informationSchema.Tables.Count > 0)
@@ -784,19 +784,19 @@ namespace Configurator
                     ApendLine("\n[ Генерування коду ]\n");
                     ApendLine("Папка: " + folderGenerateCode + "\n");
 
-                    if (File.Exists(System.IO.Path.Combine(PathToXsltTemplate, "CodeGeneration.xslt")))
+                    if (File.Exists(System.IO.Path.Combine(PathToXsltTemplate, "xslt/CodeGeneration.xslt")))
                     {
                         Configuration.GenerationCode(Conf.PathToXmlFileConfiguration,
-                            System.IO.Path.Combine(PathToXsltTemplate, "CodeGeneration.xslt"),
+                            System.IO.Path.Combine(PathToXsltTemplate, "xslt/CodeGeneration.xslt"),
                             System.IO.Path.Combine(folderGenerateCode, "CodeGeneration.cs"));
 
                         ApendLine("Файл 'CodeGeneration.cs' згенерований\n");
                     }
 
-                    if (File.Exists(System.IO.Path.Combine(PathToXsltTemplate, "Gtk.xslt")))
+                    if (File.Exists(System.IO.Path.Combine(PathToXsltTemplate, "xslt/Gtk.xslt")))
                     {
                         Configuration.GenerationCode(Conf.PathToXmlFileConfiguration,
-                            System.IO.Path.Combine(PathToXsltTemplate, "Gtk.xslt"),
+                            System.IO.Path.Combine(PathToXsltTemplate, "xslt/Gtk.xslt"),
                             System.IO.Path.Combine(folderGenerateCode, "CodeGenerationGtk.cs"));
 
                         ApendLine("Файл 'CodeGenerationGtk.cs' згенерований\n");
