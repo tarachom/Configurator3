@@ -100,7 +100,7 @@ namespace Configurator
             bSelectFolderCompileProgram.Clicked += OnSelectFolderCompileProgram;
             hBoxParamCompileProgram.PackStart(bSelectFolderCompileProgram, false, false, 5);
 
-            hBoxParamCompileProgram.PackStart(new Label("Наприклад bin/Debug/net6.0/ \nВ цю папку буде скопійований файл Confa.xml"), false, false, 5);
+            hBoxParamCompileProgram.PackStart(new Label("Наприклад bin/Debug/net7.0/ \nВ цю папку буде скопійований файл Confa.xml"), false, false, 5);
 
             //Save
             HBox hBoxSaveParam = new HBox();
