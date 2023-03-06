@@ -27,67 +27,98 @@ using AccountingSoftware;
 
 namespace Configurator
 {
-    class FormConfigurationSelection : Window
+    public class FormConfigurationSelection : Window
     {
-        ListBox listBoxDataBase;
-        ScrolledWindow scrolledWindowListBox;
-
-        public FormConfigurationSelection() : base("Конфігуратор | Вибір бази даних")
+        /// <summary>
+        /// Варіант запуску форми
+        /// </summary>
+        public enum TypeForm
         {
-            SetDefaultSize(660, 320);
+            Configurator,
+            WorkingProgram
+        }
+
+        public virtual TypeForm TypeOpenForm { get; } = TypeForm.Configurator;
+
+        protected ListBox listBox;
+
+        public FormConfigurationSelection() : base("Вибір бази даних")
+        {
             SetPosition(WindowPosition.Center);
             Resizable = false;
+            BorderWidth = 4;
 
-            string ico_file_name = AppContext.BaseDirectory + "images/configurator.ico";
-
-            if (File.Exists(ico_file_name))
-                SetDefaultIconFromFile(ico_file_name);
+            if (File.Exists(Program.IcoFileName)) SetDefaultIconFromFile(Program.IcoFileName);
 
             DeleteEvent += delegate { Application.Quit(); };
 
-            Fixed fix = new Fixed();
+            VBox vBox = new VBox();
+            Add(vBox);
 
-            scrolledWindowListBox = new ScrolledWindow();
-            scrolledWindowListBox.SetSizeRequest(500, 300);
-            scrolledWindowListBox.ShadowType = ShadowType.In;
-            scrolledWindowListBox.SetPolicy(PolicyType.Never, PolicyType.Automatic);
+            CreateToolbar(vBox);
 
-            listBoxDataBase = new ListBox();
-            listBoxDataBase.SetSizeRequest(500, 300);
-            listBoxDataBase.SelectionMode = SelectionMode.Single;
-            listBoxDataBase.ButtonPressEvent += OnListBoxDataBaseButtonPress;
-            scrolledWindowListBox.Add(listBoxDataBase);
+            //Containers -->
+            HBox hBoxContainer = new HBox();
+            vBox.PackStart(hBoxContainer, false, false, 0);
 
-            Button buttonOpen = new Button("Відкрити");
-            buttonOpen.SetSizeRequest(130, 35);
-            buttonOpen.Clicked += OnButtonOpenClicked;
+            VBox vBoxContainerLeft = new VBox() { WidthRequest = 500 };
+            hBoxContainer.PackStart(vBoxContainerLeft, false, false, 0);
 
-            Button buttonAdd = new Button("Додати");
-            buttonAdd.SetSizeRequest(130, 35);
-            buttonAdd.Clicked += OnButtonAddClicked;
+            VBox vBoxContainerRight = new VBox() { WidthRequest = 100 };
+            hBoxContainer.PackStart(vBoxContainerRight, false, false, 0);
+            //<--
 
-            Button buttonEdit = new Button("Редагувати");
-            buttonEdit.SetSizeRequest(130, 35);
-            buttonEdit.Clicked += OnButtonEditClicked;
+            //Список
+            {
+                HBox hBox = new HBox();
+                vBoxContainerLeft.PackStart(hBox, false, false, 2);
 
-            Button buttonCopy = new Button("Копіювати");
-            buttonCopy.SetSizeRequest(130, 35);
-            buttonCopy.Clicked += OnButtonCopyClicked;
+                ScrolledWindow scroll = new ScrolledWindow();
+                scroll.SetSizeRequest(500, 280);
+                scroll.ShadowType = ShadowType.In;
+                scroll.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
 
-            Button buttonDelete = new Button("Видалити");
-            buttonDelete.SetSizeRequest(130, 35);
-            buttonDelete.Clicked += OnButtonDeleteClicked;
+                listBox = new ListBox();
+                listBox.SelectionMode = SelectionMode.Single;
+                listBox.ButtonPressEvent += OnListBoxDataBaseButtonPress;
+                scroll.Add(listBox);
 
-            int buttonAddVPosition = 135;
-            int buttonAddHPosition = scrolledWindowListBox.WidthRequest + 20;
+                hBox.PackStart(scroll, false, false, 4);
+            }
 
-            fix.Put(scrolledWindowListBox, 10, 10);
-            fix.Put(buttonOpen, buttonAddHPosition, 10);
-            fix.Put(buttonAdd, buttonAddHPosition, buttonAddVPosition);
-            fix.Put(buttonEdit, buttonAddHPosition, buttonAddVPosition += buttonAdd.HeightRequest + 10);
-            fix.Put(buttonCopy, buttonAddHPosition, buttonAddVPosition += buttonEdit.HeightRequest + 10);
-            fix.Put(buttonDelete, buttonAddHPosition, buttonAddVPosition += buttonCopy.HeightRequest + 10);
-            Add(fix);
+            //Кнопки
+            if (TypeOpenForm == TypeForm.WorkingProgram)
+            {
+                HBox hBoxOpen = new HBox() { Halign = Align.Start };
+                vBoxContainerRight.PackStart(hBoxOpen, false, false, 2);
+
+                Button buttonOpen = new Button("Відкрити") { WidthRequest = 140 };
+                buttonOpen.Clicked += OnButtonOpenClicked;
+
+                hBoxOpen.PackStart(buttonOpen, false, false, 2);
+
+                Shown += (object? sender, EventArgs args) =>
+                {
+                    buttonOpen.GrabFocus();
+                };
+
+                HBox hBoxSeparator = new HBox();
+                vBoxContainerRight.PackStart(hBoxSeparator, false, false, 4);
+            }
+
+            HBox hBoxConfigurator = new HBox() { Halign = Align.Start };
+            vBoxContainerRight.PackStart(hBoxConfigurator, false, false, 2);
+
+            Button buttonConfigurator = new Button("Конфігуратор") { WidthRequest = 140 };
+            buttonConfigurator.Clicked += OnButtonOpenConfiguratorClicked;
+
+            hBoxConfigurator.PackStart(buttonConfigurator, false, false, 2);
+
+            if (TypeOpenForm == TypeForm.Configurator)
+                Shown += (object? sender, EventArgs args) =>
+                {
+                    buttonConfigurator.GrabFocus();
+                };
 
             ShowAll();
 
@@ -95,16 +126,42 @@ namespace Configurator
             FillListBoxDataBase();
         }
 
-        private void LoadConfigurationParam()
+        void CreateToolbar(VBox vBox)
+        {
+            HBox hBoxToolbar = new HBox();
+
+            Toolbar toolbar = new Toolbar();
+            hBoxToolbar.PackStart(toolbar, true, true, 0);
+
+            ToolButton addButton = new ToolButton(Stock.Add) { TooltipText = "Додати" };
+            addButton.Clicked += OnButtonAddClicked;
+            toolbar.Add(addButton);
+
+            ToolButton upButton = new ToolButton(Stock.Edit) { TooltipText = "Редагувати" };
+            upButton.Clicked += OnButtonEditClicked;
+            toolbar.Add(upButton);
+
+            ToolButton refreshButton = new ToolButton(Stock.Copy) { TooltipText = "Копіювати" };
+            refreshButton.Clicked += OnButtonCopyClicked;
+            toolbar.Add(refreshButton);
+
+            ToolButton deleteButton = new ToolButton(Stock.Delete) { TooltipText = "Видалити" };
+            deleteButton.Clicked += OnButtonDeleteClicked;
+            toolbar.Add(deleteButton);
+
+            vBox.PackStart(hBoxToolbar, false, false, 0);
+        }
+
+        void LoadConfigurationParam()
         {
             ConfigurationParamCollection.PathToXML = System.IO.Path.Combine(AppContext.BaseDirectory, "ConfigurationParam.xml");
             ConfigurationParamCollection.LoadConfigurationParamFromXML(ConfigurationParamCollection.PathToXML);
         }
 
-        private void FillListBoxDataBase(string selectConfKey = "")
+        void FillListBoxDataBase(string selectConfKey = "")
         {
-            foreach (Widget child in listBoxDataBase.Children)
-                listBoxDataBase.Remove(child);
+            foreach (Widget child in listBox.Children)
+                listBox.Remove(child);
 
             foreach (ConfigurationParam itemConfigurationParam in ConfigurationParamCollection.ListConfigurationParam!)
             {
@@ -115,32 +172,32 @@ namespace Configurator
                 itemLabel.Halign = Align.Start;
 
                 row.Add(itemLabel);
-                listBoxDataBase.Add(row);
+                listBox.Add(row);
 
                 if (!String.IsNullOrEmpty(selectConfKey))
                 {
                     if (itemConfigurationParam.ConfigurationKey == selectConfKey)
-                        listBoxDataBase.SelectRow(row);
+                        listBox.SelectRow(row);
                 }
                 else
                 {
                     if (itemConfigurationParam.Select)
-                        listBoxDataBase.SelectRow(row);
+                        listBox.SelectRow(row);
                 }
             }
 
-            listBoxDataBase.ShowAll();
+            listBox.ShowAll();
 
-            if (listBoxDataBase.Children.Length != 0 && listBoxDataBase.SelectedRow == null)
+            if (listBox.Children.Length != 0 && listBox.SelectedRow == null)
             {
-                ListBoxRow row = (ListBoxRow)listBoxDataBase.Children[0];
-                listBoxDataBase.SelectRow(row);
+                ListBoxRow row = (ListBoxRow)listBox.Children[0];
+                listBox.SelectRow(row);
             }
 
             //scrolledWindowListBox.Vadjustment.Value = scrolledWindowListBox.Vadjustment.Upper;
         }
 
-        public void CallBackUpdate(ConfigurationParam itemConfigurationParam)
+        void CallBackUpdate(ConfigurationParam itemConfigurationParam)
         {
             ConfigurationParamCollection.UpdateConfigurationParam(itemConfigurationParam);
             ConfigurationParamCollection.SaveConfigurationParamFromXML(ConfigurationParamCollection.PathToXML);
@@ -148,9 +205,16 @@ namespace Configurator
             FillListBoxDataBase(itemConfigurationParam.ConfigurationKey);
         }
 
+        public virtual void Open() { }
+
         void OnButtonOpenClicked(object? sender, EventArgs args)
         {
-            ListBoxRow[] selectedRows = listBoxDataBase.SelectedRows;
+            Open();
+        }
+
+        void OnButtonOpenConfiguratorClicked(object? sender, EventArgs args)
+        {
+            ListBoxRow[] selectedRows = listBox.SelectedRows;
 
             if (selectedRows.Length != 0)
             {
@@ -209,7 +273,7 @@ namespace Configurator
 
         void OnButtonCopyClicked(object? sender, EventArgs args)
         {
-            ListBoxRow[] selectedRows = listBoxDataBase.SelectedRows;
+            ListBoxRow[] selectedRows = listBox.SelectedRows;
 
             if (selectedRows.Length != 0)
             {
@@ -227,21 +291,22 @@ namespace Configurator
 
         void OnButtonDeleteClicked(object? sender, EventArgs args)
         {
-            ListBoxRow[] selectedRows = listBoxDataBase.SelectedRows;
+            ListBoxRow[] selectedRows = listBox.SelectedRows;
 
             if (selectedRows.Length != 0)
             {
-                if (ConfigurationParamCollection.RemoveConfigurationParam(selectedRows[0].Name))
-                {
-                    ConfigurationParamCollection.SaveConfigurationParamFromXML(ConfigurationParamCollection.PathToXML);
-                    FillListBoxDataBase();
-                }
+                if (Message.Request(this, "Видалити?") == ResponseType.Yes)
+                    if (ConfigurationParamCollection.RemoveConfigurationParam(selectedRows[0].Name))
+                    {
+                        ConfigurationParamCollection.SaveConfigurationParamFromXML(ConfigurationParamCollection.PathToXML);
+                        FillListBoxDataBase();
+                    }
             }
         }
-
+        
         void OnButtonEditClicked(object? sender, EventArgs args)
         {
-            ListBoxRow[] selectedRows = listBoxDataBase.SelectedRows;
+            ListBoxRow[] selectedRows = listBox.SelectedRows;
 
             if (selectedRows.Length != 0)
             {

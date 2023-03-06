@@ -27,7 +27,7 @@ using AccountingSoftware;
 
 namespace Configurator
 {
-    class FormConfigurator : Window
+    public class FormConfigurator : Window
     {
         readonly object loked = new Object();
         public ConfigurationParam? OpenConfigurationParam { get; set; }

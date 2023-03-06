@@ -27,7 +27,7 @@ using AccountingSoftware;
 
 namespace Configurator
 {
-    class Program
+    public class Program
     {
         public static Kernel? Kernel { get; set; }
 
@@ -37,5 +37,7 @@ namespace Configurator
             new FormConfigurationSelection();
             Application.Run();
         }
+
+        public static readonly string IcoFileName = AppContext.BaseDirectory + "images/form.ico";
     }
 }

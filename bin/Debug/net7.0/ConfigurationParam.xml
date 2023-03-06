@@ -1,22 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <Configuration Select="True">
-    <Key>6b4ef58d-4b62-4885-8059-eb6f43c51c2d</Key>
-    <Name>"Зберігання та Торгівля" для України</Name>
-    <Server>localhost</Server>
-    <Port>5432</Port>
-    <Login>postgres</Login>
-    <Password>1</Password>
-    <BaseName>storage_and_trade</BaseName>
-    <OtherParam>
-      <Param name="IsGenerateCode">True</Param>
-      <Param name="GenerateCodePath">/home/tarachom/Projects/StorageAndTrade3/Configurator</Param>
-      <Param name="CompileProgramPath">/home/tarachom/Projects/StorageAndTrade3/bin/Debug/net7.0/</Param>
-    </OtherParam>
-  </Configuration>
-  <Configuration Select="False">
     <Key>0475b27c-f0ba-4f71-875b-841e85745135</Key>
-    <Name>Демо онлайн - amazonaws.com</Name>
+    <Name>Демо онлайн - amazonaws.com2</Name>
     <Server>database-1.cgmsfs5rvp68.us-east-1.rds.amazonaws.com</Server>
     <Port>5432</Port>
     <Login>postgres</Login>
