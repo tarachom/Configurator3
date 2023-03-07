@@ -176,9 +176,8 @@ namespace Configurator
             helpList.Add("time -> TimeSpan");
             helpList.Add("enum -> enum");
             helpList.Add("pointer -> Довідник.Номенклатура()");
-            helpList.Add("empty-pointer -> EmptyPointer()");
-            helpList.Add("any-pointer -> Guid()");
             helpList.Add("composite-pointer -> UuidAndText()");
+            helpList.Add("any-pointer -> Guid()");
             helpList.Add("byte -> byte[]");
             helpList.Add("string[] -> string[]");
             helpList.Add("integer[] -> int[]");
