@@ -5,7 +5,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>07.03.2023 05:27:46</DateTimeSave>
+  <DateTimeSave>11.03.2023 16:24:48</DateTimeSave>
   <ConstantsBlocks>
     <ConstantsBlock>
       <Name>ЗначенняЗаЗамовчуванням</Name>
@@ -15193,6 +15193,15 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <SortField>0</SortField>
           <WherePeriod>0</WherePeriod>
         </Field>
+        <Field>
+          <Name>Коментар</Name>
+          <Desc>
+          </Desc>
+          <Type>
+          </Type>
+          <SortField>0</SortField>
+          <WherePeriod>0</WherePeriod>
+        </Field>
       </Fields>
       <AllowDocument>
         <Name>ЗамовленняПостачальнику</Name>
@@ -15368,6 +15377,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
                 <field>Довідники.Користувачі_Const.Назва</field>
               </FieldAndAlias>
             </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <DocField>Коментар</DocField>
+              <SqlType>
+              </SqlType>
+              <WherePeriod>0</WherePeriod>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
           </Fields>
         </TabularList>
         <TabularList>
@@ -15522,6 +15541,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
                 <table>join_tab_6</table>
                 <field>Довідники.Користувачі_Const.Назва</field>
               </FieldAndAlias>
+            </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <DocField>Коментар</DocField>
+              <SqlType>
+              </SqlType>
+              <WherePeriod>0</WherePeriod>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
             </Field>
           </Fields>
         </TabularList>
@@ -15678,6 +15707,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
                 <field>Довідники.Користувачі_Const.Назва</field>
               </FieldAndAlias>
             </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <DocField>Коментар</DocField>
+              <SqlType>
+              </SqlType>
+              <WherePeriod>0</WherePeriod>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
           </Fields>
         </TabularList>
         <TabularList>
@@ -15833,6 +15872,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
                 <field>Довідники.Користувачі_Const.Назва</field>
               </FieldAndAlias>
             </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <DocField>Коментар</DocField>
+              <SqlType>
+              </SqlType>
+              <WherePeriod>0</WherePeriod>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
           </Fields>
         </TabularList>
         <TabularList>
@@ -15955,6 +16004,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
                 <table>join_tab_3</table>
                 <field>Довідники.Користувачі_Const.Назва</field>
               </FieldAndAlias>
+            </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <DocField>Коментар</DocField>
+              <SqlType>
+              </SqlType>
+              <WherePeriod>0</WherePeriod>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
             </Field>
           </Fields>
         </TabularList>
@@ -16101,6 +16160,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
                 <field>Довідники.Користувачі_Const.Назва</field>
               </FieldAndAlias>
             </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <DocField>Коментар</DocField>
+              <SqlType>
+              </SqlType>
+              <WherePeriod>0</WherePeriod>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
           </Fields>
         </TabularList>
         <TabularList>
@@ -16246,6 +16315,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
                 <field>Довідники.Користувачі_Const.Назва</field>
               </FieldAndAlias>
             </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <DocField>Коментар</DocField>
+              <SqlType>
+              </SqlType>
+              <WherePeriod>0</WherePeriod>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
           </Fields>
         </TabularList>
         <TabularList>
@@ -16368,6 +16447,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
                 <table>join_tab_3</table>
                 <field>Довідники.Користувачі_Const.Назва</field>
               </FieldAndAlias>
+            </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <DocField>Коментар</DocField>
+              <SqlType>
+              </SqlType>
+              <WherePeriod>0</WherePeriod>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
             </Field>
           </Fields>
         </TabularList>
@@ -16524,6 +16613,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
                 <field>Довідники.Користувачі_Const.Назва</field>
               </FieldAndAlias>
             </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <DocField>Коментар</DocField>
+              <SqlType>
+              </SqlType>
+              <WherePeriod>0</WherePeriod>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
           </Fields>
         </TabularList>
         <TabularList>
@@ -16679,6 +16778,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
                 <field>Довідники.Користувачі_Const.Назва</field>
               </FieldAndAlias>
             </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <DocField>Коментар</DocField>
+              <SqlType>
+              </SqlType>
+              <WherePeriod>0</WherePeriod>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
           </Fields>
         </TabularList>
         <TabularList>
@@ -16824,6 +16933,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
                 <field>Довідники.Користувачі_Const.Назва</field>
               </FieldAndAlias>
             </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <DocField>Коментар</DocField>
+              <SqlType>
+              </SqlType>
+              <WherePeriod>0</WherePeriod>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
           </Fields>
         </TabularList>
         <TabularList>
@@ -16966,6 +17085,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
                 <table>join_tab_5</table>
                 <field>Довідники.Користувачі_Const.Назва</field>
               </FieldAndAlias>
+            </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <DocField>Коментар</DocField>
+              <SqlType>
+              </SqlType>
+              <WherePeriod>0</WherePeriod>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
             </Field>
           </Fields>
         </TabularList>
@@ -17450,6 +17579,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
                 <field>Довідники.Користувачі_Const.Назва</field>
               </FieldAndAlias>
             </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <DocField>Коментар</DocField>
+              <SqlType>
+              </SqlType>
+              <WherePeriod>0</WherePeriod>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
           </Fields>
         </TabularList>
         <TabularList>
@@ -17605,6 +17744,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
                 <field>Довідники.Користувачі_Const.Назва</field>
               </FieldAndAlias>
             </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <DocField>Коментар</DocField>
+              <SqlType>
+              </SqlType>
+              <WherePeriod>0</WherePeriod>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
           </Fields>
         </TabularList>
         <TabularList>
@@ -17727,6 +17876,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
                 <table>join_tab_3</table>
                 <field>Довідники.Користувачі_Const.Назва</field>
               </FieldAndAlias>
+            </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <DocField>Коментар</DocField>
+              <SqlType>
+              </SqlType>
+              <WherePeriod>0</WherePeriod>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
             </Field>
           </Fields>
         </TabularList>
@@ -17851,6 +18010,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
                 <field>Довідники.Користувачі_Const.Назва</field>
               </FieldAndAlias>
             </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <DocField>Коментар</DocField>
+              <SqlType>
+              </SqlType>
+              <WherePeriod>0</WherePeriod>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
           </Fields>
         </TabularList>
         <TabularList>
@@ -17973,6 +18142,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
                 <table>join_tab_3</table>
                 <field>Довідники.Користувачі_Const.Назва</field>
               </FieldAndAlias>
+            </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <DocField>Коментар</DocField>
+              <SqlType>
+              </SqlType>
+              <WherePeriod>0</WherePeriod>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
             </Field>
           </Fields>
         </TabularList>
@@ -18097,6 +18276,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
                 <field>Довідники.Користувачі_Const.Назва</field>
               </FieldAndAlias>
             </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <DocField>Коментар</DocField>
+              <SqlType>
+              </SqlType>
+              <WherePeriod>0</WherePeriod>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
           </Fields>
         </TabularList>
       </TabularLists>
@@ -18189,6 +18378,15 @@ SQL тип  непотрібно вказувати
         </Field>
         <Field>
           <Name>Автор</Name>
+          <Desc>
+          </Desc>
+          <Type>
+          </Type>
+          <SortField>0</SortField>
+          <WherePeriod>0</WherePeriod>
+        </Field>
+        <Field>
+          <Name>Коментар</Name>
           <Desc>
           </Desc>
           <Type>
@@ -18357,6 +18555,16 @@ SQL тип  непотрібно вказувати
                 <field>Довідники.Користувачі_Const.Назва</field>
               </FieldAndAlias>
             </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <DocField>Коментар</DocField>
+              <SqlType>
+              </SqlType>
+              <WherePeriod>0</WherePeriod>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
           </Fields>
         </TabularList>
         <TabularList>
@@ -18512,6 +18720,16 @@ SQL тип  непотрібно вказувати
                 <table>join_tab_6</table>
                 <field>Довідники.Користувачі_Const.Назва</field>
               </FieldAndAlias>
+            </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <DocField>Коментар</DocField>
+              <SqlType>
+              </SqlType>
+              <WherePeriod>0</WherePeriod>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
             </Field>
           </Fields>
         </TabularList>
@@ -18669,6 +18887,16 @@ SQL тип  непотрібно вказувати
                 <field>Довідники.Користувачі_Const.Назва</field>
               </FieldAndAlias>
             </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <DocField>Коментар</DocField>
+              <SqlType>
+              </SqlType>
+              <WherePeriod>0</WherePeriod>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
           </Fields>
         </TabularList>
       </TabularLists>
@@ -18762,6 +18990,15 @@ SQL тип  непотрібно вказувати
         </Field>
         <Field>
           <Name>Автор</Name>
+          <Desc>
+          </Desc>
+          <Type>
+          </Type>
+          <SortField>0</SortField>
+          <WherePeriod>0</WherePeriod>
+        </Field>
+        <Field>
+          <Name>Коментар</Name>
           <Desc>
           </Desc>
           <Type>
@@ -18932,6 +19169,16 @@ SQL тип  непотрібно вказувати
                 <field>Довідники.Користувачі_Const.Назва</field>
               </FieldAndAlias>
             </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <DocField>Коментар</DocField>
+              <SqlType>
+              </SqlType>
+              <WherePeriod>0</WherePeriod>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
           </Fields>
         </TabularList>
         <TabularList>
@@ -19087,6 +19334,16 @@ SQL тип  непотрібно вказувати
                 <table>join_tab_6</table>
                 <field>Довідники.Користувачі_Const.Назва</field>
               </FieldAndAlias>
+            </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <DocField>Коментар</DocField>
+              <SqlType>
+              </SqlType>
+              <WherePeriod>0</WherePeriod>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
             </Field>
           </Fields>
         </TabularList>
@@ -19244,6 +19501,16 @@ SQL тип  непотрібно вказувати
                 <field>Довідники.Користувачі_Const.Назва</field>
               </FieldAndAlias>
             </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <DocField>Коментар</DocField>
+              <SqlType>
+              </SqlType>
+              <WherePeriod>0</WherePeriod>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
           </Fields>
         </TabularList>
         <TabularList>
@@ -19389,6 +19656,16 @@ SQL тип  непотрібно вказувати
                 <table>join_tab_5</table>
                 <field>Довідники.Користувачі_Const.Назва</field>
               </FieldAndAlias>
+            </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <DocField>Коментар</DocField>
+              <SqlType>
+              </SqlType>
+              <WherePeriod>0</WherePeriod>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
             </Field>
           </Fields>
         </TabularList>
@@ -19546,6 +19823,16 @@ SQL тип  непотрібно вказувати
                 <field>Довідники.Користувачі_Const.Назва</field>
               </FieldAndAlias>
             </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <DocField>Коментар</DocField>
+              <SqlType>
+              </SqlType>
+              <WherePeriod>0</WherePeriod>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
           </Fields>
         </TabularList>
       </TabularLists>
@@ -19637,6 +19924,15 @@ SQL тип  непотрібно вказувати
         </Field>
         <Field>
           <Name>Автор</Name>
+          <Desc>
+          </Desc>
+          <Type>
+          </Type>
+          <SortField>0</SortField>
+          <WherePeriod>0</WherePeriod>
+        </Field>
+        <Field>
+          <Name>Коментар</Name>
           <Desc>
           </Desc>
           <Type>
@@ -19804,6 +20100,16 @@ SQL тип  непотрібно вказувати
                 <field>Довідники.Користувачі_Const.Назва</field>
               </FieldAndAlias>
             </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <DocField>Коментар</DocField>
+              <SqlType>
+              </SqlType>
+              <WherePeriod>0</WherePeriod>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
           </Fields>
         </TabularList>
         <TabularList>
@@ -19960,6 +20266,16 @@ SQL тип  непотрібно вказувати
                 <field>Довідники.Користувачі_Const.Назва</field>
               </FieldAndAlias>
             </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <DocField>Коментар</DocField>
+              <SqlType>
+              </SqlType>
+              <WherePeriod>0</WherePeriod>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
           </Fields>
         </TabularList>
       </TabularLists>
@@ -20024,6 +20340,15 @@ SQL тип  непотрібно вказувати
         </Field>
         <Field>
           <Name>Автор</Name>
+          <Desc>
+          </Desc>
+          <Type>
+          </Type>
+          <SortField>0</SortField>
+          <WherePeriod>0</WherePeriod>
+        </Field>
+        <Field>
+          <Name>Коментар</Name>
           <Desc>
           </Desc>
           <Type>
@@ -20130,11 +20455,31 @@ SQL тип  непотрібно вказувати
             </Field>
             <Field>
               <Name>Автор</Name>
-              <DocField>
-              </DocField>
+              <DocField>Автор</DocField>
               <SqlType>
               </SqlType>
               <WherePeriod>0</WherePeriod>
+              <Type>pointer</Type>
+              <Pointer>Довідники.Користувачі</Pointer>
+              <Join>
+                <table>Довідники.Користувачі_Const.TABLE</table>
+                <field>Автор</field>
+                <alias>join_tab_4</alias>
+              </Join>
+              <FieldAndAlias>
+                <table>join_tab_4</table>
+                <field>Довідники.Користувачі_Const.Назва</field>
+              </FieldAndAlias>
+            </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <DocField>Коментар</DocField>
+              <SqlType>
+              </SqlType>
+              <WherePeriod>0</WherePeriod>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
             </Field>
           </Fields>
         </TabularList>
@@ -20236,6 +20581,16 @@ SQL тип  непотрібно вказувати
                 <field>Довідники.Користувачі_Const.Назва</field>
               </FieldAndAlias>
             </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <DocField>Коментар</DocField>
+              <SqlType>
+              </SqlType>
+              <WherePeriod>0</WherePeriod>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
           </Fields>
         </TabularList>
         <TabularList>
@@ -20336,6 +20691,16 @@ SQL тип  непотрібно вказувати
                 <field>Довідники.Користувачі_Const.Назва</field>
               </FieldAndAlias>
             </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <DocField>Коментар</DocField>
+              <SqlType>
+              </SqlType>
+              <WherePeriod>0</WherePeriod>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
           </Fields>
         </TabularList>
       </TabularLists>
@@ -20391,6 +20756,15 @@ SQL тип  непотрібно вказувати
         </Field>
         <Field>
           <Name>Автор</Name>
+          <Desc>
+          </Desc>
+          <Type>
+          </Type>
+          <SortField>0</SortField>
+          <WherePeriod>0</WherePeriod>
+        </Field>
+        <Field>
+          <Name>Коментар</Name>
           <Desc>
           </Desc>
           <Type>
@@ -20496,6 +20870,16 @@ SQL тип  непотрібно вказувати
                 <field>Довідники.Користувачі_Const.Назва</field>
               </FieldAndAlias>
             </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <DocField>Коментар</DocField>
+              <SqlType>
+              </SqlType>
+              <WherePeriod>0</WherePeriod>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
           </Fields>
         </TabularList>
         <TabularList>
@@ -20587,6 +20971,16 @@ SQL тип  непотрібно вказувати
                 <table>join_tab_3</table>
                 <field>Довідники.Користувачі_Const.Назва</field>
               </FieldAndAlias>
+            </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <DocField>Коментар</DocField>
+              <SqlType>
+              </SqlType>
+              <WherePeriod>0</WherePeriod>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
             </Field>
           </Fields>
         </TabularList>
@@ -20680,6 +21074,16 @@ SQL тип  непотрібно вказувати
                 <field>Довідники.Користувачі_Const.Назва</field>
               </FieldAndAlias>
             </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <DocField>Коментар</DocField>
+              <SqlType>
+              </SqlType>
+              <WherePeriod>0</WherePeriod>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
           </Fields>
         </TabularList>
         <TabularList>
@@ -20771,6 +21175,16 @@ SQL тип  непотрібно вказувати
                 <table>join_tab_3</table>
                 <field>Довідники.Користувачі_Const.Назва</field>
               </FieldAndAlias>
+            </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <DocField>Коментар</DocField>
+              <SqlType>
+              </SqlType>
+              <WherePeriod>0</WherePeriod>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
             </Field>
           </Fields>
         </TabularList>

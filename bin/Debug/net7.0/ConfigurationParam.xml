@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <Configuration Select="False">
+  <Configuration Select="True">
     <Key>6b4ef58d-4b62-4885-8059-eb6f43c51c2d</Key>
     <Name>"Зберігання та Торгівля" для України</Name>
     <Server>localhost</Server>
@@ -25,7 +25,7 @@
     <BaseName>storage_and_trade</BaseName>
     <OtherParam />
   </Configuration>
-  <Configuration Select="True">
+  <Configuration Select="False">
     <Key>be6b05d2-5cf9-4aba-a994-c450e92527c0</Key>
     <Name>Демо онлайн - cloudclusters.io - 3</Name>
     <Server>postgresql-113297-0.cloudclusters.net</Server>
