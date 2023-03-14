@@ -229,6 +229,9 @@ namespace Configurator
         {
             FillTreeView();
 
+            if (IsNew)
+                TabularList.Name = "Записи";
+
             entryName.Text = TabularList.Name;
             textViewDesc.Buffer.Text = TabularList.Desc;
         }
