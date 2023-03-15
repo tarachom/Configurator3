@@ -11,8 +11,7 @@
     <OtherParam>
       <Param name="IsGenerateCode">True</Param>
       <Param name="GenerateCodePath">/home/tarachom/Projects/StorageAndTrade3/Configurator</Param>
-      <Param name="CompileProgramPath">
-      </Param>
+      <Param name="CompileProgramPath">/home/tarachom/Projects/StorageAndTrade3/bin/Debug/net7.0/</Param>
     </OtherParam>
   </Configuration>
   <Configuration Select="False">
@@ -21,16 +20,6 @@
     <Server>database-1.cgmsfs5rvp68.us-east-1.rds.amazonaws.com</Server>
     <Port>5432</Port>
     <Login>postgres</Login>
-    <Password>12345678</Password>
-    <BaseName>storage_and_trade</BaseName>
-    <OtherParam />
-  </Configuration>
-  <Configuration Select="False">
-    <Key>be6b05d2-5cf9-4aba-a994-c450e92527c0</Key>
-    <Name>Демо онлайн - cloudclusters.io - 3</Name>
-    <Server>postgresql-113297-0.cloudclusters.net</Server>
-    <Port>19985</Port>
-    <Login>admin</Login>
     <Password>12345678</Password>
     <BaseName>storage_and_trade</BaseName>
     <OtherParam />

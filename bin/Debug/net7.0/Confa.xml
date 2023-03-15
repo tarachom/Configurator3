@@ -5,7 +5,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>14.03.2023 20:32:04</DateTimeSave>
+  <DateTimeSave>15.03.2023 15:25:05</DateTimeSave>
   <ConstantsBlocks>
     <ConstantsBlock>
       <Name>ЗначенняЗаЗамовчуванням</Name>
@@ -858,6 +858,14 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <Desc>
           </Desc>
           <Type>boolean</Type>
+          <TabularParts />
+        </Constant>
+        <Constant>
+          <Name>ЗавантаженняСпискуБанків</Name>
+          <NameInTable>col_g3</NameInTable>
+          <Desc>
+          </Desc>
+          <Type>string</Type>
           <TabularParts />
         </Constant>
       </Constants>
@@ -4745,16 +4753,25 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsIndex>0</IsIndex>
         </Field>
         <Field>
+          <Name>ТипНаселеногоПункту</Name>
+          <NameInTable>col_b4</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+        </Field>
+        <Field>
           <Name>КодМФО</Name>
           <NameInTable>col_a3</NameInTable>
           <Type>string</Type>
           <Desc>
           </Desc>
           <IsPresentation>0</IsPresentation>
-          <IsIndex>1</IsIndex>
+          <IsIndex>0</IsIndex>
         </Field>
         <Field>
-          <Name>НазваГоловноїУстанови</Name>
+          <Name>НазваГоловноїУстановиАнг</Name>
           <NameInTable>col_a4</NameInTable>
           <Type>string</Type>
           <Desc>
@@ -4763,7 +4780,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsIndex>0</IsIndex>
         </Field>
         <Field>
-          <Name>НазваГоловноїУстановиEng</Name>
+          <Name>КодЄДРПОУ</Name>
           <NameInTable>col_a5</NameInTable>
           <Type>string</Type>
           <Desc>
@@ -4772,7 +4789,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsIndex>0</IsIndex>
         </Field>
         <Field>
-          <Name>КодЄДРПОУ</Name>
+          <Name>ПовнаНазва</Name>
           <NameInTable>col_a6</NameInTable>
           <Type>string</Type>
           <Desc>
@@ -4781,59 +4798,191 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsIndex>0</IsIndex>
         </Field>
         <Field>
-          <Name>НазваСкорочена</Name>
+          <Name>УнікальнийКодБанку</Name>
           <NameInTable>col_a7</NameInTable>
           <Type>string</Type>
-          <Desc>Назва</Desc>
+          <Desc>
+          </Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
         </Field>
         <Field>
-          <Name>НазваПовна</Name>
+          <Name>КодОбластіОпераційноїДіяльності</Name>
           <NameInTable>col_a8</NameInTable>
           <Type>string</Type>
-          <Desc>Назва</Desc>
+          <Desc>
+          </Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
         </Field>
         <Field>
-          <Name>УнікальнийКодБанку</Name>
+          <Name>НазваОбластіОпераційноїДіяльності</Name>
           <NameInTable>col_a9</NameInTable>
           <Type>string</Type>
-          <Desc>Унікальний код банку</Desc>
+          <Desc>
+          </Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
         </Field>
         <Field>
-          <Name>ТипУстанови</Name>
+          <Name>КодОбластіЗгідноСтатуту</Name>
           <NameInTable>col_b1</NameInTable>
-          <Type>enum</Type>
-          <Pointer>Перелічення.ТипБанківськоїУстанови</Pointer>
-          <Desc>Тип установи</Desc>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
         </Field>
         <Field>
-          <Name>КодОблОперДіяльності</Name>
+          <Name>НазваОбластіЗгідноСтатуту</Name>
           <NameInTable>col_b2</NameInTable>
           <Type>string</Type>
-          <Desc>Код області операційної діяльності установи</Desc>
+          <Desc>
+          </Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
         </Field>
         <Field>
-          <Name>НазваОблОперДіяльностіУстанови</Name>
+          <Name>ПоштовийІндекс</Name>
           <NameInTable>col_b3</NameInTable>
           <Type>string</Type>
-          <Desc>Назва області операційної діяльності установи</Desc>
+          <Desc>
+          </Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
         </Field>
         <Field>
-          <Name>ВнутрішньобанківськийКод</Name>
-          <NameInTable>col_b4</NameInTable>
+          <Name>НазваНаселеногоПункту</Name>
+          <NameInTable>col_b5</NameInTable>
           <Type>string</Type>
-          <Desc>Внутрішньобанківський код</Desc>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+        </Field>
+        <Field>
+          <Name>Адреса</Name>
+          <NameInTable>col_b6</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+        </Field>
+        <Field>
+          <Name>КодТелефонногоЗвязку</Name>
+          <NameInTable>col_b7</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+        </Field>
+        <Field>
+          <Name>НомерТелефону</Name>
+          <NameInTable>col_b8</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+        </Field>
+        <Field>
+          <Name>ЧисловийКодСтануУстанови</Name>
+          <NameInTable>col_b9</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+        </Field>
+        <Field>
+          <Name>НазваСтануУстанови</Name>
+          <NameInTable>col_c1</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+        </Field>
+        <Field>
+          <Name>ДатаЗміниСтану</Name>
+          <NameInTable>col_c2</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+        </Field>
+        <Field>
+          <Name>ДатаВідкриттяУстанови</Name>
+          <NameInTable>col_c3</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+        </Field>
+        <Field>
+          <Name>ДатаЗакриттяУстанови</Name>
+          <NameInTable>col_c4</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+        </Field>
+        <Field>
+          <Name>КодНБУ</Name>
+          <NameInTable>col_c5</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+        </Field>
+        <Field>
+          <Name>НомерЛіцензії</Name>
+          <NameInTable>col_c6</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+        </Field>
+        <Field>
+          <Name>ДатаЛіцензії</Name>
+          <NameInTable>col_c7</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+        </Field>
+        <Field>
+          <Name>КодСтатусу</Name>
+          <NameInTable>col_c8</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+        </Field>
+        <Field>
+          <Name>Статус</Name>
+          <NameInTable>col_c9</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+        </Field>
+        <Field>
+          <Name>ДатаЗапису</Name>
+          <NameInTable>col_d1</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
         </Field>
@@ -4861,6 +5010,176 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
               <Size>0</Size>
               <SortNum>2</SortNum>
               <SortField>True</SortField>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
+            <Field>
+              <Name>ПовнаНазва</Name>
+              <Caption>Повна назва</Caption>
+              <Size>0</Size>
+              <SortNum>3</SortNum>
+              <SortField>False</SortField>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
+            <Field>
+              <Name>КодМФО</Name>
+              <Caption>Код МФО</Caption>
+              <Size>0</Size>
+              <SortNum>4</SortNum>
+              <SortField>False</SortField>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
+            <Field>
+              <Name>КодЄДРПОУ</Name>
+              <Caption>ЄДРПОУ</Caption>
+              <Size>0</Size>
+              <SortNum>5</SortNum>
+              <SortField>False</SortField>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
+            <Field>
+              <Name>НомерЛіцензії</Name>
+              <Caption>Номер ліцензії</Caption>
+              <Size>0</Size>
+              <SortNum>6</SortNum>
+              <SortField>False</SortField>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
+            <Field>
+              <Name>ДатаЛіцензії</Name>
+              <Caption>Дата ліцензії</Caption>
+              <Size>0</Size>
+              <SortNum>7</SortNum>
+              <SortField>False</SortField>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
+            <Field>
+              <Name>Статус</Name>
+              <Caption>Статус</Caption>
+              <Size>0</Size>
+              <SortNum>8</SortNum>
+              <SortField>False</SortField>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
+            <Field>
+              <Name>ТипНаселеногоПункту</Name>
+              <Caption>Тип населеного пункту</Caption>
+              <Size>0</Size>
+              <SortNum>100</SortNum>
+              <SortField>False</SortField>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
+            <Field>
+              <Name>УнікальнийКодБанку</Name>
+              <Caption>Унікальний код</Caption>
+              <Size>0</Size>
+              <SortNum>100</SortNum>
+              <SortField>False</SortField>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
+            <Field>
+              <Name>ПоштовийІндекс</Name>
+              <Caption>Поштовий індекс</Caption>
+              <Size>0</Size>
+              <SortNum>100</SortNum>
+              <SortField>False</SortField>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
+            <Field>
+              <Name>НазваНаселеногоПункту</Name>
+              <Caption>Населений пункт</Caption>
+              <Size>0</Size>
+              <SortNum>100</SortNum>
+              <SortField>False</SortField>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
+            <Field>
+              <Name>Адреса</Name>
+              <Caption>Адреса</Caption>
+              <Size>0</Size>
+              <SortNum>100</SortNum>
+              <SortField>False</SortField>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
+            <Field>
+              <Name>НомерТелефону</Name>
+              <Caption>Телефон</Caption>
+              <Size>0</Size>
+              <SortNum>100</SortNum>
+              <SortField>False</SortField>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
+            <Field>
+              <Name>ДатаВідкриттяУстанови</Name>
+              <Caption>Дата відкриття установи</Caption>
+              <Size>0</Size>
+              <SortNum>100</SortNum>
+              <SortField>False</SortField>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
+            <Field>
+              <Name>ДатаЗакриттяУстанови</Name>
+              <Caption>Дата закриття установи</Caption>
+              <Size>0</Size>
+              <SortNum>100</SortNum>
+              <SortField>False</SortField>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
+            <Field>
+              <Name>КодНБУ</Name>
+              <Caption>Код НБУ</Caption>
+              <Size>0</Size>
+              <SortNum>100</SortNum>
+              <SortField>False</SortField>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
+            <Field>
+              <Name>КодСтатусу</Name>
+              <Caption>КодСтатусу</Caption>
+              <Size>0</Size>
+              <SortNum>100</SortNum>
+              <SortField>False</SortField>
+              <Type>string</Type>
+              <Pointer>
+              </Pointer>
+            </Field>
+            <Field>
+              <Name>ДатаЗапису</Name>
+              <Caption>ДатаЗапису</Caption>
+              <Size>0</Size>
+              <SortNum>100</SortNum>
+              <SortField>False</SortField>
               <Type>string</Type>
               <Pointer>
               </Pointer>
@@ -14972,45 +15291,6 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <Name>Зберігання</Name>
           <Value>3</Value>
           <Desc>Зберігання</Desc>
-        </Field>
-      </Fields>
-    </Enum>
-    <Enum>
-      <Name>ТипБанківськоїУстанови</Name>
-      <Desc>
-      </Desc>
-      <SerialNumber>6</SerialNumber>
-      <Fields>
-        <Field>
-          <Name>Банк</Name>
-          <Value>1</Value>
-          <Desc>Банк</Desc>
-        </Field>
-        <Field>
-          <Name>Філія</Name>
-          <Value>2</Value>
-          <Desc>Філія</Desc>
-        </Field>
-        <Field>
-          <Name>Відділення</Name>
-          <Value>3</Value>
-          <Desc>Відділення</Desc>
-        </Field>
-        <Field>
-          <Name>ПредставництвоНаТериторіїУкраїни</Name>
-          <Value>4</Value>
-          <Desc>Представництво на території України</Desc>
-        </Field>
-        <Field>
-          <Name>ФіліяЗаМежамиУкраїни</Name>
-          <Value>5</Value>
-          <Desc>Філія за межами України</Desc>
-        </Field>
-        <Field>
-          <Name>ПредставництвоЗаМежамиУкраїни</Name>
-          <Value>6</Value>
-          <Desc>Представництво за межами
-України</Desc>
         </Field>
       </Fields>
     </Enum>
