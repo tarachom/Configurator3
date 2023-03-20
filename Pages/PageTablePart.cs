@@ -109,7 +109,7 @@ namespace Configurator
             HBox hBoxScroll = new HBox();
             ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
             scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-            scrollList.SetSizeRequest(0, 300);
+            scrollList.SetSizeRequest(0, 500);
 
             listBoxFields.ButtonPressEvent += OnTabularPartsButtonPress;
 
