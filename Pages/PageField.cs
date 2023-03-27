@@ -55,6 +55,7 @@ namespace Configurator
         ComboBoxText comboBoxEnum = new ComboBoxText();
         CheckButton checkButtonIndex = new CheckButton("Індексувати");
         CheckButton checkButtonPresentation = new CheckButton("Використовувати для представлення");
+        CheckButton checkButtonFullTextSearch = new CheckButton("Повнотекстовий пошук");
 
         #endregion
 
@@ -156,6 +157,9 @@ namespace Configurator
             //Індексувати
             vBox.PackStart(checkButtonPresentation, false, false, 5);
 
+            //Повнотекстовий пошук
+            vBox.PackStart(checkButtonFullTextSearch, false, false, 5);
+
             hPaned.Pack1(vBox, false, false);
         }
 
@@ -219,6 +223,7 @@ namespace Configurator
 
             checkButtonIndex.Active = Field.IsIndex;
             checkButtonPresentation.Active = Field.IsPresentation;
+            checkButtonFullTextSearch.Active = Field.IsFullTextSearch;
 
             OnComboBoxTypeChanged(comboBoxType, new EventArgs());
         }
@@ -237,6 +242,7 @@ namespace Configurator
 
             Field.IsIndex = checkButtonIndex.Active;
             Field.IsPresentation = checkButtonPresentation.Active;
+            Field.IsFullTextSearch = checkButtonFullTextSearch.Active;
 
             Field.NameInTable = entryColumn.Text;
         }
