@@ -1189,7 +1189,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи
                 <xsl:text>return false;</xsl:text>
                 </xsl:otherwise>
             </xsl:choose>
-		    }
+        }
 
         public void ClearSpendTheDocument()
         {
@@ -1198,7 +1198,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи
               <xsl:text>(this)</xsl:text>;
             </xsl:if>
             <xsl:text>BaseSpend(false, DateTime.MinValue);</xsl:text>
-		    }
+        }
 
 		    public <xsl:value-of select="$DocumentName"/>_Objest Copy()
         {
@@ -1212,7 +1212,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи
 
         public void Delete()
         {
-		        <xsl:if test="normalize-space(TriggerFunctions/BeforeDelete) != ''">
+            <xsl:if test="normalize-space(TriggerFunctions/BeforeDelete) != ''">
                 <xsl:value-of select="TriggerFunctions/BeforeDelete"/><xsl:text>(this);</xsl:text>      
             </xsl:if>
             base.BaseDelete(<xsl:text>new string[] { </xsl:text>
@@ -1262,7 +1262,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи
         {
             base.Init(uid, fields);
         }
-		
+
         public string Назва { get; set; } = "";
 
         public string GetPresentation()
@@ -1277,12 +1277,12 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи
               </xsl:for-each> }
             );
         }
-		
+
         public <xsl:value-of select="$DocumentName"/>_Pointer GetNewDocumentPointer()
         {
             return new <xsl:value-of select="$DocumentName"/>_Pointer(base.UnigueID);
         }
-		
+
         public <xsl:value-of select="$DocumentName"/>_Pointer GetEmptyPointer()
         {
             return new <xsl:value-of select="$DocumentName"/>_Pointer();
@@ -1292,7 +1292,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи
         {
             return new UuidAndText(UnigueID.UGuid, "Документи.<xsl:value-of select="$DocumentName"/>");
         }
-		
+
         public <xsl:value-of select="$DocumentName"/>_Objest GetDocumentObject(bool readAllTablePart = false)
         {
             <xsl:value-of select="$DocumentName"/>_Objest <xsl:value-of select="$DocumentName"/>ObjestItem = new <xsl:value-of select="$DocumentName"/>_Objest();
@@ -1307,7 +1307,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи
             return <xsl:value-of select="$DocumentName"/>ObjestItem;
         }
     }
-    
+
     public class <xsl:value-of select="$DocumentName"/>_Select : DocumentSelect
     {		
         public <xsl:value-of select="$DocumentName"/>_Select() : base(Config.Kernel!, "<xsl:value-of select="Table"/>") { }
@@ -1320,7 +1320,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи
         
         public <xsl:value-of select="$DocumentName"/>_Pointer? Current { get; private set; }
     }
-    
+
       <xsl:for-each select="TabularParts/TablePart"> <!-- TableParts -->
         <xsl:variable name="TablePartName" select="Name"/>
         <xsl:variable name="TablePartFullName" select="concat($DocumentName, '_', $TablePartName)"/>
