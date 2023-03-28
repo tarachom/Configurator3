@@ -101,9 +101,6 @@ namespace Configurator
                 {
                     buttonOpen.GrabFocus();
                 };
-
-                HBox hBoxSeparator = new HBox();
-                vBoxContainerRight.PackStart(hBoxSeparator, false, false, 4);
             }
 
             HBox hBoxConfigurator = new HBox() { Halign = Align.Start };

@@ -642,6 +642,14 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники
             </xsl:for-each>
         }
         
+        public void New()
+        {
+            BaseNew();
+            <xsl:if test="normalize-space(TriggerFunctions/New) != ''">
+                <xsl:value-of select="TriggerFunctions/New"/><xsl:text>(this)</xsl:text>;
+            </xsl:if>
+        }
+
         public bool Read(UnigueID uid)
         {
             if (BaseRead(uid))
@@ -692,10 +700,10 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники
         public <xsl:value-of select="$DirectoryName"/>_Objest Copy()
         {
             <xsl:value-of select="$DirectoryName"/>_Objest copy = new <xsl:value-of select="$DirectoryName"/>_Objest();
-            copy.New();
             <xsl:for-each select="Fields/Field">
               <xsl:text>copy.</xsl:text><xsl:value-of select="Name"/><xsl:text> = </xsl:text><xsl:value-of select="Name"/>;
             </xsl:for-each>
+            copy.New();
             return copy;
         }
 
@@ -1129,6 +1137,14 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи
             </xsl:for-each>
         }
         
+        public void New()
+        {
+            BaseNew();
+            <xsl:if test="normalize-space(TriggerFunctions/New) != ''">
+                <xsl:value-of select="TriggerFunctions/New"/><xsl:text>(this)</xsl:text>;
+            </xsl:if>
+        }
+
         public bool Read(UnigueID uid)
         {
             if (BaseRead(uid))
@@ -1200,13 +1216,13 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи
             <xsl:text>BaseSpend(false, DateTime.MinValue);</xsl:text>
         }
 
-		    public <xsl:value-of select="$DocumentName"/>_Objest Copy()
+        public <xsl:value-of select="$DocumentName"/>_Objest Copy()
         {
             <xsl:value-of select="$DocumentName"/>_Objest copy = new <xsl:value-of select="$DocumentName"/>_Objest();
-			      copy.New();
             <xsl:for-each select="Fields/Field">
               <xsl:text>copy.</xsl:text><xsl:value-of select="Name"/><xsl:text> = </xsl:text><xsl:value-of select="Name"/>;
             </xsl:for-each>
+            copy.New();
             return copy;
         }
 
@@ -1402,7 +1418,32 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи
                 
             base.BaseCommitTransaction();
         }
-        
+        <!-- /* видалити */
+        public string GeneratingTextForFullTextSearch() 
+        {
+            string fullText = "";
+            <xsl:if test="count(Fields/Field[IsFullTextSearch = '1']) != 0">
+            foreach (Record record in Records)
+            {
+                fullText += string.Join(" ", new string[] { 
+                    <xsl:for-each select="Fields/Field[IsFullTextSearch = '1']">
+                      <xsl:if test="position() != 1">, 
+                      </xsl:if>
+                      <xsl:text>record.</xsl:text><xsl:value-of select="Name"/>
+                      <xsl:choose>
+                          <xsl:when test="Type = 'pointer'">
+                              <xsl:text>.GetPresentation()</xsl:text>
+                          </xsl:when>
+                          <xsl:otherwise>
+                              <xsl:text>.ToString()</xsl:text>
+                          </xsl:otherwise>
+                      </xsl:choose>
+                    </xsl:for-each> }) + "\n";
+            }
+            </xsl:if>
+            return fullText;
+        }
+        -->
         public void Delete()
         {
             base.BaseDelete(Owner.UnigueID);
@@ -1645,10 +1686,10 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.РегістриВі�
         public <xsl:value-of select="$RegisterName"/>_Objest Copy()
         {
             <xsl:value-of select="$RegisterName"/>_Objest copy = new <xsl:value-of select="$RegisterName"/>_Objest();
-			      copy.New();
             <xsl:for-each select="(DimensionFields|ResourcesFields|PropertyFields)/Fields/Field">
               <xsl:text>copy.</xsl:text><xsl:value-of select="Name"/><xsl:text> = </xsl:text><xsl:value-of select="Name"/>;
             </xsl:for-each>
+            copy.New();
             return copy;
         }
 
