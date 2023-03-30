@@ -53,6 +53,7 @@ namespace Configurator
         Entry entrySpend = new Entry() { WidthRequest = 500 };
         Entry entryClearSpend = new Entry() { WidthRequest = 500 };
         Entry entryNew = new Entry() { WidthRequest = 500 };
+        Entry entryCopying = new Entry() { WidthRequest = 500 };
         Entry entryBeforeSave = new Entry() { WidthRequest = 500 };
         Entry entryAfterSave = new Entry() { WidthRequest = 500 };
         Entry entryBeforeDelete = new Entry() { WidthRequest = 500 };
@@ -181,6 +182,13 @@ namespace Configurator
                 hBoxTrigerNew.PackStart(new Label("Новий:"), false, false, 5);
                 hBoxTrigerNew.PackStart(entryNew, false, false, 5);
 
+                //Копіювання
+                HBox hBoxTrigerCopying = new HBox() { Halign = Align.End };
+                vBoxFunc.PackStart(hBoxTrigerCopying, false, false, 5);
+
+                hBoxTrigerCopying.PackStart(new Label("Копіювання:"), false, false, 5);
+                hBoxTrigerCopying.PackStart(entryCopying, false, false, 5);
+
                 //Перед записом
                 HBox hBoxTrigerBeforeSave = new HBox() { Halign = Align.End };
                 vBoxFunc.PackStart(hBoxTrigerBeforeSave, false, false, 5);
@@ -215,6 +223,7 @@ namespace Configurator
                 buttonConstructor.Clicked += (object? sender, EventArgs args) =>
                 {
                     entryNew.Text = entryName.Text + "_Triggers.New";
+                    entryCopying.Text = entryName.Text + "_Triggers.Copying";
                     entryBeforeSave.Text = entryName.Text + "_Triggers.BeforeSave";
                     entryAfterSave.Text = entryName.Text + "_Triggers.AfterSave";
                     entryBeforeDelete.Text = entryName.Text + "_Triggers.BeforeDelete";
@@ -223,6 +232,11 @@ namespace Configurator
 class {entryName.Text}_Triggers
 {{
     public static void New({entryName.Text}_Objest ДокументОбєкт)
+    {{
+        
+    }}
+
+    public static void Copying({entryName.Text}_Objest ДокументОбєкт, {entryName.Text}_Objest Основа)
     {{
         
     }}
@@ -444,6 +458,7 @@ class {entryName.Text}_Triggers
             entryClearSpend.Text = ConfDocument.SpendFunctions.ClearSpend;
 
             entryNew.Text = ConfDocument.TriggerFunctions.New;
+            entryCopying.Text = ConfDocument.TriggerFunctions.Copying;
             entryBeforeSave.Text = ConfDocument.TriggerFunctions.BeforeSave;
             entryAfterSave.Text = ConfDocument.TriggerFunctions.AfterSave;
             entryBeforeDelete.Text = ConfDocument.TriggerFunctions.BeforeDelete;
@@ -493,6 +508,7 @@ class {entryName.Text}_Triggers
             ConfDocument.SpendFunctions.ClearSpend = entryClearSpend.Text;
 
             ConfDocument.TriggerFunctions.New = entryNew.Text;
+            ConfDocument.TriggerFunctions.Copying = entryCopying.Text;
             ConfDocument.TriggerFunctions.BeforeSave = entryBeforeSave.Text;
             ConfDocument.TriggerFunctions.AfterSave = entryAfterSave.Text;
             ConfDocument.TriggerFunctions.BeforeDelete = entryBeforeDelete.Text;

@@ -50,6 +50,7 @@ namespace Configurator
         Entry entryName = new Entry() { WidthRequest = 500 };
         Entry entryTable = new Entry() { WidthRequest = 500 };
         Entry entryNew = new Entry() { WidthRequest = 500 };
+        Entry entryCopying = new Entry() { WidthRequest = 500 };
         Entry entryBeforeSave = new Entry() { WidthRequest = 500 };
         Entry entryAfterSave = new Entry() { WidthRequest = 500 };
         Entry entryBeforeDelete = new Entry() { WidthRequest = 500 };
@@ -134,6 +135,13 @@ namespace Configurator
                 hBoxTrigerNew.PackStart(new Label("Новий:"), false, false, 5);
                 hBoxTrigerNew.PackStart(entryNew, false, false, 5);
 
+                //Копіювання
+                HBox hBoxTrigerCopying = new HBox() { Halign = Align.End };
+                vBoxTriger.PackStart(hBoxTrigerCopying, false, false, 5);
+
+                hBoxTrigerCopying.PackStart(new Label("Копіювання:"), false, false, 5);
+                hBoxTrigerCopying.PackStart(entryCopying, false, false, 5);
+
                 //Перед записом
                 HBox hBoxTrigerBeforeSave = new HBox() { Halign = Align.End };
                 vBoxTriger.PackStart(hBoxTrigerBeforeSave, false, false, 5);
@@ -168,6 +176,7 @@ namespace Configurator
                 buttonConstructor.Clicked += (object? sender, EventArgs args) =>
                 {
                     entryNew.Text = entryName.Text + "_Triggers.New";
+                    entryCopying.Text = entryName.Text + "_Triggers.Copying";
                     entryBeforeSave.Text = entryName.Text + "_Triggers.BeforeSave";
                     entryAfterSave.Text = entryName.Text + "_Triggers.AfterSave";
                     entryBeforeDelete.Text = entryName.Text + "_Triggers.BeforeDelete";
@@ -176,6 +185,11 @@ namespace Configurator
 class {entryName.Text}_Triggers
 {{
     public static void New({entryName.Text}_Objest ДовідникОбєкт)
+    {{
+        
+    }}
+
+    public static void Copying({entryName.Text}_Objest ДовідникОбєкт, {entryName.Text}_Objest Основа)
     {{
         
     }}
@@ -393,6 +407,7 @@ class {entryName.Text}_Triggers
             textViewDesc.Buffer.Text = ConfDirectory.Desc;
 
             entryNew.Text = ConfDirectory.TriggerFunctions.New;
+            entryCopying.Text = ConfDirectory.TriggerFunctions.Copying;
             entryBeforeSave.Text = ConfDirectory.TriggerFunctions.BeforeSave;
             entryAfterSave.Text = ConfDirectory.TriggerFunctions.AfterSave;
             entryBeforeDelete.Text = ConfDirectory.TriggerFunctions.BeforeDelete;
@@ -427,6 +442,7 @@ class {entryName.Text}_Triggers
             ConfDirectory.Desc = textViewDesc.Buffer.Text;
 
             ConfDirectory.TriggerFunctions.New = entryNew.Text;
+            ConfDirectory.TriggerFunctions.Copying = entryCopying.Text;
             ConfDirectory.TriggerFunctions.BeforeSave = entryBeforeSave.Text;
             ConfDirectory.TriggerFunctions.AfterSave = entryAfterSave.Text;
             ConfDirectory.TriggerFunctions.BeforeDelete = entryBeforeDelete.Text;
