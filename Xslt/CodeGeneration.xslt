@@ -1418,32 +1418,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи
                 
             base.BaseCommitTransaction();
         }
-        <!-- /* видалити */
-        public string GeneratingTextForFullTextSearch() 
-        {
-            string fullText = "";
-            <xsl:if test="count(Fields/Field[IsFullTextSearch = '1']) != 0">
-            foreach (Record record in Records)
-            {
-                fullText += string.Join(" ", new string[] { 
-                    <xsl:for-each select="Fields/Field[IsFullTextSearch = '1']">
-                      <xsl:if test="position() != 1">, 
-                      </xsl:if>
-                      <xsl:text>record.</xsl:text><xsl:value-of select="Name"/>
-                      <xsl:choose>
-                          <xsl:when test="Type = 'pointer'">
-                              <xsl:text>.GetPresentation()</xsl:text>
-                          </xsl:when>
-                          <xsl:otherwise>
-                              <xsl:text>.ToString()</xsl:text>
-                          </xsl:otherwise>
-                      </xsl:choose>
-                    </xsl:for-each> }) + "\n";
-            }
-            </xsl:if>
-            return fullText;
-        }
-        -->
+
         public void Delete()
         {
             base.BaseDelete(Owner.UnigueID);

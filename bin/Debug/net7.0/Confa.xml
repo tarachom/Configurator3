@@ -5,7 +5,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>28.03.2023 22:10:40</DateTimeSave>
+  <DateTimeSave>29.03.2023 13:47:42</DateTimeSave>
   <ConstantsBlocks>
     <ConstantsBlock>
       <Name>ЗначенняЗаЗамовчуванням</Name>
@@ -6457,6 +6457,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>1</IsFullTextSearch>
         </Field>
+        <Field>
+          <Name>КлючовіСловаДляПошуку</Name>
+          <NameInTable>col_b9</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+          <IsFullTextSearch>1</IsFullTextSearch>
+        </Field>
       </Fields>
       <TabularParts>
         <TablePart>
@@ -7081,6 +7091,15 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <Type>string</Type>
           <Desc>
           </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+          <IsFullTextSearch>1</IsFullTextSearch>
+        </Field>
+        <Field>
+          <Name>КлючовіСловаДляПошуку</Name>
+          <NameInTable>col_a2</NameInTable>
+          <Type>string</Type>
+          <Desc>Для повнотекстового пошуку</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>1</IsFullTextSearch>
@@ -7727,6 +7746,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
         </Field>
+        <Field>
+          <Name>КлючовіСловаДляПошуку</Name>
+          <NameInTable>col_b3</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+          <IsFullTextSearch>1</IsFullTextSearch>
+        </Field>
       </Fields>
       <TabularParts>
         <TablePart>
@@ -8355,6 +8384,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
         </Field>
+        <Field>
+          <Name>КлючовіСловаДляПошуку</Name>
+          <NameInTable>col_d1</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+          <IsFullTextSearch>1</IsFullTextSearch>
+        </Field>
       </Fields>
       <TabularParts>
         <TablePart>
@@ -8784,6 +8823,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
         </Field>
+        <Field>
+          <Name>КлючовіСловаДляПошуку</Name>
+          <NameInTable>col_a5</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+          <IsFullTextSearch>1</IsFullTextSearch>
+        </Field>
       </Fields>
       <TabularParts>
         <TablePart>
@@ -9171,6 +9220,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
+        </Field>
+        <Field>
+          <Name>КлючовіСловаДляПошуку</Name>
+          <NameInTable>col_a7</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+          <IsFullTextSearch>1</IsFullTextSearch>
         </Field>
       </Fields>
       <TabularParts>
@@ -9619,6 +9678,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
+        </Field>
+        <Field>
+          <Name>КлючовіСловаДляПошуку</Name>
+          <NameInTable>col_a7</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+          <IsFullTextSearch>1</IsFullTextSearch>
         </Field>
       </Fields>
       <TabularParts>
@@ -10088,6 +10157,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
         </Field>
+        <Field>
+          <Name>КлючовіСловаДляПошуку</Name>
+          <NameInTable>col_b9</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+          <IsFullTextSearch>1</IsFullTextSearch>
+        </Field>
       </Fields>
       <TabularParts>
         <TablePart>
@@ -10549,6 +10628,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
+        </Field>
+        <Field>
+          <Name>КлючовіСловаДляПошуку</Name>
+          <NameInTable>col_a5</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+          <IsFullTextSearch>1</IsFullTextSearch>
         </Field>
       </Fields>
       <TabularParts>
@@ -11037,6 +11126,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
         </Field>
+        <Field>
+          <Name>КлючовіСловаДляПошуку</Name>
+          <NameInTable>col_a4</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+          <IsFullTextSearch>1</IsFullTextSearch>
+        </Field>
       </Fields>
       <TabularParts>
         <TablePart>
@@ -11514,6 +11613,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
         </Field>
+        <Field>
+          <Name>КлючовіСловаДляПошуку</Name>
+          <NameInTable>col_a9</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+          <IsFullTextSearch>1</IsFullTextSearch>
+        </Field>
       </Fields>
       <TabularParts>
         <TablePart>
@@ -11878,6 +11987,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
+        </Field>
+        <Field>
+          <Name>КлючовіСловаДляПошуку</Name>
+          <NameInTable>col_a2</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+          <IsFullTextSearch>1</IsFullTextSearch>
         </Field>
       </Fields>
       <TabularParts>
@@ -12363,6 +12482,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
         </Field>
+        <Field>
+          <Name>КлючовіСловаДляПошуку</Name>
+          <NameInTable>col_a2</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+          <IsFullTextSearch>1</IsFullTextSearch>
+        </Field>
       </Fields>
       <TabularParts>
         <TablePart>
@@ -12643,6 +12772,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
         </Field>
+        <Field>
+          <Name>КлючовіСловаДляПошуку</Name>
+          <NameInTable>col_a2</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+          <IsFullTextSearch>1</IsFullTextSearch>
+        </Field>
       </Fields>
       <TabularParts>
         <TablePart>
@@ -12900,6 +13039,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
+        </Field>
+        <Field>
+          <Name>КлючовіСловаДляПошуку</Name>
+          <NameInTable>col_a2</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+          <IsFullTextSearch>1</IsFullTextSearch>
         </Field>
       </Fields>
       <TabularParts>
@@ -13201,6 +13350,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
+        </Field>
+        <Field>
+          <Name>КлючовіСловаДляПошуку</Name>
+          <NameInTable>col_a3</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+          <IsFullTextSearch>1</IsFullTextSearch>
         </Field>
       </Fields>
       <TabularParts>
@@ -13565,6 +13724,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         <Field>
           <Name>Коментар</Name>
           <NameInTable>col_b2</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+          <IsFullTextSearch>1</IsFullTextSearch>
+        </Field>
+        <Field>
+          <Name>КлючовіСловаДляПошуку</Name>
+          <NameInTable>col_a3</NameInTable>
           <Type>string</Type>
           <Desc>
           </Desc>
@@ -14033,6 +14202,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
         </Field>
+        <Field>
+          <Name>КлючовіСловаДляПошуку</Name>
+          <NameInTable>col_a7</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+          <IsFullTextSearch>1</IsFullTextSearch>
+        </Field>
       </Fields>
       <TabularParts>
         <TablePart>
@@ -14435,6 +14614,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
         </Field>
+        <Field>
+          <Name>КлючовіСловаДляПошуку</Name>
+          <NameInTable>col_a8</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+          <IsFullTextSearch>1</IsFullTextSearch>
+        </Field>
       </Fields>
       <TabularParts>
         <TablePart>
@@ -14734,6 +14923,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
+        </Field>
+        <Field>
+          <Name>КлючовіСловаДляПошуку</Name>
+          <NameInTable>col_a7</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+          <IsFullTextSearch>1</IsFullTextSearch>
         </Field>
       </Fields>
       <TabularParts>
@@ -15056,6 +15255,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
         </Field>
+        <Field>
+          <Name>КлючовіСловаДляПошуку</Name>
+          <NameInTable>col_a8</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+          <IsFullTextSearch>1</IsFullTextSearch>
+        </Field>
       </Fields>
       <TabularParts>
         <TablePart>
@@ -15360,6 +15569,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
+        </Field>
+        <Field>
+          <Name>КлючовіСловаДляПошуку</Name>
+          <NameInTable>col_a6</NameInTable>
+          <Type>string</Type>
+          <Desc>
+          </Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+          <IsFullTextSearch>1</IsFullTextSearch>
         </Field>
       </Fields>
       <TabularParts>
