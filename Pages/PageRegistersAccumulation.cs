@@ -53,6 +53,7 @@ namespace Configurator
         Entry entryTable = new Entry() { WidthRequest = 500 };
         TextView textViewDesc = new TextView();
         ComboBoxText comboBoxTypeReg = new ComboBoxText();
+        CheckButton checkButtonNoSummary = new CheckButton("Без підсумків");
 
         #endregion
 
@@ -149,6 +150,7 @@ namespace Configurator
             bCreateVirtualTable.Clicked += OnCreateVirtualTableClick;
 
             hBoxButtonCreateVirtualTable.PackStart(bCreateVirtualTable, false, false, 5);
+            hBoxButtonCreateVirtualTable.PackStart(checkButtonNoSummary, false, false, 5);
 
             //Табличні частини
             CreateTablePartList(vBox);
@@ -417,6 +419,7 @@ namespace Configurator
                 comboBoxTypeReg.Active = 0;
 
             textViewDesc.Buffer.Text = ConfRegister.Desc;
+            checkButtonNoSummary.Active = ConfRegister.NoSummary;
         }
 
         void FillAllowDocumentSpend()
@@ -461,6 +464,7 @@ namespace Configurator
             ConfRegister.Table = entryTable.Text;
             ConfRegister.TypeRegistersAccumulation = Enum.Parse<TypeRegistersAccumulation>(comboBoxTypeReg.ActiveId);
             ConfRegister.Desc = textViewDesc.Buffer.Text;
+            ConfRegister.NoSummary = checkButtonNoSummary.Active;
         }
 
         #endregion
@@ -905,7 +909,7 @@ SELECT
                 query += @$"
     {regName}.{{{tablePartName_Залишки}.{field.Name}}} AS {field.Name},";
             }
-            
+
             //Ресурси
             foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
                 query += @$"
@@ -959,15 +963,16 @@ HAVING";
         {
             ConfigurationObjectTablePart TablePart = CreateVirtualTable_Table("Залишки");
 
+            int index = 0;
             CreateVirtualTable_Field(TablePart, new ConfigurationObjectField("Період", "", "date", "", "", false, true));
 
             //Виміри
             foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
-                CreateVirtualTable_Field(TablePart, field);
+                CreateVirtualTable_Field(TablePart, field, "", ++index);
 
             //Ресурси
             foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
-                CreateVirtualTable_Field(TablePart, field);
+                CreateVirtualTable_Field(TablePart, field, "", ++index);
 
             CreateQueryBlock_Залишки(TablePart);
 
@@ -978,18 +983,19 @@ HAVING";
         {
             ConfigurationObjectTablePart TablePart = CreateVirtualTable_Table("ЗалишкиТаОбороти");
 
+            int index = 0;
             CreateVirtualTable_Field(TablePart, new ConfigurationObjectField("Період", "", "date", "", "", false, true));
 
             //Виміри
             foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
-                CreateVirtualTable_Field(TablePart, field);
+                CreateVirtualTable_Field(TablePart, field, "", ++index);
 
             //Ресурси
             foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
             {
-                CreateVirtualTable_Field(TablePart, field, "Прихід");
-                CreateVirtualTable_Field(TablePart, field, "Розхід");
-                CreateVirtualTable_Field(TablePart, field, "Залишок");
+                CreateVirtualTable_Field(TablePart, field, "Прихід", ++index);
+                CreateVirtualTable_Field(TablePart, field, "Розхід", ++index);
+                CreateVirtualTable_Field(TablePart, field, "Залишок", ++index);
             }
 
             CreateQueryBlock_ЗалишкиТаОбороти(TablePart);
@@ -1003,19 +1009,20 @@ HAVING";
         {
             ConfigurationObjectTablePart TablePart = CreateVirtualTable_Table("Обороти");
 
+            int index = 0;
             CreateVirtualTable_Field(TablePart, new ConfigurationObjectField("Період", "", "date", "", "", false, true));
 
             //Виміри
             foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
-                CreateVirtualTable_Field(TablePart, field);
+                CreateVirtualTable_Field(TablePart, field, "", ++index);
 
             //Ресурси
             foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
-                CreateVirtualTable_Field(TablePart, field);
+                CreateVirtualTable_Field(TablePart, field, "", ++index);
 
             //Реквізити
             foreach (ConfigurationObjectField field in ConfRegister.PropertyFields.Values)
-                CreateVirtualTable_Field(TablePart, field);
+                CreateVirtualTable_Field(TablePart, field, "", ++index);
 
             CreateQueryBlock_Обороти(TablePart);
         }
@@ -1028,13 +1035,15 @@ HAVING";
         {
             ConfigurationObjectTablePart TablePart = CreateVirtualTable_Table("Підсумки");
 
+            int index = -1;
+
             //Виміри
             foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
-                CreateVirtualTable_Field(TablePart, field);
+                CreateVirtualTable_Field(TablePart, field, "", ++index);
 
             //Ресурси
             foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
-                CreateVirtualTable_Field(TablePart, field);
+                CreateVirtualTable_Field(TablePart, field, "", ++index);
 
             CreateQueryBlock_Підсумки(TablePart, Залишки_TablePart);
         }
@@ -1050,12 +1059,27 @@ HAVING";
             return ConfRegister.TabularParts[tableName];
         }
 
-        void CreateVirtualTable_Field(ConfigurationObjectTablePart TablePart, ConfigurationObjectField field, string prefixName = "")
+        void CreateVirtualTable_Field(ConfigurationObjectTablePart TablePart, ConfigurationObjectField field, string prefixName = "", int index = -1)
         {
-            if (!TablePart.Fields.ContainsKey(field.Name + prefixName))
+            string fieldAndPrefix = field.Name + prefixName;
+
+            if (!TablePart.Fields.ContainsKey(fieldAndPrefix))
             {
                 string fieldColumnName = Configuration.GetNewUnigueColumnName(Program.Kernel!, TablePart.Table, TablePart.Fields);
-                TablePart.AppendField(new ConfigurationObjectField(field.Name + prefixName, fieldColumnName, field.Type, field.Pointer, field.Desc, false, field.IsIndex));
+
+                if (index > -1)
+                {
+                    List<KeyValuePair<string, ConfigurationObjectField>> listFields = TablePart.Fields.ToList();
+                    TablePart.Fields.Clear();
+
+                    listFields.Insert(index, new KeyValuePair<string, ConfigurationObjectField>(fieldAndPrefix,
+                        new ConfigurationObjectField(fieldAndPrefix, fieldColumnName, field.Type, field.Pointer, field.Desc, false, field.IsIndex)));
+
+                    foreach (KeyValuePair<string, ConfigurationObjectField> itemField in listFields)
+                        TablePart.AppendField(itemField.Value);
+                }
+                else
+                    TablePart.AppendField(new ConfigurationObjectField(fieldAndPrefix, fieldColumnName, field.Type, field.Pointer, field.Desc, false, field.IsIndex));
             }
         }
 
@@ -1067,7 +1091,9 @@ HAVING";
                     {
                         ConfigurationObjectTablePart Залишки_TablePart = CreateVirtualTable_Залишки();
                         CreateVirtualTable_ЗалишкиТаОбороти();
-                        CreateVirtualTable_Підсумки(Залишки_TablePart);
+
+                        if (!checkButtonNoSummary.Active)
+                            CreateVirtualTable_Підсумки(Залишки_TablePart);
 
                         break;
                     }
