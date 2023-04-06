@@ -311,7 +311,7 @@ namespace Configurator
                     xmlWriter.WriteAttributeString("name", configurationDirectories.Name);
                     xmlWriter.WriteAttributeString("tab", configurationDirectories.Table);
 
-                    WriteQuerySelect(xmlWriter, $@"SELECT uid{GetAllFields(configurationDirectories.Fields)} FROM {configurationDirectories.Table}");
+                    WriteQuerySelect(xmlWriter, $@"SELECT uid, deletion_label{GetAllFields(configurationDirectories.Fields)} FROM {configurationDirectories.Table}");
 
                     foreach (ConfigurationObjectTablePart tablePart in configurationDirectories.TabularParts.Values)
                     {
@@ -348,7 +348,7 @@ namespace Configurator
                     xmlWriter.WriteAttributeString("name", configurationDocuments.Name);
                     xmlWriter.WriteAttributeString("tab", configurationDocuments.Table);
 
-                    WriteQuerySelect(xmlWriter, $@"SELECT uid, spend, spend_date{GetAllFields(configurationDocuments.Fields)} FROM {configurationDocuments.Table}");
+                    WriteQuerySelect(xmlWriter, $@"SELECT uid, deletion_label, spend, spend_date{GetAllFields(configurationDocuments.Fields)} FROM {configurationDocuments.Table}");
 
                     foreach (ConfigurationObjectTablePart tablePart in configurationDocuments.TabularParts.Values)
                     {

@@ -24,4 +24,14 @@
     <BaseName>storage_and_trade</BaseName>
     <OtherParam />
   </Configuration>
+  <Configuration Select="False">
+    <Key>1d92367b-cf3a-4b18-9470-161a69e37d26</Key>
+    <Name>Новий *</Name>
+    <Server>localhost</Server>
+    <Port>5432</Port>
+    <Login>postgres</Login>
+    <Password>1</Password>
+    <BaseName>storage_and_trade_deletelabel</BaseName>
+    <OtherParam />
+  </Configuration>
 </root>
