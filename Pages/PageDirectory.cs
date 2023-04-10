@@ -213,7 +213,7 @@ class {entryName.Text}_Triggers
         
     }}
 
-    public static void SetDeletionLabel({entryName.Text}_Objest ДокументОбєкт, bool label)
+    public static void SetDeletionLabel({entryName.Text}_Objest ДовідникОбєкт, bool label)
     {{
         
     }}
