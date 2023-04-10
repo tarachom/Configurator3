@@ -53,6 +53,7 @@ namespace Configurator
         Entry entryCopying = new Entry() { WidthRequest = 500 };
         Entry entryBeforeSave = new Entry() { WidthRequest = 500 };
         Entry entryAfterSave = new Entry() { WidthRequest = 500 };
+        Entry entrySetDeletionLabel = new Entry() { WidthRequest = 500 };
         Entry entryBeforeDelete = new Entry() { WidthRequest = 500 };
         TextView textViewDesc = new TextView();
 
@@ -156,11 +157,18 @@ namespace Configurator
                 hBoxTrigerAfterSave.PackStart(new Label("Після запису:"), false, false, 5);
                 hBoxTrigerAfterSave.PackStart(entryAfterSave, false, false, 5);
 
+                //Перед встановлення мітки на виделення
+                HBox hBoxTrigerSetDeletionLabel = new HBox() { Halign = Align.End };
+                vBoxTriger.PackStart(hBoxTrigerSetDeletionLabel, false, false, 5);
+
+                hBoxTrigerSetDeletionLabel.PackStart(new Label("Встановлення мітки:"), false, false, 5);
+                hBoxTrigerSetDeletionLabel.PackStart(entrySetDeletionLabel, false, false, 5);
+
                 //Перед видаленням
                 HBox hBoxTrigerBeforeDelete = new HBox() { Halign = Align.End };
                 vBoxTriger.PackStart(hBoxTrigerBeforeDelete, false, false, 5);
 
-                hBoxTrigerBeforeDelete.PackStart(new Label("Перед видален.:"), false, false, 5);
+                hBoxTrigerBeforeDelete.PackStart(new Label("Перед видаленням:"), false, false, 5);
                 hBoxTrigerBeforeDelete.PackStart(entryBeforeDelete, false, false, 5);
 
                 //
@@ -179,6 +187,7 @@ namespace Configurator
                     entryCopying.Text = entryName.Text + "_Triggers.Copying";
                     entryBeforeSave.Text = entryName.Text + "_Triggers.BeforeSave";
                     entryAfterSave.Text = entryName.Text + "_Triggers.AfterSave";
+                    entrySetDeletionLabel.Text = entryName.Text + "_Triggers.SetDeletionLabel";
                     entryBeforeDelete.Text = entryName.Text + "_Triggers.BeforeDelete";
 
                     textViewCode.Buffer.Text = @$"
@@ -200,6 +209,11 @@ class {entryName.Text}_Triggers
     }}
 
     public static void AfterSave({entryName.Text}_Objest ДовідникОбєкт)
+    {{
+        
+    }}
+
+    public static void SetDeletionLabel({entryName.Text}_Objest ДокументОбєкт, bool label)
     {{
         
     }}
@@ -410,6 +424,7 @@ class {entryName.Text}_Triggers
             entryCopying.Text = ConfDirectory.TriggerFunctions.Copying;
             entryBeforeSave.Text = ConfDirectory.TriggerFunctions.BeforeSave;
             entryAfterSave.Text = ConfDirectory.TriggerFunctions.AfterSave;
+            entrySetDeletionLabel.Text = ConfDirectory.TriggerFunctions.SetDeletionLabel;
             entryBeforeDelete.Text = ConfDirectory.TriggerFunctions.BeforeDelete;
 
             FillFields();
@@ -445,6 +460,7 @@ class {entryName.Text}_Triggers
             ConfDirectory.TriggerFunctions.Copying = entryCopying.Text;
             ConfDirectory.TriggerFunctions.BeforeSave = entryBeforeSave.Text;
             ConfDirectory.TriggerFunctions.AfterSave = entryAfterSave.Text;
+            ConfDirectory.TriggerFunctions.SetDeletionLabel = entrySetDeletionLabel.Text;
             ConfDirectory.TriggerFunctions.BeforeDelete = entryBeforeDelete.Text;
         }
 

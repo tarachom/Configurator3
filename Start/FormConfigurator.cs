@@ -38,7 +38,12 @@ namespace Configurator
                 return Program.Kernel?.Conf;
             }
         }
+
+        // Список відритих віток
         List<string> TreeRowExpanded;
+
+        // Поточний рядок для позиціонування при перегрузці
+        TreePath? SelectionCurrentPath;
 
         #region Fields
 
@@ -432,6 +437,9 @@ namespace Configurator
                         TreeIter registersAccumulationIter = treeStore.AppendValues("Регістри накопичення");
                         LoadRegistersAccumulation(registersAccumulationIter);
                         IsExpand(registersAccumulationIter);
+
+                        if (SelectionCurrentPath != null)
+                            treeConfiguration.SetCursor(SelectionCurrentPath, treeConfiguration.Columns[0], false);
                     }
                 );
             }
@@ -899,9 +907,10 @@ namespace Configurator
                 return;
 
             string keyComposite = (string)treeConfiguration.Model.GetValue(iter, 2);
-
             if (String.IsNullOrEmpty(keyComposite) || keyComposite.IndexOf(".") == -1)
                 return;
+
+            SelectionCurrentPath = treeConfiguration.Model.GetPath(iter);
 
             string[] keySplit = keyComposite.Split(".");
             string block = keySplit[0];

@@ -723,6 +723,9 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники
 
         public void SetDeletionLabel(bool label = true)
         {
+            <xsl:if test="normalize-space(TriggerFunctions/SetDeletionLabel) != ''">
+                <xsl:value-of select="TriggerFunctions/SetDeletionLabel"/><xsl:text>(this, label);</xsl:text>      
+            </xsl:if>
             base.BaseDeletionLabel(label);
         }
 
@@ -1272,8 +1275,8 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи
 
         public void SetDeletionLabel(bool label = true)
         {
-            <xsl:if test="normalize-space(TriggerFunctions/BeforeDelete) != ''"><!-- !!!  -->
-                <xsl:value-of select="TriggerFunctions/BeforeDelete"/><xsl:text>(this);</xsl:text>      
+            <xsl:if test="normalize-space(TriggerFunctions/SetDeletionLabel) != ''">
+                <xsl:value-of select="TriggerFunctions/SetDeletionLabel"/><xsl:text>(this, label);</xsl:text>      
             </xsl:if>
             base.BaseDeletionLabel(label);
         }
