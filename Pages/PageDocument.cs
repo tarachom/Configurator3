@@ -285,8 +285,10 @@ namespace Configurator
                     entryBeforeDelete.Text = entryName.Text + "_Triggers.BeforeDelete";
 
                     string AutoNumCode = checkButtonAutoNum.Active ?
-                        $"ДокументОбєкт.Код = (++НумераціяДокументів.{entryName.Text}_Const).ToString(\"D6\");" : "";
+                        $"ДокументОбєкт.НомерДок = (++НумераціяДокументів.{entryName.Text}_Const).ToString(\"D8\");" : "";
 
+                    string NewCode = "ДокументОбєкт.ДатаДок = DateTime.Now;";
+                    
                     string CopyingCode = "ДокументОбєкт.Назва += \" - Копія\";";
 
                     textViewCode.Buffer.Text = @$"
@@ -295,6 +297,7 @@ class {entryName.Text}_Triggers
     public static void New({entryName.Text}_Objest ДокументОбєкт)
     {{
         {AutoNumCode}
+        {NewCode}
     }}
 
     public static void Copying({entryName.Text}_Objest ДокументОбєкт, {entryName.Text}_Objest Основа)
