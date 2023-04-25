@@ -209,7 +209,7 @@ namespace Configurator
             entryName.Text = ConfConstants.Name;
 
             if (IsNew)
-                entryColumn.Text = Configuration.GetNewUnigueColumnName(Program.Kernel!, "tab_constants", GeneralForm!.GetConstantsAllFields());
+                entryColumn.Text = Configuration.GetNewUnigueColumnName(Program.Kernel!, SpecialTables.Constants, GeneralForm!.GetConstantsAllFields());
             else
                 entryColumn.Text = ConfConstants.NameInTable;
 

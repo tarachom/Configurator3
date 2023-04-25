@@ -5,7 +5,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>24.04.2023 18:17:13</DateTimeSave>
+  <DateTimeSave>25.04.2023 14:28:28</DateTimeSave>
   <ConstantsBlocks>
     <ConstantsBlock>
       <Name>ЗначенняЗаЗамовчуванням</Name>
@@ -938,6 +938,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <Name>Організації</Name>
       <Table>tab_a01</Table>
       <Desc>Юридичні особи та підприємці нашої організації</Desc>
+      <AutoNum>0</AutoNum>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -1180,6 +1181,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <Name>Номенклатура</Name>
       <Table>tab_a03</Table>
       <Desc>Товари та послуги</Desc>
+      <AutoNum>1</AutoNum>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -1421,6 +1423,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <Name>Виробники</Name>
       <Table>tab_a04</Table>
       <Desc>Виробники</Desc>
+      <AutoNum>0</AutoNum>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -1511,6 +1514,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <Name>ВидиНоменклатури</Name>
       <Table>tab_a05</Table>
       <Desc>Види номенклатури</Desc>
+      <AutoNum>0</AutoNum>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -1623,6 +1627,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <Name>ПакуванняОдиниціВиміру</Name>
       <Table>tab_a06</Table>
       <Desc>Одиниці виміру</Desc>
+      <AutoNum>0</AutoNum>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -1733,6 +1738,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <Name>Валюти</Name>
       <Table>tab_a07</Table>
       <Desc>Валюти</Desc>
+      <AutoNum>0</AutoNum>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -1901,6 +1907,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <Name>Контрагенти</Name>
       <Table>tab_a08</Table>
       <Desc>Контрагенти</Desc>
+      <AutoNum>0</AutoNum>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -2160,6 +2167,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <Name>Склади</Name>
       <Table>tab_a10</Table>
       <Desc>Склади</Desc>
+      <AutoNum>0</AutoNum>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -2416,6 +2424,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <Name>ВидиЦін</Name>
       <Table>tab_a12</Table>
       <Desc>Види цін</Desc>
+      <AutoNum>0</AutoNum>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -2525,6 +2534,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <Name>ВидиЦінПостачальників</Name>
       <Table>tab_a13</Table>
       <Desc>Види цін постачальників</Desc>
+      <AutoNum>0</AutoNum>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -2626,6 +2636,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <Name>Користувачі</Name>
       <Table>tab_a14</Table>
       <Desc>Користувачі</Desc>
+      <AutoNum>0</AutoNum>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -2809,6 +2820,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <Name>ФізичніОсоби</Name>
       <Table>tab_a16</Table>
       <Desc>Фізичні особи</Desc>
+      <AutoNum>0</AutoNum>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -2993,6 +3005,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <Name>СтруктураПідприємства</Name>
       <Table>tab_a18</Table>
       <Desc>Структура підприємства</Desc>
+      <AutoNum>0</AutoNum>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -3084,6 +3097,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <Name>КраїниСвіту</Name>
       <Table>tab_a19</Table>
       <Desc>Країни світу</Desc>
+      <AutoNum>0</AutoNum>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -3174,6 +3188,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <Name>Файли</Name>
       <Table>tab_a20</Table>
       <Desc>Файли</Desc>
+      <AutoNum>0</AutoNum>
       <Fields>
         <Field>
           <Name>Код</Name>
@@ -3324,6 +3339,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <Name>ХарактеристикиНоменклатури</Name>
       <Table>tab_a21</Table>
       <Desc>Характеристики номенклатури</Desc>
+      <AutoNum>0</AutoNum>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -3471,6 +3487,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <Name>Номенклатура_Папки</Name>
       <Table>tab_a22</Table>
       <Desc>Номенклатура папки</Desc>
+      <AutoNum>0</AutoNum>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -3517,6 +3534,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <Name>Контрагенти_Папки</Name>
       <Table>tab_a23</Table>
       <Desc>Контрагенти папки</Desc>
+      <AutoNum>0</AutoNum>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -3563,6 +3581,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <Name>Склади_Папки</Name>
       <Table>tab_a24</Table>
       <Desc>Склади папки</Desc>
+      <AutoNum>0</AutoNum>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -3609,6 +3628,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <Name>Каси</Name>
       <Table>tab_a26</Table>
       <Desc>Каси</Desc>
+      <AutoNum>0</AutoNum>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -3757,6 +3777,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <Name>БанківськіРахункиОрганізацій</Name>
       <Table>tab_a27</Table>
       <Desc>Банківські рахунки організацій</Desc>
+      <AutoNum>0</AutoNum>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -3997,6 +4018,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <Table>tab_a28</Table>
       <Desc>Договори контрагентів. 
 Договори підпорядковані контрагенту</Desc>
+      <AutoNum>0</AutoNum>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -4319,6 +4341,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <Name>БанківськіРахункиКонтрагентів</Name>
       <Table>tab_a29</Table>
       <Desc>Банківські рахунки контрагентів</Desc>
+      <AutoNum>0</AutoNum>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -4577,6 +4600,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <Name>СтаттяРухуКоштів</Name>
       <Table>tab_a45</Table>
       <Desc>Стаття руху коштів</Desc>
+      <AutoNum>0</AutoNum>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -4727,6 +4751,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <Table>tab_b02</Table>
       <Desc>
       </Desc>
+      <AutoNum>0</AutoNum>
       <Fields>
         <Field>
           <Name>Номер</Name>
@@ -4808,6 +4833,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <Name>ПартіяТоварівКомпозит</Name>
       <Table>tab_b06</Table>
       <Desc>Композитний тип для регістру ПартіїТоварів</Desc>
+      <AutoNum>0</AutoNum>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -4988,6 +5014,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <Table>tab_b13</Table>
       <Desc>
       </Desc>
+      <AutoNum>0</AutoNum>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -5135,6 +5162,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <Table>tab_a39</Table>
       <Desc>
       </Desc>
+      <AutoNum>0</AutoNum>
       <Fields>
         <Field>
           <Name>Код</Name>
@@ -5658,6 +5686,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
 Тобто Склад може складатися з багатьох приміщень чи кімнат. 
 
 Підпорядковується складу</Desc>
+      <AutoNum>0</AutoNum>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -5788,6 +5817,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <Desc>Складська комірка це адресне місце зберігання в приміщенні
 
 Підпорядковується приміщенню</Desc>
+      <AutoNum>0</AutoNum>
       <Fields>
         <Field>
           <Name>Папка</Name>
@@ -6067,6 +6097,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
 Підпорядковужться приміщенню
 --------------------------
 Не використовується </Desc>
+      <AutoNum>0</AutoNum>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -6156,6 +6187,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <Name>ТипорозміриКомірок</Name>
       <Table>tab_a75</Table>
       <Desc>Опис комірки по параметрах</Desc>
+      <AutoNum>0</AutoNum>
       <Fields>
         <Field>
           <Name>Висота</Name>
@@ -6318,6 +6350,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <Table>tab_a76</Table>
       <Desc>
       </Desc>
+      <AutoNum>0</AutoNum>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -6375,6 +6408,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <Name>Блокнот</Name>
       <Table>tab_a41</Table>
       <Desc>Блокнот для записів</Desc>
+      <AutoNum>0</AutoNum>
       <Fields>
         <Field>
           <Name>Код</Name>

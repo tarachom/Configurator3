@@ -59,6 +59,7 @@ namespace Configurator
         Entry entrySetDeletionLabel = new Entry() { WidthRequest = 500 };
         Entry entryBeforeDelete = new Entry() { WidthRequest = 500 };
         TextView textViewDesc = new TextView();
+        CheckButton checkButtonAutoNum = new CheckButton("Автоматична нумерація");
 
         #endregion
 
@@ -118,6 +119,52 @@ namespace Configurator
             scrollTextView.Add(textViewDesc);
 
             hBoxDesc.PackStart(scrollTextView, false, false, 5);
+
+            //Автоматична нумерація
+            {
+                Expander expanderAutoNum = new Expander("Автоматична нумерація");
+                vBox.PackStart(expanderAutoNum, false, false, 5);
+
+                VBox vBoxAutoNum = new VBox();
+                expanderAutoNum.Add(vBoxAutoNum);
+
+                //Заголовок
+                HBox hBoxAutoNumInfo = new HBox() { Halign = Align.Start };
+                vBoxAutoNum.PackStart(hBoxAutoNumInfo, false, false, 5);
+                hBoxAutoNumInfo.PackStart(new Label(
+                    "Для автоматичної нумерації використовується константа в блоці <b>НумераціяДокументів</b>. " +
+                    "Назва константи - це назва документу, тому рекомендується спочатку записати документ, " +
+                    "а тоді вже включати автоматичну нумерацію.")
+                { Wrap = true, UseMarkup = true }, false, false, 5);
+
+                //Кнопка
+                HBox hBoxAutoNum = new HBox() { Halign = Align.Start };
+                vBoxAutoNum.PackStart(hBoxAutoNum, false, false, 5);
+                hBoxAutoNum.PackStart(checkButtonAutoNum, false, false, 5);
+
+                Button buttonAddConstAutoNum = new Button("Створити константу");
+                hBoxAutoNum.PackStart(buttonAddConstAutoNum, false, false, 5);
+
+                buttonAddConstAutoNum.Clicked += (object? sender, EventArgs args) =>
+                {
+                    if (Conf != null)
+                    {
+                        if (!Conf.ConstantsBlock.ContainsKey("НумераціяДокументів"))
+                            Conf.AppendConstantsBlock(new ConfigurationConstantsBlock("НумераціяДокументів", "Нумерація документів"));
+
+                        ConfigurationConstantsBlock blockAutoNum = Conf!.ConstantsBlock["НумераціяДокументів"];
+
+                        //Назва поля в таблиці
+                        string nameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!, SpecialTables.Constants, GeneralForm!.GetConstantsAllFields());
+
+                        if (!blockAutoNum.Constants.ContainsKey(entryName.Text))
+                            blockAutoNum.AppendConstant(new ConfigurationConstants(entryName.Text, nameInTable, "integer", blockAutoNum));
+
+                        checkButtonAutoNum.Active = true;
+                        GeneralForm?.LoadTreeAsync();
+                    }
+                };
+            }
 
             //Регістри накопичення
             {
@@ -237,17 +284,22 @@ namespace Configurator
                     entrySetDeletionLabel.Text = entryName.Text + "_Triggers.SetDeletionLabel";
                     entryBeforeDelete.Text = entryName.Text + "_Triggers.BeforeDelete";
 
+                    string AutoNumCode = checkButtonAutoNum.Active ?
+                        $"ДокументОбєкт.Код = (++НумераціяДокументів.{entryName.Text}_Const).ToString(\"D6\");" : "";
+
+                    string CopyingCode = "ДокументОбєкт.Назва += \" - Копія\";";
+
                     textViewCode.Buffer.Text = @$"
 class {entryName.Text}_Triggers
 {{
     public static void New({entryName.Text}_Objest ДокументОбєкт)
     {{
-        
+        {AutoNumCode}
     }}
 
     public static void Copying({entryName.Text}_Objest ДокументОбєкт, {entryName.Text}_Objest Основа)
     {{
-        
+        {CopyingCode}
     }}
 
     public static void BeforeSave({entryName.Text}_Objest ДокументОбєкт)
@@ -478,6 +530,8 @@ class {entryName.Text}_Triggers
             entrySetDeletionLabel.Text = ConfDocument.TriggerFunctions.SetDeletionLabel;
             entryBeforeDelete.Text = ConfDocument.TriggerFunctions.BeforeDelete;
 
+            checkButtonAutoNum.Active = ConfDocument.AutomaticNumeration;
+
             FillAllowRegAccum();
             FillFields();
             FillTabularParts();
@@ -528,6 +582,8 @@ class {entryName.Text}_Triggers
             ConfDocument.TriggerFunctions.AfterSave = entryAfterSave.Text;
             ConfDocument.TriggerFunctions.SetDeletionLabel = entrySetDeletionLabel.Text;
             ConfDocument.TriggerFunctions.BeforeDelete = entryBeforeDelete.Text;
+
+            ConfDocument.AutomaticNumeration = checkButtonAutoNum.Active;
 
             //Доспупні регістри
             ConfDocument.AllowRegisterAccumulation.Clear();
