@@ -348,7 +348,6 @@ namespace Configurator
             ApendLine(" --> " + Conf.PathToCopyXmlFileConfiguration + "\n");
 
             string fullPathToCopyXmlFileConguratifion = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, Conf.PathToCopyXmlFileConfiguration);
-
             Conf!.PathToTempXmlFileConfiguration = Configuration.GetTempPathToConfigurationFile(Conf.PathToXmlFileConfiguration, Conf!.PathToTempXmlFileConfiguration);
 
             ApendLine("2. Збереження конфігурації у тимчасовий файл");

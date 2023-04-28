@@ -157,18 +157,14 @@ namespace Configurator
 
         void FillListBoxDataBase(string selectConfKey = "")
         {
-            foreach (Widget child in listBox.Children)
-                listBox.Remove(child);
+            for (int i = listBox.Children.Length - 1; i >= 0; i--)
+                listBox.Remove(listBox.Children[i]);
 
             foreach (ConfigurationParam itemConfigurationParam in ConfigurationParamCollection.ListConfigurationParam!)
             {
-                ListBoxRow row = new ListBoxRow();
-                row.Name = itemConfigurationParam.ConfigurationKey;
+                ListBoxRow row = new ListBoxRow() { Name = itemConfigurationParam.ConfigurationKey };
+                row.Add(new Label(itemConfigurationParam.ToString()) { Halign = Align.Start });
 
-                Label itemLabel = new Label(itemConfigurationParam.ToString());
-                itemLabel.Halign = Align.Start;
-
-                row.Add(itemLabel);
                 listBox.Add(row);
 
                 if (!String.IsNullOrEmpty(selectConfKey))
@@ -190,8 +186,6 @@ namespace Configurator
                 ListBoxRow row = (ListBoxRow)listBox.Children[0];
                 listBox.SelectRow(row);
             }
-
-            //scrolledWindowListBox.Vadjustment.Value = scrolledWindowListBox.Vadjustment.Upper;
         }
 
         void CallBackUpdate(ConfigurationParam itemConfigurationParam)
@@ -300,7 +294,7 @@ namespace Configurator
                     }
             }
         }
-        
+
         void OnButtonEditClicked(object? sender, EventArgs args)
         {
             ListBoxRow[] selectedRows = listBox.SelectedRows;
