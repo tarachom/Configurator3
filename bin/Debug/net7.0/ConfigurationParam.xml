@@ -14,24 +14,4 @@
       <Param name="CompileProgramPath">/home/tarachom/Projects/StorageAndTrade3/bin/Debug/net7.0/</Param>
     </OtherParam>
   </Configuration>
-  <Configuration Select="False">
-    <Key>0475b27c-f0ba-4f71-875b-841e85745135</Key>
-    <Name>Демо онлайн - amazonaws.com</Name>
-    <Server>database-1.cgmsfs5rvp68.us-east-1.rds.amazonaws.com</Server>
-    <Port>5432</Port>
-    <Login>postgres</Login>
-    <Password>12345678</Password>
-    <BaseName>storage_and_trade</BaseName>
-    <OtherParam />
-  </Configuration>
-  <Configuration Select="False">
-    <Key>1d92367b-cf3a-4b18-9470-161a69e37d26</Key>
-    <Name>Новий *</Name>
-    <Server>localhost</Server>
-    <Port>5432</Port>
-    <Login>postgres</Login>
-    <Password>1</Password>
-    <BaseName>storage_and_trade_deletelabel</BaseName>
-    <OtherParam />
-  </Configuration>
 </root>
