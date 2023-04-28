@@ -49,6 +49,7 @@ namespace Configurator
         ListBox listBoxAllowRegAccum = new ListBox() { SelectionMode = SelectionMode.Single };
 
         Entry entryName = new Entry() { WidthRequest = 500 };
+        Entry entryFullName = new Entry() { WidthRequest = 500 };
         Entry entryTable = new Entry() { WidthRequest = 500 };
         Entry entrySpend = new Entry() { WidthRequest = 500 };
         Entry entryClearSpend = new Entry() { WidthRequest = 500 };
@@ -58,7 +59,7 @@ namespace Configurator
         Entry entryAfterSave = new Entry() { WidthRequest = 500 };
         Entry entrySetDeletionLabel = new Entry() { WidthRequest = 500 };
         Entry entryBeforeDelete = new Entry() { WidthRequest = 500 };
-        TextView textViewDesc = new TextView();
+        TextView textViewDesc = new TextView() { WrapMode = WrapMode.Word };
         CheckButton checkButtonAutoNum = new CheckButton("Автоматична нумерація");
 
         #endregion
@@ -100,6 +101,13 @@ namespace Configurator
 
             hBoxName.PackStart(new Label("Назва:"), false, false, 5);
             hBoxName.PackStart(entryName, false, false, 5);
+
+            //Повна Назва
+            HBox hBoxFullName = new HBox() { Halign = Align.End };
+            vBox.PackStart(hBoxFullName, false, false, 5);
+
+            hBoxFullName.PackStart(new Label("Повна назва:"), false, false, 5);
+            hBoxFullName.PackStart(entryFullName, false, false, 5);
 
             //Таблиця
             HBox hBoxTable = new HBox() { Halign = Align.End };
@@ -191,14 +199,14 @@ namespace Configurator
                 hBoxAllowRegAcumm.PackStart(scrollAllowList, true, true, 5);
             }
 
-            //Функції та тригери
+            Expander expanderFuncAndTriger = new Expander("Функції та тригери");
+            vBox.PackStart(expanderFuncAndTriger, false, false, 5);
+
+            VBox vBoxFunc = new VBox();
+            expanderFuncAndTriger.Add(vBoxFunc);
+
+            //Функції
             {
-                Expander expanderFuncAndTriger = new Expander("Функції та тригери");
-                vBox.PackStart(expanderFuncAndTriger, false, false, 5);
-
-                VBox vBoxFunc = new VBox();
-                expanderFuncAndTriger.Add(vBoxFunc);
-
                 //Заголовок блоку Функції
                 HBox hBoxSpendInfo = new HBox() { Halign = Align.Center };
                 vBoxFunc.PackStart(hBoxSpendInfo, false, false, 5);
@@ -218,6 +226,67 @@ namespace Configurator
                 hBoxClearSpend.PackStart(new Label("Очищення:"), false, false, 5);
                 hBoxClearSpend.PackStart(entryClearSpend, false, false, 5);
 
+                //
+                // Конструктор для генерування класу проведення
+                //
+
+                TextView textViewCode = new TextView();
+
+                HBox hBoxTrigerConstructorSpend = new HBox() { Halign = Align.Center };
+                vBoxFunc.PackStart(hBoxTrigerConstructorSpend, false, false, 5);
+
+                Button buttonConstructorSpend = new Button("Конструктор");
+                buttonConstructorSpend.Clicked += (object? sender, EventArgs args) =>
+                {
+                    entrySpend.Text = entryName.Text + "_SpendTheDocument.Spend";
+                    entryClearSpend.Text = entryName.Text + "_SpendTheDocument.ClearSpend";
+
+                    textViewCode.Buffer.Text = @$"
+class {entryName.Text}_SpendTheDocument
+{{
+    public static bool Spend({entryName.Text}_Objest ДокументОбєкт)
+    {{
+        try
+        {{
+            // код проведення документу
+
+            return true;
+        }}
+        catch (Exception ex)
+        {{
+            //СпільніФункції.ДокументНеПроводиться(ДокументОбєкт, ДокументОбєкт.Назва, ex.Message);
+            {entryName.Text}_SpendTheDocument.ClearSpend(ДокументОбєкт);
+            return false;
+        }}
+    }}
+
+    public static void ClearSpend({entryName.Text}_Objest ДокументОбєкт)
+    {{
+        // код очищення проводок
+    }}
+}}
+";
+
+                    textViewCode.Buffer.SelectRange(textViewCode.Buffer.StartIter, textViewCode.Buffer.EndIter);
+                    textViewCode.GrabFocus();
+                };
+
+                hBoxTrigerConstructorSpend.PackStart(buttonConstructorSpend, false, false, 5);
+
+                //Code C#
+
+                HBox hBoxTrigerCode = new HBox() { Halign = Align.End };
+                vBoxFunc.PackStart(hBoxTrigerCode, false, false, 5);
+
+                ScrolledWindow scrollCode = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 650, HeightRequest = 200 };
+                scrollCode.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+                scrollCode.Add(textViewCode);
+
+                hBoxTrigerCode.PackStart(scrollCode, false, false, 5);
+            }
+
+            //Тригери
+            {
                 //Заголовок блоку Тригери
                 HBox hBoxTrigerInfo = new HBox() { Halign = Align.Center };
                 vBoxFunc.PackStart(hBoxTrigerInfo, false, false, 5);
@@ -288,7 +357,7 @@ namespace Configurator
                         $"ДокументОбєкт.НомерДок = (++НумераціяДокументів.{entryName.Text}_Const).ToString(\"D8\");" : "";
 
                     string NewCode = "ДокументОбєкт.ДатаДок = DateTime.Now;";
-                    
+
                     string CopyingCode = "ДокументОбєкт.Назва += \" - Копія\";";
 
                     textViewCode.Buffer.Text = @$"
@@ -307,7 +376,7 @@ class {entryName.Text}_Triggers
 
     public static void BeforeSave({entryName.Text}_Objest ДокументОбєкт)
     {{
-        
+        ДокументОбєкт.Назва = $""{{{entryName.Text}_Const.FULLNAME}} №{{ДокументОбєкт.НомерДок}} від {{ДокументОбєкт.ДатаДок.ToShortDateString()}}"";
     }}
 
     public static void AfterSave({entryName.Text}_Objest ДокументОбєкт)
@@ -325,7 +394,10 @@ class {entryName.Text}_Triggers
         
     }}
 }}
-                    ";
+";
+
+                    textViewCode.Buffer.SelectRange(textViewCode.Buffer.StartIter, textViewCode.Buffer.EndIter);
+                    textViewCode.GrabFocus();
                 };
 
                 hBoxTrigerConstructor.PackStart(buttonConstructor, false, false, 5);
@@ -335,7 +407,7 @@ class {entryName.Text}_Triggers
                 HBox hBoxTrigerCode = new HBox() { Halign = Align.End };
                 vBoxFunc.PackStart(hBoxTrigerCode, false, false, 5);
 
-                ScrolledWindow scrollCode = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 500, HeightRequest = 200 };
+                ScrolledWindow scrollCode = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 650, HeightRequest = 200 };
                 scrollCode.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
                 scrollCode.Add(textViewCode);
 
@@ -506,6 +578,7 @@ class {entryName.Text}_Triggers
         public void SetValue()
         {
             entryName.Text = ConfDocument.Name;
+            entryFullName.Text = ConfDocument.FullName;
 
             if (IsNew)
             {
@@ -573,6 +646,7 @@ class {entryName.Text}_Triggers
         void GetValue()
         {
             ConfDocument.Name = entryName.Text;
+            ConfDocument.FullName = entryFullName.Text;
             ConfDocument.Table = entryTable.Text;
             ConfDocument.Desc = textViewDesc.Buffer.Text;
 

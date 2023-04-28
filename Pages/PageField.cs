@@ -49,7 +49,7 @@ namespace Configurator
 
         Entry entryName = new Entry() { WidthRequest = 500 };
         Entry entryColumn = new Entry() { WidthRequest = 500 };
-        TextView textViewDesc = new TextView();
+        TextView textViewDesc = new TextView() { WrapMode = WrapMode.Word };
         ComboBoxText comboBoxType = new ComboBoxText();
         ComboBoxText comboBoxPointer = new ComboBoxText();
         ComboBoxText comboBoxEnum = new ComboBoxText();

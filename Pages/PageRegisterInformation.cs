@@ -48,8 +48,9 @@ namespace Configurator
         ListBox listBoxPropertyFields = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxTabularList = new ListBox() { SelectionMode = SelectionMode.Single };
         Entry entryName = new Entry() { WidthRequest = 500 };
+        Entry entryFullName = new Entry() { WidthRequest = 500 };
         Entry entryTable = new Entry() { WidthRequest = 500 };
-        TextView textViewDesc = new TextView();
+        TextView textViewDesc = new TextView() { WrapMode = WrapMode.Word };
 
         #endregion
 
@@ -110,6 +111,13 @@ namespace Configurator
 
             hBoxName.PackStart(new Label("Назва:"), false, false, 5);
             hBoxName.PackStart(entryName, false, false, 5);
+
+            //Повна Назва
+            HBox hBoxFullName = new HBox() { Halign = Align.End };
+            vBox.PackStart(hBoxFullName, false, false, 5);
+
+            hBoxFullName.PackStart(new Label("Повна назва:"), false, false, 5);
+            hBoxFullName.PackStart(entryFullName, false, false, 5);
 
             //Таблиця
             HBox hBoxTable = new HBox() { Halign = Align.End };
@@ -332,6 +340,7 @@ namespace Configurator
             FillTabularList();
 
             entryName.Text = ConfRegister.Name;
+            entryFullName.Text = ConfRegister.FullName;
 
             if (IsNew)
                 entryTable.Text = Configuration.GetNewUnigueTableName(Program.Kernel!);
@@ -368,6 +377,7 @@ namespace Configurator
         void GetValue()
         {
             ConfRegister.Name = entryName.Text;
+            ConfRegister.FullName = entryFullName.Text;
             ConfRegister.Table = entryTable.Text;
             ConfRegister.Desc = textViewDesc.Buffer.Text;
         }

@@ -46,7 +46,7 @@ namespace Configurator
         #region Fields
 
         Entry entryKey = new Entry() { WidthRequest = 800 };
-        TextView textViewQuery = new TextView();
+        TextView textViewQuery = new TextView() { WrapMode = WrapMode.Word };
 
         #endregion
 

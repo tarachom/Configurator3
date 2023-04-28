@@ -45,7 +45,7 @@ namespace Configurator
 
         ListBox listBoxFields = new ListBox() { SelectionMode = SelectionMode.Single };
         Entry entryName = new Entry() { WidthRequest = 500 };
-        TextView textViewDesc = new TextView();
+        TextView textViewDesc = new TextView() { WrapMode = WrapMode.Word };
 
         #endregion
 

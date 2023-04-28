@@ -44,7 +44,7 @@ namespace Configurator
         Entry entryName = new Entry() { WidthRequest = 500 };
         Entry entryNameSpace = new Entry() { WidthRequest = 500 };
         Entry entryAutor = new Entry() { WidthRequest = 500 };
-        TextView textViewDesc = new TextView();
+        TextView textViewDesc = new TextView() { WrapMode = WrapMode.Word };
 
         #endregion
 

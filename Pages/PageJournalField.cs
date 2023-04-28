@@ -46,7 +46,7 @@ namespace Configurator
         #region Fields
 
         Entry entryName = new Entry() { WidthRequest = 500 };
-        TextView textViewDesc = new TextView();
+        TextView textViewDesc = new TextView() { WrapMode = WrapMode.Word };
         Entry entryType = new Entry();
         CheckButton checkButtonSort = new CheckButton("Сортувати");
         CheckButton checkButtonWherePeriod = new CheckButton("Відбір по періоду");

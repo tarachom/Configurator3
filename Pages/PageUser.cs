@@ -39,7 +39,7 @@ namespace Configurator
         Entry entryLogin = new Entry() { WidthRequest = 500 };
         Entry entryName = new Entry() { WidthRequest = 500 };
         Entry entryPassword = new Entry() { WidthRequest = 500 };
-        TextView textViewInfo = new TextView();
+        TextView textViewInfo = new TextView() { WrapMode = WrapMode.Word };
 
         #endregion
 

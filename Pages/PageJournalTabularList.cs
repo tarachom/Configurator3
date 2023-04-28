@@ -61,7 +61,7 @@ namespace Configurator
 
         TreeView treeViewFields;
         Entry entryName = new Entry() { WidthRequest = 250, Sensitive = false };
-        TextView textViewDesc = new TextView();
+        TextView textViewDesc = new TextView() { WrapMode = WrapMode.Word };
 
         #endregion
 

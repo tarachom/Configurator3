@@ -48,6 +48,7 @@ namespace Configurator
         ListBox listBoxTabularList = new ListBox() { SelectionMode = SelectionMode.Single };
 
         Entry entryName = new Entry() { WidthRequest = 500 };
+        Entry entryFullName = new Entry() { WidthRequest = 500 };
         Entry entryTable = new Entry() { WidthRequest = 500 };
         Entry entryNew = new Entry() { WidthRequest = 500 };
         Entry entryCopying = new Entry() { WidthRequest = 500 };
@@ -55,7 +56,7 @@ namespace Configurator
         Entry entryAfterSave = new Entry() { WidthRequest = 500 };
         Entry entrySetDeletionLabel = new Entry() { WidthRequest = 500 };
         Entry entryBeforeDelete = new Entry() { WidthRequest = 500 };
-        TextView textViewDesc = new TextView();
+        TextView textViewDesc = new TextView() { WrapMode = WrapMode.Word };
         CheckButton checkButtonAutoNum = new CheckButton("Автоматична нумерація");
 
         #endregion
@@ -98,6 +99,13 @@ namespace Configurator
             hBoxName.PackStart(new Label("Назва:"), false, false, 5);
             hBoxName.PackStart(entryName, false, false, 5);
 
+            //Повна Назва
+            HBox hBoxFullName = new HBox() { Halign = Align.End };
+            vBox.PackStart(hBoxFullName, false, false, 5);
+
+            hBoxFullName.PackStart(new Label("Повна назва:"), false, false, 5);
+            hBoxFullName.PackStart(entryFullName, false, false, 5);
+
             //Таблиця
             HBox hBoxTable = new HBox() { Halign = Align.End };
             vBox.PackStart(hBoxTable, false, false, 5);
@@ -131,7 +139,8 @@ namespace Configurator
                 hBoxAutoNumInfo.PackStart(new Label(
                     "Для автоматичної нумерації використовується константа в блоці <b>НумераціяДовідників</b>. " +
                     "Назва константи - це назва довідника, тому рекомендується спочатку записати довідник, " +
-                    "а тоді вже включати автоматичну нумерацію.") { Wrap = true, UseMarkup = true }, false, false, 5);
+                    "а тоді вже включати автоматичну нумерацію.")
+                { Wrap = true, UseMarkup = true }, false, false, 5);
 
                 //Кнопка
                 HBox hBoxAutoNum = new HBox() { Halign = Align.Start };
@@ -275,6 +284,9 @@ class {entryName.Text}_Triggers
     }}
 }}
                     ";
+
+                    textViewCode.Buffer.SelectRange(textViewCode.Buffer.StartIter, textViewCode.Buffer.EndIter);
+                    textViewCode.GrabFocus();
                 };
 
                 hBoxTrigerConstructor.PackStart(buttonConstructor, false, false, 5);
@@ -284,7 +296,7 @@ class {entryName.Text}_Triggers
                 HBox hBoxTrigerCode = new HBox() { Halign = Align.End };
                 vBoxTriger.PackStart(hBoxTrigerCode, false, false, 5);
 
-                ScrolledWindow scrollCode = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 500, HeightRequest = 200 };
+                ScrolledWindow scrollCode = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 650, HeightRequest = 200 };
                 scrollCode.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
                 scrollCode.Add(textViewCode);
 
@@ -455,6 +467,7 @@ class {entryName.Text}_Triggers
         public void SetValue()
         {
             entryName.Text = ConfDirectory.Name;
+            entryFullName.Text = ConfDirectory.FullName;
 
             if (IsNew)
             {
@@ -506,6 +519,7 @@ class {entryName.Text}_Triggers
         void GetValue()
         {
             ConfDirectory.Name = entryName.Text;
+            ConfDirectory.FullName = entryFullName.Text;
             ConfDirectory.Table = entryTable.Text;
             ConfDirectory.Desc = textViewDesc.Buffer.Text;
 
