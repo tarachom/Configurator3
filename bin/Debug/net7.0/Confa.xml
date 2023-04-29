@@ -5,7 +5,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>28.04.2023 15:40:32</DateTimeSave>
+  <DateTimeSave>29.04.2023 07:55:49</DateTimeSave>
   <ConstantsBlocks>
     <ConstantsBlock>
       <Name>ЗначенняЗаЗамовчуванням</Name>
@@ -17038,25 +17038,82 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </Field>
       </Fields>
       <AllowDocument>
-        <Name>ЗамовленняПостачальнику</Name>
-        <Name>ПоступленняТоварівТаПослуг</Name>
-        <Name>ЗамовленняКлієнта</Name>
-        <Name>РеалізаціяТоварівТаПослуг</Name>
-        <Name>ВстановленняЦінНоменклатури</Name>
-        <Name>ПрихіднийКасовийОрдер</Name>
-        <Name>РозхіднийКасовийОрдер</Name>
-        <Name>ПереміщенняТоварів</Name>
-        <Name>ПоверненняТоварівПостачальнику</Name>
-        <Name>ПоверненняТоварівВідКлієнта</Name>
-        <Name>АктВиконанихРобіт</Name>
-        <Name>ВведенняЗалишків</Name>
-        <Name>ПсуванняТоварів</Name>
-        <Name>ВнутрішнєСпоживанняТоварів</Name>
-        <Name>РахунокФактура</Name>
-        <Name>РозміщенняТоварівНаСкладі</Name>
-        <Name>ПереміщенняТоварівНаСкладі</Name>
-        <Name>ЗбіркаТоварівНаСкладі</Name>
-        <Name>РозміщенняНоменклатуриПоКоміркам</Name>
+        <Item>
+          <Name>ЗамовленняПостачальнику</Name>
+          <FullName>Замовлення постачальнику</FullName>
+        </Item>
+        <Item>
+          <Name>ПоступленняТоварівТаПослуг</Name>
+          <FullName>Поступлення товарів та послуг</FullName>
+        </Item>
+        <Item>
+          <Name>ЗамовленняКлієнта</Name>
+          <FullName>Замовлення клієнта</FullName>
+        </Item>
+        <Item>
+          <Name>РеалізаціяТоварівТаПослуг</Name>
+          <FullName>Реалізація товарів та послуг</FullName>
+        </Item>
+        <Item>
+          <Name>ВстановленняЦінНоменклатури</Name>
+          <FullName>Встановлення цін номенклатури</FullName>
+        </Item>
+        <Item>
+          <Name>ПрихіднийКасовийОрдер</Name>
+          <FullName>Прихідний касовий ордер</FullName>
+        </Item>
+        <Item>
+          <Name>РозхіднийКасовийОрдер</Name>
+          <FullName>Розхідний касовий ордер</FullName>
+        </Item>
+        <Item>
+          <Name>ПереміщенняТоварів</Name>
+          <FullName>Переміщення товарів</FullName>
+        </Item>
+        <Item>
+          <Name>ПоверненняТоварівПостачальнику</Name>
+          <FullName>Повернення товарів постачальнику</FullName>
+        </Item>
+        <Item>
+          <Name>ПоверненняТоварівВідКлієнта</Name>
+          <FullName>Повернення товарів від клієнта</FullName>
+        </Item>
+        <Item>
+          <Name>АктВиконанихРобіт</Name>
+          <FullName>Акт виконаних робіт</FullName>
+        </Item>
+        <Item>
+          <Name>ВведенняЗалишків</Name>
+          <FullName>Введення залишків</FullName>
+        </Item>
+        <Item>
+          <Name>ПсуванняТоварів</Name>
+          <FullName>Псування товарів</FullName>
+        </Item>
+        <Item>
+          <Name>ВнутрішнєСпоживанняТоварів</Name>
+          <FullName>Внутрішнє споживання товарів</FullName>
+        </Item>
+        <Item>
+          <Name>РахунокФактура</Name>
+          <FullName>Рахунок фактура</FullName>
+        </Item>
+        <Item>
+          <Name>РозміщенняТоварівНаСкладі</Name>
+          <FullName>Розміщення товарів на складі</FullName>
+        </Item>
+        <Item>
+          <Name>ПереміщенняТоварівНаСкладі</Name>
+          <FullName>Переміщення товарів на складі</FullName>
+        </Item>
+        <Item>
+          <Name>ЗбіркаТоварівНаСкладі</Name>
+          <FullName>Збірка товарів на складі</FullName>
+        </Item>
+        <Item>
+          <Name>РозміщенняНоменклатуриПоКоміркам</Name>
+          <FullName>Розміщення номенклатури по коміркам</FullName>
+        </Item>
       </AllowDocument>
       <TabularLists>
         <TabularList>
@@ -20279,9 +20336,18 @@ SQL тип  непотрібно вказувати
         </Field>
       </Fields>
       <AllowDocument>
-        <Name>ЗамовленняПостачальнику</Name>
-        <Name>ПоступленняТоварівТаПослуг</Name>
-        <Name>ПоверненняТоварівПостачальнику</Name>
+        <Item>
+          <Name>ЗамовленняПостачальнику</Name>
+          <FullName>Замовлення постачальнику</FullName>
+        </Item>
+        <Item>
+          <Name>ПоступленняТоварівТаПослуг</Name>
+          <FullName>Поступлення товарів та послуг</FullName>
+        </Item>
+        <Item>
+          <Name>ПоверненняТоварівПостачальнику</Name>
+          <FullName>Повернення товарів постачальнику</FullName>
+        </Item>
       </AllowDocument>
       <TabularLists>
         <TabularList>
@@ -20891,11 +20957,26 @@ SQL тип  непотрібно вказувати
         </Field>
       </Fields>
       <AllowDocument>
-        <Name>ЗамовленняКлієнта</Name>
-        <Name>РеалізаціяТоварівТаПослуг</Name>
-        <Name>ПоверненняТоварівВідКлієнта</Name>
-        <Name>АктВиконанихРобіт</Name>
-        <Name>РахунокФактура</Name>
+        <Item>
+          <Name>ЗамовленняКлієнта</Name>
+          <FullName>Замовлення клієнта</FullName>
+        </Item>
+        <Item>
+          <Name>РеалізаціяТоварівТаПослуг</Name>
+          <FullName>Реалізація товарів та послуг</FullName>
+        </Item>
+        <Item>
+          <Name>ПоверненняТоварівВідКлієнта</Name>
+          <FullName>Повернення товарів від клієнта</FullName>
+        </Item>
+        <Item>
+          <Name>АктВиконанихРобіт</Name>
+          <FullName>Акт виконаних робіт</FullName>
+        </Item>
+        <Item>
+          <Name>РахунокФактура</Name>
+          <FullName>Рахунок фактура</FullName>
+        </Item>
       </AllowDocument>
       <TabularLists>
         <TabularList>
@@ -21825,8 +21906,14 @@ SQL тип  непотрібно вказувати
         </Field>
       </Fields>
       <AllowDocument>
-        <Name>ПрихіднийКасовийОрдер</Name>
-        <Name>РозхіднийКасовийОрдер</Name>
+        <Item>
+          <Name>ПрихіднийКасовийОрдер</Name>
+          <FullName>Прихідний касовий ордер</FullName>
+        </Item>
+        <Item>
+          <Name>РозхіднийКасовийОрдер</Name>
+          <FullName>Розхідний касовий ордер</FullName>
+        </Item>
       </AllowDocument>
       <TabularLists>
         <TabularList>
@@ -22241,10 +22328,22 @@ SQL тип  непотрібно вказувати
         </Field>
       </Fields>
       <AllowDocument>
-        <Name>ПереміщенняТоварів</Name>
-        <Name>ВведенняЗалишків</Name>
-        <Name>ПсуванняТоварів</Name>
-        <Name>ВнутрішнєСпоживанняТоварів</Name>
+        <Item>
+          <Name>ПереміщенняТоварів</Name>
+          <FullName>Переміщення товарів</FullName>
+        </Item>
+        <Item>
+          <Name>ВведенняЗалишків</Name>
+          <FullName>Введення залишків</FullName>
+        </Item>
+        <Item>
+          <Name>ПсуванняТоварів</Name>
+          <FullName>Псування товарів</FullName>
+        </Item>
+        <Item>
+          <Name>ВнутрішнєСпоживанняТоварів</Name>
+          <FullName>Внутрішнє споживання товарів</FullName>
+        </Item>
       </AllowDocument>
       <TabularLists>
         <TabularList>
@@ -22768,10 +22867,22 @@ SQL тип  непотрібно вказувати
         </Field>
       </Fields>
       <AllowDocument>
-        <Name>РозміщенняТоварівНаСкладі</Name>
-        <Name>ПереміщенняТоварівНаСкладі</Name>
-        <Name>ЗбіркаТоварівНаСкладі</Name>
-        <Name>РозміщенняНоменклатуриПоКоміркам</Name>
+        <Item>
+          <Name>РозміщенняТоварівНаСкладі</Name>
+          <FullName>Розміщення товарів на складі</FullName>
+        </Item>
+        <Item>
+          <Name>ПереміщенняТоварівНаСкладі</Name>
+          <FullName>Переміщення товарів на складі</FullName>
+        </Item>
+        <Item>
+          <Name>ЗбіркаТоварівНаСкладі</Name>
+          <FullName>Збірка товарів на складі</FullName>
+        </Item>
+        <Item>
+          <Name>РозміщенняНоменклатуриПоКоміркам</Name>
+          <FullName>Розміщення номенклатури по коміркам</FullName>
+        </Item>
       </AllowDocument>
       <TabularLists>
         <TabularList>
