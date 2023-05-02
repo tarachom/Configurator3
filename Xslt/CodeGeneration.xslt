@@ -470,10 +470,10 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Константи
                 <xsl:variable name="groupPointer" select="substring-before(Pointer, '.')" />
                 <xsl:choose>
                   <xsl:when test="$groupPointer = 'Довідники'">
-                    <xsl:text>.GetNewDirectoryPointer()</xsl:text>
+                    <xsl:text>.Copy()</xsl:text>
                   </xsl:when>
                   <xsl:when test="$groupPointer = 'Документи'">
-                    <xsl:text>.GetNewDocumentPointer()</xsl:text>
+                    <xsl:text>.Copy()</xsl:text>
                   </xsl:when>
                 </xsl:choose>
                 </xsl:if>;
@@ -808,9 +808,9 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники
             return <xsl:value-of select="$DirectoryName"/>ObjestItem.Read(base.UnigueID) ? <xsl:value-of select="$DirectoryName"/>ObjestItem : null;
         }
 
-        public <xsl:value-of select="$DirectoryName"/>_Pointer GetNewDirectoryPointer()
+        public <xsl:value-of select="$DirectoryName"/>_Pointer Copy()
         {
-            return new <xsl:value-of select="$DirectoryName"/>_Pointer(base.UnigueID);
+            return new <xsl:value-of select="$DirectoryName"/>_Pointer(base.UnigueID, base.Fields) { Назва = Назва };
         }
 
         public string Назва { get; set; } = "";
@@ -848,6 +848,12 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники
         public UuidAndText GetBasis()
         {
             return new UuidAndText(UnigueID.UGuid, "Довідники.<xsl:value-of select="$DirectoryName"/>");
+        }
+
+        public void Clear()
+        {
+            Init(new UnigueID(), null);
+            Назва = "";
         }
     }
     
@@ -1446,9 +1452,9 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи
             base.BaseDeletionLabel(label);
         }
 
-        public <xsl:value-of select="$DocumentName"/>_Pointer GetNewDocumentPointer()
+        public <xsl:value-of select="$DocumentName"/>_Pointer Copy()
         {
-            return new <xsl:value-of select="$DocumentName"/>_Pointer(base.UnigueID);
+            return new <xsl:value-of select="$DocumentName"/>_Pointer(base.UnigueID, base.Fields) { Назва = Назва };
         }
 
         public <xsl:value-of select="$DocumentName"/>_Pointer GetEmptyPointer()
@@ -1474,6 +1480,12 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Документи
             }
             </xsl:if>
             return <xsl:value-of select="$DocumentName"/>ObjestItem;
+        }
+
+        public void Clear()
+        {
+            Init(new UnigueID(), null);
+            Назва = "";
         }
     }
 
