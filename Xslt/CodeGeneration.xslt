@@ -1042,9 +1042,30 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Переліченн�
             }
         }
 
-        public static NameValue&lt;<xsl:value-of select="$EnumName"/>&gt;[] <xsl:value-of select="$EnumName"/>_Array()
+        public static <xsl:value-of select="$EnumName"/>? <xsl:value-of select="$EnumName"/>_FindByName(string name)
         {
-            NameValue&lt;<xsl:value-of select="$EnumName"/>&gt;[] value = new NameValue&lt;<xsl:value-of select="$EnumName"/>&gt;[<xsl:value-of select="$CountEnumField"/>];
+            switch (name)
+            {
+                <xsl:for-each select="Fields/Field">
+                  <xsl:variable name="ReturnValue">
+                      <xsl:choose>
+                          <xsl:when test="normalize-space(Desc) != ''">
+                              <xsl:value-of select="normalize-space(Desc)"/>
+                          </xsl:when>
+                          <xsl:otherwise>
+                              <xsl:value-of select="normalize-space(Name)"/>
+                          </xsl:otherwise>
+                      </xsl:choose>
+                  </xsl:variable>
+                case "<xsl:value-of select="$ReturnValue"/>": return <xsl:value-of select="$EnumName"/>.<xsl:value-of select="Name"/>;
+                </xsl:for-each>
+                default: return null;
+            }
+        }
+
+        public static List&lt;NameValue&lt;<xsl:value-of select="$EnumName"/>&gt;&gt; <xsl:value-of select="$EnumName"/>_List()
+        {
+            List&lt;NameValue&lt;<xsl:value-of select="$EnumName"/>&gt;&gt; value = new List&lt;NameValue&lt;<xsl:value-of select="$EnumName"/>&gt;&gt;();
             <xsl:for-each select="Fields/Field">
               <xsl:variable name="ReturnValue">
                   <xsl:choose>
@@ -1056,7 +1077,7 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Переліченн�
                       </xsl:otherwise>
                   </xsl:choose>
               </xsl:variable>
-            value[<xsl:value-of select="position() - 1"/>] = new NameValue&lt;<xsl:value-of select="$EnumName"/>&gt;("<xsl:value-of select="$ReturnValue"/>", <xsl:value-of select="$EnumName"/>.<xsl:value-of select="Name"/>);
+            value.Add(new NameValue&lt;<xsl:value-of select="$EnumName"/>&gt;("<xsl:value-of select="$ReturnValue"/>", <xsl:value-of select="$EnumName"/>.<xsl:value-of select="Name"/>));
             </xsl:for-each>
             return value;
         }
