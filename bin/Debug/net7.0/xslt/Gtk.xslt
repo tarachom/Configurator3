@@ -49,8 +49,10 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники.Т
       <xsl:variable name="DirectoryName" select="Name"/>
     #region DIRECTORY "<xsl:value-of select="$DirectoryName"/>"
     
-      <xsl:for-each select="TabularLists/TabularList">
+      <!-- ТАБЛИЦЯ -->
+      <xsl:for-each select="TabularLists/TabularList[IsTree = '0']">
         <xsl:variable name="TabularListName" select="Name"/>
+    /* ТАБЛИЦЯ */
     public class <xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularListName"/>
     {
         string Image 
@@ -239,6 +241,148 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Довідники.Т
         }
     }
 	    </xsl:for-each>
+
+      <!-- ДЕРЕВО -->
+      <xsl:for-each select="TabularLists/TabularList[IsTree = '1']">
+        <xsl:variable name="TabularListName" select="Name"/>
+    /* ДЕРЕВО */
+    public class <xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularListName"/>
+    {
+        string Image 
+        {
+            get
+            {
+                return AppContext.BaseDirectory + "images/" + (DeletionLabel ? "doc.png" : "folder.png");
+            }
+        }
+
+        bool DeletionLabel = false;
+        string ID = "";
+        string Назва = "";
+
+        Array ToArray()
+        {
+            return new object[] { new Gdk.Pixbuf(Image), ID, Назва };
+        }
+
+        public static TreeStore Store = new TreeStore
+        (
+            typeof(Gdk.Pixbuf) /* Image */, 
+            typeof(string)     /* ID */, 
+            typeof(string)     /* Назва */
+        );
+
+        public static void AddColumns(TreeView treeView)
+        {
+            treeView.AppendColumn(new TreeViewColumn("", new CellRendererPixbuf(), "pixbuf", 0));
+            treeView.AppendColumn(new TreeViewColumn("ID", new CellRendererText(), "text", 1) { Visible = false });
+            treeView.AppendColumn(new TreeViewColumn("Назва", new CellRendererText(), "text", 2));
+        }
+
+        public static TreePath? RootPath;
+        public static TreePath? SelectPath;
+
+        public static void LoadTree(UnigueID? OpenFolder, UnigueID? selectPointer)
+        {
+            Store.Clear();
+            RootPath = SelectPath = null;
+
+            <xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularListName"/> rootRecord = new <xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularListName"/>
+            {
+                ID = Guid.Empty.ToString(),
+                Назва = " Дерево "
+            };
+
+            TreeIter rootIter = Store.AppendValues(rootRecord.ToArray());
+            RootPath = Store.GetPath(rootIter);
+
+            #region SQL
+
+            string query = $@"
+WITH RECURSIVE r AS (
+    SELECT 
+        uid, 
+        {<xsl:value-of select="$DirectoryName"/>_Const.Назва}, 
+        {<xsl:value-of select="$DirectoryName"/>_Const.Родич}, 
+        1 AS level,
+        deletion_label
+    FROM {<xsl:value-of select="$DirectoryName"/>_Const.TABLE}
+    WHERE {<xsl:value-of select="$DirectoryName"/>_Const.Родич} = '{Guid.Empty}'";
+
+            if (OpenFolder != null)
+                query += $" AND uid != '{OpenFolder}'";
+
+            query += $@"
+    UNION ALL
+    SELECT 
+        {<xsl:value-of select="$DirectoryName"/>_Const.TABLE}.uid, 
+        {<xsl:value-of select="$DirectoryName"/>_Const.TABLE}.{<xsl:value-of select="$DirectoryName"/>_Const.Назва}, 
+        {<xsl:value-of select="$DirectoryName"/>_Const.TABLE}.{<xsl:value-of select="$DirectoryName"/>_Const.Родич}, 
+        r.level + 1 AS level,
+        {<xsl:value-of select="$DirectoryName"/>_Const.TABLE}.deletion_label 
+    FROM {<xsl:value-of select="$DirectoryName"/>_Const.TABLE}
+        JOIN r ON {<xsl:value-of select="$DirectoryName"/>_Const.TABLE}.{<xsl:value-of select="$DirectoryName"/>_Const.Родич} = r.uid";
+
+            if (OpenFolder != null)
+                query += $@"
+    WHERE {<xsl:value-of select="$DirectoryName"/>_Const.TABLE}.uid != '{OpenFolder}'";
+
+            query += $@"
+)
+SELECT 
+    uid, 
+    {<xsl:value-of select="$DirectoryName"/>_Const.Назва}, 
+    {<xsl:value-of select="$DirectoryName"/>_Const.Родич}, 
+    level,
+    deletion_label
+FROM r
+ORDER BY level, {<xsl:value-of select="$DirectoryName"/>_Const.Назва} ASC
+";
+
+            #endregion
+
+            string[] columnsName;
+            List&lt;object[]&gt;? listRow = null;
+
+            Config.Kernel?.DataBase.SelectRequest(query, null, out columnsName, out listRow);
+
+            Dictionary&lt;string, TreeIter&gt; nodeDictionary = new Dictionary&lt;string, TreeIter&gt;();
+
+            if (listRow != null)
+                foreach (object[] row in listRow)
+                {
+                    string uid = row[0]?.ToString() ?? Guid.Empty.ToString();
+                    string fieldName = (row[1]?.ToString() ?? "");
+                    string fieldParent = row[2]?.ToString() ?? Guid.Empty.ToString();
+                    int level = (int)row[3];
+                    bool deletionLabel = (bool)row[4];
+
+                    <xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularListName"/> record = new <xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularListName"/>
+                    {
+                        DeletionLabel = deletionLabel,
+                        ID = uid,
+                        Назва = fieldName
+                    };
+                    
+                    TreeIter Iter;
+
+                    if (level == 1)
+                        Iter = Store.AppendValues(rootIter, record.ToArray());
+                    else
+                    {
+                        TreeIter parentIter = nodeDictionary[fieldParent];
+                        Iter = Store.AppendValues(parentIter, record.ToArray());
+                    }
+
+                    nodeDictionary.Add(uid, Iter);
+
+                    if (selectPointer != null)
+                        if (uid == selectPointer.ToString())
+                            SelectPath = Store.GetPath(Iter);
+                }
+        }
+    }
+      </xsl:for-each>
     #endregion
     </xsl:for-each>
 }

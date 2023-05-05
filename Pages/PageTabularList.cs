@@ -57,6 +57,7 @@ namespace Configurator
         );
         TreeView treeViewFields;
         Entry entryName = new Entry() { WidthRequest = 250 };
+        CheckButton checkButtonIsTree = new CheckButton("Дерево");
         TextView textViewDesc = new TextView() { WrapMode = WrapMode.Word };
 
         #endregion
@@ -133,6 +134,12 @@ namespace Configurator
             scrollTextView.Add(textViewDesc);
 
             hBoxDesc.PackStart(scrollTextView, false, false, 5);
+
+            //Дерево
+            HBox hBoxTree = new HBox() { Halign = Align.End };
+            vBox.PackStart(hBoxTree, false, false, 5);
+
+            hBoxTree.PackStart(checkButtonIsTree, false, false, 5);
 
             hPaned.Pack1(vBox, false, false);
         }
@@ -222,7 +229,6 @@ namespace Configurator
 
         #endregion
 
-
         #region Присвоєння / зчитування значень віджетів
 
         public void SetValue()
@@ -233,6 +239,7 @@ namespace Configurator
                 TabularList.Name = "Записи";
 
             entryName.Text = TabularList.Name;
+            checkButtonIsTree.Active = TabularList.IsTree;
             textViewDesc.Buffer.Text = TabularList.Desc;
         }
 
@@ -258,6 +265,7 @@ namespace Configurator
         void GetValue()
         {
             TabularList.Name = entryName.Text;
+            TabularList.IsTree = checkButtonIsTree.Active;
             TabularList.Desc = textViewDesc.Buffer.Text;
 
             //Доспупні поля
