@@ -44,6 +44,8 @@ namespace Configurator
         public System.Action? CallBack_RefreshList { get; set; }
         public bool IsNew { get; set; } = true;
 
+        public string ConfOwnerName { get; set; } = ""; /* Документи, Довідники */
+
         #region Fields
 
         ListStore listStore = new ListStore(
@@ -233,6 +235,9 @@ namespace Configurator
 
         public void SetValue()
         {
+            //Дерево доступне тільки для Довідників
+            checkButtonIsTree.Sensitive = (ConfOwnerName == "Довідники");
+
             FillTreeView();
 
             if (IsNew)

@@ -584,7 +584,7 @@ class {entryName.Text}_Triggers
             {
                 entryTable.Text = Configuration.GetNewUnigueTableName(Program.Kernel!);
 
-                ConfDocument.AppendField(new ConfigurationObjectField("Назва", "docname", "string", "", "Назва", true));
+                ConfDocument.AppendField(new ConfigurationObjectField("Назва", "docname", "string", "", "Назва", true, true));
                 ConfDocument.AppendField(new ConfigurationObjectField("ДатаДок", "docdate", "datetime", "", "ДатаДок", false, true));
                 ConfDocument.AppendField(new ConfigurationObjectField("НомерДок", "docnomer", "string", "", "НомерДок", false, true));
 
@@ -960,7 +960,8 @@ class {entryName.Text}_Triggers
                                 TabularList = ConfDocument.TabularList[curRow.Child.Name],
                                 IsNew = false,
                                 GeneralForm = GeneralForm,
-                                CallBack_RefreshList = TabularListRefreshList
+                                CallBack_RefreshList = TabularListRefreshList,
+                                ConfOwnerName = "Документи"
                             };
 
                             page.SetValue();
@@ -981,7 +982,8 @@ class {entryName.Text}_Triggers
                     TabularLists = ConfDocument.TabularList,
                     IsNew = true,
                     GeneralForm = GeneralForm,
-                    CallBack_RefreshList = TabularListRefreshList
+                    CallBack_RefreshList = TabularListRefreshList,
+                    ConfOwnerName = "Документи"
                 };
 
                 page.SetValue();

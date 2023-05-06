@@ -24,6 +24,7 @@ limitations under the License.
 using Gtk;
 
 using AccountingSoftware;
+using System.Xml;
 
 namespace Configurator
 {
@@ -40,6 +41,7 @@ namespace Configurator
         public ConfigurationDirectories ConfDirectory { get; set; } = new ConfigurationDirectories();
         public FormConfigurator? GeneralForm { get; set; }
         public bool IsNew { get; set; } = true;
+        string PathToXsltTemplate = AppContext.BaseDirectory;
 
         #region Fields
 
@@ -92,38 +94,41 @@ namespace Configurator
         {
             VBox vBox = new VBox();
 
-            //Назва
-            HBox hBoxName = new HBox() { Halign = Align.End };
-            vBox.PackStart(hBoxName, false, false, 5);
+            //Базові поля
+            {
+                //Назва
+                HBox hBoxName = new HBox() { Halign = Align.End };
+                vBox.PackStart(hBoxName, false, false, 5);
 
-            hBoxName.PackStart(new Label("Назва:"), false, false, 5);
-            hBoxName.PackStart(entryName, false, false, 5);
+                hBoxName.PackStart(new Label("Назва:"), false, false, 5);
+                hBoxName.PackStart(entryName, false, false, 5);
 
-            //Повна Назва
-            HBox hBoxFullName = new HBox() { Halign = Align.End };
-            vBox.PackStart(hBoxFullName, false, false, 5);
+                //Повна Назва
+                HBox hBoxFullName = new HBox() { Halign = Align.End };
+                vBox.PackStart(hBoxFullName, false, false, 5);
 
-            hBoxFullName.PackStart(new Label("Повна назва:"), false, false, 5);
-            hBoxFullName.PackStart(entryFullName, false, false, 5);
+                hBoxFullName.PackStart(new Label("Повна назва:"), false, false, 5);
+                hBoxFullName.PackStart(entryFullName, false, false, 5);
 
-            //Таблиця
-            HBox hBoxTable = new HBox() { Halign = Align.End };
-            vBox.PackStart(hBoxTable, false, false, 5);
+                //Таблиця
+                HBox hBoxTable = new HBox() { Halign = Align.End };
+                vBox.PackStart(hBoxTable, false, false, 5);
 
-            hBoxTable.PackStart(new Label("Таблиця:"), false, false, 5);
-            hBoxTable.PackStart(entryTable, false, false, 5);
+                hBoxTable.PackStart(new Label("Таблиця:"), false, false, 5);
+                hBoxTable.PackStart(entryTable, false, false, 5);
 
-            //Опис
-            HBox hBoxDesc = new HBox() { Halign = Align.End };
-            vBox.PackStart(hBoxDesc, false, false, 5);
+                //Опис
+                HBox hBoxDesc = new HBox() { Halign = Align.End };
+                vBox.PackStart(hBoxDesc, false, false, 5);
 
-            hBoxDesc.PackStart(new Label("Опис:") { Valign = Align.Start }, false, false, 5);
+                hBoxDesc.PackStart(new Label("Опис:") { Valign = Align.Start }, false, false, 5);
 
-            ScrolledWindow scrollTextView = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 500, HeightRequest = 100 };
-            scrollTextView.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-            scrollTextView.Add(textViewDesc);
+                ScrolledWindow scrollTextView = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 500, HeightRequest = 100 };
+                scrollTextView.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+                scrollTextView.Add(textViewDesc);
 
-            hBoxDesc.PackStart(scrollTextView, false, false, 5);
+                hBoxDesc.PackStart(scrollTextView, false, false, 5);
+            }
 
             //Автоматична нумерація
             {
@@ -152,12 +157,24 @@ namespace Configurator
 
                 buttonAddConstAutoNum.Clicked += (object? sender, EventArgs args) =>
                 {
+                    if (String.IsNullOrEmpty(entryName.Text))
+                    {
+                        Message.Error(GeneralForm, "Назва довідника не вказана");
+                        return;
+                    }
+
                     if (Conf != null)
                     {
+                        if (!Conf.Directories.ContainsKey(entryName.Text))
+                        {
+                            Message.Error(GeneralForm, "Довідник не збережений в колекцію, потрібно спочатку Зберегти");
+                            return;
+                        }
+
                         if (!Conf.ConstantsBlock.ContainsKey("НумераціяДовідників"))
                             Conf.AppendConstantsBlock(new ConfigurationConstantsBlock("НумераціяДовідників", "Нумерація довідників"));
 
-                        ConfigurationConstantsBlock blockAutoNum = Conf!.ConstantsBlock["НумераціяДовідників"];
+                        ConfigurationConstantsBlock blockAutoNum = Conf.ConstantsBlock["НумераціяДовідників"];
 
                         //Назва поля в таблиці
                         string nameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!, SpecialTables.Constants, GeneralForm!.GetConstantsAllFields());
@@ -283,7 +300,7 @@ class {entryName.Text}_Triggers
         
     }}
 }}
-                    ";
+";
 
                     textViewCode.Buffer.SelectRange(textViewCode.Buffer.StartIter, textViewCode.Buffer.EndIter);
                     textViewCode.GrabFocus();
@@ -318,6 +335,150 @@ class {entryName.Text}_Triggers
 
                 //Табличні списки
                 CreateTabularList(vBoxForm);
+            }
+
+            //Шаблони
+            {
+                Expander expanderTemplates = new Expander("Шаблони");
+                vBox.PackStart(expanderTemplates, false, false, 5);
+
+                VBox vBoxTemplates = new VBox();
+                expanderTemplates.Add(vBoxTemplates);
+
+                //Заголовок
+                HBox hBoxFolderInfo = new HBox() { Halign = Align.Start };
+                vBoxTemplates.PackStart(hBoxFolderInfo, false, false, 5);
+                hBoxFolderInfo.PackStart(new Label(
+                    "<u>Довідник для ієрархії папок</u>. " +
+                    "Будуть створені поля <b>Назва</b> та <b>Родич</b>\n\n" +
+                    "Додатково можна створити поле <b>Власник</b> якщо довідник підпорядкований іншому довіднику.")
+                { Wrap = true, UseMarkup = true, Selectable = true }, false, false, 5);
+
+                //Кнопка
+                HBox hBoxFolder = new HBox() { Halign = Align.Start };
+                vBoxTemplates.PackStart(hBoxFolder, false, false, 5);
+
+                Button buttonConstructorFolder = new Button("Створити поля");
+                hBoxFolder.PackStart(buttonConstructorFolder, false, false, 5);
+
+                buttonConstructorFolder.Clicked += (object? sender, EventArgs args) =>
+                {
+                    if (String.IsNullOrEmpty(entryName.Text))
+                    {
+                        Message.Error(GeneralForm, "Назва довідника не вказана");
+                        return;
+                    }
+
+                    if (!Conf!.Directories.ContainsKey(entryName.Text))
+                    {
+                        Message.Error(GeneralForm, "Довідник не збережений в колекцію, потрібно спочатку зберегти");
+                        return;
+                    }
+
+                    if (!ConfDirectory.Fields.ContainsKey("Назва"))
+                    {
+                        string nameInTable_Name = Configuration.GetNewUnigueColumnName(Program.Kernel!, entryTable.Text, ConfDirectory.Fields);
+                        ConfDirectory.AppendField(new ConfigurationObjectField("Назва", nameInTable_Name, "string", "", "Назва", true, true));
+                    }
+
+                    if (!ConfDirectory.Fields.ContainsKey("Родич"))
+                    {
+                        string nameInTable_Parent = Configuration.GetNewUnigueColumnName(Program.Kernel!, entryTable.Text, ConfDirectory.Fields);
+                        ConfDirectory.AppendField(new ConfigurationObjectField("Родич", nameInTable_Parent, "pointer", "Довідники." + ConfDirectory.Name, "Родич", false, true));
+                    }
+
+                    FieldsRefreshList();
+                    GeneralForm?.LoadTreeAsync();
+                };
+            }
+
+            //Код 
+            {
+                TextView textViewCode = new TextView();
+
+                Expander expanderTemplates = new Expander("Код");
+                vBox.PackStart(expanderTemplates, false, false, 5);
+
+                VBox vBoxTemplates = new VBox();
+                expanderTemplates.Add(vBoxTemplates);
+
+                //Заголовок
+                HBox hBoxElementInfo = new HBox() { Halign = Align.Start };
+                vBoxTemplates.PackStart(hBoxElementInfo, false, false, 5);
+                hBoxElementInfo.PackStart(new Label("Підказка текст ...") { UseMarkup = true, Selectable = true }, false, false, 5);
+
+                //Елемент
+                HBox hBoxElement = new HBox() { Halign = Align.Start };
+                vBoxTemplates.PackStart(hBoxElement, false, false, 5);
+
+                Button buttonConstructorElement = new Button("Елемент");
+                hBoxElement.PackStart(buttonConstructorElement, false, false, 5);
+
+                Button buttonConstructorList = new Button("Список");
+                hBoxElement.PackStart(buttonConstructorList, false, false, 5);
+
+                Button buttonConstructorPointerControl = new Button("PointerControl");
+                hBoxElement.PackStart(buttonConstructorPointerControl, false, false, 5);
+
+                Button buttonConstructorPopover = new Button("Швидкий вибір");
+                hBoxElement.PackStart(buttonConstructorPopover, false, false, 5);
+
+                buttonConstructorElement.Clicked += (object? sender, EventArgs args) =>
+                {
+                    if (String.IsNullOrEmpty(entryName.Text))
+                    {
+                        Message.Error(GeneralForm, "Назва довідника не вказана");
+                        return;
+                    }
+
+                    if (!Conf!.Directories.ContainsKey(entryName.Text))
+                    {
+                        Message.Error(GeneralForm, "Довідник не збережений в колекцію, потрібно спочатку зберегти");
+                        return;
+                    }
+
+                    XmlDocument xmlConfDocument = new XmlDocument();
+                    xmlConfDocument.AppendChild(xmlConfDocument.CreateXmlDeclaration("1.0", "utf-8", ""));
+
+                    XmlElement rootNode = xmlConfDocument.CreateElement("root");
+                    xmlConfDocument.AppendChild(rootNode);
+
+                    XmlElement nodeDirectory = xmlConfDocument.CreateElement("Directory");
+                    rootNode.AppendChild(nodeDirectory);
+
+                    XmlElement nodeDirectoryName = xmlConfDocument.CreateElement("Name");
+                    nodeDirectoryName.InnerText = ConfDirectory.Name;
+                    nodeDirectory.AppendChild(nodeDirectoryName);
+
+                    Configuration.SaveFields(ConfDirectory.Fields, xmlConfDocument, nodeDirectory, "Directory");
+                    Configuration.SaveTabularParts(ConfDirectory.TabularParts, xmlConfDocument, nodeDirectory);
+
+                    //xmlConfDocument.Save(ConfDirectory.Name + ".xml");
+
+                    Dictionary<string, object> arguments = new Dictionary<string, object>();
+                    arguments.Add("Section", "Directory");
+
+                    textViewCode.Buffer.Text = Configuration.Transform
+                    (
+                        xmlConfDocument,
+                        System.IO.Path.Combine(PathToXsltTemplate, "xslt/Constructor.xslt"),
+                        arguments
+                    );
+
+                    textViewCode.Buffer.SelectRange(textViewCode.Buffer.StartIter, textViewCode.Buffer.EndIter);
+                    textViewCode.GrabFocus();
+                };
+
+                //Code C#
+
+                HBox hBoxElementCode = new HBox() { Halign = Align.End };
+                vBoxTemplates.PackStart(hBoxElementCode, false, false, 5);
+
+                ScrolledWindow scrollCode = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 650, HeightRequest = 300 };
+                scrollCode.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+                scrollCode.Add(textViewCode);
+
+                hBoxElementCode.PackStart(scrollCode, false, false, 5);
             }
 
             hPaned.Pack1(vBox, false, false);
@@ -474,10 +635,10 @@ class {entryName.Text}_Triggers
                 entryTable.Text = Configuration.GetNewUnigueTableName(Program.Kernel!);
 
                 string nameInTable_Code = Configuration.GetNewUnigueColumnName(Program.Kernel!, entryTable.Text, ConfDirectory.Fields);
-                ConfDirectory.AppendField(new ConfigurationObjectField("Код", nameInTable_Code, "string", "", "Код"));
+                ConfDirectory.AppendField(new ConfigurationObjectField("Код", nameInTable_Code, "string", "", "Код", false, true));
 
                 string nameInTable_Name = Configuration.GetNewUnigueColumnName(Program.Kernel!, entryTable.Text, ConfDirectory.Fields);
-                ConfDirectory.AppendField(new ConfigurationObjectField("Назва", nameInTable_Name, "string", "", "Назва"));
+                ConfDirectory.AppendField(new ConfigurationObjectField("Назва", nameInTable_Name, "string", "", "Назва", true, true));
             }
             else
                 entryTable.Text = ConfDirectory.Table;
@@ -820,7 +981,8 @@ class {entryName.Text}_Triggers
                                 TabularList = ConfDirectory.TabularList[curRow.Child.Name],
                                 IsNew = false,
                                 GeneralForm = GeneralForm,
-                                CallBack_RefreshList = TabularListRefreshList
+                                CallBack_RefreshList = TabularListRefreshList,
+                                ConfOwnerName = "Довідники"
                             };
 
                             page.SetValue();
@@ -841,7 +1003,8 @@ class {entryName.Text}_Triggers
                     TabularLists = ConfDirectory.TabularList,
                     IsNew = true,
                     GeneralForm = GeneralForm,
-                    CallBack_RefreshList = TabularListRefreshList
+                    CallBack_RefreshList = TabularListRefreshList,
+                    ConfOwnerName = "Довідники"
                 };
 
                 page.SetValue();
@@ -882,7 +1045,6 @@ class {entryName.Text}_Triggers
 
             listBoxTabularList.ShowAll();
         }
-
 
         void OnTabularListRemoveClick(object? sender, EventArgs args)
         {

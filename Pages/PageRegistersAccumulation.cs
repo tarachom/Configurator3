@@ -1095,30 +1095,56 @@ HAVING";
 
         void OnCreateVirtualTableClick(object? sender, EventArgs args)
         {
-            switch (ConfRegister.TypeRegistersAccumulation)
+            if (String.IsNullOrEmpty(entryName.Text))
             {
-                case TypeRegistersAccumulation.Residues: /* Залишки */
-                    {
-                        ConfigurationObjectTablePart Залишки_TablePart = CreateVirtualTable_Залишки();
-                        CreateVirtualTable_ЗалишкиТаОбороти();
-
-                        if (!checkButtonNoSummary.Active)
-                            CreateVirtualTable_Підсумки(Залишки_TablePart);
-
-                        break;
-                    }
-                case TypeRegistersAccumulation.Turnover: /* Обороти */
-                    {
-                        CreateVirtualTable_Обороти();
-                        break;
-                    }
+                Message.Error(GeneralForm, "Назва регістру не вказана");
+                return;
             }
 
-            TabularPartsRefreshList();
-            QueryListRefreshList();
+            if (Conf != null)
+            {
+                if (!Conf.RegistersAccumulation.ContainsKey(entryName.Text))
+                {
+                    Message.Error(GeneralForm, "Регістр не збережений в колекцію, потрібно спочатку Зберегти");
+                    return;
+                }
 
-            if (!IsNew)
+                if (ConfRegister.DimensionFields.Count == 0)
+                {
+                    Message.Error(GeneralForm, "Відсутні поля вимірів");
+                    return;
+                }
+
+                if (ConfRegister.ResourcesFields.Count == 0)
+                {
+                    Message.Error(GeneralForm, "Відсутні поля ресурсів");
+                    return;
+                }
+
+                switch (ConfRegister.TypeRegistersAccumulation)
+                {
+                    case TypeRegistersAccumulation.Residues: /* Залишки */
+                        {
+                            ConfigurationObjectTablePart Залишки_TablePart = CreateVirtualTable_Залишки();
+                            CreateVirtualTable_ЗалишкиТаОбороти();
+
+                            if (!checkButtonNoSummary.Active)
+                                CreateVirtualTable_Підсумки(Залишки_TablePart);
+
+                            break;
+                        }
+                    case TypeRegistersAccumulation.Turnover: /* Обороти */
+                        {
+                            CreateVirtualTable_Обороти();
+                            break;
+                        }
+                }
+
+                TabularPartsRefreshList();
+                QueryListRefreshList();
+
                 GeneralForm?.LoadTreeAsync();
+            }
         }
 
         #endregion
