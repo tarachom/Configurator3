@@ -26,46 +26,37 @@ limitations under the License.
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     <xsl:output method="text" indent="yes" />
 
-    <!-- Розділ -->
-    <xsl:param name="Section" />
-
     <!-- Файл -->
     <xsl:param name="File" />
 
     <xsl:template match="root">
 
         <xsl:choose>
-            <xsl:when test="$Section = 'Directory'">
 
-                <xsl:choose>
-
-                    <xsl:when test="$File = 'Element'">
-                        <xsl:call-template name="DirectoryElement" />
-                    </xsl:when>
-                    <xsl:when test="$File = 'List'">
-                        <xsl:call-template name="DirectoryList" />
-                    </xsl:when>
-                    <xsl:when test="$File = 'ListSmallSelect'">
-                        <xsl:call-template name="DirectoryListSmallSelect" />
-                    </xsl:when>
-                    <xsl:when test="$File = 'ListAndTree'">
-                        <xsl:call-template name="DirectoryListAndTree" />
-                    </xsl:when>
-
-                    <xsl:when test="$File = 'Tree'">
-                        <xsl:call-template name="DirectoryTree" />
-                    </xsl:when>
-                     <xsl:when test="$File = 'TreeSmallSelect'">
-                        <xsl:call-template name="DirectoryTreeSmallSelect" />
-                    </xsl:when>
-                    
-                    <xsl:when test="$File = 'PointerControl'">
-                        <xsl:call-template name="DirectoryPointerControl" />
-                    </xsl:when>
-
-                </xsl:choose>
-
+            <xsl:when test="$File = 'Element'">
+                <xsl:call-template name="DirectoryElement" />
             </xsl:when>
+            <xsl:when test="$File = 'List'">
+                <xsl:call-template name="DirectoryList" />
+            </xsl:when>
+            <xsl:when test="$File = 'ListSmallSelect'">
+                <xsl:call-template name="DirectoryListSmallSelect" />
+            </xsl:when>
+            <xsl:when test="$File = 'ListAndTree'">
+                <xsl:call-template name="DirectoryListAndTree" />
+            </xsl:when>
+
+            <xsl:when test="$File = 'Tree'">
+                <xsl:call-template name="DirectoryTree" />
+            </xsl:when>
+                <xsl:when test="$File = 'TreeSmallSelect'">
+                <xsl:call-template name="DirectoryTreeSmallSelect" />
+            </xsl:when>
+            
+            <xsl:when test="$File = 'PointerControl'">
+                <xsl:call-template name="DirectoryPointerControl" />
+            </xsl:when>
+
         </xsl:choose>
 
     </xsl:template>

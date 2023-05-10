@@ -41,7 +41,6 @@ namespace Configurator
         public ConfigurationDirectories ConfDirectory { get; set; } = new ConfigurationDirectories();
         public FormConfigurator? GeneralForm { get; set; }
         public bool IsNew { get; set; } = true;
-        string PathToXsltTemplate = AppContext.BaseDirectory;
 
         #region Fields
 
@@ -392,11 +391,11 @@ class {entryName.Text}_Triggers
                 };
             }
 
-            //Код 
+            //Генерування коду 
             {
                 TextView textViewCode = new TextView();
 
-                Expander expanderTemplates = new Expander("Код");
+                Expander expanderTemplates = new Expander("Генерування коду");
                 vBox.PackStart(expanderTemplates, false, false, 5);
 
                 VBox vBoxTemplates = new VBox();
@@ -423,178 +422,10 @@ class {entryName.Text}_Triggers
                     Button buttonConstructorListSmallSelect = new Button("Список швидкий вибір");
                     hBoxElement.PackStart(buttonConstructorListSmallSelect, false, false, 5);
 
-                    buttonConstructorElement.Clicked += (object? sender, EventArgs args) =>
-                    {
-                        if (String.IsNullOrEmpty(entryName.Text))
-                        {
-                            Message.Error(GeneralForm, "Назва довідника не вказана");
-                            return;
-                        }
-
-                        if (!Conf!.Directories.ContainsKey(entryName.Text))
-                        {
-                            Message.Error(GeneralForm, "Довідник не збережений в колекцію, потрібно спочатку зберегти");
-                            return;
-                        }
-
-                        XmlDocument xmlConfDocument = new XmlDocument();
-                        xmlConfDocument.AppendChild(xmlConfDocument.CreateXmlDeclaration("1.0", "utf-8", ""));
-
-                        XmlElement rootNode = xmlConfDocument.CreateElement("root");
-                        xmlConfDocument.AppendChild(rootNode);
-
-                        XmlElement nodeDirectory = xmlConfDocument.CreateElement("Directory");
-                        rootNode.AppendChild(nodeDirectory);
-
-                        XmlElement nodeDirectoryName = xmlConfDocument.CreateElement("Name");
-                        nodeDirectoryName.InnerText = ConfDirectory.Name;
-                        nodeDirectory.AppendChild(nodeDirectoryName);
-
-                        Configuration.SaveFields(ConfDirectory.Fields, xmlConfDocument, nodeDirectory, "Directory");
-                        Configuration.SaveTabularParts(ConfDirectory.TabularParts, xmlConfDocument, nodeDirectory);
-
-                        Dictionary<string, object> arguments = new Dictionary<string, object>();
-                        arguments.Add("Section", "Directory");
-                        arguments.Add("File", "Element");
-
-                        textViewCode.Buffer.Text = Configuration.Transform
-                        (
-                            xmlConfDocument,
-                            System.IO.Path.Combine(PathToXsltTemplate, "xslt/Constructor.xslt"),
-                            arguments
-                        );
-
-                        textViewCode.Buffer.SelectRange(textViewCode.Buffer.StartIter, textViewCode.Buffer.EndIter);
-                        textViewCode.GrabFocus();
-                    };
-
-                    buttonConstructorList.Clicked += (object? sender, EventArgs args) =>
-                    {
-                        if (String.IsNullOrEmpty(entryName.Text))
-                        {
-                            Message.Error(GeneralForm, "Назва довідника не вказана");
-                            return;
-                        }
-
-                        if (!Conf!.Directories.ContainsKey(entryName.Text))
-                        {
-                            Message.Error(GeneralForm, "Довідник не збережений в колекцію, потрібно спочатку зберегти");
-                            return;
-                        }
-
-                        XmlDocument xmlConfDocument = new XmlDocument();
-                        xmlConfDocument.AppendChild(xmlConfDocument.CreateXmlDeclaration("1.0", "utf-8", ""));
-
-                        XmlElement rootNode = xmlConfDocument.CreateElement("root");
-                        xmlConfDocument.AppendChild(rootNode);
-
-                        XmlElement nodeDirectory = xmlConfDocument.CreateElement("Directory");
-                        rootNode.AppendChild(nodeDirectory);
-
-                        XmlElement nodeDirectoryName = xmlConfDocument.CreateElement("Name");
-                        nodeDirectoryName.InnerText = ConfDirectory.Name;
-                        nodeDirectory.AppendChild(nodeDirectoryName);
-
-                        Dictionary<string, object> arguments = new Dictionary<string, object>();
-                        arguments.Add("Section", "Directory");
-                        arguments.Add("File", "List");
-
-                        textViewCode.Buffer.Text = Configuration.Transform
-                        (
-                            xmlConfDocument,
-                            System.IO.Path.Combine(PathToXsltTemplate, "xslt/Constructor.xslt"),
-                            arguments
-                        );
-
-                        textViewCode.Buffer.SelectRange(textViewCode.Buffer.StartIter, textViewCode.Buffer.EndIter);
-                        textViewCode.GrabFocus();
-                    };
-
-                    buttonConstructorListAndTree.Clicked += (object? sender, EventArgs args) =>
-                    {
-                        if (String.IsNullOrEmpty(entryName.Text))
-                        {
-                            Message.Error(GeneralForm, "Назва довідника не вказана");
-                            return;
-                        }
-
-                        if (!Conf!.Directories.ContainsKey(entryName.Text))
-                        {
-                            Message.Error(GeneralForm, "Довідник не збережений в колекцію, потрібно спочатку зберегти");
-                            return;
-                        }
-
-                        XmlDocument xmlConfDocument = new XmlDocument();
-                        xmlConfDocument.AppendChild(xmlConfDocument.CreateXmlDeclaration("1.0", "utf-8", ""));
-
-                        XmlElement rootNode = xmlConfDocument.CreateElement("root");
-                        xmlConfDocument.AppendChild(rootNode);
-
-                        XmlElement nodeDirectory = xmlConfDocument.CreateElement("Directory");
-                        rootNode.AppendChild(nodeDirectory);
-
-                        XmlElement nodeDirectoryName = xmlConfDocument.CreateElement("Name");
-                        nodeDirectoryName.InnerText = ConfDirectory.Name;
-                        nodeDirectory.AppendChild(nodeDirectoryName);
-
-                        Configuration.SaveTabularParts(ConfDirectory.TabularParts, xmlConfDocument, nodeDirectory);
-
-                        Dictionary<string, object> arguments = new Dictionary<string, object>();
-                        arguments.Add("Section", "Directory");
-                        arguments.Add("File", "ListAndTree");
-
-                        textViewCode.Buffer.Text = Configuration.Transform
-                        (
-                            xmlConfDocument,
-                            System.IO.Path.Combine(PathToXsltTemplate, "xslt/Constructor.xslt"),
-                            arguments
-                        );
-
-                        textViewCode.Buffer.SelectRange(textViewCode.Buffer.StartIter, textViewCode.Buffer.EndIter);
-                        textViewCode.GrabFocus();
-                    };
-
-                    buttonConstructorListSmallSelect.Clicked += (object? sender, EventArgs args) =>
-                    {
-                        if (String.IsNullOrEmpty(entryName.Text))
-                        {
-                            Message.Error(GeneralForm, "Назва довідника не вказана");
-                            return;
-                        }
-
-                        if (!Conf!.Directories.ContainsKey(entryName.Text))
-                        {
-                            Message.Error(GeneralForm, "Довідник не збережений в колекцію, потрібно спочатку зберегти");
-                            return;
-                        }
-
-                        XmlDocument xmlConfDocument = new XmlDocument();
-                        xmlConfDocument.AppendChild(xmlConfDocument.CreateXmlDeclaration("1.0", "utf-8", ""));
-
-                        XmlElement rootNode = xmlConfDocument.CreateElement("root");
-                        xmlConfDocument.AppendChild(rootNode);
-
-                        XmlElement nodeDirectory = xmlConfDocument.CreateElement("Directory");
-                        rootNode.AppendChild(nodeDirectory);
-
-                        XmlElement nodeDirectoryName = xmlConfDocument.CreateElement("Name");
-                        nodeDirectoryName.InnerText = ConfDirectory.Name;
-                        nodeDirectory.AppendChild(nodeDirectoryName);
-
-                        Dictionary<string, object> arguments = new Dictionary<string, object>();
-                        arguments.Add("Section", "Directory");
-                        arguments.Add("File", "ListSmallSelect");
-
-                        textViewCode.Buffer.Text = Configuration.Transform
-                        (
-                            xmlConfDocument,
-                            System.IO.Path.Combine(PathToXsltTemplate, "xslt/Constructor.xslt"),
-                            arguments
-                        );
-
-                        textViewCode.Buffer.SelectRange(textViewCode.Buffer.StartIter, textViewCode.Buffer.EndIter);
-                        textViewCode.GrabFocus();
-                    };
+                    buttonConstructorElement.Clicked += (object? sender, EventArgs args) => { GenerateCode("Element", textViewCode, true, true); };
+                    buttonConstructorList.Clicked += (object? sender, EventArgs args) => { GenerateCode("List", textViewCode); };
+                    buttonConstructorListAndTree.Clicked += (object? sender, EventArgs args) => { GenerateCode("ListAndTree", textViewCode, false, true); };
+                    buttonConstructorListSmallSelect.Clicked += (object? sender, EventArgs args) => { GenerateCode("ListSmallSelect", textViewCode); };
                 }
 
                 //Заголовок для дерева
@@ -612,89 +443,8 @@ class {entryName.Text}_Triggers
                     Button buttonConstructorTreeSmallSelect = new Button("Дерево швидкий вибір");
                     hBoxTree.PackStart(buttonConstructorTreeSmallSelect, false, false, 5);
 
-                    buttonConstructorTree.Clicked += (object? sender, EventArgs args) =>
-                    {
-                        if (String.IsNullOrEmpty(entryName.Text))
-                        {
-                            Message.Error(GeneralForm, "Назва довідника не вказана");
-                            return;
-                        }
-
-                        if (!Conf!.Directories.ContainsKey(entryName.Text))
-                        {
-                            Message.Error(GeneralForm, "Довідник не збережений в колекцію, потрібно спочатку зберегти");
-                            return;
-                        }
-
-                        XmlDocument xmlConfDocument = new XmlDocument();
-                        xmlConfDocument.AppendChild(xmlConfDocument.CreateXmlDeclaration("1.0", "utf-8", ""));
-
-                        XmlElement rootNode = xmlConfDocument.CreateElement("root");
-                        xmlConfDocument.AppendChild(rootNode);
-
-                        XmlElement nodeDirectory = xmlConfDocument.CreateElement("Directory");
-                        rootNode.AppendChild(nodeDirectory);
-
-                        XmlElement nodeDirectoryName = xmlConfDocument.CreateElement("Name");
-                        nodeDirectoryName.InnerText = ConfDirectory.Name;
-                        nodeDirectory.AppendChild(nodeDirectoryName);
-
-                        Dictionary<string, object> arguments = new Dictionary<string, object>();
-                        arguments.Add("Section", "Directory");
-                        arguments.Add("File", "Tree");
-
-                        textViewCode.Buffer.Text = Configuration.Transform
-                        (
-                            xmlConfDocument,
-                            System.IO.Path.Combine(PathToXsltTemplate, "xslt/Constructor.xslt"),
-                            arguments
-                        );
-
-                        textViewCode.Buffer.SelectRange(textViewCode.Buffer.StartIter, textViewCode.Buffer.EndIter);
-                        textViewCode.GrabFocus();
-                    };
-
-                    buttonConstructorTreeSmallSelect.Clicked += (object? sender, EventArgs args) =>
-                    {
-                        if (String.IsNullOrEmpty(entryName.Text))
-                        {
-                            Message.Error(GeneralForm, "Назва довідника не вказана");
-                            return;
-                        }
-
-                        if (!Conf!.Directories.ContainsKey(entryName.Text))
-                        {
-                            Message.Error(GeneralForm, "Довідник не збережений в колекцію, потрібно спочатку зберегти");
-                            return;
-                        }
-
-                        XmlDocument xmlConfDocument = new XmlDocument();
-                        xmlConfDocument.AppendChild(xmlConfDocument.CreateXmlDeclaration("1.0", "utf-8", ""));
-
-                        XmlElement rootNode = xmlConfDocument.CreateElement("root");
-                        xmlConfDocument.AppendChild(rootNode);
-
-                        XmlElement nodeDirectory = xmlConfDocument.CreateElement("Directory");
-                        rootNode.AppendChild(nodeDirectory);
-
-                        XmlElement nodeDirectoryName = xmlConfDocument.CreateElement("Name");
-                        nodeDirectoryName.InnerText = ConfDirectory.Name;
-                        nodeDirectory.AppendChild(nodeDirectoryName);
-
-                        Dictionary<string, object> arguments = new Dictionary<string, object>();
-                        arguments.Add("Section", "Directory");
-                        arguments.Add("File", "TreeSmallSelect");
-
-                        textViewCode.Buffer.Text = Configuration.Transform
-                        (
-                            xmlConfDocument,
-                            System.IO.Path.Combine(PathToXsltTemplate, "xslt/Constructor.xslt"),
-                            arguments
-                        );
-
-                        textViewCode.Buffer.SelectRange(textViewCode.Buffer.StartIter, textViewCode.Buffer.EndIter);
-                        textViewCode.GrabFocus();
-                    };
+                    buttonConstructorTree.Clicked += (object? sender, EventArgs args) => { GenerateCode("Tree", textViewCode); };
+                    buttonConstructorTreeSmallSelect.Clicked += (object? sender, EventArgs args) => { GenerateCode("TreeSmallSelect", textViewCode); };
                 }
 
                 //Заголовок PointerControl
@@ -709,59 +459,19 @@ class {entryName.Text}_Triggers
                     Button buttonConstructorPointerControl = new Button("PointerControl");
                     hBoxPointerControl.PackStart(buttonConstructorPointerControl, false, false, 5);
 
-                    buttonConstructorPointerControl.Clicked += (object? sender, EventArgs args) =>
-                    {
-                        if (String.IsNullOrEmpty(entryName.Text))
-                        {
-                            Message.Error(GeneralForm, "Назва довідника не вказана");
-                            return;
-                        }
-
-                        if (!Conf!.Directories.ContainsKey(entryName.Text))
-                        {
-                            Message.Error(GeneralForm, "Довідник не збережений в колекцію, потрібно спочатку зберегти");
-                            return;
-                        }
-
-                        XmlDocument xmlConfDocument = new XmlDocument();
-                        xmlConfDocument.AppendChild(xmlConfDocument.CreateXmlDeclaration("1.0", "utf-8", ""));
-
-                        XmlElement rootNode = xmlConfDocument.CreateElement("root");
-                        xmlConfDocument.AppendChild(rootNode);
-
-                        XmlElement nodeDirectory = xmlConfDocument.CreateElement("Directory");
-                        rootNode.AppendChild(nodeDirectory);
-
-                        XmlElement nodeDirectoryName = xmlConfDocument.CreateElement("Name");
-                        nodeDirectoryName.InnerText = ConfDirectory.Name;
-                        nodeDirectory.AppendChild(nodeDirectoryName);
-
-                        Dictionary<string, object> arguments = new Dictionary<string, object>();
-                        arguments.Add("Section", "Directory");
-                        arguments.Add("File", "PointerControl");
-
-                        textViewCode.Buffer.Text = Configuration.Transform
-                        (
-                            xmlConfDocument,
-                            System.IO.Path.Combine(PathToXsltTemplate, "xslt/Constructor.xslt"),
-                            arguments
-                        );
-
-                        textViewCode.Buffer.SelectRange(textViewCode.Buffer.StartIter, textViewCode.Buffer.EndIter);
-                        textViewCode.GrabFocus();
-                    };
+                    buttonConstructorPointerControl.Clicked += (object? sender, EventArgs args) => { GenerateCode("PointerControl", textViewCode); };
                 }
 
                 //Code C#
 
-                HBox hBoxElementCode = new HBox() { Halign = Align.End };
-                vBoxTemplates.PackStart(hBoxElementCode, false, false, 5);
+                HBox hBoxCode = new HBox() { Halign = Align.End };
+                vBoxTemplates.PackStart(hBoxCode, false, false, 5);
 
                 ScrolledWindow scrollCode = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 650, HeightRequest = 300 };
                 scrollCode.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
                 scrollCode.Add(textViewCode);
 
-                hBoxElementCode.PackStart(scrollCode, false, false, 5);
+                hBoxCode.PackStart(scrollCode, false, false, 5);
             }
 
             hPaned.Pack1(vBox, false, false);
@@ -1354,9 +1064,61 @@ class {entryName.Text}_Triggers
 
         #endregion
 
-        #region Код
+        #region Генерування коду
 
+        /// <summary>
+        /// Функція для точкового генерування коду
+        /// </summary>
+        /// <param name="fileName">Назва файлу</param>
+        /// <param name="textViewCode">Поле куди помістити згенерований код</param>
+        /// <param name="includeFields">Вкласти інформацію про поля</param>
+        /// <param name="includeTabularParts">Вкласти інформацію про табличні частини</param>
+        void GenerateCode(string fileName, TextView textViewCode, bool includeFields = false, bool includeTabularParts = false)
+        {
+            if (String.IsNullOrEmpty(entryName.Text))
+            {
+                Message.Error(GeneralForm, "Назва довідника не вказана");
+                return;
+            }
 
+            if (!Conf!.Directories.ContainsKey(entryName.Text))
+            {
+                Message.Error(GeneralForm, "Довідник не збережений в колекцію, потрібно спочатку зберегти");
+                return;
+            }
+
+            XmlDocument xmlConfDocument = new XmlDocument();
+            xmlConfDocument.AppendChild(xmlConfDocument.CreateXmlDeclaration("1.0", "utf-8", ""));
+
+            XmlElement rootNode = xmlConfDocument.CreateElement("root");
+            xmlConfDocument.AppendChild(rootNode);
+
+            XmlElement nodeDirectory = xmlConfDocument.CreateElement("Directory");
+            rootNode.AppendChild(nodeDirectory);
+
+            XmlElement nodeDirectoryName = xmlConfDocument.CreateElement("Name");
+            nodeDirectoryName.InnerText = ConfDirectory.Name;
+            nodeDirectory.AppendChild(nodeDirectoryName);
+
+            if (includeFields)
+                Configuration.SaveFields(ConfDirectory.Fields, xmlConfDocument, nodeDirectory, "Directory");
+
+            if (includeTabularParts)
+                Configuration.SaveTabularParts(ConfDirectory.TabularParts, xmlConfDocument, nodeDirectory);
+
+            Dictionary<string, object> arguments = new Dictionary<string, object>();
+            arguments.Add("File", fileName);
+
+            textViewCode.Buffer.Text = Configuration.Transform
+            (
+                xmlConfDocument,
+                System.IO.Path.Combine(AppContext.BaseDirectory, "xslt/ConstructorDirectory.xslt"),
+                arguments
+            );
+
+            textViewCode.Buffer.SelectRange(textViewCode.Buffer.StartIter, textViewCode.Buffer.EndIter);
+            textViewCode.GrabFocus();
+        }
 
         #endregion
     }
