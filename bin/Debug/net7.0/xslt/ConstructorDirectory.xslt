@@ -94,7 +94,14 @@ namespace StorageAndTrade
         <xsl:for-each select="$Fields">
             <xsl:choose>
                 <xsl:when test="Type = 'string'">
-                    Entry <xsl:value-of select="Name"/> = new Entry() { WidthRequest = 500 };
+                     <xsl:choose>
+                        <xsl:when test="Multiline = '1'">
+                            TextView <xsl:value-of select="Name"/> = new TextView();
+                        </xsl:when>
+                        <xsl:otherwise>
+                            Entry <xsl:value-of select="Name"/> = new Entry() { WidthRequest = 500 };
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </xsl:when>
                 <xsl:when test="Type = 'integer'">
                     IntegerControl <xsl:value-of select="Name"/> = new IntegerControl();
@@ -164,7 +171,14 @@ namespace StorageAndTrade
             <xsl:for-each select="$Fields">
                 <xsl:choose>
                     <xsl:when test="Type = 'string' or Type = 'integer' or Type = 'numeric' or Type = 'date' or Type = 'datetime' or Type = 'time'">
-                        CreateField(vBox, "<xsl:value-of select="Name"/>:", <xsl:value-of select="Name"/>);
+                        <xsl:choose>
+                            <xsl:when test="Type = 'string' and Multiline = '1'">
+                                CreateFieldView(vBox, "<xsl:value-of select="Name"/>:", <xsl:value-of select="Name"/>, 500, 200);
+                            </xsl:when>
+                            <xsl:otherwise>
+                                CreateField(vBox, "<xsl:value-of select="Name"/>:", <xsl:value-of select="Name"/>);
+                            </xsl:otherwise>
+                        </xsl:choose>
                     </xsl:when>
                     <xsl:when test="Type = 'composite_pointer'">
                         CreateField(vBox, null, <xsl:value-of select="Name"/>);
@@ -198,7 +212,14 @@ namespace StorageAndTrade
             <xsl:for-each select="$Fields">
                 <xsl:choose>
                     <xsl:when test="Type = 'string'">
-                        <xsl:value-of select="Name"/>.Text = <xsl:value-of select="$DirectoryName"/>_Objest.<xsl:value-of select="Name"/>;
+                        <xsl:choose>
+                            <xsl:when test="Multiline = '1'">
+                                <xsl:value-of select="Name"/>.Buffer.Text = <xsl:value-of select="$DirectoryName"/>_Objest.<xsl:value-of select="Name"/>;
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:value-of select="Name"/>.Text = <xsl:value-of select="$DirectoryName"/>_Objest.<xsl:value-of select="Name"/>;
+                            </xsl:otherwise>
+                        </xsl:choose>
                     </xsl:when>
                     <xsl:when test="Type = 'integer' or Type = 'numeric' or Type = 'date' or Type = 'datetime' or Type = 'time'">
                         <xsl:value-of select="Name"/>.Value = <xsl:value-of select="$DirectoryName"/>_Objest.<xsl:value-of select="Name"/>;
@@ -236,7 +257,14 @@ namespace StorageAndTrade
             <xsl:for-each select="$Fields">
                 <xsl:choose>
                     <xsl:when test="Type = 'string'">
-                        <xsl:value-of select="$DirectoryName"/>_Objest.<xsl:value-of select="Name"/> = <xsl:value-of select="Name"/>.Text;
+                        <xsl:choose>
+                            <xsl:when test="Multiline = '1'">
+                                <xsl:value-of select="$DirectoryName"/>_Objest.<xsl:value-of select="Name"/> = <xsl:value-of select="Name"/>.Buffer.Text;
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:value-of select="$DirectoryName"/>_Objest.<xsl:value-of select="Name"/> = <xsl:value-of select="Name"/>.Text;
+                            </xsl:otherwise>
+                        </xsl:choose>
                     </xsl:when>
                      <xsl:when test="Type = 'integer' or Type = 'numeric' or Type = 'date' or Type = 'datetime' or Type = 'time'">
                         <xsl:value-of select="$DirectoryName"/>_Objest.<xsl:value-of select="Name"/> = <xsl:value-of select="Name"/>.Value;
