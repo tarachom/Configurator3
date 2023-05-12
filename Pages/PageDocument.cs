@@ -590,6 +590,8 @@ class {entryName.Text}_Triggers
 
                 string nameInTable_Comment = Configuration.GetNewUnigueColumnName(Program.Kernel!, entryTable.Text, ConfDocument.Fields);
                 ConfDocument.AppendField(new ConfigurationObjectField("Коментар", nameInTable_Comment, "string", "", "Коментар"));
+
+                ConfDocument.AppendTableList(new ConfigurationTabularList("Записи", ""));
             }
             else
                 entryTable.Text = ConfDocument.Table;

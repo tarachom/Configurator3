@@ -338,7 +338,7 @@ class {entryName.Text}_Triggers
 
             //Шаблони
             {
-                Expander expanderTemplates = new Expander("Шаблони");
+                Expander expanderTemplates = new Expander("Готові шаблони");
                 vBox.PackStart(expanderTemplates, false, false, 5);
 
                 VBox vBoxTemplates = new VBox();
@@ -348,8 +348,8 @@ class {entryName.Text}_Triggers
                 HBox hBoxFolderInfo = new HBox() { Halign = Align.Start };
                 vBoxTemplates.PackStart(hBoxFolderInfo, false, false, 5);
                 hBoxFolderInfo.PackStart(new Label(
-                    "<u>Довідник для ієрархії папок</u>. " +
-                    "Будуть створені поля <b>Назва</b> та <b>Родич</b>\n\n" +
+                    "<u>1. Довідник для ієрархії папок</u>\n\n" +
+                    "Будуть створені поля <b>Назва</b> та <b>Родич</b>\n" +
                     "Додатково можна створити поле <b>Власник</b> якщо довідник підпорядкований іншому довіднику.")
                 { Wrap = true, UseMarkup = true, Selectable = true }, false, false, 5);
 
@@ -632,6 +632,9 @@ class {entryName.Text}_Triggers
 
                 string nameInTable_Name = Configuration.GetNewUnigueColumnName(Program.Kernel!, entryTable.Text, ConfDirectory.Fields);
                 ConfDirectory.AppendField(new ConfigurationObjectField("Назва", nameInTable_Name, "string", "", "Назва", true, true));
+
+                ConfDirectory.AppendTableList(new ConfigurationTabularList("Записи", ""));
+                ConfDirectory.AppendTableList(new ConfigurationTabularList("ЗаписиШвидкийВибір", ""));
             }
             else
                 entryTable.Text = ConfDirectory.Table;
