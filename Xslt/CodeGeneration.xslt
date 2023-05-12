@@ -1624,12 +1624,14 @@ namespace <xsl:value-of select="Configuration/NameSpace"/>.Журнали
             if (Current == null)
                 return null;
 
+            <xsl:if test="count(Configuration/Documents/Document) &lt; 0">
             switch (Current.TypeDocument)
             {
                 <xsl:for-each select="Configuration/Documents/Document">
                     <xsl:text>case </xsl:text>"<xsl:value-of select="Name"/>": return new Документи.<xsl:value-of select="Name"/>_Pointer(Current.UnigueID).GetDocumentObject(readAllTablePart);
                 </xsl:for-each>
             }
+            </xsl:if>
 			
 			      return null;
         }
