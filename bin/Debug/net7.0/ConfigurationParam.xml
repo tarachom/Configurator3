@@ -1,17 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <Configuration Select="True">
-    <Key>6b4ef58d-4b62-4885-8059-eb6f43c51c2d</Key>
-    <Name>"Зберігання та Торгівля" для України</Name>
+    <Key>8992dafa-5f97-4392-a78b-8f377e9e1575</Key>
+    <Name>Чиста конфігурація</Name>
     <Server>localhost</Server>
     <Port>5432</Port>
     <Login>postgres</Login>
     <Password>1</Password>
-    <BaseName>storage_and_trade</BaseName>
-    <OtherParam>
-      <Param name="IsGenerateCode">True</Param>
-      <Param name="GenerateCodePath">/home/tarachom/Projects/StorageAndTrade3/Configurator</Param>
-      <Param name="CompileProgramPath">/home/tarachom/Projects/StorageAndTrade3/bin/Debug/net7.0/</Param>
-    </OtherParam>
+    <BaseName>empty</BaseName>
+    <OtherParam />
   </Configuration>
 </root>
