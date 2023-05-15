@@ -174,8 +174,9 @@ namespace Configurator
         {
             FillTreeView();
 
-            foreach (string field in Conf!.Documents[TabularList.Name].Fields.Keys)
-                listStoreDocFields.AppendValues(field);
+            if (Conf!.Documents.ContainsKey(TabularList.Name))
+                foreach (string field in Conf!.Documents[TabularList.Name].Fields.Keys)
+                    listStoreDocFields.AppendValues(field);
 
             entryName.Text = TabularList.Name;
             textViewDesc.Buffer.Text = TabularList.Desc;
