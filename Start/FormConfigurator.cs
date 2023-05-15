@@ -639,6 +639,7 @@ namespace Configurator
             Toolbar toolbar = new Toolbar();
 
             MenuToolButton menuToolButton = new MenuToolButton(Stock.New) { Label = "Додати", IsImportant = true };
+            menuToolButton.Clicked += (object? sender, EventArgs arg) => { ((Menu)((MenuToolButton)(MenuToolButton)sender!).Menu).Popup(); };
             menuToolButton.Menu = CreateAddMenu();
             toolbar.Add(menuToolButton);
 
