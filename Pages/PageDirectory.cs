@@ -675,6 +675,9 @@ class {entryName.Text}_Triggers
 
         void GetValue()
         {
+            if (String.IsNullOrEmpty(entryFullName.Text))
+                entryFullName.Text = entryName.Text;
+
             ConfDirectory.Name = entryName.Text;
             ConfDirectory.FullName = entryFullName.Text;
             ConfDirectory.Table = entryTable.Text;

@@ -469,6 +469,9 @@ namespace Configurator
 
         void GetValue()
         {
+            if (String.IsNullOrEmpty(entryFullName.Text))
+                entryFullName.Text = entryName.Text;
+                
             ConfRegister.Name = entryName.Text;
             ConfRegister.FullName = entryFullName.Text;
             ConfRegister.Table = entryTable.Text;

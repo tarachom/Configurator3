@@ -704,6 +704,9 @@ class {entryName.Text}_Triggers
 
         void GetValue()
         {
+            if (String.IsNullOrEmpty(entryFullName.Text))
+                entryFullName.Text = entryName.Text;
+                
             ConfDocument.Name = entryName.Text;
             ConfDocument.FullName = entryFullName.Text;
             ConfDocument.Table = entryTable.Text;
