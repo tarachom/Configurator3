@@ -423,7 +423,7 @@ class {entryName.Text}_Triggers
                     hBoxElement.PackStart(buttonConstructorListSmallSelect, false, false, 5);
 
                     buttonConstructorElement.Clicked += (object? sender, EventArgs args) => { GenerateCode("Element", textViewCode, true, true); };
-                    buttonConstructorList.Clicked += (object? sender, EventArgs args) => { GenerateCode("List", textViewCode); };
+                    buttonConstructorList.Clicked += (object? sender, EventArgs args) => { GenerateCode("List", textViewCode, false, true); };
                     buttonConstructorListAndTree.Clicked += (object? sender, EventArgs args) => { GenerateCode("ListAndTree", textViewCode, false, true); };
                     buttonConstructorListSmallSelect.Clicked += (object? sender, EventArgs args) => { GenerateCode("ListSmallSelect", textViewCode); };
                 }

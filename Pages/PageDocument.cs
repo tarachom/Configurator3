@@ -24,6 +24,7 @@ limitations under the License.
 using Gtk;
 
 using AccountingSoftware;
+using System.Xml;
 
 namespace Configurator
 {
@@ -429,6 +430,62 @@ class {entryName.Text}_Triggers
 
                 //Табличні списки
                 CreateTabularList(vBoxForm);
+            }
+
+            //Генерування коду 
+            {
+                TextView textViewCode = new TextView();
+
+                Expander expanderTemplates = new Expander("Генерування коду");
+                vBox.PackStart(expanderTemplates, false, false, 5);
+
+                VBox vBoxTemplates = new VBox();
+                expanderTemplates.Add(vBoxTemplates);
+
+                //Заголовок для списку
+                HBox hBoxElementInfo = new HBox() { Halign = Align.Start };
+                vBoxTemplates.PackStart(hBoxElementInfo, false, false, 5);
+                hBoxElementInfo.PackStart(new Label("Для списку") { UseMarkup = true, Selectable = true }, false, false, 5);
+
+                //Елемент
+                HBox hBoxElement = new HBox() { Halign = Align.Start };
+                vBoxTemplates.PackStart(hBoxElement, false, false, 5);
+                {
+                    Button buttonConstructorElement = new Button("Елемент");
+                    hBoxElement.PackStart(buttonConstructorElement, false, false, 5);
+
+                    Button buttonConstructorList = new Button("Список");
+                    hBoxElement.PackStart(buttonConstructorList, false, false, 5);
+
+                    buttonConstructorElement.Clicked += (object? sender, EventArgs args) => { GenerateCode("Element", textViewCode, true, true); };
+                    buttonConstructorList.Clicked += (object? sender, EventArgs args) => { GenerateCode("List", textViewCode, false, true); };
+                }
+
+                //Заголовок PointerControl
+                HBox hBoxPointerControlInfo = new HBox() { Halign = Align.Start };
+                vBoxTemplates.PackStart(hBoxPointerControlInfo, false, false, 5);
+                hBoxPointerControlInfo.PackStart(new Label("Елемент вибору") { UseMarkup = true, Selectable = true }, false, false, 5);
+
+                //PointerControl
+                HBox hBoxPointerControl = new HBox() { Halign = Align.Start };
+                vBoxTemplates.PackStart(hBoxPointerControl, false, false, 5);
+                {
+                    Button buttonConstructorPointerControl = new Button("PointerControl");
+                    hBoxPointerControl.PackStart(buttonConstructorPointerControl, false, false, 5);
+
+                    buttonConstructorPointerControl.Clicked += (object? sender, EventArgs args) => { GenerateCode("PointerControl", textViewCode); };
+                }
+
+                //Code C#
+
+                HBox hBoxCode = new HBox() { Halign = Align.End };
+                vBoxTemplates.PackStart(hBoxCode, false, false, 5);
+
+                ScrolledWindow scrollCode = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 650, HeightRequest = 300 };
+                scrollCode.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+                scrollCode.Add(textViewCode);
+
+                hBoxCode.PackStart(scrollCode, false, false, 5);
             }
 
             hPaned.Pack1(vBox, false, false);
@@ -1052,5 +1109,62 @@ class {entryName.Text}_Triggers
 
         #endregion
 
+        #region Генерування коду
+
+        /// <summary>
+        /// Функція для точкового генерування коду
+        /// </summary>
+        /// <param name="fileName">Назва файлу</param>
+        /// <param name="textViewCode">Поле куди помістити згенерований код</param>
+        /// <param name="includeFields">Вкласти інформацію про поля</param>
+        /// <param name="includeTabularParts">Вкласти інформацію про табличні частини</param>
+        void GenerateCode(string fileName, TextView textViewCode, bool includeFields = false, bool includeTabularParts = false)
+        {
+            if (String.IsNullOrEmpty(entryName.Text))
+            {
+                Message.Error(GeneralForm, "Назва документу не вказана");
+                return;
+            }
+
+            if (!Conf!.Documents.ContainsKey(entryName.Text))
+            {
+                Message.Error(GeneralForm, "Документ не збережений в колекцію, потрібно спочатку зберегти");
+                return;
+            }
+
+            XmlDocument xmlConfDocument = new XmlDocument();
+            xmlConfDocument.AppendChild(xmlConfDocument.CreateXmlDeclaration("1.0", "utf-8", ""));
+
+            XmlElement rootNode = xmlConfDocument.CreateElement("root");
+            xmlConfDocument.AppendChild(rootNode);
+
+            XmlElement nodeDirectory = xmlConfDocument.CreateElement("Document");
+            rootNode.AppendChild(nodeDirectory);
+
+            XmlElement nodeDirectoryName = xmlConfDocument.CreateElement("Name");
+            nodeDirectoryName.InnerText = ConfDocument.Name;
+            nodeDirectory.AppendChild(nodeDirectoryName);
+
+            if (includeFields)
+                Configuration.SaveFields(ConfDocument.Fields, xmlConfDocument, nodeDirectory, "Document");
+
+            if (includeTabularParts)
+                Configuration.SaveTabularParts(ConfDocument.TabularParts, xmlConfDocument, nodeDirectory);
+
+            Dictionary<string, object> arguments = new Dictionary<string, object>();
+            arguments.Add("File", fileName);
+
+            textViewCode.Buffer.Text = Configuration.Transform
+            (
+                xmlConfDocument,
+                System.IO.Path.Combine(AppContext.BaseDirectory, "xslt/ConstructorDocument.xslt"),
+                arguments
+            );
+
+            textViewCode.Buffer.SelectRange(textViewCode.Buffer.StartIter, textViewCode.Buffer.EndIter);
+            textViewCode.GrabFocus();
+        }
+
+        #endregion
     }
 }
