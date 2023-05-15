@@ -254,9 +254,6 @@ namespace StorageAndTrade
 
         protected override void GetValue()
         {
-            UnigueID = <xsl:value-of select="$DirectoryName"/>_Objest.UnigueID;
-            Caption = Назва.Text;
-
             <xsl:for-each select="$Fields">
                 <xsl:choose>
                     <xsl:when test="Type = 'string'">
@@ -310,6 +307,9 @@ namespace StorageAndTrade
             <xsl:for-each select="$TabularParts">
                 <xsl:value-of select="Name"/>.SaveRecords();
             </xsl:for-each>
+
+            UnigueID = <xsl:value-of select="$DirectoryName"/>_Objest.UnigueID;
+            Caption = Назва.Text;
         }
     }
 }
