@@ -441,6 +441,9 @@ class {entryName.Text}_Triggers
                 HBox hBoxTree = new HBox() { Halign = Align.Start };
                 vBoxTemplates.PackStart(hBoxTree, false, false, 5);
                 {
+                    Button buttonConstructorElement = new Button("Елемент");
+                    hBoxTree.PackStart(buttonConstructorElement, false, false, 5);
+
                     Button buttonConstructorTree = new Button("Дерево");
                     hBoxTree.PackStart(buttonConstructorTree, false, false, 5);
 
@@ -450,6 +453,7 @@ class {entryName.Text}_Triggers
                     Button buttonConstructorPointerControl = new Button("PointerControl");
                     hBoxTree.PackStart(buttonConstructorPointerControl, false, false, 5);
 
+                    buttonConstructorElement.Clicked += (object? sender, EventArgs args) => { GenerateCode("ElementTree", textViewCode, true, true); };
                     buttonConstructorTree.Clicked += (object? sender, EventArgs args) => { GenerateCode("Tree", textViewCode); };
                     buttonConstructorTreeSmallSelect.Clicked += (object? sender, EventArgs args) => { GenerateCode("TreeSmallSelect", textViewCode); };
                     buttonConstructorPointerControl.Clicked += (object? sender, EventArgs args) => { GenerateCode("PointerControlTree", textViewCode); };
