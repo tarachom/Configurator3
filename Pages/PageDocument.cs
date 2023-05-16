@@ -457,22 +457,11 @@ class {entryName.Text}_Triggers
                     Button buttonConstructorList = new Button("Список");
                     hBoxElement.PackStart(buttonConstructorList, false, false, 5);
 
+                    Button buttonConstructorPointerControl = new Button("PointerControl");
+                    hBoxElement.PackStart(buttonConstructorPointerControl, false, false, 5);
+
                     buttonConstructorElement.Clicked += (object? sender, EventArgs args) => { GenerateCode("Element", textViewCode, true, true); };
                     buttonConstructorList.Clicked += (object? sender, EventArgs args) => { GenerateCode("List", textViewCode, false, true); };
-                }
-
-                //Заголовок PointerControl
-                HBox hBoxPointerControlInfo = new HBox() { Halign = Align.Start };
-                vBoxTemplates.PackStart(hBoxPointerControlInfo, false, false, 5);
-                hBoxPointerControlInfo.PackStart(new Label("Елемент вибору") { UseMarkup = true, Selectable = true }, false, false, 5);
-
-                //PointerControl
-                HBox hBoxPointerControl = new HBox() { Halign = Align.Start };
-                vBoxTemplates.PackStart(hBoxPointerControl, false, false, 5);
-                {
-                    Button buttonConstructorPointerControl = new Button("PointerControl");
-                    hBoxPointerControl.PackStart(buttonConstructorPointerControl, false, false, 5);
-
                     buttonConstructorPointerControl.Clicked += (object? sender, EventArgs args) => { GenerateCode("PointerControl", textViewCode); };
                 }
 
