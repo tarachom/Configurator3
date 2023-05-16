@@ -624,14 +624,23 @@ class {entryName.Text}_Triggers
             {
                 entryTable.Text = Configuration.GetNewUnigueTableName(Program.Kernel!);
 
+                //Заповнення полями
                 string nameInTable_Code = Configuration.GetNewUnigueColumnName(Program.Kernel!, entryTable.Text, ConfDirectory.Fields);
                 ConfDirectory.AppendField(new ConfigurationObjectField("Код", nameInTable_Code, "string", "", "Код", false, true));
 
                 string nameInTable_Name = Configuration.GetNewUnigueColumnName(Program.Kernel!, entryTable.Text, ConfDirectory.Fields);
                 ConfDirectory.AppendField(new ConfigurationObjectField("Назва", nameInTable_Name, "string", "", "Назва", true, true));
 
-                ConfDirectory.AppendTableList(new ConfigurationTabularList("Записи", ""));
-                ConfDirectory.AppendTableList(new ConfigurationTabularList("ЗаписиШвидкийВибір", ""));
+                //Заповнення списків
+                ConfDirectory.AppendTableList(new ConfigurationTabularList("Записи"));
+                ConfDirectory.AppendTableList(new ConfigurationTabularList("ЗаписиШвидкийВибір"));
+
+                //Заповнення полями списків
+                foreach (var item in ConfDirectory.Fields)
+                {
+                    ConfDirectory.TabularList["Записи"].AppendField(new ConfigurationTabularListField(item.Value.Name));
+                    ConfDirectory.TabularList["ЗаписиШвидкийВибір"].AppendField(new ConfigurationTabularListField(item.Value.Name));
+                }
             }
             else
                 entryTable.Text = ConfDirectory.Table;

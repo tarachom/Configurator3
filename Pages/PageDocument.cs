@@ -630,6 +630,7 @@ class {entryName.Text}_Triggers
             {
                 entryTable.Text = Configuration.GetNewUnigueTableName(Program.Kernel!);
 
+                //Заповнення полями
                 ConfDocument.AppendField(new ConfigurationObjectField("Назва", "docname", "string", "", "Назва", true, true));
                 ConfDocument.AppendField(new ConfigurationObjectField("ДатаДок", "docdate", "datetime", "", "ДатаДок", false, true));
                 ConfDocument.AppendField(new ConfigurationObjectField("НомерДок", "docnomer", "string", "", "НомерДок", false, true));
@@ -637,7 +638,12 @@ class {entryName.Text}_Triggers
                 string nameInTable_Comment = Configuration.GetNewUnigueColumnName(Program.Kernel!, entryTable.Text, ConfDocument.Fields);
                 ConfDocument.AppendField(new ConfigurationObjectField("Коментар", nameInTable_Comment, "string", "", "Коментар"));
 
-                ConfDocument.AppendTableList(new ConfigurationTabularList("Записи", ""));
+                //Заповнення списків
+                ConfDocument.AppendTableList(new ConfigurationTabularList("Записи"));
+
+                //Заповнення полями списків
+                foreach (var item in ConfDocument.Fields)
+                    ConfDocument.TabularList["Записи"].AppendField(new ConfigurationTabularListField(item.Value.Name));
             }
             else
                 entryTable.Text = ConfDocument.Table;
@@ -695,7 +701,7 @@ class {entryName.Text}_Triggers
         {
             if (String.IsNullOrEmpty(entryFullName.Text))
                 entryFullName.Text = entryName.Text;
-                
+
             ConfDocument.Name = entryName.Text;
             ConfDocument.FullName = entryFullName.Text;
             ConfDocument.Table = entryTable.Text;
