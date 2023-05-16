@@ -681,6 +681,7 @@ class {entryName.Text}_Triggers
 
         void GetValue()
         {
+            //Поле з повною назвою переноситься із назви
             if (String.IsNullOrEmpty(entryFullName.Text))
                 entryFullName.Text = entryName.Text;
 
