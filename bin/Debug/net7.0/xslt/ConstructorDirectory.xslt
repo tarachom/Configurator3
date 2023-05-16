@@ -45,6 +45,9 @@ limitations under the License.
             <xsl:when test="$File = 'ListAndTree'">
                 <xsl:call-template name="DirectoryListAndTree" />
             </xsl:when>
+            <xsl:when test="$File = 'PointerControl'">
+                <xsl:call-template name="DirectoryPointerControl" />
+            </xsl:when>
 
             <xsl:when test="$File = 'Tree'">
                 <xsl:call-template name="DirectoryTree" />
@@ -52,9 +55,8 @@ limitations under the License.
                 <xsl:when test="$File = 'TreeSmallSelect'">
                 <xsl:call-template name="DirectoryTreeSmallSelect" />
             </xsl:when>
-            
-            <xsl:when test="$File = 'PointerControl'">
-                <xsl:call-template name="DirectoryPointerControl" />
+            <xsl:when test="$File = 'PointerControlTree'">
+                <xsl:call-template name="DirectoryPointerControlTree" />
             </xsl:when>
 
         </xsl:choose>
@@ -879,7 +881,7 @@ namespace StorageAndTrade
         <xsl:variable name="DirectoryName" select="Directory/Name"/>
 
 /*
-        <xsl:value-of select="$DirectoryName"/>_Дерево_ШвидкийВибір.cs
+        <xsl:value-of select="$DirectoryName"/>_ШвидкийВибір.cs
         Дерево Швидкий вибір
 */
 
@@ -892,11 +894,11 @@ using ТабличніСписки = StorageAndTrade_1_0.Довідники.Та
 
 namespace StorageAndTrade
 {
-    class <xsl:value-of select="$DirectoryName"/>_Дерево_ШвидкийВибір : ДовідникШвидкийВибір
+    class <xsl:value-of select="$DirectoryName"/>_ШвидкийВибір : ДовідникШвидкийВибір
     {
         public UnigueID? OpenFolder { get; set; }
 
-        public <xsl:value-of select="$DirectoryName"/>_Дерево_ШвидкийВибір() : base(false)
+        public <xsl:value-of select="$DirectoryName"/>_ШвидкийВибір() : base(false)
         {
             TreeViewGrid.Model = ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_ЗаписиШвидкийВибір.Store;
             ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_ЗаписиШвидкийВибір.AddColumns(TreeViewGrid);
@@ -970,7 +972,7 @@ namespace StorageAndTrade
 
 /*     
         <xsl:value-of select="$DirectoryName"/>_PointerControl.cs
-        PointerControl
+        PointerControl (Список)
 */
 
 using Gtk;
@@ -1023,6 +1025,87 @@ namespace StorageAndTrade
             PopoverSmallSelect.ShowAll();
 
             page.LoadRecords();
+        }
+
+        protected override void OnClear(object? sender, EventArgs args)
+        {
+            Pointer = new <xsl:value-of select="$DirectoryName"/>_Pointer();
+
+            if (AfterSelectFunc != null)
+                AfterSelectFunc.Invoke();
+        }
+    }
+}
+    </xsl:template>
+
+<!--- 
+//
+// ============================ PointerControlTree ============================
+//
+-->
+
+    <!-- PointerControlTree -->
+    <xsl:template name="DirectoryPointerControlTree">
+        <xsl:variable name="DirectoryName" select="Directory/Name"/>
+
+/*     
+        <xsl:value-of select="$DirectoryName"/>_PointerControl.cs
+        PointerControl (Дерево)
+*/
+
+using Gtk;
+
+using AccountingSoftware;
+using StorageAndTrade_1_0.Довідники;
+
+namespace StorageAndTrade
+{
+    class <xsl:value-of select="$DirectoryName"/>_PointerControl : PointerControl
+    {
+        public <xsl:value-of select="$DirectoryName"/>_PointerControl()
+        {
+            pointer = new <xsl:value-of select="$DirectoryName"/>_Pointer();
+            WidthPresentation = 300;
+            Caption = $"{<xsl:value-of select="$DirectoryName"/>_Const.FULLNAME}:";
+        }
+
+        public UnigueID? OpenFolder { get; set; }
+
+        <xsl:value-of select="$DirectoryName"/>_Pointer pointer;
+        public <xsl:value-of select="$DirectoryName"/>_Pointer Pointer
+        {
+            get
+            {
+                return pointer;
+            }
+            set
+            {
+                pointer = value;
+                Presentation = (pointer != null ? pointer.GetPresentation() : "");
+            }
+        }
+
+        protected override void OpenSelect(object? sender, EventArgs args)
+        {
+            Popover PopoverSmallSelect = new Popover((Button)sender!) { Position = PositionType.Bottom, BorderWidth = 2 };
+
+            if (BeforeClickOpenFunc != null)
+                BeforeClickOpenFunc.Invoke();
+
+            <xsl:value-of select="$DirectoryName"/>_ШвидкийВибір page = new <xsl:value-of select="$DirectoryName"/>_ШвидкийВибір() 
+            { PopoverParent = PopoverSmallSelect, OpenFolder = OpenFolder, DirectoryPointerItem = Pointer.UnigueID };
+            page.CallBack_OnSelectPointer = (UnigueID selectPointer) =&gt;
+            {
+                Pointer = new <xsl:value-of select="$DirectoryName"/>_Pointer(selectPointer);
+
+                if (AfterSelectFunc != null)
+                    AfterSelectFunc.Invoke();
+            };
+
+            PopoverSmallSelect.Add(page);
+            PopoverSmallSelect.ShowAll();
+
+            page.LoadTree();
         }
 
         protected override void OnClear(object? sender, EventArgs args)
