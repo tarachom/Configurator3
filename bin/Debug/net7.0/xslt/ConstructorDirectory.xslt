@@ -469,7 +469,7 @@ namespace StorageAndTrade
                 <xsl:value-of select="$DirectoryName"/>_Objest.Родич = РодичДляНового;
             }
             else
-                Родич.OpenFolder = Номенклатура_Папки_Objest.UnigueID;
+                Родич.OpenFolder = <xsl:value-of select="$DirectoryName"/>_Objest.UnigueID;
 
             <xsl:for-each select="$Fields">
                 <xsl:choose>
