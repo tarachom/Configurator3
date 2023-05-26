@@ -158,7 +158,7 @@ namespace Configurator
                 {
                     if (String.IsNullOrEmpty(entryName.Text))
                     {
-                        Message.Error(GeneralForm, "Назва довідника не вказана");
+                        Message.Error(GeneralForm, "Назва документу не вказана");
                         return;
                     }
 
@@ -166,7 +166,7 @@ namespace Configurator
                     {
                         if (!Conf.Documents.ContainsKey(entryName.Text))
                         {
-                            Message.Error(GeneralForm, "Довідник не збережений в колекцію, потрібно спочатку Зберегти");
+                            Message.Error(GeneralForm, "Документ не збережений в колекцію, потрібно спочатку Зберегти");
                             return;
                         }
 
@@ -267,7 +267,7 @@ class {entryName.Text}_SpendTheDocument
         }}
         catch (Exception ex)
         {{
-            //СпільніФункції.ДокументНеПроводиться(ДокументОбєкт, ДокументОбєкт.Назва, ex.Message);
+            СпільніФункції.ДокументНеПроводиться(ДокументОбєкт, ДокументОбєкт.Назва, ex.Message);
             {entryName.Text}_SpendTheDocument.ClearSpend(ДокументОбєкт);
             return false;
         }}
