@@ -90,7 +90,7 @@ namespace StorageAndTrade
                     TextView <xsl:value-of select="Name"/> = new TextView();
                         </xsl:when>
                         <xsl:otherwise>
-                    Entry <xsl:value-of select="Name"/> = new Entry() { WidthRequest = 500 };
+                    Entry <xsl:value-of select="Name"/> = new Entry() { /* WidthRequest = 500 */ };
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:when>
@@ -227,7 +227,8 @@ namespace StorageAndTrade
             if (IsNew)
                 <xsl:value-of select="$DocumentName"/>_Objest.New();
 
-            <xsl:for-each select="$Fields">
+            <!-- Крім скритого поля Назва яке формується перед збереженням -->
+            <xsl:for-each select="$Fields[Name != 'Назва']">
                 <xsl:choose>
                     <xsl:when test="Type = 'string'">
                         <xsl:choose>
@@ -270,7 +271,8 @@ namespace StorageAndTrade
 
         protected override void GetValue()
         {
-            <xsl:for-each select="$Fields">
+            <!-- Крім скритого поля Назва яке формується перед збереженням -->
+            <xsl:for-each select="$Fields[Name != 'Назва']">
                 <xsl:choose>
                     <xsl:when test="Type = 'string'">
                         <xsl:choose>

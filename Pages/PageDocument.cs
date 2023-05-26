@@ -156,8 +156,20 @@ namespace Configurator
 
                 buttonAddConstAutoNum.Clicked += (object? sender, EventArgs args) =>
                 {
+                    if (String.IsNullOrEmpty(entryName.Text))
+                    {
+                        Message.Error(GeneralForm, "Назва довідника не вказана");
+                        return;
+                    }
+
                     if (Conf != null)
                     {
+                        if (!Conf.Documents.ContainsKey(entryName.Text))
+                        {
+                            Message.Error(GeneralForm, "Довідник не збережений в колекцію, потрібно спочатку Зберегти");
+                            return;
+                        }
+
                         if (!Conf.ConstantsBlock.ContainsKey("НумераціяДокументів"))
                             Conf.AppendConstantsBlock(new ConfigurationConstantsBlock("НумераціяДокументів", "Нумерація документів"));
 
