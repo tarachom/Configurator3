@@ -81,7 +81,8 @@ namespace StorageAndTrade
         public <xsl:value-of select="$DocumentName"/>_Objest <xsl:value-of select="$DocumentName"/>_Objest { get; set; } = new <xsl:value-of select="$DocumentName"/>_Objest();
 
         #region Fields
-        <xsl:for-each select="$Fields">
+        <!-- Крім скритого поля Назва яке формується перед збереженням -->
+        <xsl:for-each select="$Fields[Name != 'Назва']">
             <xsl:choose>
                 <xsl:when test="Type = 'string'">
                      <xsl:choose>
@@ -187,7 +188,8 @@ namespace StorageAndTrade
         protected override void CreateContainer3(VBox vBox)
         {
             <!-- Крім полів які зразу добавляються в шапку НомерДок, ДатаДок, Коментар -->
-            <xsl:for-each select="$Fields[Name != 'НомерДок' and Name != 'ДатаДок' and Name != 'Коментар']">
+            <!-- та скритого поля Назва яке формується перед збереженням -->
+            <xsl:for-each select="$Fields[Name != 'Назва' and Name != 'НомерДок' and Name != 'ДатаДок' and Name != 'Коментар']">
                 //<xsl:value-of select="Name"/>
                 <xsl:choose>
                     <xsl:when test="Type = 'string' or Type = 'integer' or Type = 'numeric' or Type = 'date' or Type = 'datetime' or Type = 'time'">
