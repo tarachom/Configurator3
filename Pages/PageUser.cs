@@ -150,7 +150,7 @@ namespace Configurator
 
         #endregion
 
-        void OnSaveClick(object? sender, EventArgs args)
+        async void OnSaveClick(object? sender, EventArgs args)
         {
             var value = GetValue();
 
@@ -165,13 +165,14 @@ namespace Configurator
 
             if (IsNew)
             {
-                if (Program.Kernel!.DataBase.SpetialTableUsersIsExistUser(value.Item1))
+                if (Program.Kernel != null && await Program.Kernel.DataBase.SpetialTableUsersIsExistUser(value.Item1))
                 {
                     Message.Error(GeneralForm, "Назва користувача не унікальна");
                     return;
                 }
 
-                Guid? UserUID = Program.Kernel?.DataBase.SpetialTableUsersAddOrUpdate(IsNew, null, value.Item1, value.Item2, value.Item3, value.Item4);
+                Guid? UserUID = Program.Kernel != null ?
+                    await Program.Kernel.DataBase.SpetialTableUsersAddOrUpdate(IsNew, null, value.Item1, value.Item2, value.Item3, value.Item4) : null;
 
                 if (UserUID.HasValue)
                 {
@@ -186,7 +187,7 @@ namespace Configurator
             }
             else
             {
-                if (Program.Kernel!.DataBase.SpetialTableUsersIsExistUser(value.Item1, null, UID))
+                if (Program.Kernel != null && await Program.Kernel.DataBase.SpetialTableUsersIsExistUser(value.Item1, null, UID))
                 {
                     Message.Error(GeneralForm, "Назва користувача не унікальна");
                     return;
@@ -195,7 +196,7 @@ namespace Configurator
                 Program.Kernel?.DataBase.SpetialTableUsersAddOrUpdate(IsNew, UID, value.Item1, value.Item2, value.Item3, value.Item4);
             }
 
-            if (CallBack_RefreshList!=null)
+            if (CallBack_RefreshList != null)
                 CallBack_RefreshList.Invoke();
 
             GeneralForm?.RenameCurrentPageNotebook($"Користувач: {value.Item2}");

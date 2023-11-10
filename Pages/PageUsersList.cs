@@ -209,7 +209,7 @@ namespace Configurator
             LoadRecords();
         }
 
-        void OnDeleteClick(object? sender, EventArgs args)
+        async void OnDeleteClick(object? sender, EventArgs args)
         {
             if (TreeViewGrid.Selection.CountSelectedRows() != 0)
             {
@@ -225,7 +225,7 @@ namespace Configurator
                         string uid = (string)TreeViewGrid.Model.GetValue(iter, 1);
                         string name = (string)TreeViewGrid.Model.GetValue(iter, (int)Columns.Name);
 
-                        if (!Program.Kernel!.DataBase.SpetialTableUsersDelete(Guid.Parse(uid), name))
+                        if (Program.Kernel != null && !await Program.Kernel.DataBase.SpetialTableUsersDelete(Guid.Parse(uid), name))
                             Message.Error(GeneralForm, "Не вдалось видалити користувача");
                     }
 

@@ -590,7 +590,7 @@ namespace Configurator
         /// Загрузка даних
         /// </summary>
         /// <param name="fileImport">Файл загрузки</param>
-        void ImportData(object? fileImport)
+        async void ImportData(object? fileImport)
         {
             if (fileImport == null)
                 return;
@@ -643,18 +643,19 @@ namespace Configurator
             {
                 ApendLine("Виконання команд: ");
 
-                byte TransactionID = Program.Kernel!.DataBase.BeginTransaction();
+                byte TransactionID = Program.Kernel != null ? await Program.Kernel.DataBase.BeginTransaction() : (byte)0;
                 bool resultat = false;
 
                 try
                 {
-                    resultat = ExecuteSqlList(pathToXmlResultStepSQL, TransactionID);
+                    resultat = await ExecuteSqlList(pathToXmlResultStepSQL, TransactionID);
                 }
                 catch (Exception ex)
                 {
                     ApendLine("Помилка: " + ex.Message);
 
-                    Program.Kernel!.DataBase.RollbackTransaction(TransactionID);
+                    if (Program.Kernel != null)
+                        await Program.Kernel.DataBase.RollbackTransaction(TransactionID);
 
                     //Очистка тмп файлів
                     {
@@ -677,8 +678,8 @@ namespace Configurator
                     return;
                 }
 
-                if (resultat)
-                    Program.Kernel.DataBase.CommitTransaction(TransactionID);
+                if (resultat && Program.Kernel != null)
+                    await Program.Kernel.DataBase.CommitTransaction(TransactionID);
             }
 
             //Видалення тимчасових файлів
@@ -768,7 +769,7 @@ namespace Configurator
         /// Виконання SQL запитів
         /// </summary>
         /// <param name="fileStepSQL">Файл з запитами</param>
-        public bool ExecuteSqlList(string fileStepSQL, byte transactionID)
+        public async Task<bool> ExecuteSqlList(string fileStepSQL, byte transactionID)
         {
             int counter = 0;
             int iter = 0;
@@ -881,7 +882,7 @@ namespace Configurator
                     param.Add(paramName, paramObj);
                 }
 
-                int result = Program.Kernel!.DataBase.ExecuteSQL(sqlText, param, transactionID);
+                int result = await Program.Kernel!.DataBase.ExecuteSQL(sqlText, param, transactionID);
 
                 if (iter > 100)
                 {
