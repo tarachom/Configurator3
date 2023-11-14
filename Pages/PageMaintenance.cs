@@ -138,7 +138,7 @@ namespace Configurator
             );
         }
 
-        void MaintenanceTable()
+        async void MaintenanceTable()
         {
             ButtonSensitive(false);
             ClearListBoxTerminal();
@@ -160,7 +160,7 @@ namespace Configurator
 
                 string query = $@"VACUUM FULL {table.TableName};";
 
-                Program.Kernel.DataBase.ExecuteSQL(query);
+                await Program.Kernel.DataBase.ExecuteSQL(query);
             }
 
             ApendLine("");
