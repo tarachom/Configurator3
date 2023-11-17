@@ -48,7 +48,7 @@ namespace Configurator
                     XPathNavigator? currentNode = ConfigurationParamNodes.Current;
 
                     string SelectAttribute = currentNode?.GetAttribute("Select", "") ?? "";
-                    if (!String.IsNullOrEmpty(SelectAttribute))
+                    if (!string.IsNullOrEmpty(SelectAttribute))
                         ItemConfigurationParam.Select = bool.Parse(SelectAttribute);
 
                     ItemConfigurationParam.ConfigurationKey = currentNode?.SelectSingleNode("Key")?.Value ?? "";
@@ -222,29 +222,33 @@ namespace Configurator
 
         public override string ToString()
         {
-            return String.IsNullOrWhiteSpace(ConfigurationName) ? "[]" : ConfigurationName;
+            return string.IsNullOrWhiteSpace(ConfigurationName) ? "[]" : ConfigurationName;
         }
 
         public static ConfigurationParam New()
         {
-            ConfigurationParam configurationParam = new ConfigurationParam();
-            configurationParam.ConfigurationKey = Guid.NewGuid().ToString();
-            configurationParam.ConfigurationName = "Новий *";
+            ConfigurationParam configurationParam = new ConfigurationParam
+            {
+                ConfigurationKey = Guid.NewGuid().ToString(),
+                ConfigurationName = "Новий *"
+            };
 
             return configurationParam;
         }
 
         public ConfigurationParam Clone()
         {
-            ConfigurationParam configurationParam = new ConfigurationParam();
-            configurationParam.ConfigurationKey = Guid.NewGuid().ToString();
-            configurationParam.ConfigurationName = ConfigurationName + " - Копія";
-            configurationParam.DataBaseServer = DataBaseServer;
-            configurationParam.DataBaseLogin = DataBaseLogin;
-            configurationParam.DataBasePassword = DataBasePassword;
-            configurationParam.DataBaseBaseName = DataBaseBaseName;
-            configurationParam.DataBasePort = DataBasePort;
-            configurationParam.OtherParam = OtherParam;
+            ConfigurationParam configurationParam = new ConfigurationParam
+            {
+                ConfigurationKey = Guid.NewGuid().ToString(),
+                ConfigurationName = ConfigurationName + " - Копія",
+                DataBaseServer = DataBaseServer,
+                DataBaseLogin = DataBaseLogin,
+                DataBasePassword = DataBasePassword,
+                DataBaseBaseName = DataBaseBaseName,
+                DataBasePort = DataBasePort,
+                OtherParam = OtherParam
+            };
 
             return configurationParam;
         }

@@ -23,7 +23,6 @@ limitations under the License.
 
 using Gtk;
 
-
 using AccountingSoftware;
 
 namespace Configurator

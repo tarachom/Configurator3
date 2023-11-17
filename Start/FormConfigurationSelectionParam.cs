@@ -156,7 +156,7 @@ namespace Configurator
                 ThisClose();
         }
 
-        void OnButtonCreateBaseClicked(object? sender, EventArgs args)
+        async void OnButtonCreateBaseClicked(object? sender, EventArgs args)
         {
             if (OpenConfigurationParam == null)
                 return;
@@ -165,20 +165,32 @@ namespace Configurator
             {
                 Kernel kernel = new Kernel();
 
-                Exception exception;
-                bool IsExistsDatabase = false;
-
-                bool flag = kernel.CreateDatabaseIfNotExist(
+                bool ifExistsDatabase = await kernel.IfExistDatabase(
                     OpenConfigurationParam.DataBaseServer,
                     OpenConfigurationParam.DataBaseLogin,
                     OpenConfigurationParam.DataBasePassword,
                     OpenConfigurationParam.DataBasePort,
-                    OpenConfigurationParam.DataBaseBaseName, out exception, out IsExistsDatabase);
+                    OpenConfigurationParam.DataBaseBaseName
+                );
 
-                if (flag)
-                    Message.Info(this, "OK.\n\nБаза даних створена або вже існує");
+                if (ifExistsDatabase)
+                {
+                    Message.Info(this, "База даних вже існує");
+                    return;
+                }
+
+                bool result = await kernel.CreateDatabaseIfNotExist(
+                    OpenConfigurationParam.DataBaseServer,
+                    OpenConfigurationParam.DataBaseLogin,
+                    OpenConfigurationParam.DataBasePassword,
+                    OpenConfigurationParam.DataBasePort,
+                    OpenConfigurationParam.DataBaseBaseName
+                );
+
+                if (result)
+                    Message.Info(this, "OK.\n\nБаза даних створена");
                 else
-                    Message.Error(this, "Error: " + exception.Message);
+                    Message.Error(this, "Error: " + kernel.Exception?.Message);
             }
         }
 

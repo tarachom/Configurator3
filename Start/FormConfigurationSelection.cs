@@ -203,7 +203,7 @@ namespace Configurator
             Open();
         }
 
-        void OnButtonOpenConfiguratorClicked(object? sender, EventArgs args)
+        async void OnButtonOpenConfiguratorClicked(object? sender, EventArgs args)
         {
             ListBoxRow[] selectedRows = listBox.SelectedRows;
 
@@ -221,29 +221,26 @@ namespace Configurator
 
                 Program.Kernel = new Kernel();
 
-                Exception exception;
-                bool flagOpen = Program.Kernel.Open(PathToConfXML,
+                bool result = await Program.Kernel.Open(PathToConfXML,
                     OpenConfigurationParam.DataBaseServer,
                     OpenConfigurationParam.DataBaseLogin,
                     OpenConfigurationParam.DataBasePassword,
                     OpenConfigurationParam.DataBasePort,
-                    OpenConfigurationParam.DataBaseBaseName,
-                    out exception);
+                    OpenConfigurationParam.DataBaseBaseName
+                );
 
-                if (flagOpen)
+                if (result)
                 {
-                    FormConfigurator сonfigurator = new FormConfigurator();
-                    сonfigurator.OpenConfigurationParam = ConfigurationParamCollection.GetConfigurationParam(selectedRows[0].Name);
+                    FormConfigurator сonfigurator = new FormConfigurator { OpenConfigurationParam = ConfigurationParamCollection.GetConfigurationParam(selectedRows[0].Name) };
+
                     сonfigurator.Show();
-
                     сonfigurator.SetValue();
-
                     сonfigurator.LoadTreeAsync();
 
                     Hide();
                 }
                 else
-                    Message.Error(this, "Error: " + exception.Message);
+                    Message.Error(this, "Error: " + Program.Kernel.Exception?.Message);
             }
         }
 
@@ -301,12 +298,15 @@ namespace Configurator
 
             if (selectedRows.Length != 0)
             {
-                FormConfigurationSelectionParam configurationSelectionParam = new FormConfigurationSelectionParam();
-                configurationSelectionParam.Modal = true;
-                configurationSelectionParam.TransientFor = this;
-                configurationSelectionParam.Resizable = false;
-                configurationSelectionParam.OpenConfigurationParam = ConfigurationParamCollection.GetConfigurationParam(selectedRows[0].Name);
-                configurationSelectionParam.CallBackUpdate = CallBackUpdate;
+                FormConfigurationSelectionParam configurationSelectionParam = new FormConfigurationSelectionParam
+                {
+                    Modal = true,
+                    TransientFor = this,
+                    Resizable = false,
+                    OpenConfigurationParam = ConfigurationParamCollection.GetConfigurationParam(selectedRows[0].Name),
+                    CallBackUpdate = CallBackUpdate
+                };
+
                 configurationSelectionParam.Show();
             }
         }
