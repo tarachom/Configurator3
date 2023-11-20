@@ -40,7 +40,13 @@ namespace Configurator
 
         public virtual TypeForm TypeOpenForm { get; } = TypeForm.Configurator;
 
-        protected ListBox listBox;
+        HBox hBoxContainerToolbar = new HBox(); //Для тулбара
+
+        VBox vBoxContainerLeft; //Лівий для списку
+        VBox vBoxContainerRight; //Правий для кнопок
+
+        protected ListBox listBox; //Список
+        Button buttonConfigurator; //Кнопка конфігуратор
 
         public FormConfigurationSelection() : base("Вибір бази даних")
         {
@@ -61,10 +67,10 @@ namespace Configurator
             HBox hBoxContainer = new HBox();
             vBox.PackStart(hBoxContainer, false, false, 0);
 
-            VBox vBoxContainerLeft = new VBox() { WidthRequest = 500 };
+            vBoxContainerLeft = new VBox() { WidthRequest = 500 };
             hBoxContainer.PackStart(vBoxContainerLeft, false, false, 0);
 
-            VBox vBoxContainerRight = new VBox() { WidthRequest = 100 };
+            vBoxContainerRight = new VBox() { WidthRequest = 100 };
             hBoxContainer.PackStart(vBoxContainerRight, false, false, 0);
             //<--
 
@@ -73,20 +79,18 @@ namespace Configurator
                 HBox hBox = new HBox();
                 vBoxContainerLeft.PackStart(hBox, false, false, 2);
 
-                ScrolledWindow scroll = new ScrolledWindow();
+                ScrolledWindow scroll = new ScrolledWindow() { ShadowType = ShadowType.In };
                 scroll.SetSizeRequest(500, 280);
-                scroll.ShadowType = ShadowType.In;
                 scroll.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
 
-                listBox = new ListBox();
-                listBox.SelectionMode = SelectionMode.Single;
+                listBox = new ListBox { SelectionMode = SelectionMode.Single };
                 listBox.ButtonPressEvent += OnListBoxDataBaseButtonPress;
                 scroll.Add(listBox);
 
                 hBox.PackStart(scroll, false, false, 4);
             }
 
-            //Кнопки
+            //Кнопка Відкрити
             if (TypeOpenForm == TypeForm.WorkingProgram)
             {
                 HBox hBoxOpen = new HBox() { Halign = Align.Start };
@@ -97,25 +101,24 @@ namespace Configurator
 
                 hBoxOpen.PackStart(buttonOpen, false, false, 2);
 
-                Shown += (object? sender, EventArgs args) =>
-                {
-                    buttonOpen.GrabFocus();
-                };
+                //Фокус для кнопки Відкрити після відкриття форми
+                Shown += (object? sender, EventArgs args) => { buttonOpen.GrabFocus(); };
             }
 
-            HBox hBoxConfigurator = new HBox() { Halign = Align.Start };
-            vBoxContainerRight.PackStart(hBoxConfigurator, false, false, 2);
+            //Кнопка Конфігуратор
+            {
+                HBox hBoxConfigurator = new HBox() { Halign = Align.Start };
+                vBoxContainerRight.PackStart(hBoxConfigurator, false, false, 2);
 
-            Button buttonConfigurator = new Button("Конфігуратор") { WidthRequest = 140 };
-            buttonConfigurator.Clicked += OnButtonOpenConfiguratorClicked;
+                buttonConfigurator = new Button("Конфігуратор") { WidthRequest = 140 };
+                buttonConfigurator.Clicked += OnButtonOpenConfiguratorClicked;
 
-            hBoxConfigurator.PackStart(buttonConfigurator, false, false, 2);
+                hBoxConfigurator.PackStart(buttonConfigurator, false, false, 2);
 
-            if (TypeOpenForm == TypeForm.Configurator)
-                Shown += (object? sender, EventArgs args) =>
-                {
-                    buttonConfigurator.GrabFocus();
-                };
+                if (TypeOpenForm == TypeForm.Configurator)
+                    //Фокус для кнопки Конфігуратор після відкриття форми
+                    Shown += (object? sender, EventArgs args) => { buttonConfigurator.GrabFocus(); };
+            }
 
             ShowAll();
 
@@ -125,10 +128,8 @@ namespace Configurator
 
         void CreateToolbar(VBox vBox)
         {
-            HBox hBoxToolbar = new HBox();
-
             Toolbar toolbar = new Toolbar();
-            hBoxToolbar.PackStart(toolbar, true, true, 0);
+            hBoxContainerToolbar.PackStart(toolbar, true, true, 0);
 
             ToolButton addButton = new ToolButton(Stock.Add) { TooltipText = "Додати" };
             addButton.Clicked += OnButtonAddClicked;
@@ -146,7 +147,7 @@ namespace Configurator
             deleteButton.Clicked += OnButtonDeleteClicked;
             toolbar.Add(deleteButton);
 
-            vBox.PackStart(hBoxToolbar, false, false, 0);
+            vBox.PackStart(hBoxContainerToolbar, false, false, 0);
         }
 
         void LoadConfigurationParam()
@@ -157,9 +158,11 @@ namespace Configurator
 
         void FillListBoxDataBase(string selectConfKey = "")
         {
+            //Очищення у зворотньому напрямку
             for (int i = listBox.Children.Length - 1; i >= 0; i--)
                 listBox.Remove(listBox.Children[i]);
 
+            //Заповнення списку
             foreach (ConfigurationParam itemConfigurationParam in ConfigurationParamCollection.ListConfigurationParam!)
             {
                 ListBoxRow row = new ListBoxRow() { Name = itemConfigurationParam.ConfigurationKey };
@@ -167,7 +170,7 @@ namespace Configurator
 
                 listBox.Add(row);
 
-                if (!String.IsNullOrEmpty(selectConfKey))
+                if (!string.IsNullOrEmpty(selectConfKey))
                 {
                     if (itemConfigurationParam.ConfigurationKey == selectConfKey)
                         listBox.SelectRow(row);
@@ -181,6 +184,7 @@ namespace Configurator
 
             listBox.ShowAll();
 
+            //Виділення першого елементу в списку
             if (listBox.Children.Length != 0 && listBox.SelectedRow == null)
             {
                 ListBoxRow row = (ListBoxRow)listBox.Children[0];
@@ -196,11 +200,33 @@ namespace Configurator
             FillListBoxDataBase(itemConfigurationParam.ConfigurationKey);
         }
 
-        public virtual void Open() { }
+        public virtual async ValueTask Open() { await ValueTask.FromResult(true); }
 
-        void OnButtonOpenClicked(object? sender, EventArgs args)
+        async void OnButtonOpenClicked(object? sender, EventArgs args)
         {
-            Open();
+            if (sender == null) return;
+
+            //Блокування кнопок і списку
+            Button buttonOpen = (Button)sender;
+            hBoxContainerToolbar.Sensitive = listBox.Sensitive =
+            buttonConfigurator.Sensitive = buttonOpen.Sensitive = false;
+
+            //Спінер на форму
+            HBox hBoxSpinner = new HBox() { Halign = Align.Center };
+            hBoxSpinner.PackStart(new Spinner() { Active = true }, false, false, 10);
+
+            vBoxContainerRight.PackStart(hBoxSpinner, false, false, 2);
+            vBoxContainerRight.ShowAll();
+
+            await Open();
+
+            //Видалення спінера
+            vBoxContainerRight.Remove(hBoxSpinner);
+            vBoxContainerRight.ShowAll();
+
+            //Розблокування кнопок і списку
+            hBoxContainerToolbar.Sensitive = listBox.Sensitive =
+            buttonConfigurator.Sensitive = buttonOpen.Sensitive = true;
         }
 
         async void OnButtonOpenConfiguratorClicked(object? sender, EventArgs args)

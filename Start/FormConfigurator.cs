@@ -29,7 +29,7 @@ namespace Configurator
 {
     public class FormConfigurator : Window
     {
-        readonly object loked = new Object();
+        readonly object loked = new();
         public ConfigurationParam? OpenConfigurationParam { get; set; }
         Configuration? Conf
         {

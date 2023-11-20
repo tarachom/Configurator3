@@ -68,7 +68,7 @@ namespace Configurator
                             string paramName = currentItemParamNode?.GetAttribute("name", "") ?? "";
                             string paramValue = currentItemParamNode?.Value ?? "";
 
-                            if (!String.IsNullOrEmpty(paramName))
+                            if (!string.IsNullOrEmpty(paramName))
                                 ItemConfigurationParam.OtherParam.Add(paramName, paramValue);
                         }
 
@@ -230,7 +230,7 @@ namespace Configurator
             ConfigurationParam configurationParam = new ConfigurationParam
             {
                 ConfigurationKey = Guid.NewGuid().ToString(),
-                ConfigurationName = "Новий *"
+                ConfigurationName = "*"
             };
 
             return configurationParam;
