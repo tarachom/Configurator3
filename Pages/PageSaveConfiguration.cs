@@ -335,7 +335,7 @@ namespace Configurator
             }
         }
 
-        void SaveAndAnalize()
+        async void SaveAndAnalize()
         {
             ButtonSensitive(false);
 
@@ -355,7 +355,7 @@ namespace Configurator
             ApendLine(" --> " + Conf.PathToTempXmlFileConfiguration + "\n");
 
             ApendLine("3. Отримання структури бази даних");
-            ConfigurationInformationSchema informationSchema = Program.Kernel!.DataBase.SelectInformationSchema();
+            ConfigurationInformationSchema informationSchema = await Program.Kernel!.DataBase.SelectInformationSchema();
 
             if (informationSchema.Tables.Count > 0)
             {
@@ -608,7 +608,7 @@ namespace Configurator
             ApendLine("\n\n\n");
         }
 
-        void SaveAnalizeAndCreateSQL()
+        async void SaveAnalizeAndCreateSQL()
         {
             ButtonSensitive(false);
 
@@ -631,7 +631,7 @@ namespace Configurator
             ApendLine(" --> " + Conf.PathToTempXmlFileConfiguration + "\n");
 
             ApendLine("2. Отримання структури бази даних");
-            ConfigurationInformationSchema informationSchema = Program.Kernel!.DataBase.SelectInformationSchema();
+            ConfigurationInformationSchema informationSchema = await Program.Kernel!.DataBase.SelectInformationSchema();
             Configuration.SaveInformationSchema(informationSchema,
                  System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, "InformationSchema.xml"));
 

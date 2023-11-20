@@ -405,7 +405,7 @@ namespace Configurator
 
         #region Присвоєння / зчитування значень віджетів
 
-        public void SetValue()
+        public async void SetValue()
         {
             FillAllowDocumentSpend();
             FillDimensionFields();
@@ -418,7 +418,7 @@ namespace Configurator
             entryFullName.Text = ConfRegister.FullName;
 
             if (IsNew)
-                entryTable.Text = Configuration.GetNewUnigueTableName(Program.Kernel!);
+                entryTable.Text = await Configuration.GetNewUnigueTableName(Program.Kernel!);
             else
                 entryTable.Text = ConfRegister.Table;
 
@@ -471,7 +471,7 @@ namespace Configurator
         {
             if (String.IsNullOrEmpty(entryFullName.Text))
                 entryFullName.Text = entryName.Text;
-                
+
             ConfRegister.Name = entryName.Text;
             ConfRegister.FullName = entryFullName.Text;
             ConfRegister.Table = entryTable.Text;
@@ -972,9 +972,9 @@ HAVING";
         // Залишки
         //
 
-        ConfigurationObjectTablePart CreateVirtualTable_Залишки()
+        async ValueTask<ConfigurationObjectTablePart> CreateVirtualTable_Залишки()
         {
-            ConfigurationObjectTablePart TablePart = CreateVirtualTable_Table("Залишки");
+            ConfigurationObjectTablePart TablePart = await CreateVirtualTable_Table("Залишки");
 
             int index = 0;
             CreateVirtualTable_Field(TablePart, new ConfigurationObjectField("Період", "", "date", "", "", false, true));
@@ -992,9 +992,9 @@ HAVING";
             return TablePart;
         }
 
-        void CreateVirtualTable_ЗалишкиТаОбороти()
+        async void CreateVirtualTable_ЗалишкиТаОбороти()
         {
-            ConfigurationObjectTablePart TablePart = CreateVirtualTable_Table("ЗалишкиТаОбороти");
+            ConfigurationObjectTablePart TablePart = await CreateVirtualTable_Table("ЗалишкиТаОбороти");
 
             int index = 0;
             CreateVirtualTable_Field(TablePart, new ConfigurationObjectField("Період", "", "date", "", "", false, true));
@@ -1018,9 +1018,9 @@ HAVING";
         // Обороти
         //
 
-        void CreateVirtualTable_Обороти()
+        async void CreateVirtualTable_Обороти()
         {
-            ConfigurationObjectTablePart TablePart = CreateVirtualTable_Table("Обороти");
+            ConfigurationObjectTablePart TablePart = await CreateVirtualTable_Table("Обороти");
 
             int index = 0;
             CreateVirtualTable_Field(TablePart, new ConfigurationObjectField("Період", "", "date", "", "", false, true));
@@ -1044,9 +1044,9 @@ HAVING";
         // Підсумки
         //
 
-        void CreateVirtualTable_Підсумки(ConfigurationObjectTablePart Залишки_TablePart)
+        async void CreateVirtualTable_Підсумки(ConfigurationObjectTablePart Залишки_TablePart)
         {
-            ConfigurationObjectTablePart TablePart = CreateVirtualTable_Table("Підсумки");
+            ConfigurationObjectTablePart TablePart = await CreateVirtualTable_Table("Підсумки");
 
             int index = -1;
 
@@ -1061,11 +1061,11 @@ HAVING";
             CreateQueryBlock_Підсумки(TablePart, Залишки_TablePart);
         }
 
-        ConfigurationObjectTablePart CreateVirtualTable_Table(string tableName)
+        async ValueTask<ConfigurationObjectTablePart> CreateVirtualTable_Table(string tableName)
         {
             if (!ConfRegister.TabularParts.ContainsKey(tableName))
             {
-                string table = Configuration.GetNewUnigueTableName(Program.Kernel!);
+                string table = await Configuration.GetNewUnigueTableName(Program.Kernel!);
                 ConfRegister.AppendTablePart(new ConfigurationObjectTablePart(tableName, table, "Віртуальна таблиця"));
             }
 
@@ -1096,7 +1096,7 @@ HAVING";
             }
         }
 
-        void OnCreateVirtualTableClick(object? sender, EventArgs args)
+        async void OnCreateVirtualTableClick(object? sender, EventArgs args)
         {
             if (String.IsNullOrEmpty(entryName.Text))
             {
@@ -1128,7 +1128,7 @@ HAVING";
                 {
                     case TypeRegistersAccumulation.Residues: /* Залишки */
                         {
-                            ConfigurationObjectTablePart Залишки_TablePart = CreateVirtualTable_Залишки();
+                            ConfigurationObjectTablePart Залишки_TablePart = await CreateVirtualTable_Залишки();
                             CreateVirtualTable_ЗалишкиТаОбороти();
 
                             if (!checkButtonNoSummary.Active)
@@ -1577,7 +1577,7 @@ HAVING";
             });
         }
 
-        void OnTabularPartsCopyClick(object? sender, EventArgs args)
+        async void OnTabularPartsCopyClick(object? sender, EventArgs args)
         {
             ListBoxRow[] selectedRows = listBoxTableParts.SelectedRows;
 
@@ -1589,7 +1589,7 @@ HAVING";
                     {
                         ConfigurationObjectTablePart newTablePart = ConfRegister.TabularParts[row.Child.Name].Copy();
                         newTablePart.Name += GenerateName.GetNewName();
-                        newTablePart.Table = Configuration.GetNewUnigueTableName(Program.Kernel!);
+                        newTablePart.Table = await Configuration.GetNewUnigueTableName(Program.Kernel!);
 
                         ConfRegister.AppendTablePart(newTablePart);
                     }

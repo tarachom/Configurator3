@@ -615,14 +615,14 @@ class {entryName.Text}_Triggers
 
         #region Присвоєння / зчитування значень віджетів
 
-        public void SetValue()
+        public async void SetValue()
         {
             entryName.Text = ConfDirectory.Name;
             entryFullName.Text = ConfDirectory.FullName;
 
             if (IsNew)
             {
-                entryTable.Text = Configuration.GetNewUnigueTableName(Program.Kernel!);
+                entryTable.Text = await Configuration.GetNewUnigueTableName(Program.Kernel!);
 
                 //Заповнення полями
                 string nameInTable_Code = Configuration.GetNewUnigueColumnName(Program.Kernel!, entryTable.Text, ConfDirectory.Fields);
@@ -906,7 +906,7 @@ class {entryName.Text}_Triggers
             });
         }
 
-        void OnTabularPartsCopyClick(object? sender, EventArgs args)
+        async void OnTabularPartsCopyClick(object? sender, EventArgs args)
         {
             ListBoxRow[] selectedRows = listBoxTableParts.SelectedRows;
 
@@ -918,7 +918,7 @@ class {entryName.Text}_Triggers
                     {
                         ConfigurationObjectTablePart newTablePart = ConfDirectory.TabularParts[row.Child.Name].Copy();
                         newTablePart.Name += GenerateName.GetNewName();
-                        newTablePart.Table = Configuration.GetNewUnigueTableName(Program.Kernel!);
+                        newTablePart.Table = await Configuration.GetNewUnigueTableName(Program.Kernel!);
 
                         ConfDirectory.AppendTablePart(newTablePart);
                     }

@@ -196,14 +196,14 @@ namespace Configurator
 
         #region Присвоєння / зчитування значень віджетів
 
-        public void SetValue()
+        public async void SetValue()
         {
             FillTabularParts();
 
             entryName.Text = TablePart.Name;
 
             if (IsNew)
-                entryTable.Text = Configuration.GetNewUnigueTableName(Program.Kernel!);
+                entryTable.Text = await Configuration.GetNewUnigueTableName(Program.Kernel!);
             else
                 entryTable.Text = TablePart.Table;
 

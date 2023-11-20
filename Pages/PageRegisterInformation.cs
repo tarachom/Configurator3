@@ -332,7 +332,7 @@ namespace Configurator
 
         #region Присвоєння / зчитування значень віджетів
 
-        public void SetValue()
+        public async void SetValue()
         {
             FillDimensionFields();
             FillResourcesFields();
@@ -343,7 +343,7 @@ namespace Configurator
             entryFullName.Text = ConfRegister.FullName;
 
             if (IsNew)
-                entryTable.Text = Configuration.GetNewUnigueTableName(Program.Kernel!);
+                entryTable.Text = await Configuration.GetNewUnigueTableName(Program.Kernel!);
             else
                 entryTable.Text = ConfRegister.Table;
 

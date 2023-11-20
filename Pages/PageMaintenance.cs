@@ -144,7 +144,7 @@ namespace Configurator
             ClearListBoxTerminal();
 
             ApendLine("Структура бази даних");
-            ConfigurationInformationSchema informationSchema = Program.Kernel!.DataBase.SelectInformationSchema();
+            ConfigurationInformationSchema informationSchema = await Program.Kernel!.DataBase.SelectInformationSchema();
 
             ApendLine("Таблиць: " + informationSchema.Tables.Count);
             ApendLine("");

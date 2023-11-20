@@ -83,10 +83,10 @@ namespace Configurator
             thread.Start();
         }
 
-        void LoadShemaAsync()
+        async void LoadShemaAsync()
         {
             //Структура бази даних
-            ConfigurationInformationSchema informationSchema = Program.Kernel!.DataBase.SelectInformationSchema();
+            ConfigurationInformationSchema informationSchema = await Program.Kernel!.DataBase.SelectInformationSchema();
 
             lock (loked)
             {

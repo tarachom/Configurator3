@@ -1907,7 +1907,7 @@ namespace Configurator
             }
         }
 
-        void OnCopyClick(object? sender, EventArgs args)
+        async void OnCopyClick(object? sender, EventArgs args)
         {
             TreeIter iter;
 
@@ -1941,7 +1941,7 @@ namespace Configurator
                                 itemConst.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!, "tab_constants", AllFields);
 
                                 foreach (ConfigurationObjectTablePart tablePart in itemConst.TabularParts.Values)
-                                    tablePart.Table = Configuration.GetNewUnigueTableName(Program.Kernel!);
+                                    tablePart.Table = await Configuration.GetNewUnigueTableName(Program.Kernel!);
                             }
 
                             Conf!.AppendConstantsBlock(newConstantBlock);
@@ -1966,7 +1966,7 @@ namespace Configurator
                                     if (!Conf!.ConstantsBlock[blockConst].Constants.ContainsKey(newConstant.Name))
                                     {
                                         foreach (ConfigurationObjectTablePart tablePart in newConstant.TabularParts.Values)
-                                            tablePart.Table = Configuration.GetNewUnigueTableName(Program.Kernel!);
+                                            tablePart.Table = await Configuration.GetNewUnigueTableName(Program.Kernel!);
 
                                         Conf!.ConstantsBlock[blockConst].AppendConstant(newConstant);
                                     }
@@ -1978,7 +1978,7 @@ namespace Configurator
                                     string nameTablePart = blockAndName[2];
                                     ConfigurationObjectTablePart newTablePart = Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart].Copy();
                                     newTablePart.Name += GenerateName.GetNewName();
-                                    newTablePart.Table = Configuration.GetNewUnigueTableName(Program.Kernel!);
+                                    newTablePart.Table =await Configuration.GetNewUnigueTableName(Program.Kernel!);
 
                                     if (!Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts.ContainsKey(newTablePart.Name))
                                         Conf!.ConstantsBlock[blockConst].Constants[nameConst].AppendTablePart(newTablePart);
@@ -2031,12 +2031,12 @@ namespace Configurator
                                     {
                                         ConfigurationDirectories newDirectory = Conf!.Directories[directory].Copy();
                                         newDirectory.Name += GenerateName.GetNewName();
-                                        newDirectory.Table = Configuration.GetNewUnigueTableName(Program.Kernel!);
+                                        newDirectory.Table =await Configuration.GetNewUnigueTableName(Program.Kernel!);
 
                                         if (!Conf!.Directories.ContainsKey(newDirectory.Name))
                                         {
                                             foreach (ConfigurationObjectTablePart tablePart in newDirectory.TabularParts.Values)
-                                                tablePart.Table = Configuration.GetNewUnigueTableName(Program.Kernel!);
+                                                tablePart.Table =await Configuration.GetNewUnigueTableName(Program.Kernel!);
 
                                             Conf!.AppendDirectory(newDirectory);
                                         }
@@ -2048,7 +2048,7 @@ namespace Configurator
                                     string nameTablePart = directoryPath[1];
                                     ConfigurationObjectTablePart newTablePart = Conf!.Directories[directory].TabularParts[nameTablePart].Copy();
                                     newTablePart.Name += GenerateName.GetNewName();
-                                    newTablePart.Table = Configuration.GetNewUnigueTableName(Program.Kernel!);
+                                    newTablePart.Table =await Configuration.GetNewUnigueTableName(Program.Kernel!);
 
                                     if (!Conf!.Directories[directory].TabularParts.ContainsKey(newTablePart.Name))
                                         Conf!.Directories[directory].AppendTablePart(newTablePart);
@@ -2101,12 +2101,12 @@ namespace Configurator
                                     {
                                         ConfigurationDocuments newDocument = Conf!.Documents[document].Copy();
                                         newDocument.Name += GenerateName.GetNewName();
-                                        newDocument.Table = Configuration.GetNewUnigueTableName(Program.Kernel!);
+                                        newDocument.Table =await Configuration.GetNewUnigueTableName(Program.Kernel!);
 
                                         if (!Conf!.Documents.ContainsKey(newDocument.Name))
                                         {
                                             foreach (ConfigurationObjectTablePart tablePart in newDocument.TabularParts.Values)
-                                                tablePart.Table = Configuration.GetNewUnigueTableName(Program.Kernel!);
+                                                tablePart.Table =await Configuration.GetNewUnigueTableName(Program.Kernel!);
 
                                             Conf!.AppendDocument(newDocument);
                                         }
@@ -2119,7 +2119,7 @@ namespace Configurator
 
                                     ConfigurationObjectTablePart newTablePart = Conf!.Documents[document].TabularParts[nameTablePart].Copy();
                                     newTablePart.Name += GenerateName.GetNewName();
-                                    newTablePart.Table = Configuration.GetNewUnigueTableName(Program.Kernel!);
+                                    newTablePart.Table =await Configuration.GetNewUnigueTableName(Program.Kernel!);
 
                                     if (!Conf!.Documents[document].TabularParts.ContainsKey(newTablePart.Name))
                                         Conf!.Documents[document].AppendTablePart(newTablePart);
@@ -2157,7 +2157,7 @@ namespace Configurator
                                 {
                                     ConfigurationRegistersInformation newRegInfo = Conf!.RegistersInformation[register].Copy();
                                     newRegInfo.Name += GenerateName.GetNewName();
-                                    newRegInfo.Table = Configuration.GetNewUnigueTableName(Program.Kernel!);
+                                    newRegInfo.Table =await Configuration.GetNewUnigueTableName(Program.Kernel!);
 
                                     if (!Conf!.RegistersInformation.ContainsKey(newRegInfo.Name))
                                         Conf!.AppendRegistersInformation(newRegInfo);
@@ -2222,12 +2222,12 @@ namespace Configurator
                                 {
                                     ConfigurationRegistersAccumulation newRegAccum = Conf!.RegistersAccumulation[register].Copy();
                                     newRegAccum.Name += GenerateName.GetNewName();
-                                    newRegAccum.Table = Configuration.GetNewUnigueTableName(Program.Kernel!);
+                                    newRegAccum.Table =await Configuration.GetNewUnigueTableName(Program.Kernel!);
 
                                     if (!Conf!.RegistersAccumulation.ContainsKey(newRegAccum.Name))
                                     {
                                         foreach (ConfigurationObjectTablePart tablePart in newRegAccum.TabularParts.Values)
-                                            tablePart.Table = Configuration.GetNewUnigueTableName(Program.Kernel!);
+                                            tablePart.Table =await Configuration.GetNewUnigueTableName(Program.Kernel!);
 
                                         Conf!.AppendRegistersAccumulation(newRegAccum);
                                     }
@@ -2283,7 +2283,7 @@ namespace Configurator
 
                                         ConfigurationObjectTablePart newTablePart = Conf!.RegistersAccumulation[register].TabularParts[nameTablePart].Copy();
                                         newTablePart.Name += GenerateName.GetNewName();
-                                        newTablePart.Table = Configuration.GetNewUnigueTableName(Program.Kernel!);
+                                        newTablePart.Table =await Configuration.GetNewUnigueTableName(Program.Kernel!);
 
                                         if (!Conf!.RegistersAccumulation[register].TabularParts.ContainsKey(newTablePart.Name))
                                             Conf!.RegistersAccumulation[register].AppendTablePart(newTablePart);
