@@ -158,8 +158,6 @@ namespace Configurator
 
         void DocFieldChanged(object sender, EditedArgs args)
         {
-            CellRenderer cellRender = (CellRenderer)sender;
-
             TreeIter iter;
             if (listStore.GetIterFromString(out iter, args.Path))
                 listStore.SetValue(iter, (int)Columns.DocField, args.NewText);

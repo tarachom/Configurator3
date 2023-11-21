@@ -106,8 +106,10 @@ namespace Configurator
         {
             VBox vBox = new VBox();
 
-            Expander expanderHelp = new Expander("Довідка");
-            expanderHelp.Add(vBox);
+            Expander expanderHelp = new Expander("Довідка")
+            {
+                vBox
+            };
 
             HBox hBox = new HBox() { Halign = Align.Fill };
             vBox.PackStart(hBox, false, false, 5);
@@ -138,7 +140,7 @@ namespace Configurator
         {
             entryKey.Text = entryKey.Text.Trim();
 
-            if (String.IsNullOrEmpty(entryKey.Text))
+            if (string.IsNullOrEmpty(entryKey.Text))
             {
                 Message.Error(GeneralForm, $"Назва не задана");
                 return;

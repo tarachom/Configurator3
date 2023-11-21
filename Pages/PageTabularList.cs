@@ -255,7 +255,7 @@ namespace Configurator
                 bool isExistField = TabularList.Fields.ContainsKey(field.Name);
 
                 string caption = isExistField ?
-                    (!String.IsNullOrEmpty(TabularList.Fields[field.Name].Caption) ?
+                    (!string.IsNullOrEmpty(TabularList.Fields[field.Name].Caption) ?
                         TabularList.Fields[field.Name].Caption : field.Name) : field.Name;
 
                 uint size = isExistField ? TabularList.Fields[field.Name].Size : 0;

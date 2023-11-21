@@ -171,6 +171,8 @@ namespace Configurator
         {
             foreach (KeyValuePair<string, string> query in QueryBlock.Query)
                 listBoxQuery.Add(new Label(query.Key) { Name = query.Key.ToString(), Halign = Align.Start });
+
+            listBoxQuery.ShowAll();
         }
 
         void GetValue()
@@ -183,7 +185,7 @@ namespace Configurator
 
         void OnSaveClick(object? sender, EventArgs args)
         {
-            if (String.IsNullOrEmpty(entryName.Text))
+            if (string.IsNullOrEmpty(entryName.Text))
             {
                 Message.Error(GeneralForm, $"Назва не задана");
                 return;
@@ -302,8 +304,6 @@ namespace Configurator
                 listBoxQuery.Remove(item);
 
             FillQueryList();
-
-            listBoxQuery.ShowAll();
         }
 
         void OnQueryListRemoveClick(object? sender, EventArgs args)

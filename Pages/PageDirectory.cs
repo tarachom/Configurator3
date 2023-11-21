@@ -665,24 +665,30 @@ class {entryName.Text}_Triggers
         {
             foreach (ConfigurationObjectField field in ConfDirectory.Fields.Values)
                 listBoxFields.Add(new Label(field.Name + (field.IsPresentation ? " [ представлення ]" : "")) { Name = field.Name, Halign = Align.Start });
+
+            listBoxFields.ShowAll();
         }
 
         void FillTabularParts()
         {
             foreach (ConfigurationObjectTablePart tablePart in ConfDirectory.TabularParts.Values)
                 listBoxTableParts.Add(new Label(tablePart.Name) { Name = tablePart.Name, Halign = Align.Start });
+
+            listBoxTableParts.ShowAll();
         }
 
         void FillTabularList()
         {
             foreach (ConfigurationTabularList tableList in ConfDirectory.TabularList.Values)
                 listBoxTabularList.Add(new Label(tableList.Name) { Name = tableList.Name, Halign = Align.Start });
+
+            listBoxTabularList.ShowAll();
         }
 
         void GetValue()
         {
             //Поле з повною назвою переноситься із назви
-            if (String.IsNullOrEmpty(entryFullName.Text))
+            if (string.IsNullOrEmpty(entryFullName.Text))
                 entryFullName.Text = entryName.Text;
 
             ConfDirectory.Name = entryName.Text;
@@ -827,8 +833,6 @@ class {entryName.Text}_Triggers
                 listBoxFields.Remove(item);
 
             FillFields();
-
-            listBoxFields.ShowAll();
         }
 
         void OnFieldsRemoveClick(object? sender, EventArgs args)
@@ -936,8 +940,6 @@ class {entryName.Text}_Triggers
                 listBoxTableParts.Remove(item);
 
             FillTabularParts();
-
-            listBoxTableParts.ShowAll();
         }
 
         void OnTabularPartsRemoveClick(object? sender, EventArgs args)
@@ -1048,8 +1050,6 @@ class {entryName.Text}_Triggers
                 listBoxTabularList.Remove(item);
 
             FillTabularList();
-
-            listBoxTabularList.ShowAll();
         }
 
         void OnTabularListRemoveClick(object? sender, EventArgs args)

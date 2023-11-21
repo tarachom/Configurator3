@@ -237,6 +237,8 @@ namespace Configurator
         {
             foreach (ConfigurationObjectTablePart tablePart in ConfConstants.TabularParts.Values)
                 listBoxTableParts.Add(new Label(tablePart.Name) { Name = tablePart.Name, Halign = Align.Start });
+
+            listBoxTableParts.ShowAll();
         }
 
         void GetValue()
@@ -408,8 +410,6 @@ namespace Configurator
                 listBoxTableParts.Remove(item);
 
             FillTabularParts();
-
-            listBoxTableParts.ShowAll();
         }
 
         void OnTabularPartsRemoveClick(object? sender, EventArgs args)

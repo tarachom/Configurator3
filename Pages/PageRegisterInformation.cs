@@ -354,29 +354,37 @@ namespace Configurator
         {
             foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
                 listBoxDimensionFields.Add(new Label(field.Name) { Name = field.Name, Halign = Align.Start });
+
+            listBoxDimensionFields.ShowAll();
         }
 
         void FillResourcesFields()
         {
             foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
                 listBoxResourcesFields.Add(new Label(field.Name) { Name = field.Name, Halign = Align.Start });
+
+            listBoxResourcesFields.ShowAll();
         }
 
         void FillPropertyFields()
         {
             foreach (ConfigurationObjectField field in ConfRegister.PropertyFields.Values)
                 listBoxPropertyFields.Add(new Label(field.Name) { Name = field.Name, Halign = Align.Start });
+
+            listBoxPropertyFields.ShowAll();
         }
 
         void FillTabularList()
         {
             foreach (ConfigurationTabularList tableList in ConfRegister.TabularList.Values)
                 listBoxTabularList.Add(new Label(tableList.Name) { Name = tableList.Name, Halign = Align.Start });
+
+            listBoxTabularList.ShowAll();
         }
 
         void GetValue()
         {
-            if (String.IsNullOrEmpty(entryFullName.Text))
+            if (string.IsNullOrEmpty(entryFullName.Text))
                 entryFullName.Text = entryName.Text;
                 
             ConfRegister.Name = entryName.Text;
@@ -527,8 +535,6 @@ namespace Configurator
                 listBoxDimensionFields.Remove(item);
 
             FillDimensionFields();
-
-            listBoxDimensionFields.ShowAll();
         }
 
         void OnDimensionFieldsRemoveClick(object? sender, EventArgs args)
@@ -652,8 +658,6 @@ namespace Configurator
                 listBoxResourcesFields.Remove(item);
 
             FillResourcesFields();
-
-            listBoxResourcesFields.ShowAll();
         }
 
         void OnResourcesFieldsRemoveClick(object? sender, EventArgs args)
@@ -777,8 +781,6 @@ namespace Configurator
                 listBoxPropertyFields.Remove(item);
 
             FillPropertyFields();
-
-            listBoxPropertyFields.ShowAll();
         }
 
         void OnPropertyFieldsRemoveClick(object? sender, EventArgs args)
@@ -901,10 +903,7 @@ namespace Configurator
                 listBoxTabularList.Remove(item);
 
             FillTabularList();
-
-            listBoxTabularList.ShowAll();
         }
-
 
         void OnTabularListRemoveClick(object? sender, EventArgs args)
         {

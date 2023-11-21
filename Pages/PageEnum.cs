@@ -168,6 +168,8 @@ namespace Configurator
         {
             foreach (ConfigurationEnumField field in ConfEnum.Fields.Values)
                 listBoxFields.Add(new Label($"{field.Name} = {field.Value}") { Name = field.Name, Halign = Align.Start });
+
+            listBoxFields.ShowAll();
         }
 
         void GetValue()
@@ -302,8 +304,6 @@ namespace Configurator
                 listBoxFields.Remove(item);
 
             FillFields();
-
-            listBoxFields.ShowAll();
         }
 
         void OnFieldsRemoveClick(object? sender, EventArgs args)

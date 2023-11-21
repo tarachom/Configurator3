@@ -243,6 +243,8 @@ namespace Configurator
         {
             foreach (ConfigurationJournalField field in ConfJournals.Fields.Values)
                 listBoxFields.Add(new Label($"{field.Name}" + (field.SortField ? " [Order]" : "") + (field.WherePeriod ? " [WherePeriod]" : "")) { Name = field.Name, Halign = Align.Start });
+
+            listBoxFields.ShowAll();
         }
 
         void FillDocuments()
@@ -254,12 +256,16 @@ namespace Configurator
                         Name = doc.Name,
                         Active = ConfJournals.AllowDocuments.Contains(doc.Name)
                     });
+
+            listBoxDocuments.ShowAll();
         }
 
         void FillTabularList()
         {
             foreach (ConfigurationTabularList tableList in ConfJournals.TabularList.Values)
                 listBoxTabularList.Add(new Label(tableList.Name) { Name = tableList.Name, Halign = Align.Start });
+
+            listBoxTabularList.ShowAll();
         }
 
         void GetValue()
@@ -426,8 +432,6 @@ namespace Configurator
                 listBoxFields.Remove(item);
 
             FillFields();
-
-            listBoxFields.ShowAll();
         }
 
         void OnFieldsRemoveClick(object? sender, EventArgs args)
@@ -511,8 +515,6 @@ namespace Configurator
                 listBoxTabularList.Remove(item);
 
             FillTabularList();
-
-            listBoxTabularList.ShowAll();
         }
 
         #endregion

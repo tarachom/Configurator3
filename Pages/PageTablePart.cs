@@ -214,6 +214,8 @@ namespace Configurator
         {
             foreach (ConfigurationObjectField field in TablePart.Fields.Values)
                 listBoxFields.Add(new Label(field.Name) { Name = field.Name, Halign = Align.Start });
+
+            listBoxFields.ShowAll();
         }
 
         void GetValue()
@@ -272,6 +274,7 @@ namespace Configurator
                 CallBack_RefreshList.Invoke();
         }
 
+        #region OnTabularParts
         void OnTabularPartsButtonPress(object? sender, ButtonPressEventArgs args)
         {
             if (args.Event.Type == Gdk.EventType.DoubleButtonPress)
@@ -351,8 +354,6 @@ namespace Configurator
                 listBoxFields.Remove(item);
 
             FillTabularParts();
-
-            listBoxFields.ShowAll();
         }
 
         void OnTabularPartsRemoveClick(object? sender, EventArgs args)
@@ -377,6 +378,7 @@ namespace Configurator
         {
             OnTabularPartsRefreshClick(null, new EventArgs());
         }
+        #endregion
 
         #region Генерування коду
 
@@ -389,7 +391,7 @@ namespace Configurator
         /// <param name="includeTabularParts">Вкласти інформацію про табличні частини</param>
         void GenerateCode(string fileName, TextView textViewCode)
         {
-            if (String.IsNullOrEmpty(entryName.Text))
+            if (string.IsNullOrEmpty(entryName.Text))
             {
                 Message.Error(GeneralForm, "Назва табличної частини не вказана");
                 return;
@@ -416,8 +418,10 @@ namespace Configurator
 
             Configuration.SaveFields(TablePart.Fields, xmlConfDocument, nodeTablePart, "TablePart");
 
-            Dictionary<string, object> arguments = new Dictionary<string, object>();
-            arguments.Add("File", fileName);
+            Dictionary<string, object> arguments = new Dictionary<string, object>
+            {
+                { "File", fileName }
+            };
 
             textViewCode.Buffer.Text = Configuration.Transform
             (

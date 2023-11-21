@@ -435,41 +435,53 @@ namespace Configurator
         {
             foreach (string field in ConfRegister.AllowDocumentSpend)
                 listBoxAllowDocumentSpend.Add(new Label(field) { Name = field, Halign = Align.Start });
+
+            listBoxAllowDocumentSpend.ShowAll();
         }
 
         void FillDimensionFields()
         {
             foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
                 listBoxDimensionFields.Add(new Label(field.Name) { Name = field.Name, Halign = Align.Start });
+
+            listBoxDimensionFields.ShowAll();
         }
 
         void FillResourcesFields()
         {
             foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
                 listBoxResourcesFields.Add(new Label(field.Name) { Name = field.Name, Halign = Align.Start });
+
+            listBoxResourcesFields.ShowAll();
         }
 
         void FillPropertyFields()
         {
             foreach (ConfigurationObjectField field in ConfRegister.PropertyFields.Values)
                 listBoxPropertyFields.Add(new Label(field.Name) { Name = field.Name, Halign = Align.Start });
+
+            listBoxPropertyFields.ShowAll();
         }
 
         void FillTabularParts()
         {
             foreach (ConfigurationObjectTablePart tablePart in ConfRegister.TabularParts.Values)
                 listBoxTableParts.Add(new Label(tablePart.Name) { Name = tablePart.Name, Halign = Align.Start });
+
+            listBoxTableParts.ShowAll();
         }
 
         void FillQueryBlockList()
         {
             foreach (ConfigurationObjectQueryBlock queryBlock in ConfRegister.QueryBlockList.Values)
                 listBoxQueryBlock.Add(new Label(queryBlock.Name) { Name = queryBlock.Name, Halign = Align.Start });
+
+            listBoxQueryBlock.ShowAll();
         }
 
         void GetValue()
         {
-            if (String.IsNullOrEmpty(entryFullName.Text))
+            if (string.IsNullOrEmpty(entryFullName.Text))
                 entryFullName.Text = entryName.Text;
 
             ConfRegister.Name = entryName.Text;
@@ -992,7 +1004,7 @@ HAVING";
             return TablePart;
         }
 
-        async void CreateVirtualTable_ЗалишкиТаОбороти()
+        async ValueTask CreateVirtualTable_ЗалишкиТаОбороти()
         {
             ConfigurationObjectTablePart TablePart = await CreateVirtualTable_Table("ЗалишкиТаОбороти");
 
@@ -1018,7 +1030,7 @@ HAVING";
         // Обороти
         //
 
-        async void CreateVirtualTable_Обороти()
+        async ValueTask CreateVirtualTable_Обороти()
         {
             ConfigurationObjectTablePart TablePart = await CreateVirtualTable_Table("Обороти");
 
@@ -1044,7 +1056,7 @@ HAVING";
         // Підсумки
         //
 
-        async void CreateVirtualTable_Підсумки(ConfigurationObjectTablePart Залишки_TablePart)
+        async ValueTask CreateVirtualTable_Підсумки(ConfigurationObjectTablePart Залишки_TablePart)
         {
             ConfigurationObjectTablePart TablePart = await CreateVirtualTable_Table("Підсумки");
 
@@ -1098,7 +1110,7 @@ HAVING";
 
         async void OnCreateVirtualTableClick(object? sender, EventArgs args)
         {
-            if (String.IsNullOrEmpty(entryName.Text))
+            if (string.IsNullOrEmpty(entryName.Text))
             {
                 Message.Error(GeneralForm, "Назва регістру не вказана");
                 return;
@@ -1129,16 +1141,16 @@ HAVING";
                     case TypeRegistersAccumulation.Residues: /* Залишки */
                         {
                             ConfigurationObjectTablePart Залишки_TablePart = await CreateVirtualTable_Залишки();
-                            CreateVirtualTable_ЗалишкиТаОбороти();
+                            await CreateVirtualTable_ЗалишкиТаОбороти();
 
                             if (!checkButtonNoSummary.Active)
-                                CreateVirtualTable_Підсумки(Залишки_TablePart);
+                                await CreateVirtualTable_Підсумки(Залишки_TablePart);
 
                             break;
                         }
                     case TypeRegistersAccumulation.Turnover: /* Обороти */
                         {
-                            CreateVirtualTable_Обороти();
+                            await CreateVirtualTable_Обороти();
                             break;
                         }
                 }
@@ -1248,8 +1260,6 @@ HAVING";
                 listBoxDimensionFields.Remove(item);
 
             FillDimensionFields();
-
-            listBoxDimensionFields.ShowAll();
         }
 
         void OnDimensionFieldsRemoveClick(object? sender, EventArgs args)
@@ -1373,8 +1383,6 @@ HAVING";
                 listBoxResourcesFields.Remove(item);
 
             FillResourcesFields();
-
-            listBoxResourcesFields.ShowAll();
         }
 
         void OnResourcesFieldsRemoveClick(object? sender, EventArgs args)
@@ -1498,8 +1506,6 @@ HAVING";
                 listBoxPropertyFields.Remove(item);
 
             FillPropertyFields();
-
-            listBoxPropertyFields.ShowAll();
         }
 
         void OnPropertyFieldsRemoveClick(object? sender, EventArgs args)
@@ -1607,8 +1613,6 @@ HAVING";
                 listBoxTableParts.Remove(item);
 
             FillTabularParts();
-
-            listBoxTableParts.ShowAll();
         }
 
         void OnTabularPartsRemoveClick(object? sender, EventArgs args)
@@ -1713,8 +1717,6 @@ HAVING";
                 listBoxQueryBlock.Remove(item);
 
             FillQueryBlockList();
-
-            listBoxQueryBlock.ShowAll();
         }
 
         void OnQueryListRemoveClick(object? sender, EventArgs args)

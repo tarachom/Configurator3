@@ -29,8 +29,8 @@ namespace Configurator
     {
         public static void Info(Window? pwin, string message)
         {
-            MessageDialog md = new MessageDialog(pwin, DialogFlags.DestroyWithParent, MessageType.Info, ButtonsType.Ok, message);
-            md.WindowPosition = WindowPosition.Center;
+            MessageDialog md = new MessageDialog(pwin, DialogFlags.DestroyWithParent, MessageType.Info, ButtonsType.Ok, message) { WindowPosition = WindowPosition.Center };
+
             md.Run();
             md.Dispose();
             md.Destroy();
@@ -38,8 +38,8 @@ namespace Configurator
 
         public static void Error(Window? pwin, string message)
         {
-            MessageDialog md = new MessageDialog(pwin, DialogFlags.DestroyWithParent, MessageType.Warning, ButtonsType.Close, message);
-            md.WindowPosition = WindowPosition.Center;
+            MessageDialog md = new MessageDialog(pwin, DialogFlags.DestroyWithParent, MessageType.Warning, ButtonsType.Close, message) { WindowPosition = WindowPosition.Center };
+
             md.Run();
             md.Dispose();
             md.Destroy();
@@ -48,6 +48,7 @@ namespace Configurator
         public static ResponseType Request(Window? pwin, string message)
         {
             MessageDialog md = new MessageDialog(pwin, DialogFlags.DestroyWithParent, MessageType.Question, ButtonsType.YesNo, message);
+            
             ResponseType response = (ResponseType)md.Run();
             md.Dispose();
             md.Destroy();

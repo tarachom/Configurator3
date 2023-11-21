@@ -314,7 +314,7 @@ namespace Configurator
             GetValue();
 
             if (Field.Type == "pointer" || Field.Type == "enum")
-                if (String.IsNullOrEmpty(Field.Pointer))
+                if (string.IsNullOrEmpty(Field.Pointer))
                 {
                     Message.Error(GeneralForm, $"Потрібно деталізувати тип для [ pointer ] або [ enum ]\nВиберіть із списку тип для деталізації");
                     return;
