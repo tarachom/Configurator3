@@ -269,9 +269,10 @@ namespace Configurator
                     textViewCode.Buffer.Text = @$"
 class {entryName.Text}_Triggers
 {{
-    public static void New({entryName.Text}_Objest ДовідникОбєкт)
+    public static async ValueTask New({entryName.Text}_Objest ДовідникОбєкт)
     {{
         {AutoNumCode}
+        await ValueTask.FromResult(true);
     }}
 
     public static void Copying({entryName.Text}_Objest ДовідникОбєкт, {entryName.Text}_Objest Основа)

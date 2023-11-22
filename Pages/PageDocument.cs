@@ -257,7 +257,7 @@ namespace Configurator
                     textViewCode.Buffer.Text = @$"
 class {entryName.Text}_SpendTheDocument
 {{
-    public static bool Spend({entryName.Text}_Objest ДокументОбєкт)
+    public static async ValueTask<bool> Spend({entryName.Text}_Objest ДокументОбєкт)
     {{
         try
         {{
@@ -268,14 +268,15 @@ class {entryName.Text}_SpendTheDocument
         catch (Exception ex)
         {{
             СпільніФункції.ДокументНеПроводиться(ДокументОбєкт, ДокументОбєкт.Назва, ex.Message);
-            {entryName.Text}_SpendTheDocument.ClearSpend(ДокументОбєкт);
+            await ClearSpend(ДокументОбєкт);
             return false;
         }}
     }}
 
-    public static void ClearSpend({entryName.Text}_Objest ДокументОбєкт)
+    public static async ValueTask ClearSpend({entryName.Text}_Objest ДокументОбєкт)
     {{
         // код очищення проводок
+        await ValueTask.FromResult(true); //Заглушка
     }}
 }}
 ";
@@ -376,15 +377,17 @@ class {entryName.Text}_SpendTheDocument
                     textViewCode.Buffer.Text = @$"
 class {entryName.Text}_Triggers
 {{
-    public static void New({entryName.Text}_Objest ДокументОбєкт)
+    public static async ValueTask New({entryName.Text}_Objest ДокументОбєкт)
     {{
         {AutoNumCode}
         {NewCode}
+        await ValueTask.FromResult(true);
     }}
 
-    public static void Copying({entryName.Text}_Objest ДокументОбєкт, {entryName.Text}_Objest Основа)
+    public static async ValueTask Copying({entryName.Text}_Objest ДокументОбєкт, {entryName.Text}_Objest Основа)
     {{
         {CopyingCode}
+        await ValueTask.FromResult(true);
     }}
 
     public static void BeforeSave({entryName.Text}_Objest ДокументОбєкт)
