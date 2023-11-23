@@ -137,8 +137,7 @@ namespace Configurator
             HBox hBoxTerminal = new HBox();
             PackStart(hBoxTerminal, true, true, 5);
 
-            scrollListBoxTerminal = new ScrolledWindow();
-            scrollListBoxTerminal.KineticScrolling = true;
+            scrollListBoxTerminal = new ScrolledWindow() { KineticScrolling = true };
             scrollListBoxTerminal.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
             scrollListBoxTerminal.Add(textTerminal = new TextView());
 
@@ -704,7 +703,7 @@ namespace Configurator
             ApendLine("\n\n\n");
         }
 
-        void ExecuteSQLAndGenerateCode()
+        async void ExecuteSQLAndGenerateCode()
         {
             ButtonSensitive(false);
 
@@ -732,7 +731,7 @@ namespace Configurator
 
                         try
                         {
-                            Program.Kernel!.DataBase.ExecuteSQL(sqlText);
+                            await Program.Kernel!.DataBase.ExecuteSQL(sqlText);
                         }
                         catch (Exception ex)
                         {
@@ -756,7 +755,7 @@ namespace Configurator
             }
 
             //Копіювання файлу конфігурації Confa.xml в каталог зкомпільованої програми
-            if (!String.IsNullOrEmpty(entryCompileProgramPath.Text))
+            if (!string.IsNullOrEmpty(entryCompileProgramPath.Text))
             {
                 if (entryCompileProgramPath.Text.Substring(entryCompileProgramPath.Text.Length - 1, 1) != "/")
                     entryCompileProgramPath.Text += "/";
@@ -774,7 +773,7 @@ namespace Configurator
 
             if (checkButtonIsGenerate.Active)
             {
-                string folderGenerateCode = String.IsNullOrEmpty(entryGenerateCodePath.Text) ?
+                string folderGenerateCode = string.IsNullOrEmpty(entryGenerateCodePath.Text) ?
                        System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)! :
                        entryGenerateCodePath.Text;
 

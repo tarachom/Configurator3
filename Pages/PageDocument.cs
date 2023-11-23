@@ -137,6 +137,11 @@ namespace Configurator
                 VBox vBoxAutoNum = new VBox();
                 expanderAutoNum.Add(vBoxAutoNum);
 
+                //Прапорець
+                HBox hBoxAutoNum = new HBox() { Halign = Align.Start };
+                vBoxAutoNum.PackStart(hBoxAutoNum, false, false, 10);
+                hBoxAutoNum.PackStart(checkButtonAutoNum, false, false, 5);
+
                 //Заголовок
                 HBox hBoxAutoNumInfo = new HBox() { Halign = Align.Start };
                 vBoxAutoNum.PackStart(hBoxAutoNumInfo, false, false, 5);
@@ -147,12 +152,11 @@ namespace Configurator
                 { Wrap = true, UseMarkup = true }, false, false, 5);
 
                 //Кнопка
-                HBox hBoxAutoNum = new HBox() { Halign = Align.Start };
-                vBoxAutoNum.PackStart(hBoxAutoNum, false, false, 5);
-                hBoxAutoNum.PackStart(checkButtonAutoNum, false, false, 5);
+                HBox hBoxAutoNumButton = new HBox() { Halign = Align.Start };
+                vBoxAutoNum.PackStart(hBoxAutoNumButton, false, false, 5);
 
                 Button buttonAddConstAutoNum = new Button("Створити константу");
-                hBoxAutoNum.PackStart(buttonAddConstAutoNum, false, false, 5);
+                hBoxAutoNumButton.PackStart(buttonAddConstAutoNum, false, false, 5);
 
                 buttonAddConstAutoNum.Clicked += (object? sender, EventArgs args) =>
                 {
@@ -243,14 +247,26 @@ namespace Configurator
                 // Конструктор для генерування класу проведення
                 //
 
-                TextView textViewCode = new TextView();
-
                 HBox hBoxTrigerConstructorSpend = new HBox() { Halign = Align.Center };
                 vBoxFunc.PackStart(hBoxTrigerConstructorSpend, false, false, 5);
 
                 Button buttonConstructorSpend = new Button("Конструктор");
                 buttonConstructorSpend.Clicked += (object? sender, EventArgs args) =>
                 {
+                    TextView textViewCode = new TextView();
+
+                    ScrolledWindow scrollCode = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 600, HeightRequest = 300 };
+                    scrollCode.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+                    scrollCode.Add(textViewCode);
+
+                    Popover popover = new Popover((Widget)sender!) { BorderWidth = 5 };
+                    popover.Add(scrollCode);
+                    popover.ShowAll();
+
+                    //
+                    // Code
+                    //
+
                     entrySpend.Text = entryName.Text + "_SpendTheDocument.Spend";
                     entryClearSpend.Text = entryName.Text + "_SpendTheDocument.ClearSpend";
 
@@ -262,6 +278,7 @@ class {entryName.Text}_SpendTheDocument
         try
         {{
             // код проведення документу
+            // ...
 
             return true;
         }}
@@ -276,27 +293,17 @@ class {entryName.Text}_SpendTheDocument
     public static async ValueTask ClearSpend({entryName.Text}_Objest ДокументОбєкт)
     {{
         // код очищення проводок
-        await ValueTask.FromResult(true); //Заглушка
+        // ...
+
+        await ValueTask.FromResult(true);
     }}
 }}
 ";
-
                     textViewCode.Buffer.SelectRange(textViewCode.Buffer.StartIter, textViewCode.Buffer.EndIter);
                     textViewCode.GrabFocus();
                 };
 
                 hBoxTrigerConstructorSpend.PackStart(buttonConstructorSpend, false, false, 5);
-
-                //Code C#
-
-                HBox hBoxTrigerCode = new HBox() { Halign = Align.End };
-                vBoxFunc.PackStart(hBoxTrigerCode, false, false, 5);
-
-                ScrolledWindow scrollCode = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 650, HeightRequest = 200 };
-                scrollCode.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-                scrollCode.Add(textViewCode);
-
-                hBoxTrigerCode.PackStart(scrollCode, false, false, 5);
             }
 
             //Тригери
@@ -352,14 +359,26 @@ class {entryName.Text}_SpendTheDocument
                 // Конструктор для генерування класу тригерів
                 //
 
-                TextView textViewCode = new TextView();
-
                 HBox hBoxTrigerConstructor = new HBox() { Halign = Align.Center };
                 vBoxFunc.PackStart(hBoxTrigerConstructor, false, false, 5);
 
                 Button buttonConstructor = new Button("Конструктор");
                 buttonConstructor.Clicked += (object? sender, EventArgs args) =>
                 {
+                    TextView textViewCode = new TextView();
+
+                    ScrolledWindow scrollCode = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 600, HeightRequest = 300 };
+                    scrollCode.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+                    scrollCode.Add(textViewCode);
+
+                    Popover popover = new Popover((Widget)sender!) { BorderWidth = 5 };
+                    popover.Add(scrollCode);
+                    popover.ShowAll();
+
+                    //
+                    // Code
+                    //
+
                     entryNew.Text = entryName.Text + "_Triggers.New";
                     entryCopying.Text = entryName.Text + "_Triggers.Copying";
                     entryBeforeSave.Text = entryName.Text + "_Triggers.BeforeSave";
@@ -390,44 +409,32 @@ class {entryName.Text}_Triggers
         await ValueTask.FromResult(true);
     }}
 
-    public static void BeforeSave({entryName.Text}_Objest ДокументОбєкт)
+    public static async ValueTask BeforeSave({entryName.Text}_Objest ДокументОбєкт)
     {{
         ДокументОбєкт.Назва = $""{{{entryName.Text}_Const.FULLNAME}} №{{ДокументОбєкт.НомерДок}} від {{ДокументОбєкт.ДатаДок.ToShortDateString()}}"";
     }}
 
-    public static void AfterSave({entryName.Text}_Objest ДокументОбєкт)
+    public static async ValueTask AfterSave({entryName.Text}_Objest ДокументОбєкт)
     {{
-        
+        await ValueTask.FromResult(true);
     }}
 
-    public static void SetDeletionLabel({entryName.Text}_Objest ДокументОбєкт, bool label)
+    public static async ValueTask SetDeletionLabel({entryName.Text}_Objest ДокументОбєкт, bool label)
     {{
-        
+        await ValueTask.FromResult(true);
     }}
 
-    public static void BeforeDelete({entryName.Text}_Objest ДокументОбєкт)
+    public static async ValueTask BeforeDelete({entryName.Text}_Objest ДокументОбєкт)
     {{
-        
+        await ValueTask.FromResult(true);
     }}
 }}
 ";
-
                     textViewCode.Buffer.SelectRange(textViewCode.Buffer.StartIter, textViewCode.Buffer.EndIter);
                     textViewCode.GrabFocus();
                 };
 
                 hBoxTrigerConstructor.PackStart(buttonConstructor, false, false, 5);
-
-                //Code C#
-
-                HBox hBoxTrigerCode = new HBox() { Halign = Align.End };
-                vBoxFunc.PackStart(hBoxTrigerCode, false, false, 5);
-
-                ScrolledWindow scrollCode = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 650, HeightRequest = 200 };
-                scrollCode.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-                scrollCode.Add(textViewCode);
-
-                hBoxTrigerCode.PackStart(scrollCode, false, false, 5);
             }
 
             //Списки та форми
@@ -449,8 +456,6 @@ class {entryName.Text}_Triggers
 
             //Генерування коду 
             {
-                TextView textViewCode = new TextView();
-
                 Expander expanderTemplates = new Expander("Генерування коду");
                 vBox.PackStart(expanderTemplates, false, false, 5);
 
@@ -468,28 +473,16 @@ class {entryName.Text}_Triggers
                 {
                     Button buttonConstructorElement = new Button("Елемент");
                     hBoxElement.PackStart(buttonConstructorElement, false, false, 5);
+                    buttonConstructorElement.Clicked += (object? sender, EventArgs args) => { GenerateCode((Widget)sender!, "Element", true, true); };
 
                     Button buttonConstructorList = new Button("Список");
                     hBoxElement.PackStart(buttonConstructorList, false, false, 5);
+                    buttonConstructorList.Clicked += (object? sender, EventArgs args) => { GenerateCode((Widget)sender!, "List", false, true); };
 
                     Button buttonConstructorPointerControl = new Button("PointerControl");
                     hBoxElement.PackStart(buttonConstructorPointerControl, false, false, 5);
-
-                    buttonConstructorElement.Clicked += (object? sender, EventArgs args) => { GenerateCode("Element", textViewCode, true, true); };
-                    buttonConstructorList.Clicked += (object? sender, EventArgs args) => { GenerateCode("List", textViewCode, false, true); };
-                    buttonConstructorPointerControl.Clicked += (object? sender, EventArgs args) => { GenerateCode("PointerControl", textViewCode); };
+                    buttonConstructorPointerControl.Clicked += (object? sender, EventArgs args) => { GenerateCode((Widget)sender!, "PointerControl"); };
                 }
-
-                //Code C#
-
-                HBox hBoxCode = new HBox() { Halign = Align.End };
-                vBoxTemplates.PackStart(hBoxCode, false, false, 5);
-
-                ScrolledWindow scrollCode = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 650, HeightRequest = 300 };
-                scrollCode.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-                scrollCode.Add(textViewCode);
-
-                hBoxCode.PackStart(scrollCode, false, false, 5);
             }
 
             hPaned.Pack1(vBox, false, false);
@@ -1127,16 +1120,9 @@ class {entryName.Text}_Triggers
 
         #region Генерування коду
 
-        /// <summary>
-        /// Функція для точкового генерування коду
-        /// </summary>
-        /// <param name="fileName">Назва файлу</param>
-        /// <param name="textViewCode">Поле куди помістити згенерований код</param>
-        /// <param name="includeFields">Вкласти інформацію про поля</param>
-        /// <param name="includeTabularParts">Вкласти інформацію про табличні частини</param>
-        void GenerateCode(string fileName, TextView textViewCode, bool includeFields = false, bool includeTabularParts = false)
+        void GenerateCode(Widget relative_to, string fileName, bool includeFields = false, bool includeTabularParts = false)
         {
-            if (String.IsNullOrEmpty(entryName.Text))
+            if (string.IsNullOrEmpty(entryName.Text))
             {
                 Message.Error(GeneralForm, "Назва документу не вказана");
                 return;
@@ -1167,14 +1153,21 @@ class {entryName.Text}_Triggers
             if (includeTabularParts)
                 Configuration.SaveTabularParts(ConfDocument.TabularParts, xmlConfDocument, nodeDirectory);
 
-            Dictionary<string, object> arguments = new Dictionary<string, object>();
-            arguments.Add("File", fileName);
+            TextView textViewCode = new TextView();
+
+            ScrolledWindow scrollCode = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 600, HeightRequest = 300 };
+            scrollCode.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+            scrollCode.Add(textViewCode);
+
+            Popover popover = new Popover(relative_to) { BorderWidth = 5 };
+            popover.Add(scrollCode);
+            popover.ShowAll();
 
             textViewCode.Buffer.Text = Configuration.Transform
             (
                 xmlConfDocument,
                 System.IO.Path.Combine(AppContext.BaseDirectory, "xslt/ConstructorDocument.xslt"),
-                arguments
+                new Dictionary<string, object> { { "File", fileName } }
             );
 
             textViewCode.Buffer.SelectRange(textViewCode.Buffer.StartIter, textViewCode.Buffer.EndIter);

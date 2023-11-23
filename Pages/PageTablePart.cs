@@ -156,8 +156,6 @@ namespace Configurator
 
             //Генерування коду 
             {
-                TextView textViewCode = new TextView();
-
                 Expander expanderTemplates = new Expander("Генерування коду");
                 vBox.PackStart(expanderTemplates, false, false, 5);
 
@@ -175,20 +173,8 @@ namespace Configurator
                 {
                     Button buttonConstructorElement = new Button("Таблична частина");
                     hBox.PackStart(buttonConstructorElement, false, false, 5);
-
-                    buttonConstructorElement.Clicked += (object? sender, EventArgs args) => { GenerateCode("TablePart", textViewCode); };
+                    buttonConstructorElement.Clicked += (object? sender, EventArgs args) => { GenerateCode((Widget)sender!, "TablePart"); };
                 }
-
-                //Code C#
-
-                HBox hBoxCode = new HBox() { Halign = Align.End };
-                vBoxTemplates.PackStart(hBoxCode, false, false, 5);
-
-                ScrolledWindow scrollCode = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 650, HeightRequest = 300 };
-                scrollCode.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-                scrollCode.Add(textViewCode);
-
-                hBoxCode.PackStart(scrollCode, false, false, 5);
             }
 
             hPaned.Pack1(vBox, false, false);
@@ -382,14 +368,7 @@ namespace Configurator
 
         #region Генерування коду
 
-        /// <summary>
-        /// Функція для точкового генерування коду
-        /// </summary>
-        /// <param name="fileName">Назва файлу</param>
-        /// <param name="textViewCode">Поле куди помістити згенерований код</param>
-        /// <param name="includeFields">Вкласти інформацію про поля</param>
-        /// <param name="includeTabularParts">Вкласти інформацію про табличні частини</param>
-        void GenerateCode(string fileName, TextView textViewCode)
+        void GenerateCode(Widget relative_to, string fileName)
         {
             if (string.IsNullOrEmpty(entryName.Text))
             {
@@ -418,16 +397,21 @@ namespace Configurator
 
             Configuration.SaveFields(TablePart.Fields, xmlConfDocument, nodeTablePart, "TablePart");
 
-            Dictionary<string, object> arguments = new Dictionary<string, object>
-            {
-                { "File", fileName }
-            };
+            TextView textViewCode = new TextView();
+
+            ScrolledWindow scrollCode = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 600, HeightRequest = 300 };
+            scrollCode.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+            scrollCode.Add(textViewCode);
+
+            Popover popover = new Popover(relative_to) { BorderWidth = 5 };
+            popover.Add(scrollCode);
+            popover.ShowAll();
 
             textViewCode.Buffer.Text = Configuration.Transform
             (
                 xmlConfDocument,
                 System.IO.Path.Combine(AppContext.BaseDirectory, "xslt/ConstructorTablePart.xslt"),
-                arguments
+                new Dictionary<string, object> { { "File", fileName } }
             );
 
             textViewCode.Buffer.SelectRange(textViewCode.Buffer.StartIter, textViewCode.Buffer.EndIter);
