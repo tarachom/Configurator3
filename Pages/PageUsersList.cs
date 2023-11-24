@@ -21,6 +21,7 @@ limitations under the License.
 Сайт:     accounting.org.ua
 */
 
+using AccountingSoftware;
 using Gtk;
 
 namespace Configurator
@@ -90,13 +91,13 @@ namespace Configurator
             ShowAll();
         }
 
-        public void LoadRecords()
+        public async void LoadRecords()
         {
             Store.Clear();
 
-            List<Dictionary<string, object>> listRow = Program.Kernel!.DataBase.SpetialTableUsersExtendetList();
+            SelectRequestAsync_Record recordResult = await Program.Kernel!.DataBase.SpetialTableUsersExtendetList();
 
-            foreach (Dictionary<string, object> record in listRow)
+            foreach (Dictionary<string, object> record in recordResult.ListRow)
             {
                 Store.AppendValues(
                     new Gdk.Pixbuf(AppContext.BaseDirectory + "images/doc.png"),

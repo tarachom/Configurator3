@@ -121,17 +121,19 @@ namespace Configurator
 
         #region Присвоєння / зчитування значень віджетів
 
-        public void SetValue()
+        public async void SetValue()
         {
             if (!IsNew)
             {
-                Dictionary<string, object>? ExtendetUser = Program.Kernel?.DataBase.SpetialTableUsersExtendetUser(UID);
+                SelectRequestAsync_Record? recordResult = await Program.Kernel!.DataBase.SpetialTableUsersExtendetUser(UID);
 
-                if (ExtendetUser != null)
+                if (recordResult != null)
                 {
-                    entryLogin.Text = ExtendetUser["name"].ToString();
-                    entryName.Text = ExtendetUser["fullname"].ToString();
-                    textViewInfo.Buffer.Text = ExtendetUser["info"].ToString();
+                    Dictionary<string, object> line = recordResult.ListRow[0];
+
+                    entryLogin.Text = line["name"].ToString();
+                    entryName.Text = line["fullname"].ToString();
+                    textViewInfo.Buffer.Text = line["info"].ToString();
                 }
             }
         }
