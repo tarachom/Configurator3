@@ -39,6 +39,8 @@ namespace Configurator
         Entry Password = new Entry();
         Entry Basename = new Entry();
 
+        Button buttonCreateBase;
+
         #endregion
 
         public FormConfigurationSelectionParam() : base("Параметри підключення PostgreSQL")
@@ -71,7 +73,7 @@ namespace Configurator
             buttonSave.SetSizeRequest(0, 35);
             buttonSave.Clicked += OnButtonSaveClicked;
 
-            Button buttonCreateBase = new Button("Створити базу даних");
+            buttonCreateBase = new Button("Створити базу даних");
             buttonCreateBase.SetSizeRequest(0, 35);
             buttonCreateBase.Clicked += OnButtonCreateBaseClicked;
 
@@ -163,6 +165,8 @@ namespace Configurator
 
             if (SaveConfParam())
             {
+                buttonCreateBase.Sensitive = false;
+
                 Kernel kernel = new Kernel();
 
                 bool ifExistsDatabase = await kernel.IfExistDatabase(
@@ -174,23 +178,24 @@ namespace Configurator
                 );
 
                 if (ifExistsDatabase)
-                {
                     Message.Info(this, "База даних вже існує");
-                    return;
+                else
+                {
+                    bool result = await kernel.CreateDatabaseIfNotExist(
+                        OpenConfigurationParam.DataBaseServer,
+                        OpenConfigurationParam.DataBaseLogin,
+                        OpenConfigurationParam.DataBasePassword,
+                        OpenConfigurationParam.DataBasePort,
+                        OpenConfigurationParam.DataBaseBaseName
+                    );
+
+                    if (result)
+                        Message.Info(this, "OK.\n\nБаза даних створена");
+                    else
+                        Message.Error(this, "Error: " + kernel.Exception?.Message);
                 }
 
-                bool result = await kernel.CreateDatabaseIfNotExist(
-                    OpenConfigurationParam.DataBaseServer,
-                    OpenConfigurationParam.DataBaseLogin,
-                    OpenConfigurationParam.DataBasePassword,
-                    OpenConfigurationParam.DataBasePort,
-                    OpenConfigurationParam.DataBaseBaseName
-                );
-
-                if (result)
-                    Message.Info(this, "OK.\n\nБаза даних створена");
-                else
-                    Message.Error(this, "Error: " + kernel.Exception?.Message);
+                buttonCreateBase.Sensitive = true;
             }
         }
 
