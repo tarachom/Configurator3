@@ -29,13 +29,7 @@ namespace Configurator
 {
     class PageMaintenance : VBox
     {
-        Configuration? Conf
-        {
-            get
-            {
-                return Program.Kernel?.Conf;
-            }
-        }
+        Configuration Conf { get { return Program.Kernel.Conf; } }
 
         public FormConfigurator? GeneralForm { get; set; }
         CancellationTokenSource? CancellationTokenThread { get; set; }
@@ -144,7 +138,7 @@ namespace Configurator
             ClearListBoxTerminal();
 
             ApendLine("Структура бази даних");
-            ConfigurationInformationSchema informationSchema = await Program.Kernel!.DataBase.SelectInformationSchema();
+            ConfigurationInformationSchema informationSchema = await Program.Kernel.DataBase.SelectInformationSchema();
 
             ApendLine("Таблиць: " + informationSchema.Tables.Count);
             ApendLine("");

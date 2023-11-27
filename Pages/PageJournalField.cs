@@ -29,13 +29,7 @@ namespace Configurator
 {
     class PageJournalField : VBox
     {
-        Configuration? Conf
-        {
-            get
-            {
-                return Program.Kernel?.Conf;
-            }
-        }
+        Configuration Conf { get { return Program.Kernel.Conf; } }
 
         public Dictionary<string, ConfigurationJournalField> Fields = new Dictionary<string, ConfigurationJournalField>();
         public ConfigurationJournalField Field { get; set; } = new ConfigurationJournalField();
@@ -162,7 +156,7 @@ namespace Configurator
         void OnSaveClick(object? sender, EventArgs args)
         {
             string name = entryName.Text;
-            string errorList = Configuration.ValidateConfigurationObjectName(Program.Kernel!, ref name);
+            string errorList = Configuration.ValidateConfigurationObjectName(Program.Kernel, ref name);
             entryName.Text = name;
 
             if (errorList.Length > 0)

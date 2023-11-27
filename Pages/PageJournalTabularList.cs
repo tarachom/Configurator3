@@ -29,13 +29,7 @@ namespace Configurator
 {
     class PageJournalTabularList : VBox
     {
-        Configuration? Conf
-        {
-            get
-            {
-                return Program.Kernel?.Conf;
-            }
-        }
+        Configuration Conf { get { return Program.Kernel.Conf; } }
 
         public Dictionary<string, ConfigurationJournalField> Fields = new Dictionary<string, ConfigurationJournalField>();
         public Dictionary<string, ConfigurationTabularList> TabularLists { get; set; } = new Dictionary<string, ConfigurationTabularList>();
@@ -172,8 +166,8 @@ namespace Configurator
         {
             FillTreeView();
 
-            if (Conf!.Documents.ContainsKey(TabularList.Name))
-                foreach (string field in Conf!.Documents[TabularList.Name].Fields.Keys)
+            if (Conf.Documents.ContainsKey(TabularList.Name))
+                foreach (string field in Conf.Documents[TabularList.Name].Fields.Keys)
                     listStoreDocFields.AppendValues(field);
 
             entryName.Text = TabularList.Name;

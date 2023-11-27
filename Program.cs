@@ -29,7 +29,7 @@ namespace Configurator
 {
     public class Program
     {
-        public static Kernel? Kernel { get; set; }
+        public static Kernel Kernel { get; set; } = new Kernel();
 
         public static void Main()
         {

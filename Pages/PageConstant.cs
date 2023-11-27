@@ -29,13 +29,7 @@ namespace Configurator
 {
     class PageConstant : VBox
     {
-        Configuration? Conf
-        {
-            get
-            {
-                return Program.Kernel?.Conf;
-            }
-        }
+        Configuration Conf { get { return Program.Kernel.Conf; } }
 
         public ConfigurationConstants ConfConstants { get; set; } = new ConfigurationConstants();
         public FormConfigurator? GeneralForm { get; set; }
@@ -144,7 +138,7 @@ namespace Configurator
             HBox hBoxBlock = new HBox() { Halign = Align.End };
             vBox.PackStart(hBoxBlock, false, false, 5);
 
-            foreach (ConfigurationConstantsBlock block in Conf!.ConstantsBlock.Values)
+            foreach (ConfigurationConstantsBlock block in Conf.ConstantsBlock.Values)
                 comboBoxBlock.Append(block.BlockName, block.BlockName);
 
             hBoxBlock.PackStart(new Label("Блок:"), false, false, 5);
@@ -166,10 +160,10 @@ namespace Configurator
             HBox hBoxPointer = new HBox() { Halign = Align.End };
             vBox.PackStart(hBoxPointer, false, false, 5);
 
-            foreach (ConfigurationDirectories item in Conf!.Directories.Values)
+            foreach (ConfigurationDirectories item in Conf.Directories.Values)
                 comboBoxPointer.Append($"Довідники.{item.Name}", $"Довідники.{item.Name}");
 
-            foreach (ConfigurationDocuments item in Conf!.Documents.Values)
+            foreach (ConfigurationDocuments item in Conf.Documents.Values)
                 comboBoxPointer.Append($"Документи.{item.Name}", $"Документи.{item.Name}");
 
             hBoxPointer.PackStart(new Label("Вказівник:"), false, false, 5);
@@ -179,7 +173,7 @@ namespace Configurator
             HBox hBoxEnum = new HBox() { Halign = Align.End };
             vBox.PackStart(hBoxEnum, false, false, 5);
 
-            foreach (ConfigurationEnums item in Conf!.Enums.Values)
+            foreach (ConfigurationEnums item in Conf.Enums.Values)
                 comboBoxEnum.Append($"Перелічення.{item.Name}", $"Перелічення.{item.Name}");
 
             hBoxEnum.PackStart(new Label("Перелічення:"), false, false, 5);
@@ -209,7 +203,7 @@ namespace Configurator
             entryName.Text = ConfConstants.Name;
 
             if (IsNew)
-                entryColumn.Text = Configuration.GetNewUnigueColumnName(Program.Kernel!, SpecialTables.Constants, GeneralForm!.GetConstantsAllFields());
+                entryColumn.Text = Configuration.GetNewUnigueColumnName(Program.Kernel, SpecialTables.Constants, GeneralForm!.GetConstantsAllFields());
             else
                 entryColumn.Text = ConfConstants.NameInTable;
 
@@ -246,7 +240,7 @@ namespace Configurator
             ConfConstants.Name = entryName.Text;
             ConfConstants.NameInTable = entryColumn.Text;
             ConfConstants.Desc = textViewDesc.Buffer.Text;
-            ConfConstants.Block = Conf!.ConstantsBlock[comboBoxBlock.ActiveId];
+            ConfConstants.Block = Conf.ConstantsBlock[comboBoxBlock.ActiveId];
             ConfConstants.Type = comboBoxType.ActiveId;
 
             if (ConfConstants.Type == "pointer")
@@ -267,7 +261,7 @@ namespace Configurator
         void OnSaveClick(object? sender, EventArgs args)
         {
             string name = entryName.Text;
-            string errorList = Configuration.ValidateConfigurationObjectName(Program.Kernel!, ref name);
+            string errorList = Configuration.ValidateConfigurationObjectName(Program.Kernel, ref name);
             entryName.Text = name;
 
             if (errorList.Length > 0)
@@ -282,7 +276,7 @@ namespace Configurator
                 return;
             }
 
-            if (!Conf!.ConstantsBlock.ContainsKey(comboBoxBlock.ActiveId))
+            if (!Conf.ConstantsBlock.ContainsKey(comboBoxBlock.ActiveId))
             {
                 Message.Error(GeneralForm, $"Відсутній блок {comboBoxBlock.ActiveId}");
                 return;
@@ -290,7 +284,7 @@ namespace Configurator
 
             if (IsNew)
             {
-                if (Conf!.ConstantsBlock[comboBoxBlock.ActiveId].Constants.ContainsKey(entryName.Text))
+                if (Conf.ConstantsBlock[comboBoxBlock.ActiveId].Constants.ContainsKey(entryName.Text))
                 {
                     Message.Error(GeneralForm, $"Назва константи не унікальна в межах блоку {comboBoxBlock.ActiveId}");
                     return;
@@ -300,14 +294,14 @@ namespace Configurator
             {
                 if (ConfConstants.Name != entryName.Text || ConfConstants.Block.BlockName != comboBoxBlock.ActiveId)
                 {
-                    if (Conf!.ConstantsBlock[comboBoxBlock.ActiveId].Constants.ContainsKey(entryName.Text))
+                    if (Conf.ConstantsBlock[comboBoxBlock.ActiveId].Constants.ContainsKey(entryName.Text))
                     {
                         Message.Error(GeneralForm, $"Назва константи не унікальна в межах блоку {comboBoxBlock.ActiveId}");
                         return;
                     }
                 }
 
-                Conf!.ConstantsBlock[ConfConstants.Block.BlockName].Constants.Remove(ConfConstants.Name);
+                Conf.ConstantsBlock[ConfConstants.Block.BlockName].Constants.Remove(ConfConstants.Name);
             }
 
             GetValue();
@@ -325,7 +319,7 @@ namespace Configurator
                     return;
                 }
 
-            Conf!.AppendConstants(ConfConstants.Block.BlockName, ConfConstants);
+            Conf.AppendConstants(ConfConstants.Block.BlockName, ConfConstants);
 
             IsNew = false;
 

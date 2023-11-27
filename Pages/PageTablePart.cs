@@ -30,13 +30,7 @@ namespace Configurator
 {
     class PageTablePart : VBox
     {
-        Configuration? Conf
-        {
-            get
-            {
-                return Program.Kernel?.Conf;
-            }
-        }
+        Configuration Conf { get { return Program.Kernel.Conf; } }
 
         public Dictionary<string, ConfigurationObjectTablePart> TabularParts { get; set; } = new Dictionary<string, ConfigurationObjectTablePart>();
         public ConfigurationObjectTablePart TablePart { get; set; } = new ConfigurationObjectTablePart();
@@ -189,7 +183,7 @@ namespace Configurator
             entryName.Text = TablePart.Name;
 
             if (IsNew)
-                entryTable.Text = await Configuration.GetNewUnigueTableName(Program.Kernel!);
+                entryTable.Text = await Configuration.GetNewUnigueTableName(Program.Kernel);
             else
                 entryTable.Text = TablePart.Table;
 
@@ -216,7 +210,7 @@ namespace Configurator
         void OnSaveClick(object? sender, EventArgs args)
         {
             string name = entryName.Text;
-            string errorList = Configuration.ValidateConfigurationObjectName(Program.Kernel!, ref name);
+            string errorList = Configuration.ValidateConfigurationObjectName(Program.Kernel, ref name);
             entryName.Text = name;
 
             if (errorList.Length > 0)
@@ -321,7 +315,7 @@ namespace Configurator
                     if (TablePart.Fields.ContainsKey(row.Child.Name))
                     {
                         ConfigurationObjectField newField = TablePart.Fields[row.Child.Name].Copy();
-                        newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!, TablePart.Table, TablePart.Fields);
+                        newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, TablePart.Table, TablePart.Fields);
                         newField.Name += GenerateName.GetNewName();
 
                         TablePart.AppendField(newField);

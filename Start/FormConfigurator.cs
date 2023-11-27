@@ -31,13 +31,7 @@ namespace Configurator
     {
         readonly object loked = new();
         public ConfigurationParam? OpenConfigurationParam { get; set; }
-        Configuration? Conf
-        {
-            get
-            {
-                return Program.Kernel?.Conf;
-            }
-        }
+        Configuration Conf { get { return Program.Kernel.Conf; } }
 
         // Список відритих віток
         List<string> TreeRowExpanded;
@@ -97,7 +91,7 @@ namespace Configurator
 
         void LoadConstants(TreeIter rootIter)
         {
-            foreach (KeyValuePair<string, ConfigurationConstantsBlock> ConfConstantsBlock in Conf!.ConstantsBlock)
+            foreach (KeyValuePair<string, ConfigurationConstantsBlock> ConfConstantsBlock in Conf.ConstantsBlock)
             {
                 string key = $"БлокКонстант.{ConfConstantsBlock.Value.BlockName}";
 
@@ -154,7 +148,7 @@ namespace Configurator
 
         void LoadDirectories(TreeIter rootIter)
         {
-            foreach (ConfigurationDirectories ConfDirectory in Conf!.Directories.Values)
+            foreach (ConfigurationDirectories ConfDirectory in Conf.Directories.Values)
             {
                 LoadDirectory(rootIter, ConfDirectory);
             }
@@ -203,7 +197,7 @@ namespace Configurator
 
         void LoadDocuments(TreeIter rootIter)
         {
-            foreach (ConfigurationDocuments ConfDocuments in Conf!.Documents.Values)
+            foreach (ConfigurationDocuments ConfDocuments in Conf.Documents.Values)
             {
                 LoadDocument(rootIter, ConfDocuments);
             }
@@ -227,7 +221,7 @@ namespace Configurator
 
         void LoadEnums(TreeIter rootIter)
         {
-            foreach (ConfigurationEnums ConfEnum in Conf!.Enums.Values)
+            foreach (ConfigurationEnums ConfEnum in Conf.Enums.Values)
             {
                 LoadEnum(rootIter, ConfEnum);
             }
@@ -251,7 +245,7 @@ namespace Configurator
 
         void LoadJournals(TreeIter rootIter)
         {
-            foreach (ConfigurationJournals ConfJournal in Conf!.Journals.Values)
+            foreach (ConfigurationJournals ConfJournal in Conf.Journals.Values)
             {
                 LoadJournal(rootIter, ConfJournal);
             }
@@ -307,7 +301,7 @@ namespace Configurator
 
         void LoadRegistersInformation(TreeIter rootIter)
         {
-            foreach (ConfigurationRegistersInformation ConfRegistersInformation in Conf!.RegistersInformation.Values)
+            foreach (ConfigurationRegistersInformation ConfRegistersInformation in Conf.RegistersInformation.Values)
             {
                 LoadRegisterInformation(rootIter, ConfRegistersInformation);
             }
@@ -387,7 +381,7 @@ namespace Configurator
 
         void LoadRegistersAccumulation(TreeIter rootIter)
         {
-            foreach (ConfigurationRegistersAccumulation ConfRegistersAccumulation in Conf!.RegistersAccumulation.Values)
+            foreach (ConfigurationRegistersAccumulation ConfRegistersAccumulation in Conf.RegistersAccumulation.Values)
             {
                 LoadRegisterAccumulation(rootIter, ConfRegistersAccumulation);
             }
@@ -470,7 +464,7 @@ namespace Configurator
         public Dictionary<string, ConfigurationObjectField> GetConstantsAllFields()
         {
             Dictionary<string, ConfigurationObjectField> ConstantsAllFields = new Dictionary<string, ConfigurationObjectField>();
-            foreach (ConfigurationConstantsBlock block in Conf!.ConstantsBlock.Values)
+            foreach (ConfigurationConstantsBlock block in Conf.ConstantsBlock.Values)
             {
                 foreach (ConfigurationConstants constants in block.Constants.Values)
                 {
@@ -487,7 +481,7 @@ namespace Configurator
             if (OpenConfigurationParam != null)
             {
                 statusBar.Halign = Align.Start;
-                statusBar.Add(new Label($"Конфігурація: {Conf!.Name} "));
+                statusBar.Add(new Label($"Конфігурація: {Conf.Name} "));
                 statusBar.Add(new Separator(Orientation.Vertical));
                 statusBar.Add(new Label($" Сервер: {OpenConfigurationParam.DataBaseServer} "));
                 statusBar.Add(new Separator(Orientation.Vertical));
@@ -763,7 +757,7 @@ namespace Configurator
         void OnUploadConfigurationToFileClick(object? sender, EventArgs args)
         {
             string folderSave = "";
-            string fileConfName = "Confa_" + Conf!.NameSpace + "_" + DateTime.Now.ToString("dd_MM_yyyy") + ".xml";
+            string fileConfName = "Confa_" + Conf.NameSpace + "_" + DateTime.Now.ToString("dd_MM_yyyy") + ".xml";
             bool saveOk = false;
 
             FileChooserDialog fc = new FileChooserDialog("Виберіть каталог для вигрузки конфігурації", this,
@@ -774,7 +768,7 @@ namespace Configurator
                 if (!String.IsNullOrEmpty(fc.CurrentFolder))
                 {
                     string fileConf = System.IO.Path.Combine(fc.CurrentFolder, fileConfName);
-                    Configuration.Save(fileConf, Conf!);
+                    Configuration.Save(fileConf, Conf);
 
                     folderSave = fc.CurrentFolder;
                     saveOk = true;
@@ -800,14 +794,14 @@ namespace Configurator
 
             if (fc.Run() == (int)ResponseType.Accept)
             {
-                if (!String.IsNullOrEmpty(fc.Filename))
+                if (!string.IsNullOrEmpty(fc.Filename))
                 {
                     Configuration openConf;
                     Configuration.Load(fc.Filename, out openConf);
 
-                    openConf.PathToXmlFileConfiguration = Conf!.PathToXmlFileConfiguration;
+                    openConf.PathToXmlFileConfiguration = Conf.PathToXmlFileConfiguration;
 
-                    Program.Kernel!.Conf = openConf;
+                    Program.Kernel.Conf = openConf;
 
                     loadOk = true;
                 }
@@ -925,7 +919,7 @@ namespace Configurator
                         {
                             PageConstantBlock page = new PageConstantBlock()
                             {
-                                ConfConstantsBlock = Conf!.ConstantsBlock[name],
+                                ConfConstantsBlock = Conf.ConstantsBlock[name],
                                 IsNew = false,
                                 GeneralForm = this
                             };
@@ -952,7 +946,7 @@ namespace Configurator
                                         {
                                             IsNew = false,
                                             GeneralForm = this,
-                                            ConfConstants = Conf!.ConstantsBlock[blockConst].Constants[nameConst]
+                                            ConfConstants = Conf.ConstantsBlock[blockConst].Constants[nameConst]
                                         };
 
                                         page.SetValue();
@@ -970,8 +964,8 @@ namespace Configurator
                                         PageTablePart page = new PageTablePart()
                                         {
                                             GeneralForm = this,
-                                            TabularParts = Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts,
-                                            TablePart = Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart],
+                                            TabularParts = Conf.ConstantsBlock[blockConst].Constants[nameConst].TabularParts,
+                                            TablePart = Conf.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart],
                                             IsNew = false
                                         };
 
@@ -991,8 +985,8 @@ namespace Configurator
                                     {
                                         PageField page = new PageField()
                                         {
-                                            Fields = Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart].Fields,
-                                            Field = Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart].Fields[nameField],
+                                            Fields = Conf.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart].Fields,
+                                            Field = Conf.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart].Fields[nameField],
                                             IsNew = false,
                                             GeneralForm = this
                                         };
@@ -1027,8 +1021,8 @@ namespace Configurator
                                         {
                                             PageField page = new PageField()
                                             {
-                                                Fields = Conf!.Directories[directoryName].Fields,
-                                                Field = Conf!.Directories[directoryName].Fields[fieldName],
+                                                Fields = Conf.Directories[directoryName].Fields,
+                                                Field = Conf.Directories[directoryName].Fields[fieldName],
                                                 IsNew = false,
                                                 GeneralForm = this
                                             };
@@ -1044,7 +1038,7 @@ namespace Configurator
                                         {
                                             PageDirectory page = new PageDirectory()
                                             {
-                                                ConfDirectory = Conf!.Directories[directory],
+                                                ConfDirectory = Conf.Directories[directory],
                                                 IsNew = false,
                                                 GeneralForm = this
                                             };
@@ -1065,8 +1059,8 @@ namespace Configurator
                                         PageTablePart page = new PageTablePart()
                                         {
                                             GeneralForm = this,
-                                            TabularParts = Conf!.Directories[directory].TabularParts,
-                                            TablePart = Conf!.Directories[directory].TabularParts[nameTablePart],
+                                            TabularParts = Conf.Directories[directory].TabularParts,
+                                            TablePart = Conf.Directories[directory].TabularParts[nameTablePart],
                                             IsNew = false
                                         };
 
@@ -1085,8 +1079,8 @@ namespace Configurator
                                     {
                                         PageField page = new PageField()
                                         {
-                                            Fields = Conf!.Directories[directory].TabularParts[nameTablePart].Fields,
-                                            Field = Conf!.Directories[directory].TabularParts[nameTablePart].Fields[nameField],
+                                            Fields = Conf.Directories[directory].TabularParts[nameTablePart].Fields,
+                                            Field = Conf.Directories[directory].TabularParts[nameTablePart].Fields[nameField],
                                             IsNew = false,
                                             GeneralForm = this
                                         };
@@ -1121,8 +1115,8 @@ namespace Configurator
                                         {
                                             PageField page = new PageField()
                                             {
-                                                Fields = Conf!.Documents[documentName].Fields,
-                                                Field = Conf!.Documents[documentName].Fields[fieldName],
+                                                Fields = Conf.Documents[documentName].Fields,
+                                                Field = Conf.Documents[documentName].Fields[fieldName],
                                                 IsNew = false,
                                                 GeneralForm = this
                                             };
@@ -1138,7 +1132,7 @@ namespace Configurator
                                         {
                                             PageDocument page = new PageDocument()
                                             {
-                                                ConfDocument = Conf!.Documents[document],
+                                                ConfDocument = Conf.Documents[document],
                                                 IsNew = false,
                                                 GeneralForm = this
                                             };
@@ -1159,8 +1153,8 @@ namespace Configurator
                                         PageTablePart page = new PageTablePart()
                                         {
                                             GeneralForm = this,
-                                            TabularParts = Conf!.Documents[document].TabularParts,
-                                            TablePart = Conf!.Documents[document].TabularParts[nameTablePart],
+                                            TabularParts = Conf.Documents[document].TabularParts,
+                                            TablePart = Conf.Documents[document].TabularParts[nameTablePart],
                                             IsNew = false
                                         };
 
@@ -1179,8 +1173,8 @@ namespace Configurator
                                     {
                                         PageField page = new PageField()
                                         {
-                                            Fields = Conf!.Documents[document].TabularParts[nameTablePart].Fields,
-                                            Field = Conf!.Documents[document].TabularParts[nameTablePart].Fields[nameField],
+                                            Fields = Conf.Documents[document].TabularParts[nameTablePart].Fields,
+                                            Field = Conf.Documents[document].TabularParts[nameTablePart].Fields[nameField],
                                             IsNew = false,
                                             GeneralForm = this
                                         };
@@ -1209,7 +1203,7 @@ namespace Configurator
                                     {
                                         PageRegisterInformation page = new PageRegisterInformation()
                                         {
-                                            ConfRegister = Conf!.RegistersInformation[register],
+                                            ConfRegister = Conf.RegistersInformation[register],
                                             IsNew = false,
                                             GeneralForm = this
                                         };
@@ -1229,11 +1223,11 @@ namespace Configurator
 
                                     CreateNotebookPage($"Поле: {fieldName}", () =>
                                     {
-                                        Dictionary<string, ConfigurationObjectField> AllFields = Conf!.CombineAllFieldForRegister
+                                        Dictionary<string, ConfigurationObjectField> AllFields = Conf.CombineAllFieldForRegister
                                         (
-                                            Conf!.RegistersInformation[register].DimensionFields.Values,
-                                            Conf!.RegistersInformation[register].ResourcesFields.Values,
-                                            Conf!.RegistersInformation[register].PropertyFields.Values
+                                            Conf.RegistersInformation[register].DimensionFields.Values,
+                                            Conf.RegistersInformation[register].ResourcesFields.Values,
+                                            Conf.RegistersInformation[register].PropertyFields.Values
                                         );
 
                                         Dictionary<string, ConfigurationObjectField> Fields;
@@ -1241,18 +1235,18 @@ namespace Configurator
 
                                         if (typeName == "Dimension")
                                         {
-                                            Fields = Conf!.RegistersInformation[register].DimensionFields;
-                                            Field = Conf!.RegistersInformation[register].DimensionFields[fieldName];
+                                            Fields = Conf.RegistersInformation[register].DimensionFields;
+                                            Field = Conf.RegistersInformation[register].DimensionFields[fieldName];
                                         }
                                         else if (typeName == "Resources")
                                         {
-                                            Fields = Conf!.RegistersInformation[register].ResourcesFields;
-                                            Field = Conf!.RegistersInformation[register].ResourcesFields[fieldName];
+                                            Fields = Conf.RegistersInformation[register].ResourcesFields;
+                                            Field = Conf.RegistersInformation[register].ResourcesFields[fieldName];
                                         }
                                         else
                                         {
-                                            Fields = Conf!.RegistersInformation[register].PropertyFields;
-                                            Field = Conf!.RegistersInformation[register].PropertyFields[fieldName];
+                                            Fields = Conf.RegistersInformation[register].PropertyFields;
+                                            Field = Conf.RegistersInformation[register].PropertyFields[fieldName];
                                         }
 
                                         PageField page = new PageField()
@@ -1288,7 +1282,7 @@ namespace Configurator
                                     {
                                         PageRegistersAccumulation page = new PageRegistersAccumulation()
                                         {
-                                            ConfRegister = Conf!.RegistersAccumulation[register],
+                                            ConfRegister = Conf.RegistersAccumulation[register],
                                             IsNew = false,
                                             GeneralForm = this
                                         };
@@ -1310,11 +1304,11 @@ namespace Configurator
 
                                         CreateNotebookPage($"Поле: {fieldName}", () =>
                                         {
-                                            Dictionary<string, ConfigurationObjectField> AllFields = Conf!.CombineAllFieldForRegister
+                                            Dictionary<string, ConfigurationObjectField> AllFields = Conf.CombineAllFieldForRegister
                                             (
-                                                Conf!.RegistersAccumulation[register].DimensionFields.Values,
-                                                Conf!.RegistersAccumulation[register].ResourcesFields.Values,
-                                                Conf!.RegistersAccumulation[register].PropertyFields.Values
+                                                Conf.RegistersAccumulation[register].DimensionFields.Values,
+                                                Conf.RegistersAccumulation[register].ResourcesFields.Values,
+                                                Conf.RegistersAccumulation[register].PropertyFields.Values
                                             );
 
                                             Dictionary<string, ConfigurationObjectField> Fields;
@@ -1322,18 +1316,18 @@ namespace Configurator
 
                                             if (typeName == "Dimension")
                                             {
-                                                Fields = Conf!.RegistersAccumulation[register].DimensionFields;
-                                                Field = Conf!.RegistersAccumulation[register].DimensionFields[fieldName];
+                                                Fields = Conf.RegistersAccumulation[register].DimensionFields;
+                                                Field = Conf.RegistersAccumulation[register].DimensionFields[fieldName];
                                             }
                                             else if (typeName == "Resources")
                                             {
-                                                Fields = Conf!.RegistersAccumulation[register].ResourcesFields;
-                                                Field = Conf!.RegistersAccumulation[register].ResourcesFields[fieldName];
+                                                Fields = Conf.RegistersAccumulation[register].ResourcesFields;
+                                                Field = Conf.RegistersAccumulation[register].ResourcesFields[fieldName];
                                             }
                                             else
                                             {
-                                                Fields = Conf!.RegistersAccumulation[register].PropertyFields;
-                                                Field = Conf!.RegistersAccumulation[register].PropertyFields[fieldName];
+                                                Fields = Conf.RegistersAccumulation[register].PropertyFields;
+                                                Field = Conf.RegistersAccumulation[register].PropertyFields[fieldName];
                                             }
 
                                             PageField page = new PageField()
@@ -1359,8 +1353,8 @@ namespace Configurator
                                             PageTablePart page = new PageTablePart()
                                             {
                                                 GeneralForm = this,
-                                                TabularParts = Conf!.RegistersAccumulation[register].TabularParts,
-                                                TablePart = Conf!.RegistersAccumulation[register].TabularParts[nameTablePart],
+                                                TabularParts = Conf.RegistersAccumulation[register].TabularParts,
+                                                TablePart = Conf.RegistersAccumulation[register].TabularParts[nameTablePart],
                                                 IsNew = false
                                             };
 
@@ -1382,8 +1376,8 @@ namespace Configurator
                                     {
                                         PageField page = new PageField()
                                         {
-                                            Fields = Conf!.RegistersAccumulation[register].TabularParts[nameTablePart].Fields,
-                                            Field = Conf!.RegistersAccumulation[register].TabularParts[nameTablePart].Fields[fieldName],
+                                            Fields = Conf.RegistersAccumulation[register].TabularParts[nameTablePart].Fields,
+                                            Field = Conf.RegistersAccumulation[register].TabularParts[nameTablePart].Fields[fieldName],
                                             IsNew = false,
                                             GeneralForm = this
                                         };
@@ -1410,8 +1404,8 @@ namespace Configurator
                             {
                                 PageEnumField page = new PageEnumField()
                                 {
-                                    Fields = Conf!.Enums[enumName].Fields,
-                                    Field = Conf!.Enums[enumName].Fields[fieldName],
+                                    Fields = Conf.Enums[enumName].Fields,
+                                    Field = Conf.Enums[enumName].Fields[fieldName],
                                     IsNew = false,
                                     GeneralForm = this
                                 };
@@ -1427,7 +1421,7 @@ namespace Configurator
                             {
                                 PageEnum page = new PageEnum()
                                 {
-                                    ConfEnum = Conf!.Enums[name],
+                                    ConfEnum = Conf.Enums[name],
                                     IsNew = false,
                                     GeneralForm = this
                                 };
@@ -1451,8 +1445,8 @@ namespace Configurator
                             {
                                 PageJournalField page = new PageJournalField()
                                 {
-                                    Fields = Conf!.Journals[journalName].Fields,
-                                    Field = Conf!.Journals[journalName].Fields[fieldName],
+                                    Fields = Conf.Journals[journalName].Fields,
+                                    Field = Conf.Journals[journalName].Fields[fieldName],
                                     IsNew = false,
                                     GeneralForm = this
                                 };
@@ -1468,7 +1462,7 @@ namespace Configurator
                             {
                                 PageJournal page = new PageJournal()
                                 {
-                                    ConfJournals = Conf!.Journals[name],
+                                    ConfJournals = Conf.Journals[name],
                                     IsNew = false,
                                     GeneralForm = this
                                 };
@@ -1527,7 +1521,7 @@ namespace Configurator
                     {
                         if (Message.Request(this, "Видалити?") == ResponseType.Yes)
                         {
-                            Conf!.ConstantsBlock.Remove(name);
+                            Conf.ConstantsBlock.Remove(name);
                             reloadTree = true;
                         }
                         break;
@@ -1544,7 +1538,7 @@ namespace Configurator
                                 {
                                     if (Message.Request(this, "Видалити?") == ResponseType.Yes)
                                     {
-                                        Conf!.ConstantsBlock[blockConst].Constants.Remove(nameConst);
+                                        Conf.ConstantsBlock[blockConst].Constants.Remove(nameConst);
                                         reloadTree = true;
                                     }
                                     break;
@@ -1555,7 +1549,7 @@ namespace Configurator
 
                                     if (Message.Request(this, "Видалити?") == ResponseType.Yes)
                                     {
-                                        Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts.Remove(nameTablePart);
+                                        Conf.ConstantsBlock[blockConst].Constants[nameConst].TabularParts.Remove(nameTablePart);
                                         reloadTree = true;
                                     }
                                     break;
@@ -1567,7 +1561,7 @@ namespace Configurator
 
                                     if (Message.Request(this, "Видалити?") == ResponseType.Yes)
                                     {
-                                        Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart].Fields.Remove(nameField);
+                                        Conf.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart].Fields.Remove(nameField);
                                         reloadTree = true;
                                     }
                                     break;
@@ -1593,19 +1587,19 @@ namespace Configurator
 
                                         if (Message.Request(this, "Видалити?") == ResponseType.Yes)
                                         {
-                                            Conf!.Directories[directoryName].Fields.Remove(fieldName);
+                                            Conf.Directories[directoryName].Fields.Remove(fieldName);
                                             reloadTree = true;
                                         }
                                     }
                                     else
                                     {
-                                        List<string> ListPointers = Conf!.SearchForPointers("Довідники." + directory);
+                                        List<string> ListPointers = Conf.SearchForPointers("Довідники." + directory);
 
                                         if (ListPointers.Count == 0)
                                         {
                                             if (Message.Request(this, "Видалити?") == ResponseType.Yes)
                                             {
-                                                Conf!.Directories.Remove(directory);
+                                                Conf.Directories.Remove(directory);
                                                 reloadTree = true;
                                             }
                                         }
@@ -1629,7 +1623,7 @@ namespace Configurator
 
                                     if (Message.Request(this, "Видалити?") == ResponseType.Yes)
                                     {
-                                        Conf!.Directories[directory].TabularParts.Remove(nameTablePart);
+                                        Conf.Directories[directory].TabularParts.Remove(nameTablePart);
                                         reloadTree = true;
                                     }
                                     break;
@@ -1641,7 +1635,7 @@ namespace Configurator
 
                                     if (Message.Request(this, "Видалити?") == ResponseType.Yes)
                                     {
-                                        Conf!.Directories[directory].TabularParts[nameTablePart].Fields.Remove(nameField);
+                                        Conf.Directories[directory].TabularParts[nameTablePart].Fields.Remove(nameField);
                                         reloadTree = true;
                                     }
                                     break;
@@ -1667,19 +1661,19 @@ namespace Configurator
 
                                         if (Message.Request(this, "Видалити?") == ResponseType.Yes)
                                         {
-                                            Conf!.Documents[documentName].Fields.Remove(fieldName);
+                                            Conf.Documents[documentName].Fields.Remove(fieldName);
                                             reloadTree = true;
                                         }
                                     }
                                     else
                                     {
-                                        List<string> ListPointers = Conf!.SearchForPointers("Документи." + document);
+                                        List<string> ListPointers = Conf.SearchForPointers("Документи." + document);
 
                                         if (ListPointers.Count == 0)
                                         {
                                             if (Message.Request(this, "Видалити?") == ResponseType.Yes)
                                             {
-                                                Conf!.Documents.Remove(document);
+                                                Conf.Documents.Remove(document);
                                                 reloadTree = true;
                                             }
                                         }
@@ -1703,7 +1697,7 @@ namespace Configurator
 
                                     if (Message.Request(this, "Видалити?") == ResponseType.Yes)
                                     {
-                                        Conf!.Documents[document].TabularParts.Remove(nameTablePart);
+                                        Conf.Documents[document].TabularParts.Remove(nameTablePart);
                                         reloadTree = true;
                                     }
                                     break;
@@ -1715,7 +1709,7 @@ namespace Configurator
 
                                     if (Message.Request(this, "Видалити?") == ResponseType.Yes)
                                     {
-                                        Conf!.Documents[document].TabularParts[nameTablePart].Fields.Remove(nameField);
+                                        Conf.Documents[document].TabularParts[nameTablePart].Fields.Remove(nameField);
                                         reloadTree = true;
                                     }
                                     break;
@@ -1735,7 +1729,7 @@ namespace Configurator
                                 {
                                     if (Message.Request(this, "Видалити?") == ResponseType.Yes)
                                     {
-                                        Conf!.RegistersInformation.Remove(register);
+                                        Conf.RegistersInformation.Remove(register);
                                         reloadTree = true;
                                     }
                                     break;
@@ -1749,11 +1743,11 @@ namespace Configurator
                                     if (Message.Request(this, "Видалити?") == ResponseType.Yes)
                                     {
                                         if (typeName == "Dimension")
-                                            Conf!.RegistersInformation[register].DimensionFields.Remove(fieldName);
+                                            Conf.RegistersInformation[register].DimensionFields.Remove(fieldName);
                                         else if (typeName == "Resources")
-                                            Conf!.RegistersInformation[register].ResourcesFields.Remove(fieldName);
+                                            Conf.RegistersInformation[register].ResourcesFields.Remove(fieldName);
                                         else
-                                            Conf!.RegistersInformation[register].PropertyFields.Remove(fieldName);
+                                            Conf.RegistersInformation[register].PropertyFields.Remove(fieldName);
 
                                         reloadTree = true;
                                     }
@@ -1775,7 +1769,7 @@ namespace Configurator
                                 {
                                     if (Message.Request(this, "Видалити?") == ResponseType.Yes)
                                     {
-                                        Conf!.RegistersAccumulation.Remove(register);
+                                        Conf.RegistersAccumulation.Remove(register);
                                         reloadTree = true;
                                     }
                                     break;
@@ -1791,11 +1785,11 @@ namespace Configurator
                                         if (Message.Request(this, "Видалити?") == ResponseType.Yes)
                                         {
                                             if (typeName == "Dimension")
-                                                Conf!.RegistersAccumulation[register].DimensionFields.Remove(fieldName);
+                                                Conf.RegistersAccumulation[register].DimensionFields.Remove(fieldName);
                                             else if (typeName == "Resources")
-                                                Conf!.RegistersAccumulation[register].ResourcesFields.Remove(fieldName);
+                                                Conf.RegistersAccumulation[register].ResourcesFields.Remove(fieldName);
                                             else
-                                                Conf!.RegistersAccumulation[register].PropertyFields.Remove(fieldName);
+                                                Conf.RegistersAccumulation[register].PropertyFields.Remove(fieldName);
 
                                             reloadTree = true;
                                         }
@@ -1806,7 +1800,7 @@ namespace Configurator
 
                                         if (Message.Request(this, "Видалити?") == ResponseType.Yes)
                                         {
-                                            Conf!.RegistersAccumulation[register].TabularParts.Remove(nameTablePart);
+                                            Conf.RegistersAccumulation[register].TabularParts.Remove(nameTablePart);
                                             reloadTree = true;
                                         }
                                     }
@@ -1820,7 +1814,7 @@ namespace Configurator
 
                                     if (Message.Request(this, "Видалити?") == ResponseType.Yes)
                                     {
-                                        Conf!.RegistersAccumulation[register].TabularParts[nameTablePart].Fields.Remove(nameField);
+                                        Conf.RegistersAccumulation[register].TabularParts[nameTablePart].Fields.Remove(nameField);
                                         reloadTree = true;
                                     }
 
@@ -1840,19 +1834,19 @@ namespace Configurator
 
                             if (Message.Request(this, "Видалити?") == ResponseType.Yes)
                             {
-                                Conf!.Enums[enumName].Fields.Remove(fieldName);
+                                Conf.Enums[enumName].Fields.Remove(fieldName);
                                 reloadTree = true;
                             }
                         }
                         else
                         {
-                            List<string> ListPointers = Conf!.SearchForPointersEnum("Перелічення." + name);
+                            List<string> ListPointers = Conf.SearchForPointersEnum("Перелічення." + name);
 
                             if (ListPointers.Count == 0)
                             {
                                 if (Message.Request(this, "Видалити?") == ResponseType.Yes)
                                 {
-                                    Conf!.Enums.Remove(name);
+                                    Conf.Enums.Remove(name);
                                     reloadTree = true;
                                 }
                             }
@@ -1881,7 +1875,7 @@ namespace Configurator
 
                             if (Message.Request(this, "Видалити?") == ResponseType.Yes)
                             {
-                                Conf!.Journals[journalName].Fields.Remove(fieldName);
+                                Conf.Journals[journalName].Fields.Remove(fieldName);
                                 reloadTree = true;
                             }
                         }
@@ -1889,7 +1883,7 @@ namespace Configurator
                         {
                             if (Message.Request(this, "Видалити?") == ResponseType.Yes)
                             {
-                                Conf!.Journals.Remove(name);
+                                Conf.Journals.Remove(name);
                                 reloadTree = true;
                             }
                         }
@@ -1929,22 +1923,22 @@ namespace Configurator
             {
                 case "БлокКонстант":
                     {
-                        ConfigurationConstantsBlock newConstantBlock = Conf!.ConstantsBlock[name].Copy();
+                        ConfigurationConstantsBlock newConstantBlock = Conf.ConstantsBlock[name].Copy();
                         newConstantBlock.BlockName += GenerateName.GetNewName();
 
                         Dictionary<string, ConfigurationObjectField> AllFields = GetConstantsAllFields();
 
-                        if (!Conf!.ConstantsBlock.ContainsKey(newConstantBlock.BlockName))
+                        if (!Conf.ConstantsBlock.ContainsKey(newConstantBlock.BlockName))
                         {
                             foreach (ConfigurationConstants itemConst in newConstantBlock.Constants.Values)
                             {
-                                itemConst.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!, "tab_constants", AllFields);
+                                itemConst.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, "tab_constants", AllFields);
 
                                 foreach (ConfigurationObjectTablePart tablePart in itemConst.TabularParts.Values)
-                                    tablePart.Table = await Configuration.GetNewUnigueTableName(Program.Kernel!);
+                                    tablePart.Table = await Configuration.GetNewUnigueTableName(Program.Kernel);
                             }
 
-                            Conf!.AppendConstantsBlock(newConstantBlock);
+                            Conf.AppendConstantsBlock(newConstantBlock);
                         }
 
                         break;
@@ -1959,16 +1953,16 @@ namespace Configurator
                         {
                             case 2:
                                 {
-                                    ConfigurationConstants newConstant = Conf!.ConstantsBlock[blockConst].Constants[nameConst].Copy();
+                                    ConfigurationConstants newConstant = Conf.ConstantsBlock[blockConst].Constants[nameConst].Copy();
                                     newConstant.Name += GenerateName.GetNewName();
-                                    newConstant.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!, "tab_constants", GetConstantsAllFields());
+                                    newConstant.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, "tab_constants", GetConstantsAllFields());
 
-                                    if (!Conf!.ConstantsBlock[blockConst].Constants.ContainsKey(newConstant.Name))
+                                    if (!Conf.ConstantsBlock[blockConst].Constants.ContainsKey(newConstant.Name))
                                     {
                                         foreach (ConfigurationObjectTablePart tablePart in newConstant.TabularParts.Values)
-                                            tablePart.Table = await Configuration.GetNewUnigueTableName(Program.Kernel!);
+                                            tablePart.Table = await Configuration.GetNewUnigueTableName(Program.Kernel);
 
-                                        Conf!.ConstantsBlock[blockConst].AppendConstant(newConstant);
+                                        Conf.ConstantsBlock[blockConst].AppendConstant(newConstant);
                                     }
 
                                     break;
@@ -1976,12 +1970,12 @@ namespace Configurator
                             case 3:
                                 {
                                     string nameTablePart = blockAndName[2];
-                                    ConfigurationObjectTablePart newTablePart = Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart].Copy();
+                                    ConfigurationObjectTablePart newTablePart = Conf.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart].Copy();
                                     newTablePart.Name += GenerateName.GetNewName();
-                                    newTablePart.Table =await Configuration.GetNewUnigueTableName(Program.Kernel!);
+                                    newTablePart.Table =await Configuration.GetNewUnigueTableName(Program.Kernel);
 
-                                    if (!Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts.ContainsKey(newTablePart.Name))
-                                        Conf!.ConstantsBlock[blockConst].Constants[nameConst].AppendTablePart(newTablePart);
+                                    if (!Conf.ConstantsBlock[blockConst].Constants[nameConst].TabularParts.ContainsKey(newTablePart.Name))
+                                        Conf.ConstantsBlock[blockConst].Constants[nameConst].AppendTablePart(newTablePart);
 
                                     break;
                                 }
@@ -1990,14 +1984,14 @@ namespace Configurator
                                     string nameTablePart = blockAndName[2];
                                     string nameField = blockAndName[3];
 
-                                    ConfigurationObjectField newField = Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart].Fields[nameField].Copy();
+                                    ConfigurationObjectField newField = Conf.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart].Fields[nameField].Copy();
                                     newField.Name += GenerateName.GetNewName();
-                                    newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!,
-                                        Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart].Table,
-                                        Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart].Fields);
+                                    newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel,
+                                        Conf.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart].Table,
+                                        Conf.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart].Fields);
 
-                                    if (!Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart].Fields.ContainsKey(newField.Name))
-                                        Conf!.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart].AppendField(newField);
+                                    if (!Conf.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart].Fields.ContainsKey(newField.Name))
+                                        Conf.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart].AppendField(newField);
 
                                     break;
                                 }
@@ -2020,25 +2014,25 @@ namespace Configurator
                                         string directoryName = directoryAndField[0];
                                         string fieldName = directoryAndField[1];
 
-                                        ConfigurationObjectField newField = Conf!.Directories[directoryName].Fields[fieldName].Copy();
+                                        ConfigurationObjectField newField = Conf.Directories[directoryName].Fields[fieldName].Copy();
                                         newField.Name += GenerateName.GetNewName();
-                                        newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!, Conf!.Directories[directoryName].Table, Conf!.Directories[directoryName].Fields);
+                                        newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, Conf.Directories[directoryName].Table, Conf.Directories[directoryName].Fields);
 
-                                        if (!Conf!.Directories[directoryName].Fields.ContainsKey(newField.Name))
-                                            Conf!.Directories[directoryName].AppendField(newField);
+                                        if (!Conf.Directories[directoryName].Fields.ContainsKey(newField.Name))
+                                            Conf.Directories[directoryName].AppendField(newField);
                                     }
                                     else
                                     {
-                                        ConfigurationDirectories newDirectory = Conf!.Directories[directory].Copy();
+                                        ConfigurationDirectories newDirectory = Conf.Directories[directory].Copy();
                                         newDirectory.Name += GenerateName.GetNewName();
-                                        newDirectory.Table =await Configuration.GetNewUnigueTableName(Program.Kernel!);
+                                        newDirectory.Table =await Configuration.GetNewUnigueTableName(Program.Kernel);
 
-                                        if (!Conf!.Directories.ContainsKey(newDirectory.Name))
+                                        if (!Conf.Directories.ContainsKey(newDirectory.Name))
                                         {
                                             foreach (ConfigurationObjectTablePart tablePart in newDirectory.TabularParts.Values)
-                                                tablePart.Table =await Configuration.GetNewUnigueTableName(Program.Kernel!);
+                                                tablePart.Table =await Configuration.GetNewUnigueTableName(Program.Kernel);
 
-                                            Conf!.AppendDirectory(newDirectory);
+                                            Conf.AppendDirectory(newDirectory);
                                         }
                                     }
                                     break;
@@ -2046,12 +2040,12 @@ namespace Configurator
                             case 2:
                                 {
                                     string nameTablePart = directoryPath[1];
-                                    ConfigurationObjectTablePart newTablePart = Conf!.Directories[directory].TabularParts[nameTablePart].Copy();
+                                    ConfigurationObjectTablePart newTablePart = Conf.Directories[directory].TabularParts[nameTablePart].Copy();
                                     newTablePart.Name += GenerateName.GetNewName();
-                                    newTablePart.Table =await Configuration.GetNewUnigueTableName(Program.Kernel!);
+                                    newTablePart.Table =await Configuration.GetNewUnigueTableName(Program.Kernel);
 
-                                    if (!Conf!.Directories[directory].TabularParts.ContainsKey(newTablePart.Name))
-                                        Conf!.Directories[directory].AppendTablePart(newTablePart);
+                                    if (!Conf.Directories[directory].TabularParts.ContainsKey(newTablePart.Name))
+                                        Conf.Directories[directory].AppendTablePart(newTablePart);
 
                                     break;
                                 }
@@ -2060,14 +2054,14 @@ namespace Configurator
                                     string nameTablePart = directoryPath[1];
                                     string nameField = directoryPath[2];
 
-                                    ConfigurationObjectField newField = Conf!.Directories[directory].TabularParts[nameTablePart].Fields[nameField].Copy();
+                                    ConfigurationObjectField newField = Conf.Directories[directory].TabularParts[nameTablePart].Fields[nameField].Copy();
                                     newField.Name += GenerateName.GetNewName();
-                                    newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!,
-                                        Conf!.Directories[directory].TabularParts[nameTablePart].Table,
-                                        Conf!.Directories[directory].TabularParts[nameTablePart].Fields);
+                                    newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel,
+                                        Conf.Directories[directory].TabularParts[nameTablePart].Table,
+                                        Conf.Directories[directory].TabularParts[nameTablePart].Fields);
 
-                                    if (!Conf!.Directories[directory].TabularParts[nameTablePart].Fields.ContainsKey(newField.Name))
-                                        Conf!.Directories[directory].TabularParts[nameTablePart].AppendField(newField);
+                                    if (!Conf.Directories[directory].TabularParts[nameTablePart].Fields.ContainsKey(newField.Name))
+                                        Conf.Directories[directory].TabularParts[nameTablePart].AppendField(newField);
 
                                     break;
                                 }
@@ -2090,25 +2084,25 @@ namespace Configurator
                                         string documentName = documentAndField[0];
                                         string fieldName = documentAndField[1];
 
-                                        ConfigurationObjectField newField = Conf!.Documents[documentName].Fields[fieldName].Copy();
+                                        ConfigurationObjectField newField = Conf.Documents[documentName].Fields[fieldName].Copy();
                                         newField.Name += GenerateName.GetNewName();
-                                        newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!, Conf!.Documents[documentName].Table, Conf!.Documents[documentName].Fields);
+                                        newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, Conf.Documents[documentName].Table, Conf.Documents[documentName].Fields);
 
-                                        if (!Conf!.Documents[documentName].Fields.ContainsKey(newField.Name))
-                                            Conf!.Documents[documentName].AppendField(newField);
+                                        if (!Conf.Documents[documentName].Fields.ContainsKey(newField.Name))
+                                            Conf.Documents[documentName].AppendField(newField);
                                     }
                                     else
                                     {
-                                        ConfigurationDocuments newDocument = Conf!.Documents[document].Copy();
+                                        ConfigurationDocuments newDocument = Conf.Documents[document].Copy();
                                         newDocument.Name += GenerateName.GetNewName();
-                                        newDocument.Table =await Configuration.GetNewUnigueTableName(Program.Kernel!);
+                                        newDocument.Table =await Configuration.GetNewUnigueTableName(Program.Kernel);
 
-                                        if (!Conf!.Documents.ContainsKey(newDocument.Name))
+                                        if (!Conf.Documents.ContainsKey(newDocument.Name))
                                         {
                                             foreach (ConfigurationObjectTablePart tablePart in newDocument.TabularParts.Values)
-                                                tablePart.Table =await Configuration.GetNewUnigueTableName(Program.Kernel!);
+                                                tablePart.Table =await Configuration.GetNewUnigueTableName(Program.Kernel);
 
-                                            Conf!.AppendDocument(newDocument);
+                                            Conf.AppendDocument(newDocument);
                                         }
                                     }
                                     break;
@@ -2117,12 +2111,12 @@ namespace Configurator
                                 {
                                     string nameTablePart = documentPath[1];
 
-                                    ConfigurationObjectTablePart newTablePart = Conf!.Documents[document].TabularParts[nameTablePart].Copy();
+                                    ConfigurationObjectTablePart newTablePart = Conf.Documents[document].TabularParts[nameTablePart].Copy();
                                     newTablePart.Name += GenerateName.GetNewName();
-                                    newTablePart.Table =await Configuration.GetNewUnigueTableName(Program.Kernel!);
+                                    newTablePart.Table =await Configuration.GetNewUnigueTableName(Program.Kernel);
 
-                                    if (!Conf!.Documents[document].TabularParts.ContainsKey(newTablePart.Name))
-                                        Conf!.Documents[document].AppendTablePart(newTablePart);
+                                    if (!Conf.Documents[document].TabularParts.ContainsKey(newTablePart.Name))
+                                        Conf.Documents[document].AppendTablePart(newTablePart);
 
                                     break;
                                 }
@@ -2131,14 +2125,14 @@ namespace Configurator
                                     string nameTablePart = documentPath[1];
                                     string nameField = documentPath[2];
 
-                                    ConfigurationObjectField newField = Conf!.Documents[document].TabularParts[nameTablePart].Fields[nameField].Copy();
+                                    ConfigurationObjectField newField = Conf.Documents[document].TabularParts[nameTablePart].Fields[nameField].Copy();
                                     newField.Name += GenerateName.GetNewName();
-                                    newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!,
-                                        Conf!.Documents[document].TabularParts[nameTablePart].Table,
-                                        Conf!.Documents[document].TabularParts[nameTablePart].Fields);
+                                    newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel,
+                                        Conf.Documents[document].TabularParts[nameTablePart].Table,
+                                        Conf.Documents[document].TabularParts[nameTablePart].Fields);
 
-                                    if (!Conf!.Documents[document].TabularParts[nameTablePart].Fields.ContainsKey(newField.Name))
-                                        Conf!.Documents[document].TabularParts[nameTablePart].AppendField(newField);
+                                    if (!Conf.Documents[document].TabularParts[nameTablePart].Fields.ContainsKey(newField.Name))
+                                        Conf.Documents[document].TabularParts[nameTablePart].AppendField(newField);
 
                                     break;
                                 }
@@ -2155,12 +2149,12 @@ namespace Configurator
                         {
                             case 1:
                                 {
-                                    ConfigurationRegistersInformation newRegInfo = Conf!.RegistersInformation[register].Copy();
+                                    ConfigurationRegistersInformation newRegInfo = Conf.RegistersInformation[register].Copy();
                                     newRegInfo.Name += GenerateName.GetNewName();
-                                    newRegInfo.Table =await Configuration.GetNewUnigueTableName(Program.Kernel!);
+                                    newRegInfo.Table =await Configuration.GetNewUnigueTableName(Program.Kernel);
 
-                                    if (!Conf!.RegistersInformation.ContainsKey(newRegInfo.Name))
-                                        Conf!.AppendRegistersInformation(newRegInfo);
+                                    if (!Conf.RegistersInformation.ContainsKey(newRegInfo.Name))
+                                        Conf.AppendRegistersInformation(newRegInfo);
 
                                     break;
                                 }
@@ -2170,39 +2164,39 @@ namespace Configurator
                                     string typeName = typeAndField[0];
                                     string fieldName = typeAndField[1];
 
-                                    Dictionary<string, ConfigurationObjectField> AllFields = Conf!.CombineAllFieldForRegister
+                                    Dictionary<string, ConfigurationObjectField> AllFields = Conf.CombineAllFieldForRegister
                                     (
-                                        Conf!.RegistersInformation[register].DimensionFields.Values,
-                                        Conf!.RegistersInformation[register].ResourcesFields.Values,
-                                        Conf!.RegistersInformation[register].PropertyFields.Values
+                                        Conf.RegistersInformation[register].DimensionFields.Values,
+                                        Conf.RegistersInformation[register].ResourcesFields.Values,
+                                        Conf.RegistersInformation[register].PropertyFields.Values
                                     );
 
                                     ConfigurationObjectField newField;
 
                                     if (typeName == "Dimension")
-                                        newField = Conf!.RegistersInformation[register].DimensionFields[fieldName].Copy();
+                                        newField = Conf.RegistersInformation[register].DimensionFields[fieldName].Copy();
                                     else if (typeName == "Resources")
-                                        newField = Conf!.RegistersInformation[register].ResourcesFields[fieldName].Copy();
+                                        newField = Conf.RegistersInformation[register].ResourcesFields[fieldName].Copy();
                                     else
-                                        newField = Conf!.RegistersInformation[register].PropertyFields[fieldName].Copy();
+                                        newField = Conf.RegistersInformation[register].PropertyFields[fieldName].Copy();
 
                                     newField.Name += GenerateName.GetNewName();
-                                    newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!, Conf!.RegistersInformation[register].Table, AllFields);
+                                    newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, Conf.RegistersInformation[register].Table, AllFields);
 
                                     if (typeName == "Dimension")
                                     {
-                                        if (!Conf!.RegistersInformation[register].DimensionFields.ContainsKey(newField.Name))
-                                            Conf!.RegistersInformation[register].AppendDimensionField(newField);
+                                        if (!Conf.RegistersInformation[register].DimensionFields.ContainsKey(newField.Name))
+                                            Conf.RegistersInformation[register].AppendDimensionField(newField);
                                     }
                                     else if (typeName == "Resources")
                                     {
-                                        if (!Conf!.RegistersInformation[register].ResourcesFields.ContainsKey(newField.Name))
-                                            Conf!.RegistersInformation[register].AppendResourcesField(newField);
+                                        if (!Conf.RegistersInformation[register].ResourcesFields.ContainsKey(newField.Name))
+                                            Conf.RegistersInformation[register].AppendResourcesField(newField);
                                     }
                                     else
                                     {
-                                        if (!Conf!.RegistersInformation[register].PropertyFields.ContainsKey(newField.Name))
-                                            Conf!.RegistersInformation[register].AppendPropertyField(newField);
+                                        if (!Conf.RegistersInformation[register].PropertyFields.ContainsKey(newField.Name))
+                                            Conf.RegistersInformation[register].AppendPropertyField(newField);
                                     }
 
                                     break;
@@ -2220,16 +2214,16 @@ namespace Configurator
                         {
                             case 1:
                                 {
-                                    ConfigurationRegistersAccumulation newRegAccum = Conf!.RegistersAccumulation[register].Copy();
+                                    ConfigurationRegistersAccumulation newRegAccum = Conf.RegistersAccumulation[register].Copy();
                                     newRegAccum.Name += GenerateName.GetNewName();
-                                    newRegAccum.Table =await Configuration.GetNewUnigueTableName(Program.Kernel!);
+                                    newRegAccum.Table =await Configuration.GetNewUnigueTableName(Program.Kernel);
 
-                                    if (!Conf!.RegistersAccumulation.ContainsKey(newRegAccum.Name))
+                                    if (!Conf.RegistersAccumulation.ContainsKey(newRegAccum.Name))
                                     {
                                         foreach (ConfigurationObjectTablePart tablePart in newRegAccum.TabularParts.Values)
-                                            tablePart.Table =await Configuration.GetNewUnigueTableName(Program.Kernel!);
+                                            tablePart.Table =await Configuration.GetNewUnigueTableName(Program.Kernel);
 
-                                        Conf!.AppendRegistersAccumulation(newRegAccum);
+                                        Conf.AppendRegistersAccumulation(newRegAccum);
                                     }
 
                                     break;
@@ -2242,51 +2236,51 @@ namespace Configurator
                                         string typeName = typeAndField[0];
                                         string fieldName = typeAndField[1];
 
-                                        Dictionary<string, ConfigurationObjectField> AllFields = Conf!.CombineAllFieldForRegister
+                                        Dictionary<string, ConfigurationObjectField> AllFields = Conf.CombineAllFieldForRegister
                                         (
-                                            Conf!.RegistersInformation[register].DimensionFields.Values,
-                                            Conf!.RegistersInformation[register].ResourcesFields.Values,
-                                            Conf!.RegistersInformation[register].PropertyFields.Values
+                                            Conf.RegistersInformation[register].DimensionFields.Values,
+                                            Conf.RegistersInformation[register].ResourcesFields.Values,
+                                            Conf.RegistersInformation[register].PropertyFields.Values
                                         );
 
                                         ConfigurationObjectField newField;
 
                                         if (typeName == "Dimension")
-                                            newField = Conf!.RegistersAccumulation[register].DimensionFields[fieldName].Copy();
+                                            newField = Conf.RegistersAccumulation[register].DimensionFields[fieldName].Copy();
                                         else if (typeName == "Resources")
-                                            newField = Conf!.RegistersAccumulation[register].ResourcesFields[fieldName].Copy();
+                                            newField = Conf.RegistersAccumulation[register].ResourcesFields[fieldName].Copy();
                                         else
-                                            newField = Conf!.RegistersAccumulation[register].PropertyFields[fieldName].Copy();
+                                            newField = Conf.RegistersAccumulation[register].PropertyFields[fieldName].Copy();
 
                                         newField.Name += GenerateName.GetNewName();
-                                        newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!, Conf!.RegistersAccumulation[register].Table, AllFields);
+                                        newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, Conf.RegistersAccumulation[register].Table, AllFields);
 
                                         if (typeName == "Dimension")
                                         {
-                                            if (!Conf!.RegistersAccumulation[register].DimensionFields.ContainsKey(newField.Name))
-                                                Conf!.RegistersAccumulation[register].AppendDimensionField(newField);
+                                            if (!Conf.RegistersAccumulation[register].DimensionFields.ContainsKey(newField.Name))
+                                                Conf.RegistersAccumulation[register].AppendDimensionField(newField);
                                         }
                                         else if (typeName == "Resources")
                                         {
-                                            if (!Conf!.RegistersAccumulation[register].ResourcesFields.ContainsKey(newField.Name))
-                                                Conf!.RegistersAccumulation[register].AppendResourcesField(newField);
+                                            if (!Conf.RegistersAccumulation[register].ResourcesFields.ContainsKey(newField.Name))
+                                                Conf.RegistersAccumulation[register].AppendResourcesField(newField);
                                         }
                                         else
                                         {
-                                            if (!Conf!.RegistersAccumulation[register].PropertyFields.ContainsKey(newField.Name))
-                                                Conf!.RegistersAccumulation[register].AppendPropertyField(newField);
+                                            if (!Conf.RegistersAccumulation[register].PropertyFields.ContainsKey(newField.Name))
+                                                Conf.RegistersAccumulation[register].AppendPropertyField(newField);
                                         }
                                     }
                                     else
                                     {
                                         string nameTablePart = registerPath[1];
 
-                                        ConfigurationObjectTablePart newTablePart = Conf!.RegistersAccumulation[register].TabularParts[nameTablePart].Copy();
+                                        ConfigurationObjectTablePart newTablePart = Conf.RegistersAccumulation[register].TabularParts[nameTablePart].Copy();
                                         newTablePart.Name += GenerateName.GetNewName();
-                                        newTablePart.Table =await Configuration.GetNewUnigueTableName(Program.Kernel!);
+                                        newTablePart.Table =await Configuration.GetNewUnigueTableName(Program.Kernel);
 
-                                        if (!Conf!.RegistersAccumulation[register].TabularParts.ContainsKey(newTablePart.Name))
-                                            Conf!.RegistersAccumulation[register].AppendTablePart(newTablePart);
+                                        if (!Conf.RegistersAccumulation[register].TabularParts.ContainsKey(newTablePart.Name))
+                                            Conf.RegistersAccumulation[register].AppendTablePart(newTablePart);
                                     }
 
                                     break;
@@ -2296,14 +2290,14 @@ namespace Configurator
                                     string nameTablePart = registerPath[1];
                                     string nameField = registerPath[2];
 
-                                    ConfigurationObjectField newField = Conf!.RegistersAccumulation[register].TabularParts[nameTablePart].Fields[nameField].Copy();
+                                    ConfigurationObjectField newField = Conf.RegistersAccumulation[register].TabularParts[nameTablePart].Fields[nameField].Copy();
                                     newField.Name += GenerateName.GetNewName();
-                                    newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!,
-                                        Conf!.RegistersAccumulation[register].TabularParts[nameTablePart].Table,
-                                        Conf!.RegistersAccumulation[register].TabularParts[nameTablePart].Fields);
+                                    newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel,
+                                        Conf.RegistersAccumulation[register].TabularParts[nameTablePart].Table,
+                                        Conf.RegistersAccumulation[register].TabularParts[nameTablePart].Fields);
 
-                                    if (!Conf!.RegistersAccumulation[register].TabularParts[nameTablePart].Fields.ContainsKey(newField.Name))
-                                        Conf!.RegistersAccumulation[register].TabularParts[nameTablePart].AppendField(newField);
+                                    if (!Conf.RegistersAccumulation[register].TabularParts[nameTablePart].Fields.ContainsKey(newField.Name))
+                                        Conf.RegistersAccumulation[register].TabularParts[nameTablePart].AppendField(newField);
 
                                     break;
                                 }
@@ -2319,20 +2313,20 @@ namespace Configurator
                             string enumName = enumAndField[0];
                             string fieldName = enumAndField[1];
 
-                            ConfigurationEnumField newField = Conf!.Enums[enumName].Fields[fieldName].Copy(++Conf!.Enums[enumName].SerialNumber);
+                            ConfigurationEnumField newField = Conf.Enums[enumName].Fields[fieldName].Copy(++Conf.Enums[enumName].SerialNumber);
                             newField.Name += GenerateName.GetNewName();
 
-                            if (!Conf!.Enums[enumName].Fields.ContainsKey(newField.Name))
-                                Conf!.Enums[enumName].AppendField(newField);
+                            if (!Conf.Enums[enumName].Fields.ContainsKey(newField.Name))
+                                Conf.Enums[enumName].AppendField(newField);
 
                         }
                         else
                         {
-                            ConfigurationEnums newEnum = Conf!.Enums[name].Copy();
+                            ConfigurationEnums newEnum = Conf.Enums[name].Copy();
                             newEnum.Name += GenerateName.GetNewName();
 
-                            if (!Conf!.Enums.ContainsKey(newEnum.Name))
-                                Conf!.AppendEnum(newEnum);
+                            if (!Conf.Enums.ContainsKey(newEnum.Name))
+                                Conf.AppendEnum(newEnum);
                         }
 
                         break;
@@ -2345,19 +2339,19 @@ namespace Configurator
                             string journalName = journalAndField[0];
                             string fieldName = journalAndField[1];
 
-                            ConfigurationJournalField newField = Conf!.Journals[journalName].Fields[fieldName].Copy();
+                            ConfigurationJournalField newField = Conf.Journals[journalName].Fields[fieldName].Copy();
                             newField.Name += GenerateName.GetNewName();
 
-                            if (!Conf!.Journals[journalName].Fields.ContainsKey(newField.Name))
-                                Conf!.Journals[journalName].AppendField(newField);
+                            if (!Conf.Journals[journalName].Fields.ContainsKey(newField.Name))
+                                Conf.Journals[journalName].AppendField(newField);
                         }
                         else
                         {
-                            ConfigurationJournals newJournal = Conf!.Journals[name].Copy();
+                            ConfigurationJournals newJournal = Conf.Journals[name].Copy();
                             newJournal.Name += GenerateName.GetNewName();
 
-                            if (!Conf!.Journals.ContainsKey(newJournal.Name))
-                                Conf!.AppendJournal(newJournal);
+                            if (!Conf.Journals.ContainsKey(newJournal.Name))
+                                Conf.AppendJournal(newJournal);
                         }
 
                         break;

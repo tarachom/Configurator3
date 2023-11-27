@@ -31,13 +31,7 @@ namespace Configurator
 {
     class PageSaveConfiguration : VBox
     {
-        Configuration? Conf
-        {
-            get
-            {
-                return Program.Kernel?.Conf;
-            }
-        }
+        Configuration Conf { get { return Program.Kernel.Conf; } }
 
         public FormConfigurator? GeneralForm { get; set; }
 
@@ -227,13 +221,13 @@ namespace Configurator
         void OnCloseClick(object? sender, EventArgs args)
         {
             string fullPathToCopyXmlFileConguratifion =
-                System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf!.PathToXmlFileConfiguration)!, Conf.PathToCopyXmlFileConfiguration);
+                System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, Conf.PathToCopyXmlFileConfiguration);
 
             if (File.Exists(fullPathToCopyXmlFileConguratifion))
                 File.Delete(fullPathToCopyXmlFileConguratifion);
 
-            if (File.Exists(Conf!.PathToTempXmlFileConfiguration))
-                File.Delete(Conf!.PathToTempXmlFileConfiguration);
+            if (File.Exists(Conf.PathToTempXmlFileConfiguration))
+                File.Delete(Conf.PathToTempXmlFileConfiguration);
 
             GeneralForm?.CloseCurrentPageNotebook();
         }
@@ -343,18 +337,18 @@ namespace Configurator
             ApendLine("[ КОНФІГУРАЦІЯ ]\n");
 
             ApendLine("1. Створення копії файлу конфігурації");
-            Conf!.PathToCopyXmlFileConfiguration = Configuration.CreateCopyConfigurationFile(Conf.PathToXmlFileConfiguration, Conf.PathToCopyXmlFileConfiguration);
+            Conf.PathToCopyXmlFileConfiguration = Configuration.CreateCopyConfigurationFile(Conf.PathToXmlFileConfiguration, Conf.PathToCopyXmlFileConfiguration);
             ApendLine(" --> " + Conf.PathToCopyXmlFileConfiguration + "\n");
 
             string fullPathToCopyXmlFileConguratifion = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, Conf.PathToCopyXmlFileConfiguration);
-            Conf!.PathToTempXmlFileConfiguration = Configuration.GetTempPathToConfigurationFile(Conf.PathToXmlFileConfiguration, Conf!.PathToTempXmlFileConfiguration);
+            Conf.PathToTempXmlFileConfiguration = Configuration.GetTempPathToConfigurationFile(Conf.PathToXmlFileConfiguration, Conf.PathToTempXmlFileConfiguration);
 
             ApendLine("2. Збереження конфігурації у тимчасовий файл");
             Configuration.Save(Conf.PathToTempXmlFileConfiguration, Conf);
             ApendLine(" --> " + Conf.PathToTempXmlFileConfiguration + "\n");
 
             ApendLine("3. Отримання структури бази даних");
-            ConfigurationInformationSchema informationSchema = await Program.Kernel!.DataBase.SelectInformationSchema();
+            ConfigurationInformationSchema informationSchema = await Program.Kernel.DataBase.SelectInformationSchema();
 
             if (informationSchema.Tables.Count > 0)
             {
@@ -369,7 +363,7 @@ namespace Configurator
 
                 Configuration.CreateOneFileForComparison(
                     informationSchemaFile,
-                    Conf!.PathToTempXmlFileConfiguration,
+                    Conf.PathToTempXmlFileConfiguration,
                     fullPathToCopyXmlFileConguratifion,
                     oneFileForComparison
                 );
@@ -595,10 +589,10 @@ namespace Configurator
             }
 
             ApendLine("Видалення тимчасового файлу");
-            if (File.Exists(Conf!.PathToTempXmlFileConfiguration))
+            if (File.Exists(Conf.PathToTempXmlFileConfiguration))
             {
-                File.Delete(Conf!.PathToTempXmlFileConfiguration);
-                ApendLine(" --> " + Conf!.PathToTempXmlFileConfiguration + "\n");
+                File.Delete(Conf.PathToTempXmlFileConfiguration);
+                ApendLine(" --> " + Conf.PathToTempXmlFileConfiguration + "\n");
             }
 
             ButtonSensitive(true);
@@ -618,7 +612,7 @@ namespace Configurator
             string replacementColumn = "yes"; //(checkBoxReplacement.Checked ? "yes" : "no");
 
             ApendLine("1. Створення копії файлу конфігурації");
-            Conf!.PathToCopyXmlFileConfiguration = Configuration.CreateCopyConfigurationFile(Conf.PathToXmlFileConfiguration, Conf.PathToCopyXmlFileConfiguration);
+            Conf.PathToCopyXmlFileConfiguration = Configuration.CreateCopyConfigurationFile(Conf.PathToXmlFileConfiguration, Conf.PathToCopyXmlFileConfiguration);
             ApendLine(" --> " + Conf.PathToCopyXmlFileConfiguration + "\n");
 
             string fullPathToCopyXmlFileConguratifion = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, Conf.PathToCopyXmlFileConfiguration);
@@ -630,7 +624,7 @@ namespace Configurator
             ApendLine(" --> " + Conf.PathToTempXmlFileConfiguration + "\n");
 
             ApendLine("2. Отримання структури бази даних");
-            ConfigurationInformationSchema informationSchema = await Program.Kernel!.DataBase.SelectInformationSchema();
+            ConfigurationInformationSchema informationSchema = await Program.Kernel.DataBase.SelectInformationSchema();
             Configuration.SaveInformationSchema(informationSchema,
                  System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, "InformationSchema.xml"));
 
@@ -709,7 +703,7 @@ namespace Configurator
 
             ClearListBoxTerminal();
 
-            string pathToSqlCommandFile = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf!.PathToXmlFileConfiguration)!, "ComparisonAnalize.xml");
+            string pathToSqlCommandFile = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, "ComparisonAnalize.xml");
 
             if (File.Exists(pathToSqlCommandFile))
             {
@@ -731,7 +725,7 @@ namespace Configurator
 
                         try
                         {
-                            await Program.Kernel!.DataBase.ExecuteSQL(sqlText);
+                            await Program.Kernel.DataBase.ExecuteSQL(sqlText);
                         }
                         catch (Exception ex)
                         {

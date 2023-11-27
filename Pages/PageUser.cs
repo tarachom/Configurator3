@@ -125,7 +125,7 @@ namespace Configurator
         {
             if (!IsNew)
             {
-                SelectRequestAsync_Record? recordResult = await Program.Kernel!.DataBase.SpetialTableUsersExtendetUser(UID);
+                SelectRequestAsync_Record? recordResult = await Program.Kernel.DataBase.SpetialTableUsersExtendetUser(UID);
 
                 if (recordResult != null)
                 {
@@ -157,7 +157,7 @@ namespace Configurator
             var value = GetValue();
 
             string name = value.Item1;
-            string errorList = Configuration.ValidateConfigurationObjectName(Program.Kernel!, ref name);
+            string errorList = Configuration.ValidateConfigurationObjectName(Program.Kernel, ref name);
 
             if (errorList.Length > 0)
             {
@@ -167,14 +167,13 @@ namespace Configurator
 
             if (IsNew)
             {
-                if (Program.Kernel != null && await Program.Kernel.DataBase.SpetialTableUsersIsExistUser(value.Item1))
+                if (await Program.Kernel.DataBase.SpetialTableUsersIsExistUser(value.Item1))
                 {
                     Message.Error(GeneralForm, "Назва користувача не унікальна");
                     return;
                 }
 
-                Guid? UserUID = Program.Kernel != null ?
-                    await Program.Kernel.DataBase.SpetialTableUsersAddOrUpdate(IsNew, null, value.Item1, value.Item2, value.Item3, value.Item4) : null;
+                Guid? UserUID = await Program.Kernel.DataBase.SpetialTableUsersAddOrUpdate(IsNew, null, value.Item1, value.Item2, value.Item3, value.Item4);
 
                 if (UserUID.HasValue)
                 {
@@ -189,13 +188,13 @@ namespace Configurator
             }
             else
             {
-                if (Program.Kernel != null && await Program.Kernel.DataBase.SpetialTableUsersIsExistUser(value.Item1, null, UID))
+                if (await Program.Kernel.DataBase.SpetialTableUsersIsExistUser(value.Item1, null, UID))
                 {
                     Message.Error(GeneralForm, "Назва користувача не унікальна");
                     return;
                 }
 
-                Program.Kernel?.DataBase.SpetialTableUsersAddOrUpdate(IsNew, UID, value.Item1, value.Item2, value.Item3, value.Item4);
+                await Program.Kernel.DataBase.SpetialTableUsersAddOrUpdate(IsNew, UID, value.Item1, value.Item2, value.Item3, value.Item4);
             }
 
             if (CallBack_RefreshList != null)

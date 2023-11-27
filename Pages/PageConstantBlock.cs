@@ -29,13 +29,7 @@ namespace Configurator
 {
     class PageConstantBlock : VBox
     {
-        Configuration? Conf
-        {
-            get
-            {
-                return Program.Kernel?.Conf;
-            }
-        }
+        Configuration Conf { get { return Program.Kernel.Conf; } }
 
         public ConfigurationConstantsBlock ConfConstantsBlock { get; set; } = new ConfigurationConstantsBlock();
         public FormConfigurator? GeneralForm { get; set; }
@@ -135,7 +129,7 @@ namespace Configurator
         void OnSaveClick(object? sender, EventArgs args)
         {
             string name = entryName.Text;
-            string errorList = Configuration.ValidateConfigurationObjectName(Program.Kernel!, ref name);
+            string errorList = Configuration.ValidateConfigurationObjectName(Program.Kernel, ref name);
             entryName.Text = name;
 
             if (errorList.Length > 0)
@@ -146,7 +140,7 @@ namespace Configurator
 
             if (IsNew)
             {
-                if (Conf!.ConstantsBlock.ContainsKey(entryName.Text))
+                if (Conf.ConstantsBlock.ContainsKey(entryName.Text))
                 {
                     Message.Error(GeneralForm, $"Назва блоку не унікальна");
                     return;
@@ -156,19 +150,19 @@ namespace Configurator
             {
                 if (ConfConstantsBlock.BlockName != entryName.Text)
                 {
-                    if (Conf!.ConstantsBlock.ContainsKey(entryName.Text))
+                    if (Conf.ConstantsBlock.ContainsKey(entryName.Text))
                     {
                         Message.Error(GeneralForm, $"Назва блоку не унікальна");
                         return;
                     }
                 }
 
-                Conf!.ConstantsBlock.Remove(ConfConstantsBlock.BlockName);
+                Conf.ConstantsBlock.Remove(ConfConstantsBlock.BlockName);
             }
 
             GetValue();
 
-            Conf!.ConstantsBlock.Add(ConfConstantsBlock.BlockName, ConfConstantsBlock);
+            Conf.ConstantsBlock.Add(ConfConstantsBlock.BlockName, ConfConstantsBlock);
 
             IsNew = false;
 
@@ -182,10 +176,10 @@ namespace Configurator
             {
                 ConfigurationConstants ConfConstants = new ConfigurationConstants();
 
-                if (Conf!.ConstantsBlock.ContainsKey(ConfConstantsBlock.BlockName))
+                if (Conf.ConstantsBlock.ContainsKey(ConfConstantsBlock.BlockName))
                     ConfConstants.Block = new ConfigurationConstantsBlock(ConfConstantsBlock.BlockName);
-                else if (Conf!.ConstantsBlock.Count != 0)
-                    ConfConstants.Block = Conf!.ConstantsBlock.Values.First<ConfigurationConstantsBlock>();
+                else if (Conf.ConstantsBlock.Count != 0)
+                    ConfConstants.Block = Conf.ConstantsBlock.Values.First<ConfigurationConstantsBlock>();
 
                 PageConstant page = new PageConstant()
                 {

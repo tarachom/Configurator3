@@ -33,13 +33,7 @@ namespace Configurator
 {
     class PageUnloadingAndLoadingData : VBox
     {
-        Configuration? Conf
-        {
-            get
-            {
-                return Program.Kernel?.Conf;
-            }
-        }
+        Configuration Conf { get { return Program.Kernel.Conf; } }
 
         public FormConfigurator? GeneralForm { get; set; }
 
@@ -134,7 +128,7 @@ namespace Configurator
 
         void OnLoadingClick(object? sender, EventArgs args)
         {
-            string fileName = Conf!.Name + "_Export_" + DateTime.Now.ToString("dd_MM_yyyy") + ".xml";
+            string fileName = Conf.Name + "_Export_" + DateTime.Now.ToString("dd_MM_yyyy") + ".xml";
             string fullPath = "";
 
             bool fileSelect = false;
@@ -255,7 +249,7 @@ namespace Configurator
                 ApendLine("КОНСТАНТИ");
 
                 xmlWriter.WriteStartElement("Constants");
-                foreach (ConfigurationConstantsBlock configurationConstantsBlock in Conf!.ConstantsBlock.Values)
+                foreach (ConfigurationConstantsBlock configurationConstantsBlock in Conf.ConstantsBlock.Values)
                 {
                     if (CancellationTokenThread.IsCancellationRequested)
                         break;
@@ -300,7 +294,7 @@ namespace Configurator
                 ApendLine("ДОВІДНИКИ");
 
                 xmlWriter.WriteStartElement("Directories");
-                foreach (ConfigurationDirectories configurationDirectories in Conf!.Directories.Values)
+                foreach (ConfigurationDirectories configurationDirectories in Conf.Directories.Values)
                 {
                     if (CancellationTokenThread.IsCancellationRequested)
                         break;
@@ -337,7 +331,7 @@ namespace Configurator
                 ApendLine("ДОКУМЕНТИ");
 
                 xmlWriter.WriteStartElement("Documents");
-                foreach (ConfigurationDocuments configurationDocuments in Conf!.Documents.Values)
+                foreach (ConfigurationDocuments configurationDocuments in Conf.Documents.Values)
                 {
                     if (CancellationTokenThread.IsCancellationRequested)
                         break;
@@ -374,7 +368,7 @@ namespace Configurator
                 ApendLine("РЕГІСТРИ ІНФОРМАЦІЇ");
 
                 xmlWriter.WriteStartElement("RegistersInformation");
-                foreach (ConfigurationRegistersInformation configurationRegistersInformation in Conf!.RegistersInformation.Values)
+                foreach (ConfigurationRegistersInformation configurationRegistersInformation in Conf.RegistersInformation.Values)
                 {
                     if (CancellationTokenThread.IsCancellationRequested)
                         break;
@@ -401,7 +395,7 @@ namespace Configurator
                 ApendLine("РЕГІСТРИ НАКОПИЧЕННЯ");
 
                 xmlWriter.WriteStartElement("RegistersAccumulation");
-                foreach (ConfigurationRegistersAccumulation configurationRegistersAccumulation in Conf!.RegistersAccumulation.Values)
+                foreach (ConfigurationRegistersAccumulation configurationRegistersAccumulation in Conf.RegistersAccumulation.Values)
                 {
                     if (CancellationTokenThread.IsCancellationRequested)
                         break;
@@ -518,7 +512,7 @@ namespace Configurator
             List<object[]> listRow = new List<object[]>();
             Dictionary<string, object> paramQuery = new Dictionary<string, object>();
 
-            Program.Kernel?.DataBase.SelectRequest(query, paramQuery, out columnsName, out listRow);
+            Program.Kernel.DataBase.SelectRequest(query, paramQuery, out columnsName, out listRow);
 
             foreach (object[] row in listRow)
             {
@@ -643,8 +637,8 @@ namespace Configurator
             {
                 ApendLine("Виконання команд: ");
 
-                byte TransactionID = Program.Kernel != null ? await Program.Kernel.DataBase.BeginTransaction() : (byte)0;
-                bool resultat = false;
+                byte TransactionID = await Program.Kernel.DataBase.BeginTransaction();
+                bool resultat;
 
                 try
                 {
@@ -654,8 +648,7 @@ namespace Configurator
                 {
                     ApendLine("Помилка: " + ex.Message);
 
-                    if (Program.Kernel != null)
-                        await Program.Kernel.DataBase.RollbackTransaction(TransactionID);
+                    await Program.Kernel.DataBase.RollbackTransaction(TransactionID);
 
                     //Очистка тмп файлів
                     {
@@ -678,7 +671,7 @@ namespace Configurator
                     return;
                 }
 
-                if (resultat && Program.Kernel != null)
+                if (resultat)
                     await Program.Kernel.DataBase.CommitTransaction(TransactionID);
             }
 
@@ -882,7 +875,7 @@ namespace Configurator
                     param.Add(paramName, paramObj);
                 }
 
-                int result = await Program.Kernel!.DataBase.ExecuteSQL(sqlText, param, transactionID);
+                int result = await Program.Kernel.DataBase.ExecuteSQL(sqlText, param, transactionID);
 
                 if (iter > 100)
                 {

@@ -86,7 +86,7 @@ namespace Configurator
         async void LoadShemaAsync()
         {
             //Структура бази даних
-            ConfigurationInformationSchema informationSchema = await Program.Kernel!.DataBase.SelectInformationSchema();
+            ConfigurationInformationSchema informationSchema = await Program.Kernel.DataBase.SelectInformationSchema();
 
             lock (loked)
             {

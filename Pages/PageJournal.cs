@@ -29,13 +29,7 @@ namespace Configurator
 {
     class PageJournal : VBox
     {
-        Configuration? Conf
-        {
-            get
-            {
-                return Program.Kernel?.Conf;
-            }
-        }
+        Configuration Conf { get { return Program.Kernel.Conf; } }
 
         public ConfigurationJournals ConfJournals { get; set; } = new ConfigurationJournals();
         public FormConfigurator? GeneralForm { get; set; }
@@ -249,7 +243,7 @@ namespace Configurator
 
         void FillDocuments()
         {
-            foreach (ConfigurationDocuments doc in Conf!.Documents.Values)
+            foreach (ConfigurationDocuments doc in Conf.Documents.Values)
                 listBoxDocuments.Add(
                     new CheckButton(doc.Name)
                     {
@@ -311,7 +305,7 @@ namespace Configurator
         void OnSaveClick(object? sender, EventArgs args)
         {
             string name = entryName.Text;
-            string errorList = Configuration.ValidateConfigurationObjectName(Program.Kernel!, ref name);
+            string errorList = Configuration.ValidateConfigurationObjectName(Program.Kernel, ref name);
             entryName.Text = name;
 
             if (errorList.Length > 0)
@@ -322,7 +316,7 @@ namespace Configurator
 
             if (IsNew)
             {
-                if (Conf!.Enums.ContainsKey(entryName.Text))
+                if (Conf.Enums.ContainsKey(entryName.Text))
                 {
                     Message.Error(GeneralForm, $"Назва журналу не унікальна");
                     return;
@@ -332,19 +326,19 @@ namespace Configurator
             {
                 if (ConfJournals.Name != entryName.Text)
                 {
-                    if (Conf!.Journals.ContainsKey(entryName.Text))
+                    if (Conf.Journals.ContainsKey(entryName.Text))
                     {
                         Message.Error(GeneralForm, $"Назва журналу не унікальна");
                         return;
                     }
                 }
 
-                Conf!.Journals.Remove(ConfJournals.Name);
+                Conf.Journals.Remove(ConfJournals.Name);
             }
 
             GetValue();
 
-            Conf!.AppendJournal(ConfJournals);
+            Conf.AppendJournal(ConfJournals);
 
             IsNew = false;
 

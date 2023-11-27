@@ -95,7 +95,7 @@ namespace Configurator
         {
             Store.Clear();
 
-            SelectRequestAsync_Record recordResult = await Program.Kernel!.DataBase.SpetialTableUsersExtendetList();
+            SelectRequestAsync_Record recordResult = await Program.Kernel.DataBase.SpetialTableUsersExtendetList();
 
             foreach (Dictionary<string, object> record in recordResult.ListRow)
             {
@@ -226,7 +226,7 @@ namespace Configurator
                         string uid = (string)TreeViewGrid.Model.GetValue(iter, 1);
                         string name = (string)TreeViewGrid.Model.GetValue(iter, (int)Columns.Name);
 
-                        if (Program.Kernel != null && !await Program.Kernel.DataBase.SpetialTableUsersDelete(Guid.Parse(uid), name))
+                        if (!await Program.Kernel.DataBase.SpetialTableUsersDelete(Guid.Parse(uid), name))
                             Message.Error(GeneralForm, "Не вдалось видалити користувача");
                     }
 

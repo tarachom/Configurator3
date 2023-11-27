@@ -29,13 +29,7 @@ namespace Configurator
 {
     class PageRegisterInformation : VBox
     {
-        Configuration? Conf
-        {
-            get
-            {
-                return Program.Kernel?.Conf;
-            }
-        }
+        Configuration Conf { get { return Program.Kernel.Conf; } }
 
         public ConfigurationRegistersInformation ConfRegister { get; set; } = new ConfigurationRegistersInformation();
         public FormConfigurator? GeneralForm { get; set; }
@@ -343,7 +337,7 @@ namespace Configurator
             entryFullName.Text = ConfRegister.FullName;
 
             if (IsNew)
-                entryTable.Text = await Configuration.GetNewUnigueTableName(Program.Kernel!);
+                entryTable.Text = await Configuration.GetNewUnigueTableName(Program.Kernel);
             else
                 entryTable.Text = ConfRegister.Table;
 
@@ -398,7 +392,7 @@ namespace Configurator
         void OnSaveClick(object? sender, EventArgs args)
         {
             string name = entryName.Text;
-            string errorList = Configuration.ValidateConfigurationObjectName(Program.Kernel!, ref name);
+            string errorList = Configuration.ValidateConfigurationObjectName(Program.Kernel, ref name);
             entryName.Text = name;
 
             if (errorList.Length > 0)
@@ -409,7 +403,7 @@ namespace Configurator
 
             if (IsNew)
             {
-                if (Conf!.RegistersInformation.ContainsKey(entryName.Text))
+                if (Conf.RegistersInformation.ContainsKey(entryName.Text))
                 {
                     Message.Error(GeneralForm, $"Назва регістру не унікальна");
                     return;
@@ -419,19 +413,19 @@ namespace Configurator
             {
                 if (ConfRegister.Name != entryName.Text)
                 {
-                    if (Conf!.RegistersInformation.ContainsKey(entryName.Text))
+                    if (Conf.RegistersInformation.ContainsKey(entryName.Text))
                     {
                         Message.Error(GeneralForm, $"Назва регістру не унікальна");
                         return;
                     }
                 }
 
-                Conf!.RegistersInformation.Remove(ConfRegister.Name);
+                Conf.RegistersInformation.Remove(ConfRegister.Name);
             }
 
             GetValue();
 
-            Conf!.AppendRegistersInformation(ConfRegister);
+            Conf.AppendRegistersInformation(ConfRegister);
 
             IsNew = false;
 
@@ -454,7 +448,7 @@ namespace Configurator
                     if (ConfRegister.DimensionFields.ContainsKey(curRow.Child.Name))
                         GeneralForm?.CreateNotebookPage($"Поле: {curRow.Child.Name}", () =>
                         {
-                            Dictionary<string, ConfigurationObjectField> AllFields = Conf!.CombineAllFieldForRegister
+                            Dictionary<string, ConfigurationObjectField> AllFields = Conf.CombineAllFieldForRegister
                             (
                                 ConfRegister.DimensionFields.Values,
                                 ConfRegister.ResourcesFields.Values,
@@ -483,7 +477,7 @@ namespace Configurator
         {
             GeneralForm?.CreateNotebookPage("Поле *", () =>
             {
-                Dictionary<string, ConfigurationObjectField> AllFields = Conf!.CombineAllFieldForRegister
+                Dictionary<string, ConfigurationObjectField> AllFields = Conf.CombineAllFieldForRegister
                 (
                     ConfRegister.DimensionFields.Values,
                     ConfRegister.ResourcesFields.Values,
@@ -577,7 +571,7 @@ namespace Configurator
                     if (ConfRegister.ResourcesFields.ContainsKey(curRow.Child.Name))
                         GeneralForm?.CreateNotebookPage($"Поле: {curRow.Child.Name}", () =>
                         {
-                            Dictionary<string, ConfigurationObjectField> AllFields = Conf!.CombineAllFieldForRegister
+                            Dictionary<string, ConfigurationObjectField> AllFields = Conf.CombineAllFieldForRegister
                             (
                                 ConfRegister.DimensionFields.Values,
                                 ConfRegister.ResourcesFields.Values,
@@ -606,7 +600,7 @@ namespace Configurator
         {
             GeneralForm?.CreateNotebookPage("Поле *", () =>
             {
-                Dictionary<string, ConfigurationObjectField> AllFields = Conf!.CombineAllFieldForRegister
+                Dictionary<string, ConfigurationObjectField> AllFields = Conf.CombineAllFieldForRegister
                 (
                     ConfRegister.DimensionFields.Values,
                     ConfRegister.ResourcesFields.Values,
@@ -700,7 +694,7 @@ namespace Configurator
                     if (ConfRegister.PropertyFields.ContainsKey(curRow.Child.Name))
                         GeneralForm?.CreateNotebookPage($"Поле: {curRow.Child.Name}", () =>
                         {
-                            Dictionary<string, ConfigurationObjectField> AllFields = Conf!.CombineAllFieldForRegister
+                            Dictionary<string, ConfigurationObjectField> AllFields = Conf.CombineAllFieldForRegister
                             (
                                 ConfRegister.DimensionFields.Values,
                                 ConfRegister.ResourcesFields.Values,
@@ -729,7 +723,7 @@ namespace Configurator
         {
             GeneralForm?.CreateNotebookPage("Поле *", () =>
             {
-                Dictionary<string, ConfigurationObjectField> AllFields = Conf!.CombineAllFieldForRegister
+                Dictionary<string, ConfigurationObjectField> AllFields = Conf.CombineAllFieldForRegister
                  (
                      ConfRegister.DimensionFields.Values,
                      ConfRegister.ResourcesFields.Values,
@@ -823,7 +817,7 @@ namespace Configurator
                     if (ConfRegister.TabularList.ContainsKey(curRow.Child.Name))
                         GeneralForm?.CreateNotebookPage($"Табличний список: {curRow.Child.Name}", () =>
                         {
-                            Dictionary<string, ConfigurationObjectField> AllFields = Conf!.CombineAllFieldForRegister
+                            Dictionary<string, ConfigurationObjectField> AllFields = Conf.CombineAllFieldForRegister
                             (
                                 ConfRegister.DimensionFields.Values,
                                 ConfRegister.ResourcesFields.Values,
@@ -852,7 +846,7 @@ namespace Configurator
         {
             GeneralForm?.CreateNotebookPage("Табличний список *", () =>
             {
-                Dictionary<string, ConfigurationObjectField> AllFields = Conf!.CombineAllFieldForRegister
+                Dictionary<string, ConfigurationObjectField> AllFields = Conf.CombineAllFieldForRegister
                 (
                     ConfRegister.DimensionFields.Values,
                     ConfRegister.ResourcesFields.Values,

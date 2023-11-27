@@ -30,13 +30,7 @@ namespace Configurator
 {
     class PageDirectory : VBox
     {
-        Configuration? Conf
-        {
-            get
-            {
-                return Program.Kernel?.Conf;
-            }
-        }
+        Configuration Conf { get { return Program.Kernel.Conf; } }
 
         public ConfigurationDirectories ConfDirectory { get; set; } = new ConfigurationDirectories();
         public FormConfigurator? GeneralForm { get; set; }
@@ -179,7 +173,7 @@ namespace Configurator
                         ConfigurationConstantsBlock blockAutoNum = Conf.ConstantsBlock["НумераціяДовідників"];
 
                         //Назва поля в таблиці
-                        string nameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!, SpecialTables.Constants, GeneralForm!.GetConstantsAllFields());
+                        string nameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, SpecialTables.Constants, GeneralForm!.GetConstantsAllFields());
 
                         if (!blockAutoNum.Constants.ContainsKey(entryName.Text))
                             blockAutoNum.AppendConstant(new ConfigurationConstants(entryName.Text, nameInTable, "integer", blockAutoNum));
@@ -370,7 +364,7 @@ class {entryName.Text}_Triggers
                         return;
                     }
 
-                    if (!Conf!.Directories.ContainsKey(entryName.Text))
+                    if (!Conf.Directories.ContainsKey(entryName.Text))
                     {
                         Message.Error(GeneralForm, "Довідник не збережений в колекцію, потрібно спочатку зберегти");
                         return;
@@ -378,13 +372,13 @@ class {entryName.Text}_Triggers
 
                     if (!ConfDirectory.Fields.ContainsKey("Назва"))
                     {
-                        string nameInTable_Name = Configuration.GetNewUnigueColumnName(Program.Kernel!, entryTable.Text, ConfDirectory.Fields);
+                        string nameInTable_Name = Configuration.GetNewUnigueColumnName(Program.Kernel, entryTable.Text, ConfDirectory.Fields);
                         ConfDirectory.AppendField(new ConfigurationObjectField("Назва", nameInTable_Name, "string", "", "Назва", true, true));
                     }
 
                     if (!ConfDirectory.Fields.ContainsKey("Родич"))
                     {
-                        string nameInTable_Parent = Configuration.GetNewUnigueColumnName(Program.Kernel!, entryTable.Text, ConfDirectory.Fields);
+                        string nameInTable_Parent = Configuration.GetNewUnigueColumnName(Program.Kernel, entryTable.Text, ConfDirectory.Fields);
                         ConfDirectory.AppendField(new ConfigurationObjectField("Родич", nameInTable_Parent, "pointer", "Довідники." + ConfDirectory.Name, "Родич", false, true));
                     }
 
@@ -609,13 +603,13 @@ class {entryName.Text}_Triggers
 
             if (IsNew)
             {
-                entryTable.Text = await Configuration.GetNewUnigueTableName(Program.Kernel!);
+                entryTable.Text = await Configuration.GetNewUnigueTableName(Program.Kernel);
 
                 //Заповнення полями
-                string nameInTable_Code = Configuration.GetNewUnigueColumnName(Program.Kernel!, entryTable.Text, ConfDirectory.Fields);
+                string nameInTable_Code = Configuration.GetNewUnigueColumnName(Program.Kernel, entryTable.Text, ConfDirectory.Fields);
                 ConfDirectory.AppendField(new ConfigurationObjectField("Код", nameInTable_Code, "string", "", "Код", false, true));
 
-                string nameInTable_Name = Configuration.GetNewUnigueColumnName(Program.Kernel!, entryTable.Text, ConfDirectory.Fields);
+                string nameInTable_Name = Configuration.GetNewUnigueColumnName(Program.Kernel, entryTable.Text, ConfDirectory.Fields);
                 ConfDirectory.AppendField(new ConfigurationObjectField("Назва", nameInTable_Name, "string", "", "Назва", true, true));
 
                 //Заповнення списків
@@ -698,7 +692,7 @@ class {entryName.Text}_Triggers
         void OnSaveClick(object? sender, EventArgs args)
         {
             string name = entryName.Text;
-            string errorList = Configuration.ValidateConfigurationObjectName(Program.Kernel!, ref name);
+            string errorList = Configuration.ValidateConfigurationObjectName(Program.Kernel, ref name);
             entryName.Text = name;
 
             if (errorList.Length > 0)
@@ -709,7 +703,7 @@ class {entryName.Text}_Triggers
 
             if (IsNew)
             {
-                if (Conf!.Directories.ContainsKey(entryName.Text))
+                if (Conf.Directories.ContainsKey(entryName.Text))
                 {
                     Message.Error(GeneralForm, $"Назва довідника не унікальна");
                     return;
@@ -719,19 +713,19 @@ class {entryName.Text}_Triggers
             {
                 if (ConfDirectory.Name != entryName.Text)
                 {
-                    if (Conf!.Directories.ContainsKey(entryName.Text))
+                    if (Conf.Directories.ContainsKey(entryName.Text))
                     {
                         Message.Error(GeneralForm, $"Назва довідника не унікальна");
                         return;
                     }
                 }
 
-                Conf!.Directories.Remove(ConfDirectory.Name);
+                Conf.Directories.Remove(ConfDirectory.Name);
             }
 
             GetValue();
 
-            Conf!.AppendDirectory(ConfDirectory);
+            Conf.AppendDirectory(ConfDirectory);
 
             IsNew = false;
 
@@ -802,7 +796,7 @@ class {entryName.Text}_Triggers
                     {
                         ConfigurationObjectField newField = ConfDirectory.Fields[row.Child.Name].Copy();
                         newField.Name += GenerateName.GetNewName();
-                        newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!, ConfDirectory.Table, ConfDirectory.Fields);
+                        newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, ConfDirectory.Table, ConfDirectory.Fields);
 
                         ConfDirectory.AppendField(newField);
                     }
@@ -909,7 +903,7 @@ class {entryName.Text}_Triggers
                     {
                         ConfigurationObjectTablePart newTablePart = ConfDirectory.TabularParts[row.Child.Name].Copy();
                         newTablePart.Name += GenerateName.GetNewName();
-                        newTablePart.Table = await Configuration.GetNewUnigueTableName(Program.Kernel!);
+                        newTablePart.Table = await Configuration.GetNewUnigueTableName(Program.Kernel);
 
                         ConfDirectory.AppendTablePart(newTablePart);
                     }
@@ -1074,7 +1068,7 @@ class {entryName.Text}_Triggers
                 return;
             }
 
-            if (!Conf!.Directories.ContainsKey(entryName.Text))
+            if (!Conf.Directories.ContainsKey(entryName.Text))
             {
                 Message.Error(GeneralForm, "Довідник не збережений в колекцію, потрібно спочатку зберегти");
                 return;

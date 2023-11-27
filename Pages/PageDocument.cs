@@ -30,13 +30,7 @@ namespace Configurator
 {
     class PageDocument : VBox
     {
-        Configuration? Conf
-        {
-            get
-            {
-                return Program.Kernel?.Conf;
-            }
-        }
+        Configuration Conf { get { return Program.Kernel.Conf; } }
 
         public ConfigurationDocuments ConfDocument { get; set; } = new ConfigurationDocuments();
         public FormConfigurator? GeneralForm { get; set; }
@@ -176,10 +170,10 @@ namespace Configurator
                         if (!Conf.ConstantsBlock.ContainsKey("НумераціяДокументів"))
                             Conf.AppendConstantsBlock(new ConfigurationConstantsBlock("НумераціяДокументів", "Нумерація документів"));
 
-                        ConfigurationConstantsBlock blockAutoNum = Conf!.ConstantsBlock["НумераціяДокументів"];
+                        ConfigurationConstantsBlock blockAutoNum = Conf.ConstantsBlock["НумераціяДокументів"];
 
                         //Назва поля в таблиці
-                        string nameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!, SpecialTables.Constants, GeneralForm!.GetConstantsAllFields());
+                        string nameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, SpecialTables.Constants, GeneralForm!.GetConstantsAllFields());
 
                         if (!blockAutoNum.Constants.ContainsKey(entryName.Text))
                             blockAutoNum.AppendConstant(new ConfigurationConstants(entryName.Text, nameInTable, "integer", blockAutoNum));
@@ -635,14 +629,14 @@ class {entryName.Text}_Triggers
 
             if (IsNew)
             {
-                entryTable.Text = await Configuration.GetNewUnigueTableName(Program.Kernel!);
+                entryTable.Text = await Configuration.GetNewUnigueTableName(Program.Kernel);
 
                 //Заповнення полями
                 ConfDocument.AppendField(new ConfigurationObjectField("Назва", "docname", "string", "", "Назва", true, true));
                 ConfDocument.AppendField(new ConfigurationObjectField("ДатаДок", "docdate", "datetime", "", "ДатаДок", false, true));
                 ConfDocument.AppendField(new ConfigurationObjectField("НомерДок", "docnomer", "string", "", "НомерДок", false, true));
 
-                string nameInTable_Comment = Configuration.GetNewUnigueColumnName(Program.Kernel!, entryTable.Text, ConfDocument.Fields);
+                string nameInTable_Comment = Configuration.GetNewUnigueColumnName(Program.Kernel, entryTable.Text, ConfDocument.Fields);
                 ConfDocument.AppendField(new ConfigurationObjectField("Коментар", nameInTable_Comment, "string", "", "Коментар"));
 
                 //Заповнення списків
@@ -677,7 +671,7 @@ class {entryName.Text}_Triggers
 
         void FillAllowRegAccum()
         {
-            foreach (ConfigurationRegistersAccumulation regAccum in Conf!.RegistersAccumulation.Values)
+            foreach (ConfigurationRegistersAccumulation regAccum in Conf.RegistersAccumulation.Values)
                 listBoxAllowRegAccum.Add(
                     new CheckButton(regAccum.Name)
                     {
@@ -751,7 +745,7 @@ class {entryName.Text}_Triggers
         void OnSaveClick(object? sender, EventArgs args)
         {
             string name = entryName.Text;
-            string errorList = Configuration.ValidateConfigurationObjectName(Program.Kernel!, ref name);
+            string errorList = Configuration.ValidateConfigurationObjectName(Program.Kernel, ref name);
             entryName.Text = name;
 
             if (errorList.Length > 0)
@@ -762,7 +756,7 @@ class {entryName.Text}_Triggers
 
             if (IsNew)
             {
-                if (Conf!.Documents.ContainsKey(entryName.Text))
+                if (Conf.Documents.ContainsKey(entryName.Text))
                 {
                     Message.Error(GeneralForm, $"Назва документу не унікальна");
                     return;
@@ -772,19 +766,19 @@ class {entryName.Text}_Triggers
             {
                 if (ConfDocument.Name != entryName.Text)
                 {
-                    if (Conf!.Documents.ContainsKey(entryName.Text))
+                    if (Conf.Documents.ContainsKey(entryName.Text))
                     {
                         Message.Error(GeneralForm, $"Назва документу не унікальна");
                         return;
                     }
                 }
 
-                Conf!.Documents.Remove(ConfDocument.Name);
+                Conf.Documents.Remove(ConfDocument.Name);
             }
 
             GetValue();
 
-            Conf!.AppendDocument(ConfDocument);
+            Conf.AppendDocument(ConfDocument);
 
             IsNew = false;
 
@@ -854,7 +848,7 @@ class {entryName.Text}_Triggers
                     if (ConfDocument.Fields.ContainsKey(row.Child.Name))
                     {
                         ConfigurationObjectField newField = ConfDocument.Fields[row.Child.Name].Copy();
-                        newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel!, ConfDocument.Table, ConfDocument.Fields);
+                        newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, ConfDocument.Table, ConfDocument.Fields);
                         newField.Name += GenerateName.GetNewName();
 
                         ConfDocument.AppendField(newField);
@@ -962,7 +956,7 @@ class {entryName.Text}_Triggers
                     {
                         ConfigurationObjectTablePart newTablePart = ConfDocument.TabularParts[row.Child.Name].Copy();
                         newTablePart.Name += GenerateName.GetNewName();
-                        newTablePart.Table = await Configuration.GetNewUnigueTableName(Program.Kernel!);
+                        newTablePart.Table = await Configuration.GetNewUnigueTableName(Program.Kernel);
 
                         ConfDocument.AppendTablePart(newTablePart);
                     }
@@ -1127,7 +1121,7 @@ class {entryName.Text}_Triggers
                 return;
             }
 
-            if (!Conf!.Documents.ContainsKey(entryName.Text))
+            if (!Conf.Documents.ContainsKey(entryName.Text))
             {
                 Message.Error(GeneralForm, "Документ не збережений в колекцію, потрібно спочатку зберегти");
                 return;

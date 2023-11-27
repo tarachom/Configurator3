@@ -29,13 +29,7 @@ namespace Configurator
 {
     class PageField : VBox
     {
-        Configuration? Conf
-        {
-            get
-            {
-                return Program.Kernel?.Conf;
-            }
-        }
+        Configuration Conf { get { return Program.Kernel.Conf; } }
 
         public string Table { get; set; } = "";
         public Dictionary<string, ConfigurationObjectField> Fields = new Dictionary<string, ConfigurationObjectField>();
@@ -121,10 +115,10 @@ namespace Configurator
             HBox hBoxPointer = new HBox() { Halign = Align.End };
             vBox.PackStart(hBoxPointer, false, false, 5);
 
-            foreach (ConfigurationDirectories item in Conf!.Directories.Values)
+            foreach (ConfigurationDirectories item in Conf.Directories.Values)
                 comboBoxPointer.Append($"Довідники.{item.Name}", $"Довідники.{item.Name}");
 
-            foreach (ConfigurationDocuments item in Conf!.Documents.Values)
+            foreach (ConfigurationDocuments item in Conf.Documents.Values)
                 comboBoxPointer.Append($"Документи.{item.Name}", $"Документи.{item.Name}");
 
             hBoxPointer.PackStart(new Label("Вказівник:"), false, false, 5);
@@ -134,7 +128,7 @@ namespace Configurator
             HBox hBoxEnum = new HBox() { Halign = Align.End };
             vBox.PackStart(hBoxEnum, false, false, 5);
 
-            foreach (ConfigurationEnums item in Conf!.Enums.Values)
+            foreach (ConfigurationEnums item in Conf.Enums.Values)
                 comboBoxEnum.Append($"Перелічення.{item.Name}", $"Перелічення.{item.Name}");
 
             hBoxEnum.PackStart(new Label("Перелічення:"), false, false, 5);
@@ -208,7 +202,7 @@ namespace Configurator
             entryName.Text = Field.Name;
 
             if (IsNew)
-                entryColumn.Text = Configuration.GetNewUnigueColumnName(Program.Kernel!, Table, AllFields ?? Fields);
+                entryColumn.Text = Configuration.GetNewUnigueColumnName(Program.Kernel, Table, AllFields ?? Fields);
             else
                 entryColumn.Text = Field.NameInTable;
 
@@ -264,7 +258,7 @@ namespace Configurator
         void OnSaveClick(object? sender, EventArgs args)
         {
             string name = entryName.Text;
-            string errorList = Configuration.ValidateConfigurationObjectName(Program.Kernel!, ref name);
+            string errorList = Configuration.ValidateConfigurationObjectName(Program.Kernel, ref name);
             entryName.Text = name;
 
             if (errorList.Length > 0)

@@ -29,13 +29,7 @@ namespace Configurator
 {
     class PageEnumField : VBox
     {
-        Configuration? Conf
-        {
-            get
-            {
-                return Program.Kernel?.Conf;
-            }
-        }
+        Configuration Conf { get { return Program.Kernel.Conf; } }
 
         public Dictionary<string, ConfigurationEnumField> Fields = new Dictionary<string, ConfigurationEnumField>();
         public ConfigurationEnumField Field { get; set; } = new ConfigurationEnumField();
@@ -149,7 +143,7 @@ namespace Configurator
         void OnSaveClick(object? sender, EventArgs args)
         {
             string name = entryName.Text;
-            string errorList = Configuration.ValidateConfigurationObjectName(Program.Kernel!, ref name);
+            string errorList = Configuration.ValidateConfigurationObjectName(Program.Kernel, ref name);
             entryName.Text = name;
 
             if (errorList.Length > 0)

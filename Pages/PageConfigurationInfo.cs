@@ -29,13 +29,7 @@ namespace Configurator
 {
     class PageConfigurationInfo : VBox
     {
-        Configuration? Conf
-        {
-            get
-            {
-                return Program.Kernel?.Conf;
-            }
-        }
+        Configuration Conf { get { return Program.Kernel.Conf; } }
 
         public FormConfigurator? GeneralForm { get; set; }
 
@@ -131,18 +125,18 @@ namespace Configurator
 
         public void SetValue()
         {
-            entryName.Text = Conf!.Name;
-            entryNameSpace.Text = Conf!.NameSpace;
-            entryAutor.Text = Conf!.Author;
-            textViewDesc.Buffer.Text = Conf!.Desc;
+            entryName.Text = Conf.Name;
+            entryNameSpace.Text = Conf.NameSpace;
+            entryAutor.Text = Conf.Author;
+            textViewDesc.Buffer.Text = Conf.Desc;
         }
 
         void GetValue()
         {
-            Conf!.Name = entryName.Text;
-            Conf!.NameSpace = entryNameSpace.Text;
-            Conf!.Author = entryAutor.Text;
-            Conf!.Desc = textViewDesc.Buffer.Text;
+            Conf.Name = entryName.Text;
+            Conf.NameSpace = entryNameSpace.Text;
+            Conf.Author = entryAutor.Text;
+            Conf.Desc = textViewDesc.Buffer.Text;
         }
 
         #endregion
@@ -150,7 +144,7 @@ namespace Configurator
         void OnSaveClick(object? sender, EventArgs args)
         {
             string name = entryNameSpace.Text;
-            string errorList = Configuration.ValidateConfigurationObjectName(Program.Kernel!, ref name);
+            string errorList = Configuration.ValidateConfigurationObjectName(Program.Kernel, ref name);
             entryNameSpace.Text = name;
 
             if (errorList.Length > 0)

@@ -29,13 +29,7 @@ namespace Configurator
 {
     class PageEnum : VBox
     {
-        Configuration? Conf
-        {
-            get
-            {
-                return Program.Kernel?.Conf;
-            }
-        }
+        Configuration Conf { get { return Program.Kernel.Conf; } }
 
         public ConfigurationEnums ConfEnum { get; set; } = new ConfigurationEnums();
         public FormConfigurator? GeneralForm { get; set; }
@@ -183,7 +177,7 @@ namespace Configurator
         void OnSaveClick(object? sender, EventArgs args)
         {
             string name = entryName.Text;
-            string errorList = Configuration.ValidateConfigurationObjectName(Program.Kernel!, ref name);
+            string errorList = Configuration.ValidateConfigurationObjectName(Program.Kernel, ref name);
             entryName.Text = name;
 
             if (errorList.Length > 0)
@@ -194,7 +188,7 @@ namespace Configurator
             
             if (IsNew)
             {
-                if (Conf!.Enums.ContainsKey(entryName.Text))
+                if (Conf.Enums.ContainsKey(entryName.Text))
                 {
                     Message.Error(GeneralForm, $"Назва перелічення не унікальна");
                     return;
@@ -204,19 +198,19 @@ namespace Configurator
             {
                 if (ConfEnum.Name != entryName.Text)
                 {
-                    if (Conf!.Enums.ContainsKey(entryName.Text))
+                    if (Conf.Enums.ContainsKey(entryName.Text))
                     {
                         Message.Error(GeneralForm, $"Назва перелічення не унікальна");
                         return;
                     }
                 }
 
-                Conf!.Enums.Remove(ConfEnum.Name);
+                Conf.Enums.Remove(ConfEnum.Name);
             }
 
             GetValue();
 
-            Conf!.AppendEnum(ConfEnum);
+            Conf.AppendEnum(ConfEnum);
 
             IsNew = false;
 

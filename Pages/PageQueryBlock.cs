@@ -29,13 +29,7 @@ namespace Configurator
 {
     class PageQueryBlock : VBox
     {
-        Configuration? Conf
-        {
-            get
-            {
-                return Program.Kernel?.Conf;
-            }
-        }
+        Configuration Conf { get { return Program.Kernel.Conf; } }
 
         public Dictionary<string, ConfigurationObjectQueryBlock> QueryBlockList { get; set; } = new Dictionary<string, ConfigurationObjectQueryBlock>();
         public ConfigurationObjectQueryBlock QueryBlock { get; set; } = new ConfigurationObjectQueryBlock();
