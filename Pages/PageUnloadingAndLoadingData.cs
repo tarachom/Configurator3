@@ -214,7 +214,7 @@ namespace Configurator
         /// Вигрузка даних
         /// </summary>
         /// <param name="fileExport">Файл вигрузки</param>
-        void ExportData(object? fileExport)
+        async void ExportData(object? fileExport)
         {
             if (fileExport == null)
                 return;
@@ -276,12 +276,12 @@ namespace Configurator
                             xmlWriter.WriteAttributeString("name", tablePart.Name);
                             xmlWriter.WriteAttributeString("tab", tablePart.Table);
 
-                            WriteQuerySelect(xmlWriter, $@"SELECT uid{GetAllFields(tablePart.Fields)} FROM {tablePart.Table}");
+                            await WriteQuerySelect(xmlWriter, $@"SELECT uid{GetAllFields(tablePart.Fields)} FROM {tablePart.Table}");
 
                             xmlWriter.WriteEndElement();
                         }
 
-                        WriteQuerySelect(xmlWriter, $@"SELECT {configurationConstants.NameInTable} FROM tab_constants");
+                        await WriteQuerySelect(xmlWriter, $@"SELECT {configurationConstants.NameInTable} FROM tab_constants");
 
                         xmlWriter.WriteEndElement(); //Constant
                     }
@@ -305,7 +305,7 @@ namespace Configurator
                     xmlWriter.WriteAttributeString("name", configurationDirectories.Name);
                     xmlWriter.WriteAttributeString("tab", configurationDirectories.Table);
 
-                    WriteQuerySelect(xmlWriter, $@"SELECT uid, deletion_label{GetAllFields(configurationDirectories.Fields)} FROM {configurationDirectories.Table}");
+                    await WriteQuerySelect(xmlWriter, $@"SELECT uid, deletion_label{GetAllFields(configurationDirectories.Fields)} FROM {configurationDirectories.Table}");
 
                     foreach (ConfigurationObjectTablePart tablePart in configurationDirectories.TabularParts.Values)
                     {
@@ -316,7 +316,7 @@ namespace Configurator
                         xmlWriter.WriteAttributeString("name", tablePart.Name);
                         xmlWriter.WriteAttributeString("tab", tablePart.Table);
 
-                        WriteQuerySelect(xmlWriter, $@"SELECT uid, owner{GetAllFields(tablePart.Fields)} FROM {tablePart.Table}");
+                        await WriteQuerySelect(xmlWriter, $@"SELECT uid, owner{GetAllFields(tablePart.Fields)} FROM {tablePart.Table}");
 
                         xmlWriter.WriteEndElement();
                     }
@@ -342,7 +342,7 @@ namespace Configurator
                     xmlWriter.WriteAttributeString("name", configurationDocuments.Name);
                     xmlWriter.WriteAttributeString("tab", configurationDocuments.Table);
 
-                    WriteQuerySelect(xmlWriter, $@"SELECT uid, deletion_label, spend, spend_date{GetAllFields(configurationDocuments.Fields)} FROM {configurationDocuments.Table}");
+                    await WriteQuerySelect(xmlWriter, $@"SELECT uid, deletion_label, spend, spend_date{GetAllFields(configurationDocuments.Fields)} FROM {configurationDocuments.Table}");
 
                     foreach (ConfigurationObjectTablePart tablePart in configurationDocuments.TabularParts.Values)
                     {
@@ -353,7 +353,7 @@ namespace Configurator
                         xmlWriter.WriteAttributeString("name", tablePart.Name);
                         xmlWriter.WriteAttributeString("tab", tablePart.Table);
 
-                        WriteQuerySelect(xmlWriter, $@"SELECT uid, owner{GetAllFields(tablePart.Fields)} FROM {tablePart.Table}");
+                        await WriteQuerySelect(xmlWriter, $@"SELECT uid, owner{GetAllFields(tablePart.Fields)} FROM {tablePart.Table}");
 
                         xmlWriter.WriteEndElement();
                     }
@@ -383,7 +383,7 @@ namespace Configurator
                         GetAllFields(configurationRegistersInformation.ResourcesFields) +
                         GetAllFields(configurationRegistersInformation.PropertyFields);
 
-                    WriteQuerySelect(xmlWriter, $@"SELECT uid, period, owner{query_fields} FROM {configurationRegistersInformation.Table}");
+                    await WriteQuerySelect(xmlWriter, $@"SELECT uid, period, owner{query_fields} FROM {configurationRegistersInformation.Table}");
 
                     xmlWriter.WriteEndElement(); //Register
                 }
@@ -410,7 +410,7 @@ namespace Configurator
                         GetAllFields(configurationRegistersAccumulation.ResourcesFields) +
                         GetAllFields(configurationRegistersAccumulation.PropertyFields);
 
-                    WriteQuerySelect(xmlWriter, $@"SELECT uid, period, income, owner{query_fields} FROM {configurationRegistersAccumulation.Table}");
+                    await WriteQuerySelect(xmlWriter, $@"SELECT uid, period, income, owner{query_fields} FROM {configurationRegistersAccumulation.Table}");
 
                     foreach (ConfigurationObjectTablePart tablePart in configurationRegistersAccumulation.TabularParts.Values)
                     {
@@ -421,7 +421,7 @@ namespace Configurator
                         xmlWriter.WriteAttributeString("name", tablePart.Name);
                         xmlWriter.WriteAttributeString("tab", tablePart.Table);
 
-                        WriteQuerySelect(xmlWriter, $@"SELECT uid{GetAllFields(tablePart.Fields)} FROM {tablePart.Table}");
+                        await WriteQuerySelect(xmlWriter, $@"SELECT uid{GetAllFields(tablePart.Fields)} FROM {tablePart.Table}");
 
                         xmlWriter.WriteEndElement();
                     }
@@ -506,25 +506,19 @@ namespace Configurator
         /// </summary>
         /// <param name="xmlWriter">ХМЛ</param>
         /// <param name="query">Запит</param>
-        void WriteQuerySelect(XmlWriter xmlWriter, string query)
+        async ValueTask WriteQuerySelect(XmlWriter xmlWriter, string query)
         {
-            string[] columnsName = new string[] { };
-            List<object[]> listRow = new List<object[]>();
-            Dictionary<string, object> paramQuery = new Dictionary<string, object>();
+            var recordResult = await Program.Kernel.DataBase.SelectRequestAsync(query);
 
-            Program.Kernel.DataBase.SelectRequest(query, paramQuery, out columnsName, out listRow);
-
-            foreach (object[] row in listRow)
+            foreach (var row in recordResult.ListRow)
             {
                 if (CancellationTokenThread!.IsCancellationRequested)
                     break;
 
-                int counter = 0;
-
                 xmlWriter.WriteStartElement("row");
-                foreach (string column in columnsName)
+                foreach (string column in recordResult.ColumnsName)
                 {
-                    string typeName = row[counter].GetType().Name;
+                    string typeName = row[column].GetType().Name;
 
                     if (typeName != "DBNull")
                     {
@@ -535,22 +529,22 @@ namespace Configurator
                         {
                             case "String[]":
                                 {
-                                    xmlWriter.WriteRaw(ArrayToXml<string>.Convert((string[])row[counter]));
+                                    xmlWriter.WriteRaw(ArrayToXml<string>.Convert((string[])row[column]));
                                     break;
                                 }
                             case "Int32[]":
                                 {
-                                    xmlWriter.WriteRaw(ArrayToXml<int>.Convert((int[])row[counter]));
+                                    xmlWriter.WriteRaw(ArrayToXml<int>.Convert((int[])row[column]));
                                     break;
                                 }
                             case "Decimal[]":
                                 {
-                                    xmlWriter.WriteRaw(ArrayToXml<decimal>.Convert((decimal[])row[counter]));
+                                    xmlWriter.WriteRaw(ArrayToXml<decimal>.Convert((decimal[])row[column]));
                                     break;
                                 }
                             case "UuidAndText":
                                 {
-                                    xmlWriter.WriteRaw(((UuidAndText)row[counter]).ToXml());
+                                    xmlWriter.WriteRaw(((UuidAndText)row[column]).ToXml());
                                     break;
                                 }
                             case "Byte[]":
@@ -560,15 +554,13 @@ namespace Configurator
                                 }
                             default:
                                 {
-                                    xmlWriter.WriteString(row[counter].ToString());
+                                    xmlWriter.WriteString(row[column].ToString());
                                     break;
                                 }
                         }
 
                         xmlWriter.WriteEndElement();
                     }
-
-                    counter++;
                 }
                 xmlWriter.WriteEndElement();
             }
