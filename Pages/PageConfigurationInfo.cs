@@ -36,6 +36,7 @@ namespace Configurator
         #region Fields
 
         Entry entryName = new Entry() { WidthRequest = 500 };
+        Entry entryNameSpaceGenerationCode = new Entry() { WidthRequest = 500 };
         Entry entryNameSpace = new Entry() { WidthRequest = 500 };
         Entry entryAutor = new Entry() { WidthRequest = 500 };
         TextView textViewDesc = new TextView() { WrapMode = WrapMode.Word };
@@ -81,10 +82,17 @@ namespace Configurator
             hBoxName.PackStart(entryName, false, false, 5);
 
             //Простір імен
+            HBox hBoxNameSpaceGenerationCode = new HBox() { Halign = Align.End };
+            vBox.PackStart(hBoxNameSpaceGenerationCode, false, false, 5);
+
+            hBoxNameSpaceGenerationCode.PackStart(new Label("Простір імен згенерованого коду:"), false, false, 5);
+            hBoxNameSpaceGenerationCode.PackStart(entryNameSpaceGenerationCode, false, false, 5);
+
+            //Простір імен
             HBox hBoxNameSpace = new HBox() { Halign = Align.End };
             vBox.PackStart(hBoxNameSpace, false, false, 5);
 
-            hBoxNameSpace.PackStart(new Label("Простір імен:"), false, false, 5);
+            hBoxNameSpace.PackStart(new Label("Простір імен програми:"), false, false, 5);
             hBoxNameSpace.PackStart(entryNameSpace, false, false, 5);
 
             //Автор
@@ -126,6 +134,7 @@ namespace Configurator
         public void SetValue()
         {
             entryName.Text = Conf.Name;
+            entryNameSpaceGenerationCode.Text = Conf.NameSpaceGenerationCode;
             entryNameSpace.Text = Conf.NameSpace;
             entryAutor.Text = Conf.Author;
             textViewDesc.Buffer.Text = Conf.Desc;
@@ -134,6 +143,7 @@ namespace Configurator
         void GetValue()
         {
             Conf.Name = entryName.Text;
+            Conf.NameSpaceGenerationCode = entryNameSpaceGenerationCode.Text;
             Conf.NameSpace = entryNameSpace.Text;
             Conf.Author = entryAutor.Text;
             Conf.Desc = textViewDesc.Buffer.Text;

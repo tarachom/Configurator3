@@ -1107,7 +1107,12 @@ class {entryName.Text}_Triggers
             (
                 xmlConfDocument,
                 System.IO.Path.Combine(AppContext.BaseDirectory, "xslt/ConstructorDirectory.xslt"),
-                new Dictionary<string, object> { { "File", fileName } }
+                new Dictionary<string, object>
+                {
+                    { "File", fileName },
+                    { "NameSpaceGenerationCode", Conf.NameSpaceGenerationCode },
+                    { "NameSpace", Conf.NameSpace }
+                }
             );
 
             textViewCode.Buffer.SelectRange(textViewCode.Buffer.StartIter, textViewCode.Buffer.EndIter);
