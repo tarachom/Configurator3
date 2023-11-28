@@ -405,6 +405,7 @@ class {entryName.Text}_Triggers
     public static async ValueTask BeforeSave({entryName.Text}_Objest ДокументОбєкт)
     {{
         ДокументОбєкт.Назва = $""{{{entryName.Text}_Const.FULLNAME}} №{{ДокументОбєкт.НомерДок}} від {{ДокументОбєкт.ДатаДок.ToShortDateString()}}"";
+        await ValueTask.FromResult(true);
     }}
 
     public static async ValueTask AfterSave({entryName.Text}_Objest ДокументОбєкт)
