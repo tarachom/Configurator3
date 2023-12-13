@@ -590,9 +590,9 @@ namespace <xsl:value-of select="Configuration/NameSpaceGenerationCode"/>.Дов�
     public static class <xsl:value-of select="$DirectoryName"/>_Const
     {
         public const string TABLE = "<xsl:value-of select="Table"/>";
-        public const string POINTER = "Довідники.<xsl:value-of select="$DirectoryName"/>";
-        public const string FULLNAME = "<xsl:value-of select="normalize-space(FullName)"/>";
-        public const string DELETION_LABEL = "deletion_label";
+        public const string POINTER = "Довідники.<xsl:value-of select="$DirectoryName"/>"; /* Повна назва вказівника */
+        public const string FULLNAME = "<xsl:value-of select="normalize-space(FullName)"/>"; /* Повна назва об'єкта */
+        public const string DELETION_LABEL = "deletion_label"; /* Помітка на видалення true|false */
         <xsl:for-each select="Fields/Field">
         public const string <xsl:value-of select="Name"/> = "<xsl:value-of select="NameInTable"/>";</xsl:for-each>
     }
@@ -1089,9 +1089,11 @@ namespace <xsl:value-of select="Configuration/NameSpaceGenerationCode"/>.Док�
     public static class <xsl:value-of select="$DocumentName"/>_Const
     {
         public const string TABLE = "<xsl:value-of select="Table"/>";
-        public const string POINTER = "Документи.<xsl:value-of select="$DocumentName"/>";
-        public const string FULLNAME = "<xsl:value-of select="normalize-space(FullName)"/>";
-        public const string DELETION_LABEL = "deletion_label";
+        public const string POINTER = "Документи.<xsl:value-of select="$DocumentName"/>"; /* Повна назва вказівника */
+        public const string FULLNAME = "<xsl:value-of select="normalize-space(FullName)"/>"; /* Повна назва об'єкта */
+        public const string DELETION_LABEL = "deletion_label"; /* Помітка на видалення true|false */
+        public const string SPEND = "spend"; /* Проведений true|false */
+        public const string SPEND_DATE = "spend_date"; /* Дата проведення DateTime */
         
         <xsl:for-each select="Fields/Field">
         public const string <xsl:value-of select="Name"/> = "<xsl:value-of select="NameInTable"/>";</xsl:for-each>

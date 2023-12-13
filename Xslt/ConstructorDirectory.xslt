@@ -381,8 +381,6 @@ namespace <xsl:value-of select="$NameSpace"/>
 
             if (ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_Записи.SelectPath != null)
                 TreeViewGrid.SetCursor(ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_Записи.SelectPath, TreeViewGrid.Columns[0], false);
-
-            TreeViewGrid.GrabFocus();
         }
 
         protected override async ValueTask LoadRecords_OnSearch(string searchText)

@@ -412,8 +412,6 @@ namespace <xsl:value-of select="$NameSpace"/>
                 TreeViewGrid.SetCursor(ТабличніСписки.<xsl:value-of select="$DocumentName"/>_Записи.SelectPath, TreeViewGrid.Columns[0], false);
             else if (ТабличніСписки.<xsl:value-of select="$DocumentName"/>_Записи.CurrentPath != null)
                 TreeViewGrid.SetCursor(ТабличніСписки.<xsl:value-of select="$DocumentName"/>_Записи.CurrentPath, TreeViewGrid.Columns[0], false);
-
-            TreeViewGrid.GrabFocus();
         }
 
         protected override async void LoadRecords_OnSearch(string searchText)
@@ -435,8 +433,6 @@ namespace <xsl:value-of select="$NameSpace"/>
 
             if (ТабличніСписки.<xsl:value-of select="$DocumentName"/>_Записи.FirstPath != null)
                 TreeViewGrid.SetCursor(ТабличніСписки.<xsl:value-of select="$DocumentName"/>_Записи.FirstPath, TreeViewGrid.Columns[0], false);
-
-            TreeViewGrid.GrabFocus();
         }
 
         protected override async void OpenPageElement(bool IsNew, UnigueID? unigueID = null)
