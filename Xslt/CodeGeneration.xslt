@@ -455,7 +455,8 @@ namespace <xsl:value-of select="Configuration/NameSpaceGenerationCode"/>.Кон�
         public static async ValueTask ReadAll()
         {
             <xsl:variable name="Constants" select="Constants/Constant" />
-		        <xsl:if test="count($Constants) &gt; 0">
+            <xsl:variable name="CountConstants" select="count($Constants)" />
+		        <xsl:if test="$CountConstants &gt; 0">
             Dictionary&lt;string, object&gt; fieldValue = [];
             bool IsSelect = await Config.Kernel.DataBase.SelectAllConstants("tab_constants",
                  <xsl:text>[</xsl:text>
@@ -475,6 +476,9 @@ namespace <xsl:value-of select="Configuration/NameSpaceGenerationCode"/>.Кон�
                 </xsl:for-each>
             }
 			      </xsl:if>
+            <xsl:if test="$CountConstants = 0">
+                <xsl:text>await ValueTask.FromResult(true);</xsl:text>
+            </xsl:if>
         }
         
         <xsl:for-each select="Constants/Constant">
@@ -1934,6 +1938,9 @@ namespace <xsl:value-of select="Configuration/NameSpaceGenerationCode"/>.Рег�
                         break;
             }
             </xsl:if>
+            <xsl:if test="$QueryAllCountCalculation = 0">
+                <xsl:text>await ValueTask.FromResult(true);</xsl:text>
+            </xsl:if>
         }
 
         /* Функція для обчислення підсумкових віртуальних таблиць */
@@ -1966,6 +1973,9 @@ namespace <xsl:value-of select="Configuration/NameSpaceGenerationCode"/>.Рег�
                         default:
                             break;
                 }
+            </xsl:if>
+            <xsl:if test="$QueryAllCountCalculation = 0">
+                <xsl:text>await ValueTask.FromResult(true);</xsl:text>
             </xsl:if>
         }
     }
