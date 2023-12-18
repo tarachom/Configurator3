@@ -335,6 +335,33 @@ namespace <xsl:value-of select="Configuration/NameSpaceGenerationCode"/>
                   <xsl:text>await Константи.</xsl:text><xsl:value-of select="Name"/>.ReadAll();
             </xsl:for-each>
         }
+
+        public static async void StartBackgroundTask()
+        {
+            if (Kernel.Session == Guid.Empty)
+                throw new Exception("Порожні сесія користувача. Спочатку потрібно залогінитись, а тоді вже викликати функцію StartBackgroundTask()");
+
+            while (true)
+            {
+                await Константи.Системні.ReadAll();
+                
+                //Зупинка розрахунків використовується при масовому перепроведенні документів щоб
+                //провести всі документ, а тоді вже розраховувати регістри
+                if (!Константи.Системні.ЗупинитиФоновіЗадачі_Const)
+                {
+                    //Виконання обчислень
+                    await Kernel.DataBase.SpetialTableRegAccumTrigerExecute
+                    (
+                        Kernel.Session,
+                        РегістриНакопичення.VirtualTablesСalculation.Execute, 
+                        РегістриНакопичення.VirtualTablesСalculation.ExecuteFinalCalculation
+                    );
+                }
+
+                //Затримка на 5 сек
+                await Task.Delay(5000);
+            }
+        }
     }
 
     public class Functions
