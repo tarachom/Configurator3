@@ -513,8 +513,7 @@ namespace Configurator
             //Toolbar
             vbox.PackStart(CreateToolbar(), false, false, 0);
 
-            hPaned = new HPaned();
-            hPaned.Position = 200;
+            hPaned = new HPaned { Position = 200 };
 
             ScrolledWindow scrollTree = new ScrolledWindow() { ShadowType = ShadowType.In };
             scrollTree.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
@@ -531,13 +530,18 @@ namespace Configurator
 
             hPaned.Pack1(scrollTree, false, true);
 
-            topNotebook = new Notebook() { Scrollable = true, EnablePopup = true, BorderWidth = 0, ShowBorder = false };
-            topNotebook.TabPos = PositionType.Top;
+            topNotebook = new Notebook
+            {
+                Scrollable = true,
+                EnablePopup = true,
+                BorderWidth = 0,
+                ShowBorder = false,
+                TabPos = PositionType.Top
+            };
 
             CreateNotebookPage("Стартова", () =>
             {
-                PageHome page = new PageHome();
-                return page;
+                return new PageHome();
             });
 
             hPaned.Pack2(topNotebook, false, true);
@@ -556,8 +560,7 @@ namespace Configurator
 
             //1
             Menu СonfMenu = new Menu();
-            MenuItem configurationItem = new MenuItem("Конфігурація");
-            configurationItem.Submenu = СonfMenu;
+            MenuItem configurationItem = new MenuItem("Конфігурація") { Submenu = СonfMenu };
 
             MenuItem saveConfiguration = new MenuItem("Зберегти конфігурацію");
             saveConfiguration.Activated += OnSaveConfigurationClick;
@@ -567,12 +570,15 @@ namespace Configurator
             editConfigurationInfo.Activated += OnConfigurationInfo;
             СonfMenu.Append(editConfigurationInfo);
 
+            MenuItem editDictTSearch = new MenuItem("Повнотектовий пошук");
+            editDictTSearch.Activated += OnDictTSearch;
+            СonfMenu.Append(editDictTSearch);
+
             mb.Append(configurationItem);
 
             //2
             Menu UsersMenu = new Menu();
-            MenuItem usersItem = new MenuItem("Користувачі");
-            usersItem.Submenu = UsersMenu;
+            MenuItem usersItem = new MenuItem("Користувачі") { Submenu = UsersMenu };
 
             MenuItem usersList = new MenuItem("Список користувачів");
             usersList.Activated += OnUsersListClick;
@@ -582,8 +588,7 @@ namespace Configurator
 
             //3
             Menu UploadAndLoadMenu = new Menu();
-            MenuItem uploadAndLoadDataMenuItem = new MenuItem("Вигрузка та загрузка");
-            uploadAndLoadDataMenuItem.Submenu = UploadAndLoadMenu;
+            MenuItem uploadAndLoadDataMenuItem = new MenuItem("Вигрузка та загрузка") { Submenu = UploadAndLoadMenu };
 
             MenuItem uploadConfigurationToFile = new MenuItem("Вигрузити конфігурацію в файл");
             uploadConfigurationToFile.Activated += OnUploadConfigurationToFileClick;
@@ -609,8 +614,7 @@ namespace Configurator
 
             //4
             Menu AboutMenu = new Menu();
-            MenuItem aboutMenuItem = new MenuItem("Про програму");
-            aboutMenuItem.Submenu = AboutMenu;
+            MenuItem aboutMenuItem = new MenuItem("Про програму") { Submenu = AboutMenu };
 
             MenuItem aboutMenuInfoItem = new MenuItem("Інформація");
             aboutMenuInfoItem.Activated += OnAboutMenuInfo;
@@ -750,6 +754,16 @@ namespace Configurator
 
                 page.SetValue();
 
+                return page;
+            });
+        }
+
+        void OnDictTSearch(object? sender, EventArgs args)
+        {
+            CreateNotebookPage("Повнотектовий пошук", () =>
+            {
+                PageDictTSearch page = new PageDictTSearch() { GeneralForm = this };
+                page.SetValue();
                 return page;
             });
         }
@@ -1972,7 +1986,7 @@ namespace Configurator
                                     string nameTablePart = blockAndName[2];
                                     ConfigurationObjectTablePart newTablePart = Conf.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart].Copy();
                                     newTablePart.Name += GenerateName.GetNewName();
-                                    newTablePart.Table =await Configuration.GetNewUnigueTableName(Program.Kernel);
+                                    newTablePart.Table = await Configuration.GetNewUnigueTableName(Program.Kernel);
 
                                     if (!Conf.ConstantsBlock[blockConst].Constants[nameConst].TabularParts.ContainsKey(newTablePart.Name))
                                         Conf.ConstantsBlock[blockConst].Constants[nameConst].AppendTablePart(newTablePart);
@@ -2025,12 +2039,12 @@ namespace Configurator
                                     {
                                         ConfigurationDirectories newDirectory = Conf.Directories[directory].Copy();
                                         newDirectory.Name += GenerateName.GetNewName();
-                                        newDirectory.Table =await Configuration.GetNewUnigueTableName(Program.Kernel);
+                                        newDirectory.Table = await Configuration.GetNewUnigueTableName(Program.Kernel);
 
                                         if (!Conf.Directories.ContainsKey(newDirectory.Name))
                                         {
                                             foreach (ConfigurationObjectTablePart tablePart in newDirectory.TabularParts.Values)
-                                                tablePart.Table =await Configuration.GetNewUnigueTableName(Program.Kernel);
+                                                tablePart.Table = await Configuration.GetNewUnigueTableName(Program.Kernel);
 
                                             Conf.AppendDirectory(newDirectory);
                                         }
@@ -2042,7 +2056,7 @@ namespace Configurator
                                     string nameTablePart = directoryPath[1];
                                     ConfigurationObjectTablePart newTablePart = Conf.Directories[directory].TabularParts[nameTablePart].Copy();
                                     newTablePart.Name += GenerateName.GetNewName();
-                                    newTablePart.Table =await Configuration.GetNewUnigueTableName(Program.Kernel);
+                                    newTablePart.Table = await Configuration.GetNewUnigueTableName(Program.Kernel);
 
                                     if (!Conf.Directories[directory].TabularParts.ContainsKey(newTablePart.Name))
                                         Conf.Directories[directory].AppendTablePart(newTablePart);
@@ -2095,12 +2109,12 @@ namespace Configurator
                                     {
                                         ConfigurationDocuments newDocument = Conf.Documents[document].Copy();
                                         newDocument.Name += GenerateName.GetNewName();
-                                        newDocument.Table =await Configuration.GetNewUnigueTableName(Program.Kernel);
+                                        newDocument.Table = await Configuration.GetNewUnigueTableName(Program.Kernel);
 
                                         if (!Conf.Documents.ContainsKey(newDocument.Name))
                                         {
                                             foreach (ConfigurationObjectTablePart tablePart in newDocument.TabularParts.Values)
-                                                tablePart.Table =await Configuration.GetNewUnigueTableName(Program.Kernel);
+                                                tablePart.Table = await Configuration.GetNewUnigueTableName(Program.Kernel);
 
                                             Conf.AppendDocument(newDocument);
                                         }
@@ -2113,7 +2127,7 @@ namespace Configurator
 
                                     ConfigurationObjectTablePart newTablePart = Conf.Documents[document].TabularParts[nameTablePart].Copy();
                                     newTablePart.Name += GenerateName.GetNewName();
-                                    newTablePart.Table =await Configuration.GetNewUnigueTableName(Program.Kernel);
+                                    newTablePart.Table = await Configuration.GetNewUnigueTableName(Program.Kernel);
 
                                     if (!Conf.Documents[document].TabularParts.ContainsKey(newTablePart.Name))
                                         Conf.Documents[document].AppendTablePart(newTablePart);
@@ -2151,7 +2165,7 @@ namespace Configurator
                                 {
                                     ConfigurationRegistersInformation newRegInfo = Conf.RegistersInformation[register].Copy();
                                     newRegInfo.Name += GenerateName.GetNewName();
-                                    newRegInfo.Table =await Configuration.GetNewUnigueTableName(Program.Kernel);
+                                    newRegInfo.Table = await Configuration.GetNewUnigueTableName(Program.Kernel);
 
                                     if (!Conf.RegistersInformation.ContainsKey(newRegInfo.Name))
                                         Conf.AppendRegistersInformation(newRegInfo);
@@ -2216,12 +2230,12 @@ namespace Configurator
                                 {
                                     ConfigurationRegistersAccumulation newRegAccum = Conf.RegistersAccumulation[register].Copy();
                                     newRegAccum.Name += GenerateName.GetNewName();
-                                    newRegAccum.Table =await Configuration.GetNewUnigueTableName(Program.Kernel);
+                                    newRegAccum.Table = await Configuration.GetNewUnigueTableName(Program.Kernel);
 
                                     if (!Conf.RegistersAccumulation.ContainsKey(newRegAccum.Name))
                                     {
                                         foreach (ConfigurationObjectTablePart tablePart in newRegAccum.TabularParts.Values)
-                                            tablePart.Table =await Configuration.GetNewUnigueTableName(Program.Kernel);
+                                            tablePart.Table = await Configuration.GetNewUnigueTableName(Program.Kernel);
 
                                         Conf.AppendRegistersAccumulation(newRegAccum);
                                     }
@@ -2277,7 +2291,7 @@ namespace Configurator
 
                                         ConfigurationObjectTablePart newTablePart = Conf.RegistersAccumulation[register].TabularParts[nameTablePart].Copy();
                                         newTablePart.Name += GenerateName.GetNewName();
-                                        newTablePart.Table =await Configuration.GetNewUnigueTableName(Program.Kernel);
+                                        newTablePart.Table = await Configuration.GetNewUnigueTableName(Program.Kernel);
 
                                         if (!Conf.RegistersAccumulation[register].TabularParts.ContainsKey(newTablePart.Name))
                                             Conf.RegistersAccumulation[register].AppendTablePart(newTablePart);
