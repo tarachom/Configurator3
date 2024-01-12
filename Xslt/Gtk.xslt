@@ -495,51 +495,6 @@ namespace <xsl:value-of select="Configuration/NameSpaceGenerationCode"/>.Док�
                     return null;
             }
         }
-
-        public static void ДодатиВідбірПоПеріоду(List&lt;Where&gt; Where, string fieldWhere, Перелічення.ТипПеріодуДляЖурналівДокументів типПеріоду)
-        {
-            switch (типПеріоду)
-            {
-                case Перелічення.ТипПеріодуДляЖурналівДокументів.ЗПочаткуРоку:
-                {
-                    Where.Add(new Where(fieldWhere, Comparison.QT_EQ, new DateTime(DateTime.Now.Year, 1, 1)));
-                    break;
-                }
-                case Перелічення.ТипПеріодуДляЖурналівДокументів.Квартал:
-                {
-                    DateTime ДатаТриМісцяНазад = DateTime.Now.AddMonths(-3);
-                    Where.Add(new Where(fieldWhere, Comparison.QT_EQ, new DateTime(ДатаТриМісцяНазад.Year, ДатаТриМісцяНазад.Month, 1)));
-                    break;
-                }
-                case Перелічення.ТипПеріодуДляЖурналівДокументів.ЗМинулогоМісяця:
-                {
-                    DateTime ДатаМісцьНазад = DateTime.Now.AddMonths(-1);
-                    Where.Add(new Where(fieldWhere, Comparison.QT_EQ, new DateTime(ДатаМісцьНазад.Year, ДатаМісцьНазад.Month, 1)));
-                    break;
-                }
-                case Перелічення.ТипПеріодуДляЖурналівДокументів.Місяць:
-                {
-                    Where.Add(new Where(fieldWhere, Comparison.QT_EQ, DateTime.Now.AddMonths(-1)));
-                    break;
-                }
-                case Перелічення.ТипПеріодуДляЖурналівДокументів.ЗПочаткуМісяця:
-                {
-                    Where.Add(new Where(fieldWhere, Comparison.QT_EQ, new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1)));
-                    break;
-                }
-                case Перелічення.ТипПеріодуДляЖурналівДокументів.ЗПочаткуТижня:
-                {
-                    DateTime СімДнівНазад = DateTime.Now.AddDays(-7);
-                    Where.Add(new Where(fieldWhere, Comparison.QT_EQ, new DateTime(СімДнівНазад.Year, СімДнівНазад.Month, СімДнівНазад.Day)));
-                    break;
-                }
-                case Перелічення.ТипПеріодуДляЖурналівДокументів.ПоточнийДень:
-                {
-                    Where.Add(new Where(fieldWhere, Comparison.QT_EQ, new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day)));
-                    break;
-                }
-            }
-        }
     }
 
     <xsl:for-each select="Configuration/Documents/Document">
@@ -1017,7 +972,6 @@ namespace <xsl:value-of select="Configuration/NameSpaceGenerationCode"/>.Рег�
         <xsl:variable name="TabularListName" select="Name"/>
     public class <xsl:value-of select="$RegisterName"/>_<xsl:value-of select="$TabularListName"/>
     {
-        string Image = AppContext.BaseDirectory + "images/doc.png";
         string ID = "";
         string Період = "";
         <xsl:for-each select="Fields/Field">
@@ -1025,19 +979,29 @@ namespace <xsl:value-of select="Configuration/NameSpaceGenerationCode"/>.Рег�
 
         Array ToArray()
         {
-            return new object[] { new Gdk.Pixbuf(Image), ID, Період,
-            <xsl:for-each select="Fields/Field">
-              <xsl:text>/*</xsl:text><xsl:value-of select="Name"/><xsl:text>*/ </xsl:text><xsl:value-of select="Name"/>,
-            </xsl:for-each> };
+            return new object[] 
+            { 
+                Іконки.ДляТабличногоСписку.Normal, 
+                ID, 
+                Період,
+                <xsl:for-each select="Fields/Field">
+                  <xsl:text>/*</xsl:text><xsl:value-of select="Name"/><xsl:text>*/ </xsl:text><xsl:value-of select="Name"/>,
+                </xsl:for-each> 
+            };
         }
-
-        public static ListStore Store = new ListStore([/*Image*/ typeof(Gdk.Pixbuf), /*ID*/ typeof(string), /*Період*/ typeof(string),
-            <xsl:for-each select="Fields/Field">
-                <xsl:text>/*</xsl:text><xsl:value-of select="Name"/>*/ typeof(string),
-            </xsl:for-each>]);
 
         public static void AddColumns(TreeView treeView)
         {
+            treeView.Model = new ListStore(
+            [
+                /*Image*/ typeof(Gdk.Pixbuf), 
+                /*ID*/ typeof(string), 
+                /*Період*/ typeof(string),
+                <xsl:for-each select="Fields/Field">
+                    <xsl:text>/*</xsl:text><xsl:value-of select="Name"/>*/ typeof(string),
+                </xsl:for-each>
+            ]);
+
             treeView.AppendColumn(new TreeViewColumn("", new CellRendererPixbuf(), "pixbuf", 0)); /* { Ypad = 0 } */
             treeView.AppendColumn(new TreeViewColumn("ID", new CellRendererText(), "text", 1) { Visible = false });
             treeView.AppendColumn(new TreeViewColumn("Період", new CellRendererText(), "text", 2));
@@ -1059,21 +1023,42 @@ namespace <xsl:value-of select="Configuration/NameSpaceGenerationCode"/>.Рег�
             treeView.AppendColumn(new TreeViewColumn());
         }
 
-        public static List&lt;Where&gt; Where { get; set; } = [];
+        public static void ДодатиВідбір(TreeView treeView, Where where)
+        {
+            if (!treeView.Data.ContainsKey("Where"))
+                treeView.Data.Add("Where", new List&lt;Where&gt;() { where });
+            else
+            {
+                object? value = treeView.Data["Where"];
+                if (value == null)
+                    treeView.Data["Where"] = new List&lt;Where&gt;() { where };
+                else
+                    ((List&lt;Where&gt;)value).Add(where);
+            }
+        }
+
+        public static void ОчиститиВідбір(TreeView treeView)
+        {
+            if (treeView.Data.ContainsKey("Where"))
+                treeView.Data["Where"] = null;
+        }
 
         public static UnigueID? SelectPointerItem { get; set; }
         public static TreePath? SelectPath;
         public static TreePath? CurrentPath;
 
-        public static async ValueTask LoadRecords()
+        public static async ValueTask LoadRecords(TreeView treeView)
         {
-            Store.Clear();
             SelectPath = CurrentPath = null;
 
             РегістриВідомостей.<xsl:value-of select="$RegisterName"/>_RecordsSet <xsl:value-of select="$RegisterName"/>_RecordsSet = new РегістриВідомостей.<xsl:value-of select="$RegisterName"/>_RecordsSet();
 
             /* Where */
-            <xsl:value-of select="$RegisterName"/>_RecordsSet.QuerySelect.Where = Where;
+            if (treeView.Data.ContainsKey("Where"))
+            {
+                var where = treeView.Data["Where"];
+                if (where != null) <xsl:value-of select="$RegisterName"/>_Select.QuerySelect.Where = (List&lt;Where&gt;)where;
+            }
 
             /* DEFAULT ORDER */
             <xsl:value-of select="$RegisterName"/>_RecordsSet.QuerySelect.Order.Add("period", SelectOrder.ASC);
@@ -1100,6 +1085,10 @@ namespace <xsl:value-of select="Configuration/NameSpaceGenerationCode"/>.Рег�
 
             /* Read */
             await <xsl:value-of select="$RegisterName"/>_RecordsSet.Read();
+
+            ListStore Store = (ListStore)treeView.Model;
+            Store.Clear();
+
             foreach (<xsl:value-of select="$RegisterName"/>_RecordsSet.Record record in <xsl:value-of select="$RegisterName"/>_RecordsSet.Records)
             {
                 <xsl:value-of select="$RegisterName"/>_<xsl:value-of select="$TabularListName"/> Record = new <xsl:value-of select="$RegisterName"/>_<xsl:value-of select="$TabularListName"/>
