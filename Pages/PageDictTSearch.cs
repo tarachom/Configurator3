@@ -90,8 +90,8 @@ namespace Configurator
                 vBox.PackStart(hBoxHelp, false, false, 5);
 
                 //Довідка текст
-                Label labelHelp = new Label(@"
-<b>ДОДАВАННЯ УКРАЇНСЬКОГО СЛОВНИКА</b>
+                Label labelHelp = new Label(
+@"<b>ДОДАВАННЯ УКРАЇНСЬКОГО СЛОВНИКА</b>
 1. <b>Відкрити репозиторій:</b> https://github.com/brown-uk/dict_uk/releases
 
 2. <b>Завантажити архів:</b> hunspell-uk_UA_***.zip
@@ -118,8 +118,8 @@ sudo cp ukrainian.stop $(pg_config --sharedir)/tsearch_data/ukrainian.stop
                 vBox.PackStart(hBoxSql, false, false, 5);
 
                 //SQL текст
-                Label labelSQL = new Label(@"
-<b>SQL</b>
+                Label labelSQL = new Label(
+@"<b>SQL</b>
 <b>Створення словника</b>
 CREATE TEXT SEARCH DICTIONARY ukrainian_huns (TEMPLATE = ispell, DictFile = uk_UA, AffFile = uk_UA, StopWords = ukrainian);
 

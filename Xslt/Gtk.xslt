@@ -58,6 +58,60 @@ namespace <xsl:value-of select="Configuration/NameSpaceGenerationCode"/>.Іко�
     }
 }
 
+namespace <xsl:value-of select="Configuration/NameSpaceGenerationCode"/>
+{
+    public abstract class ТабличнийСписок
+    {
+        public static void ДодатиВідбір(TreeView treeView, Where where, bool clear_all_before_add = false)
+        {
+            if (!treeView.Data.ContainsKey("Where"))
+                treeView.Data.Add("Where", new List&lt;Where&gt;() { where });
+            else
+            {
+                if (clear_all_before_add)
+                    treeView.Data["Where"] = new List&lt;Where&gt;() { where };
+                else
+                {
+                    object? value = treeView.Data["Where"];
+                    if (value == null)
+                        treeView.Data["Where"] = new List&lt;Where&gt;() { where };
+                    else
+                        ((List&lt;Where&gt;)value).Add(where);
+                }
+            }
+        }
+
+        public static void ДодатиВідбір(TreeView treeView, List&lt;Where&gt; where, bool clear_all_before_add = false)
+        {
+            if (!treeView.Data.ContainsKey("Where"))
+                treeView.Data.Add("Where", where);
+            else
+            {
+                if (clear_all_before_add)
+                    treeView.Data["Where"] = where;
+                else
+                {
+                    object? value = treeView.Data["Where"];
+                    if (value == null)
+                        treeView.Data["Where"] = where;
+                    else
+                    {
+                        var list = (List&lt;Where&gt;)value;
+                        foreach (Where item in where)
+                            list.Add(item);
+                    }
+                }
+            }
+        }
+
+        public static void ОчиститиВідбір(TreeView treeView)
+        {
+            if (treeView.Data.ContainsKey("Where"))
+                treeView.Data["Where"] = null;
+        }
+    }
+}
+
 namespace <xsl:value-of select="Configuration/NameSpaceGenerationCode"/>.Довідники.ТабличніСписки
 {
     <xsl:for-each select="Configuration/Directories/Directory">
@@ -68,7 +122,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGenerationCode"/>.Дов�
       <xsl:for-each select="TabularLists/TabularList[IsTree = '0']">
         <xsl:variable name="TabularListName" select="Name"/>
     /* ТАБЛИЦЯ */
-    public class <xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularListName"/>
+    public class <xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularListName"/> : ТабличнийСписок
     {
         bool DeletionLabel = false;
         string ID = "";
@@ -116,26 +170,6 @@ namespace <xsl:value-of select="Configuration/NameSpaceGenerationCode"/>.Дов�
             </xsl:for-each>
             //Пустишка
             treeView.AppendColumn(new TreeViewColumn());
-        }
-
-        public static void ДодатиВідбір(TreeView treeView, Where where)
-        {
-            if (!treeView.Data.ContainsKey("Where"))
-                treeView.Data.Add("Where", new List&lt;Where&gt;() { where });
-            else
-            {
-                object? value = treeView.Data["Where"];
-                if (value == null)
-                    treeView.Data["Where"] = new List&lt;Where&gt;() { where };
-                else
-                    ((List&lt;Where&gt;)value).Add(where);
-            }
-        }
-
-        public static void ОчиститиВідбір(TreeView treeView)
-        {
-            if (treeView.Data.ContainsKey("Where"))
-                treeView.Data["Where"] = null;
         }
 
         public static UnigueID? DirectoryPointerItem { get; set; }
@@ -503,7 +537,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGenerationCode"/>.Док�
     
       <xsl:for-each select="TabularLists/TabularList">
         <xsl:variable name="TabularListName" select="Name"/>
-    public class <xsl:value-of select="$DocumentName"/>_<xsl:value-of select="$TabularListName"/>
+    public class <xsl:value-of select="$DocumentName"/>_<xsl:value-of select="$TabularListName"/> : ТабличнийСписок
     {
         bool DeletionLabel = false;
         bool Spend = false;
@@ -561,26 +595,6 @@ namespace <xsl:value-of select="Configuration/NameSpaceGenerationCode"/>.Док�
             ОчиститиВідбір(treeView);
             Where? where = Інтерфейс.ВідбірПоПеріоду(Документи.<xsl:value-of select="$DocumentName"/>_Const.ДатаДок, типПеріоду);
             if (where != null) ДодатиВідбір(treeView, where);               
-        }
-
-        public static void ДодатиВідбір(TreeView treeView, Where where)
-        {
-            if (!treeView.Data.ContainsKey("Where"))
-                treeView.Data.Add("Where", new List&lt;Where&gt;() { where });
-            else
-            {
-                object? value = treeView.Data["Where"];
-                if (value == null)
-                    treeView.Data["Where"] = new List&lt;Where&gt;() { where };
-                else
-                    ((List&lt;Where&gt;)value).Add(where);
-            }
-        }
-
-        public static void ОчиститиВідбір(TreeView treeView)
-        {
-            if (treeView.Data.ContainsKey("Where"))
-                treeView.Data["Where"] = null;
         }
 
         public static UnigueID? DocumentPointerItem { get; set; }
@@ -970,7 +984,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGenerationCode"/>.Рег�
     
       <xsl:for-each select="TabularLists/TabularList">
         <xsl:variable name="TabularListName" select="Name"/>
-    public class <xsl:value-of select="$RegisterName"/>_<xsl:value-of select="$TabularListName"/>
+    public class <xsl:value-of select="$RegisterName"/>_<xsl:value-of select="$TabularListName"/> : ТабличнийСписок
     {
         string ID = "";
         string Період = "";
@@ -1023,26 +1037,6 @@ namespace <xsl:value-of select="Configuration/NameSpaceGenerationCode"/>.Рег�
             treeView.AppendColumn(new TreeViewColumn());
         }
 
-        public static void ДодатиВідбір(TreeView treeView, Where where)
-        {
-            if (!treeView.Data.ContainsKey("Where"))
-                treeView.Data.Add("Where", new List&lt;Where&gt;() { where });
-            else
-            {
-                object? value = treeView.Data["Where"];
-                if (value == null)
-                    treeView.Data["Where"] = new List&lt;Where&gt;() { where };
-                else
-                    ((List&lt;Where&gt;)value).Add(where);
-            }
-        }
-
-        public static void ОчиститиВідбір(TreeView treeView)
-        {
-            if (treeView.Data.ContainsKey("Where"))
-                treeView.Data["Where"] = null;
-        }
-
         public static UnigueID? SelectPointerItem { get; set; }
         public static TreePath? SelectPath;
         public static TreePath? CurrentPath;
@@ -1057,7 +1051,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGenerationCode"/>.Рег�
             if (treeView.Data.ContainsKey("Where"))
             {
                 var where = treeView.Data["Where"];
-                if (where != null) <xsl:value-of select="$RegisterName"/>_Select.QuerySelect.Where = (List&lt;Where&gt;)where;
+                if (where != null) <xsl:value-of select="$RegisterName"/>_RecordsSet.QuerySelect.Where = (List&lt;Where&gt;)where;
             }
 
             /* DEFAULT ORDER */

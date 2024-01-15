@@ -230,7 +230,7 @@ namespace Configurator
         public void SetValue()
         {
             //Дерево доступне тільки для Довідників
-            checkButtonIsTree.Sensitive = (ConfOwnerName == "Довідники");
+            checkButtonIsTree.Sensitive = ConfOwnerName == "Довідники";
 
             FillTreeView();
 
