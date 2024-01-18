@@ -408,9 +408,9 @@ namespace Configurator
                 treeViewAdditional.AppendColumn(new TreeViewColumn("Тип", cell, "text", ColumnsAdditional.Type));
             }
 
-            //Caption
+            //Value
             {
-                CellRendererText cell = new CellRendererText() { Editable = true };
+                CellRendererText cell = new CellRendererText() { Editable = true, SingleParagraphMode = true };
                 cell.Edited += (object o, EditedArgs args) =>
                 {
                     TreeIter iter;
