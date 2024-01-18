@@ -129,6 +129,7 @@ namespace Configurator
 
             treeViewAdditional = new TreeView(listStoreAdditional);
             treeViewAdditional.Selection.Mode = SelectionMode.Multiple;
+            treeViewAdditional.ButtonPressEvent += OnTreeViewAdditionalPressEvent;
             AddColumnTreeViewAdditional();
 
             HPaned hPaned = new HPaned() { BorderWidth = 5 };
@@ -410,14 +411,10 @@ namespace Configurator
 
             //Value
             {
-                CellRendererText cell = new CellRendererText() { Editable = true, SingleParagraphMode = true };
-                cell.Edited += (object o, EditedArgs args) =>
-                {
-                    TreeIter iter;
-                    if (listStoreAdditional.GetIterFromString(out iter, args.Path))
-                        listStoreAdditional.SetValue(iter, (int)ColumnsAdditional.Value, args.NewText);
-                };
-                treeViewAdditional.AppendColumn(new TreeViewColumn("Значення", cell, "text", ColumnsAdditional.Value) { MinWidth = 300 });
+                TreeViewColumn Column = new TreeViewColumn("Значення", new CellRendererText() { SingleParagraphMode = true }, "text", ColumnsAdditional.Value) { MinWidth = 300, MaxWidth = 500 };
+                Column.Data.Add("Column", ColumnsAdditional.Value);
+
+                treeViewAdditional.AppendColumn(Column);
             }
 
             //Пустишка
@@ -583,6 +580,79 @@ namespace Configurator
                     TreeIter iter;
                     if (treeViewAdditional.Model.GetIter(out iter, selectionRows[i]))
                         listStoreAdditional.Remove(ref iter);
+                }
+            }
+        }
+
+        void OnTreeViewAdditionalPressEvent(object sender, ButtonPressEventArgs args)
+        {
+            if (args.Event.Button == 1 && args.Event.Type == Gdk.EventType.DoubleButtonPress && treeViewAdditional.Selection.CountSelectedRows() != 0)
+            {
+                TreePath itemPath;
+                TreeViewColumn treeColumn;
+
+                treeViewAdditional.GetCursor(out itemPath, out treeColumn);
+                if (treeColumn.Data.ContainsKey("Column"))
+                {
+                    TreeIter iter;
+                    treeViewAdditional.Model.GetIter(out iter, itemPath);
+
+                    //Швидкий вибір
+                    Gdk.Rectangle rectangleCell = treeViewAdditional.GetCellArea(itemPath, treeColumn);
+                    rectangleCell.Offset(0, rectangleCell.Height);
+                    Popover popoverSmallSelect = new Popover(treeViewAdditional)
+                    {
+                        PointingTo = rectangleCell,
+                        Position = PositionType.Left,
+                        BorderWidth = 5
+                    };
+
+                    int rowNumber = int.Parse(itemPath.ToString());
+
+                    if ((ColumnsAdditional)treeColumn.Data["Column"]! == ColumnsAdditional.Value)
+                    {
+                        VBox vBox = new VBox();
+                        TextView textViewCode = new TextView();
+
+                        //Кнопки
+                        {
+                            HBox hBox = new HBox();
+                            vBox.PackStart(hBox, false, false, 5);
+
+                            Button bSave = new Button("Зберегти");
+                            bSave.Clicked += (object? sender, EventArgs args) =>
+                            {
+                                treeViewAdditional.Model.SetValue(iter, (int)ColumnsAdditional.Value, textViewCode.Buffer.Text);
+                                popoverSmallSelect.Hide();
+                            };
+                            hBox.PackStart(bSave, false, false, 2);
+
+                            Button bClose = new Button(new Image(Stock.Cancel, IconSize.Button)) { TooltipText = "Закрити" };
+                            bClose.Clicked += (object? sender, EventArgs args) =>
+                            {
+                                popoverSmallSelect.Hide();
+                            };
+                            hBox.PackEnd(bClose, false, false, 2);
+                        }
+
+                        //Text
+                        {
+                            HBox hBox = new HBox();
+                            vBox.PackStart(hBox, false, false, 5);
+
+                            textViewCode.Buffer.Text = (string)treeViewAdditional.Model.GetValue(iter, (int)ColumnsAdditional.Value);
+
+                            ScrolledWindow scrollCode = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 1000, HeightRequest = 600 };
+                            scrollCode.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+                            scrollCode.Add(textViewCode);
+
+                            hBox.PackStart(scrollCode, false, false, 0);
+                        }
+
+                        popoverSmallSelect.Add(vBox);
+                    }
+
+                    popoverSmallSelect.ShowAll();
                 }
             }
         }
