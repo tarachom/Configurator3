@@ -168,22 +168,24 @@ namespace Configurator
             Expander expanderHelp = new Expander("Довідка");
             expanderHelp.Add(vBox);
 
-            List<string> helpList = new List<string>();
-            helpList.Add("Типи даних та їх відповідники в C#:");
-            helpList.Add("integer -> int");
-            helpList.Add("numeric -> decimal");
-            helpList.Add("boolean -> bool");
-            helpList.Add("date -> DateTime");
-            helpList.Add("datetime -> DateTime");
-            helpList.Add("time -> TimeSpan");
-            helpList.Add("enum -> enum");
-            helpList.Add("pointer -> Довідник.Номенклатура()");
-            helpList.Add("composite-pointer -> UuidAndText()");
-            helpList.Add("any-pointer -> Guid()");
-            helpList.Add("byte -> byte[]");
-            helpList.Add("string[] -> string[]");
-            helpList.Add("integer[] -> int[]");
-            helpList.Add("numeric[] -> decimal[]");
+            List<string> helpList =
+            [
+                "Типи даних та їх відповідники в C#:",
+                "integer -> int",
+                "numeric -> decimal",
+                "boolean -> bool",
+                "date -> DateTime",
+                "datetime -> DateTime",
+                "time -> TimeSpan",
+                "enum -> enum",
+                "pointer -> Довідник.Номенклатура()",
+                "composite-pointer -> UuidAndText()",
+                "any-pointer -> Guid()",
+                "byte -> byte[]",
+                "string[] -> string[]",
+                "integer[] -> int[]",
+                "numeric[] -> decimal[]",
+            ];
 
             foreach (var item in helpList)
             {

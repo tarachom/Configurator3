@@ -31,8 +31,8 @@ namespace Configurator
     {
         Configuration Conf { get { return Program.Kernel.Conf; } }
 
-        public Dictionary<string, ConfigurationObjectField> Fields = new Dictionary<string, ConfigurationObjectField>();
-        public Dictionary<string, ConfigurationTabularList> TabularLists { get; set; } = new Dictionary<string, ConfigurationTabularList>();
+        public Dictionary<string, ConfigurationObjectField> Fields = [];
+        public Dictionary<string, ConfigurationTabularList> TabularLists { get; set; } = [];
         public ConfigurationTabularList TabularList { get; set; } = new ConfigurationTabularList();
         public FormConfigurator? GeneralForm { get; set; }
         public System.Action? CallBack_RefreshList { get; set; }
@@ -41,6 +41,17 @@ namespace Configurator
         public string ConfOwnerName { get; set; } = ""; /* Документи, Довідники */
 
         #region Fields
+
+        enum Columns
+        {
+            Visible,
+            Name,
+            Caption,
+            Size,
+            SortNum,
+            SortField,
+            Type
+        }
 
         ListStore listStore = new ListStore(
             typeof(bool),   //Visible
@@ -51,10 +62,48 @@ namespace Configurator
             typeof(bool),   //SortField
             typeof(string)  //Type
         );
+
         TreeView treeViewFields;
+
         Entry entryName = new Entry() { WidthRequest = 250 };
         CheckButton checkButtonIsTree = new CheckButton("Дерево");
         TextView textViewDesc = new TextView() { WrapMode = WrapMode.Word };
+
+        #endregion
+
+        #region AdditionalFields
+
+        //Колонки для додатковх полів
+        enum ColumnsAdditional
+        {
+            Visible,
+            Name,
+            Caption,
+            Size,
+            SortNum,
+            Type,
+            Value
+        }
+
+        //Додаткові поля
+        ListStore listStoreAdditional = new ListStore(
+            typeof(bool),   //Visible
+            typeof(string), //Name
+            typeof(string), //Caption
+            typeof(uint),   //Size
+            typeof(int),    //SortNum
+            typeof(string), //Type
+            typeof(string)  //Value
+        );
+
+        //Типи даних для додаткових полів
+        ListStore listStoreAdditionalType = new ListStore(
+            typeof(string) //Name
+        );
+
+        string[] AdditionalTypeList = ["string", "integer", "numeric", "boolean", "image"];
+
+        TreeView treeViewAdditional;
 
         #endregion
 
@@ -78,6 +127,10 @@ namespace Configurator
             treeViewFields = new TreeView(listStore);
             AddColumnTreeViewFields();
 
+            treeViewAdditional = new TreeView(listStoreAdditional);
+            treeViewAdditional.Selection.Mode = SelectionMode.Multiple;
+            AddColumnTreeViewAdditional();
+
             HPaned hPaned = new HPaned() { BorderWidth = 5 };
 
             CreatePack1(hPaned);
@@ -92,19 +145,58 @@ namespace Configurator
         {
             VBox vBox = new VBox();
 
-            HBox hBoxTreeView = new HBox();
-            hBoxTreeView.PackStart(new Label("Поля:"), false, false, 5);
-            vBox.PackStart(hBoxTreeView, false, false, 5);
+            //Поля
+            {
+                HBox hBoxCaption = new HBox();
+                hBoxCaption.PackStart(new Label("Поля:"), false, false, 5);
+                vBox.PackStart(hBoxCaption, false, false, 5);
 
-            HBox hBoxScrollTreeView = new HBox();
-            ScrolledWindow scrollTreeView = new ScrolledWindow() { ShadowType = ShadowType.In };
-            scrollTreeView.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-            scrollTreeView.SetSizeRequest(0, 500);
+                HBox hBoxScroll = new HBox();
+                ScrolledWindow scroll = new ScrolledWindow() { ShadowType = ShadowType.In };
+                scroll.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+                scroll.SetSizeRequest(0, 400);
 
-            scrollTreeView.Add(treeViewFields);
-            hBoxScrollTreeView.PackStart(scrollTreeView, true, true, 5);
+                scroll.Add(treeViewFields);
+                hBoxScroll.PackStart(scroll, true, true, 5);
 
-            vBox.PackStart(hBoxScrollTreeView, false, false, 0);
+                vBox.PackStart(hBoxScroll, false, false, 0);
+            }
+
+            //Додаткові поля
+            {
+                //Заголовок
+                HBox hBoxCaption = new HBox();
+                hBoxCaption.PackStart(new Label("Додаткові поля:"), false, false, 5);
+                vBox.PackStart(hBoxCaption, false, false, 5);
+
+                //Toolbar
+                Toolbar toolbar = new Toolbar();
+                vBox.PackStart(toolbar, false, false, 0);
+
+                ToolButton buttonAdd = new ToolButton(new Image(Stock.New, IconSize.Menu), "Додати") { IsImportant = true };
+                buttonAdd.Clicked += OnAdditionalFieldsAddClick;
+                toolbar.Add(buttonAdd);
+
+                ToolButton buttonCopy = new ToolButton(new Image(Stock.Copy, IconSize.Menu), "Копіювати") { IsImportant = true };
+                buttonCopy.Clicked += OnAdditionalFieldsCopyClick;
+                toolbar.Add(buttonCopy);
+
+                ToolButton buttonDelete = new ToolButton(new Image(Stock.Clear, IconSize.Menu), "Видалити") { IsImportant = true };
+                buttonDelete.Clicked += OnAdditionalFieldsRemoveClick;
+                toolbar.Add(buttonDelete);
+
+                //Tree
+                HBox hBoxScroll = new HBox();
+                ScrolledWindow scroll = new ScrolledWindow() { ShadowType = ShadowType.In };
+                scroll.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+                scroll.SetSizeRequest(0, 400);
+
+                scroll.Add(treeViewAdditional);
+                hBoxScroll.PackStart(scroll, true, true, 5);
+
+                vBox.PackStart(hBoxScroll, false, false, 0);
+            }
+
             hPaned.Pack2(vBox, true, false);
         }
 
@@ -140,87 +232,196 @@ namespace Configurator
             hPaned.Pack1(vBox, false, false);
         }
 
-
         #region TreeView
 
         void AddColumnTreeViewFields()
         {
-            CellRendererToggle visibleField = new CellRendererToggle();
-            visibleField.Toggled += EditedVisible;
-            treeViewFields.AppendColumn(new TreeViewColumn("", visibleField, "active", 0));
-
-            treeViewFields.AppendColumn(new TreeViewColumn("Назва", new CellRendererText(), "text", 1));
-
-            CellRendererText textCaption = new CellRendererText() { Editable = true };
-            textCaption.Edited += EditedCaption;
-            treeViewFields.AppendColumn(new TreeViewColumn("Заголовок", textCaption, "text", 2));
-
-            CellRendererText textSize = new CellRendererText() { Editable = true };
-            textSize.Edited += EditedSize;
-            treeViewFields.AppendColumn(new TreeViewColumn("Розмір", textSize, "text", 3));
-
-            CellRendererText textSortNum = new CellRendererText() { Editable = true };
-            textSortNum.Edited += EditedSortNum;
-
-            treeViewFields.AppendColumn(new TreeViewColumn("Порядок", textSortNum, "text", 4));
-            listStore.SetSortColumnId(4, SortType.Ascending);
-
-            CellRendererToggle sortField = new CellRendererToggle();
-            sortField.Toggled += EditedSortField;
-            treeViewFields.AppendColumn(new TreeViewColumn("Сортувати", sortField, "active", 5));
-
-            treeViewFields.AppendColumn(new TreeViewColumn("Тип", new CellRendererText(), "text", 6));
-        }
-
-        private void EditedVisible(object o, ToggledArgs args)
-        {
-            Gtk.TreeIter iter;
-            if (listStore.GetIterFromString(out iter, args.Path))
+            //Visible
             {
-                bool val = (bool)listStore.GetValue(iter, 0);
-                listStore.SetValue(iter, 0, !val);
+                CellRendererToggle cell = new CellRendererToggle();
+                cell.Toggled += (object o, ToggledArgs args) =>
+                {
+                    Gtk.TreeIter iter;
+                    if (listStore.GetIterFromString(out iter, args.Path))
+                    {
+                        bool val = (bool)listStore.GetValue(iter, (int)Columns.Visible);
+                        listStore.SetValue(iter, (int)Columns.Visible, !val);
+                    }
+                };
+                treeViewFields.AppendColumn(new TreeViewColumn("", cell, "active", Columns.Visible));
             }
-        }
 
-        private void EditedSortField(object o, ToggledArgs args)
-        {
-            Gtk.TreeIter iter;
-            if (listStore.GetIterFromString(out iter, args.Path))
+            //Name
+            treeViewFields.AppendColumn(new TreeViewColumn("Назва", new CellRendererText(), "text", Columns.Name));
+
+            //Caption
             {
-                bool val = (bool)listStore.GetValue(iter, 5);
-                listStore.SetValue(iter, 5, !val);
+                CellRendererText cell = new CellRendererText() { Editable = true };
+                cell.Edited += (object o, EditedArgs args) =>
+                {
+                    Gtk.TreeIter iter;
+                    if (listStore.GetIterFromString(out iter, args.Path))
+                        listStore.SetValue(iter, (int)Columns.Caption, args.NewText);
+                };
+                treeViewFields.AppendColumn(new TreeViewColumn("Заголовок", cell, "text", Columns.Caption));
             }
-        }
 
-        private void EditedCaption(object o, EditedArgs args)
-        {
-            Gtk.TreeIter iter;
-            if (listStore.GetIterFromString(out iter, args.Path))
-                listStore.SetValue(iter, 2, args.NewText);
-        }
-
-        private void EditedSize(object o, EditedArgs args)
-        {
-            Gtk.TreeIter iter;
-            if (listStore.GetIterFromString(out iter, args.Path))
+            //Size
             {
-                uint size;
-                uint.TryParse(args.NewText, out size);
+                CellRendererText cell = new CellRendererText() { Editable = true };
+                cell.Edited += (object o, EditedArgs args) =>
+                {
+                    Gtk.TreeIter iter;
+                    if (listStore.GetIterFromString(out iter, args.Path))
+                    {
+                        uint size;
+                        uint.TryParse(args.NewText, out size);
 
-                listStore.SetValue(iter, 3, size);
+                        listStore.SetValue(iter, (int)Columns.Size, size);
+                    }
+                };
+                treeViewFields.AppendColumn(new TreeViewColumn("Розмір", cell, "text", Columns.Size));
             }
+
+            //SortNum
+            {
+                CellRendererText cell = new CellRendererText() { Editable = true };
+                cell.Edited += (object o, EditedArgs args) =>
+                {
+                    Gtk.TreeIter iter;
+                    if (listStore.GetIterFromString(out iter, args.Path))
+                    {
+                        uint sortNum;
+                        uint.TryParse(args.NewText, out sortNum);
+
+                        listStore.SetValue(iter, (int)Columns.SortNum, sortNum);
+                    }
+                };
+                treeViewFields.AppendColumn(new TreeViewColumn("Порядок", cell, "text", Columns.SortNum));
+                listStore.SetSortColumnId((int)Columns.SortNum, SortType.Ascending);
+            }
+
+            //SortField
+            {
+                CellRendererToggle cell = new CellRendererToggle();
+                cell.Toggled += (object o, ToggledArgs args) =>
+                {
+                    Gtk.TreeIter iter;
+                    if (listStore.GetIterFromString(out iter, args.Path))
+                    {
+                        bool val = (bool)listStore.GetValue(iter, (int)Columns.SortField);
+                        listStore.SetValue(iter, (int)Columns.SortField, !val);
+                    }
+                };
+                treeViewFields.AppendColumn(new TreeViewColumn("Сортувати", cell, "active", Columns.SortField));
+            }
+
+            //Type
+            treeViewFields.AppendColumn(new TreeViewColumn("Тип", new CellRendererText(), "text", Columns.Type));
         }
 
-        private void EditedSortNum(object o, EditedArgs args)
+        void AddColumnTreeViewAdditional()
         {
-            Gtk.TreeIter iter;
-            if (listStore.GetIterFromString(out iter, args.Path))
+            //Visible
             {
-                uint sortNum;
-                uint.TryParse(args.NewText, out sortNum);
-
-                listStore.SetValue(iter, 4, sortNum);
+                CellRendererToggle cell = new CellRendererToggle();
+                cell.Toggled += (object o, ToggledArgs args) =>
+                {
+                    TreeIter iter;
+                    if (listStoreAdditional.GetIterFromString(out iter, args.Path))
+                    {
+                        bool val = (bool)listStoreAdditional.GetValue(iter, (int)ColumnsAdditional.Visible);
+                        listStoreAdditional.SetValue(iter, (int)ColumnsAdditional.Visible, !val);
+                    }
+                };
+                treeViewAdditional.AppendColumn(new TreeViewColumn("", cell, "active", ColumnsAdditional.Visible));
             }
+
+            //Name
+            {
+                CellRendererText cell = new CellRendererText() { Editable = true };
+                cell.Edited += (object o, EditedArgs args) =>
+                {
+                    TreeIter iter;
+                    if (listStoreAdditional.GetIterFromString(out iter, args.Path))
+                        listStoreAdditional.SetValue(iter, (int)ColumnsAdditional.Name, args.NewText);
+                };
+                treeViewAdditional.AppendColumn(new TreeViewColumn("Назва", cell, "text", ColumnsAdditional.Name) { MinWidth = 150 });
+            }
+
+            //Caption
+            {
+                CellRendererText cell = new CellRendererText() { Editable = true };
+                cell.Edited += (object o, EditedArgs args) =>
+                {
+                    TreeIter iter;
+                    if (listStoreAdditional.GetIterFromString(out iter, args.Path))
+                        listStoreAdditional.SetValue(iter, (int)ColumnsAdditional.Caption, args.NewText);
+                };
+                treeViewAdditional.AppendColumn(new TreeViewColumn("Заголовок", cell, "text", ColumnsAdditional.Caption) { MinWidth = 150 });
+            }
+
+            //Size
+            {
+                CellRendererText cell = new CellRendererText() { Editable = true };
+                cell.Edited += (object o, EditedArgs args) =>
+                {
+                    TreeIter iter;
+                    if (listStoreAdditional.GetIterFromString(out iter, args.Path))
+                    {
+                        uint size;
+                        uint.TryParse(args.NewText, out size);
+
+                        listStoreAdditional.SetValue(iter, (int)ColumnsAdditional.Size, size);
+                    }
+                };
+                treeViewAdditional.AppendColumn(new TreeViewColumn("Розмір", cell, "text", ColumnsAdditional.Size));
+            }
+
+            //SortNum
+            {
+                CellRendererText cell = new CellRendererText() { Editable = true };
+                cell.Edited += (object o, EditedArgs args) =>
+                {
+                    TreeIter iter;
+                    if (listStoreAdditional.GetIterFromString(out iter, args.Path))
+                    {
+                        uint sortNum;
+                        uint.TryParse(args.NewText, out sortNum);
+
+                        listStoreAdditional.SetValue(iter, (int)ColumnsAdditional.SortNum, sortNum);
+                    }
+                };
+                treeViewAdditional.AppendColumn(new TreeViewColumn("Порядок", cell, "text", ColumnsAdditional.SortNum));
+                listStoreAdditional.SetSortColumnId((int)ColumnsAdditional.SortNum, SortType.Ascending);
+            }
+
+            //Type
+            {
+                CellRendererCombo cell = new CellRendererCombo() { Editable = true, Model = listStoreAdditionalType, TextColumn = 0 };
+                cell.Edited += (object sender, EditedArgs args) =>
+                {
+                    TreeIter iter;
+                    if (listStoreAdditional.GetIterFromString(out iter, args.Path))
+                        listStoreAdditional.SetValue(iter, (int)ColumnsAdditional.Type, args.NewText);
+                };
+                treeViewAdditional.AppendColumn(new TreeViewColumn("Тип", cell, "text", ColumnsAdditional.Type));
+            }
+
+            //Caption
+            {
+                CellRendererText cell = new CellRendererText() { Editable = true };
+                cell.Edited += (object o, EditedArgs args) =>
+                {
+                    TreeIter iter;
+                    if (listStoreAdditional.GetIterFromString(out iter, args.Path))
+                        listStoreAdditional.SetValue(iter, (int)ColumnsAdditional.Value, args.NewText);
+                };
+                treeViewAdditional.AppendColumn(new TreeViewColumn("Значення", cell, "text", ColumnsAdditional.Value) { MinWidth = 300 });
+            }
+
+            //Пустишка
+            treeViewAdditional.AppendColumn(new TreeViewColumn());
         }
 
         #endregion
@@ -233,6 +434,7 @@ namespace Configurator
             checkButtonIsTree.Sensitive = ConfOwnerName == "Довідники";
 
             FillTreeView();
+            FillTreeAdditionalView();
 
             if (IsNew)
                 TabularList.Name = "Записи";
@@ -240,6 +442,10 @@ namespace Configurator
             entryName.Text = TabularList.Name;
             checkButtonIsTree.Active = TabularList.IsTree;
             textViewDesc.Buffer.Text = TabularList.Desc;
+
+            //Типи даних для додаткових полів
+            foreach (string type in AdditionalTypeList)
+                listStoreAdditionalType.AppendValues(type);
         }
 
         void FillTreeView()
@@ -261,32 +467,124 @@ namespace Configurator
             }
         }
 
+        void FillTreeAdditionalView()
+        {
+            listStoreAdditional.Clear();
+
+            foreach (ConfigurationTabularListAdditionalField field in TabularList.AdditionalFields.Values)
+            {
+                listStoreAdditional.AppendValues(
+                    field.Visible,
+                    field.Name,
+                    field.Caption,
+                    field.Size,
+                    field.SortNum,
+                    field.Type,
+                    field.Value
+                );
+            }
+        }
+
         void GetValue()
         {
             TabularList.Name = entryName.Text;
             TabularList.IsTree = checkButtonIsTree.Active;
             TabularList.Desc = textViewDesc.Buffer.Text;
 
-            //Доспупні поля
-            TabularList.Fields.Clear();
-
             TreeIter iter;
+
+            //Поля
+            TabularList.Fields.Clear();
             if (listStore.GetIterFirst(out iter))
                 do
                 {
-                    if ((bool)listStore.GetValue(iter, 0))
+                    if ((bool)listStore.GetValue(iter, (int)Columns.Visible))
                     {
-                        string name = (string)listStore.GetValue(iter, 1);
-                        string caption = (string)listStore.GetValue(iter, 2);
-                        uint size = (uint)listStore.GetValue(iter, 3);
-                        int sortNum = (int)listStore.GetValue(iter, 4);
-                        bool sortField = (bool)listStore.GetValue(iter, 5);
+                        string name = (string)listStore.GetValue(iter, (int)Columns.Name);
+                        string caption = (string)listStore.GetValue(iter, (int)Columns.Caption);
+                        uint size = (uint)listStore.GetValue(iter, (int)Columns.Size);
+                        int sortNum = (int)listStore.GetValue(iter, (int)Columns.SortNum);
+                        bool sortField = (bool)listStore.GetValue(iter, (int)Columns.SortField);
 
                         ConfigurationObjectField field = Fields[name];
                         TabularList.AppendField(new ConfigurationTabularListField(field.Name, caption, size, sortNum, sortField));
                     }
                 }
                 while (listStore.IterNext(ref iter));
+
+            //Додаткові поля
+            TabularList.AdditionalFields.Clear();
+            if (listStoreAdditional.GetIterFirst(out iter))
+                do
+                {
+                    bool visible = (bool)listStoreAdditional.GetValue(iter, (int)ColumnsAdditional.Visible);
+                    string name = (string)listStoreAdditional.GetValue(iter, (int)ColumnsAdditional.Name);
+
+                    string newName = name;
+                    //Перевірка унікальності імені поля і створення нового імені
+                    for (int i = 1; TabularList.AdditionalFields.ContainsKey(newName) && i < 100; i++)
+                        newName = name + i;
+
+                    name = newName;
+
+                    string caption = (string)listStoreAdditional.GetValue(iter, (int)ColumnsAdditional.Caption);
+                    uint size = (uint)listStoreAdditional.GetValue(iter, (int)ColumnsAdditional.Size);
+                    int sortNum = (int)listStoreAdditional.GetValue(iter, (int)ColumnsAdditional.SortNum);
+                    string type = (string)listStoreAdditional.GetValue(iter, (int)ColumnsAdditional.Type);
+                    if (!AdditionalTypeList.Contains(type))
+                        type = "string";
+
+                    string value = (string)listStoreAdditional.GetValue(iter, (int)ColumnsAdditional.Value);
+
+                    TabularList.AppendAdditionalField(new ConfigurationTabularListAdditionalField(visible, name, caption, size, sortNum, type, value));
+                }
+                while (listStoreAdditional.IterNext(ref iter));
+
+            FillTreeAdditionalView();
+        }
+
+        #endregion
+
+        #region AdditionalFields
+
+        void OnAdditionalFieldsAddClick(object? sender, EventArgs args)
+        {
+            listStoreAdditional.AppendValues(false, "field", "field", 0, 100, "string", "");
+        }
+
+        void OnAdditionalFieldsCopyClick(object? sender, EventArgs args)
+        {
+            if (treeViewAdditional.Selection.CountSelectedRows() != 0)
+            {
+                TreePath[] selectionRows = treeViewAdditional.Selection.GetSelectedRows();
+                foreach (TreePath itemPath in selectionRows)
+                {
+                    TreeIter iter;
+                    treeViewAdditional.Model.GetIter(out iter, itemPath);
+
+                    TreeIter newIter = listStoreAdditional.Append();
+
+                    for (int i = 0; i < Enum.GetValues(typeof(ColumnsAdditional)).Length; i++)
+                        if (i == (int)ColumnsAdditional.SortNum)
+                            listStoreAdditional.SetValue(newIter, i, 100);
+                        else
+                            listStoreAdditional.SetValue(newIter, i, listStoreAdditional.GetValue(iter, i));
+                }
+            }
+        }
+
+        void OnAdditionalFieldsRemoveClick(object? sender, EventArgs args)
+        {
+            if (treeViewAdditional.Selection.CountSelectedRows() != 0)
+            {
+                TreePath[] selectionRows = treeViewAdditional.Selection.GetSelectedRows();
+                for (int i = selectionRows.Length - 1; i >= 0; i--)
+                {
+                    TreeIter iter;
+                    if (treeViewAdditional.Model.GetIter(out iter, selectionRows[i]))
+                        listStoreAdditional.Remove(ref iter);
+                }
+            }
         }
 
         #endregion
