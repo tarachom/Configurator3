@@ -91,7 +91,7 @@ namespace <xsl:value-of select="$NameSpace"/>
                 <xsl:when test="Type = 'string'">
                      <xsl:choose>
                         <xsl:when test="Multiline = '1'">
-                    TextView <xsl:value-of select="Name"/> = new TextView();
+                    TextView <xsl:value-of select="Name"/> = new TextView() { WrapMode = WrapMode.Word };
                         </xsl:when>
                         <xsl:otherwise>
                     Entry <xsl:value-of select="Name"/> = new Entry() { /* WidthRequest = 500 */ };
@@ -316,26 +316,23 @@ namespace <xsl:value-of select="$NameSpace"/>
 
         protected override async ValueTask&lt;bool&gt; Save()
         {
-            bool isSave;
+            bool isSave = false;
 
             try
             {
-                isSave = await <xsl:value-of select="$DocumentName"/>_Objest.Save();
+                if(await <xsl:value-of select="$DocumentName"/>_Objest.Save())
+                {
+                    <xsl:for-each select="$TabularParts">
+                    await <xsl:value-of select="Name"/>.SaveRecords();
+                    </xsl:for-each>
+                    isSave = true;
+                }
             }
             catch (Exception ex)
             {
                 MsgError(ex);
                 return false;
             }
-
-            <xsl:if test="count($TabularParts) != 0">
-            if (isSave)
-            {
-                <xsl:for-each select="$TabularParts">
-                    await <xsl:value-of select="Name"/>.SaveRecords();
-                </xsl:for-each>
-            }
-            </xsl:if>
 
             UnigueID = <xsl:value-of select="$DocumentName"/>_Objest.UnigueID;
             Caption = <xsl:value-of select="$DocumentName"/>_Objest.Назва;
@@ -350,14 +347,13 @@ namespace <xsl:value-of select="$NameSpace"/>
                 bool isSpend = await <xsl:value-of select="$DocumentName"/>_Objest.SpendTheDocument(<xsl:value-of select="$DocumentName"/>_Objest.ДатаДок);
 
                 if (!isSpend)
-                    ФункціїДляПовідомлень.ВідкритиТермінал();
+                    ФункціїДляПовідомлень.ПоказатиПовідомлення(<xsl:value-of select="$DocumentName"/>_Objest.UnigueID);
 
                 return isSpend;
             }
             else
             {
                 await <xsl:value-of select="$DocumentName"/>_Objest.ClearSpendTheDocument();
-                
                 return true;
             }
         }
@@ -395,7 +391,6 @@ namespace <xsl:value-of select="$NameSpace"/>
     {
         public <xsl:value-of select="$DocumentName"/>() : base()
         {
-            TreeViewGrid.Model = ТабличніСписки.<xsl:value-of select="$DocumentName"/>_Записи.Store;
             ТабличніСписки.<xsl:value-of select="$DocumentName"/>_Записи.AddColumns(TreeViewGrid);
         }
 
@@ -406,7 +401,7 @@ namespace <xsl:value-of select="$NameSpace"/>
             ТабличніСписки.<xsl:value-of select="$DocumentName"/>_Записи.SelectPointerItem = SelectPointerItem;
             ТабличніСписки.<xsl:value-of select="$DocumentName"/>_Записи.DocumentPointerItem = DocumentPointerItem;
 
-            await ТабличніСписки.<xsl:value-of select="$DocumentName"/>_Записи.LoadRecords();
+            await ТабличніСписки.<xsl:value-of select="$DocumentName"/>_Записи.LoadRecords(TreeViewGrid);
 
             if (ТабличніСписки.<xsl:value-of select="$DocumentName"/>_Записи.SelectPath != null)
                 TreeViewGrid.SetCursor(ТабличніСписки.<xsl:value-of select="$DocumentName"/>_Записи.SelectPath, TreeViewGrid.Columns[0], false);
@@ -423,13 +418,13 @@ namespace <xsl:value-of select="$NameSpace"/>
 
             searchText = "%" + searchText.Replace(" ", "%") + "%";
 
-            ТабличніСписки.<xsl:value-of select="$DocumentName"/>_Записи.Where.Clear();
+            ТабличніСписки.<xsl:value-of select="$DocumentName"/>_Записи.ОчиститиВідбір(TreeViewGrid);
 
             //Назва
-            ТабличніСписки.<xsl:value-of select="$DocumentName"/>_Записи.Where.Add(
+            ТабличніСписки.<xsl:value-of select="$DocumentName"/>_Записи.ДодатиВідбір(TreeViewGrid,
                 new Where(<xsl:value-of select="$DocumentName"/>_Const.Назва, Comparison.LIKE, searchText) { FuncToField = "LOWER" });
 
-            await ТабличніСписки.<xsl:value-of select="$DocumentName"/>_Записи.LoadRecords();
+            await ТабличніСписки.<xsl:value-of select="$DocumentName"/>_Записи.LoadRecords(TreeViewGrid);
 
             if (ТабличніСписки.<xsl:value-of select="$DocumentName"/>_Записи.FirstPath != null)
                 TreeViewGrid.SetCursor(ТабличніСписки.<xsl:value-of select="$DocumentName"/>_Записи.FirstPath, TreeViewGrid.Columns[0], false);
@@ -507,7 +502,7 @@ namespace <xsl:value-of select="$NameSpace"/>
 
         protected override void PeriodWhereChanged()
         {
-            ТабличніСписки.<xsl:value-of select="$DocumentName"/>_Записи.ДодатиВідбірПоПеріоду(Enum.Parse&lt;ТипПеріодуДляЖурналівДокументів&gt;(ComboBoxPeriodWhere.ActiveId));
+            ТабличніСписки.<xsl:value-of select="$DocumentName"/>_Записи.ДодатиВідбірПоПеріоду(TreeViewGrid, Enum.Parse&lt;ТипПеріодуДляЖурналівДокументів&gt;(ComboBoxPeriodWhere.ActiveId));
             LoadRecords();
         }
 
@@ -520,7 +515,7 @@ namespace <xsl:value-of select="$NameSpace"/>
             if (spendDoc)
             {
                 if (!await <xsl:value-of select="$DocumentName"/>_Objest.SpendTheDocument(<xsl:value-of select="$DocumentName"/>_Objest.ДатаДок))
-                    ФункціїДляПовідомлень.ВідкритиТермінал();
+                    ФункціїДляПовідомлень.ПоказатиПовідомлення(<xsl:value-of select="$DocumentName"/>_Objest.UnigueID);
             }
             else
                 await <xsl:value-of select="$DocumentName"/>_Objest.ClearSpendTheDocument();
@@ -599,7 +594,7 @@ namespace <xsl:value-of select="$NameSpace"/>
                 }
             };
 
-            Program.GeneralForm?.CreateNotebookPage($"Вибір - {<xsl:value-of select="$DocumentName"/>_Const.FULLNAME}", () =&gt; { return page; }, true);
+            Program.GeneralForm?.CreateNotebookPage($"Вибір - {<xsl:value-of select="$DocumentName"/>_Const.FULLNAME}", () =&gt; { return page; });
 
             if (UseWherePeriod)
                 page.SetValue();
