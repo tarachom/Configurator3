@@ -357,6 +357,11 @@ namespace <xsl:value-of select="$NameSpace"/>
                 return true;
             }
         }
+
+        protected override DocumentPointer? ReportSpendTheDocument(UnigueID unigueID)
+        {
+            return new <xsl:value-of select="$DocumentName"/>_Pointer(unigueID);
+        }
     }
 }
     </xsl:template>
@@ -456,6 +461,7 @@ namespace <xsl:value-of select="$NameSpace"/>
                     {
                         <xsl:value-of select="$DocumentName"/>_Елемент page = new <xsl:value-of select="$DocumentName"/>_Елемент
                         {
+                            UnigueID = unigueID,
                             CallBack_LoadRecords = CallBack_LoadRecords,
                             IsNew = false,
                             <xsl:value-of select="$DocumentName"/>_Objest = <xsl:value-of select="$DocumentName"/>_Objest,
