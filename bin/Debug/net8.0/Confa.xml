@@ -6,7 +6,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>18.01.2024 14:15:04</DateTimeSave>
+  <DateTimeSave>01.02.2024 08:55:23</DateTimeSave>
   <DictTSearch>simple</DictTSearch>
   <ConstantsBlocks>
     <ConstantsBlock>
@@ -956,6 +956,9 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <Table>tab_a01</Table>
       <Desc>Юридичні особи та підприємці нашої організації</Desc>
       <AutoNum>0</AutoNum>
+      <Type>Normal</Type>
+      <PointerFolders>
+      </PointerFolders>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -1216,6 +1219,8 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <Table>tab_a03</Table>
       <Desc>Товари та послуги</Desc>
       <AutoNum>1</AutoNum>
+      <Type>Hierarchical</Type>
+      <PointerFolders>Довідники.Номенклатура_Папки</PointerFolders>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -1520,6 +1525,8 @@ END)]]></Value>
       <Table>tab_a04</Table>
       <Desc>Виробники</Desc>
       <AutoNum>0</AutoNum>
+      <Type>Hierarchical</Type>
+      <PointerFolders>Довідники.Виробники_Папки</PointerFolders>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -1616,6 +1623,9 @@ END)]]></Value>
       <Table>tab_a05</Table>
       <Desc>Види номенклатури</Desc>
       <AutoNum>0</AutoNum>
+      <Type>Normal</Type>
+      <PointerFolders>
+      </PointerFolders>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -1735,6 +1745,9 @@ END)]]></Value>
       <Table>tab_a06</Table>
       <Desc>Одиниці виміру</Desc>
       <AutoNum>0</AutoNum>
+      <Type>Normal</Type>
+      <PointerFolders>
+      </PointerFolders>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -1852,6 +1865,9 @@ END)]]></Value>
       <Table>tab_a07</Table>
       <Desc>Валюти</Desc>
       <AutoNum>0</AutoNum>
+      <Type>Normal</Type>
+      <PointerFolders>
+      </PointerFolders>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -2028,6 +2044,9 @@ END)]]></Value>
       <Table>tab_a08</Table>
       <Desc>Контрагенти</Desc>
       <AutoNum>0</AutoNum>
+      <Type>Normal</Type>
+      <PointerFolders>
+      </PointerFolders>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -2304,6 +2323,9 @@ END)]]></Value>
       <Table>tab_a10</Table>
       <Desc>Склади</Desc>
       <AutoNum>0</AutoNum>
+      <Type>Normal</Type>
+      <PointerFolders>
+      </PointerFolders>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -2573,6 +2595,9 @@ END)]]></Value>
       <Table>tab_a12</Table>
       <Desc>Види цін</Desc>
       <AutoNum>0</AutoNum>
+      <Type>Normal</Type>
+      <PointerFolders>
+      </PointerFolders>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -2688,6 +2713,9 @@ END)]]></Value>
       <Table>tab_a13</Table>
       <Desc>Види цін постачальників</Desc>
       <AutoNum>0</AutoNum>
+      <Type>Normal</Type>
+      <PointerFolders>
+      </PointerFolders>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -2795,6 +2823,9 @@ END)]]></Value>
       <Table>tab_a14</Table>
       <Desc>Користувачі</Desc>
       <AutoNum>0</AutoNum>
+      <Type>Normal</Type>
+      <PointerFolders>
+      </PointerFolders>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -2991,6 +3022,9 @@ END)]]></Value>
       <Table>tab_a16</Table>
       <Desc>Фізичні особи</Desc>
       <AutoNum>0</AutoNum>
+      <Type>Normal</Type>
+      <PointerFolders>
+      </PointerFolders>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -3188,6 +3222,9 @@ END)]]></Value>
       <Table>tab_a18</Table>
       <Desc>Структура підприємства</Desc>
       <AutoNum>0</AutoNum>
+      <Type>Normal</Type>
+      <PointerFolders>
+      </PointerFolders>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -3285,6 +3322,9 @@ END)]]></Value>
       <Table>tab_a19</Table>
       <Desc>Країни світу</Desc>
       <AutoNum>0</AutoNum>
+      <Type>Normal</Type>
+      <PointerFolders>
+      </PointerFolders>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -3381,6 +3421,9 @@ END)]]></Value>
       <Table>tab_a20</Table>
       <Desc>Файли</Desc>
       <AutoNum>0</AutoNum>
+      <Type>Normal</Type>
+      <PointerFolders>
+      </PointerFolders>
       <Fields>
         <Field>
           <Name>Код</Name>
@@ -3539,6 +3582,9 @@ END)]]></Value>
       <Table>tab_a21</Table>
       <Desc>Характеристики номенклатури</Desc>
       <AutoNum>0</AutoNum>
+      <Type>Normal</Type>
+      <PointerFolders>
+      </PointerFolders>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -3693,6 +3739,9 @@ END)]]></Value>
       <Table>tab_a22</Table>
       <Desc>Номенклатура папки</Desc>
       <AutoNum>0</AutoNum>
+      <Type>Normal</Type>
+      <PointerFolders>
+      </PointerFolders>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -3758,6 +3807,9 @@ END)]]></Value>
       <Table>tab_a23</Table>
       <Desc>Контрагенти папки</Desc>
       <AutoNum>0</AutoNum>
+      <Type>Normal</Type>
+      <PointerFolders>
+      </PointerFolders>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -3823,6 +3875,9 @@ END)]]></Value>
       <Table>tab_a24</Table>
       <Desc>Склади папки</Desc>
       <AutoNum>0</AutoNum>
+      <Type>Normal</Type>
+      <PointerFolders>
+      </PointerFolders>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -3888,6 +3943,9 @@ END)]]></Value>
       <Table>tab_a26</Table>
       <Desc>Каси</Desc>
       <AutoNum>0</AutoNum>
+      <Type>Normal</Type>
+      <PointerFolders>
+      </PointerFolders>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -4042,6 +4100,9 @@ END)]]></Value>
       <Table>tab_a27</Table>
       <Desc>Банківські рахунки організацій</Desc>
       <AutoNum>0</AutoNum>
+      <Type>Normal</Type>
+      <PointerFolders>
+      </PointerFolders>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -4295,6 +4356,9 @@ END)]]></Value>
       <Desc>Договори контрагентів. 
 Договори підпорядковані контрагенту</Desc>
       <AutoNum>0</AutoNum>
+      <Type>Normal</Type>
+      <PointerFolders>
+      </PointerFolders>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -4626,6 +4690,9 @@ END)]]></Value>
       <Table>tab_a29</Table>
       <Desc>Банківські рахунки контрагентів</Desc>
       <AutoNum>0</AutoNum>
+      <Type>Normal</Type>
+      <PointerFolders>
+      </PointerFolders>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -4900,6 +4967,9 @@ END)]]></Value>
       <Table>tab_a45</Table>
       <Desc>Стаття руху коштів</Desc>
       <AutoNum>0</AutoNum>
+      <Type>Normal</Type>
+      <PointerFolders>
+      </PointerFolders>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -5058,6 +5128,9 @@ END)]]></Value>
       <Desc>
       </Desc>
       <AutoNum>0</AutoNum>
+      <Type>Normal</Type>
+      <PointerFolders>
+      </PointerFolders>
       <Fields>
         <Field>
           <Name>Номер</Name>
@@ -5145,6 +5218,9 @@ END)]]></Value>
       <Table>tab_b06</Table>
       <Desc>Композитний тип для регістру ПартіїТоварів</Desc>
       <AutoNum>0</AutoNum>
+      <Type>Normal</Type>
+      <PointerFolders>
+      </PointerFolders>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -5330,6 +5406,9 @@ END)]]></Value>
       <Desc>
       </Desc>
       <AutoNum>0</AutoNum>
+      <Type>Normal</Type>
+      <PointerFolders>
+      </PointerFolders>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -5483,6 +5562,9 @@ END)]]></Value>
       <Desc>
       </Desc>
       <AutoNum>0</AutoNum>
+      <Type>Normal</Type>
+      <PointerFolders>
+      </PointerFolders>
       <Fields>
         <Field>
           <Name>Код</Name>
@@ -6038,6 +6120,9 @@ END)]]></Value>
 
 Підпорядковується складу</Desc>
       <AutoNum>0</AutoNum>
+      <Type>Normal</Type>
+      <PointerFolders>
+      </PointerFolders>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -6173,6 +6258,9 @@ END)]]></Value>
 
 Підпорядковується приміщенню</Desc>
       <AutoNum>0</AutoNum>
+      <Type>Normal</Type>
+      <PointerFolders>
+      </PointerFolders>
       <Fields>
         <Field>
           <Name>Папка</Name>
@@ -6461,6 +6549,9 @@ END)]]></Value>
 --------------------------
 Не використовується </Desc>
       <AutoNum>0</AutoNum>
+      <Type>Normal</Type>
+      <PointerFolders>
+      </PointerFolders>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -6555,6 +6646,9 @@ END)]]></Value>
       <Table>tab_a75</Table>
       <Desc>Опис комірки по параметрах</Desc>
       <AutoNum>0</AutoNum>
+      <Type>Normal</Type>
+      <PointerFolders>
+      </PointerFolders>
       <Fields>
         <Field>
           <Name>Висота</Name>
@@ -6727,6 +6821,9 @@ END)]]></Value>
       <Desc>
       </Desc>
       <AutoNum>0</AutoNum>
+      <Type>Normal</Type>
+      <PointerFolders>
+      </PointerFolders>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -6841,6 +6938,9 @@ END)]]></Value>
       <Table>tab_a41</Table>
       <Desc>Блокнот для записів</Desc>
       <AutoNum>0</AutoNum>
+      <Type>Normal</Type>
+      <PointerFolders>
+      </PointerFolders>
       <Fields>
         <Field>
           <Name>Код</Name>
