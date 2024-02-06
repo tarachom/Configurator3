@@ -451,7 +451,7 @@ namespace Configurator
 
             treeConfiguration.AppendColumn(new TreeViewColumn("Конфігурація", new CellRendererText(), "text", 0));
             treeConfiguration.AppendColumn(new TreeViewColumn("Тип", new CellRendererText(), "text", 1));
-            treeConfiguration.AppendColumn(new TreeViewColumn("Ключ", new CellRendererText(), "text", 2) { Visible = false });
+            treeConfiguration.AppendColumn(new TreeViewColumn("Ключ", new CellRendererText(), "text", 2) { Visible = true });
             treeConfiguration.Model = treeStore;
 
             return treeStore;
@@ -910,13 +910,11 @@ namespace Configurator
 
         void OnRowActivated(object sender, RowActivatedArgs args)
         {
-            TreeIter iter;
-
-            if (!treeConfiguration.Selection.GetSelected(out iter) || !treeConfiguration.Model.GetIter(out iter, args.Path))
+            if (!treeConfiguration.Selection.GetSelected(out TreeIter iter) || !treeConfiguration.Model.GetIter(out iter, args.Path))
                 return;
 
             string keyComposite = (string)treeConfiguration.Model.GetValue(iter, 2);
-            if (String.IsNullOrEmpty(keyComposite) || keyComposite.IndexOf(".") == -1)
+            if (string.IsNullOrEmpty(keyComposite) || !keyComposite.Contains('.', StringComparison.CurrentCulture))
                 return;
 
             SelectionCurrentPath = treeConfiguration.Model.GetPath(iter);

@@ -6,7 +6,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>01.02.2024 08:55:23</DateTimeSave>
+  <DateTimeSave>06.02.2024 12:52:45</DateTimeSave>
   <DictTSearch>simple</DictTSearch>
   <ConstantsBlocks>
     <ConstantsBlock>
@@ -956,9 +956,8 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <Table>tab_a01</Table>
       <Desc>Юридичні особи та підприємці нашої організації</Desc>
       <AutoNum>0</AutoNum>
-      <Type>Normal</Type>
-      <PointerFolders>
-      </PointerFolders>
+      <Type>HierarchyInAnotherDirectory</Type>
+      <PointerFolders>Довідники.Організації_Папки</PointerFolders>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -1053,6 +1052,16 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
+          <IsFullTextSearch>0</IsFullTextSearch>
+        </Field>
+        <Field>
+          <Name>Папка</Name>
+          <NameInTable>col_b1</NameInTable>
+          <Type>pointer</Type>
+          <Pointer>Довідники.Організації_Папки</Pointer>
+          <Desc>Папка</Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>1</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
         </Field>
       </Fields>
@@ -1212,6 +1221,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         <SetDeletionLabel>Організації_Triggers.SetDeletionLabel</SetDeletionLabel>
         <BeforeDelete>Організації_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
+      <Forms />
     </Directory>
     <Directory>
       <Name>Номенклатура</Name>
@@ -1518,6 +1528,7 @@ END)]]></Value>
         <SetDeletionLabel>Номенклатура_Triggers.SetDeletionLabel</SetDeletionLabel>
         <BeforeDelete>Номенклатура_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
+      <Forms />
     </Directory>
     <Directory>
       <Name>Виробники</Name>
@@ -1616,6 +1627,7 @@ END)]]></Value>
         <SetDeletionLabel>Виробники_Triggers.SetDeletionLabel</SetDeletionLabel>
         <BeforeDelete>Виробники_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
+      <Forms />
     </Directory>
     <Directory>
       <Name>ВидиНоменклатури</Name>
@@ -1738,6 +1750,7 @@ END)]]></Value>
         <SetDeletionLabel>ВидиНоменклатури_Triggers.SetDeletionLabel</SetDeletionLabel>
         <BeforeDelete>ВидиНоменклатури_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
+      <Forms />
     </Directory>
     <Directory>
       <Name>ПакуванняОдиниціВиміру</Name>
@@ -1858,6 +1871,7 @@ END)]]></Value>
         <SetDeletionLabel>ПакуванняОдиниціВиміру_Triggers.SetDeletionLabel</SetDeletionLabel>
         <BeforeDelete>ПакуванняОдиниціВиміру_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
+      <Forms />
     </Directory>
     <Directory>
       <Name>Валюти</Name>
@@ -2037,6 +2051,7 @@ END)]]></Value>
         <SetDeletionLabel>Валюти_Triggers.SetDeletionLabel</SetDeletionLabel>
         <BeforeDelete>Валюти_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
+      <Forms />
     </Directory>
     <Directory>
       <Name>Контрагенти</Name>
@@ -2316,6 +2331,7 @@ END)]]></Value>
         <SetDeletionLabel>Контрагенти_Triggers.SetDeletionLabel</SetDeletionLabel>
         <BeforeDelete>Контрагенти_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
+      <Forms />
     </Directory>
     <Directory>
       <Name>Склади</Name>
@@ -2588,6 +2604,7 @@ END)]]></Value>
         <SetDeletionLabel>Склади_Triggers.SetDeletionLabel</SetDeletionLabel>
         <BeforeDelete>Склади_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
+      <Forms />
     </Directory>
     <Directory>
       <Name>ВидиЦін</Name>
@@ -2706,6 +2723,7 @@ END)]]></Value>
         <SetDeletionLabel>ВидиЦін_Triggers.SetDeletionLabel</SetDeletionLabel>
         <BeforeDelete>ВидиЦін_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
+      <Forms />
     </Directory>
     <Directory>
       <Name>ВидиЦінПостачальників</Name>
@@ -2816,6 +2834,7 @@ END)]]></Value>
         <SetDeletionLabel>ВидиЦінПостачальників_Triggers.SetDeletionLabel</SetDeletionLabel>
         <BeforeDelete>ВидиЦінПостачальників_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
+      <Forms />
     </Directory>
     <Directory>
       <Name>Користувачі</Name>
@@ -3015,6 +3034,7 @@ END)]]></Value>
         <SetDeletionLabel>Користувачі_Triggers.SetDeletionLabel</SetDeletionLabel>
         <BeforeDelete>Користувачі_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
+      <Forms />
     </Directory>
     <Directory>
       <Name>ФізичніОсоби</Name>
@@ -3215,6 +3235,7 @@ END)]]></Value>
         <SetDeletionLabel>ФізичніОсоби_Triggers.SetDeletionLabel</SetDeletionLabel>
         <BeforeDelete>ФізичніОсоби_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
+      <Forms />
     </Directory>
     <Directory>
       <Name>СтруктураПідприємства</Name>
@@ -3315,6 +3336,7 @@ END)]]></Value>
         <SetDeletionLabel>СтруктураПідприємства_Triggers.SetDeletionLabel</SetDeletionLabel>
         <BeforeDelete>СтруктураПідприємства_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
+      <Forms />
     </Directory>
     <Directory>
       <Name>КраїниСвіту</Name>
@@ -3414,6 +3436,7 @@ END)]]></Value>
         <SetDeletionLabel>КраїниСвіту_Triggers.SetDeletionLabel</SetDeletionLabel>
         <BeforeDelete>КраїниСвіту_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
+      <Forms />
     </Directory>
     <Directory>
       <Name>Файли</Name>
@@ -3575,6 +3598,7 @@ END)]]></Value>
         <SetDeletionLabel>Файли_Triggers.SetDeletionLabel</SetDeletionLabel>
         <BeforeDelete>Файли_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
+      <Forms />
     </Directory>
     <Directory>
       <Name>ХарактеристикиНоменклатури</Name>
@@ -3732,6 +3756,7 @@ END)]]></Value>
         <SetDeletionLabel>ХарактеристикиНоменклатури_Triggers.SetDeletionLabel</SetDeletionLabel>
         <BeforeDelete>ХарактеристикиНоменклатури_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
+      <Forms />
     </Directory>
     <Directory>
       <Name>Номенклатура_Папки</Name>
@@ -3800,6 +3825,7 @@ END)]]></Value>
         <SetDeletionLabel>Номенклатура_Папки_Triggers.SetDeletionLabel</SetDeletionLabel>
         <BeforeDelete>Номенклатура_Папки_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
+      <Forms />
     </Directory>
     <Directory>
       <Name>Контрагенти_Папки</Name>
@@ -3868,6 +3894,7 @@ END)]]></Value>
         <SetDeletionLabel>Контрагенти_Папки_Triggers.SetDeletionLabel</SetDeletionLabel>
         <BeforeDelete>Контрагенти_Папки_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
+      <Forms />
     </Directory>
     <Directory>
       <Name>Склади_Папки</Name>
@@ -3936,6 +3963,7 @@ END)]]></Value>
         <SetDeletionLabel>Склади_Папки_Triggers.SetDeletionLabel</SetDeletionLabel>
         <BeforeDelete>Склади_Папки_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
+      <Forms />
     </Directory>
     <Directory>
       <Name>Каси</Name>
@@ -4093,6 +4121,7 @@ END)]]></Value>
         <SetDeletionLabel>Каси_Triggers.SetDeletionLabel</SetDeletionLabel>
         <BeforeDelete>Каси_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
+      <Forms />
     </Directory>
     <Directory>
       <Name>БанківськіРахункиОрганізацій</Name>
@@ -4348,6 +4377,7 @@ END)]]></Value>
         <SetDeletionLabel>БанківськіРахункиОрганізацій_Triggers.SetDeletionLabel</SetDeletionLabel>
         <BeforeDelete>БанківськіРахункиОрганізацій_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
+      <Forms />
     </Directory>
     <Directory>
       <Name>ДоговориКонтрагентів</Name>
@@ -4683,6 +4713,7 @@ END)]]></Value>
         <SetDeletionLabel>ДоговориКонтрагентів_Triggers.SetDeletionLabel</SetDeletionLabel>
         <BeforeDelete>ДоговориКонтрагентів_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
+      <Forms />
     </Directory>
     <Directory>
       <Name>БанківськіРахункиКонтрагентів</Name>
@@ -4960,6 +4991,7 @@ END)]]></Value>
         <SetDeletionLabel>БанківськіРахункиКонтрагентів_Triggers.SetDeletionLabel</SetDeletionLabel>
         <BeforeDelete>БанківськіРахункиКонтрагентів_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
+      <Forms />
     </Directory>
     <Directory>
       <Name>СтаттяРухуКоштів</Name>
@@ -5120,6 +5152,7 @@ END)]]></Value>
         <SetDeletionLabel>СтаттяРухуКоштів_Triggers.SetDeletionLabel</SetDeletionLabel>
         <BeforeDelete>СтаттяРухуКоштів_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
+      <Forms />
     </Directory>
     <Directory>
       <Name>СеріїНоменклатури</Name>
@@ -5211,6 +5244,7 @@ END)]]></Value>
         <SetDeletionLabel>СеріїНоменклатури_Triggers.SetDeletionLabel</SetDeletionLabel>
         <BeforeDelete>СеріїНоменклатури_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
+      <Forms />
     </Directory>
     <Directory>
       <Name>ПартіяТоварівКомпозит</Name>
@@ -5398,6 +5432,7 @@ END)]]></Value>
         <SetDeletionLabel>ПартіяТоварівКомпозит_Triggers.SetDeletionLabel</SetDeletionLabel>
         <BeforeDelete>ПартіяТоварівКомпозит_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
+      <Forms />
     </Directory>
     <Directory>
       <Name>ВидиЗапасів</Name>
@@ -5554,6 +5589,7 @@ END)]]></Value>
         <SetDeletionLabel>ВидиЗапасів_Triggers.SetDeletionLabel</SetDeletionLabel>
         <BeforeDelete>ВидиЗапасів_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
+      <Forms />
     </Directory>
     <Directory>
       <Name>Банки</Name>
@@ -6110,6 +6146,7 @@ END)]]></Value>
         <SetDeletionLabel>Банки_Triggers.SetDeletionLabel</SetDeletionLabel>
         <BeforeDelete>Банки_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
+      <Forms />
     </Directory>
     <Directory>
       <Name>СкладськіПриміщення</Name>
@@ -6249,6 +6286,7 @@ END)]]></Value>
         <SetDeletionLabel>СкладськіПриміщення_Triggers.SetDeletionLabel</SetDeletionLabel>
         <BeforeDelete>СкладськіПриміщення_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
+      <Forms />
     </Directory>
     <Directory>
       <Name>СкладськіКомірки</Name>
@@ -6539,6 +6577,7 @@ END)]]></Value>
         <SetDeletionLabel>СкладськіКомірки_Triggers.SetDeletionLabel</SetDeletionLabel>
         <BeforeDelete>СкладськіКомірки_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
+      <Forms />
     </Directory>
     <Directory>
       <Name>ОбластьЗберігання</Name>
@@ -6639,6 +6678,7 @@ END)]]></Value>
         <BeforeDelete>
         </BeforeDelete>
       </TriggerFunctions>
+      <Forms />
     </Directory>
     <Directory>
       <Name>ТипорозміриКомірок</Name>
@@ -6813,6 +6853,7 @@ END)]]></Value>
         <SetDeletionLabel>ТипорозміриКомірок_Triggers.SetDeletionLabel</SetDeletionLabel>
         <BeforeDelete>ТипорозміриКомірок_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
+      <Forms />
     </Directory>
     <Directory>
       <Name>СкладськіКомірки_Папки</Name>
@@ -6931,6 +6972,7 @@ END)]]></Value>
         <SetDeletionLabel>СкладськіКомірки_Папки_Triggers.SetDeletionLabel</SetDeletionLabel>
         <BeforeDelete>СкладськіКомірки_Папки_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
+      <Forms />
     </Directory>
     <Directory>
       <Name>Блокнот</Name>
@@ -7082,6 +7124,81 @@ END)]]></Value>
         <SetDeletionLabel>Блокнот_Triggers.SetDeletionLabel</SetDeletionLabel>
         <BeforeDelete>Блокнот_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
+      <Forms />
+    </Directory>
+    <Directory>
+      <Name>Організації_Папки</Name>
+      <FullName>Організації Папки</FullName>
+      <Table>tab_a65</Table>
+      <Desc>Організації Папки</Desc>
+      <AutoNum>0</AutoNum>
+      <Type>Hierarchical</Type>
+      <PointerFolders>
+      </PointerFolders>
+      <Fields>
+        <Field>
+          <Name>Код</Name>
+          <NameInTable>col_a1</NameInTable>
+          <Type>string</Type>
+          <Desc>Код</Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>1</IsIndex>
+          <IsFullTextSearch>0</IsFullTextSearch>
+          <Multiline>0</Multiline>
+        </Field>
+        <Field>
+          <Name>Назва</Name>
+          <NameInTable>col_a2</NameInTable>
+          <Type>string</Type>
+          <Desc>Назва</Desc>
+          <IsPresentation>1</IsPresentation>
+          <IsIndex>1</IsIndex>
+          <IsFullTextSearch>0</IsFullTextSearch>
+          <Multiline>0</Multiline>
+        </Field>
+        <Field>
+          <Name>Родич</Name>
+          <NameInTable>col_a3</NameInTable>
+          <Type>pointer</Type>
+          <Pointer>Довідники.Організації_Папки</Pointer>
+          <Desc>Родич</Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>1</IsIndex>
+          <IsFullTextSearch>0</IsFullTextSearch>
+        </Field>
+      </Fields>
+      <TabularParts />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Desc>
+          </Desc>
+          <IsTree>1</IsTree>
+          <Fields />
+        </TabularList>
+        <TabularList>
+          <Name>ЗаписиШвидкийВибір</Name>
+          <Desc>
+          </Desc>
+          <IsTree>1</IsTree>
+          <Fields />
+        </TabularList>
+      </TabularLists>
+      <TriggerFunctions>
+        <New>
+        </New>
+        <Copying>
+        </Copying>
+        <BeforeSave>
+        </BeforeSave>
+        <AfterSave>
+        </AfterSave>
+        <SetDeletionLabel>
+        </SetDeletionLabel>
+        <BeforeDelete>
+        </BeforeDelete>
+      </TriggerFunctions>
+      <Forms />
     </Directory>
   </Directories>
   <Documents>

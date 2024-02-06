@@ -113,130 +113,149 @@ namespace Configurator
                 hBoxTable.PackStart(entryTable, false, false, 5);
 
                 //Опис
-                HBox hBoxDesc = new HBox() { Halign = Align.End };
-                vBox.PackStart(hBoxDesc, false, false, 5);
+                {
+                    HBox hBoxDesc = new HBox() { Halign = Align.End };
+                    vBox.PackStart(hBoxDesc, false, false, 5);
 
-                hBoxDesc.PackStart(new Label("Опис:") { Valign = Align.Start }, false, false, 5);
+                    hBoxDesc.PackStart(new Label("Опис:") { Valign = Align.Start }, false, false, 5);
 
-                ScrolledWindow scrollTextView = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 500, HeightRequest = 100 };
-                scrollTextView.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-                scrollTextView.Add(textViewDesc);
+                    ScrolledWindow scrollTextView = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 500, HeightRequest = 100 };
+                    scrollTextView.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+                    scrollTextView.Add(textViewDesc);
 
-                hBoxDesc.PackStart(scrollTextView, false, false, 5);
+                    hBoxDesc.PackStart(scrollTextView, false, false, 5);
+                }
 
                 //Тип довідника
-                HBox hBoxTypeDir = new HBox() { Halign = Align.End };
-                vBox.PackStart(hBoxTypeDir, false, false, 5);
-
-                comboBoxTypeDir.Append(TypeDirectories.Normal.ToString(), "Звичайний");
-                comboBoxTypeDir.Append(TypeDirectories.Hierarchical.ToString(), "Ієрархічний");
-                comboBoxTypeDir.Changed += (object? sender, EventArgs args) =>
                 {
-                    comboBoxPointerFolders.Parent.Sensitive =
-                        comboBoxTypeDir.ActiveId == TypeDirectories.Hierarchical.ToString();
-                };
+                    HBox hBoxTypeDir = new HBox() { Halign = Align.End };
+                    vBox.PackStart(hBoxTypeDir, false, false, 5);
 
-                hBoxTypeDir.PackStart(new Label("Тип довідника:"), false, false, 5);
-                hBoxTypeDir.PackStart(comboBoxTypeDir, false, false, 5);
+                    comboBoxTypeDir.Append(TypeDirectories.Normal.ToString(), "Звичайний");
+                    comboBoxTypeDir.Append(TypeDirectories.Hierarchical.ToString(), "Ієрархічний");
+                    comboBoxTypeDir.Append(TypeDirectories.HierarchyInAnotherDirectory.ToString(), "Ієрархія в окремому довіднику");
 
-                //Pointer
-                HBox hBoxPointerFolders = new HBox() { Halign = Align.End };
-                vBox.PackStart(hBoxPointerFolders, false, false, 5);
+                    hBoxTypeDir.PackStart(new Label("Тип довідника:"), false, false, 5);
+                    hBoxTypeDir.PackStart(comboBoxTypeDir, false, false, 5);
+                }
 
-                FillPointerFolders();
-
-                hBoxPointerFolders.PackStart(new Label("Папки:"), false, false, 5);
-                hBoxPointerFolders.PackStart(comboBoxPointerFolders, false, false, 5);
-
-                Button buttonAddDirFolders = new Button("Новий");
-                hBoxPointerFolders.PackStart(buttonAddDirFolders, false, false, 5);
-
+                //Кнопка створення окремого довідника для ієрархії або додаткових полів
+                Button buttonAddDirFolders = new Button("Створити");
                 buttonAddDirFolders.Clicked += async (object? sender, EventArgs args) =>
                 {
-                    if (string.IsNullOrEmpty(entryName.Text))
+                    if (comboBoxTypeDir.ActiveId == TypeDirectories.HierarchyInAnotherDirectory.ToString())
                     {
-                        Message.Error(GeneralForm, "Назва довідника не вказана");
-                        return;
-                    }
-
-                    if (!Conf.Directories.ContainsKey(entryName.Text))
-                    {
-                        Message.Error(GeneralForm, "Довідник не збережений в колекцію, потрібно спочатку зберегти");
-                        return;
-                    }
-
-                    string newConfDirectoryName = entryName.Text + "_Папки";
-
-                    if (!Conf.Directories.ContainsKey(newConfDirectoryName))
-                    {
-                        ConfigurationDirectories newConfDirectory = new ConfigurationDirectories
+                        if (string.IsNullOrEmpty(entryName.Text))
                         {
-                            Name = newConfDirectoryName,
-                            FullName = entryName.Text + " Папки",
-                            Desc = entryName.Text + " Папки",
-                            TypeDirectory = TypeDirectories.Normal,
-                            Table = await Configuration.GetNewUnigueTableName(Program.Kernel)
-                        };
-
-                        //
-                        //Заповнення полями
-                        //
-
-                        //Код
-                        string nameInTable_Code = Configuration.GetNewUnigueColumnName(Program.Kernel, newConfDirectory.Table, newConfDirectory.Fields);
-                        newConfDirectory.AppendField(new ConfigurationObjectField("Код", nameInTable_Code, "string", "", "Код", false, true));
-
-                        //Назва
-                        string nameInTable_Name = Configuration.GetNewUnigueColumnName(Program.Kernel, newConfDirectory.Table, newConfDirectory.Fields);
-                        newConfDirectory.AppendField(new ConfigurationObjectField("Назва", nameInTable_Name, "string", "", "Назва", true, true));
-
-                        //Родич
-                        string nameInTable_Parent = Configuration.GetNewUnigueColumnName(Program.Kernel, newConfDirectory.Table, newConfDirectory.Fields);
-                        newConfDirectory.AppendField(new ConfigurationObjectField("Родич", nameInTable_Parent, "pointer", $"Довідники.{newConfDirectory.Name}", "Родич", false, true));
-
-                        //Заповнення списків
-                        newConfDirectory.AppendTableList(new ConfigurationTabularList("Записи", "", true));
-                        newConfDirectory.AppendTableList(new ConfigurationTabularList("ЗаписиШвидкийВибір", "", true));
-
-                        Conf.AppendDirectory(newConfDirectory);
-
-                        //Перевантажити список довідників
-                        FillPointerFolders();
-
-                        //Встановити створений довідник як вибраний у списку
-                        comboBoxPointerFolders.ActiveId = $"Довідники.{newConfDirectoryName}";
-
-                        //Додати нове поле Папка в основний довідник
-                        if (!ConfDirectory.Fields.ContainsKey("Папка"))
-                        {
-                            string nameInTable_Folder = Configuration.GetNewUnigueColumnName(Program.Kernel, ConfDirectory.Table, ConfDirectory.Fields);
-                            ConfDirectory.AppendField(new ConfigurationObjectField("Папка", nameInTable_Folder, "pointer", $"Довідники.{newConfDirectory.Name}", "Папка", false, true));
+                            Message.Error(GeneralForm, "Назва довідника не вказана");
+                            return;
                         }
 
-                        //Перевантажити список полів
-                        FieldsRefreshList();
-
-                        //Перевантажити дерево та відкрити вкладку з новим довідником
-                        GeneralForm?.LoadTreeAsync();
-                        GeneralForm?.CreateNotebookPage($"Довідник: {newConfDirectoryName}", () =>
+                        if (!Conf.Directories.ContainsKey(entryName.Text))
                         {
-                            PageDirectory page = new PageDirectory()
+                            Message.Error(GeneralForm, "Довідник не збережений в колекцію, потрібно спочатку зберегти");
+                            return;
+                        }
+
+                        string newConfDirectoryName = entryName.Text + "_Папки";
+
+                        if (!Conf.Directories.ContainsKey(newConfDirectoryName))
+                        {
+                            ConfigurationDirectories newConfDirectory = new ConfigurationDirectories
                             {
-                                ConfDirectory = Conf.Directories[newConfDirectoryName],
-                                IsNew = false,
-                                GeneralForm = GeneralForm
+                                Name = newConfDirectoryName,
+                                FullName = entryName.Text + " Папки",
+                                Desc = entryName.Text + " Папки",
+                                TypeDirectory = TypeDirectories.Hierarchical,
+                                Table = await Configuration.GetNewUnigueTableName(Program.Kernel)
                             };
 
-                            page.SetValue();
+                            //Код
+                            string nameInTable_Code = Configuration.GetNewUnigueColumnName(Program.Kernel, newConfDirectory.Table, newConfDirectory.Fields);
+                            newConfDirectory.AppendField(new ConfigurationObjectField("Код", nameInTable_Code, "string", "", "Код", false, true));
 
-                            return page;
-                        });
+                            //Назва
+                            string nameInTable_Name = Configuration.GetNewUnigueColumnName(Program.Kernel, newConfDirectory.Table, newConfDirectory.Fields);
+                            newConfDirectory.AppendField(new ConfigurationObjectField("Назва", nameInTable_Name, "string", "", "Назва", true, true));
+
+                            //Родич
+                            string nameInTable_Parent = Configuration.GetNewUnigueColumnName(Program.Kernel, newConfDirectory.Table, newConfDirectory.Fields);
+                            newConfDirectory.AppendField(new ConfigurationObjectField("Родич", nameInTable_Parent, "pointer", $"Довідники.{newConfDirectory.Name}", "Родич", false, true));
+
+                            //Заповнення списків
+                            newConfDirectory.AppendTableList(new ConfigurationTabularList("Записи", "", true));
+                            newConfDirectory.AppendTableList(new ConfigurationTabularList("ЗаписиШвидкийВибір", "", true));
+
+                            Conf.AppendDirectory(newConfDirectory);
+
+                            //Перевантажити список довідників
+                            FillPointerFolders();
+
+                            //Встановити створений довідник як вибраний у списку
+                            comboBoxPointerFolders.ActiveId = $"Довідники.{newConfDirectoryName}";
+
+                            //Додати нове поле Папка в основний довідник
+                            if (!ConfDirectory.Fields.ContainsKey("Папка"))
+                            {
+                                string nameInTable_Folder = Configuration.GetNewUnigueColumnName(Program.Kernel, ConfDirectory.Table, ConfDirectory.Fields);
+                                ConfDirectory.AppendField(new ConfigurationObjectField("Папка", nameInTable_Folder, "pointer", $"Довідники.{newConfDirectory.Name}", "Папка", false, true));
+                            }
+
+                            //Перевантажити список полів
+                            FieldsRefreshList();
+
+                            //Перевантажити дерево та відкрити вкладку з новим довідником
+                            GeneralForm?.LoadTreeAsync();
+                        }
+                        else
+                        {
+                            comboBoxPointerFolders.ActiveId = $"Довідники.{newConfDirectoryName}";
+                        }
                     }
                     else
                     {
-                        comboBoxPointerFolders.ActiveId = $"Довідники.{newConfDirectoryName}";
+                        if (!ConfDirectory.Fields.ContainsKey("Родич"))
+                        {
+                            // Родич
+                            string nameInTable_Parent = Configuration.GetNewUnigueColumnName(Program.Kernel, ConfDirectory.Table, ConfDirectory.Fields);
+                            ConfDirectory.AppendField(new ConfigurationObjectField("Родич", nameInTable_Parent, "pointer", $"Довідники.{ConfDirectory.Name}", "Родич", false, true));
+
+                            //Перевантажити список полів
+                            FieldsRefreshList();
+
+                            //Перевантажити дерево та відкрити вкладку з новим довідником
+                            GeneralForm?.LoadTreeAsync();
+                        }
                     }
                 };
+
+                //Обробка вибору типу довідника
+                comboBoxTypeDir.Changed += (object? sender, EventArgs args) =>
+                {
+                    //Вибір папки тільки якщо HierarchyInAnotherDirectory
+                    comboBoxPointerFolders.Parent.Sensitive =
+                        comboBoxTypeDir.ActiveId == TypeDirectories.HierarchyInAnotherDirectory.ToString();
+
+                    //Кнопка працює тільки Hierarchical або HierarchyInAnotherDirectory
+                    buttonAddDirFolders.Sensitive =
+                        comboBoxTypeDir.ActiveId == TypeDirectories.Hierarchical.ToString() ||
+                        comboBoxTypeDir.ActiveId == TypeDirectories.HierarchyInAnotherDirectory.ToString();
+                };
+
+                //Вказівник на ієрархію в окремому довіднику
+                {
+                    HBox hBoxPointerFolders = new HBox() { Halign = Align.End };
+                    vBox.PackStart(hBoxPointerFolders, false, false, 5);
+
+                    HBox hBoxCaptionAndCombobox = new HBox() { Sensitive = false };
+                    hBoxCaptionAndCombobox.PackStart(new Label("Довідник:"), false, false, 2);
+                    hBoxCaptionAndCombobox.PackStart(comboBoxPointerFolders, false, false, 2);
+
+                    hBoxPointerFolders.PackStart(hBoxCaptionAndCombobox, false, false, 5);
+                    hBoxPointerFolders.PackStart(buttonAddDirFolders, false, false, 5);
+
+                    FillPointerFolders();
+                }
             }
 
             //Автоматична нумерація
@@ -449,6 +468,7 @@ class {entryName.Text}_Triggers
             }
 
             //Шаблони
+            /*
             {
                 Expander expanderTemplates = new Expander("Готові шаблони");
                 vBox.PackStart(expanderTemplates, false, false, 5);
@@ -502,6 +522,7 @@ class {entryName.Text}_Triggers
                     GeneralForm?.LoadTreeAsync();
                 };
             }
+            */
 
             //Генерування коду 
             {
@@ -816,7 +837,7 @@ class {entryName.Text}_Triggers
 
             ConfDirectory.AutomaticNumeration = checkButtonAutoNum.Active;
             ConfDirectory.TypeDirectory = Enum.Parse<TypeDirectories>(comboBoxTypeDir.ActiveId);
-            ConfDirectory.PointerFolders = (ConfDirectory.TypeDirectory == TypeDirectories.Hierarchical &&
+            ConfDirectory.PointerFolders = (ConfDirectory.TypeDirectory == TypeDirectories.HierarchyInAnotherDirectory &&
                 comboBoxPointerFolders.Active != -1) ? comboBoxPointerFolders.ActiveId : "";
         }
 
