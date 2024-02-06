@@ -267,7 +267,7 @@ namespace Configurator
                         xmlWriter.WriteAttributeString("name", configurationConstants.Name);
                         xmlWriter.WriteAttributeString("col", configurationConstants.NameInTable);
 
-                        foreach (ConfigurationObjectTablePart tablePart in configurationConstants.TabularParts.Values)
+                        foreach (ConfigurationTablePart tablePart in configurationConstants.TabularParts.Values)
                         {
                             if (CancellationTokenThread.IsCancellationRequested)
                                 break;
@@ -307,7 +307,7 @@ namespace Configurator
 
                     await WriteQuerySelect(xmlWriter, $@"SELECT uid, deletion_label{GetAllFields(configurationDirectories.Fields)} FROM {configurationDirectories.Table}");
 
-                    foreach (ConfigurationObjectTablePart tablePart in configurationDirectories.TabularParts.Values)
+                    foreach (ConfigurationTablePart tablePart in configurationDirectories.TabularParts.Values)
                     {
                         if (CancellationTokenThread.IsCancellationRequested)
                             break;
@@ -344,7 +344,7 @@ namespace Configurator
 
                     await WriteQuerySelect(xmlWriter, $@"SELECT uid, deletion_label, spend, spend_date{GetAllFields(configurationDocuments.Fields)} FROM {configurationDocuments.Table}");
 
-                    foreach (ConfigurationObjectTablePart tablePart in configurationDocuments.TabularParts.Values)
+                    foreach (ConfigurationTablePart tablePart in configurationDocuments.TabularParts.Values)
                     {
                         if (CancellationTokenThread.IsCancellationRequested)
                             break;
@@ -412,7 +412,7 @@ namespace Configurator
 
                     await WriteQuerySelect(xmlWriter, $@"SELECT uid, period, income, owner{query_fields} FROM {configurationRegistersAccumulation.Table}");
 
-                    foreach (ConfigurationObjectTablePart tablePart in configurationRegistersAccumulation.TabularParts.Values)
+                    foreach (ConfigurationTablePart tablePart in configurationRegistersAccumulation.TabularParts.Values)
                     {
                         if (CancellationTokenThread.IsCancellationRequested)
                             break;
@@ -449,11 +449,11 @@ namespace Configurator
         /// </summary>
         /// <param name="fields">Колекція полів</param>
         /// <returns>Список полів</returns>
-        string GetAllFields(Dictionary<string, ConfigurationObjectField> fields)
+        string GetAllFields(Dictionary<string, ConfigurationField> fields)
         {
             string guery_fields = "";
 
-            foreach (ConfigurationObjectField field in fields.Values)
+            foreach (ConfigurationField field in fields.Values)
                 guery_fields += $", {field.NameInTable}";
 
             return guery_fields;
@@ -461,10 +461,10 @@ namespace Configurator
 
         #region Info (додаткові відомості у файл вигрузки)
 
-        void WriteFieldsInfo(XmlWriter xmlWriter, Dictionary<string, ConfigurationObjectField> fields)
+        void WriteFieldsInfo(XmlWriter xmlWriter, Dictionary<string, ConfigurationField> fields)
         {
             xmlWriter.WriteStartElement("FieldInfo");
-            foreach (ConfigurationObjectField field in fields.Values)
+            foreach (ConfigurationField field in fields.Values)
             {
                 xmlWriter.WriteStartElement("Field");
                 xmlWriter.WriteAttributeString("name", field.Name);
@@ -477,7 +477,7 @@ namespace Configurator
             xmlWriter.WriteEndElement();
         }
 
-        void WriteTablePartInfo(XmlWriter xmlWriter, ConfigurationObjectTablePart tablePart)
+        void WriteTablePartInfo(XmlWriter xmlWriter, ConfigurationTablePart tablePart)
         {
             xmlWriter.WriteStartElement("TablePart");
             xmlWriter.WriteAttributeString("name", tablePart.Name);
@@ -488,12 +488,12 @@ namespace Configurator
             xmlWriter.WriteEndElement();
         }
 
-        void WriteTabularPartsInfo(XmlWriter xmlWriter, Dictionary<string, ConfigurationObjectTablePart> tabularParts)
+        void WriteTabularPartsInfo(XmlWriter xmlWriter, Dictionary<string, ConfigurationTablePart> tabularParts)
         {
             if (tabularParts.Count > 0)
             {
                 xmlWriter.WriteStartElement("TabularPartsInfo");
-                foreach (ConfigurationObjectTablePart tablePart in tabularParts.Values)
+                foreach (ConfigurationTablePart tablePart in tabularParts.Values)
                     WriteTablePartInfo(xmlWriter, tablePart);
                 xmlWriter.WriteEndElement(); //TabularPartsInfo
             }

@@ -31,7 +31,7 @@ namespace Configurator
     {
         Configuration Conf { get { return Program.Kernel.Conf; } }
 
-        public ConfigurationObjectQueryBlock QueryBlock { get; set; } = new ConfigurationObjectQueryBlock();
+        public ConfigurationQueryBlock QueryBlock { get; set; } = new ConfigurationQueryBlock();
         public string Key { get; set; } = "";
         public FormConfigurator? GeneralForm { get; set; }
         public System.Action? CallBack_RefreshList { get; set; }

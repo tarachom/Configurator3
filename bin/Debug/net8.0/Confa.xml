@@ -6,7 +6,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>06.02.2024 15:22:38</DateTimeSave>
+  <DateTimeSave>06.02.2024 18:43:22</DateTimeSave>
   <DictTSearch>simple</DictTSearch>
   <ConstantsBlocks>
     <ConstantsBlock>
@@ -1226,7 +1226,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <Table>tab_a03</Table>
       <Desc>Товари та послуги</Desc>
       <AutoNum>1</AutoNum>
-      <Type>Hierarchical</Type>
+      <Type>HierarchyInAnotherDirectory</Type>
       <PointerFolders>Довідники.Номенклатура_Папки</PointerFolders>
       <Fields>
         <Field>

@@ -105,9 +105,9 @@ namespace Configurator
                 HBox hBoxType = new HBox() { Halign = Align.End };
                 vBox.PackStart(hBoxType, false, false, 5);
 
-                comboBoxTypeForm.Append(TypeForms.None.ToString(), "Неоприділений");
-                comboBoxTypeForm.Append(TypeForms.List.ToString(), "Список");
-                comboBoxTypeForm.Append(TypeForms.Element.ToString(), "Елемент");
+                comboBoxTypeForm.Append(ConfigurationForms.TypeForms.None.ToString(), "Неоприділений");
+                comboBoxTypeForm.Append(ConfigurationForms.TypeForms.List.ToString(), "Список");
+                comboBoxTypeForm.Append(ConfigurationForms.TypeForms.Element.ToString(), "Елемент");
 
                 hBoxType.PackStart(new Label("Тип форми:"), false, false, 5);
                 hBoxType.PackStart(comboBoxTypeForm, false, false, 5);
@@ -147,7 +147,7 @@ namespace Configurator
         {
             Form.Name = entryName.Text;
             Form.Desc = textViewDesc.Buffer.Text;
-            Form.Type = Enum.Parse<TypeForms>(comboBoxTypeForm.ActiveId);
+            Form.Type = Enum.Parse<ConfigurationForms.TypeForms>(comboBoxTypeForm.ActiveId);
         }
 
         #endregion

@@ -31,7 +31,7 @@ namespace Configurator
     {
         Configuration Conf { get { return Program.Kernel.Conf; } }
 
-        public Dictionary<string, ConfigurationObjectField> Fields = [];
+        public Dictionary<string, ConfigurationField> Fields = [];
         public Dictionary<string, ConfigurationTabularList> TabularLists { get; set; } = [];
         public ConfigurationTabularList TabularList { get; set; } = new ConfigurationTabularList();
         public FormConfigurator? GeneralForm { get; set; }
@@ -447,7 +447,7 @@ namespace Configurator
 
         void FillTreeView()
         {
-            foreach (ConfigurationObjectField field in Fields.Values)
+            foreach (ConfigurationField field in Fields.Values)
             {
                 bool isExistField = TabularList.Fields.ContainsKey(field.Name);
 
@@ -503,7 +503,7 @@ namespace Configurator
                         int sortNum = (int)listStore.GetValue(iter, (int)Columns.SortNum);
                         bool sortField = (bool)listStore.GetValue(iter, (int)Columns.SortField);
 
-                        ConfigurationObjectField field = Fields[name];
+                        ConfigurationField field = Fields[name];
                         TabularList.AppendField(new ConfigurationTabularListField(field.Name, caption, size, sortNum, sortField));
                     }
                 }

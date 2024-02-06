@@ -32,8 +32,8 @@ namespace Configurator
     {
         Configuration Conf { get { return Program.Kernel.Conf; } }
 
-        public Dictionary<string, ConfigurationObjectTablePart> TabularParts { get; set; } = new Dictionary<string, ConfigurationObjectTablePart>();
-        public ConfigurationObjectTablePart TablePart { get; set; } = new ConfigurationObjectTablePart();
+        public Dictionary<string, ConfigurationTablePart> TabularParts { get; set; } = new Dictionary<string, ConfigurationTablePart>();
+        public ConfigurationTablePart TablePart { get; set; } = new ConfigurationTablePart();
         public FormConfigurator? GeneralForm { get; set; }
         public System.Action? CallBack_RefreshList { get; set; }
         public bool IsNew { get; set; } = true;
@@ -192,7 +192,7 @@ namespace Configurator
 
         void FillTabularParts()
         {
-            foreach (ConfigurationObjectField field in TablePart.Fields.Values)
+            foreach (ConfigurationField field in TablePart.Fields.Values)
                 listBoxFields.Add(new Label(field.Name) { Name = field.Name, Halign = Align.Start });
 
             listBoxFields.ShowAll();
@@ -314,7 +314,7 @@ namespace Configurator
                 {
                     if (TablePart.Fields.ContainsKey(row.Child.Name))
                     {
-                        ConfigurationObjectField newField = TablePart.Fields[row.Child.Name].Copy();
+                        ConfigurationField newField = TablePart.Fields[row.Child.Name].Copy();
                         newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, TablePart.Table, TablePart.Fields);
                         newField.Name += GenerateName.GetNewName();
 

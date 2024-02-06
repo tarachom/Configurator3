@@ -346,7 +346,7 @@ namespace Configurator
 
         void FillDimensionFields()
         {
-            foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
+            foreach (ConfigurationField field in ConfRegister.DimensionFields.Values)
                 listBoxDimensionFields.Add(new Label(field.Name) { Name = field.Name, Halign = Align.Start });
 
             listBoxDimensionFields.ShowAll();
@@ -354,7 +354,7 @@ namespace Configurator
 
         void FillResourcesFields()
         {
-            foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
+            foreach (ConfigurationField field in ConfRegister.ResourcesFields.Values)
                 listBoxResourcesFields.Add(new Label(field.Name) { Name = field.Name, Halign = Align.Start });
 
             listBoxResourcesFields.ShowAll();
@@ -362,7 +362,7 @@ namespace Configurator
 
         void FillPropertyFields()
         {
-            foreach (ConfigurationObjectField field in ConfRegister.PropertyFields.Values)
+            foreach (ConfigurationField field in ConfRegister.PropertyFields.Values)
                 listBoxPropertyFields.Add(new Label(field.Name) { Name = field.Name, Halign = Align.Start });
 
             listBoxPropertyFields.ShowAll();
@@ -448,7 +448,7 @@ namespace Configurator
                     if (ConfRegister.DimensionFields.ContainsKey(curRow.Child.Name))
                         GeneralForm?.CreateNotebookPage($"Поле: {curRow.Child.Name}", () =>
                         {
-                            Dictionary<string, ConfigurationObjectField> AllFields = Conf.CombineAllFieldForRegister
+                            Dictionary<string, ConfigurationField> AllFields = Conf.CombineAllFieldForRegister
                             (
                                 ConfRegister.DimensionFields.Values,
                                 ConfRegister.ResourcesFields.Values,
@@ -477,7 +477,7 @@ namespace Configurator
         {
             GeneralForm?.CreateNotebookPage("Поле *", () =>
             {
-                Dictionary<string, ConfigurationObjectField> AllFields = Conf.CombineAllFieldForRegister
+                Dictionary<string, ConfigurationField> AllFields = Conf.CombineAllFieldForRegister
                 (
                     ConfRegister.DimensionFields.Values,
                     ConfRegister.ResourcesFields.Values,
@@ -510,7 +510,7 @@ namespace Configurator
                 {
                     if (ConfRegister.DimensionFields.ContainsKey(row.Child.Name))
                     {
-                        ConfigurationObjectField newField = ConfRegister.DimensionFields[row.Child.Name].Copy();
+                        ConfigurationField newField = ConfRegister.DimensionFields[row.Child.Name].Copy();
                         newField.Name += GenerateName.GetNewName();
 
                         ConfRegister.AppendDimensionField(newField);
@@ -571,7 +571,7 @@ namespace Configurator
                     if (ConfRegister.ResourcesFields.ContainsKey(curRow.Child.Name))
                         GeneralForm?.CreateNotebookPage($"Поле: {curRow.Child.Name}", () =>
                         {
-                            Dictionary<string, ConfigurationObjectField> AllFields = Conf.CombineAllFieldForRegister
+                            Dictionary<string, ConfigurationField> AllFields = Conf.CombineAllFieldForRegister
                             (
                                 ConfRegister.DimensionFields.Values,
                                 ConfRegister.ResourcesFields.Values,
@@ -600,7 +600,7 @@ namespace Configurator
         {
             GeneralForm?.CreateNotebookPage("Поле *", () =>
             {
-                Dictionary<string, ConfigurationObjectField> AllFields = Conf.CombineAllFieldForRegister
+                Dictionary<string, ConfigurationField> AllFields = Conf.CombineAllFieldForRegister
                 (
                     ConfRegister.DimensionFields.Values,
                     ConfRegister.ResourcesFields.Values,
@@ -633,7 +633,7 @@ namespace Configurator
                 {
                     if (ConfRegister.ResourcesFields.ContainsKey(row.Child.Name))
                     {
-                        ConfigurationObjectField newField = ConfRegister.ResourcesFields[row.Child.Name].Copy();
+                        ConfigurationField newField = ConfRegister.ResourcesFields[row.Child.Name].Copy();
                         newField.Name += GenerateName.GetNewName();
 
                         ConfRegister.AppendResourcesField(newField);
@@ -694,7 +694,7 @@ namespace Configurator
                     if (ConfRegister.PropertyFields.ContainsKey(curRow.Child.Name))
                         GeneralForm?.CreateNotebookPage($"Поле: {curRow.Child.Name}", () =>
                         {
-                            Dictionary<string, ConfigurationObjectField> AllFields = Conf.CombineAllFieldForRegister
+                            Dictionary<string, ConfigurationField> AllFields = Conf.CombineAllFieldForRegister
                             (
                                 ConfRegister.DimensionFields.Values,
                                 ConfRegister.ResourcesFields.Values,
@@ -723,7 +723,7 @@ namespace Configurator
         {
             GeneralForm?.CreateNotebookPage("Поле *", () =>
             {
-                Dictionary<string, ConfigurationObjectField> AllFields = Conf.CombineAllFieldForRegister
+                Dictionary<string, ConfigurationField> AllFields = Conf.CombineAllFieldForRegister
                  (
                      ConfRegister.DimensionFields.Values,
                      ConfRegister.ResourcesFields.Values,
@@ -756,7 +756,7 @@ namespace Configurator
                 {
                     if (ConfRegister.PropertyFields.ContainsKey(row.Child.Name))
                     {
-                        ConfigurationObjectField newField = ConfRegister.PropertyFields[row.Child.Name].Copy();
+                        ConfigurationField newField = ConfRegister.PropertyFields[row.Child.Name].Copy();
                         newField.Name += GenerateName.GetNewName();
 
                         ConfRegister.AppendPropertyField(newField);
@@ -817,7 +817,7 @@ namespace Configurator
                     if (ConfRegister.TabularList.ContainsKey(curRow.Child.Name))
                         GeneralForm?.CreateNotebookPage($"Табличний список: {curRow.Child.Name}", () =>
                         {
-                            Dictionary<string, ConfigurationObjectField> AllFields = Conf.CombineAllFieldForRegister
+                            Dictionary<string, ConfigurationField> AllFields = Conf.CombineAllFieldForRegister
                             (
                                 ConfRegister.DimensionFields.Values,
                                 ConfRegister.ResourcesFields.Values,
@@ -846,7 +846,7 @@ namespace Configurator
         {
             GeneralForm?.CreateNotebookPage("Табличний список *", () =>
             {
-                Dictionary<string, ConfigurationObjectField> AllFields = Conf.CombineAllFieldForRegister
+                Dictionary<string, ConfigurationField> AllFields = Conf.CombineAllFieldForRegister
                 (
                     ConfRegister.DimensionFields.Values,
                     ConfRegister.ResourcesFields.Values,

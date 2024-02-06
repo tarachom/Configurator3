@@ -435,7 +435,7 @@ namespace Configurator
 
         void FillDimensionFields()
         {
-            foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
+            foreach (ConfigurationField field in ConfRegister.DimensionFields.Values)
                 listBoxDimensionFields.Add(new Label(field.Name) { Name = field.Name, Halign = Align.Start });
 
             listBoxDimensionFields.ShowAll();
@@ -443,7 +443,7 @@ namespace Configurator
 
         void FillResourcesFields()
         {
-            foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
+            foreach (ConfigurationField field in ConfRegister.ResourcesFields.Values)
                 listBoxResourcesFields.Add(new Label(field.Name) { Name = field.Name, Halign = Align.Start });
 
             listBoxResourcesFields.ShowAll();
@@ -451,7 +451,7 @@ namespace Configurator
 
         void FillPropertyFields()
         {
-            foreach (ConfigurationObjectField field in ConfRegister.PropertyFields.Values)
+            foreach (ConfigurationField field in ConfRegister.PropertyFields.Values)
                 listBoxPropertyFields.Add(new Label(field.Name) { Name = field.Name, Halign = Align.Start });
 
             listBoxPropertyFields.ShowAll();
@@ -459,7 +459,7 @@ namespace Configurator
 
         void FillTabularParts()
         {
-            foreach (ConfigurationObjectTablePart tablePart in ConfRegister.TabularParts.Values)
+            foreach (ConfigurationTablePart tablePart in ConfRegister.TabularParts.Values)
                 listBoxTableParts.Add(new Label(tablePart.Name) { Name = tablePart.Name, Halign = Align.Start });
 
             listBoxTableParts.ShowAll();
@@ -467,7 +467,7 @@ namespace Configurator
 
         void FillQueryBlockList()
         {
-            foreach (ConfigurationObjectQueryBlock queryBlock in ConfRegister.QueryBlockList.Values)
+            foreach (ConfigurationQueryBlock queryBlock in ConfRegister.QueryBlockList.Values)
                 listBoxQueryBlock.Add(new Label(queryBlock.Name) { Name = queryBlock.Name, Halign = Align.Start });
 
             listBoxQueryBlock.ShowAll();
@@ -538,18 +538,18 @@ namespace Configurator
         // Залишки
         //
 
-        void CreateQueryBlock_Залишки(ConfigurationObjectTablePart TablePart)
+        void CreateQueryBlock_Залишки(ConfigurationTablePart TablePart)
         {
             string queryBlockKey = "Залишки";
 
-            ConfigurationObjectQueryBlock queryBlock;
+            ConfigurationQueryBlock queryBlock;
             if (ConfRegister.QueryBlockList.ContainsKey(queryBlockKey))
             {
                 queryBlock = ConfRegister.QueryBlockList[queryBlockKey];
                 queryBlock.Query.Clear();
             }
             else
-                ConfRegister.AppendQueryBlockList(queryBlock = new ConfigurationObjectQueryBlock(queryBlockKey));
+                ConfRegister.AppendQueryBlockList(queryBlock = new ConfigurationQueryBlock(queryBlockKey));
 
             string regName = $"{ConfRegister.Name}";
             string tablePartName = $"{ConfRegister.Name}_{TablePart.Name}_TablePart";
@@ -576,7 +576,7 @@ INSERT INTO {{{tablePartName}.TABLE}}
 
             int counter = 0;
 
-            foreach (ConfigurationObjectField field in TablePart.Fields.Values)
+            foreach (ConfigurationField field in TablePart.Fields.Values)
                 query += @$"
     {{{tablePartName}.{field.Name}}}" + (++counter < TablePart.Fields.Count ? "," : "");
 
@@ -589,12 +589,12 @@ SELECT
             counter = 0;
 
             //Виміри
-            foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
+            foreach (ConfigurationField field in ConfRegister.DimensionFields.Values)
                 query += @$"
     {regName}.{{{regName}_Const.{field.Name}}} AS {field.Name},";
 
             //Ресурси
-            foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
+            foreach (ConfigurationField field in ConfRegister.ResourcesFields.Values)
                 query += @$"
 
     /* {field.Name} */
@@ -615,7 +615,7 @@ GROUP BY
     Період";
 
             //Виміри
-            foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
+            foreach (ConfigurationField field in ConfRegister.DimensionFields.Values)
                 query += $", {field.Name}";
 
             query += @$"
@@ -625,7 +625,7 @@ HAVING";
             counter = 0;
 
             //Ресурси
-            foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
+            foreach (ConfigurationField field in ConfRegister.ResourcesFields.Values)
                 query += @$"
 
     /* {field.Name} */
@@ -639,18 +639,18 @@ HAVING";
             queryBlock.Query.Add("SELECT", query);
         }
 
-        void CreateQueryBlock_ЗалишкиТаОбороти(ConfigurationObjectTablePart TablePart)
+        void CreateQueryBlock_ЗалишкиТаОбороти(ConfigurationTablePart TablePart)
         {
             string queryBlockKey = "ЗалишкиТаОбороти";
 
-            ConfigurationObjectQueryBlock queryBlock;
+            ConfigurationQueryBlock queryBlock;
             if (ConfRegister.QueryBlockList.ContainsKey(queryBlockKey))
             {
                 queryBlock = ConfRegister.QueryBlockList[queryBlockKey];
                 queryBlock.Query.Clear();
             }
             else
-                ConfRegister.AppendQueryBlockList(queryBlock = new ConfigurationObjectQueryBlock(queryBlockKey));
+                ConfRegister.AppendQueryBlockList(queryBlock = new ConfigurationQueryBlock(queryBlockKey));
 
             string regName = $"{ConfRegister.Name}";
             string tablePartName = $"{ConfRegister.Name}_{TablePart.Name}_TablePart";
@@ -677,7 +677,7 @@ INSERT INTO {{{tablePartName}.TABLE}}
 
             int counter = 0;
 
-            foreach (ConfigurationObjectField field in TablePart.Fields.Values)
+            foreach (ConfigurationField field in TablePart.Fields.Values)
                 query += @$"
     {{{tablePartName}.{field.Name}}}" + (++counter < TablePart.Fields.Count ? "," : "");
 
@@ -690,12 +690,12 @@ SELECT
             counter = 0;
 
             //Виміри
-            foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
+            foreach (ConfigurationField field in ConfRegister.DimensionFields.Values)
                 query += @$"
     {regName}.{{{regName}_Const.{field.Name}}} AS {field.Name},";
 
             //Ресурси
-            foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
+            foreach (ConfigurationField field in ConfRegister.ResourcesFields.Values)
                 query += @$"
 
     /* {field.Name} */
@@ -720,7 +720,7 @@ GROUP BY
     Період";
 
             //Виміри
-            foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
+            foreach (ConfigurationField field in ConfRegister.DimensionFields.Values)
                 query += $", {field.Name}";
 
             query += @$"
@@ -730,7 +730,7 @@ HAVING";
             counter = 0;
 
             //Ресурси
-            foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
+            foreach (ConfigurationField field in ConfRegister.ResourcesFields.Values)
                 query += @$"
 
     /* {field.Name} */
@@ -752,18 +752,18 @@ HAVING";
         // Обороти
         //
 
-        void CreateQueryBlock_Обороти(ConfigurationObjectTablePart TablePart)
+        void CreateQueryBlock_Обороти(ConfigurationTablePart TablePart)
         {
             string queryBlockKey = "Обороти";
 
-            ConfigurationObjectQueryBlock queryBlock;
+            ConfigurationQueryBlock queryBlock;
             if (ConfRegister.QueryBlockList.ContainsKey(queryBlockKey))
             {
                 queryBlock = ConfRegister.QueryBlockList[queryBlockKey];
                 queryBlock.Query.Clear();
             }
             else
-                ConfRegister.AppendQueryBlockList(queryBlock = new ConfigurationObjectQueryBlock(queryBlockKey));
+                ConfRegister.AppendQueryBlockList(queryBlock = new ConfigurationQueryBlock(queryBlockKey));
 
             string regName = $"{ConfRegister.Name}";
             string tablePartName = $"{ConfRegister.Name}_{TablePart.Name}_TablePart";
@@ -790,7 +790,7 @@ INSERT INTO {{{tablePartName}.TABLE}}
 
             int counter = 0;
 
-            foreach (ConfigurationObjectField field in TablePart.Fields.Values)
+            foreach (ConfigurationField field in TablePart.Fields.Values)
                 query += @$"
     {{{tablePartName}.{field.Name}}}" + (++counter < TablePart.Fields.Count ? "," : "");
 
@@ -803,7 +803,7 @@ SELECT
             counter = 0;
 
             //Виміри
-            foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
+            foreach (ConfigurationField field in ConfRegister.DimensionFields.Values)
                 query += @$"
     {regName}.{{{regName}_Const.{field.Name}}} AS {field.Name}" +
         (++counter < ConfRegister.DimensionFields.Count || ConfRegister.ResourcesFields.Count != 0 || ConfRegister.PropertyFields.Count != 0 ? "," : "");
@@ -812,7 +812,7 @@ SELECT
             counter = 0;
 
             //Ресурси
-            foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
+            foreach (ConfigurationField field in ConfRegister.ResourcesFields.Values)
                 query += @$"
     SUM({regName}.{{{regName}_Const.{field.Name}}}) AS {field.Name}" +
         (++counter < ConfRegister.ResourcesFields.Count || ConfRegister.PropertyFields.Count != 0 ? "," : "");
@@ -821,7 +821,7 @@ SELECT
             counter = 0;
 
             //Реквізити
-            foreach (ConfigurationObjectField field in ConfRegister.PropertyFields.Values)
+            foreach (ConfigurationField field in ConfRegister.PropertyFields.Values)
                 query += @$"
     {regName}.{{{regName}_Const.{field.Name}}} AS {field.Name}" +
         (++counter < ConfRegister.PropertyFields.Count ? "," : "");
@@ -840,7 +840,7 @@ GROUP BY
             counter = 0;
 
             //Виміри
-            foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
+            foreach (ConfigurationField field in ConfRegister.DimensionFields.Values)
                 query += $"{field.Name}" +
                 (++counter < ConfRegister.DimensionFields.Count || ConfRegister.PropertyFields.Count != 0 ? ", " : "") +
                 (counter % 5 == 0 ? "\n" : "");
@@ -848,7 +848,7 @@ GROUP BY
             counter = 0;
 
             //Реквізити
-            foreach (ConfigurationObjectField field in ConfRegister.PropertyFields.Values)
+            foreach (ConfigurationField field in ConfRegister.PropertyFields.Values)
                 query += $"{field.Name}" +
                 (++counter < ConfRegister.PropertyFields.Count ? ", " : "") +
                 (counter % 5 == 0 ? "\n" : "");
@@ -860,7 +860,7 @@ HAVING";
             counter = 0;
 
             //Ресурси
-            foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
+            foreach (ConfigurationField field in ConfRegister.ResourcesFields.Values)
                 query += @$"
     SUM({regName}.{{{regName}_Const.{field.Name}}}) != 0 " +
         (++counter < ConfRegister.ResourcesFields.Count ? "OR" : "");
@@ -874,11 +874,11 @@ HAVING";
         // Підсумки на основі залишків
         //
 
-        void CreateQueryBlock_Підсумки(ConfigurationObjectTablePart TablePart, ConfigurationObjectTablePart Залишки_TablePart)
+        void CreateQueryBlock_Підсумки(ConfigurationTablePart TablePart, ConfigurationTablePart Залишки_TablePart)
         {
             string queryBlockKey = "Підсумки";
 
-            ConfigurationObjectQueryBlock queryBlock;
+            ConfigurationQueryBlock queryBlock;
             if (ConfRegister.QueryBlockList.ContainsKey(queryBlockKey))
             {
                 queryBlock = ConfRegister.QueryBlockList[queryBlockKey];
@@ -886,7 +886,7 @@ HAVING";
                 queryBlock.Query.Clear();
             }
             else
-                ConfRegister.AppendQueryBlockList(queryBlock = new ConfigurationObjectQueryBlock(queryBlockKey, true));
+                ConfRegister.AppendQueryBlockList(queryBlock = new ConfigurationQueryBlock(queryBlockKey, true));
 
             string regName = $"{ConfRegister.Name}";
             string tablePartName = $"{ConfRegister.Name}_{TablePart.Name}_TablePart";
@@ -911,7 +911,7 @@ INSERT INTO {{{tablePartName}.TABLE}}
 
             int counter = 0;
 
-            foreach (ConfigurationObjectField field in TablePart.Fields.Values)
+            foreach (ConfigurationField field in TablePart.Fields.Values)
                 query += @$"
     {{{tablePartName}.{field.Name}}}" + (++counter < TablePart.Fields.Count ? "," : "");
 
@@ -923,14 +923,14 @@ SELECT
             counter = 0;
 
             //Виміри
-            foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
+            foreach (ConfigurationField field in ConfRegister.DimensionFields.Values)
             {
                 query += @$"
     {regName}.{{{tablePartName_Залишки}.{field.Name}}} AS {field.Name},";
             }
 
             //Ресурси
-            foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
+            foreach (ConfigurationField field in ConfRegister.ResourcesFields.Values)
                 query += @$"
 
     /* {field.Name} */
@@ -947,7 +947,7 @@ GROUP BY
             counter = 0;
 
             //Виміри
-            foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
+            foreach (ConfigurationField field in ConfRegister.DimensionFields.Values)
                 query += $"{field.Name}" +
                 (++counter < ConfRegister.DimensionFields.Count ? ", " : "");
 
@@ -958,7 +958,7 @@ HAVING";
             counter = 0;
 
             //Ресурси
-            foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
+            foreach (ConfigurationField field in ConfRegister.ResourcesFields.Values)
                 query += @$"
 
     /* {field.Name} */
@@ -978,19 +978,19 @@ HAVING";
         // Залишки
         //
 
-        async ValueTask<ConfigurationObjectTablePart> CreateVirtualTable_Залишки()
+        async ValueTask<ConfigurationTablePart> CreateVirtualTable_Залишки()
         {
-            ConfigurationObjectTablePart TablePart = await CreateVirtualTable_Table("Залишки");
+            ConfigurationTablePart TablePart = await CreateVirtualTable_Table("Залишки");
 
             int index = 0;
-            CreateVirtualTable_Field(TablePart, new ConfigurationObjectField("Період", "", "date", "", "", false, true));
+            CreateVirtualTable_Field(TablePart, new ConfigurationField("Період", "", "date", "", "", false, true));
 
             //Виміри
-            foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
+            foreach (ConfigurationField field in ConfRegister.DimensionFields.Values)
                 CreateVirtualTable_Field(TablePart, field, "", ++index);
 
             //Ресурси
-            foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
+            foreach (ConfigurationField field in ConfRegister.ResourcesFields.Values)
                 CreateVirtualTable_Field(TablePart, field, "", ++index);
 
             CreateQueryBlock_Залишки(TablePart);
@@ -1000,17 +1000,17 @@ HAVING";
 
         async ValueTask CreateVirtualTable_ЗалишкиТаОбороти()
         {
-            ConfigurationObjectTablePart TablePart = await CreateVirtualTable_Table("ЗалишкиТаОбороти");
+            ConfigurationTablePart TablePart = await CreateVirtualTable_Table("ЗалишкиТаОбороти");
 
             int index = 0;
-            CreateVirtualTable_Field(TablePart, new ConfigurationObjectField("Період", "", "date", "", "", false, true));
+            CreateVirtualTable_Field(TablePart, new ConfigurationField("Період", "", "date", "", "", false, true));
 
             //Виміри
-            foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
+            foreach (ConfigurationField field in ConfRegister.DimensionFields.Values)
                 CreateVirtualTable_Field(TablePart, field, "", ++index);
 
             //Ресурси
-            foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
+            foreach (ConfigurationField field in ConfRegister.ResourcesFields.Values)
             {
                 CreateVirtualTable_Field(TablePart, field, "Прихід", ++index);
                 CreateVirtualTable_Field(TablePart, field, "Розхід", ++index);
@@ -1026,21 +1026,21 @@ HAVING";
 
         async ValueTask CreateVirtualTable_Обороти()
         {
-            ConfigurationObjectTablePart TablePart = await CreateVirtualTable_Table("Обороти");
+            ConfigurationTablePart TablePart = await CreateVirtualTable_Table("Обороти");
 
             int index = 0;
-            CreateVirtualTable_Field(TablePart, new ConfigurationObjectField("Період", "", "date", "", "", false, true));
+            CreateVirtualTable_Field(TablePart, new ConfigurationField("Період", "", "date", "", "", false, true));
 
             //Виміри
-            foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
+            foreach (ConfigurationField field in ConfRegister.DimensionFields.Values)
                 CreateVirtualTable_Field(TablePart, field, "", ++index);
 
             //Ресурси
-            foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
+            foreach (ConfigurationField field in ConfRegister.ResourcesFields.Values)
                 CreateVirtualTable_Field(TablePart, field, "", ++index);
 
             //Реквізити
-            foreach (ConfigurationObjectField field in ConfRegister.PropertyFields.Values)
+            foreach (ConfigurationField field in ConfRegister.PropertyFields.Values)
                 CreateVirtualTable_Field(TablePart, field, "", ++index);
 
             CreateQueryBlock_Обороти(TablePart);
@@ -1050,35 +1050,35 @@ HAVING";
         // Підсумки
         //
 
-        async ValueTask CreateVirtualTable_Підсумки(ConfigurationObjectTablePart Залишки_TablePart)
+        async ValueTask CreateVirtualTable_Підсумки(ConfigurationTablePart Залишки_TablePart)
         {
-            ConfigurationObjectTablePart TablePart = await CreateVirtualTable_Table("Підсумки");
+            ConfigurationTablePart TablePart = await CreateVirtualTable_Table("Підсумки");
 
             int index = -1;
 
             //Виміри
-            foreach (ConfigurationObjectField field in ConfRegister.DimensionFields.Values)
+            foreach (ConfigurationField field in ConfRegister.DimensionFields.Values)
                 CreateVirtualTable_Field(TablePart, field, "", ++index);
 
             //Ресурси
-            foreach (ConfigurationObjectField field in ConfRegister.ResourcesFields.Values)
+            foreach (ConfigurationField field in ConfRegister.ResourcesFields.Values)
                 CreateVirtualTable_Field(TablePart, field, "", ++index);
 
             CreateQueryBlock_Підсумки(TablePart, Залишки_TablePart);
         }
 
-        async ValueTask<ConfigurationObjectTablePart> CreateVirtualTable_Table(string tableName)
+        async ValueTask<ConfigurationTablePart> CreateVirtualTable_Table(string tableName)
         {
             if (!ConfRegister.TabularParts.ContainsKey(tableName))
             {
                 string table = await Configuration.GetNewUnigueTableName(Program.Kernel);
-                ConfRegister.AppendTablePart(new ConfigurationObjectTablePart(tableName, table, "Віртуальна таблиця"));
+                ConfRegister.AppendTablePart(new ConfigurationTablePart(tableName, table, "Віртуальна таблиця"));
             }
 
             return ConfRegister.TabularParts[tableName];
         }
 
-        void CreateVirtualTable_Field(ConfigurationObjectTablePart TablePart, ConfigurationObjectField field, string prefixName = "", int index = -1)
+        void CreateVirtualTable_Field(ConfigurationTablePart TablePart, ConfigurationField field, string prefixName = "", int index = -1)
         {
             string fieldAndPrefix = field.Name + prefixName;
 
@@ -1088,17 +1088,17 @@ HAVING";
 
                 if (index > -1)
                 {
-                    List<KeyValuePair<string, ConfigurationObjectField>> listFields = TablePart.Fields.ToList();
+                    List<KeyValuePair<string, ConfigurationField>> listFields = TablePart.Fields.ToList();
                     TablePart.Fields.Clear();
 
-                    listFields.Insert(index, new KeyValuePair<string, ConfigurationObjectField>(fieldAndPrefix,
-                        new ConfigurationObjectField(fieldAndPrefix, fieldColumnName, field.Type, field.Pointer, field.Desc, false, field.IsIndex)));
+                    listFields.Insert(index, new KeyValuePair<string, ConfigurationField>(fieldAndPrefix,
+                        new ConfigurationField(fieldAndPrefix, fieldColumnName, field.Type, field.Pointer, field.Desc, false, field.IsIndex)));
 
-                    foreach (KeyValuePair<string, ConfigurationObjectField> itemField in listFields)
+                    foreach (KeyValuePair<string, ConfigurationField> itemField in listFields)
                         TablePart.AppendField(itemField.Value);
                 }
                 else
-                    TablePart.AppendField(new ConfigurationObjectField(fieldAndPrefix, fieldColumnName, field.Type, field.Pointer, field.Desc, false, field.IsIndex));
+                    TablePart.AppendField(new ConfigurationField(fieldAndPrefix, fieldColumnName, field.Type, field.Pointer, field.Desc, false, field.IsIndex));
             }
         }
 
@@ -1134,7 +1134,7 @@ HAVING";
                 {
                     case TypeRegistersAccumulation.Residues: /* Залишки */
                         {
-                            ConfigurationObjectTablePart Залишки_TablePart = await CreateVirtualTable_Залишки();
+                            ConfigurationTablePart Залишки_TablePart = await CreateVirtualTable_Залишки();
                             await CreateVirtualTable_ЗалишкиТаОбороти();
 
                             if (!checkButtonNoSummary.Active)
@@ -1173,7 +1173,7 @@ HAVING";
                     if (ConfRegister.DimensionFields.ContainsKey(curRow.Child.Name))
                         GeneralForm?.CreateNotebookPage($"Поле: {curRow.Child.Name}", () =>
                         {
-                            Dictionary<string, ConfigurationObjectField> AllFields = Conf.CombineAllFieldForRegister
+                            Dictionary<string, ConfigurationField> AllFields = Conf.CombineAllFieldForRegister
                             (
                                 ConfRegister.DimensionFields.Values,
                                 ConfRegister.ResourcesFields.Values,
@@ -1202,7 +1202,7 @@ HAVING";
         {
             GeneralForm?.CreateNotebookPage("Поле *", () =>
             {
-                Dictionary<string, ConfigurationObjectField> AllFields = Conf.CombineAllFieldForRegister
+                Dictionary<string, ConfigurationField> AllFields = Conf.CombineAllFieldForRegister
                 (
                     ConfRegister.DimensionFields.Values,
                     ConfRegister.ResourcesFields.Values,
@@ -1235,7 +1235,7 @@ HAVING";
                 {
                     if (ConfRegister.DimensionFields.ContainsKey(row.Child.Name))
                     {
-                        ConfigurationObjectField newField = ConfRegister.DimensionFields[row.Child.Name].Copy();
+                        ConfigurationField newField = ConfRegister.DimensionFields[row.Child.Name].Copy();
                         newField.Name += GenerateName.GetNewName();
 
                         ConfRegister.AppendDimensionField(newField);
@@ -1296,7 +1296,7 @@ HAVING";
                     if (ConfRegister.ResourcesFields.ContainsKey(curRow.Child.Name))
                         GeneralForm?.CreateNotebookPage($"Поле: {curRow.Child.Name}", () =>
                         {
-                            Dictionary<string, ConfigurationObjectField> AllFields = Conf.CombineAllFieldForRegister
+                            Dictionary<string, ConfigurationField> AllFields = Conf.CombineAllFieldForRegister
                             (
                                 ConfRegister.DimensionFields.Values,
                                 ConfRegister.ResourcesFields.Values,
@@ -1325,7 +1325,7 @@ HAVING";
         {
             GeneralForm?.CreateNotebookPage("Поле *", () =>
             {
-                Dictionary<string, ConfigurationObjectField> AllFields = Conf.CombineAllFieldForRegister
+                Dictionary<string, ConfigurationField> AllFields = Conf.CombineAllFieldForRegister
                 (
                     ConfRegister.DimensionFields.Values,
                     ConfRegister.ResourcesFields.Values,
@@ -1358,7 +1358,7 @@ HAVING";
                 {
                     if (ConfRegister.ResourcesFields.ContainsKey(row.Child.Name))
                     {
-                        ConfigurationObjectField newField = ConfRegister.ResourcesFields[row.Child.Name].Copy();
+                        ConfigurationField newField = ConfRegister.ResourcesFields[row.Child.Name].Copy();
                         newField.Name += GenerateName.GetNewName();
 
                         ConfRegister.AppendResourcesField(newField);
@@ -1419,7 +1419,7 @@ HAVING";
                     if (ConfRegister.PropertyFields.ContainsKey(curRow.Child.Name))
                         GeneralForm?.CreateNotebookPage($"Поле: {curRow.Child.Name}", () =>
                         {
-                            Dictionary<string, ConfigurationObjectField> AllFields = Conf.CombineAllFieldForRegister
+                            Dictionary<string, ConfigurationField> AllFields = Conf.CombineAllFieldForRegister
                             (
                                 ConfRegister.DimensionFields.Values,
                                 ConfRegister.ResourcesFields.Values,
@@ -1448,7 +1448,7 @@ HAVING";
         {
             GeneralForm?.CreateNotebookPage("Поле *", () =>
             {
-                Dictionary<string, ConfigurationObjectField> AllFields = Conf.CombineAllFieldForRegister
+                Dictionary<string, ConfigurationField> AllFields = Conf.CombineAllFieldForRegister
                 (
                     ConfRegister.DimensionFields.Values,
                     ConfRegister.ResourcesFields.Values,
@@ -1481,7 +1481,7 @@ HAVING";
                 {
                     if (ConfRegister.PropertyFields.ContainsKey(row.Child.Name))
                     {
-                        ConfigurationObjectField newField = ConfRegister.PropertyFields[row.Child.Name].Copy();
+                        ConfigurationField newField = ConfRegister.PropertyFields[row.Child.Name].Copy();
                         newField.Name += GenerateName.GetNewName();
 
                         ConfRegister.AppendPropertyField(newField);
@@ -1587,7 +1587,7 @@ HAVING";
                 {
                     if (ConfRegister.TabularParts.ContainsKey(row.Child.Name))
                     {
-                        ConfigurationObjectTablePart newTablePart = ConfRegister.TabularParts[row.Child.Name].Copy();
+                        ConfigurationTablePart newTablePart = ConfRegister.TabularParts[row.Child.Name].Copy();
                         newTablePart.Name += GenerateName.GetNewName();
                         newTablePart.Table = await Configuration.GetNewUnigueTableName(Program.Kernel);
 
@@ -1694,7 +1694,7 @@ HAVING";
                 {
                     if (ConfRegister.QueryBlockList.ContainsKey(row.Child.Name))
                     {
-                        ConfigurationObjectQueryBlock newQueryBlock = ConfRegister.QueryBlockList[row.Child.Name].Copy();
+                        ConfigurationQueryBlock newQueryBlock = ConfRegister.QueryBlockList[row.Child.Name].Copy();
                         newQueryBlock.Name += GenerateName.GetNewName();
 
                         ConfRegister.AppendQueryBlockList(newQueryBlock);

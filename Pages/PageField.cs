@@ -32,9 +32,9 @@ namespace Configurator
         Configuration Conf { get { return Program.Kernel.Conf; } }
 
         public string Table { get; set; } = "";
-        public Dictionary<string, ConfigurationObjectField> Fields = new Dictionary<string, ConfigurationObjectField>();
-        public Dictionary<string, ConfigurationObjectField>? AllFields; //Для регістрів
-        public ConfigurationObjectField Field { get; set; } = new ConfigurationObjectField();
+        public Dictionary<string, ConfigurationField> Fields = new Dictionary<string, ConfigurationField>();
+        public Dictionary<string, ConfigurationField>? AllFields; //Для регістрів
+        public ConfigurationField Field { get; set; } = new ConfigurationField();
         public FormConfigurator? GeneralForm { get; set; }
         public System.Action? CallBack_RefreshList { get; set; }
         public bool IsNew { get; set; } = true;

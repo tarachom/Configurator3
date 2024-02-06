@@ -31,8 +31,8 @@ namespace Configurator
     {
         Configuration Conf { get { return Program.Kernel.Conf; } }
 
-        public Dictionary<string, ConfigurationObjectQueryBlock> QueryBlockList { get; set; } = new Dictionary<string, ConfigurationObjectQueryBlock>();
-        public ConfigurationObjectQueryBlock QueryBlock { get; set; } = new ConfigurationObjectQueryBlock();
+        public Dictionary<string, ConfigurationQueryBlock> QueryBlockList { get; set; } = new Dictionary<string, ConfigurationQueryBlock>();
+        public ConfigurationQueryBlock QueryBlock { get; set; } = new ConfigurationQueryBlock();
         public FormConfigurator? GeneralForm { get; set; }
         public System.Action? CallBack_RefreshList { get; set; }
         public bool IsNew { get; set; } = true;

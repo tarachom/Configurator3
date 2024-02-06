@@ -229,7 +229,7 @@ namespace Configurator
 
         void FillTabularParts()
         {
-            foreach (ConfigurationObjectTablePart tablePart in ConfConstants.TabularParts.Values)
+            foreach (ConfigurationTablePart tablePart in ConfConstants.TabularParts.Values)
                 listBoxTableParts.Add(new Label(tablePart.Name) { Name = tablePart.Name, Halign = Align.Start });
 
             listBoxTableParts.ShowAll();
@@ -385,7 +385,7 @@ namespace Configurator
                 {
                     if (ConfConstants.TabularParts.ContainsKey(row.Child.Name))
                     {
-                        ConfigurationObjectTablePart newTablePart = ConfConstants.TabularParts[row.Child.Name].Copy();
+                        ConfigurationTablePart newTablePart = ConfConstants.TabularParts[row.Child.Name].Copy();
                         newTablePart.Name += GenerateName.GetNewName();
 
                         ConfConstants.AppendTablePart(newTablePart);

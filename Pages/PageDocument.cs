@@ -633,12 +633,12 @@ class {entryName.Text}_Triggers
                 entryTable.Text = await Configuration.GetNewUnigueTableName(Program.Kernel);
 
                 //Заповнення полями
-                ConfDocument.AppendField(new ConfigurationObjectField("Назва", "docname", "string", "", "Назва", true, true));
-                ConfDocument.AppendField(new ConfigurationObjectField("ДатаДок", "docdate", "datetime", "", "ДатаДок", false, true));
-                ConfDocument.AppendField(new ConfigurationObjectField("НомерДок", "docnomer", "string", "", "НомерДок", false, true));
+                ConfDocument.AppendField(new ConfigurationField("Назва", "docname", "string", "", "Назва", true, true));
+                ConfDocument.AppendField(new ConfigurationField("ДатаДок", "docdate", "datetime", "", "ДатаДок", false, true));
+                ConfDocument.AppendField(new ConfigurationField("НомерДок", "docnomer", "string", "", "НомерДок", false, true));
 
                 string nameInTable_Comment = Configuration.GetNewUnigueColumnName(Program.Kernel, entryTable.Text, ConfDocument.Fields);
-                ConfDocument.AppendField(new ConfigurationObjectField("Коментар", nameInTable_Comment, "string", "", "Коментар"));
+                ConfDocument.AppendField(new ConfigurationField("Коментар", nameInTable_Comment, "string", "", "Коментар"));
 
                 //Заповнення списків
                 ConfDocument.AppendTableList(new ConfigurationTabularList("Записи"));
@@ -685,7 +685,7 @@ class {entryName.Text}_Triggers
 
         void FillFields()
         {
-            foreach (ConfigurationObjectField field in ConfDocument.Fields.Values)
+            foreach (ConfigurationField field in ConfDocument.Fields.Values)
                 listBoxFields.Add(new Label(field.Name + (field.IsPresentation ? " [ представлення ]" : "")) { Name = field.Name, Halign = Align.Start });
 
             listBoxFields.ShowAll();
@@ -693,7 +693,7 @@ class {entryName.Text}_Triggers
 
         void FillTabularParts()
         {
-            foreach (ConfigurationObjectTablePart tablePart in ConfDocument.TabularParts.Values)
+            foreach (ConfigurationTablePart tablePart in ConfDocument.TabularParts.Values)
                 listBoxTableParts.Add(new Label(tablePart.Name) { Name = tablePart.Name, Halign = Align.Start });
 
             listBoxTableParts.ShowAll();
@@ -848,7 +848,7 @@ class {entryName.Text}_Triggers
                 {
                     if (ConfDocument.Fields.ContainsKey(row.Child.Name))
                     {
-                        ConfigurationObjectField newField = ConfDocument.Fields[row.Child.Name].Copy();
+                        ConfigurationField newField = ConfDocument.Fields[row.Child.Name].Copy();
                         newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, ConfDocument.Table, ConfDocument.Fields);
                         newField.Name += GenerateName.GetNewName();
 
@@ -955,7 +955,7 @@ class {entryName.Text}_Triggers
                 {
                     if (ConfDocument.TabularParts.ContainsKey(row.Child.Name))
                     {
-                        ConfigurationObjectTablePart newTablePart = ConfDocument.TabularParts[row.Child.Name].Copy();
+                        ConfigurationTablePart newTablePart = ConfDocument.TabularParts[row.Child.Name].Copy();
                         newTablePart.Name += GenerateName.GetNewName();
                         newTablePart.Table = await Configuration.GetNewUnigueTableName(Program.Kernel);
 
