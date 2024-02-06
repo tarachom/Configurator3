@@ -41,6 +41,7 @@ namespace Configurator
         ListBox listBoxFields = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxTableParts = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxTabularList = new ListBox() { SelectionMode = SelectionMode.Single };
+        ListBox listBoxFormsList = new ListBox() { SelectionMode = SelectionMode.Single };
 
         Entry entryName = new Entry() { WidthRequest = 500 };
         Entry entryFullName = new Entry() { WidthRequest = 500 };
@@ -524,6 +525,23 @@ class {entryName.Text}_Triggers
             }
             */
 
+            //Форми
+            {
+                Expander expanderForm = new Expander("Форми");
+                vBox.PackStart(expanderForm, false, false, 5);
+
+                VBox vBoxForm = new VBox();
+                expanderForm.Add(vBoxForm);
+
+                //Заголовок блоку Forms
+                HBox hBoxInterfaceCreateInfo = new HBox() { Halign = Align.Center };
+                vBoxForm.PackStart(hBoxInterfaceCreateInfo, false, false, 5);
+                hBoxInterfaceCreateInfo.PackStart(new Label("Форми"), false, false, 5);
+
+                //Форми
+                CreateFormsList(vBoxForm);
+            }
+
             //Генерування коду 
             {
                 Expander expanderTemplates = new Expander("Генерування коду");
@@ -731,6 +749,48 @@ class {entryName.Text}_Triggers
             vBoxContainer.PackStart(vBox, false, false, 0);
         }
 
+        void CreateFormsList(VBox vBoxContainer)
+        {
+            VBox vBox = new VBox();
+
+            HBox hBox = new HBox();
+            hBox.PackStart(new Label("Форми:"), false, false, 5);
+            vBox.PackStart(hBox, false, false, 5);
+
+            Toolbar toolbar = new Toolbar();
+            vBox.PackStart(toolbar, false, false, 0);
+
+            ToolButton buttonAdd = new ToolButton(Stock.New) { Label = "Додати", IsImportant = true };
+            buttonAdd.Clicked += OnFormsListAddClick;
+            toolbar.Add(buttonAdd);
+
+            ToolButton buttonCopy = new ToolButton(Stock.Copy) { Label = "Копіювати", IsImportant = true };
+            buttonCopy.Clicked += OnFormsListCopyClick;
+            toolbar.Add(buttonCopy);
+
+            ToolButton buttonRefresh = new ToolButton(Stock.Refresh) { Label = "Обновити", IsImportant = true };
+            buttonRefresh.Clicked += OnFormsListRefreshClick;
+            toolbar.Add(buttonRefresh);
+
+            ToolButton buttonDelete = new ToolButton(Stock.Clear) { Label = "Видалити", IsImportant = true };
+            buttonDelete.Clicked += OnFormsListRemoveClick;
+            toolbar.Add(buttonDelete);
+
+            HBox hBoxScroll = new HBox();
+            ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
+            scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+            scrollList.SetSizeRequest(0, 100);
+
+            listBoxFormsList.ButtonPressEvent += OnFormsListButtonPress;
+
+            scrollList.Add(listBoxFormsList);
+            hBoxScroll.PackStart(scrollList, true, true, 5);
+
+            vBox.PackStart(hBoxScroll, false, false, 0);
+
+            vBoxContainer.PackStart(vBox, false, false, 0);
+        }
+
         #region Присвоєння / зчитування значень віджетів
 
         public async void SetValue()
@@ -781,6 +841,7 @@ class {entryName.Text}_Triggers
             FillFields();
             FillTabularParts();
             FillTabularList();
+            FillFormsList();
         }
 
         void FillFields()
@@ -805,6 +866,14 @@ class {entryName.Text}_Triggers
                 listBoxTabularList.Add(new Label(tableList.Name) { Name = tableList.Name, Halign = Align.Start });
 
             listBoxTabularList.ShowAll();
+        }
+
+        void FillFormsList()
+        {
+            foreach (ConfigurationForms form in ConfDirectory.Forms.Values)
+                listBoxFormsList.Add(new Label(form.Name) { Name = form.Name, Halign = Align.Start });
+
+            listBoxFormsList.ShowAll();
         }
 
         void FillPointerFolders()
@@ -1208,6 +1277,112 @@ class {entryName.Text}_Triggers
         void TabularListRefreshList()
         {
             OnTabularListRefreshClick(null, new EventArgs());
+        }
+
+        #endregion
+
+        #region FormsList
+
+        void OnFormsListButtonPress(object? sender, ButtonPressEventArgs args)
+        {
+            if (args.Event.Type == Gdk.EventType.DoubleButtonPress)
+            {
+                ListBoxRow[] selectedRows = listBoxFormsList.SelectedRows;
+
+                if (selectedRows.Length != 0)
+                {
+                    ListBoxRow curRow = selectedRows[0];
+
+                    if (ConfDirectory.Forms.ContainsKey(curRow.Child.Name))
+                        GeneralForm?.CreateNotebookPage($"Форма: {curRow.Child.Name}", () =>
+                        {
+                            PageForm page = new PageForm()
+                            {
+                                Forms = ConfDirectory.Forms,
+                                Form = ConfDirectory.Forms[curRow.Child.Name],
+                                IsNew = false,
+                                GeneralForm = GeneralForm,
+                                CallBack_RefreshList = FormsListRefreshList
+                            };
+
+                            page.SetValue();
+
+                            return page;
+                        });
+                }
+            }
+        }
+
+        void OnFormsListAddClick(object? sender, EventArgs args)
+        {
+            GeneralForm?.CreateNotebookPage("Форма *", () =>
+            {
+                PageForm page = new PageForm()
+                {
+                    Forms = ConfDirectory.Forms,
+                    IsNew = true,
+                    GeneralForm = GeneralForm,
+                    CallBack_RefreshList = FormsListRefreshList,
+                };
+
+                page.SetValue();
+
+                return page;
+            });
+        }
+
+        void OnFormsListCopyClick(object? sender, EventArgs args)
+        {
+            ListBoxRow[] selectedRows = listBoxFormsList.SelectedRows;
+
+            if (selectedRows.Length != 0)
+            {
+                foreach (ListBoxRow row in selectedRows)
+                {
+                    if (ConfDirectory.Forms.ContainsKey(row.Child.Name))
+                    {
+                        ConfigurationForms newForms = ConfDirectory.Forms[row.Child.Name].Copy();
+                        newForms.Name += GenerateName.GetNewName();
+
+                        ConfDirectory.AppendForms(newForms);
+                    }
+                }
+
+                FormsListRefreshList();
+
+                GeneralForm?.LoadTreeAsync();
+            }
+        }
+
+        void OnFormsListRefreshClick(object? sender, EventArgs args)
+        {
+            foreach (Widget item in listBoxFormsList.Children)
+                listBoxFormsList.Remove(item);
+
+            FillFormsList();
+        }
+
+        void OnFormsListRemoveClick(object? sender, EventArgs args)
+        {
+            ListBoxRow[] selectedRows = listBoxFormsList.SelectedRows;
+
+            if (selectedRows.Length != 0)
+            {
+                foreach (ListBoxRow row in selectedRows)
+                {
+                    if (ConfDirectory.Forms.ContainsKey(row.Child.Name))
+                        ConfDirectory.Forms.Remove(row.Child.Name);
+                }
+
+                FormsListRefreshList();
+
+                GeneralForm?.LoadTreeAsync();
+            }
+        }
+
+        void FormsListRefreshList()
+        {
+            OnFormsListRefreshClick(null, new EventArgs());
         }
 
         #endregion
