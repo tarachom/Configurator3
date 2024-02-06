@@ -6,7 +6,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>06.02.2024 12:52:45</DateTimeSave>
+  <DateTimeSave>06.02.2024 13:23:08</DateTimeSave>
   <DictTSearch>simple</DictTSearch>
   <ConstantsBlocks>
     <ConstantsBlock>
@@ -956,8 +956,9 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
       <Table>tab_a01</Table>
       <Desc>Юридичні особи та підприємці нашої організації</Desc>
       <AutoNum>0</AutoNum>
-      <Type>HierarchyInAnotherDirectory</Type>
-      <PointerFolders>Довідники.Організації_Папки</PointerFolders>
+      <Type>Normal</Type>
+      <PointerFolders>
+      </PointerFolders>
       <Fields>
         <Field>
           <Name>Назва</Name>
@@ -1052,16 +1053,6 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
-          <IsFullTextSearch>0</IsFullTextSearch>
-        </Field>
-        <Field>
-          <Name>Папка</Name>
-          <NameInTable>col_b1</NameInTable>
-          <Type>pointer</Type>
-          <Pointer>Довідники.Організації_Папки</Pointer>
-          <Desc>Папка</Desc>
-          <IsPresentation>0</IsPresentation>
-          <IsIndex>1</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
         </Field>
       </Fields>
@@ -7123,80 +7114,6 @@ END)]]></Value>
         <AfterSave>Блокнот_Triggers.AfterSave</AfterSave>
         <SetDeletionLabel>Блокнот_Triggers.SetDeletionLabel</SetDeletionLabel>
         <BeforeDelete>Блокнот_Triggers.BeforeDelete</BeforeDelete>
-      </TriggerFunctions>
-      <Forms />
-    </Directory>
-    <Directory>
-      <Name>Організації_Папки</Name>
-      <FullName>Організації Папки</FullName>
-      <Table>tab_a65</Table>
-      <Desc>Організації Папки</Desc>
-      <AutoNum>0</AutoNum>
-      <Type>Hierarchical</Type>
-      <PointerFolders>
-      </PointerFolders>
-      <Fields>
-        <Field>
-          <Name>Код</Name>
-          <NameInTable>col_a1</NameInTable>
-          <Type>string</Type>
-          <Desc>Код</Desc>
-          <IsPresentation>0</IsPresentation>
-          <IsIndex>1</IsIndex>
-          <IsFullTextSearch>0</IsFullTextSearch>
-          <Multiline>0</Multiline>
-        </Field>
-        <Field>
-          <Name>Назва</Name>
-          <NameInTable>col_a2</NameInTable>
-          <Type>string</Type>
-          <Desc>Назва</Desc>
-          <IsPresentation>1</IsPresentation>
-          <IsIndex>1</IsIndex>
-          <IsFullTextSearch>0</IsFullTextSearch>
-          <Multiline>0</Multiline>
-        </Field>
-        <Field>
-          <Name>Родич</Name>
-          <NameInTable>col_a3</NameInTable>
-          <Type>pointer</Type>
-          <Pointer>Довідники.Організації_Папки</Pointer>
-          <Desc>Родич</Desc>
-          <IsPresentation>0</IsPresentation>
-          <IsIndex>1</IsIndex>
-          <IsFullTextSearch>0</IsFullTextSearch>
-        </Field>
-      </Fields>
-      <TabularParts />
-      <TabularLists>
-        <TabularList>
-          <Name>Записи</Name>
-          <Desc>
-          </Desc>
-          <IsTree>1</IsTree>
-          <Fields />
-        </TabularList>
-        <TabularList>
-          <Name>ЗаписиШвидкийВибір</Name>
-          <Desc>
-          </Desc>
-          <IsTree>1</IsTree>
-          <Fields />
-        </TabularList>
-      </TabularLists>
-      <TriggerFunctions>
-        <New>
-        </New>
-        <Copying>
-        </Copying>
-        <BeforeSave>
-        </BeforeSave>
-        <AfterSave>
-        </AfterSave>
-        <SetDeletionLabel>
-        </SetDeletionLabel>
-        <BeforeDelete>
-        </BeforeDelete>
       </TriggerFunctions>
       <Forms />
     </Directory>
