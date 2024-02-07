@@ -711,10 +711,6 @@ class {entryName.Text}_Triggers
         {
             VBox vBox = new VBox();
 
-            HBox hBox = new HBox();
-            hBox.PackStart(new Label("Табличні списки:"), false, false, 5);
-            vBox.PackStart(hBox, false, false, 5);
-
             Toolbar toolbar = new Toolbar();
             vBox.PackStart(toolbar, false, false, 0);
 
@@ -753,8 +749,14 @@ class {entryName.Text}_Triggers
         {
             VBox vBox = new VBox();
 
+            Button buttonCreateForms = new Button("Створити");
+            buttonCreateForms.Clicked += (object? sender, EventArgs args) =>
+            {
+                
+            };
+
             HBox hBox = new HBox();
-            hBox.PackStart(new Label("Форми:"), false, false, 5);
+            hBox.PackStart(buttonCreateForms, false, false, 5);
             vBox.PackStart(hBox, false, false, 5);
 
             Toolbar toolbar = new Toolbar();
@@ -1349,8 +1351,6 @@ class {entryName.Text}_Triggers
                 }
 
                 FormsListRefreshList();
-
-                GeneralForm?.LoadTreeAsync();
             }
         }
 
@@ -1369,14 +1369,10 @@ class {entryName.Text}_Triggers
             if (selectedRows.Length != 0)
             {
                 foreach (ListBoxRow row in selectedRows)
-                {
                     if (ConfDirectory.Forms.ContainsKey(row.Child.Name))
                         ConfDirectory.Forms.Remove(row.Child.Name);
-                }
 
                 FormsListRefreshList();
-
-                GeneralForm?.LoadTreeAsync();
             }
         }
 

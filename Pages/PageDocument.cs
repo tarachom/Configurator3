@@ -433,7 +433,7 @@ class {entryName.Text}_Triggers
 
             //Списки та форми
             {
-                Expander expanderForm = new Expander("Табличні списки та форми");
+                Expander expanderForm = new Expander("Табличні списки");
                 vBox.PackStart(expanderForm, false, false, 5);
 
                 VBox vBoxForm = new VBox();
@@ -582,10 +582,6 @@ class {entryName.Text}_Triggers
         void CreateTabularList(VBox vBoxContainer)
         {
             VBox vBox = new VBox();
-
-            HBox hBox = new HBox();
-            hBox.PackStart(new Label("Табличні списки:"), false, false, 5);
-            vBox.PackStart(hBox, false, false, 5);
 
             Toolbar toolbar = new Toolbar();
             vBox.PackStart(toolbar, false, false, 0);
