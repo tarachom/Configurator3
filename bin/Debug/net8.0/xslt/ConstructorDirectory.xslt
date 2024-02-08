@@ -364,28 +364,25 @@ namespace <xsl:value-of select="$NameSpace"/>
     {
         public <xsl:value-of select="$DirectoryName"/>() : base()
         {
-            TreeViewGrid.Model = ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_Записи.Store;
             ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_Записи.AddColumns(TreeViewGrid);
         }
 
         #region Override
 
-        public override void LoadRecords()
+        public override async ValueTask LoadRecords()
         {
             ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_Записи.SelectPointerItem = SelectPointerItem;
             ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_Записи.DirectoryPointerItem = DirectoryPointerItem;
 
-            ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_Записи.Where.Clear();
+            ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_Записи.ОчиститиВідбір(TreeViewGrid);
 
-            ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_Записи.LoadRecords();
+            await ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_Записи.LoadRecords(TreeViewGrid);
 
             if (ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_Записи.SelectPath != null)
                 TreeViewGrid.SetCursor(ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_Записи.SelectPath, TreeViewGrid.Columns[0], false);
-
-            TreeViewGrid.GrabFocus();
         }
 
-        protected override void LoadRecords_OnSearch(string searchText)
+        protected override async ValueTask LoadRecords_OnSearch(string searchText)
         {
             searchText = searchText.ToLower().Trim();
 
@@ -394,19 +391,19 @@ namespace <xsl:value-of select="$NameSpace"/>
 
             searchText = "%" + searchText.Replace(" ", "%") + "%";
 
-            ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_Записи.Where.Clear();
+            ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_Записи.ОчиститиВідбір(TreeViewGrid);
 
             //Назва
-            ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_Записи.Where.Add(
+            ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_Записи.ДодатиВідбір(TreeViewGrid,
                 new Where(<xsl:value-of select="$DirectoryName"/>_Const.Назва, Comparison.LIKE, searchText) { FuncToField = "LOWER" });
 
-            ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_Записи.LoadRecords();
+            await ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_Записи.LoadRecords(TreeViewGrid);
 
             if (ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_Записи.FirstPath != null)
                 TreeViewGrid.SetCursor(ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_Записи.FirstPath, TreeViewGrid.Columns[0], false);
         }
 
-        protected override void OpenPageElement(bool IsNew, UnigueID? unigueID = null)
+        protected override async void OpenPageElement(bool IsNew, UnigueID? unigueID = null)
         {
             if (IsNew)
             {
@@ -421,12 +418,12 @@ namespace <xsl:value-of select="$NameSpace"/>
                     page.SetValue();
 
                     return page;
-                }, true);
+                });
             }
             else if (unigueID != null)
             {
                 <xsl:value-of select="$DirectoryName"/>_Objest <xsl:value-of select="$DirectoryName"/>_Objest = new <xsl:value-of select="$DirectoryName"/>_Objest();
-                if (<xsl:value-of select="$DirectoryName"/>_Objest.Read(unigueID))
+                if (await <xsl:value-of select="$DirectoryName"/>_Objest.Read(unigueID))
                 {
                     Program.GeneralForm?.CreateNotebookPage($"{<xsl:value-of select="$DirectoryName"/>_Objest.Назва}", () =>
                     {
@@ -440,32 +437,32 @@ namespace <xsl:value-of select="$NameSpace"/>
                         page.SetValue();
 
                         return page;
-                    }, true);
+                    });
                 }
                 else
                     Message.Error(Program.GeneralForm, "Не вдалось прочитати!");
             }
         }
 
-        protected override void SetDeletionLabel(UnigueID unigueID)
+        protected override async ValueTask SetDeletionLabel(UnigueID unigueID)
         {
             <xsl:value-of select="$DirectoryName"/>_Objest <xsl:value-of select="$DirectoryName"/>_Objest = new <xsl:value-of select="$DirectoryName"/>_Objest();
-            if (<xsl:value-of select="$DirectoryName"/>_Objest.Read(unigueID))
-                <xsl:value-of select="$DirectoryName"/>_Objest.SetDeletionLabel(!<xsl:value-of select="$DirectoryName"/>_Objest.DeletionLabel);
+            if (await <xsl:value-of select="$DirectoryName"/>_Objest.Read(unigueID))
+                await <xsl:value-of select="$DirectoryName"/>_Objest.SetDeletionLabel(!<xsl:value-of select="$DirectoryName"/>_Objest.DeletionLabel);
             else
                 Message.Error(Program.GeneralForm, "Не вдалось прочитати!");
         }
 
-        protected override UnigueID? Copy(UnigueID unigueID)
+        protected override async ValueTask&lt;UnigueID?&gt; Copy(UnigueID unigueID)
         {
             <xsl:value-of select="$DirectoryName"/>_Objest <xsl:value-of select="$DirectoryName"/>_Objest = new <xsl:value-of select="$DirectoryName"/>_Objest();
-            if (<xsl:value-of select="$DirectoryName"/>_Objest.Read(unigueID))
+            if (await <xsl:value-of select="$DirectoryName"/>_Objest.Read(unigueID))
             {
-                <xsl:value-of select="$DirectoryName"/>_Objest <xsl:value-of select="$DirectoryName"/>_Objest_Новий = <xsl:value-of select="$DirectoryName"/>_Objest.Copy(true);
-                <xsl:value-of select="$DirectoryName"/>_Objest_Новий.Save();
+                <xsl:value-of select="$DirectoryName"/>_Objest <xsl:value-of select="$DirectoryName"/>_Objest_Новий = await <xsl:value-of select="$DirectoryName"/>_Objest.Copy(true);
+                await <xsl:value-of select="$DirectoryName"/>_Objest_Новий.Save();
                 <xsl:for-each select="$TabularParts">
                     /* Таблична частина: <xsl:value-of select="Name"/> */
-                    <xsl:value-of select="$DirectoryName"/>_Objest_Новий.<xsl:value-of select="Name"/>_TablePart.Save(false);
+                    await <xsl:value-of select="$DirectoryName"/>_Objest_Новий.<xsl:value-of select="Name"/>_TablePart.Save(false);
                 </xsl:for-each>
                 return <xsl:value-of select="$DirectoryName"/>_Objest_Новий.UnigueID;
             }
@@ -508,7 +505,6 @@ namespace <xsl:value-of select="$NameSpace"/>
     {
         public <xsl:value-of select="$DirectoryName"/>_ШвидкийВибір() : base()
         {
-            TreeViewGrid.Model = ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_ЗаписиШвидкийВибір.Store;
             ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_ЗаписиШвидкийВибір.AddColumns(TreeViewGrid);
 
             //Сторінка
@@ -522,7 +518,7 @@ namespace <xsl:value-of select="$NameSpace"/>
                         CallBack_OnSelectPointer = CallBack_OnSelectPointer
                     };
 
-                    Program.GeneralForm?.CreateNotebookPage($"Вибір - {<xsl:value-of select="$DirectoryName"/>_Const.FULLNAME}", () =&gt; { return page; }, true);
+                    Program.GeneralForm?.CreateNotebookPage($"Вибір - {<xsl:value-of select="$DirectoryName"/>_Const.FULLNAME}", () =&gt; { return page; });
 
                     await page.LoadRecords();
                 };
@@ -541,7 +537,7 @@ namespace <xsl:value-of select="$NameSpace"/>
                         CallBack_OnSelectPointer = CallBack_OnSelectPointer
                     };
 
-                    Program.GeneralForm?.CreateNotebookPage($"{<xsl:value-of select="$DirectoryName"/>_Const.FULLNAME} *", () =&gt; { return page; }, true);
+                    Program.GeneralForm?.CreateNotebookPage($"{<xsl:value-of select="$DirectoryName"/>_Const.FULLNAME} *", () =&gt; { return page; });
 
                     page.SetValue();
                 };
@@ -554,9 +550,9 @@ namespace <xsl:value-of select="$NameSpace"/>
         {
             ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_ЗаписиШвидкийВибір.DirectoryPointerItem = DirectoryPointerItem;
 
-            ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_ЗаписиШвидкийВибір.Where.Clear();
+            ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_ЗаписиШвидкийВибір.ОчиститиВідбір(TreeViewGrid);
 
-            await ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_ЗаписиШвидкийВибір.LoadRecords();
+            await ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_ЗаписиШвидкийВибір.LoadRecords(TreeViewGrid);
 
             if (ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_ЗаписиШвидкийВибір.SelectPath != null)
                 TreeViewGrid.SetCursor(ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_ЗаписиШвидкийВибір.SelectPath, TreeViewGrid.Columns[0], false);
@@ -571,17 +567,17 @@ namespace <xsl:value-of select="$NameSpace"/>
 
             searchText = "%" + searchText.Replace(" ", "%") + "%";
 
-            ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_ЗаписиШвидкийВибір.Where.Clear();
+            ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_ЗаписиШвидкийВибір.ОчиститиВідбір(TreeViewGrid);
 
             //Код
-            ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_ЗаписиШвидкийВибір.Where.Add(
+            ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_ЗаписиШвидкийВибір.ДодатиВідбір(TreeViewGrid,
                 new Where(<xsl:value-of select="$DirectoryName"/>_Const.Код, Comparison.LIKE, searchText) { FuncToField = "LOWER" });
 
             //Назва
-            ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_ЗаписиШвидкийВибір.Where.Add(
+            ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_ЗаписиШвидкийВибір.ДодатиВідбір(TreeViewGrid,
                 new Where(Comparison.OR, <xsl:value-of select="$DirectoryName"/>_Const.Назва, Comparison.LIKE, searchText) { FuncToField = "LOWER" });
 
-            await ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_ЗаписиШвидкийВибір.LoadRecords();
+            await ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_ЗаписиШвидкийВибір.LoadRecords(TreeViewGrid);
         }
     }
 }
@@ -705,7 +701,7 @@ namespace <xsl:value-of select="$NameSpace"/>
                     page.SetValue();
 
                     return page;
-                }, true);
+                });
             }
             else if (unigueID != null)
             {
@@ -724,7 +720,7 @@ namespace <xsl:value-of select="$NameSpace"/>
                         page.SetValue();
 
                         return page;
-                    }, true);
+                    });
                 }
                 else
                     Message.Error(Program.GeneralForm, "Не вдалось прочитати!");
@@ -797,13 +793,12 @@ namespace <xsl:value-of select="$NameSpace"/>
     {
         public <xsl:value-of select="$DirectoryName"/>_Дерево() : base()
         {
-            TreeViewGrid.Model = ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_Записи.Store;
             ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_Записи.AddColumns(TreeViewGrid);
         }
 
         public override async void LoadTree()
         {
-            await ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_Записи.LoadTree(OpenFolder, DirectoryPointerItem);
+            await ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_Записи.LoadTree(TreeViewGrid, OpenFolder, DirectoryPointerItem);
 
             TreeViewGrid.ExpandToPath(ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_Записи.RootPath);
             TreeViewGrid.SetCursor(ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_Записи.RootPath, TreeViewGrid.Columns[0], false);
@@ -833,7 +828,7 @@ namespace <xsl:value-of select="$NameSpace"/>
                     page.SetValue();
 
                     return page;
-                }, true);
+                });
             }
             else if (unigueID != null)
             {
@@ -852,7 +847,7 @@ namespace <xsl:value-of select="$NameSpace"/>
                         page.SetValue();
 
                         return page;
-                    }, true);
+                    });
                 }
                 else
                     Message.Error(Program.GeneralForm, "Не вдалось прочитати!");
@@ -923,7 +918,6 @@ namespace <xsl:value-of select="$NameSpace"/>
 
         public <xsl:value-of select="$DirectoryName"/>_ШвидкийВибір() : base(false)
         {
-            TreeViewGrid.Model = ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_ЗаписиШвидкийВибір.Store;
             ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_ЗаписиШвидкийВибір.AddColumns(TreeViewGrid);
 
             //Сторінка
@@ -938,7 +932,7 @@ namespace <xsl:value-of select="$NameSpace"/>
                         OpenFolder = OpenFolder
                     };
 
-                    Program.GeneralForm?.CreateNotebookPage($"Вибір - {<xsl:value-of select="$DirectoryName"/>_Const.FULLNAME}", () =&gt; { return page; }, true);
+                    Program.GeneralForm?.CreateNotebookPage($"Вибір - {<xsl:value-of select="$DirectoryName"/>_Const.FULLNAME}", () =&gt; { return page; });
 
                     page.LoadTree();
                 };
@@ -957,7 +951,7 @@ namespace <xsl:value-of select="$NameSpace"/>
                         CallBack_OnSelectPointer = CallBack_OnSelectPointer
                     };
 
-                    Program.GeneralForm?.CreateNotebookPage($"{<xsl:value-of select="$DirectoryName"/>_Const.FULLNAME} *", () =&gt; { return page; }, true);
+                    Program.GeneralForm?.CreateNotebookPage($"{<xsl:value-of select="$DirectoryName"/>_Const.FULLNAME} *", () =&gt; { return page; });
 
                     page.SetValue();
                 };
@@ -968,7 +962,7 @@ namespace <xsl:value-of select="$NameSpace"/>
 
         public async void LoadTree()
         {
-            await ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_ЗаписиШвидкийВибір.LoadTree(OpenFolder, DirectoryPointerItem);
+            await ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_ЗаписиШвидкийВибір.LoadTree(TreeViewGrid, OpenFolder, DirectoryPointerItem);
 
             TreeViewGrid.ExpandToPath(ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_ЗаписиШвидкийВибір.RootPath);
             TreeViewGrid.SetCursor(ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_ЗаписиШвидкийВибір.RootPath, TreeViewGrid.Columns[0], false);

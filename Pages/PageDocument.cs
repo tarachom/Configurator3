@@ -48,12 +48,25 @@ namespace Configurator
         Entry entryTable = new Entry() { WidthRequest = 500 };
         Entry entrySpend = new Entry() { WidthRequest = 500 };
         Entry entryClearSpend = new Entry() { WidthRequest = 500 };
-        Entry entryNew = new Entry() { WidthRequest = 500 };
-        Entry entryCopying = new Entry() { WidthRequest = 500 };
-        Entry entryBeforeSave = new Entry() { WidthRequest = 500 };
-        Entry entryAfterSave = new Entry() { WidthRequest = 500 };
-        Entry entrySetDeletionLabel = new Entry() { WidthRequest = 500 };
-        Entry entryBeforeDelete = new Entry() { WidthRequest = 500 };
+
+        #region Trigers
+
+        Entry entryNew = new Entry() { WidthRequest = 400 };
+        Entry entryCopying = new Entry() { WidthRequest = 400 };
+        Entry entryBeforeSave = new Entry() { WidthRequest = 400 };
+        Entry entryAfterSave = new Entry() { WidthRequest = 400 };
+        Entry entrySetDeletionLabel = new Entry() { WidthRequest = 400 };
+        Entry entryBeforeDelete = new Entry() { WidthRequest = 400 };
+
+        Switch switchNew = new Switch();
+        Switch switchCopying = new Switch();
+        Switch switchBeforeSave = new Switch();
+        Switch switchAfterSave = new Switch();
+        Switch switchSetDeletionLabel = new Switch();
+        Switch switchBeforeDelete = new Switch();
+
+        #endregion
+
         TextView textViewDesc = new TextView() { WrapMode = WrapMode.Word };
         CheckButton checkButtonAutoNum = new CheckButton("Автоматична нумерація");
 
@@ -312,6 +325,7 @@ class {entryName.Text}_SpendTheDocument
 
                 hBoxTrigerNew.PackStart(new Label("Новий:"), false, false, 5);
                 hBoxTrigerNew.PackStart(entryNew, false, false, 5);
+                CreateSwitch(hBoxTrigerNew, switchNew);
 
                 //Копіювання
                 HBox hBoxTrigerCopying = new HBox() { Halign = Align.End };
@@ -319,6 +333,7 @@ class {entryName.Text}_SpendTheDocument
 
                 hBoxTrigerCopying.PackStart(new Label("Копіювання:"), false, false, 5);
                 hBoxTrigerCopying.PackStart(entryCopying, false, false, 5);
+                CreateSwitch(hBoxTrigerCopying, switchCopying);
 
                 //Перед записом
                 HBox hBoxTrigerBeforeSave = new HBox() { Halign = Align.End };
@@ -326,6 +341,7 @@ class {entryName.Text}_SpendTheDocument
 
                 hBoxTrigerBeforeSave.PackStart(new Label("Перед записом:"), false, false, 5);
                 hBoxTrigerBeforeSave.PackStart(entryBeforeSave, false, false, 5);
+                CreateSwitch(hBoxTrigerBeforeSave, switchBeforeSave);
 
                 //Після запису
                 HBox hBoxTrigerAfterSave = new HBox() { Halign = Align.End };
@@ -333,6 +349,7 @@ class {entryName.Text}_SpendTheDocument
 
                 hBoxTrigerAfterSave.PackStart(new Label("Після запису:"), false, false, 5);
                 hBoxTrigerAfterSave.PackStart(entryAfterSave, false, false, 5);
+                CreateSwitch(hBoxTrigerAfterSave, switchAfterSave);
 
                 //Перед встановлення мітки на виделення
                 HBox hBoxTrigerSetDeletionLabel = new HBox() { Halign = Align.End };
@@ -340,6 +357,7 @@ class {entryName.Text}_SpendTheDocument
 
                 hBoxTrigerSetDeletionLabel.PackStart(new Label("Встановлення мітки:"), false, false, 5);
                 hBoxTrigerSetDeletionLabel.PackStart(entrySetDeletionLabel, false, false, 5);
+                CreateSwitch(hBoxTrigerSetDeletionLabel, switchSetDeletionLabel);
 
                 //Перед видаленням
                 HBox hBoxTrigerBeforeDelete = new HBox() { Halign = Align.End };
@@ -347,6 +365,7 @@ class {entryName.Text}_SpendTheDocument
 
                 hBoxTrigerBeforeDelete.PackStart(new Label("Перед видаленням:"), false, false, 5);
                 hBoxTrigerBeforeDelete.PackStart(entryBeforeDelete, false, false, 5);
+                CreateSwitch(hBoxTrigerBeforeDelete, switchBeforeDelete);
 
                 //
                 // Конструктор для генерування класу тригерів
@@ -617,6 +636,17 @@ class {entryName.Text}_Triggers
             vBoxContainer.PackStart(vBox, false, false, 0);
         }
 
+        void CreateSwitch(HBox hBoxContainer, Switch switchWidget)
+        {
+            HBox hBoxSwitch = new HBox();
+            hBoxSwitch.PackStart(switchWidget, false, false, 0);
+
+            VBox vBoxSwitch = new VBox() { Valign = Align.Center };
+            vBoxSwitch.PackStart(hBoxSwitch, true, true, 0);
+
+            hBoxContainer.PackEnd(vBoxSwitch, false, false, 5);
+        }
+
         #region Присвоєння / зчитування значень віджетів
 
         public async void SetValue()
@@ -651,12 +681,23 @@ class {entryName.Text}_Triggers
             entrySpend.Text = ConfDocument.SpendFunctions.Spend;
             entryClearSpend.Text = ConfDocument.SpendFunctions.ClearSpend;
 
+            #region Trigers
+
             entryNew.Text = ConfDocument.TriggerFunctions.New;
             entryCopying.Text = ConfDocument.TriggerFunctions.Copying;
             entryBeforeSave.Text = ConfDocument.TriggerFunctions.BeforeSave;
             entryAfterSave.Text = ConfDocument.TriggerFunctions.AfterSave;
             entrySetDeletionLabel.Text = ConfDocument.TriggerFunctions.SetDeletionLabel;
             entryBeforeDelete.Text = ConfDocument.TriggerFunctions.BeforeDelete;
+
+            switchNew.Active = ConfDocument.TriggerFunctions.NewAction;
+            switchCopying.Active = ConfDocument.TriggerFunctions.CopyingAction;
+            switchBeforeSave.Active = ConfDocument.TriggerFunctions.BeforeSaveAction;
+            switchAfterSave.Active = ConfDocument.TriggerFunctions.AfterSaveAction;
+            switchSetDeletionLabel.Active = ConfDocument.TriggerFunctions.SetDeletionLabelAction;
+            switchBeforeDelete.Active = ConfDocument.TriggerFunctions.BeforeDeleteAction;
+
+            #endregion
 
             checkButtonAutoNum.Active = ConfDocument.AutomaticNumeration;
 
@@ -717,12 +758,23 @@ class {entryName.Text}_Triggers
             ConfDocument.SpendFunctions.Spend = entrySpend.Text;
             ConfDocument.SpendFunctions.ClearSpend = entryClearSpend.Text;
 
+            #region Trigers
+
             ConfDocument.TriggerFunctions.New = entryNew.Text;
             ConfDocument.TriggerFunctions.Copying = entryCopying.Text;
             ConfDocument.TriggerFunctions.BeforeSave = entryBeforeSave.Text;
             ConfDocument.TriggerFunctions.AfterSave = entryAfterSave.Text;
             ConfDocument.TriggerFunctions.SetDeletionLabel = entrySetDeletionLabel.Text;
             ConfDocument.TriggerFunctions.BeforeDelete = entryBeforeDelete.Text;
+
+            ConfDocument.TriggerFunctions.NewAction = switchNew.Active;
+            ConfDocument.TriggerFunctions.CopyingAction = switchCopying.Active;
+            ConfDocument.TriggerFunctions.BeforeSaveAction = switchBeforeSave.Active;
+            ConfDocument.TriggerFunctions.AfterSaveAction = switchAfterSave.Active;
+            ConfDocument.TriggerFunctions.SetDeletionLabelAction = switchSetDeletionLabel.Active;
+            ConfDocument.TriggerFunctions.BeforeDeleteAction = switchBeforeDelete.Active;
+
+            #endregion
 
             ConfDocument.AutomaticNumeration = checkButtonAutoNum.Active;
 

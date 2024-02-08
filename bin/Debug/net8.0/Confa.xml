@@ -6,7 +6,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>07.02.2024 18:28:09</DateTimeSave>
+  <DateTimeSave>08.02.2024 14:42:20</DateTimeSave>
   <DictTSearch>simple</DictTSearch>
   <ConstantsBlocks>
     <ConstantsBlock>
@@ -1203,12 +1203,12 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
         </TabularList>
       </TabularLists>
       <TriggerFunctions>
-        <New>Організації_Triggers.New</New>
-        <Copying>Організації_Triggers.Copying</Copying>
-        <BeforeSave>Організації_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>Організації_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>Організації_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>Організації_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">Організації_Triggers.New</New>
+        <Copying Action="0">Організації_Triggers.Copying</Copying>
+        <BeforeSave Action="0">Організації_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">Організації_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">Організації_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">Організації_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms>
         <Form>
@@ -1234,7 +1234,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <Desc>Назва</Desc>
           <IsPresentation>1</IsPresentation>
           <IsIndex>0</IsIndex>
-          <IsFullTextSearch>1</IsFullTextSearch>
+          <IsFullTextSearch>0</IsFullTextSearch>
           <Multiline>0</Multiline>
         </Field>
         <Field>
@@ -1255,7 +1255,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
-          <IsFullTextSearch>1</IsFullTextSearch>
+          <IsFullTextSearch>0</IsFullTextSearch>
           <Multiline>0</Multiline>
         </Field>
         <Field>
@@ -1266,7 +1266,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
-          <IsFullTextSearch>1</IsFullTextSearch>
+          <IsFullTextSearch>0</IsFullTextSearch>
           <Multiline>1</Multiline>
         </Field>
         <Field>
@@ -1277,7 +1277,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           </Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
-          <IsFullTextSearch>1</IsFullTextSearch>
+          <IsFullTextSearch>0</IsFullTextSearch>
           <Multiline>0</Multiline>
         </Field>
         <Field>
@@ -1516,12 +1516,12 @@ END)]]></Value>
         </TabularList>
       </TabularLists>
       <TriggerFunctions>
-        <New>Номенклатура_Triggers.New</New>
-        <Copying>Номенклатура_Triggers.Copying</Copying>
-        <BeforeSave>Номенклатура_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>Номенклатура_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>Номенклатура_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>Номенклатура_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">Номенклатура_Triggers.New</New>
+        <Copying Action="0">Номенклатура_Triggers.Copying</Copying>
+        <BeforeSave Action="0">Номенклатура_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">Номенклатура_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">Номенклатура_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">Номенклатура_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms />
     </Directory>
@@ -1614,12 +1614,12 @@ END)]]></Value>
         </TabularList>
       </TabularLists>
       <TriggerFunctions>
-        <New>Виробники_Triggers.New</New>
-        <Copying>Виробники_Triggers.Copying</Copying>
-        <BeforeSave>Виробники_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>Виробники_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>Виробники_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>Виробники_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">Виробники_Triggers.New</New>
+        <Copying Action="0">Виробники_Triggers.Copying</Copying>
+        <BeforeSave Action="0">Виробники_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">Виробники_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">Виробники_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">Виробники_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms />
     </Directory>
@@ -1735,12 +1735,12 @@ END)]]></Value>
         </TabularList>
       </TabularLists>
       <TriggerFunctions>
-        <New>ВидиНоменклатури_Triggers.New</New>
-        <Copying>ВидиНоменклатури_Triggers.Copying</Copying>
-        <BeforeSave>ВидиНоменклатури_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>ВидиНоменклатури_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>ВидиНоменклатури_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>ВидиНоменклатури_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">ВидиНоменклатури_Triggers.New</New>
+        <Copying Action="0">ВидиНоменклатури_Triggers.Copying</Copying>
+        <BeforeSave Action="0">ВидиНоменклатури_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">ВидиНоменклатури_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">ВидиНоменклатури_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">ВидиНоменклатури_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms />
     </Directory>
@@ -1854,12 +1854,12 @@ END)]]></Value>
         </TabularList>
       </TabularLists>
       <TriggerFunctions>
-        <New>ПакуванняОдиниціВиміру_Triggers.New</New>
-        <Copying>ПакуванняОдиниціВиміру_Triggers.Copying</Copying>
-        <BeforeSave>ПакуванняОдиниціВиміру_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>ПакуванняОдиниціВиміру_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>ПакуванняОдиниціВиміру_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>ПакуванняОдиниціВиміру_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">ПакуванняОдиниціВиміру_Triggers.New</New>
+        <Copying Action="0">ПакуванняОдиниціВиміру_Triggers.Copying</Copying>
+        <BeforeSave Action="0">ПакуванняОдиниціВиміру_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">ПакуванняОдиниціВиміру_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">ПакуванняОдиниціВиміру_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">ПакуванняОдиниціВиміру_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms />
     </Directory>
@@ -2032,12 +2032,12 @@ END)]]></Value>
         </TabularList>
       </TabularLists>
       <TriggerFunctions>
-        <New>Валюти_Triggers.New</New>
-        <Copying>Валюти_Triggers.Copying</Copying>
-        <BeforeSave>Валюти_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>Валюти_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>Валюти_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>Валюти_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">Валюти_Triggers.New</New>
+        <Copying Action="0">Валюти_Triggers.Copying</Copying>
+        <BeforeSave Action="0">Валюти_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">Валюти_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">Валюти_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">Валюти_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms />
     </Directory>
@@ -2311,12 +2311,12 @@ END)]]></Value>
         </TabularList>
       </TabularLists>
       <TriggerFunctions>
-        <New>Контрагенти_Triggers.New</New>
-        <Copying>Контрагенти_Triggers.Copying</Copying>
-        <BeforeSave>Контрагенти_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>Контрагенти_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>Контрагенти_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>Контрагенти_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">Контрагенти_Triggers.New</New>
+        <Copying Action="0">Контрагенти_Triggers.Copying</Copying>
+        <BeforeSave Action="0">Контрагенти_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">Контрагенти_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">Контрагенти_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">Контрагенти_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms />
     </Directory>
@@ -2583,12 +2583,12 @@ END)]]></Value>
         </TabularList>
       </TabularLists>
       <TriggerFunctions>
-        <New>Склади_Triggers.New</New>
-        <Copying>Склади_Triggers.Copying</Copying>
-        <BeforeSave>Склади_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>Склади_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>Склади_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>Склади_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">Склади_Triggers.New</New>
+        <Copying Action="0">Склади_Triggers.Copying</Copying>
+        <BeforeSave Action="0">Склади_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">Склади_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">Склади_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">Склади_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms />
     </Directory>
@@ -2700,12 +2700,12 @@ END)]]></Value>
         </TabularList>
       </TabularLists>
       <TriggerFunctions>
-        <New>ВидиЦін_Triggers.New</New>
-        <Copying>ВидиЦін_Triggers.Copying</Copying>
-        <BeforeSave>ВидиЦін_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>ВидиЦін_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>ВидиЦін_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>ВидиЦін_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">ВидиЦін_Triggers.New</New>
+        <Copying Action="0">ВидиЦін_Triggers.Copying</Copying>
+        <BeforeSave Action="0">ВидиЦін_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">ВидиЦін_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">ВидиЦін_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">ВидиЦін_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms />
     </Directory>
@@ -2809,12 +2809,12 @@ END)]]></Value>
         </TabularList>
       </TabularLists>
       <TriggerFunctions>
-        <New>ВидиЦінПостачальників_Triggers.New</New>
-        <Copying>ВидиЦінПостачальників_Triggers.Copying</Copying>
-        <BeforeSave>ВидиЦінПостачальників_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>ВидиЦінПостачальників_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>ВидиЦінПостачальників_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>ВидиЦінПостачальників_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">ВидиЦінПостачальників_Triggers.New</New>
+        <Copying Action="0">ВидиЦінПостачальників_Triggers.Copying</Copying>
+        <BeforeSave Action="0">ВидиЦінПостачальників_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">ВидиЦінПостачальників_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">ВидиЦінПостачальників_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">ВидиЦінПостачальників_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms />
     </Directory>
@@ -3007,12 +3007,12 @@ END)]]></Value>
         </TabularList>
       </TabularLists>
       <TriggerFunctions>
-        <New>Користувачі_Triggers.New</New>
-        <Copying>Користувачі_Triggers.Copying</Copying>
-        <BeforeSave>Користувачі_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>Користувачі_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>Користувачі_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>Користувачі_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">Користувачі_Triggers.New</New>
+        <Copying Action="0">Користувачі_Triggers.Copying</Copying>
+        <BeforeSave Action="0">Користувачі_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">Користувачі_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">Користувачі_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">Користувачі_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms />
     </Directory>
@@ -3206,12 +3206,12 @@ END)]]></Value>
         </TabularList>
       </TabularLists>
       <TriggerFunctions>
-        <New>ФізичніОсоби_Triggers.New</New>
-        <Copying>ФізичніОсоби_Triggers.Copying</Copying>
-        <BeforeSave>ФізичніОсоби_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>ФізичніОсоби_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>ФізичніОсоби_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>ФізичніОсоби_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">ФізичніОсоби_Triggers.New</New>
+        <Copying Action="0">ФізичніОсоби_Triggers.Copying</Copying>
+        <BeforeSave Action="0">ФізичніОсоби_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">ФізичніОсоби_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">ФізичніОсоби_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">ФізичніОсоби_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms />
     </Directory>
@@ -3305,12 +3305,12 @@ END)]]></Value>
         </TabularList>
       </TabularLists>
       <TriggerFunctions>
-        <New>СтруктураПідприємства_Triggers.New</New>
-        <Copying>СтруктураПідприємства_Triggers.Copying</Copying>
-        <BeforeSave>СтруктураПідприємства_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>СтруктураПідприємства_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>СтруктураПідприємства_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>СтруктураПідприємства_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">СтруктураПідприємства_Triggers.New</New>
+        <Copying Action="0">СтруктураПідприємства_Triggers.Copying</Copying>
+        <BeforeSave Action="0">СтруктураПідприємства_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">СтруктураПідприємства_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">СтруктураПідприємства_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">СтруктураПідприємства_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms />
     </Directory>
@@ -3403,12 +3403,12 @@ END)]]></Value>
         </TabularList>
       </TabularLists>
       <TriggerFunctions>
-        <New>КраїниСвіту_Triggers.New</New>
-        <Copying>КраїниСвіту_Triggers.Copying</Copying>
-        <BeforeSave>КраїниСвіту_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>КраїниСвіту_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>КраїниСвіту_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>КраїниСвіту_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">КраїниСвіту_Triggers.New</New>
+        <Copying Action="0">КраїниСвіту_Triggers.Copying</Copying>
+        <BeforeSave Action="0">КраїниСвіту_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">КраїниСвіту_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">КраїниСвіту_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">КраїниСвіту_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms />
     </Directory>
@@ -3563,12 +3563,12 @@ END)]]></Value>
         </TabularList>
       </TabularLists>
       <TriggerFunctions>
-        <New>Файли_Triggers.New</New>
-        <Copying>Файли_Triggers.Copying</Copying>
-        <BeforeSave>Файли_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>Файли_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>Файли_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>Файли_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">Файли_Triggers.New</New>
+        <Copying Action="0">Файли_Triggers.Copying</Copying>
+        <BeforeSave Action="0">Файли_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">Файли_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">Файли_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">Файли_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms />
     </Directory>
@@ -3719,12 +3719,12 @@ END)]]></Value>
         </TabularList>
       </TabularLists>
       <TriggerFunctions>
-        <New>ХарактеристикиНоменклатури_Triggers.New</New>
-        <Copying>ХарактеристикиНоменклатури_Triggers.Copying</Copying>
-        <BeforeSave>ХарактеристикиНоменклатури_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>ХарактеристикиНоменклатури_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>ХарактеристикиНоменклатури_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>ХарактеристикиНоменклатури_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">ХарактеристикиНоменклатури_Triggers.New</New>
+        <Copying Action="0">ХарактеристикиНоменклатури_Triggers.Copying</Copying>
+        <BeforeSave Action="0">ХарактеристикиНоменклатури_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">ХарактеристикиНоменклатури_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">ХарактеристикиНоменклатури_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">ХарактеристикиНоменклатури_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms />
     </Directory>
@@ -3786,12 +3786,12 @@ END)]]></Value>
         </TabularList>
       </TabularLists>
       <TriggerFunctions>
-        <New>Номенклатура_Папки_Triggers.New</New>
-        <Copying>Номенклатура_Папки_Triggers.Copying</Copying>
-        <BeforeSave>Номенклатура_Папки_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>Номенклатура_Папки_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>Номенклатура_Папки_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>Номенклатура_Папки_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">Номенклатура_Папки_Triggers.New</New>
+        <Copying Action="0">Номенклатура_Папки_Triggers.Copying</Copying>
+        <BeforeSave Action="0">Номенклатура_Папки_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">Номенклатура_Папки_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">Номенклатура_Папки_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">Номенклатура_Папки_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms />
     </Directory>
@@ -3853,12 +3853,12 @@ END)]]></Value>
         </TabularList>
       </TabularLists>
       <TriggerFunctions>
-        <New>Контрагенти_Папки_Triggers.New</New>
-        <Copying>Контрагенти_Папки_Triggers.Copying</Copying>
-        <BeforeSave>Контрагенти_Папки_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>Контрагенти_Папки_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>Контрагенти_Папки_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>Контрагенти_Папки_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">Контрагенти_Папки_Triggers.New</New>
+        <Copying Action="0">Контрагенти_Папки_Triggers.Copying</Copying>
+        <BeforeSave Action="0">Контрагенти_Папки_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">Контрагенти_Папки_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">Контрагенти_Папки_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">Контрагенти_Папки_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms />
     </Directory>
@@ -3920,12 +3920,12 @@ END)]]></Value>
         </TabularList>
       </TabularLists>
       <TriggerFunctions>
-        <New>Склади_Папки_Triggers.New</New>
-        <Copying>Склади_Папки_Triggers.Copying</Copying>
-        <BeforeSave>Склади_Папки_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>Склади_Папки_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>Склади_Папки_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>Склади_Папки_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">Склади_Папки_Triggers.New</New>
+        <Copying Action="0">Склади_Папки_Triggers.Copying</Copying>
+        <BeforeSave Action="0">Склади_Папки_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">Склади_Папки_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">Склади_Папки_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">Склади_Папки_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms />
     </Directory>
@@ -4076,12 +4076,12 @@ END)]]></Value>
         </TabularList>
       </TabularLists>
       <TriggerFunctions>
-        <New>Каси_Triggers.New</New>
-        <Copying>Каси_Triggers.Copying</Copying>
-        <BeforeSave>Каси_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>Каси_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>Каси_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>Каси_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">Каси_Triggers.New</New>
+        <Copying Action="0">Каси_Triggers.Copying</Copying>
+        <BeforeSave Action="0">Каси_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">Каси_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">Каси_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">Каси_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms />
     </Directory>
@@ -4330,12 +4330,12 @@ END)]]></Value>
         </TabularList>
       </TabularLists>
       <TriggerFunctions>
-        <New>БанківськіРахункиОрганізацій_Triggers.New</New>
-        <Copying>БанківськіРахункиОрганізацій_Triggers.Copying</Copying>
-        <BeforeSave>БанківськіРахункиОрганізацій_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>БанківськіРахункиОрганізацій_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>БанківськіРахункиОрганізацій_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>БанківськіРахункиОрганізацій_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">БанківськіРахункиОрганізацій_Triggers.New</New>
+        <Copying Action="0">БанківськіРахункиОрганізацій_Triggers.Copying</Copying>
+        <BeforeSave Action="0">БанківськіРахункиОрганізацій_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">БанківськіРахункиОрганізацій_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">БанківськіРахункиОрганізацій_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">БанківськіРахункиОрганізацій_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms />
     </Directory>
@@ -4664,12 +4664,12 @@ END)]]></Value>
         </TabularList>
       </TabularLists>
       <TriggerFunctions>
-        <New>ДоговориКонтрагентів_Triggers.New</New>
-        <Copying>ДоговориКонтрагентів_Triggers.Copying</Copying>
-        <BeforeSave>ДоговориКонтрагентів_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>ДоговориКонтрагентів_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>ДоговориКонтрагентів_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>ДоговориКонтрагентів_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">ДоговориКонтрагентів_Triggers.New</New>
+        <Copying Action="0">ДоговориКонтрагентів_Triggers.Copying</Copying>
+        <BeforeSave Action="0">ДоговориКонтрагентів_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">ДоговориКонтрагентів_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">ДоговориКонтрагентів_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">ДоговориКонтрагентів_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms />
     </Directory>
@@ -4940,12 +4940,12 @@ END)]]></Value>
         </TabularList>
       </TabularLists>
       <TriggerFunctions>
-        <New>БанківськіРахункиКонтрагентів_Triggers.New</New>
-        <Copying>БанківськіРахункиКонтрагентів_Triggers.Copying</Copying>
-        <BeforeSave>БанківськіРахункиКонтрагентів_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>БанківськіРахункиКонтрагентів_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>БанківськіРахункиКонтрагентів_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>БанківськіРахункиКонтрагентів_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">БанківськіРахункиКонтрагентів_Triggers.New</New>
+        <Copying Action="0">БанківськіРахункиКонтрагентів_Triggers.Copying</Copying>
+        <BeforeSave Action="0">БанківськіРахункиКонтрагентів_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">БанківськіРахункиКонтрагентів_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">БанківськіРахункиКонтрагентів_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">БанківськіРахункиКонтрагентів_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms />
     </Directory>
@@ -5099,12 +5099,12 @@ END)]]></Value>
         </TabularList>
       </TabularLists>
       <TriggerFunctions>
-        <New>СтаттяРухуКоштів_Triggers.New</New>
-        <Copying>СтаттяРухуКоштів_Triggers.Copying</Copying>
-        <BeforeSave>СтаттяРухуКоштів_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>СтаттяРухуКоштів_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>СтаттяРухуКоштів_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>СтаттяРухуКоштів_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">СтаттяРухуКоштів_Triggers.New</New>
+        <Copying Action="0">СтаттяРухуКоштів_Triggers.Copying</Copying>
+        <BeforeSave Action="0">СтаттяРухуКоштів_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">СтаттяРухуКоштів_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">СтаттяРухуКоштів_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">СтаттяРухуКоштів_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms />
     </Directory>
@@ -5189,12 +5189,12 @@ END)]]></Value>
         </TabularList>
       </TabularLists>
       <TriggerFunctions>
-        <New>СеріїНоменклатури_Triggers.New</New>
-        <Copying>СеріїНоменклатури_Triggers.Copying</Copying>
-        <BeforeSave>СеріїНоменклатури_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>СеріїНоменклатури_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>СеріїНоменклатури_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>СеріїНоменклатури_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">СеріїНоменклатури_Triggers.New</New>
+        <Copying Action="0">СеріїНоменклатури_Triggers.Copying</Copying>
+        <BeforeSave Action="0">СеріїНоменклатури_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">СеріїНоменклатури_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">СеріїНоменклатури_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">СеріїНоменклатури_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms />
     </Directory>
@@ -5375,12 +5375,12 @@ END)]]></Value>
         </TabularList>
       </TabularLists>
       <TriggerFunctions>
-        <New>ПартіяТоварівКомпозит_Triggers.New</New>
-        <Copying>ПартіяТоварівКомпозит_Triggers.Copying</Copying>
-        <BeforeSave>ПартіяТоварівКомпозит_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>ПартіяТоварівКомпозит_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>ПартіяТоварівКомпозит_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>ПартіяТоварівКомпозит_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">ПартіяТоварівКомпозит_Triggers.New</New>
+        <Copying Action="0">ПартіяТоварівКомпозит_Triggers.Copying</Copying>
+        <BeforeSave Action="0">ПартіяТоварівКомпозит_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">ПартіяТоварівКомпозит_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">ПартіяТоварівКомпозит_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">ПартіяТоварівКомпозит_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms />
     </Directory>
@@ -5530,12 +5530,12 @@ END)]]></Value>
         </TabularList>
       </TabularLists>
       <TriggerFunctions>
-        <New>ВидиЗапасів_Triggers.New</New>
-        <Copying>ВидиЗапасів_Triggers.Copying</Copying>
-        <BeforeSave>ВидиЗапасів_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>ВидиЗапасів_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>ВидиЗапасів_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>ВидиЗапасів_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">ВидиЗапасів_Triggers.New</New>
+        <Copying Action="0">ВидиЗапасів_Triggers.Copying</Copying>
+        <BeforeSave Action="0">ВидиЗапасів_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">ВидиЗапасів_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">ВидиЗапасів_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">ВидиЗапасів_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms />
     </Directory>
@@ -6085,12 +6085,12 @@ END)]]></Value>
         </TabularList>
       </TabularLists>
       <TriggerFunctions>
-        <New>Банки_Triggers.New</New>
-        <Copying>Банки_Triggers.Copying</Copying>
-        <BeforeSave>Банки_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>Банки_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>Банки_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>Банки_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">Банки_Triggers.New</New>
+        <Copying Action="0">Банки_Triggers.Copying</Copying>
+        <BeforeSave Action="0">Банки_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">Банки_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">Банки_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">Банки_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms />
     </Directory>
@@ -6223,12 +6223,12 @@ END)]]></Value>
         </TabularList>
       </TabularLists>
       <TriggerFunctions>
-        <New>СкладськіПриміщення_Triggers.New</New>
-        <Copying>СкладськіПриміщення_Triggers.Copying</Copying>
-        <BeforeSave>СкладськіПриміщення_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>СкладськіПриміщення_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>СкладськіПриміщення_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>СкладськіПриміщення_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">СкладськіПриміщення_Triggers.New</New>
+        <Copying Action="0">СкладськіПриміщення_Triggers.Copying</Copying>
+        <BeforeSave Action="0">СкладськіПриміщення_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">СкладськіПриміщення_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">СкладськіПриміщення_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">СкладськіПриміщення_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms />
     </Directory>
@@ -6513,12 +6513,12 @@ END)]]></Value>
         </TabularList>
       </TabularLists>
       <TriggerFunctions>
-        <New>СкладськіКомірки_Triggers.New</New>
-        <Copying>СкладськіКомірки_Triggers.Copying</Copying>
-        <BeforeSave>СкладськіКомірки_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>СкладськіКомірки_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>СкладськіКомірки_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>СкладськіКомірки_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">СкладськіКомірки_Triggers.New</New>
+        <Copying Action="0">СкладськіКомірки_Triggers.Copying</Copying>
+        <BeforeSave Action="0">СкладськіКомірки_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">СкладськіКомірки_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">СкладськіКомірки_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">СкладськіКомірки_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms />
     </Directory>
@@ -6606,17 +6606,17 @@ END)]]></Value>
         </TabularList>
       </TabularLists>
       <TriggerFunctions>
-        <New>
+        <New Action="0">
         </New>
-        <Copying>
+        <Copying Action="0">
         </Copying>
-        <BeforeSave>
+        <BeforeSave Action="0">
         </BeforeSave>
-        <AfterSave>
+        <AfterSave Action="0">
         </AfterSave>
-        <SetDeletionLabel>
+        <SetDeletionLabel Action="0">
         </SetDeletionLabel>
-        <BeforeDelete>
+        <BeforeDelete Action="0">
         </BeforeDelete>
       </TriggerFunctions>
       <Forms />
@@ -6785,12 +6785,12 @@ END)]]></Value>
         </TabularList>
       </TabularLists>
       <TriggerFunctions>
-        <New>ТипорозміриКомірок_Triggers.New</New>
-        <Copying>ТипорозміриКомірок_Triggers.Copying</Copying>
-        <BeforeSave>ТипорозміриКомірок_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>ТипорозміриКомірок_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>ТипорозміриКомірок_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>ТипорозміриКомірок_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">ТипорозміриКомірок_Triggers.New</New>
+        <Copying Action="0">ТипорозміриКомірок_Triggers.Copying</Copying>
+        <BeforeSave Action="0">ТипорозміриКомірок_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">ТипорозміриКомірок_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">ТипорозміриКомірок_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">ТипорозміриКомірок_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms />
     </Directory>
@@ -6902,12 +6902,12 @@ END)]]></Value>
         </TabularList>
       </TabularLists>
       <TriggerFunctions>
-        <New>СкладськіКомірки_Папки_Triggers.New</New>
-        <Copying>СкладськіКомірки_Папки_Triggers.Copying</Copying>
-        <BeforeSave>СкладськіКомірки_Папки_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>СкладськіКомірки_Папки_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>СкладськіКомірки_Папки_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>СкладськіКомірки_Папки_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">СкладськіКомірки_Папки_Triggers.New</New>
+        <Copying Action="0">СкладськіКомірки_Папки_Triggers.Copying</Copying>
+        <BeforeSave Action="0">СкладськіКомірки_Папки_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">СкладськіКомірки_Папки_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">СкладськіКомірки_Папки_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">СкладськіКомірки_Папки_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms />
     </Directory>
@@ -7052,12 +7052,12 @@ END)]]></Value>
         </TabularList>
       </TabularLists>
       <TriggerFunctions>
-        <New>Блокнот_Triggers.New</New>
-        <Copying>Блокнот_Triggers.Copying</Copying>
-        <BeforeSave>Блокнот_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>Блокнот_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>Блокнот_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>Блокнот_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">Блокнот_Triggers.New</New>
+        <Copying Action="0">Блокнот_Triggers.Copying</Copying>
+        <BeforeSave Action="0">Блокнот_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">Блокнот_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">Блокнот_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">Блокнот_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms />
     </Directory>
@@ -7638,12 +7638,12 @@ END)]]></Value>
         <Name>ЗамовленняПостачальникам</Name>
       </AllowRegisterAccumulation>
       <TriggerFunctions>
-        <New>ЗамовленняПостачальнику_Triggers.New</New>
-        <Copying>ЗамовленняПостачальнику_Triggers.Copying</Copying>
-        <BeforeSave>ЗамовленняПостачальнику_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>ЗамовленняПостачальнику_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>ЗамовленняПостачальнику_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>ЗамовленняПостачальнику_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">ЗамовленняПостачальнику_Triggers.New</New>
+        <Copying Action="0">ЗамовленняПостачальнику_Triggers.Copying</Copying>
+        <BeforeSave Action="0">ЗамовленняПостачальнику_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">ЗамовленняПостачальнику_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">ЗамовленняПостачальнику_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">ЗамовленняПостачальнику_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <SpendFunctions>
         <Spend>ЗамовленняПостачальнику_SpendTheDocument.Spend</Spend>
@@ -8329,12 +8329,12 @@ END)]]></Value>
         <Name>ПартіїТоварів</Name>
       </AllowRegisterAccumulation>
       <TriggerFunctions>
-        <New>ПоступленняТоварівТаПослуг_Triggers.New</New>
-        <Copying>ПоступленняТоварівТаПослуг_Triggers.Copying</Copying>
-        <BeforeSave>ПоступленняТоварівТаПослуг_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>ПоступленняТоварівТаПослуг_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>ПоступленняТоварівТаПослуг_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>ПоступленняТоварівТаПослуг_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="1">ПоступленняТоварівТаПослуг_Triggers.New</New>
+        <Copying Action="1">ПоступленняТоварівТаПослуг_Triggers.Copying</Copying>
+        <BeforeSave Action="0">ПоступленняТоварівТаПослуг_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">ПоступленняТоварівТаПослуг_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">ПоступленняТоварівТаПослуг_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">ПоступленняТоварівТаПослуг_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <SpendFunctions>
         <Spend>ПоступленняТоварівТаПослуг_SpendTheDocument.Spend</Spend>
@@ -8957,12 +8957,12 @@ END)]]></Value>
         <Name>ВільніЗалишки</Name>
       </AllowRegisterAccumulation>
       <TriggerFunctions>
-        <New>ЗамовленняКлієнта_Triggers.New</New>
-        <Copying>ЗамовленняКлієнта_Triggers.Copying</Copying>
-        <BeforeSave>ЗамовленняКлієнта_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>ЗамовленняКлієнта_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>ЗамовленняКлієнта_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>ЗамовленняКлієнта_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">ЗамовленняКлієнта_Triggers.New</New>
+        <Copying Action="0">ЗамовленняКлієнта_Triggers.Copying</Copying>
+        <BeforeSave Action="0">ЗамовленняКлієнта_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">ЗамовленняКлієнта_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">ЗамовленняКлієнта_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">ЗамовленняКлієнта_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <SpendFunctions>
         <Spend>ЗамовленняКлієнта_SpendTheDocument.Spend</Spend>
@@ -9647,12 +9647,12 @@ END)]]></Value>
         <Name>Продажі</Name>
       </AllowRegisterAccumulation>
       <TriggerFunctions>
-        <New>РеалізаціяТоварівТаПослуг_Triggers.New</New>
-        <Copying>РеалізаціяТоварівТаПослуг_Triggers.Copying</Copying>
-        <BeforeSave>РеалізаціяТоварівТаПослуг_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>РеалізаціяТоварівТаПослуг_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>РеалізаціяТоварівТаПослуг_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>РеалізаціяТоварівТаПослуг_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">РеалізаціяТоварівТаПослуг_Triggers.New</New>
+        <Copying Action="0">РеалізаціяТоварівТаПослуг_Triggers.Copying</Copying>
+        <BeforeSave Action="0">РеалізаціяТоварівТаПослуг_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">РеалізаціяТоварівТаПослуг_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">РеалізаціяТоварівТаПослуг_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">РеалізаціяТоварівТаПослуг_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <SpendFunctions>
         <Spend>РеалізаціяТоварівТаПослуг_SpendTheDocument.Spend</Spend>
@@ -9957,12 +9957,12 @@ END)]]></Value>
       </TabularLists>
       <AllowRegisterAccumulation />
       <TriggerFunctions>
-        <New>ВстановленняЦінНоменклатури_Triggers.New</New>
-        <Copying>ВстановленняЦінНоменклатури_Triggers.Copying</Copying>
-        <BeforeSave>ВстановленняЦінНоменклатури_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>ВстановленняЦінНоменклатури_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>ВстановленняЦінНоменклатури_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>ВстановленняЦінНоменклатури_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">ВстановленняЦінНоменклатури_Triggers.New</New>
+        <Copying Action="0">ВстановленняЦінНоменклатури_Triggers.Copying</Copying>
+        <BeforeSave Action="0">ВстановленняЦінНоменклатури_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">ВстановленняЦінНоменклатури_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">ВстановленняЦінНоменклатури_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">ВстановленняЦінНоменклатури_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <SpendFunctions>
         <Spend>ВстановленняЦінНоменклатури_SpendTheDocument.Spend</Spend>
@@ -10405,12 +10405,12 @@ END)]]></Value>
         <Name>РухКоштів</Name>
       </AllowRegisterAccumulation>
       <TriggerFunctions>
-        <New>ПрихіднийКасовийОрдер_Triggers.New</New>
-        <Copying>ПрихіднийКасовийОрдер_Triggers.Copying</Copying>
-        <BeforeSave>ПрихіднийКасовийОрдер_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>ПрихіднийКасовийОрдер_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>ПрихіднийКасовийОрдер_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>ПрихіднийКасовийОрдер_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">ПрихіднийКасовийОрдер_Triggers.New</New>
+        <Copying Action="0">ПрихіднийКасовийОрдер_Triggers.Copying</Copying>
+        <BeforeSave Action="0">ПрихіднийКасовийОрдер_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">ПрихіднийКасовийОрдер_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">ПрихіднийКасовийОрдер_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">ПрихіднийКасовийОрдер_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <SpendFunctions>
         <Spend>ПрихіднийКасовийОрдер_SpendTheDocument.Spend</Spend>
@@ -10883,12 +10883,12 @@ END)]]></Value>
         <Name>РухКоштів</Name>
       </AllowRegisterAccumulation>
       <TriggerFunctions>
-        <New>РозхіднийКасовийОрдер_Triggers.New</New>
-        <Copying>РозхіднийКасовийОрдер_Triggers.Copying</Copying>
-        <BeforeSave>РозхіднийКасовийОрдер_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>РозхіднийКасовийОрдер_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>РозхіднийКасовийОрдер_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>РозхіднийКасовийОрдер_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">РозхіднийКасовийОрдер_Triggers.New</New>
+        <Copying Action="0">РозхіднийКасовийОрдер_Triggers.Copying</Copying>
+        <BeforeSave Action="0">РозхіднийКасовийОрдер_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">РозхіднийКасовийОрдер_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">РозхіднийКасовийОрдер_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">РозхіднийКасовийОрдер_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <SpendFunctions>
         <Spend>РозхіднийКасовийОрдер_SpendTheDocument.Spend</Spend>
@@ -11344,12 +11344,12 @@ END)]]></Value>
         <Name>ПартіїТоварів</Name>
       </AllowRegisterAccumulation>
       <TriggerFunctions>
-        <New>ПереміщенняТоварів_Triggers.New</New>
-        <Copying>ПереміщенняТоварів_Triggers.Copying</Copying>
-        <BeforeSave>ПереміщенняТоварів_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>ПереміщенняТоварів_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>ПереміщенняТоварів_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>ПереміщенняТоварів_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">ПереміщенняТоварів_Triggers.New</New>
+        <Copying Action="0">ПереміщенняТоварів_Triggers.Copying</Copying>
+        <BeforeSave Action="0">ПереміщенняТоварів_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">ПереміщенняТоварів_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">ПереміщенняТоварів_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">ПереміщенняТоварів_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <SpendFunctions>
         <Spend>ПереміщенняТоварів_SpendTheDocument.Spend</Spend>
@@ -11893,12 +11893,12 @@ END)]]></Value>
         <Name>ПартіїТоварів</Name>
       </AllowRegisterAccumulation>
       <TriggerFunctions>
-        <New>ПоверненняТоварівПостачальнику_Triggers.New</New>
-        <Copying>ПоверненняТоварівПостачальнику_Triggers.Copying</Copying>
-        <BeforeSave>ПоверненняТоварівПостачальнику_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>ПоверненняТоварівПостачальнику_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>ПоверненняТоварівПостачальнику_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>ПоверненняТоварівПостачальнику_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">ПоверненняТоварівПостачальнику_Triggers.New</New>
+        <Copying Action="0">ПоверненняТоварівПостачальнику_Triggers.Copying</Copying>
+        <BeforeSave Action="0">ПоверненняТоварівПостачальнику_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">ПоверненняТоварівПостачальнику_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">ПоверненняТоварівПостачальнику_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">ПоверненняТоварівПостачальнику_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <SpendFunctions>
         <Spend>ПоверненняТоварівПостачальнику_SpendTheDocument.Spend</Spend>
@@ -12410,12 +12410,12 @@ END)]]></Value>
         <Name>Продажі</Name>
       </AllowRegisterAccumulation>
       <TriggerFunctions>
-        <New>ПоверненняТоварівВідКлієнта_Triggers.New</New>
-        <Copying>ПоверненняТоварівВідКлієнта_Triggers.Copying</Copying>
-        <BeforeSave>ПоверненняТоварівВідКлієнта_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>ПоверненняТоварівВідКлієнта_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>ПоверненняТоварівВідКлієнта_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>ПоверненняТоварівВідКлієнта_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">ПоверненняТоварівВідКлієнта_Triggers.New</New>
+        <Copying Action="0">ПоверненняТоварівВідКлієнта_Triggers.Copying</Copying>
+        <BeforeSave Action="0">ПоверненняТоварівВідКлієнта_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">ПоверненняТоварівВідКлієнта_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">ПоверненняТоварівВідКлієнта_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">ПоверненняТоварівВідКлієнта_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <SpendFunctions>
         <Spend>ПоверненняТоварівВідКлієнта_SpendTheDocument.Spend</Spend>
@@ -12837,12 +12837,12 @@ END)]]></Value>
         <Name>Продажі</Name>
       </AllowRegisterAccumulation>
       <TriggerFunctions>
-        <New>АктВиконанихРобіт_Triggers.New</New>
-        <Copying>АктВиконанихРобіт_Triggers.Copying</Copying>
-        <BeforeSave>АктВиконанихРобіт_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>АктВиконанихРобіт_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>АктВиконанихРобіт_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>АктВиконанихРобіт_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">АктВиконанихРобіт_Triggers.New</New>
+        <Copying Action="0">АктВиконанихРобіт_Triggers.Copying</Copying>
+        <BeforeSave Action="0">АктВиконанихРобіт_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">АктВиконанихРобіт_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">АктВиконанихРобіт_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">АктВиконанихРобіт_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <SpendFunctions>
         <Spend>АктВиконанихРобіт_SpendTheDocument.Spend</Spend>
@@ -13373,12 +13373,12 @@ END)]]></Value>
         <Name>ПартіїТоварів</Name>
       </AllowRegisterAccumulation>
       <TriggerFunctions>
-        <New>ВведенняЗалишків_Triggers.New</New>
-        <Copying>ВведенняЗалишків_Triggers.Copying</Copying>
-        <BeforeSave>ВведенняЗалишків_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>ВведенняЗалишків_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>ВведенняЗалишків_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>ВведенняЗалишків_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">ВведенняЗалишків_Triggers.New</New>
+        <Copying Action="0">ВведенняЗалишків_Triggers.Copying</Copying>
+        <BeforeSave Action="0">ВведенняЗалишків_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">ВведенняЗалишків_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">ВведенняЗалишків_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">ВведенняЗалишків_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <SpendFunctions>
         <Spend>ВведенняЗалишків_SpendTheDocument.Spend</Spend>
@@ -13666,17 +13666,17 @@ END)]]></Value>
       </TabularLists>
       <AllowRegisterAccumulation />
       <TriggerFunctions>
-        <New>
+        <New Action="0">
         </New>
-        <Copying>
+        <Copying Action="0">
         </Copying>
-        <BeforeSave>
+        <BeforeSave Action="0">
         </BeforeSave>
-        <AfterSave>
+        <AfterSave Action="0">
         </AfterSave>
-        <SetDeletionLabel>
+        <SetDeletionLabel Action="0">
         </SetDeletionLabel>
-        <BeforeDelete>
+        <BeforeDelete Action="0">
         </BeforeDelete>
       </TriggerFunctions>
       <SpendFunctions>
@@ -13967,17 +13967,17 @@ END)]]></Value>
       </TabularLists>
       <AllowRegisterAccumulation />
       <TriggerFunctions>
-        <New>
+        <New Action="0">
         </New>
-        <Copying>
+        <Copying Action="0">
         </Copying>
-        <BeforeSave>
+        <BeforeSave Action="0">
         </BeforeSave>
-        <AfterSave>
+        <AfterSave Action="0">
         </AfterSave>
-        <SetDeletionLabel>
+        <SetDeletionLabel Action="0">
         </SetDeletionLabel>
-        <BeforeDelete>
+        <BeforeDelete Action="0">
         </BeforeDelete>
       </TriggerFunctions>
       <SpendFunctions>
@@ -14324,12 +14324,12 @@ END)]]></Value>
       </TabularLists>
       <AllowRegisterAccumulation />
       <TriggerFunctions>
-        <New>ПерерахунокТоварів_Triggers.New</New>
-        <Copying>ПерерахунокТоварів_Triggers.Copying</Copying>
-        <BeforeSave>ПерерахунокТоварів_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>ПерерахунокТоварів_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>ПерерахунокТоварів_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>ПерерахунокТоварів_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">ПерерахунокТоварів_Triggers.New</New>
+        <Copying Action="0">ПерерахунокТоварів_Triggers.Copying</Copying>
+        <BeforeSave Action="0">ПерерахунокТоварів_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">ПерерахунокТоварів_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">ПерерахунокТоварів_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">ПерерахунокТоварів_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <SpendFunctions>
         <Spend>ПерерахунокТоварів_SpendTheDocument.Spend</Spend>
@@ -14698,12 +14698,12 @@ END)]]></Value>
         <Name>ПартіїТоварів</Name>
       </AllowRegisterAccumulation>
       <TriggerFunctions>
-        <New>ПсуванняТоварів_Triggers.New</New>
-        <Copying>ПсуванняТоварів_Triggers.Copying</Copying>
-        <BeforeSave>ПсуванняТоварів_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>ПсуванняТоварів_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>ПсуванняТоварів_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>ПсуванняТоварів_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">ПсуванняТоварів_Triggers.New</New>
+        <Copying Action="0">ПсуванняТоварів_Triggers.Copying</Copying>
+        <BeforeSave Action="0">ПсуванняТоварів_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">ПсуванняТоварів_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">ПсуванняТоварів_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">ПсуванняТоварів_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <SpendFunctions>
         <Spend>ПсуванняТоварів_SpendTheDocument.Spend</Spend>
@@ -15101,12 +15101,12 @@ END)]]></Value>
         <Name>ПартіїТоварів</Name>
       </AllowRegisterAccumulation>
       <TriggerFunctions>
-        <New>ВнутрішнєСпоживанняТоварів_Triggers.New</New>
-        <Copying>ВнутрішнєСпоживанняТоварів_Triggers.Copying</Copying>
-        <BeforeSave>ВнутрішнєСпоживанняТоварів_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>ВнутрішнєСпоживанняТоварів_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>ВнутрішнєСпоживанняТоварів_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>ВнутрішнєСпоживанняТоварів_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">ВнутрішнєСпоживанняТоварів_Triggers.New</New>
+        <Copying Action="0">ВнутрішнєСпоживанняТоварів_Triggers.Copying</Copying>
+        <BeforeSave Action="0">ВнутрішнєСпоживанняТоварів_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">ВнутрішнєСпоживанняТоварів_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">ВнутрішнєСпоживанняТоварів_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">ВнутрішнєСпоживанняТоварів_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <SpendFunctions>
         <Spend>ВнутрішнєСпоживанняТоварів_SpendTheDocument.Spend</Spend>
@@ -15625,12 +15625,12 @@ END)]]></Value>
         <Name>ВільніЗалишки</Name>
       </AllowRegisterAccumulation>
       <TriggerFunctions>
-        <New>РахунокФактура_Triggers.New</New>
-        <Copying>РахунокФактура_Triggers.Copying</Copying>
-        <BeforeSave>РахунокФактура_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>РахунокФактура_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>РахунокФактура_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>РахунокФактура_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">РахунокФактура_Triggers.New</New>
+        <Copying Action="0">РахунокФактура_Triggers.Copying</Copying>
+        <BeforeSave Action="0">РахунокФактура_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">РахунокФактура_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">РахунокФактура_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">РахунокФактура_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <SpendFunctions>
         <Spend>РахунокФактура_SpendTheDocument.Spend</Spend>
@@ -15955,12 +15955,12 @@ END)]]></Value>
         <Name>ТовариВКомірках</Name>
       </AllowRegisterAccumulation>
       <TriggerFunctions>
-        <New>РозміщенняТоварівНаСкладі_Triggers.New</New>
-        <Copying>РозміщенняТоварівНаСкладі_Triggers.Copying</Copying>
-        <BeforeSave>РозміщенняТоварівНаСкладі_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>РозміщенняТоварівНаСкладі_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>РозміщенняТоварівНаСкладі_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>РозміщенняТоварівНаСкладі_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">РозміщенняТоварівНаСкладі_Triggers.New</New>
+        <Copying Action="0">РозміщенняТоварівНаСкладі_Triggers.Copying</Copying>
+        <BeforeSave Action="0">РозміщенняТоварівНаСкладі_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">РозміщенняТоварівНаСкладі_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">РозміщенняТоварівНаСкладі_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">РозміщенняТоварівНаСкладі_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <SpendFunctions>
         <Spend>РозміщенняТоварівНаСкладі_SpendTheDocument.Spend</Spend>
@@ -16284,12 +16284,12 @@ END)]]></Value>
         <Name>ТовариВКомірках</Name>
       </AllowRegisterAccumulation>
       <TriggerFunctions>
-        <New>ПереміщенняТоварівНаСкладі_Triggers.New</New>
-        <Copying>ПереміщенняТоварівНаСкладі_Triggers.Copying</Copying>
-        <BeforeSave>ПереміщенняТоварівНаСкладі_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>ПереміщенняТоварівНаСкладі_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>ПереміщенняТоварівНаСкладі_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>ПереміщенняТоварівНаСкладі_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">ПереміщенняТоварівНаСкладі_Triggers.New</New>
+        <Copying Action="0">ПереміщенняТоварівНаСкладі_Triggers.Copying</Copying>
+        <BeforeSave Action="0">ПереміщенняТоварівНаСкладі_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">ПереміщенняТоварівНаСкладі_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">ПереміщенняТоварівНаСкладі_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">ПереміщенняТоварівНаСкладі_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <SpendFunctions>
         <Spend>ПереміщенняТоварівНаСкладі_SpendTheDocument.Spend</Spend>
@@ -16614,12 +16614,12 @@ END)]]></Value>
         <Name>ТовариВКомірках</Name>
       </AllowRegisterAccumulation>
       <TriggerFunctions>
-        <New>ЗбіркаТоварівНаСкладі_Triggers.New</New>
-        <Copying>ЗбіркаТоварівНаСкладі_Triggers.Copying</Copying>
-        <BeforeSave>ЗбіркаТоварівНаСкладі_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>ЗбіркаТоварівНаСкладі_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>ЗбіркаТоварівНаСкладі_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>ЗбіркаТоварівНаСкладі_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">ЗбіркаТоварівНаСкладі_Triggers.New</New>
+        <Copying Action="0">ЗбіркаТоварівНаСкладі_Triggers.Copying</Copying>
+        <BeforeSave Action="0">ЗбіркаТоварівНаСкладі_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">ЗбіркаТоварівНаСкладі_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">ЗбіркаТоварівНаСкладі_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">ЗбіркаТоварівНаСкладі_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <SpendFunctions>
         <Spend>ЗбіркаТоварівНаСкладі_SpendTheDocument.Spend</Spend>
@@ -16898,12 +16898,12 @@ END)]]></Value>
       </TabularLists>
       <AllowRegisterAccumulation />
       <TriggerFunctions>
-        <New>РозміщенняНоменклатуриПоКоміркам_Triggers.New</New>
-        <Copying>РозміщенняНоменклатуриПоКоміркам_Triggers.Copying</Copying>
-        <BeforeSave>РозміщенняНоменклатуриПоКоміркам_Triggers.BeforeSave</BeforeSave>
-        <AfterSave>РозміщенняНоменклатуриПоКоміркам_Triggers.AfterSave</AfterSave>
-        <SetDeletionLabel>РозміщенняНоменклатуриПоКоміркам_Triggers.SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete>РозміщенняНоменклатуриПоКоміркам_Triggers.BeforeDelete</BeforeDelete>
+        <New Action="0">РозміщенняНоменклатуриПоКоміркам_Triggers.New</New>
+        <Copying Action="0">РозміщенняНоменклатуриПоКоміркам_Triggers.Copying</Copying>
+        <BeforeSave Action="0">РозміщенняНоменклатуриПоКоміркам_Triggers.BeforeSave</BeforeSave>
+        <AfterSave Action="0">РозміщенняНоменклатуриПоКоміркам_Triggers.AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">РозміщенняНоменклатуриПоКоміркам_Triggers.SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">РозміщенняНоменклатуриПоКоміркам_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <SpendFunctions>
         <Spend>РозміщенняНоменклатуриПоКоміркам_SpendTheDocument.Spend</Spend>

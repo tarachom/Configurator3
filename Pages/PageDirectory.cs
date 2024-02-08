@@ -46,12 +46,25 @@ namespace Configurator
         Entry entryName = new Entry() { WidthRequest = 500 };
         Entry entryFullName = new Entry() { WidthRequest = 500 };
         Entry entryTable = new Entry() { WidthRequest = 500 };
-        Entry entryNew = new Entry() { WidthRequest = 500 };
-        Entry entryCopying = new Entry() { WidthRequest = 500 };
-        Entry entryBeforeSave = new Entry() { WidthRequest = 500 };
-        Entry entryAfterSave = new Entry() { WidthRequest = 500 };
-        Entry entrySetDeletionLabel = new Entry() { WidthRequest = 500 };
-        Entry entryBeforeDelete = new Entry() { WidthRequest = 500 };
+
+        #region Trigers
+
+        Entry entryNew = new Entry() { WidthRequest = 400 };
+        Entry entryCopying = new Entry() { WidthRequest = 400 };
+        Entry entryBeforeSave = new Entry() { WidthRequest = 400 };
+        Entry entryAfterSave = new Entry() { WidthRequest = 400 };
+        Entry entrySetDeletionLabel = new Entry() { WidthRequest = 400 };
+        Entry entryBeforeDelete = new Entry() { WidthRequest = 400 };
+
+        Switch switchNew = new Switch();
+        Switch switchCopying = new Switch();
+        Switch switchBeforeSave = new Switch();
+        Switch switchAfterSave = new Switch();
+        Switch switchSetDeletionLabel = new Switch();
+        Switch switchBeforeDelete = new Switch();
+
+        #endregion
+
         TextView textViewDesc = new TextView() { WrapMode = WrapMode.Word };
         CheckButton checkButtonAutoNum = new CheckButton("Автоматична нумерація");
         ComboBoxText comboBoxTypeDir = new ComboBoxText();
@@ -217,6 +230,18 @@ namespace Configurator
                     {
                         if (!ConfDirectory.Fields.ContainsKey("Родич"))
                         {
+                            if (string.IsNullOrEmpty(entryName.Text))
+                            {
+                                Message.Error(GeneralForm, "Назва довідника не вказана");
+                                return;
+                            }
+
+                            if (!Conf.Directories.ContainsKey(entryName.Text))
+                            {
+                                Message.Error(GeneralForm, "Довідник не збережений в колекцію, потрібно спочатку зберегти");
+                                return;
+                            }
+
                             // Родич
                             string nameInTable_Parent = Configuration.GetNewUnigueColumnName(Program.Kernel, ConfDirectory.Table, ConfDirectory.Fields);
                             ConfDirectory.AppendField(new ConfigurationField("Родич", nameInTable_Parent, "pointer", $"Довідники.{ConfDirectory.Name}", "Родич", false, true));
@@ -338,35 +363,40 @@ namespace Configurator
                 vBoxTriger.PackStart(hBoxTrigerNew, false, false, 5);
 
                 hBoxTrigerNew.PackStart(new Label("Новий:"), false, false, 5);
-                hBoxTrigerNew.PackStart(entryNew, false, false, 5);
+                hBoxTrigerNew.PackStart(entryNew, false, false, 0);
+                CreateSwitch(hBoxTrigerNew, switchNew);
 
                 //Копіювання
                 HBox hBoxTrigerCopying = new HBox() { Halign = Align.End };
                 vBoxTriger.PackStart(hBoxTrigerCopying, false, false, 5);
 
                 hBoxTrigerCopying.PackStart(new Label("Копіювання:"), false, false, 5);
-                hBoxTrigerCopying.PackStart(entryCopying, false, false, 5);
+                hBoxTrigerCopying.PackStart(entryCopying, false, false, 0);
+                CreateSwitch(hBoxTrigerCopying, switchCopying);
 
                 //Перед записом
                 HBox hBoxTrigerBeforeSave = new HBox() { Halign = Align.End };
                 vBoxTriger.PackStart(hBoxTrigerBeforeSave, false, false, 5);
 
                 hBoxTrigerBeforeSave.PackStart(new Label("Перед записом:"), false, false, 5);
-                hBoxTrigerBeforeSave.PackStart(entryBeforeSave, false, false, 5);
+                hBoxTrigerBeforeSave.PackStart(entryBeforeSave, false, false, 0);
+                CreateSwitch(hBoxTrigerBeforeSave, switchBeforeSave);
 
                 //Після запису
                 HBox hBoxTrigerAfterSave = new HBox() { Halign = Align.End };
                 vBoxTriger.PackStart(hBoxTrigerAfterSave, false, false, 5);
 
                 hBoxTrigerAfterSave.PackStart(new Label("Після запису:"), false, false, 5);
-                hBoxTrigerAfterSave.PackStart(entryAfterSave, false, false, 5);
+                hBoxTrigerAfterSave.PackStart(entryAfterSave, false, false, 0);
+                CreateSwitch(hBoxTrigerAfterSave, switchAfterSave);
 
                 //Перед встановлення мітки на виделення
                 HBox hBoxTrigerSetDeletionLabel = new HBox() { Halign = Align.End };
                 vBoxTriger.PackStart(hBoxTrigerSetDeletionLabel, false, false, 5);
 
                 hBoxTrigerSetDeletionLabel.PackStart(new Label("Встановлення мітки:"), false, false, 5);
-                hBoxTrigerSetDeletionLabel.PackStart(entrySetDeletionLabel, false, false, 5);
+                hBoxTrigerSetDeletionLabel.PackStart(entrySetDeletionLabel, false, false, 0);
+                CreateSwitch(hBoxTrigerSetDeletionLabel, switchSetDeletionLabel);
 
                 //Перед видаленням
                 HBox hBoxTrigerBeforeDelete = new HBox() { Halign = Align.End };
@@ -374,6 +404,7 @@ namespace Configurator
 
                 hBoxTrigerBeforeDelete.PackStart(new Label("Перед видаленням:"), false, false, 5);
                 hBoxTrigerBeforeDelete.PackStart(entryBeforeDelete, false, false, 5);
+                CreateSwitch(hBoxTrigerBeforeDelete, switchBeforeDelete);
 
                 //
                 // Конструктор для генерування класу тригерів
@@ -752,7 +783,7 @@ class {entryName.Text}_Triggers
             Button buttonCreateForms = new Button("Створити");
             buttonCreateForms.Clicked += (object? sender, EventArgs args) =>
             {
-                
+
             };
 
             HBox hBox = new HBox();
@@ -793,6 +824,17 @@ class {entryName.Text}_Triggers
             vBoxContainer.PackStart(vBox, false, false, 0);
         }
 
+        void CreateSwitch(HBox hBoxContainer, Switch switchWidget)
+        {
+            HBox hBoxSwitch = new HBox();
+            hBoxSwitch.PackStart(switchWidget, false, false, 0);
+
+            VBox vBoxSwitch = new VBox() { Valign = Align.Center };
+            vBoxSwitch.PackStart(hBoxSwitch, true, true, 0);
+
+            hBoxContainer.PackEnd(vBoxSwitch, false, false, 5);
+        }
+
         #region Присвоєння / зчитування значень віджетів
 
         public async void SetValue()
@@ -827,12 +869,23 @@ class {entryName.Text}_Triggers
 
             textViewDesc.Buffer.Text = ConfDirectory.Desc;
 
+            #region Trigers
+
             entryNew.Text = ConfDirectory.TriggerFunctions.New;
             entryCopying.Text = ConfDirectory.TriggerFunctions.Copying;
             entryBeforeSave.Text = ConfDirectory.TriggerFunctions.BeforeSave;
             entryAfterSave.Text = ConfDirectory.TriggerFunctions.AfterSave;
             entrySetDeletionLabel.Text = ConfDirectory.TriggerFunctions.SetDeletionLabel;
             entryBeforeDelete.Text = ConfDirectory.TriggerFunctions.BeforeDelete;
+
+            switchNew.Active = ConfDirectory.TriggerFunctions.NewAction;
+            switchCopying.Active = ConfDirectory.TriggerFunctions.CopyingAction;
+            switchBeforeSave.Active = ConfDirectory.TriggerFunctions.BeforeSaveAction;
+            switchAfterSave.Active = ConfDirectory.TriggerFunctions.AfterSaveAction;
+            switchSetDeletionLabel.Active = ConfDirectory.TriggerFunctions.SetDeletionLabelAction;
+            switchBeforeDelete.Active = ConfDirectory.TriggerFunctions.BeforeDeleteAction;
+
+            #endregion
 
             checkButtonAutoNum.Active = ConfDirectory.AutomaticNumeration;
             comboBoxTypeDir.ActiveId = ConfDirectory.TypeDirectory.ToString();
@@ -899,12 +952,23 @@ class {entryName.Text}_Triggers
             ConfDirectory.Table = entryTable.Text;
             ConfDirectory.Desc = textViewDesc.Buffer.Text;
 
+            #region Trigers
+
             ConfDirectory.TriggerFunctions.New = entryNew.Text;
             ConfDirectory.TriggerFunctions.Copying = entryCopying.Text;
             ConfDirectory.TriggerFunctions.BeforeSave = entryBeforeSave.Text;
             ConfDirectory.TriggerFunctions.AfterSave = entryAfterSave.Text;
             ConfDirectory.TriggerFunctions.SetDeletionLabel = entrySetDeletionLabel.Text;
             ConfDirectory.TriggerFunctions.BeforeDelete = entryBeforeDelete.Text;
+
+            ConfDirectory.TriggerFunctions.NewAction = switchNew.Active;
+            ConfDirectory.TriggerFunctions.CopyingAction = switchCopying.Active;
+            ConfDirectory.TriggerFunctions.BeforeSaveAction = switchBeforeSave.Active;
+            ConfDirectory.TriggerFunctions.AfterSaveAction = switchAfterSave.Active;
+            ConfDirectory.TriggerFunctions.SetDeletionLabelAction = switchSetDeletionLabel.Active;
+            ConfDirectory.TriggerFunctions.BeforeDeleteAction = switchBeforeDelete.Active;
+
+            #endregion
 
             ConfDirectory.AutomaticNumeration = checkButtonAutoNum.Active;
             ConfDirectory.TypeDirectory = Enum.Parse<ConfigurationDirectories.TypeDirectories>(comboBoxTypeDir.ActiveId);
