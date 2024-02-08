@@ -46,8 +46,8 @@ namespace Configurator
         Entry entryName = new Entry() { WidthRequest = 500 };
         Entry entryFullName = new Entry() { WidthRequest = 500 };
         Entry entryTable = new Entry() { WidthRequest = 500 };
-        Entry entrySpend = new Entry() { WidthRequest = 500 };
-        Entry entryClearSpend = new Entry() { WidthRequest = 500 };
+        Entry entrySpend = new Entry() { WidthRequest = 460 };
+        Entry entryClearSpend = new Entry() { WidthRequest = 460 };
 
         #region Trigers
 
@@ -283,7 +283,7 @@ class {entryName.Text}_SpendTheDocument
     {{
         try
         {{
-            // код проведення документу
+            // проведення документу
             // ...
 
             return true;
@@ -291,16 +291,12 @@ class {entryName.Text}_SpendTheDocument
         catch (Exception ex)
         {{
             СпільніФункції.ДокументНеПроводиться(ДокументОбєкт, ДокументОбєкт.Назва, ex.Message);
-            await ClearSpend(ДокументОбєкт);
             return false;
         }}
     }}
 
     public static async ValueTask ClearSpend({entryName.Text}_Objest ДокументОбєкт)
     {{
-        // код очищення проводок
-        // ...
-
         await ValueTask.FromResult(true);
     }}
 }}
@@ -390,6 +386,10 @@ class {entryName.Text}_SpendTheDocument
                     //
                     // Code
                     //
+
+                    if (string.IsNullOrEmpty(entryNew.Text)) switchNew.Active = true;
+                    if (string.IsNullOrEmpty(entryCopying.Text)) switchCopying.Active = true;
+                    if (string.IsNullOrEmpty(entryBeforeSave.Text)) switchBeforeSave.Active = true;
 
                     entryNew.Text = entryName.Text + "_Triggers.New";
                     entryCopying.Text = entryName.Text + "_Triggers.Copying";

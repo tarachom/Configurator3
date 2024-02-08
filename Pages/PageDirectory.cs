@@ -426,6 +426,9 @@ namespace Configurator
                     popover.Add(scrollCode);
                     popover.ShowAll();
 
+                    if (string.IsNullOrEmpty(entryNew.Text)) switchNew.Active = true;
+                    if (string.IsNullOrEmpty(entryCopying.Text)) switchCopying.Active = true;
+
                     entryNew.Text = entryName.Text + "_Triggers.New";
                     entryCopying.Text = entryName.Text + "_Triggers.Copying";
                     entryBeforeSave.Text = entryName.Text + "_Triggers.BeforeSave";
