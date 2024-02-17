@@ -32,17 +32,27 @@ namespace Configurator
     {
         Configuration Conf { get { return Program.Kernel.Conf; } }
 
+        public Dictionary<string, ConfigurationField> Fields = [];
         public Dictionary<string, ConfigurationForms> Forms { get; set; } = new Dictionary<string, ConfigurationForms>();
         public ConfigurationForms Form { get; set; } = new ConfigurationForms();
         public FormConfigurator? GeneralForm { get; set; }
         public System.Action? CallBack_RefreshList { get; set; }
         public bool IsNew { get; set; } = true;
+        public ConfigurationForms.TypeForms TypeForm { get; set; } = ConfigurationForms.TypeForms.None;
 
         #region Fields
 
-        Entry entryName = new Entry() { WidthRequest = 300 };
+        Entry entryName = new Entry() { WidthRequest = 250 };
         TextView textViewDesc = new TextView() { WrapMode = WrapMode.Word };
-        ComboBoxText comboBoxTypeForm = new ComboBoxText();
+        Notebook notebook = new Notebook()
+        {
+            Scrollable = true,
+            EnablePopup = true,
+            BorderWidth = 0,
+            ShowBorder = false,
+            TabPos = PositionType.Top,
+            HeightRequest = 600
+        };
         SourceView sourceViewCode = new SourceView() { ShowLineNumbers = true };
 
         #endregion
@@ -93,24 +103,11 @@ namespace Configurator
 
                 hBoxDesc.PackStart(new Label("Опис:") { Valign = Align.Start }, false, false, 5);
 
-                ScrolledWindow scrollTextView = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 300, HeightRequest = 100 };
+                ScrolledWindow scrollTextView = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 250, HeightRequest = 100 };
                 scrollTextView.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
                 scrollTextView.Add(textViewDesc);
 
                 hBoxDesc.PackStart(scrollTextView, false, false, 5);
-            }
-
-            //Тип форми
-            {
-                HBox hBoxType = new HBox() { Halign = Align.End };
-                vBox.PackStart(hBoxType, false, false, 5);
-
-                comboBoxTypeForm.Append(ConfigurationForms.TypeForms.None.ToString(), "Неоприділений");
-                comboBoxTypeForm.Append(ConfigurationForms.TypeForms.List.ToString(), "Список");
-                comboBoxTypeForm.Append(ConfigurationForms.TypeForms.Element.ToString(), "Елемент");
-
-                hBoxType.PackStart(new Label("Тип форми:"), false, false, 5);
-                hBoxType.PackStart(comboBoxTypeForm, false, false, 5);
             }
 
             hPaned.Pack1(vBox, false, false);
@@ -121,33 +118,78 @@ namespace Configurator
             VBox vBox = new VBox();
 
             HBox hBox = new HBox() { Halign = Align.Fill };
-            vBox.PackStart(hBox, true, true, 5);
-
-            sourceViewCode.Buffer.Language = new LanguageManager().GetLanguage("c-sharp");
-
-            ScrolledWindow scrollTextView = new ScrolledWindow() { ShadowType = ShadowType.In, HeightRequest = 600 };
-            scrollTextView.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-            scrollTextView.Add(sourceViewCode);
-
-            hBox.PackStart(scrollTextView, true, true, 5);
+            hBox.PackStart(notebook, true, true, 5);
+            vBox.PackStart(hBox, true, true, 0);
 
             hPaned.Pack2(vBox, true, false);
+        }
+
+        public void CreateNotePage(string tabName, Widget pageWidget)
+        {
+            ScrolledWindow scroll = new ScrolledWindow() { ShadowType = ShadowType.In };
+            scroll.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+            scroll.Add(pageWidget);
+
+            notebook.AppendPage(scroll, new Label(tabName));
+            notebook.ShowAll();
+        }
+
+        public void CreateElementForm()
+        {
+            VBox vBox = new VBox();
+
+            foreach (ConfigurationField field in Fields.Values)
+            {
+                HBox hBox = new HBox() { Halign = Align.Start };
+                hBox.PackStart(new Label(field.Name), false, false, 5);
+                vBox.PackStart(hBox, false, false, 5);
+            }
+
+            CreateNotePage("Форма", vBox);
+        }
+
+        public void CreateListForm()
+        {
+            VBox vBox = new VBox();
+            HBox hBox = new HBox() { Halign = Align.Start };
+
+            vBox.PackStart(hBox, true, true, 0);
+
+            CreateNotePage("Форма", vBox);
         }
 
         #region Присвоєння / зчитування значень віджетів
 
         public void SetValue()
         {
+            if (IsNew)
+                Form.Type = TypeForm;
+
             entryName.Text = Form.Name;
             textViewDesc.Buffer.Text = Form.Desc;
-            comboBoxTypeForm.ActiveId = Form.Type.ToString();
+
+            switch (TypeForm)
+            {
+                case ConfigurationForms.TypeForms.Element:
+                    {
+                        CreateElementForm();
+                        break;
+                    }
+                case ConfigurationForms.TypeForms.List:
+                    {
+                        CreateListForm();
+                        break;
+                    }
+            }
+
+            sourceViewCode.Buffer.Language = new LanguageManager().GetLanguage("c-sharp");
+            CreateNotePage("Код", sourceViewCode);
         }
 
         void GetValue()
         {
             Form.Name = entryName.Text;
             Form.Desc = textViewDesc.Buffer.Text;
-            Form.Type = Enum.Parse<ConfigurationForms.TypeForms>(comboBoxTypeForm.ActiveId);
         }
 
         #endregion

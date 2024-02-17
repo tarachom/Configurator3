@@ -1369,6 +1369,8 @@ class {entryName.Text}_Triggers
                             {
                                 Forms = ConfDirectory.Forms,
                                 Form = ConfDirectory.Forms[curRow.Child.Name],
+                                TypeForm = ConfDirectory.Forms[curRow.Child.Name].Type,
+                                Fields = ConfDirectory.Fields,
                                 IsNew = false,
                                 GeneralForm = GeneralForm,
                                 CallBack_RefreshList = FormsListRefreshList
@@ -1389,6 +1391,8 @@ class {entryName.Text}_Triggers
                 PageForm page = new PageForm()
                 {
                     Forms = ConfDirectory.Forms,
+                    TypeForm = ConfigurationForms.TypeForms.Element,
+                    Fields = ConfDirectory.Fields,
                     IsNew = true,
                     GeneralForm = GeneralForm,
                     CallBack_RefreshList = FormsListRefreshList,
