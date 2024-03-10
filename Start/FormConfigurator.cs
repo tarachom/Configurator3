@@ -518,7 +518,7 @@ namespace Configurator
             ScrolledWindow scrollTree = new ScrolledWindow() { ShadowType = ShadowType.In };
             scrollTree.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
 
-            treeConfiguration = new TreeView() { BorderWidth = 0 };
+            treeConfiguration = new TreeView() { BorderWidth = 0, EnableTreeLines = true };
             treeConfiguration.RowActivated += OnRowActivated;
             treeConfiguration.RowExpanded += OnRowExpanded;
             treeConfiguration.RowCollapsed += OnRowCollapsed;
