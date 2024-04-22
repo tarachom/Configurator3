@@ -29,7 +29,7 @@ namespace Configurator
 {
     class PageTabularList : VBox
     {
-        Configuration Conf { get { return Program.Kernel.Conf; } }
+        //Configuration Conf { get { return Program.Kernel.Conf; } }
 
         public Dictionary<string, ConfigurationField> Fields = [];
         public Dictionary<string, ConfigurationTabularList> TabularLists { get; set; } = [];
@@ -50,6 +50,7 @@ namespace Configurator
             Size,
             SortNum,
             SortField,
+            SortDirection,
             Type
         }
 
@@ -60,6 +61,7 @@ namespace Configurator
             typeof(uint),   //Size
             typeof(int),    //SortNum
             typeof(bool),   //SortField
+            typeof(bool),   //SortDirection
             typeof(string)  //Type
         );
 
@@ -317,6 +319,21 @@ namespace Configurator
                 treeViewFields.AppendColumn(new TreeViewColumn("Сортувати", cell, "active", Columns.SortField));
             }
 
+            //SortDirection
+            {
+                CellRendererToggle cell = new CellRendererToggle();
+                cell.Toggled += (object o, ToggledArgs args) =>
+                {
+                    Gtk.TreeIter iter;
+                    if (listStore.GetIterFromString(out iter, args.Path))
+                    {
+                        bool val = (bool)listStore.GetValue(iter, (int)Columns.SortDirection);
+                        listStore.SetValue(iter, (int)Columns.SortDirection, !val);
+                    }
+                };
+                treeViewFields.AppendColumn(new TreeViewColumn("Зворотнє сортування", cell, "active", Columns.SortDirection));
+            }
+
             //Type
             treeViewFields.AppendColumn(new TreeViewColumn("Тип", new CellRendererText(), "text", Columns.Type));
         }
@@ -406,7 +423,7 @@ namespace Configurator
                     if (listStoreAdditional.GetIterFromString(out iter, args.Path))
                         listStoreAdditional.SetValue(iter, (int)ColumnsAdditional.Type, args.NewText);
                 };
-                treeViewAdditional.AppendColumn(new TreeViewColumn("Тип", cell, "text", ColumnsAdditional.Type));
+                treeViewAdditional.AppendColumn(new TreeViewColumn("Тип", cell, "text", ColumnsAdditional.Type) { MinWidth = 100 });
             }
 
             //Value
@@ -458,9 +475,10 @@ namespace Configurator
                 uint size = isExistField ? TabularList.Fields[field.Name].Size : 0;
                 int sortNum = isExistField ? TabularList.Fields[field.Name].SortNum : 100;
                 bool sortField = isExistField ? TabularList.Fields[field.Name].SortField : false;
+                bool sortDirection = isExistField ? TabularList.Fields[field.Name].SortDirection : false;
                 string sType = field.Type == "pointer" || field.Type == "enum" ? field.Pointer : field.Type;
 
-                listStore.AppendValues(isExistField, field.Name, caption, size, sortNum, sortField, sType);
+                listStore.AppendValues(isExistField, field.Name, caption, size, sortNum, sortField, sortDirection, sType);
             }
         }
 
@@ -502,9 +520,10 @@ namespace Configurator
                         uint size = (uint)listStore.GetValue(iter, (int)Columns.Size);
                         int sortNum = (int)listStore.GetValue(iter, (int)Columns.SortNum);
                         bool sortField = (bool)listStore.GetValue(iter, (int)Columns.SortField);
+                        bool sortDirection = (bool)listStore.GetValue(iter, (int)Columns.SortDirection);
 
                         ConfigurationField field = Fields[name];
-                        TabularList.AppendField(new ConfigurationTabularListField(field.Name, caption, size, sortNum, sortField));
+                        TabularList.AppendField(new ConfigurationTabularListField(field.Name, caption, size, sortNum, sortField, sortDirection));
                     }
                 }
                 while (listStore.IterNext(ref iter));

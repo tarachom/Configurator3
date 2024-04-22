@@ -302,7 +302,7 @@ namespace Configurator
                 vBoxAutoNum.PackStart(hBoxAutoNumInfo, false, false, 5);
                 hBoxAutoNumInfo.PackStart(new Label(
                     "Для автоматичної нумерації використовується константа в блоці <b>НумераціяДовідників</b>. " +
-                    "Назва константи - це назва довідника, тому рекомендується спочатку зберегти довідник.")
+                    "Назва константи - це назва довідника.")
                 { Wrap = true, UseMarkup = true }, false, false, 5);
 
                 //Кнопка
@@ -796,8 +796,8 @@ class {entryName.Text}_Triggers
             Toolbar toolbar = new Toolbar();
             vBox.PackStart(toolbar, false, false, 0);
 
-            ToolButton buttonAdd = new ToolButton(Stock.New) { Label = "Додати", IsImportant = true };
-            buttonAdd.Clicked += OnFormsListAddClick;
+            MenuToolButton buttonAdd = new MenuToolButton(new Image(Stock.New, IconSize.Menu), "Додати") { IsImportant = true, Menu = OnFormsListAddFormSubMenu() };
+            buttonAdd.Clicked += (object? sender, EventArgs arg) => { ((Menu)((MenuToolButton)sender!).Menu).Popup(); };
             toolbar.Add(buttonAdd);
 
             ToolButton buttonCopy = new ToolButton(Stock.Copy) { Label = "Копіювати", IsImportant = true };
@@ -860,11 +860,17 @@ class {entryName.Text}_Triggers
                 ConfDirectory.AppendTableList(new ConfigurationTabularList("Записи"));
                 ConfDirectory.AppendTableList(new ConfigurationTabularList("ЗаписиШвидкийВибір"));
 
+                int sortNum = 0;
+                bool sortField;
+
                 //Заповнення полями списків
                 foreach (var item in ConfDirectory.Fields)
                 {
-                    ConfDirectory.TabularList["Записи"].AppendField(new ConfigurationTabularListField(item.Value.Name));
-                    ConfDirectory.TabularList["ЗаписиШвидкийВибір"].AppendField(new ConfigurationTabularListField(item.Value.Name));
+                    ++sortNum;
+                    sortField = item.Value.Name == "Назва";
+
+                    ConfDirectory.TabularList["Записи"].AppendField(new ConfigurationTabularListField(item.Value.Name, item.Value.Name, 0, sortNum, sortField));
+                    ConfDirectory.TabularList["ЗаписиШвидкийВибір"].AppendField(new ConfigurationTabularListField(item.Value.Name, item.Value.Name, 0, sortNum, sortField));
                 }
             }
             else
@@ -1384,25 +1390,49 @@ class {entryName.Text}_Triggers
             }
         }
 
-        void OnFormsListAddClick(object? sender, EventArgs args)
+        Menu OnFormsListAddFormSubMenu()
         {
-            GeneralForm?.CreateNotebookPage("Форма *", () =>
+            //Внутрішня функція для субменю
+            void OnFormsListAdd(ConfigurationForms.TypeForms typeForms)
             {
-                PageForm page = new PageForm()
+                GeneralForm?.CreateNotebookPage("Форма *", () =>
                 {
-                    Forms = ConfDirectory.Forms,
-                    TypeForm = ConfigurationForms.TypeForms.Element,
-                    Fields = ConfDirectory.Fields,
-                    IsNew = true,
-                    GeneralForm = GeneralForm,
-                    CallBack_RefreshList = FormsListRefreshList,
-                };
+                    PageForm page = new PageForm()
+                    {
+                        Forms = ConfDirectory.Forms,
+                        TypeForm = typeForms,
+                        Fields = ConfDirectory.Fields,
+                        IsNew = true,
+                        GeneralForm = GeneralForm,
+                        CallBack_RefreshList = FormsListRefreshList,
+                    };
 
-                page.SetValue();
+                    page.SetValue();
 
-                return page;
-            });
+                    return page;
+                });
+            }
+
+            Menu Menu = new Menu();
+
+            {
+                MenuItem item = new MenuItem("Елемент");
+                item.Activated += (object? sender, EventArgs args) => { OnFormsListAdd(ConfigurationForms.TypeForms.Element); };
+                Menu.Append(item);
+            }
+
+            {
+                MenuItem item = new MenuItem("Список");
+                item.Activated += (object? sender, EventArgs args) => { OnFormsListAdd(ConfigurationForms.TypeForms.List); };
+                Menu.Append(item);
+            }
+
+            Menu.ShowAll();
+
+            return Menu;
         }
+
+        
 
         void OnFormsListCopyClick(object? sender, EventArgs args)
         {

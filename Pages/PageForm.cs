@@ -30,7 +30,7 @@ namespace Configurator
 {
     class PageForm : VBox
     {
-        Configuration Conf { get { return Program.Kernel.Conf; } }
+        //Configuration Conf { get { return Program.Kernel.Conf; } }
 
         public Dictionary<string, ConfigurationField> Fields = [];
         public Dictionary<string, ConfigurationForms> Forms { get; set; } = new Dictionary<string, ConfigurationForms>();

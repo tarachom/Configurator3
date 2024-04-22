@@ -154,7 +154,7 @@ namespace Configurator
                 vBoxAutoNum.PackStart(hBoxAutoNumInfo, false, false, 5);
                 hBoxAutoNumInfo.PackStart(new Label(
                     "Для автоматичної нумерації використовується константа в блоці <b>НумераціяДокументів</b>. " +
-                    "Назва константи - це назва документу, тому рекомендується спочатку записати документ.")
+                    "Назва константи - це назва документу.")
                 { Wrap = true, UseMarkup = true }, false, false, 5);
 
                 //Кнопка
@@ -669,9 +669,19 @@ class {entryName.Text}_Triggers
                 //Заповнення списків
                 ConfDocument.AppendTableList(new ConfigurationTabularList("Записи"));
 
+                int sortNum = 0;
+                bool sortField;
+                string caption;
+
                 //Заповнення полями списків
                 foreach (var item in ConfDocument.Fields)
-                    ConfDocument.TabularList["Записи"].AppendField(new ConfigurationTabularListField(item.Value.Name));
+                {
+                    ++sortNum;
+                    sortField = item.Value.Name == "ДатаДок";
+                    caption = item.Value.Name switch { "ДатаДок" => "Дата", "НомерДок" => "Номер", _ => item.Value.Name };
+                    
+                    ConfDocument.TabularList["Записи"].AppendField(new ConfigurationTabularListField(item.Value.Name, caption, 0, sortNum, sortField));
+                }
             }
             else
                 entryTable.Text = ConfDocument.Table;
