@@ -26,13 +26,18 @@ using Gtk;
 using AccountingSoftware;
 using GtkSource;
 
+using System.Xml;
+using System.ComponentModel;
+
 namespace Configurator
 {
     class PageForm : VBox
     {
-        //Configuration Conf { get { return Program.Kernel.Conf; } }
-
+        Configuration Conf { get { return Program.Kernel.Conf; } }
+        public string ParentName { get; set; } = "";
+        public string ParentType { get; set; } = "";
         public Dictionary<string, ConfigurationField> Fields = [];
+        public Dictionary<string, ConfigurationTablePart> TabularParts = [];
         public Dictionary<string, ConfigurationForms> Forms { get; set; } = new Dictionary<string, ConfigurationForms>();
         public ConfigurationForms Form { get; set; } = new ConfigurationForms();
         public FormConfigurator? GeneralForm { get; set; }
@@ -42,6 +47,7 @@ namespace Configurator
 
         #region Fields
 
+        Label labelType = new Label();
         Entry entryName = new Entry() { WidthRequest = 250 };
         TextView textViewDesc = new TextView() { WrapMode = WrapMode.Word };
         Notebook notebook = new Notebook()
@@ -54,6 +60,23 @@ namespace Configurator
             HeightRequest = 600
         };
         SourceView sourceViewCode = new SourceView() { ShowLineNumbers = true };
+
+        #endregion
+
+        #region FormElementField / Для форми елемента
+
+        TreeView treeViewFormElementField;
+        ListStore listStoreFormElementField = new ListStore(
+            typeof(bool),   //Visible
+            typeof(string), //Name
+            typeof(string)  //Caption
+        );
+        enum FormElementFieldColumns
+        {
+            Visible,
+            Name,
+            Caption,
+        }
 
         #endregion
 
@@ -74,6 +97,9 @@ namespace Configurator
 
             PackStart(hBox, false, false, 10);
 
+            treeViewFormElementField = new TreeView(listStoreFormElementField);
+            AddColumnTreeViewFormElementField();
+
             HPaned hPaned = new HPaned() { BorderWidth = 5 };
 
             CreatePack1(hPaned);
@@ -84,12 +110,54 @@ namespace Configurator
             ShowAll();
         }
 
+        #region TreeView
+
+        void AddColumnTreeViewFormElementField()
+        {
+            //Visible
+            {
+                CellRendererToggle cell = new CellRendererToggle();
+                cell.Toggled += (object o, ToggledArgs args) =>
+                {
+                    if (listStoreFormElementField.GetIterFromString(out TreeIter iter, args.Path))
+                    {
+                        bool val = (bool)listStoreFormElementField.GetValue(iter, (int)FormElementFieldColumns.Visible);
+                        listStoreFormElementField.SetValue(iter, (int)FormElementFieldColumns.Visible, !val);
+                    }
+                };
+                treeViewFormElementField.AppendColumn(new TreeViewColumn("", cell, "active", FormElementFieldColumns.Visible));
+            }
+
+            //Name
+            treeViewFormElementField.AppendColumn(new TreeViewColumn("Назва", new CellRendererText(), "text", FormElementFieldColumns.Name));
+
+            //Caption
+            {
+                CellRendererText cell = new CellRendererText() { Editable = true };
+                cell.Edited += (object o, EditedArgs args) =>
+                {
+                    if (listStoreFormElementField.GetIterFromString(out TreeIter iter, args.Path))
+                        listStoreFormElementField.SetValue(iter, (int)FormElementFieldColumns.Caption, args.NewText);
+                };
+                treeViewFormElementField.AppendColumn(new TreeViewColumn("Заголовок", cell, "text", FormElementFieldColumns.Caption));
+            }
+        }
+
+        #endregion
+
         void CreatePack1(HPaned hPaned)
         {
             VBox vBox = new VBox();
 
             //Базові поля
             {
+                //Тип форми
+                HBox hBoxType = new HBox() { Halign = Align.End };
+                vBox.PackStart(hBoxType, false, false, 5);
+
+                hBoxType.PackStart(new Label("Тип форми:"), false, false, 5);
+                hBoxType.PackStart(labelType, false, false, 5);
+
                 //Назва
                 HBox hBoxName = new HBox() { Halign = Align.End };
                 vBox.PackStart(hBoxName, false, false, 5);
@@ -138,11 +206,20 @@ namespace Configurator
         {
             VBox vBox = new VBox();
 
-            foreach (ConfigurationField field in Fields.Values)
+            //Поля
             {
-                HBox hBox = new HBox() { Halign = Align.Start };
-                hBox.PackStart(new Label(field.Name), false, false, 5);
-                vBox.PackStart(hBox, false, false, 5);
+                HBox hBoxCaption = new HBox();
+                hBoxCaption.PackStart(new Label("Поля"), false, false, 5);
+                vBox.PackStart(hBoxCaption, false, false, 2);
+
+                HBox hBoxScroll = new HBox();
+                ScrolledWindow scroll = new ScrolledWindow() { ShadowType = ShadowType.In };
+                scroll.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+
+                scroll.Add(treeViewFormElementField);
+                hBoxScroll.PackStart(scroll, true, true, 5);
+
+                vBox.PackStart(hBoxScroll, true, true, 5);
             }
 
             CreateNotePage("Форма", vBox);
@@ -165,6 +242,13 @@ namespace Configurator
             if (IsNew)
                 Form.Type = TypeForm;
 
+            labelType.Markup = "<b>" + Form.Type switch
+            {
+                ConfigurationForms.TypeForms.Element => "Елемент",
+                ConfigurationForms.TypeForms.List => "Список",
+                _ => ""
+            } + "</b>";
+
             entryName.Text = Form.Name;
             textViewDesc.Buffer.Text = Form.Desc;
 
@@ -182,14 +266,76 @@ namespace Configurator
                     }
             }
 
-            sourceViewCode.Buffer.Language = new LanguageManager().GetLanguage("c-sharp");
-            CreateNotePage("Код", sourceViewCode);
+            //Сторінка генерування коду
+            {
+                VBox vBox = new VBox();
+
+                Button buttonGenCode = new Button("Згенерувати код");
+                buttonGenCode.Clicked += (object? sender, EventArgs args) => 
+                { 
+                    GenerateCode(Form.Type switch
+                    {
+                        ConfigurationForms.TypeForms.Element => "Element",
+                        ConfigurationForms.TypeForms.List => "List",
+                        _ => ""
+                    }, true, true); 
+                };
+
+                HBox hBoxButton = new HBox();
+                hBoxButton.PackStart(buttonGenCode, false, false, 5);
+                vBox.PackStart(hBoxButton, false, false, 5);
+
+                HBox hBoxCode = new HBox();
+
+                sourceViewCode.Buffer.Language = new LanguageManager().GetLanguage("c-sharp");
+
+                ScrolledWindow scrollCode = new ScrolledWindow() { ShadowType = ShadowType.In };
+                scrollCode.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+                scrollCode.Add(sourceViewCode);
+                hBoxCode.PackStart(scrollCode, true, true, 5);
+
+                vBox.PackStart(hBoxCode, true, true, 5);
+
+                CreateNotePage("Код", vBox);
+            }
+
+            FillTreeViewFormElementField();
+        }
+
+        void FillTreeViewFormElementField()
+        {
+            foreach (ConfigurationField field in Fields.Values)
+            {
+                bool isExistField = Form.ElementFields.ContainsKey(field.Name);
+
+                string caption = isExistField ?
+                    (!string.IsNullOrEmpty(Form.ElementFields[field.Name].Caption) ?
+                        Form.ElementFields[field.Name].Caption : field.Name) : field.Name;
+
+                listStoreFormElementField.AppendValues(isExistField, field.Name, caption);
+            }
         }
 
         void GetValue()
         {
             Form.Name = entryName.Text;
             Form.Desc = textViewDesc.Buffer.Text;
+
+            //Поля форми елементу
+            Form.ElementFields.Clear();
+            if (listStoreFormElementField.GetIterFirst(out TreeIter iter))
+                do
+                {
+                    if ((bool)listStoreFormElementField.GetValue(iter, (int)FormElementFieldColumns.Visible))
+                    {
+                        string name = (string)listStoreFormElementField.GetValue(iter, (int)FormElementFieldColumns.Name);
+                        string caption = (string)listStoreFormElementField.GetValue(iter, (int)FormElementFieldColumns.Caption);
+
+                        ConfigurationField field = Fields[name];
+                        Form.AppendElementField(new ConfigurationFormsElementField(field.Name, caption));
+                    }
+                }
+                while (listStoreFormElementField.IterNext(ref iter));
         }
 
         #endregion
@@ -239,5 +385,53 @@ namespace Configurator
             if (CallBack_RefreshList != null)
                 CallBack_RefreshList.Invoke();
         }
+
+        #region Генерування коду
+
+        void GenerateCode(string fileName, bool includeFields = false, bool includeTabularParts = false)
+        {
+            if (!(ParentType == "Directory" || ParentType == "Document"))
+            {
+                Message.Error(GeneralForm, "Невірно вказаний тип власника форми. Має бути Directory або Document");
+                return;
+            }
+
+            GetValue();
+
+            XmlDocument xmlConfDocument = new XmlDocument();
+            xmlConfDocument.AppendChild(xmlConfDocument.CreateXmlDeclaration("1.0", "utf-8", ""));
+
+            XmlElement rootNode = xmlConfDocument.CreateElement("root");
+            xmlConfDocument.AppendChild(rootNode);
+
+            XmlElement nodeDirectory = xmlConfDocument.CreateElement(ParentType);
+            rootNode.AppendChild(nodeDirectory);
+
+            XmlElement nodeDirectoryName = xmlConfDocument.CreateElement("Name");
+            nodeDirectoryName.InnerText = ParentName;
+            nodeDirectory.AppendChild(nodeDirectoryName);
+
+            Configuration.SaveFormElementField(Form.ElementFields, xmlConfDocument, nodeDirectory);
+
+            if (includeFields)
+                Configuration.SaveFields(Fields, xmlConfDocument, nodeDirectory, ParentType);
+
+            if (includeTabularParts)
+                Configuration.SaveTabularParts(TabularParts, xmlConfDocument, nodeDirectory);
+
+            sourceViewCode.Buffer.Text = Configuration.Transform
+            (
+                xmlConfDocument,
+                System.IO.Path.Combine(AppContext.BaseDirectory, $"xslt/Constructor{ParentType}.xslt"),
+                new Dictionary<string, object>
+                {
+                    { "File", fileName },
+                    { "NameSpaceGenerationCode", Conf.NameSpaceGenerationCode },
+                    { "NameSpace", Conf.NameSpace }
+                }
+            );
+        }
+
+        #endregion
     }
 }

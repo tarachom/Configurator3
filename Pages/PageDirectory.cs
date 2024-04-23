@@ -815,7 +815,7 @@ class {entryName.Text}_Triggers
             HBox hBoxScroll = new HBox();
             ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
             scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-            scrollList.SetSizeRequest(0, 100);
+            scrollList.SetSizeRequest(0, 200);
 
             listBoxFormsList.ButtonPressEvent += OnFormsListButtonPress;
 
@@ -1373,10 +1373,13 @@ class {entryName.Text}_Triggers
                         {
                             PageForm page = new PageForm()
                             {
+                                ParentName = ConfDirectory.Name,
+                                ParentType = "Directory",
                                 Forms = ConfDirectory.Forms,
                                 Form = ConfDirectory.Forms[curRow.Child.Name],
                                 TypeForm = ConfDirectory.Forms[curRow.Child.Name].Type,
                                 Fields = ConfDirectory.Fields,
+                                TabularParts = ConfDirectory.TabularParts,
                                 IsNew = false,
                                 GeneralForm = GeneralForm,
                                 CallBack_RefreshList = FormsListRefreshList
@@ -1395,13 +1398,22 @@ class {entryName.Text}_Triggers
             //Внутрішня функція для субменю
             void OnFormsListAdd(ConfigurationForms.TypeForms typeForms)
             {
+                if (string.IsNullOrEmpty(entryName.Text))
+                {
+                    Message.Error(GeneralForm, "Назва довідника не вказана");
+                    return;
+                }
+
                 GeneralForm?.CreateNotebookPage("Форма *", () =>
                 {
                     PageForm page = new PageForm()
                     {
+                        ParentName = ConfDirectory.Name,
+                        ParentType = "Directory",
                         Forms = ConfDirectory.Forms,
                         TypeForm = typeForms,
                         Fields = ConfDirectory.Fields,
+                        TabularParts = ConfDirectory.TabularParts,
                         IsNew = true,
                         GeneralForm = GeneralForm,
                         CallBack_RefreshList = FormsListRefreshList,
@@ -1431,8 +1443,6 @@ class {entryName.Text}_Triggers
 
             return Menu;
         }
-
-        
 
         void OnFormsListCopyClick(object? sender, EventArgs args)
         {

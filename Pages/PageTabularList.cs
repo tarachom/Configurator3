@@ -244,8 +244,7 @@ namespace Configurator
                 CellRendererToggle cell = new CellRendererToggle();
                 cell.Toggled += (object o, ToggledArgs args) =>
                 {
-                    Gtk.TreeIter iter;
-                    if (listStore.GetIterFromString(out iter, args.Path))
+                    if (listStore.GetIterFromString(out TreeIter iter, args.Path))
                     {
                         bool val = (bool)listStore.GetValue(iter, (int)Columns.Visible);
                         listStore.SetValue(iter, (int)Columns.Visible, !val);
@@ -262,8 +261,7 @@ namespace Configurator
                 CellRendererText cell = new CellRendererText() { Editable = true };
                 cell.Edited += (object o, EditedArgs args) =>
                 {
-                    Gtk.TreeIter iter;
-                    if (listStore.GetIterFromString(out iter, args.Path))
+                    if (listStore.GetIterFromString(out TreeIter iter, args.Path))
                         listStore.SetValue(iter, (int)Columns.Caption, args.NewText);
                 };
                 treeViewFields.AppendColumn(new TreeViewColumn("Заголовок", cell, "text", Columns.Caption));
@@ -274,12 +272,9 @@ namespace Configurator
                 CellRendererText cell = new CellRendererText() { Editable = true };
                 cell.Edited += (object o, EditedArgs args) =>
                 {
-                    Gtk.TreeIter iter;
-                    if (listStore.GetIterFromString(out iter, args.Path))
+                    if (listStore.GetIterFromString(out TreeIter iter, args.Path))
                     {
-                        uint size;
-                        uint.TryParse(args.NewText, out size);
-
+                        uint.TryParse(args.NewText, out uint size);
                         listStore.SetValue(iter, (int)Columns.Size, size);
                     }
                 };
@@ -291,12 +286,9 @@ namespace Configurator
                 CellRendererText cell = new CellRendererText() { Editable = true };
                 cell.Edited += (object o, EditedArgs args) =>
                 {
-                    Gtk.TreeIter iter;
-                    if (listStore.GetIterFromString(out iter, args.Path))
+                    if (listStore.GetIterFromString(out TreeIter iter, args.Path))
                     {
-                        uint sortNum;
-                        uint.TryParse(args.NewText, out sortNum);
-
+                        uint.TryParse(args.NewText, out uint sortNum);
                         listStore.SetValue(iter, (int)Columns.SortNum, sortNum);
                     }
                 };
@@ -309,8 +301,7 @@ namespace Configurator
                 CellRendererToggle cell = new CellRendererToggle();
                 cell.Toggled += (object o, ToggledArgs args) =>
                 {
-                    Gtk.TreeIter iter;
-                    if (listStore.GetIterFromString(out iter, args.Path))
+                    if (listStore.GetIterFromString(out TreeIter iter, args.Path))
                     {
                         bool val = (bool)listStore.GetValue(iter, (int)Columns.SortField);
                         listStore.SetValue(iter, (int)Columns.SortField, !val);
@@ -324,8 +315,7 @@ namespace Configurator
                 CellRendererToggle cell = new CellRendererToggle();
                 cell.Toggled += (object o, ToggledArgs args) =>
                 {
-                    Gtk.TreeIter iter;
-                    if (listStore.GetIterFromString(out iter, args.Path))
+                    if (listStore.GetIterFromString(out TreeIter iter, args.Path))
                     {
                         bool val = (bool)listStore.GetValue(iter, (int)Columns.SortDirection);
                         listStore.SetValue(iter, (int)Columns.SortDirection, !val);
@@ -345,8 +335,7 @@ namespace Configurator
                 CellRendererToggle cell = new CellRendererToggle();
                 cell.Toggled += (object o, ToggledArgs args) =>
                 {
-                    TreeIter iter;
-                    if (listStoreAdditional.GetIterFromString(out iter, args.Path))
+                    if (listStoreAdditional.GetIterFromString(out TreeIter iter, args.Path))
                     {
                         bool val = (bool)listStoreAdditional.GetValue(iter, (int)ColumnsAdditional.Visible);
                         listStoreAdditional.SetValue(iter, (int)ColumnsAdditional.Visible, !val);
@@ -360,8 +349,7 @@ namespace Configurator
                 CellRendererText cell = new CellRendererText() { Editable = true };
                 cell.Edited += (object o, EditedArgs args) =>
                 {
-                    TreeIter iter;
-                    if (listStoreAdditional.GetIterFromString(out iter, args.Path))
+                    if (listStoreAdditional.GetIterFromString(out TreeIter iter, args.Path))
                         listStoreAdditional.SetValue(iter, (int)ColumnsAdditional.Name, args.NewText);
                 };
                 treeViewAdditional.AppendColumn(new TreeViewColumn("Назва", cell, "text", ColumnsAdditional.Name) { MinWidth = 150 });
@@ -372,8 +360,7 @@ namespace Configurator
                 CellRendererText cell = new CellRendererText() { Editable = true };
                 cell.Edited += (object o, EditedArgs args) =>
                 {
-                    TreeIter iter;
-                    if (listStoreAdditional.GetIterFromString(out iter, args.Path))
+                    if (listStoreAdditional.GetIterFromString(out TreeIter iter, args.Path))
                         listStoreAdditional.SetValue(iter, (int)ColumnsAdditional.Caption, args.NewText);
                 };
                 treeViewAdditional.AppendColumn(new TreeViewColumn("Заголовок", cell, "text", ColumnsAdditional.Caption) { MinWidth = 150 });
@@ -387,9 +374,7 @@ namespace Configurator
                     TreeIter iter;
                     if (listStoreAdditional.GetIterFromString(out iter, args.Path))
                     {
-                        uint size;
-                        uint.TryParse(args.NewText, out size);
-
+                        uint.TryParse(args.NewText, out uint size);
                         listStoreAdditional.SetValue(iter, (int)ColumnsAdditional.Size, size);
                     }
                 };
@@ -401,12 +386,9 @@ namespace Configurator
                 CellRendererText cell = new CellRendererText() { Editable = true };
                 cell.Edited += (object o, EditedArgs args) =>
                 {
-                    TreeIter iter;
-                    if (listStoreAdditional.GetIterFromString(out iter, args.Path))
+                    if (listStoreAdditional.GetIterFromString(out TreeIter iter, args.Path))
                     {
-                        uint sortNum;
-                        uint.TryParse(args.NewText, out sortNum);
-
+                        uint.TryParse(args.NewText, out uint sortNum);
                         listStoreAdditional.SetValue(iter, (int)ColumnsAdditional.SortNum, sortNum);
                     }
                 };
@@ -419,8 +401,7 @@ namespace Configurator
                 CellRendererCombo cell = new CellRendererCombo() { Editable = true, Model = listStoreAdditionalType, TextColumn = 0 };
                 cell.Edited += (object sender, EditedArgs args) =>
                 {
-                    TreeIter iter;
-                    if (listStoreAdditional.GetIterFromString(out iter, args.Path))
+                    if (listStoreAdditional.GetIterFromString(out TreeIter iter, args.Path))
                         listStoreAdditional.SetValue(iter, (int)ColumnsAdditional.Type, args.NewText);
                 };
                 treeViewAdditional.AppendColumn(new TreeViewColumn("Тип", cell, "text", ColumnsAdditional.Type) { MinWidth = 100 });
@@ -506,11 +487,9 @@ namespace Configurator
             TabularList.IsTree = checkButtonIsTree.Active;
             TabularList.Desc = textViewDesc.Buffer.Text;
 
-            TreeIter iter;
-
             //Поля
             TabularList.Fields.Clear();
-            if (listStore.GetIterFirst(out iter))
+            if (listStore.GetIterFirst(out TreeIter iter))
                 do
                 {
                     if ((bool)listStore.GetValue(iter, (int)Columns.Visible))
