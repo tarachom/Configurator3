@@ -1,5 +1,5 @@
 # Конфігуратор 3
-<b>Конструктор для моделювання програми для обліку</b> | .net 8, Linux, Windows <br/><br/>
+<b>Конструктор для моделювання програми для обліку</b> | .net 8, Linux, Windows <br/>
 
 <hr />
 Детальніше про програму [accounting.org.ua](https://accounting.org.ua/configurator.html)<br/>
