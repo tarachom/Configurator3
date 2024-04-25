@@ -6,7 +6,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>25.04.2024 14:48:19</DateTimeSave>
+  <DateTimeSave>25.04.2024 15:34:43</DateTimeSave>
   <DictTSearch>simple</DictTSearch>
   <ConstantsBlocks>
     <ConstantsBlock>
@@ -8669,6 +8669,148 @@ END)]]></Value>
             <ElementField>
               <Name>Кратність</Name>
               <Caption>Кратність</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>Каса</Name>
+              <Caption>Каса</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>Основа</Name>
+              <Caption>Основа</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>Коментар</Name>
+              <Caption>Коментар</Caption>
+            </ElementField>
+          </ElementFields>
+          <ElementTableParts>
+            <ElementTablePart>
+              <Name>Товари</Name>
+              <Caption>Товари</Caption>
+            </ElementTablePart>
+          </ElementTableParts>
+        </Form>
+        <Form>
+          <Name>іваіва</Name>
+          <Desc>
+          </Desc>
+          <Type>Element</Type>
+          <ElementFields>
+            <ElementField>
+              <Name>Назва</Name>
+              <Caption>Назва</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>НомерДок</Name>
+              <Caption>НомерДок</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>ДатаДок</Name>
+              <Caption>ДатаДок</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>Валюта</Name>
+              <Caption>Валюта</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>ГосподарськаОперація</Name>
+              <Caption>ГосподарськаОперація</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>Підрозділ</Name>
+              <Caption>Підрозділ</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>Склад</Name>
+              <Caption>Склад</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>Контрагент</Name>
+              <Caption>Контрагент</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>СумаДокументу</Name>
+              <Caption>СумаДокументу</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>ЗамовленняПостачальнику</Name>
+              <Caption>ЗамовленняПостачальнику</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>ДатаОплати</Name>
+              <Caption>ДатаОплати</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>ФормаОплати</Name>
+              <Caption>ФормаОплати</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>Узгоджений</Name>
+              <Caption>Узгоджений</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>БанківськийРахунокОрганізації</Name>
+              <Caption>БанківськийРахунокОрганізації</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>НомерВхідногоДокументу</Name>
+              <Caption>НомерВхідногоДокументу</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>ДатаВхідногоДокументу</Name>
+              <Caption>ДатаВхідногоДокументу</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>БанківськийРахунокКонтрагента</Name>
+              <Caption>БанківськийРахунокКонтрагента</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>Договір</Name>
+              <Caption>Договір</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>Автор</Name>
+              <Caption>Автор</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>ПовернутиТару</Name>
+              <Caption>ПовернутиТару</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>ДатаПоверненняТари</Name>
+              <Caption>ДатаПоверненняТари</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>СпосібДоставки</Name>
+              <Caption>СпосібДоставки</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>Організація</Name>
+              <Caption>Організація</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>Курс</Name>
+              <Caption>Курс</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>Кратність</Name>
+              <Caption>Кратність</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>ЧасДоставкиЗ</Name>
+              <Caption>ЧасДоставкиЗ</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>ЧасДоставкиДо</Name>
+              <Caption>ЧасДоставкиДо</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>Менеджер</Name>
+              <Caption>Менеджер</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>СтаттяРухуКоштів</Name>
+              <Caption>СтаттяРухуКоштів</Caption>
             </ElementField>
             <ElementField>
               <Name>Каса</Name>

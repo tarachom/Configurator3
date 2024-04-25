@@ -379,7 +379,8 @@ namespace Configurator
                     (!string.IsNullOrEmpty(Form.ElementFields[field.Name].Caption) ?
                         Form.ElementFields[field.Name].Caption : field.Name) : field.Name;
 
-                listStoreFormElementField.AppendValues(isExistField, field.Name, caption);
+                //Для нової форми видимими стають всі поля
+                listStoreFormElementField.AppendValues(IsNew || isExistField, field.Name, caption);
             }
         }
 
@@ -393,7 +394,8 @@ namespace Configurator
                     (!string.IsNullOrEmpty(Form.ElementTableParts[tablePart.Name].Caption) ?
                         Form.ElementTableParts[tablePart.Name].Caption : tablePart.Name) : tablePart.Name;
 
-                listStoreFormElementTablePart.AppendValues(isExistField, tablePart.Name, caption);
+                //Для нової форми видимими стають таб частини
+                listStoreFormElementTablePart.AppendValues(IsNew || isExistField, tablePart.Name, caption);
             }
         }
 
