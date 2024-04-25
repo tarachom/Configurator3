@@ -42,6 +42,7 @@ namespace Configurator
         ListBox listBoxTableParts = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxTabularList = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxAllowRegAccum = new ListBox() { SelectionMode = SelectionMode.Single };
+        ListBox listBoxFormsList = new ListBox() { SelectionMode = SelectionMode.Single };
 
         Entry entryName = new Entry() { WidthRequest = 500 };
         Entry entryFullName = new Entry() { WidthRequest = 500 };
@@ -103,38 +104,41 @@ namespace Configurator
         {
             VBox vBox = new VBox();
 
-            //Назва
-            HBox hBoxName = new HBox() { Halign = Align.End };
-            vBox.PackStart(hBoxName, false, false, 5);
+            //Базові поля
+            {
+                //Назва
+                HBox hBoxName = new HBox() { Halign = Align.End };
+                vBox.PackStart(hBoxName, false, false, 5);
 
-            hBoxName.PackStart(new Label("Назва:"), false, false, 5);
-            hBoxName.PackStart(entryName, false, false, 5);
+                hBoxName.PackStart(new Label("Назва:"), false, false, 5);
+                hBoxName.PackStart(entryName, false, false, 5);
 
-            //Повна Назва
-            HBox hBoxFullName = new HBox() { Halign = Align.End };
-            vBox.PackStart(hBoxFullName, false, false, 5);
+                //Повна Назва
+                HBox hBoxFullName = new HBox() { Halign = Align.End };
+                vBox.PackStart(hBoxFullName, false, false, 5);
 
-            hBoxFullName.PackStart(new Label("Повна назва:"), false, false, 5);
-            hBoxFullName.PackStart(entryFullName, false, false, 5);
+                hBoxFullName.PackStart(new Label("Повна назва:"), false, false, 5);
+                hBoxFullName.PackStart(entryFullName, false, false, 5);
 
-            //Таблиця
-            HBox hBoxTable = new HBox() { Halign = Align.End };
-            vBox.PackStart(hBoxTable, false, false, 5);
+                //Таблиця
+                HBox hBoxTable = new HBox() { Halign = Align.End };
+                vBox.PackStart(hBoxTable, false, false, 5);
 
-            hBoxTable.PackStart(new Label("Таблиця:"), false, false, 5);
-            hBoxTable.PackStart(entryTable, false, false, 5);
+                hBoxTable.PackStart(new Label("Таблиця:"), false, false, 5);
+                hBoxTable.PackStart(entryTable, false, false, 5);
 
-            //Опис
-            HBox hBoxDesc = new HBox() { Halign = Align.End };
-            vBox.PackStart(hBoxDesc, false, false, 5);
+                //Опис
+                HBox hBoxDesc = new HBox() { Halign = Align.End };
+                vBox.PackStart(hBoxDesc, false, false, 5);
 
-            hBoxDesc.PackStart(new Label("Опис:") { Valign = Align.Start }, false, false, 5);
+                hBoxDesc.PackStart(new Label("Опис:") { Valign = Align.Start }, false, false, 5);
 
-            ScrolledWindow scrollTextView = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 500, HeightRequest = 100 };
-            scrollTextView.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-            scrollTextView.Add(textViewDesc);
+                ScrolledWindow scrollTextView = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 500, HeightRequest = 100 };
+                scrollTextView.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+                scrollTextView.Add(textViewDesc);
 
-            hBoxDesc.PackStart(scrollTextView, false, false, 5);
+                hBoxDesc.PackStart(scrollTextView, false, false, 5);
+            }
 
             //Автоматична нумерація
             {
@@ -222,61 +226,63 @@ namespace Configurator
                 hBoxAllowRegAcumm.PackStart(scrollAllowList, true, true, 5);
             }
 
-            Expander expanderFuncAndTriger = new Expander("Функції та тригери");
-            vBox.PackStart(expanderFuncAndTriger, false, false, 5);
-
-            VBox vBoxFunc = new VBox();
-            expanderFuncAndTriger.Add(vBoxFunc);
-
-            //Функції
+            //Функції та тригери
             {
-                //Заголовок блоку Функції
-                HBox hBoxSpendInfo = new HBox() { Halign = Align.Center };
-                vBoxFunc.PackStart(hBoxSpendInfo, false, false, 5);
-                hBoxSpendInfo.PackStart(new Label("Функції"), false, false, 5);
+                Expander expanderFuncAndTriger = new Expander("Функції та тригери");
+                vBox.PackStart(expanderFuncAndTriger, false, false, 5);
 
-                //Проведення
-                HBox hBoxSpend = new HBox() { Halign = Align.End };
-                vBoxFunc.PackStart(hBoxSpend, false, false, 5);
+                VBox vBoxFunc = new VBox();
+                expanderFuncAndTriger.Add(vBoxFunc);
 
-                hBoxSpend.PackStart(new Label("Проведення:"), false, false, 5);
-                hBoxSpend.PackStart(entrySpend, false, false, 5);
-
-                //Очищення
-                HBox hBoxClearSpend = new HBox() { Halign = Align.End };
-                vBoxFunc.PackStart(hBoxClearSpend, false, false, 5);
-
-                hBoxClearSpend.PackStart(new Label("Очищення:"), false, false, 5);
-                hBoxClearSpend.PackStart(entryClearSpend, false, false, 5);
-
-                //
-                // Конструктор для генерування класу проведення
-                //
-
-                HBox hBoxTrigerConstructorSpend = new HBox() { Halign = Align.Center };
-                vBoxFunc.PackStart(hBoxTrigerConstructorSpend, false, false, 5);
-
-                Button buttonConstructorSpend = new Button("Конструктор");
-                buttonConstructorSpend.Clicked += (object? sender, EventArgs args) =>
+                //Функції
                 {
-                    TextView textViewCode = new TextView();
+                    //Заголовок блоку Функції
+                    HBox hBoxSpendInfo = new HBox() { Halign = Align.Center };
+                    vBoxFunc.PackStart(hBoxSpendInfo, false, false, 5);
+                    hBoxSpendInfo.PackStart(new Label("Функції"), false, false, 5);
 
-                    ScrolledWindow scrollCode = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 600, HeightRequest = 300 };
-                    scrollCode.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-                    scrollCode.Add(textViewCode);
+                    //Проведення
+                    HBox hBoxSpend = new HBox() { Halign = Align.End };
+                    vBoxFunc.PackStart(hBoxSpend, false, false, 5);
 
-                    Popover popover = new Popover((Widget)sender!) { BorderWidth = 5 };
-                    popover.Add(scrollCode);
-                    popover.ShowAll();
+                    hBoxSpend.PackStart(new Label("Проведення:"), false, false, 5);
+                    hBoxSpend.PackStart(entrySpend, false, false, 5);
+
+                    //Очищення
+                    HBox hBoxClearSpend = new HBox() { Halign = Align.End };
+                    vBoxFunc.PackStart(hBoxClearSpend, false, false, 5);
+
+                    hBoxClearSpend.PackStart(new Label("Очищення:"), false, false, 5);
+                    hBoxClearSpend.PackStart(entryClearSpend, false, false, 5);
 
                     //
-                    // Code
+                    // Конструктор для генерування класу проведення
                     //
 
-                    entrySpend.Text = entryName.Text + "_SpendTheDocument.Spend";
-                    entryClearSpend.Text = entryName.Text + "_SpendTheDocument.ClearSpend";
+                    HBox hBoxTrigerConstructorSpend = new HBox() { Halign = Align.Center };
+                    vBoxFunc.PackStart(hBoxTrigerConstructorSpend, false, false, 5);
 
-                    textViewCode.Buffer.Text = @$"
+                    Button buttonConstructorSpend = new Button("Конструктор");
+                    buttonConstructorSpend.Clicked += (object? sender, EventArgs args) =>
+                    {
+                        TextView textViewCode = new TextView();
+
+                        ScrolledWindow scrollCode = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 600, HeightRequest = 300 };
+                        scrollCode.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+                        scrollCode.Add(textViewCode);
+
+                        Popover popover = new Popover((Widget)sender!) { BorderWidth = 5 };
+                        popover.Add(scrollCode);
+                        popover.ShowAll();
+
+                        //
+                        // Code
+                        //
+
+                        entrySpend.Text = entryName.Text + "_SpendTheDocument.Spend";
+                        entryClearSpend.Text = entryName.Text + "_SpendTheDocument.ClearSpend";
+
+                        textViewCode.Buffer.Text = @$"
 class {entryName.Text}_SpendTheDocument
 {{
     public static async ValueTask<bool> Spend({entryName.Text}_Objest ДокументОбєкт)
@@ -301,111 +307,111 @@ class {entryName.Text}_SpendTheDocument
     }}
 }}
 ";
-                    textViewCode.Buffer.SelectRange(textViewCode.Buffer.StartIter, textViewCode.Buffer.EndIter);
-                    textViewCode.GrabFocus();
-                };
+                        textViewCode.Buffer.SelectRange(textViewCode.Buffer.StartIter, textViewCode.Buffer.EndIter);
+                        textViewCode.GrabFocus();
+                    };
 
-                hBoxTrigerConstructorSpend.PackStart(buttonConstructorSpend, false, false, 5);
-            }
+                    hBoxTrigerConstructorSpend.PackStart(buttonConstructorSpend, false, false, 5);
+                }
 
-            //Тригери
-            {
-                //Заголовок блоку Тригери
-                HBox hBoxTrigerInfo = new HBox() { Halign = Align.Center };
-                vBoxFunc.PackStart(hBoxTrigerInfo, false, false, 5);
-                hBoxTrigerInfo.PackStart(new Label("Тригери"), false, false, 5);
-
-                //Новий
-                HBox hBoxTrigerNew = new HBox() { Halign = Align.End };
-                vBoxFunc.PackStart(hBoxTrigerNew, false, false, 5);
-
-                hBoxTrigerNew.PackStart(new Label("Новий:"), false, false, 5);
-                hBoxTrigerNew.PackStart(entryNew, false, false, 5);
-                CreateSwitch(hBoxTrigerNew, switchNew);
-
-                //Копіювання
-                HBox hBoxTrigerCopying = new HBox() { Halign = Align.End };
-                vBoxFunc.PackStart(hBoxTrigerCopying, false, false, 5);
-
-                hBoxTrigerCopying.PackStart(new Label("Копіювання:"), false, false, 5);
-                hBoxTrigerCopying.PackStart(entryCopying, false, false, 5);
-                CreateSwitch(hBoxTrigerCopying, switchCopying);
-
-                //Перед записом
-                HBox hBoxTrigerBeforeSave = new HBox() { Halign = Align.End };
-                vBoxFunc.PackStart(hBoxTrigerBeforeSave, false, false, 5);
-
-                hBoxTrigerBeforeSave.PackStart(new Label("Перед записом:"), false, false, 5);
-                hBoxTrigerBeforeSave.PackStart(entryBeforeSave, false, false, 5);
-                CreateSwitch(hBoxTrigerBeforeSave, switchBeforeSave);
-
-                //Після запису
-                HBox hBoxTrigerAfterSave = new HBox() { Halign = Align.End };
-                vBoxFunc.PackStart(hBoxTrigerAfterSave, false, false, 5);
-
-                hBoxTrigerAfterSave.PackStart(new Label("Після запису:"), false, false, 5);
-                hBoxTrigerAfterSave.PackStart(entryAfterSave, false, false, 5);
-                CreateSwitch(hBoxTrigerAfterSave, switchAfterSave);
-
-                //Перед встановлення мітки на виделення
-                HBox hBoxTrigerSetDeletionLabel = new HBox() { Halign = Align.End };
-                vBoxFunc.PackStart(hBoxTrigerSetDeletionLabel, false, false, 5);
-
-                hBoxTrigerSetDeletionLabel.PackStart(new Label("Встановлення мітки:"), false, false, 5);
-                hBoxTrigerSetDeletionLabel.PackStart(entrySetDeletionLabel, false, false, 5);
-                CreateSwitch(hBoxTrigerSetDeletionLabel, switchSetDeletionLabel);
-
-                //Перед видаленням
-                HBox hBoxTrigerBeforeDelete = new HBox() { Halign = Align.End };
-                vBoxFunc.PackStart(hBoxTrigerBeforeDelete, false, false, 5);
-
-                hBoxTrigerBeforeDelete.PackStart(new Label("Перед видаленням:"), false, false, 5);
-                hBoxTrigerBeforeDelete.PackStart(entryBeforeDelete, false, false, 5);
-                CreateSwitch(hBoxTrigerBeforeDelete, switchBeforeDelete);
-
-                //
-                // Конструктор для генерування класу тригерів
-                //
-
-                HBox hBoxTrigerConstructor = new HBox() { Halign = Align.Center };
-                vBoxFunc.PackStart(hBoxTrigerConstructor, false, false, 5);
-
-                Button buttonConstructor = new Button("Конструктор");
-                buttonConstructor.Clicked += (object? sender, EventArgs args) =>
+                //Тригери
                 {
-                    TextView textViewCode = new TextView();
+                    //Заголовок блоку Тригери
+                    HBox hBoxTrigerInfo = new HBox() { Halign = Align.Center };
+                    vBoxFunc.PackStart(hBoxTrigerInfo, false, false, 5);
+                    hBoxTrigerInfo.PackStart(new Label("Тригери"), false, false, 5);
 
-                    ScrolledWindow scrollCode = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 600, HeightRequest = 300 };
-                    scrollCode.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-                    scrollCode.Add(textViewCode);
+                    //Новий
+                    HBox hBoxTrigerNew = new HBox() { Halign = Align.End };
+                    vBoxFunc.PackStart(hBoxTrigerNew, false, false, 5);
 
-                    Popover popover = new Popover((Widget)sender!) { BorderWidth = 5 };
-                    popover.Add(scrollCode);
-                    popover.ShowAll();
+                    hBoxTrigerNew.PackStart(new Label("Новий:"), false, false, 5);
+                    hBoxTrigerNew.PackStart(entryNew, false, false, 5);
+                    CreateSwitch(hBoxTrigerNew, switchNew);
+
+                    //Копіювання
+                    HBox hBoxTrigerCopying = new HBox() { Halign = Align.End };
+                    vBoxFunc.PackStart(hBoxTrigerCopying, false, false, 5);
+
+                    hBoxTrigerCopying.PackStart(new Label("Копіювання:"), false, false, 5);
+                    hBoxTrigerCopying.PackStart(entryCopying, false, false, 5);
+                    CreateSwitch(hBoxTrigerCopying, switchCopying);
+
+                    //Перед записом
+                    HBox hBoxTrigerBeforeSave = new HBox() { Halign = Align.End };
+                    vBoxFunc.PackStart(hBoxTrigerBeforeSave, false, false, 5);
+
+                    hBoxTrigerBeforeSave.PackStart(new Label("Перед записом:"), false, false, 5);
+                    hBoxTrigerBeforeSave.PackStart(entryBeforeSave, false, false, 5);
+                    CreateSwitch(hBoxTrigerBeforeSave, switchBeforeSave);
+
+                    //Після запису
+                    HBox hBoxTrigerAfterSave = new HBox() { Halign = Align.End };
+                    vBoxFunc.PackStart(hBoxTrigerAfterSave, false, false, 5);
+
+                    hBoxTrigerAfterSave.PackStart(new Label("Після запису:"), false, false, 5);
+                    hBoxTrigerAfterSave.PackStart(entryAfterSave, false, false, 5);
+                    CreateSwitch(hBoxTrigerAfterSave, switchAfterSave);
+
+                    //Перед встановлення мітки на виделення
+                    HBox hBoxTrigerSetDeletionLabel = new HBox() { Halign = Align.End };
+                    vBoxFunc.PackStart(hBoxTrigerSetDeletionLabel, false, false, 5);
+
+                    hBoxTrigerSetDeletionLabel.PackStart(new Label("Встановлення мітки:"), false, false, 5);
+                    hBoxTrigerSetDeletionLabel.PackStart(entrySetDeletionLabel, false, false, 5);
+                    CreateSwitch(hBoxTrigerSetDeletionLabel, switchSetDeletionLabel);
+
+                    //Перед видаленням
+                    HBox hBoxTrigerBeforeDelete = new HBox() { Halign = Align.End };
+                    vBoxFunc.PackStart(hBoxTrigerBeforeDelete, false, false, 5);
+
+                    hBoxTrigerBeforeDelete.PackStart(new Label("Перед видаленням:"), false, false, 5);
+                    hBoxTrigerBeforeDelete.PackStart(entryBeforeDelete, false, false, 5);
+                    CreateSwitch(hBoxTrigerBeforeDelete, switchBeforeDelete);
 
                     //
-                    // Code
+                    // Конструктор для генерування класу тригерів
                     //
 
-                    if (string.IsNullOrEmpty(entryNew.Text)) switchNew.Active = true;
-                    if (string.IsNullOrEmpty(entryCopying.Text)) switchCopying.Active = true;
-                    if (string.IsNullOrEmpty(entryBeforeSave.Text)) switchBeforeSave.Active = true;
+                    HBox hBoxTrigerConstructor = new HBox() { Halign = Align.Center };
+                    vBoxFunc.PackStart(hBoxTrigerConstructor, false, false, 5);
 
-                    entryNew.Text = entryName.Text + "_Triggers.New";
-                    entryCopying.Text = entryName.Text + "_Triggers.Copying";
-                    entryBeforeSave.Text = entryName.Text + "_Triggers.BeforeSave";
-                    entryAfterSave.Text = entryName.Text + "_Triggers.AfterSave";
-                    entrySetDeletionLabel.Text = entryName.Text + "_Triggers.SetDeletionLabel";
-                    entryBeforeDelete.Text = entryName.Text + "_Triggers.BeforeDelete";
+                    Button buttonConstructor = new Button("Конструктор");
+                    buttonConstructor.Clicked += (object? sender, EventArgs args) =>
+                    {
+                        TextView textViewCode = new TextView();
 
-                    string AutoNumCode = checkButtonAutoNum.Active ?
-                        $"ДокументОбєкт.НомерДок = (++НумераціяДокументів.{entryName.Text}_Const).ToString(\"D8\");" : "";
+                        ScrolledWindow scrollCode = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 600, HeightRequest = 300 };
+                        scrollCode.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+                        scrollCode.Add(textViewCode);
 
-                    string NewCode = "ДокументОбєкт.ДатаДок = DateTime.Now;";
+                        Popover popover = new Popover((Widget)sender!) { BorderWidth = 5 };
+                        popover.Add(scrollCode);
+                        popover.ShowAll();
 
-                    string CopyingCode = "ДокументОбєкт.Назва += \" - Копія\";";
+                        //
+                        // Code
+                        //
 
-                    textViewCode.Buffer.Text = @$"
+                        if (string.IsNullOrEmpty(entryNew.Text)) switchNew.Active = true;
+                        if (string.IsNullOrEmpty(entryCopying.Text)) switchCopying.Active = true;
+                        if (string.IsNullOrEmpty(entryBeforeSave.Text)) switchBeforeSave.Active = true;
+
+                        entryNew.Text = entryName.Text + "_Triggers.New";
+                        entryCopying.Text = entryName.Text + "_Triggers.Copying";
+                        entryBeforeSave.Text = entryName.Text + "_Triggers.BeforeSave";
+                        entryAfterSave.Text = entryName.Text + "_Triggers.AfterSave";
+                        entrySetDeletionLabel.Text = entryName.Text + "_Triggers.SetDeletionLabel";
+                        entryBeforeDelete.Text = entryName.Text + "_Triggers.BeforeDelete";
+
+                        string AutoNumCode = checkButtonAutoNum.Active ?
+                            $"ДокументОбєкт.НомерДок = (++НумераціяДокументів.{entryName.Text}_Const).ToString(\"D8\");" : "";
+
+                        string NewCode = "ДокументОбєкт.ДатаДок = DateTime.Now;";
+
+                        string CopyingCode = "ДокументОбєкт.Назва += \" - Копія\";";
+
+                        textViewCode.Buffer.Text = @$"
 class {entryName.Text}_Triggers
 {{
     public static async ValueTask New({entryName.Text}_Objest ДокументОбєкт)
@@ -443,11 +449,12 @@ class {entryName.Text}_Triggers
     }}
 }}
 ";
-                    textViewCode.Buffer.SelectRange(textViewCode.Buffer.StartIter, textViewCode.Buffer.EndIter);
-                    textViewCode.GrabFocus();
-                };
+                        textViewCode.Buffer.SelectRange(textViewCode.Buffer.StartIter, textViewCode.Buffer.EndIter);
+                        textViewCode.GrabFocus();
+                    };
 
-                hBoxTrigerConstructor.PackStart(buttonConstructor, false, false, 5);
+                    hBoxTrigerConstructor.PackStart(buttonConstructor, false, false, 5);
+                }
             }
 
             //Списки та форми
@@ -465,6 +472,23 @@ class {entryName.Text}_Triggers
 
                 //Табличні списки
                 CreateTabularList(vBoxForm);
+            }
+
+            //Форми
+            {
+                Expander expanderForm = new Expander("Форми");
+                vBox.PackStart(expanderForm, false, false, 5);
+
+                VBox vBoxForm = new VBox();
+                expanderForm.Add(vBoxForm);
+
+                //Заголовок блоку Forms
+                HBox hBoxInterfaceCreateInfo = new HBox() { Halign = Align.Center };
+                vBoxForm.PackStart(hBoxInterfaceCreateInfo, false, false, 5);
+                hBoxInterfaceCreateInfo.PackStart(new Label("Форми"), false, false, 5);
+
+                //Форми
+                CreateFormsList(vBoxForm);
             }
 
             //Генерування коду 
@@ -636,6 +660,54 @@ class {entryName.Text}_Triggers
             vBoxContainer.PackStart(vBox, false, false, 0);
         }
 
+        void CreateFormsList(VBox vBoxContainer)
+        {
+            VBox vBox = new VBox();
+
+            Button buttonCreateForms = new Button("Створити");
+            buttonCreateForms.Clicked += (object? sender, EventArgs args) =>
+            {
+
+            };
+
+            HBox hBox = new HBox();
+            hBox.PackStart(buttonCreateForms, false, false, 5);
+            vBox.PackStart(hBox, false, false, 5);
+
+            Toolbar toolbar = new Toolbar();
+            vBox.PackStart(toolbar, false, false, 0);
+
+            MenuToolButton buttonAdd = new MenuToolButton(new Image(Stock.New, IconSize.Menu), "Додати") { IsImportant = true, Menu = OnFormsListAddFormSubMenu() };
+            buttonAdd.Clicked += (object? sender, EventArgs arg) => { ((Menu)((MenuToolButton)sender!).Menu).Popup(); };
+            toolbar.Add(buttonAdd);
+
+            ToolButton buttonCopy = new ToolButton(Stock.Copy) { Label = "Копіювати", IsImportant = true };
+            buttonCopy.Clicked += OnFormsListCopyClick;
+            toolbar.Add(buttonCopy);
+
+            ToolButton buttonRefresh = new ToolButton(Stock.Refresh) { Label = "Обновити", IsImportant = true };
+            buttonRefresh.Clicked += OnFormsListRefreshClick;
+            toolbar.Add(buttonRefresh);
+
+            ToolButton buttonDelete = new ToolButton(Stock.Clear) { Label = "Видалити", IsImportant = true };
+            buttonDelete.Clicked += OnFormsListRemoveClick;
+            toolbar.Add(buttonDelete);
+
+            HBox hBoxScroll = new HBox();
+            ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
+            scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+            scrollList.SetSizeRequest(0, 200);
+
+            listBoxFormsList.ButtonPressEvent += OnFormsListButtonPress;
+
+            scrollList.Add(listBoxFormsList);
+            hBoxScroll.PackStart(scrollList, true, true, 5);
+
+            vBox.PackStart(hBoxScroll, false, false, 0);
+
+            vBoxContainer.PackStart(vBox, false, false, 0);
+        }
+
         void CreateSwitch(HBox hBoxContainer, Switch switchWidget)
         {
             HBox hBoxSwitch = new HBox();
@@ -679,7 +751,7 @@ class {entryName.Text}_Triggers
                     ++sortNum;
                     sortField = item.Value.Name == "ДатаДок";
                     caption = item.Value.Name switch { "ДатаДок" => "Дата", "НомерДок" => "Номер", _ => item.Value.Name };
-                    
+
                     ConfDocument.TabularList["Записи"].AppendField(new ConfigurationTabularListField(item.Value.Name, caption, 0, sortNum, sortField));
                 }
             }
@@ -715,6 +787,7 @@ class {entryName.Text}_Triggers
             FillFields();
             FillTabularParts();
             FillTabularList();
+            FillFormsList();
         }
 
         void FillAllowRegAccum()
@@ -752,6 +825,14 @@ class {entryName.Text}_Triggers
                 listBoxTabularList.Add(new Label(tableList.Name) { Name = tableList.Name, Halign = Align.Start });
 
             listBoxTabularList.ShowAll();
+        }
+
+        void FillFormsList()
+        {
+            foreach (ConfigurationForms form in ConfDocument.Forms.Values)
+                listBoxFormsList.Add(new Label(form.Name) { Name = form.Name, Halign = Align.Start });
+
+            listBoxFormsList.ShowAll();
         }
 
         void GetValue()
@@ -1166,6 +1247,144 @@ class {entryName.Text}_Triggers
         void TabularListRefreshList()
         {
             OnTabularListRefreshClick(null, new EventArgs());
+        }
+
+        #endregion
+
+        #region FormsList
+
+        void OnFormsListButtonPress(object? sender, ButtonPressEventArgs args)
+        {
+            if (args.Event.Type == Gdk.EventType.DoubleButtonPress)
+            {
+                ListBoxRow[] selectedRows = listBoxFormsList.SelectedRows;
+
+                if (selectedRows.Length != 0)
+                {
+                    ListBoxRow curRow = selectedRows[0];
+
+                    if (ConfDocument.Forms.ContainsKey(curRow.Child.Name))
+                        GeneralForm?.CreateNotebookPage($"Форма: {curRow.Child.Name}", () =>
+                        {
+                            PageForm page = new PageForm()
+                            {
+                                ParentName = ConfDocument.Name,
+                                ParentType = "Document",
+                                Forms = ConfDocument.Forms,
+                                Form = ConfDocument.Forms[curRow.Child.Name],
+                                TypeForm = ConfDocument.Forms[curRow.Child.Name].Type,
+                                Fields = ConfDocument.Fields,
+                                TabularParts = ConfDocument.TabularParts,
+                                IsNew = false,
+                                GeneralForm = GeneralForm,
+                                CallBack_RefreshList = FormsListRefreshList
+                            };
+
+                            page.SetValue();
+
+                            return page;
+                        });
+                }
+            }
+        }
+
+        Menu OnFormsListAddFormSubMenu()
+        {
+            //Внутрішня функція для субменю
+            void OnFormsListAdd(ConfigurationForms.TypeForms typeForms)
+            {
+                if (string.IsNullOrEmpty(entryName.Text))
+                {
+                    Message.Error(GeneralForm, "Назва документу не вказана");
+                    return;
+                }
+
+                GeneralForm?.CreateNotebookPage("Форма *", () =>
+                {
+                    PageForm page = new PageForm()
+                    {
+                        ParentName = ConfDocument.Name,
+                        ParentType = "Document",
+                        Forms = ConfDocument.Forms,
+                        TypeForm = typeForms,
+                        Fields = ConfDocument.Fields,
+                        TabularParts = ConfDocument.TabularParts,
+                        IsNew = true,
+                        GeneralForm = GeneralForm,
+                        CallBack_RefreshList = FormsListRefreshList,
+                    };
+
+                    page.SetValue();
+
+                    return page;
+                });
+            }
+
+            Menu Menu = new Menu();
+
+            {
+                MenuItem item = new MenuItem("Елемент");
+                item.Activated += (object? sender, EventArgs args) => { OnFormsListAdd(ConfigurationForms.TypeForms.Element); };
+                Menu.Append(item);
+            }
+
+            {
+                MenuItem item = new MenuItem("Список");
+                item.Activated += (object? sender, EventArgs args) => { OnFormsListAdd(ConfigurationForms.TypeForms.List); };
+                Menu.Append(item);
+            }
+
+            Menu.ShowAll();
+
+            return Menu;
+        }
+
+        void OnFormsListCopyClick(object? sender, EventArgs args)
+        {
+            ListBoxRow[] selectedRows = listBoxFormsList.SelectedRows;
+
+            if (selectedRows.Length != 0)
+            {
+                foreach (ListBoxRow row in selectedRows)
+                {
+                    if (ConfDocument.Forms.ContainsKey(row.Child.Name))
+                    {
+                        ConfigurationForms newForms = ConfDocument.Forms[row.Child.Name].Copy();
+                        newForms.Name += GenerateName.GetNewName();
+
+                        ConfDocument.AppendForms(newForms);
+                    }
+                }
+
+                FormsListRefreshList();
+            }
+        }
+
+        void OnFormsListRefreshClick(object? sender, EventArgs args)
+        {
+            foreach (Widget item in listBoxFormsList.Children)
+                listBoxFormsList.Remove(item);
+
+            FillFormsList();
+        }
+
+        void OnFormsListRemoveClick(object? sender, EventArgs args)
+        {
+            ListBoxRow[] selectedRows = listBoxFormsList.SelectedRows;
+
+            if (selectedRows.Length != 0)
+            {
+                foreach (ListBoxRow row in selectedRows)
+                    if (ConfDocument.Forms.ContainsKey(row.Child.Name))
+                        ConfDocument.Forms.Remove(row.Child.Name);
+
+                FormsListRefreshList();
+            }
+        }
+
+        void FormsListRefreshList()
+        {
+            OnFormsListRefreshClick(null, new EventArgs());
         }
 
         #endregion

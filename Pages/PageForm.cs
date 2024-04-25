@@ -56,14 +56,13 @@ namespace Configurator
             EnablePopup = true,
             BorderWidth = 0,
             ShowBorder = false,
-            TabPos = PositionType.Top,
-            HeightRequest = 600
+            TabPos = PositionType.Top
         };
         SourceView sourceViewCode = new SourceView() { ShowLineNumbers = true };
 
         #endregion
 
-        #region FormElementField / Для форми елемента
+        #region FormElementField / Поля для форми елемента
 
         TreeView treeViewFormElementField;
         ListStore listStoreFormElementField = new ListStore(
@@ -72,6 +71,23 @@ namespace Configurator
             typeof(string)  //Caption
         );
         enum FormElementFieldColumns
+        {
+            Visible,
+            Name,
+            Caption,
+        }
+
+        #endregion
+
+        #region FormElementTablePart / Табличні частини для форми елемента
+
+        TreeView treeViewFormElementTablePart;
+        ListStore listStoreFormElementTablePart = new ListStore(
+            typeof(bool),   //Visible
+            typeof(string), //Name
+            typeof(string)  //Caption
+        );
+        enum FormElementTablePartColumns
         {
             Visible,
             Name,
@@ -100,12 +116,15 @@ namespace Configurator
             treeViewFormElementField = new TreeView(listStoreFormElementField);
             AddColumnTreeViewFormElementField();
 
+            treeViewFormElementTablePart = new TreeView(listStoreFormElementTablePart);
+            AddColumnTreeViewFormElementTablePart();
+
             HPaned hPaned = new HPaned() { BorderWidth = 5 };
 
             CreatePack1(hPaned);
             CreatePack2(hPaned);
 
-            PackStart(hPaned, false, false, 5);
+            PackStart(hPaned, true, true, 5);
 
             ShowAll();
         }
@@ -140,6 +159,37 @@ namespace Configurator
                         listStoreFormElementField.SetValue(iter, (int)FormElementFieldColumns.Caption, args.NewText);
                 };
                 treeViewFormElementField.AppendColumn(new TreeViewColumn("Заголовок", cell, "text", FormElementFieldColumns.Caption));
+            }
+        }
+
+        void AddColumnTreeViewFormElementTablePart()
+        {
+            //Visible
+            {
+                CellRendererToggle cell = new CellRendererToggle();
+                cell.Toggled += (object o, ToggledArgs args) =>
+                {
+                    if (listStoreFormElementTablePart.GetIterFromString(out TreeIter iter, args.Path))
+                    {
+                        bool val = (bool)listStoreFormElementTablePart.GetValue(iter, (int)FormElementTablePartColumns.Visible);
+                        listStoreFormElementTablePart.SetValue(iter, (int)FormElementTablePartColumns.Visible, !val);
+                    }
+                };
+                treeViewFormElementTablePart.AppendColumn(new TreeViewColumn("", cell, "active", FormElementTablePartColumns.Visible));
+            }
+
+            //Name
+            treeViewFormElementTablePart.AppendColumn(new TreeViewColumn("Назва", new CellRendererText(), "text", FormElementTablePartColumns.Name));
+
+            //Caption
+            {
+                CellRendererText cell = new CellRendererText() { Editable = true };
+                cell.Edited += (object o, EditedArgs args) =>
+                {
+                    if (listStoreFormElementTablePart.GetIterFromString(out TreeIter iter, args.Path))
+                        listStoreFormElementTablePart.SetValue(iter, (int)FormElementTablePartColumns.Caption, args.NewText);
+                };
+                treeViewFormElementTablePart.AppendColumn(new TreeViewColumn("Заголовок", cell, "text", FormElementTablePartColumns.Caption));
             }
         }
 
@@ -213,10 +263,26 @@ namespace Configurator
                 vBox.PackStart(hBoxCaption, false, false, 2);
 
                 HBox hBoxScroll = new HBox();
-                ScrolledWindow scroll = new ScrolledWindow() { ShadowType = ShadowType.In };
+                ScrolledWindow scroll = new ScrolledWindow() { ShadowType = ShadowType.In, HeightRequest = 200 };
                 scroll.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
 
                 scroll.Add(treeViewFormElementField);
+                hBoxScroll.PackStart(scroll, true, true, 5);
+
+                vBox.PackStart(hBoxScroll, true, true, 5);
+            }
+
+            //Табличні частини
+            {
+                HBox hBoxCaption = new HBox();
+                hBoxCaption.PackStart(new Label("Табличні частини"), false, false, 5);
+                vBox.PackStart(hBoxCaption, false, false, 2);
+
+                HBox hBoxScroll = new HBox();
+                ScrolledWindow scroll = new ScrolledWindow() { ShadowType = ShadowType.In };
+                scroll.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+
+                scroll.Add(treeViewFormElementTablePart);
                 hBoxScroll.PackStart(scroll, true, true, 5);
 
                 vBox.PackStart(hBoxScroll, true, true, 5);
@@ -271,14 +337,14 @@ namespace Configurator
                 VBox vBox = new VBox();
 
                 Button buttonGenCode = new Button("Згенерувати код");
-                buttonGenCode.Clicked += (object? sender, EventArgs args) => 
-                { 
+                buttonGenCode.Clicked += (object? sender, EventArgs args) =>
+                {
                     GenerateCode(Form.Type switch
                     {
                         ConfigurationForms.TypeForms.Element => "Element",
                         ConfigurationForms.TypeForms.List => "List",
                         _ => ""
-                    }, true, true); 
+                    }, true, true);
                 };
 
                 HBox hBoxButton = new HBox();
@@ -300,6 +366,7 @@ namespace Configurator
             }
 
             FillTreeViewFormElementField();
+            FillTreeViewFormElementTablePart();
         }
 
         void FillTreeViewFormElementField()
@@ -316,26 +383,60 @@ namespace Configurator
             }
         }
 
+        void FillTreeViewFormElementTablePart()
+        {
+            foreach (ConfigurationTablePart tablePart in TabularParts.Values)
+            {
+                bool isExistField = Form.ElementTableParts.ContainsKey(tablePart.Name);
+
+                string caption = isExistField ?
+                    (!string.IsNullOrEmpty(Form.ElementTableParts[tablePart.Name].Caption) ?
+                        Form.ElementTableParts[tablePart.Name].Caption : tablePart.Name) : tablePart.Name;
+
+                listStoreFormElementTablePart.AppendValues(isExistField, tablePart.Name, caption);
+            }
+        }
+
         void GetValue()
         {
             Form.Name = entryName.Text;
             Form.Desc = textViewDesc.Buffer.Text;
 
             //Поля форми елементу
-            Form.ElementFields.Clear();
-            if (listStoreFormElementField.GetIterFirst(out TreeIter iter))
-                do
-                {
-                    if ((bool)listStoreFormElementField.GetValue(iter, (int)FormElementFieldColumns.Visible))
+            {
+                Form.ElementFields.Clear();
+                if (listStoreFormElementField.GetIterFirst(out TreeIter iter))
+                    do
                     {
-                        string name = (string)listStoreFormElementField.GetValue(iter, (int)FormElementFieldColumns.Name);
-                        string caption = (string)listStoreFormElementField.GetValue(iter, (int)FormElementFieldColumns.Caption);
+                        if ((bool)listStoreFormElementField.GetValue(iter, (int)FormElementFieldColumns.Visible))
+                        {
+                            string name = (string)listStoreFormElementField.GetValue(iter, (int)FormElementFieldColumns.Name);
+                            string caption = (string)listStoreFormElementField.GetValue(iter, (int)FormElementFieldColumns.Caption);
 
-                        ConfigurationField field = Fields[name];
-                        Form.AppendElementField(new ConfigurationFormsElementField(field.Name, caption));
+                            ConfigurationField field = Fields[name];
+                            Form.AppendElementField(new ConfigurationFormsElementField(field.Name, caption));
+                        }
                     }
-                }
-                while (listStoreFormElementField.IterNext(ref iter));
+                    while (listStoreFormElementField.IterNext(ref iter));
+            }
+
+            //Табличні частини форми елементу
+            {
+                Form.ElementTableParts.Clear();
+                if (listStoreFormElementTablePart.GetIterFirst(out TreeIter iter))
+                    do
+                    {
+                        if ((bool)listStoreFormElementTablePart.GetValue(iter, (int)FormElementTablePartColumns.Visible))
+                        {
+                            string name = (string)listStoreFormElementTablePart.GetValue(iter, (int)FormElementTablePartColumns.Name);
+                            string caption = (string)listStoreFormElementTablePart.GetValue(iter, (int)FormElementTablePartColumns.Caption);
+
+                            ConfigurationTablePart tablePart = TabularParts[name];
+                            Form.AppendElementTablePart(new ConfigurationFormsElementTablePart(tablePart.Name, caption));
+                        }
+                    }
+                    while (listStoreFormElementTablePart.IterNext(ref iter));
+            }
         }
 
         #endregion
@@ -412,6 +513,7 @@ namespace Configurator
             nodeDirectory.AppendChild(nodeDirectoryName);
 
             Configuration.SaveFormElementField(Form.ElementFields, xmlConfDocument, nodeDirectory);
+            Configuration.SaveFormElementTablePart(Form.ElementTableParts, xmlConfDocument, nodeDirectory);
 
             if (includeFields)
                 Configuration.SaveFields(Fields, xmlConfDocument, nodeDirectory, ParentType);

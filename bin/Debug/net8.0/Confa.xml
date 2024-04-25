@@ -6,7 +6,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>23.04.2024 18:55:57</DateTimeSave>
+  <DateTimeSave>25.04.2024 14:48:19</DateTimeSave>
   <DictTSearch>simple</DictTSearch>
   <ConstantsBlocks>
     <ConstantsBlock>
@@ -1561,16 +1561,24 @@ END)]]></Value>
               <Caption>Артикул</Caption>
             </ElementField>
             <ElementField>
+              <Name>ТипНоменклатури</Name>
+              <Caption>ТипНоменклатури</Caption>
+            </ElementField>
+            <ElementField>
               <Name>Виробник</Name>
               <Caption>Виробник @</Caption>
             </ElementField>
+            <ElementField>
+              <Name>ВидНоменклатури</Name>
+              <Caption>ВидНоменклатури</Caption>
+            </ElementField>
           </ElementFields>
-        </Form>
-        <Form>
-          <Name>ertertdf</Name>
-          <Desc>
-          </Desc>
-          <Type>List</Type>
+          <ElementTableParts>
+            <ElementTablePart>
+              <Name>Файли</Name>
+              <Caption>Файли</Caption>
+            </ElementTablePart>
+          </ElementTableParts>
         </Form>
       </Forms>
     </Directory>
@@ -2392,7 +2400,54 @@ END)]]></Value>
         <SetDeletionLabel Action="0">Контрагенти_Triggers.SetDeletionLabel</SetDeletionLabel>
         <BeforeDelete Action="0">Контрагенти_Triggers.BeforeDelete</BeforeDelete>
       </TriggerFunctions>
-      <Forms />
+      <Forms>
+        <Form>
+          <Name>rtert</Name>
+          <Desc>
+          </Desc>
+          <Type>Element</Type>
+          <ElementFields>
+            <ElementField>
+              <Name>Назва</Name>
+              <Caption>Назва</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>Код</Name>
+              <Caption>Код</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>НазваПовна</Name>
+              <Caption>НазваПовна</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>РеєстраційнийНомер</Name>
+              <Caption>РеєстраційнийНомер</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>Папка</Name>
+              <Caption>Папка</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>Опис</Name>
+              <Caption>Опис</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>КлючовіСловаДляПошуку</Name>
+              <Caption>КлючовіСловаДляПошуку</Caption>
+            </ElementField>
+          </ElementFields>
+          <ElementTableParts>
+            <ElementTablePart>
+              <Name>Контакти</Name>
+              <Caption>Контакти</Caption>
+            </ElementTablePart>
+            <ElementTablePart>
+              <Name>Файли</Name>
+              <Caption>Файли</Caption>
+            </ElementTablePart>
+          </ElementTableParts>
+        </Form>
+      </Forms>
     </Directory>
     <Directory>
       <Name>Склади</Name>
@@ -7869,6 +7924,7 @@ END)]]></Value>
         <Spend>ЗамовленняПостачальнику_SpendTheDocument.Spend</Spend>
         <ClearSpend>ЗамовленняПостачальнику_SpendTheDocument.ClearSpend</ClearSpend>
       </SpendFunctions>
+      <Forms />
     </Document>
     <Document>
       <Name>ПоступленняТоварівТаПослуг</Name>
@@ -8571,6 +8627,70 @@ END)]]></Value>
         <Spend>ПоступленняТоварівТаПослуг_SpendTheDocument.Spend</Spend>
         <ClearSpend>ПоступленняТоварівТаПослуг_SpendTheDocument.ClearSpend</ClearSpend>
       </SpendFunctions>
+      <Forms>
+        <Form>
+          <Name>Елемент</Name>
+          <Desc>
+          </Desc>
+          <Type>Element</Type>
+          <ElementFields>
+            <ElementField>
+              <Name>Назва</Name>
+              <Caption>Назва</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>НомерДок</Name>
+              <Caption>НомерДок</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>ДатаДок</Name>
+              <Caption>ДатаДок</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>Валюта</Name>
+              <Caption>Валюта</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>Контрагент</Name>
+              <Caption>Контрагент</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>Узгоджений</Name>
+              <Caption>Узгоджений</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>СпосібДоставки</Name>
+              <Caption>СпосібДоставки</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>Курс</Name>
+              <Caption>Курс</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>Кратність</Name>
+              <Caption>Кратність</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>Каса</Name>
+              <Caption>Каса</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>Основа</Name>
+              <Caption>Основа</Caption>
+            </ElementField>
+            <ElementField>
+              <Name>Коментар</Name>
+              <Caption>Коментар</Caption>
+            </ElementField>
+          </ElementFields>
+          <ElementTableParts>
+            <ElementTablePart>
+              <Name>Товари</Name>
+              <Caption>Товари</Caption>
+            </ElementTablePart>
+          </ElementTableParts>
+        </Form>
+      </Forms>
     </Document>
     <Document>
       <Name>ЗамовленняКлієнта</Name>
@@ -9210,6 +9330,7 @@ END)]]></Value>
         <Spend>ЗамовленняКлієнта_SpendTheDocument.Spend</Spend>
         <ClearSpend>ЗамовленняКлієнта_SpendTheDocument.ClearSpend</ClearSpend>
       </SpendFunctions>
+      <Forms />
     </Document>
     <Document>
       <Name>РеалізаціяТоварівТаПослуг</Name>
@@ -9911,6 +10032,7 @@ END)]]></Value>
         <Spend>РеалізаціяТоварівТаПослуг_SpendTheDocument.Spend</Spend>
         <ClearSpend>РеалізаціяТоварівТаПослуг_SpendTheDocument.ClearSpend</ClearSpend>
       </SpendFunctions>
+      <Forms />
     </Document>
     <Document>
       <Name>ВстановленняЦінНоменклатури</Name>
@@ -10229,6 +10351,7 @@ END)]]></Value>
         <Spend>ВстановленняЦінНоменклатури_SpendTheDocument.Spend</Spend>
         <ClearSpend>ВстановленняЦінНоменклатури_SpendTheDocument.ClearSpend</ClearSpend>
       </SpendFunctions>
+      <Forms />
     </Document>
     <Document>
       <Name>ПрихіднийКасовийОрдер</Name>
@@ -10688,6 +10811,7 @@ END)]]></Value>
         <Spend>ПрихіднийКасовийОрдер_SpendTheDocument.Spend</Spend>
         <ClearSpend>ПрихіднийКасовийОрдер_SpendTheDocument.ClearSpend</ClearSpend>
       </SpendFunctions>
+      <Forms />
     </Document>
     <Document>
       <Name>РозхіднийКасовийОрдер</Name>
@@ -11177,6 +11301,7 @@ END)]]></Value>
         <Spend>РозхіднийКасовийОрдер_SpendTheDocument.Spend</Spend>
         <ClearSpend>РозхіднийКасовийОрдер_SpendTheDocument.ClearSpend</ClearSpend>
       </SpendFunctions>
+      <Forms />
     </Document>
     <Document>
       <Name>ПереміщенняТоварів</Name>
@@ -11646,6 +11771,7 @@ END)]]></Value>
         <Spend>ПереміщенняТоварів_SpendTheDocument.Spend</Spend>
         <ClearSpend>ПереміщенняТоварів_SpendTheDocument.ClearSpend</ClearSpend>
       </SpendFunctions>
+      <Forms />
     </Document>
     <Document>
       <Name>ПоверненняТоварівПостачальнику</Name>
@@ -12206,6 +12332,7 @@ END)]]></Value>
         <Spend>ПоверненняТоварівПостачальнику_SpendTheDocument.Spend</Spend>
         <ClearSpend>ПоверненняТоварівПостачальнику_SpendTheDocument.ClearSpend</ClearSpend>
       </SpendFunctions>
+      <Forms />
     </Document>
     <Document>
       <Name>ПоверненняТоварівВідКлієнта</Name>
@@ -12734,6 +12861,7 @@ END)]]></Value>
         <Spend>ПоверненняТоварівВідКлієнта_SpendTheDocument.Spend</Spend>
         <ClearSpend>ПоверненняТоварівВідКлієнта_SpendTheDocument.ClearSpend</ClearSpend>
       </SpendFunctions>
+      <Forms />
     </Document>
     <Document>
       <Name>АктВиконанихРобіт</Name>
@@ -13171,6 +13299,7 @@ END)]]></Value>
         <Spend>АктВиконанихРобіт_SpendTheDocument.Spend</Spend>
         <ClearSpend>АктВиконанихРобіт_SpendTheDocument.ClearSpend</ClearSpend>
       </SpendFunctions>
+      <Forms />
     </Document>
     <Document>
       <Name>ВведенняЗалишків</Name>
@@ -13716,6 +13845,7 @@ END)]]></Value>
         <Spend>ВведенняЗалишків_SpendTheDocument.Spend</Spend>
         <ClearSpend>ВведенняЗалишків_SpendTheDocument.ClearSpend</ClearSpend>
       </SpendFunctions>
+      <Forms />
     </Document>
     <Document>
       <Name>НадлишкиТоварів</Name>
@@ -14024,6 +14154,7 @@ END)]]></Value>
         <ClearSpend>
         </ClearSpend>
       </SpendFunctions>
+      <Forms />
     </Document>
     <Document>
       <Name>ПересортицяТоварів</Name>
@@ -14332,6 +14463,7 @@ END)]]></Value>
         <ClearSpend>
         </ClearSpend>
       </SpendFunctions>
+      <Forms />
     </Document>
     <Document>
       <Name>ПерерахунокТоварів</Name>
@@ -14689,6 +14821,7 @@ END)]]></Value>
         <Spend>ПерерахунокТоварів_SpendTheDocument.Spend</Spend>
         <ClearSpend>ПерерахунокТоварів_SpendTheDocument.ClearSpend</ClearSpend>
       </SpendFunctions>
+      <Forms />
     </Document>
     <Document>
       <Name>ПсуванняТоварів</Name>
@@ -15071,6 +15204,7 @@ END)]]></Value>
         <Spend>ПсуванняТоварів_SpendTheDocument.Spend</Spend>
         <ClearSpend>ПсуванняТоварів_SpendTheDocument.ClearSpend</ClearSpend>
       </SpendFunctions>
+      <Forms />
     </Document>
     <Document>
       <Name>ВнутрішнєСпоживанняТоварів</Name>
@@ -15483,6 +15617,7 @@ END)]]></Value>
         <Spend>ВнутрішнєСпоживанняТоварів_SpendTheDocument.Spend</Spend>
         <ClearSpend>ВнутрішнєСпоживанняТоварів_SpendTheDocument.ClearSpend</ClearSpend>
       </SpendFunctions>
+      <Forms />
     </Document>
     <Document>
       <Name>РахунокФактура</Name>
@@ -16018,6 +16153,7 @@ END)]]></Value>
         <Spend>РахунокФактура_SpendTheDocument.Spend</Spend>
         <ClearSpend>РахунокФактура_SpendTheDocument.ClearSpend</ClearSpend>
       </SpendFunctions>
+      <Forms />
     </Document>
     <Document>
       <Name>РозміщенняТоварівНаСкладі</Name>
@@ -16355,6 +16491,7 @@ END)]]></Value>
         <Spend>РозміщенняТоварівНаСкладі_SpendTheDocument.Spend</Spend>
         <ClearSpend>РозміщенняТоварівНаСкладі_SpendTheDocument.ClearSpend</ClearSpend>
       </SpendFunctions>
+      <Forms />
     </Document>
     <Document>
       <Name>ПереміщенняТоварівНаСкладі</Name>
@@ -16691,6 +16828,7 @@ END)]]></Value>
         <Spend>ПереміщенняТоварівНаСкладі_SpendTheDocument.Spend</Spend>
         <ClearSpend>ПереміщенняТоварівНаСкладі_SpendTheDocument.ClearSpend</ClearSpend>
       </SpendFunctions>
+      <Forms />
     </Document>
     <Document>
       <Name>ЗбіркаТоварівНаСкладі</Name>
@@ -17028,6 +17166,7 @@ END)]]></Value>
         <Spend>ЗбіркаТоварівНаСкладі_SpendTheDocument.Spend</Spend>
         <ClearSpend>ЗбіркаТоварівНаСкладі_SpendTheDocument.ClearSpend</ClearSpend>
       </SpendFunctions>
+      <Forms />
     </Document>
     <Document>
       <Name>РозміщенняНоменклатуриПоКоміркам</Name>
@@ -17319,6 +17458,7 @@ END)]]></Value>
         <Spend>РозміщенняНоменклатуриПоКоміркам_SpendTheDocument.Spend</Spend>
         <ClearSpend>РозміщенняНоменклатуриПоКоміркам_SpendTheDocument.ClearSpend</ClearSpend>
       </SpendFunctions>
+      <Forms />
     </Document>
   </Documents>
   <Enums>
