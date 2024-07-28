@@ -106,7 +106,8 @@ sudo cp ukrainian.stop $(pg_config --sharedir)/tsearch_data/ukrainian.stop
                 {
                     Wrap = true,
                     UseMarkup = true,
-                    Selectable = true
+                    Selectable = true,
+                    UseUnderline = false
                 };
 
                 hBoxHelp.PackStart(labelHelp, false, false, 10);

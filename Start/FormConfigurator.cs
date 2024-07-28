@@ -481,11 +481,11 @@ namespace Configurator
             if (OpenConfigurationParam != null)
             {
                 statusBar.Halign = Align.Start;
-                statusBar.Add(new Label($"Конфігурація: {Conf.Name} "));
+                statusBar.Add(new Label($"Конфігурація: {Conf.Name} ") { UseUnderline = false });
                 statusBar.Add(new Separator(Orientation.Vertical));
-                statusBar.Add(new Label($" Сервер: {OpenConfigurationParam.DataBaseServer} "));
+                statusBar.Add(new Label($" Сервер: {OpenConfigurationParam.DataBaseServer} ") { UseUnderline = false });
                 statusBar.Add(new Separator(Orientation.Vertical));
-                statusBar.Add(new Label($" База даних: {OpenConfigurationParam.DataBaseBaseName} "));
+                statusBar.Add(new Label($" База даних: {OpenConfigurationParam.DataBaseBaseName} ") { UseUnderline = false });
                 statusBar.ShowAll();
             }
         }
