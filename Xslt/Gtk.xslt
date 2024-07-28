@@ -474,7 +474,7 @@ ORDER BY level, {<xsl:value-of select="$DirectoryName"/>_Const.Назва} ASC
 
             #endregion
 
-            var recordResult = await Config.Kernel.DataBase.SelectRequestquery);
+            var recordResult = await Config.Kernel.DataBase.SelectRequest(query);
 
             Dictionary&lt;string, TreeIter&gt; nodeDictionary = new Dictionary&lt;string, TreeIter&gt;();
 
