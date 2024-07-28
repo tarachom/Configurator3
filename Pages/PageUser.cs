@@ -125,7 +125,7 @@ namespace Configurator
         {
             if (!IsNew)
             {
-                SelectRequestAsync_Record? recordResult = await Program.Kernel.DataBase.SpetialTableUsersExtendetUser(UID);
+                SelectRequest_Record? recordResult = await Program.Kernel.DataBase.SpetialTableUsersExtendetUser(UID);
 
                 if (recordResult != null)
                 {

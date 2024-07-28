@@ -95,7 +95,7 @@ namespace Configurator
         {
             Store.Clear();
 
-            SelectRequestAsync_Record recordResult = await Program.Kernel.DataBase.SpetialTableUsersExtendetList();
+            SelectRequest_Record recordResult = await Program.Kernel.DataBase.SpetialTableUsersExtendetList();
 
             foreach (Dictionary<string, object> record in recordResult.ListRow)
             {

@@ -508,7 +508,7 @@ namespace Configurator
         /// <param name="query">Запит</param>
         async ValueTask WriteQuerySelect(XmlWriter xmlWriter, string query)
         {
-            var recordResult = await Program.Kernel.DataBase.SelectRequestAsync(query);
+            var recordResult = await Program.Kernel.DataBase.SelectRequest(query);
 
             foreach (var row in recordResult.ListRow)
             {
