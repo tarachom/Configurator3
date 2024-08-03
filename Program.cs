@@ -21,7 +21,6 @@ limitations under the License.
 Сайт:     accounting.org.ua
 */
 
-
 using Gtk;
 using AccountingSoftware;
 
@@ -34,10 +33,8 @@ namespace Configurator
         public static void Main()
         {
             Application.Init();
-            new FormConfigurationSelection();
+            _ = new FormConfigurationSelection();
             Application.Run();
         }
-
-        public static readonly string IcoFileName = AppContext.BaseDirectory + "images/form.ico";
     }
 }

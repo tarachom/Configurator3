@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AccountingSoftwareLib\AccountingSoftware\AccountingSoftware.csproj" />
+    <ProjectReference Include="..\AccountingSoftwareLib\InterfaceGtk\InterfaceGtk.csproj" />
   </ItemGroup>
 
 </Project>
