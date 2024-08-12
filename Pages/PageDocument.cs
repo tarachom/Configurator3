@@ -296,7 +296,7 @@ class {entryName.Text}_SpendTheDocument
         }}
         catch (Exception ex)
         {{
-            СпільніФункції.ДокументНеПроводиться(ДокументОбєкт, ДокументОбєкт.Назва, ex.Message);
+            await СпільніФункції.ДокументНеПроводиться(ДокументОбєкт, ДокументОбєкт.Назва, ex.Message);
             return false;
         }}
     }}
