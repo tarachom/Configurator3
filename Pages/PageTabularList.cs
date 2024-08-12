@@ -635,7 +635,7 @@ namespace Configurator
 
                         //Text
                         {
-                            HBox hBox = new HBox();
+                            Box hBox = new HBox();
                             vBox.PackStart(hBox, false, false, 5);
 
                             textViewCode.Buffer.Text = (string)treeViewAdditional.Model.GetValue(iter, (int)ColumnsAdditional.Value);

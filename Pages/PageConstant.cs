@@ -27,7 +27,7 @@ using AccountingSoftware;
 
 namespace Configurator
 {
-    class PageConstant : VBox
+    class PageConstant : Box
     {
         Configuration Conf { get { return Program.Kernel.Conf; } }
 
@@ -48,10 +48,9 @@ namespace Configurator
 
         #endregion
 
-        public PageConstant() : base()
+        public PageConstant() : base(Orientation.Vertical, 0)
         {
-            new VBox();
-            HBox hBox = new HBox();
+            Box hBox = new Box(Orientation.Horizontal, 0);
 
             Button bSave = new Button("Зберегти");
             bSave.Clicked += OnSaveClick;
@@ -65,7 +64,7 @@ namespace Configurator
 
             PackStart(hBox, false, false, 10);
 
-            HPaned hPaned = new HPaned() { BorderWidth = 5 };
+            Paned hPaned = new Paned(Orientation.Horizontal) { BorderWidth = 5 };
 
             CreatePack1(hPaned);
             CreatePack2(hPaned);
@@ -75,34 +74,34 @@ namespace Configurator
             ShowAll();
         }
 
-        void CreatePack2(HPaned hPaned)
+        void CreatePack2(Paned hPaned)
         {
-            VBox vBox = new VBox();
+            Box vBox = new Box(Orientation.Vertical, 0);
 
-            HBox hBox = new HBox();
+            Box hBox = new Box(Orientation.Horizontal, 0);
             hBox.PackStart(new Label("Табличні частини:"), false, false, 5);
             vBox.PackStart(hBox, false, false, 5);
 
             Toolbar toolbar = new Toolbar();
             vBox.PackStart(toolbar, false, false, 0);
 
-            ToolButton buttonAdd = new ToolButton(Stock.New) { Label = "Додати", IsImportant = true };
+            ToolButton buttonAdd = new ToolButton(new Image(Stock.New, IconSize.Menu), "Додати") { Label = "Додати", IsImportant = true };
             buttonAdd.Clicked += OnTabularPartsAddClick;
             toolbar.Add(buttonAdd);
 
-            ToolButton buttonCopy = new ToolButton(Stock.Copy) { Label = "Копіювати", IsImportant = true };
+            ToolButton buttonCopy = new ToolButton(new Image(Stock.Copy, IconSize.Menu), "Копіювати") { Label = "Копіювати", IsImportant = true };
             buttonCopy.Clicked += OnTabularPartsCopyClick;
             toolbar.Add(buttonCopy);
 
-            ToolButton buttonRefresh = new ToolButton(Stock.Refresh) { Label = "Обновити", IsImportant = true };
+            ToolButton buttonRefresh = new ToolButton(new Image(Stock.Refresh, IconSize.Menu), "Обновити") { Label = "Обновити", IsImportant = true };
             buttonRefresh.Clicked += OnTabularPartsRefreshClick;
             toolbar.Add(buttonRefresh);
 
-            ToolButton buttonDelete = new ToolButton(Stock.Clear) { Label = "Видалити", IsImportant = true };
+            ToolButton buttonDelete = new ToolButton(new Image(Stock.Clear, IconSize.Menu), "Видалити") { Label = "Видалити", IsImportant = true };
             buttonDelete.Clicked += OnTabularPartsRemoveClick;
             toolbar.Add(buttonDelete);
 
-            HBox hBoxScroll = new HBox();
+            Box hBoxScroll = new Box(Orientation.Horizontal, 0);
             ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
             scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
             scrollList.SetSizeRequest(0, 250);
@@ -116,26 +115,26 @@ namespace Configurator
             hPaned.Pack2(vBox, true, false);
         }
 
-        void CreatePack1(HPaned hPaned)
+        void CreatePack1(Paned hPaned)
         {
-            VBox vBox = new VBox();
+            Box vBox = new Box(Orientation.Vertical, 0);
 
             //Назва
-            HBox hBoxName = new HBox() { Halign = Align.End };
+            Box hBoxName = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxName, false, false, 5);
 
             hBoxName.PackStart(new Label("Назва:"), false, false, 5);
             hBoxName.PackStart(entryName, false, false, 5);
 
             //Поле
-            HBox hBoxColumn = new HBox() { Halign = Align.End };
+            Box hBoxColumn = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxColumn, false, false, 5);
 
             hBoxColumn.PackStart(new Label("Поле в таблиці:"), false, false, 5);
             hBoxColumn.PackStart(entryColumn, false, false, 5);
 
             //Блок
-            HBox hBoxBlock = new HBox() { Halign = Align.End };
+            Box hBoxBlock = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxBlock, false, false, 5);
 
             foreach (ConfigurationConstantsBlock block in Conf.ConstantsBlock.Values)
@@ -145,7 +144,7 @@ namespace Configurator
             hBoxBlock.PackStart(comboBoxBlock, false, false, 5);
 
             //Тип
-            HBox hBoxType = new HBox() { Halign = Align.End };
+            Box hBoxType = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxType, false, false, 5);
 
             foreach (var fieldType in FieldType.DefaultList())
@@ -157,7 +156,7 @@ namespace Configurator
             hBoxType.PackStart(comboBoxType, false, false, 5);
 
             //Pointer
-            HBox hBoxPointer = new HBox() { Halign = Align.End };
+            Box hBoxPointer = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxPointer, false, false, 5);
 
             foreach (ConfigurationDirectories item in Conf.Directories.Values)
@@ -170,7 +169,7 @@ namespace Configurator
             hBoxPointer.PackStart(comboBoxPointer, false, false, 5);
 
             //Enum
-            HBox hBoxEnum = new HBox() { Halign = Align.End };
+            Box hBoxEnum = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxEnum, false, false, 5);
 
             foreach (ConfigurationEnums item in Conf.Enums.Values)
@@ -180,7 +179,7 @@ namespace Configurator
             hBoxEnum.PackStart(comboBoxEnum, false, false, 5);
 
             //Опис
-            HBox hBoxDesc = new HBox() { Halign = Align.End };
+            Box hBoxDesc = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxDesc, false, false, 5);
 
             hBoxDesc.PackStart(new Label("Опис:") { Valign = Align.Start }, false, false, 5);

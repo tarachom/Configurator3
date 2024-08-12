@@ -27,7 +27,7 @@ using AccountingSoftware;
 
 namespace Configurator
 {
-    class PageDictTSearch : VBox
+    class PageDictTSearch : Box
     {
         Configuration Conf { get { return Program.Kernel.Conf; } }
 
@@ -39,10 +39,9 @@ namespace Configurator
 
         #endregion
 
-        public PageDictTSearch() : base()
+        public PageDictTSearch() : base(Orientation.Vertical, 0)
         {
-            new VBox();
-            HBox hBox = new HBox();
+            Box hBox = new Box(Orientation.Horizontal, 0);
 
             Button bSave = new Button("Зберегти");
             bSave.Clicked += OnSaveClick;
@@ -56,7 +55,7 @@ namespace Configurator
 
             PackStart(hBox, false, false, 10);
 
-            HPaned hPaned = new HPaned() { BorderWidth = 5, Position = 200 };
+            Paned hPaned = new Paned(Orientation.Horizontal) { BorderWidth = 5, Position = 200 };
 
             CreatePack1(hPaned);
             CreatePack2(hPaned);
@@ -66,12 +65,12 @@ namespace Configurator
             ShowAll();
         }
 
-        void CreatePack1(HPaned hPaned)
+        void CreatePack1(Paned hPaned)
         {
-            VBox vBox = new VBox();
+            Box vBox = new Box(Orientation.Vertical, 0);
 
             //Види словників
-            HBox hBoxTsConfig = new HBox() { Halign = Align.End };
+            Box hBoxTsConfig = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxTsConfig, false, false, 5);
 
             hBoxTsConfig.PackStart(new Label("Вид словника:"), false, false, 5);
@@ -80,13 +79,13 @@ namespace Configurator
             hPaned.Pack1(vBox, false, false);
         }
 
-        void CreatePack2(HPaned hPaned)
+        void CreatePack2(Paned hPaned)
         {
-            VBox vBox = new VBox();
+            Box vBox = new Box(Orientation.Vertical, 0);
 
             //Довідка
             {
-                HBox hBoxHelp = new HBox() { Halign = Align.Start };
+                Box hBoxHelp = new Box(Orientation.Horizontal, 0) { Halign = Align.Start };
                 vBox.PackStart(hBoxHelp, false, false, 5);
 
                 //Довідка текст
@@ -115,7 +114,7 @@ sudo cp ukrainian.stop $(pg_config --sharedir)/tsearch_data/ukrainian.stop
 
             //SQL
             {
-                HBox hBoxSql = new HBox() { Halign = Align.Start };
+                Box hBoxSql = new Box(Orientation.Horizontal, 0) { Halign = Align.Start };
                 vBox.PackStart(hBoxSql, false, false, 5);
 
                 //SQL текст
@@ -146,7 +145,7 @@ ALTER TEXT SEARCH CONFIGURATION ukrainian ALTER MAPPING FOR asciihword, asciiwor
 
             //Кнопки
             {
-                HBox hBoxButton = new HBox() { Halign = Align.Start };
+                Box hBoxButton = new Box(Orientation.Horizontal, 0) { Halign = Align.Start };
                 vBox.PackStart(hBoxButton, false, false, 5);
 
                 Button button = new Button() { Label = "Виконати SQL" };
