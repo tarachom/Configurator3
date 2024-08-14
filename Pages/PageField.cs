@@ -151,53 +151,6 @@ namespace Configurator
 
             hBoxDesc.PackStart(scrollTextView, false, false, 5);
 
-            //Налаштування для композитного типу даних
-            {
-                Expander expanderCompositePointerAllow = new Expander("Налаштування для композитного типу даних");
-                vBox.PackStart(expanderCompositePointerAllow, false, false, 5);
-
-                Box vBoxCompositePointerAllow = new Box(Orientation.Vertical, 0);
-                expanderCompositePointerAllow.Add(vBoxCompositePointerAllow);
-
-                //Заголовок
-                Box hBoxCompositePointerAllowInfo = new Box(Orientation.Horizontal, 0) { Halign = Align.Center };
-                vBoxCompositePointerAllow.PackStart(hBoxCompositePointerAllowInfo, false, false, 10);
-                hBoxCompositePointerAllowInfo.PackStart(new Label("<b>Довідники або документи доступні для вибору</b>") { UseMarkup = true }, false, false, 5);
-
-                Box hBoxCompositePointerListBoxes = new Box(Orientation.Horizontal, 0);
-                vBoxCompositePointerAllow.PackStart(hBoxCompositePointerListBoxes, false, false, 5);
-
-                //Довідники
-                {
-                    Box vBoxListBox = new Box(Orientation.Vertical, 0);
-                    hBoxCompositePointerListBoxes.PackStart(vBoxListBox, false, false, 0);
-
-                    vBoxListBox.PackStart(new Label("Довідники"), false, false, 2);
-                    vBoxListBox.PackStart(checkButtonCompositePointerNotUseDirectories, false, false, 5);
-
-                    ScrolledWindow scrollList = new ScrolledWindow() { WidthRequest = 300, HeightRequest = 400, ShadowType = ShadowType.In };
-                    scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-                    scrollList.Add(listBoxCompositePointerAllowDirectories);
-
-                    vBoxListBox.PackStart(scrollList, false, false, 5);
-                }
-
-                //Документи
-                {
-                    Box vBoxListBox = new Box(Orientation.Vertical, 0);
-                    hBoxCompositePointerListBoxes.PackStart(vBoxListBox, false, false, 5);
-
-                    vBoxListBox.PackStart(new Label("Документи"), false, false, 2);
-                    vBoxListBox.PackStart(checkButtonCompositePointerNotUseDocuments, false, false, 5);
-
-                    ScrolledWindow scrollList = new ScrolledWindow() { WidthRequest = 300, HeightRequest = 400, ShadowType = ShadowType.In };
-                    scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-                    scrollList.Add(listBoxCompositePointerAllowDocuments);
-
-                    vBoxListBox.PackStart(scrollList, false, false, 5);
-                }
-            }
-
             hPaned.Pack1(vBox, false, false);
         }
 
@@ -217,13 +170,61 @@ namespace Configurator
             //Багатострічкове поле
             vBox.PackStart(checkButtonMultiline, false, false, 5);
 
-            //Довідка
-            Box vBoxExpander = new Box(Orientation.Vertical, 0);
-            Expander expanderHelp = new Expander("Довідка") { vBoxExpander };
+            //Налаштування для композитного типу даних
+            {
+                Expander expanderCompositePointerAllow = new Expander("Налаштування для композитного типу даних");
+                vBox.PackStart(expanderCompositePointerAllow, false, false, 5);
 
-            List<string> helpList =
-            [
-                "Типи даних та їх відповідники в C#:",
+                Box vBoxCompositePointerAllow = new Box(Orientation.Vertical, 0);
+                expanderCompositePointerAllow.Add(vBoxCompositePointerAllow);
+
+                //Заголовок
+                Box hBoxCompositePointerAllowInfo = new Box(Orientation.Horizontal, 5) { Halign = Align.Start };
+                vBoxCompositePointerAllow.PackStart(hBoxCompositePointerAllowInfo, false, false, 10);
+                hBoxCompositePointerAllowInfo.PackStart(new Label("<b>Довідники або документи доступні для вибору</b>") { UseMarkup = true }, false, false, 5);
+
+                Box hBoxCompositePointerListBoxes = new Box(Orientation.Horizontal, 0);
+                vBoxCompositePointerAllow.PackStart(hBoxCompositePointerListBoxes, false, false, 5);
+
+                //Довідники
+                {
+                    Box vBoxListBox = new Box(Orientation.Vertical, 0);
+                    hBoxCompositePointerListBoxes.PackStart(vBoxListBox, false, false, 5);
+
+                    vBoxListBox.PackStart(new Label("Довідники"), false, false, 2);
+                    vBoxListBox.PackStart(checkButtonCompositePointerNotUseDirectories, false, false, 5);
+
+                    ScrolledWindow scrollList = new ScrolledWindow() { WidthRequest = 250, HeightRequest = 400, ShadowType = ShadowType.In };
+                    scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+                    scrollList.Add(listBoxCompositePointerAllowDirectories);
+
+                    vBoxListBox.PackStart(scrollList, false, false, 5);
+                }
+
+                //Документи
+                {
+                    Box vBoxListBox = new Box(Orientation.Vertical, 0);
+                    hBoxCompositePointerListBoxes.PackStart(vBoxListBox, false, false, 5);
+
+                    vBoxListBox.PackStart(new Label("Документи"), false, false, 2);
+                    vBoxListBox.PackStart(checkButtonCompositePointerNotUseDocuments, false, false, 5);
+
+                    ScrolledWindow scrollList = new ScrolledWindow() { WidthRequest = 250, HeightRequest = 400, ShadowType = ShadowType.In };
+                    scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+                    scrollList.Add(listBoxCompositePointerAllowDocuments);
+
+                    vBoxListBox.PackStart(scrollList, false, false, 5);
+                }
+            }
+
+            //Довідка
+            {
+                Box vBoxExpander = new Box(Orientation.Vertical, 0);
+                Expander expanderHelp = new Expander("Довідка") { vBoxExpander };
+
+                List<string> helpList =
+                [
+                    "Типи даних та їх відповідники в C#:",
                 "integer -> int",
                 "numeric -> decimal",
                 "boolean -> bool",
@@ -240,14 +241,15 @@ namespace Configurator
                 "numeric[] -> decimal[]",
             ];
 
-            foreach (var item in helpList)
-            {
-                Box hBox = new Box(Orientation.Horizontal, 0);
-                vBoxExpander.PackStart(hBox, false, false, 5);
-                hBox.PackStart(new Label(item) { UseUnderline = false }, false, false, 5);
-            }
+                foreach (var item in helpList)
+                {
+                    Box hBox = new Box(Orientation.Horizontal, 0);
+                    vBoxExpander.PackStart(hBox, false, false, 5);
+                    hBox.PackStart(new Label(item) { UseUnderline = false }, false, false, 5);
+                }
 
-            vBox.PackStart(expanderHelp, false, false, 5);
+                vBox.PackStart(expanderHelp, false, false, 5);
+            }
 
             hPaned.Pack2(vBox, false, false);
         }
@@ -384,6 +386,16 @@ namespace Configurator
 
                 checkButtonFullTextSearch.Sensitive = isString;
                 checkButtonMultiline.Sensitive = isString;
+            }
+
+            //composite_pointer
+            {
+                bool isCompositePointer = typeName == "composite_pointer";
+
+                checkButtonCompositePointerNotUseDirectories.Sensitive = isCompositePointer;
+                checkButtonCompositePointerNotUseDocuments.Sensitive = isCompositePointer;
+                listBoxCompositePointerAllowDirectories.Sensitive = isCompositePointer;
+                listBoxCompositePointerAllowDocuments.Sensitive = isCompositePointer;
             }
         }
 
