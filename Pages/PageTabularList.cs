@@ -27,7 +27,7 @@ using AccountingSoftware;
 
 namespace Configurator
 {
-    class PageTabularList : VBox
+    class PageTabularList : Box
     {
         //Configuration Conf { get { return Program.Kernel.Conf; } }
 
@@ -51,6 +51,7 @@ namespace Configurator
             SortNum,
             SortField,
             SortDirection,
+            FilterField,
             Type
         }
 
@@ -62,6 +63,7 @@ namespace Configurator
             typeof(int),    //SortNum
             typeof(bool),   //SortField
             typeof(bool),   //SortDirection
+            typeof(bool),   //FilterField
             typeof(string)  //Type
         );
 
@@ -109,10 +111,9 @@ namespace Configurator
 
         #endregion
 
-        public PageTabularList() : base()
+        public PageTabularList() : base(Orientation.Vertical, 0)
         {
-            new VBox();
-            HBox hBox = new HBox();
+            Box hBox = new Box(Orientation.Horizontal, 0);
 
             Button bSave = new Button("Зберегти");
             bSave.Clicked += OnSaveClick;
@@ -134,7 +135,7 @@ namespace Configurator
             treeViewAdditional.ButtonPressEvent += OnTreeViewAdditionalPressEvent;
             AddColumnTreeViewAdditional();
 
-            HPaned hPaned = new HPaned() { BorderWidth = 5 };
+            Paned hPaned = new Paned(Orientation.Horizontal) { BorderWidth = 5 };
 
             CreatePack1(hPaned);
             CreatePack2(hPaned);
@@ -144,17 +145,17 @@ namespace Configurator
             ShowAll();
         }
 
-        void CreatePack2(HPaned hPaned)
+        void CreatePack2(Paned hPaned)
         {
-            VBox vBox = new VBox();
+            Box vBox = new Box(Orientation.Vertical, 0);
 
             //Поля
             {
-                HBox hBoxCaption = new HBox();
+                Box hBoxCaption = new Box(Orientation.Horizontal, 0);
                 hBoxCaption.PackStart(new Label("Поля:"), false, false, 5);
                 vBox.PackStart(hBoxCaption, false, false, 5);
 
-                HBox hBoxScroll = new HBox();
+                Box hBoxScroll = new Box(Orientation.Horizontal, 0);
                 ScrolledWindow scroll = new ScrolledWindow() { ShadowType = ShadowType.In };
                 scroll.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
                 scroll.SetSizeRequest(0, 400);
@@ -168,7 +169,7 @@ namespace Configurator
             //Додаткові поля
             {
                 //Заголовок
-                HBox hBoxCaption = new HBox();
+                Box hBoxCaption = new Box(Orientation.Horizontal, 0);
                 hBoxCaption.PackStart(new Label("Додаткові поля:"), false, false, 5);
                 vBox.PackStart(hBoxCaption, false, false, 5);
 
@@ -189,7 +190,7 @@ namespace Configurator
                 toolbar.Add(buttonDelete);
 
                 //Tree
-                HBox hBoxScroll = new HBox();
+                Box hBoxScroll = new Box(Orientation.Horizontal, 0);
                 ScrolledWindow scroll = new ScrolledWindow() { ShadowType = ShadowType.In };
                 scroll.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
                 scroll.SetSizeRequest(0, 400);
@@ -203,19 +204,19 @@ namespace Configurator
             hPaned.Pack2(vBox, true, false);
         }
 
-        void CreatePack1(HPaned hPaned)
+        void CreatePack1(Paned hPaned)
         {
-            VBox vBox = new VBox();
+            Box vBox = new Box(Orientation.Vertical, 0);
 
             //Назва
-            HBox hBoxName = new HBox() { Halign = Align.End };
+            Box hBoxName = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxName, false, false, 5);
 
             hBoxName.PackStart(new Label("Назва:"), false, false, 5);
             hBoxName.PackStart(entryName, false, false, 5);
 
             //Опис
-            HBox hBoxDesc = new HBox() { Halign = Align.End };
+            Box hBoxDesc = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxDesc, false, false, 5);
 
             hBoxDesc.PackStart(new Label("Опис:") { Valign = Align.Start }, false, false, 5);
@@ -227,7 +228,7 @@ namespace Configurator
             hBoxDesc.PackStart(scrollTextView, false, false, 5);
 
             //Дерево
-            HBox hBoxTree = new HBox() { Halign = Align.End };
+            Box hBoxTree = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxTree, false, false, 5);
 
             hBoxTree.PackStart(checkButtonIsTree, false, false, 5);
@@ -322,6 +323,20 @@ namespace Configurator
                     }
                 };
                 treeViewFields.AppendColumn(new TreeViewColumn("Зворотнє сортування", cell, "active", Columns.SortDirection));
+            }
+
+            //FilterField
+            {
+                CellRendererToggle cell = new CellRendererToggle();
+                cell.Toggled += (object o, ToggledArgs args) =>
+                {
+                    if (listStore.GetIterFromString(out TreeIter iter, args.Path))
+                    {
+                        bool val = (bool)listStore.GetValue(iter, (int)Columns.FilterField);
+                        listStore.SetValue(iter, (int)Columns.FilterField, !val);
+                    }
+                };
+                treeViewFields.AppendColumn(new TreeViewColumn("Фільтрувати", cell, "active", Columns.FilterField));
             }
 
             //Type
@@ -457,9 +472,10 @@ namespace Configurator
                 int sortNum = isExistField ? TabularList.Fields[field.Name].SortNum : 100;
                 bool sortField = isExistField ? TabularList.Fields[field.Name].SortField : false;
                 bool sortDirection = isExistField ? TabularList.Fields[field.Name].SortDirection : false;
+                bool filterField = isExistField ? TabularList.Fields[field.Name].FilterField : false;
                 string sType = field.Type == "pointer" || field.Type == "enum" ? field.Pointer : field.Type;
 
-                listStore.AppendValues(isExistField, field.Name, caption, size, sortNum, sortField, sortDirection, sType);
+                listStore.AppendValues(isExistField, field.Name, caption, size, sortNum, sortField, sortDirection, filterField, sType);
             }
         }
 
@@ -500,9 +516,10 @@ namespace Configurator
                         int sortNum = (int)listStore.GetValue(iter, (int)Columns.SortNum);
                         bool sortField = (bool)listStore.GetValue(iter, (int)Columns.SortField);
                         bool sortDirection = (bool)listStore.GetValue(iter, (int)Columns.SortDirection);
+                        bool filterField = (bool)listStore.GetValue(iter, (int)Columns.FilterField);
 
                         ConfigurationField field = Fields[name];
-                        TabularList.AppendField(new ConfigurationTabularListField(field.Name, caption, size, sortNum, sortField, sortDirection));
+                        TabularList.AppendField(new ConfigurationTabularListField(field.Name, caption, size, sortNum, sortField, sortDirection, filterField));
                     }
                 }
                 while (listStore.IterNext(ref iter));
@@ -554,9 +571,7 @@ namespace Configurator
                 TreePath[] selectionRows = treeViewAdditional.Selection.GetSelectedRows();
                 foreach (TreePath itemPath in selectionRows)
                 {
-                    TreeIter iter;
-                    treeViewAdditional.Model.GetIter(out iter, itemPath);
-
+                    treeViewAdditional.Model.GetIter(out TreeIter iter, itemPath);
                     TreeIter newIter = listStoreAdditional.Append();
 
                     for (int i = 0; i < Enum.GetValues(typeof(ColumnsAdditional)).Length; i++)
@@ -574,11 +589,8 @@ namespace Configurator
             {
                 TreePath[] selectionRows = treeViewAdditional.Selection.GetSelectedRows();
                 for (int i = selectionRows.Length - 1; i >= 0; i--)
-                {
-                    TreeIter iter;
-                    if (treeViewAdditional.Model.GetIter(out iter, selectionRows[i]))
+                    if (treeViewAdditional.Model.GetIter(out TreeIter iter, selectionRows[i]))
                         listStoreAdditional.Remove(ref iter);
-                }
             }
         }
 
@@ -586,14 +598,10 @@ namespace Configurator
         {
             if (args.Event.Button == 1 && args.Event.Type == Gdk.EventType.DoubleButtonPress && treeViewAdditional.Selection.CountSelectedRows() != 0)
             {
-                TreePath itemPath;
-                TreeViewColumn treeColumn;
-
-                treeViewAdditional.GetCursor(out itemPath, out treeColumn);
+                treeViewAdditional.GetCursor(out TreePath itemPath, out TreeViewColumn treeColumn);
                 if (treeColumn.Data.ContainsKey("Column"))
                 {
-                    TreeIter iter;
-                    treeViewAdditional.Model.GetIter(out iter, itemPath);
+                    treeViewAdditional.Model.GetIter(out TreeIter iter, itemPath);
 
                     //Швидкий вибір
                     Gdk.Rectangle rectangleCell = treeViewAdditional.GetCellArea(itemPath, treeColumn);
@@ -609,12 +617,12 @@ namespace Configurator
 
                     if ((ColumnsAdditional)treeColumn.Data["Column"]! == ColumnsAdditional.Value)
                     {
-                        VBox vBox = new VBox();
+                        Box vBox = new Box(Orientation.Vertical, 0);
                         TextView textViewCode = new TextView();
 
                         //Кнопки
                         {
-                            HBox hBox = new HBox();
+                            Box hBox = new Box(Orientation.Horizontal, 0);
                             vBox.PackStart(hBox, false, false, 5);
 
                             Button bSave = new Button("Зберегти");
@@ -625,17 +633,15 @@ namespace Configurator
                             };
                             hBox.PackStart(bSave, false, false, 2);
 
-                            Button bClose = new Button(new Image(Stock.Cancel, IconSize.Button)) { TooltipText = "Закрити" };
-                            bClose.Clicked += (object? sender, EventArgs args) =>
-                            {
-                                popoverSmallSelect.Hide();
-                            };
+                            Button bClose = new Button(new Image(AppContext.BaseDirectory + "images/clean.png")) { TooltipText = "Закрити" };
+                            bClose.Clicked += (object? sender, EventArgs args) => { popoverSmallSelect.Hide(); };
+
                             hBox.PackEnd(bClose, false, false, 2);
                         }
 
                         //Text
                         {
-                            Box hBox = new HBox();
+                            Box hBox = new Box(Orientation.Horizontal, 0);
                             vBox.PackStart(hBox, false, false, 5);
 
                             textViewCode.Buffer.Text = (string)treeViewAdditional.Model.GetValue(iter, (int)ColumnsAdditional.Value);
@@ -698,9 +704,7 @@ namespace Configurator
             IsNew = false;
 
             GeneralForm?.RenameCurrentPageNotebook($"Табличний список: {TabularList.Name}");
-
-            if (CallBack_RefreshList != null)
-                CallBack_RefreshList.Invoke();
+            CallBack_RefreshList?.Invoke();
         }
     }
 }
