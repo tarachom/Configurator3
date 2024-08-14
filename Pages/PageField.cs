@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2019-2023 TARAKHOMYN YURIY IVANOVYCH
+Copyright (C) 2019-2024 TARAKHOMYN YURIY IVANOVYCH
 All rights reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,12 +27,12 @@ using AccountingSoftware;
 
 namespace Configurator
 {
-    class PageField : VBox
+    class PageField : Box
     {
         Configuration Conf { get { return Program.Kernel.Conf; } }
 
         public string Table { get; set; } = "";
-        public Dictionary<string, ConfigurationField> Fields = new Dictionary<string, ConfigurationField>();
+        public Dictionary<string, ConfigurationField> Fields = [];
         public Dictionary<string, ConfigurationField>? AllFields; //Для регістрів
         public ConfigurationField Field { get; set; } = new ConfigurationField();
         public FormConfigurator? GeneralForm { get; set; }
@@ -50,14 +50,19 @@ namespace Configurator
         CheckButton checkButtonIndex = new CheckButton("Індексувати");
         CheckButton checkButtonPresentation = new CheckButton("Використовувати для представлення");
         CheckButton checkButtonFullTextSearch = new CheckButton("Повнотекстовий пошук");
-        CheckButton checkButtonMultiline = new CheckButton("Багатострічкове поле (тільки для типу string)");
+        CheckButton checkButtonMultiline = new CheckButton("Багатострічкове поле");
+
+        //Для композитного типу даних
+        CheckButton checkButtonCompositePointerNotUseDirectories = new CheckButton("Не викоритовувати");
+        CheckButton checkButtonCompositePointerNotUseDocuments = new CheckButton("Не викоритовувати");
+        ListBox listBoxCompositePointerAllowDirectories = new ListBox() { SelectionMode = SelectionMode.Single };
+        ListBox listBoxCompositePointerAllowDocuments = new ListBox() { SelectionMode = SelectionMode.Single };
 
         #endregion
 
-        public PageField() : base()
+        public PageField() : base(Orientation.Vertical, 0)
         {
-            new VBox();
-            HBox hBox = new HBox();
+            Box hBox = new Box(Orientation.Horizontal, 0);
 
             Button bSave = new Button("Зберегти");
             bSave.Clicked += OnSaveClick;
@@ -71,7 +76,7 @@ namespace Configurator
 
             PackStart(hBox, false, false, 10);
 
-            HPaned hPaned = new HPaned() { BorderWidth = 5, Position = 500 };
+            Paned hPaned = new Paned(Orientation.Horizontal) { BorderWidth = 5, Position = 500 };
 
             CreatePack1(hPaned);
             CreatePack2(hPaned);
@@ -81,26 +86,26 @@ namespace Configurator
             ShowAll();
         }
 
-        void CreatePack1(HPaned hPaned)
+        void CreatePack1(Paned hPaned)
         {
-            VBox vBox = new VBox();
+            Box vBox = new Box(Orientation.Vertical, 0);
 
             //Назва
-            HBox hBoxName = new HBox() { Halign = Align.End };
+            Box hBoxName = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxName, false, false, 5);
 
             hBoxName.PackStart(new Label("Назва:"), false, false, 5);
             hBoxName.PackStart(entryName, false, false, 5);
 
             //Поле
-            HBox hBoxColumn = new HBox() { Halign = Align.End };
+            Box hBoxColumn = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxColumn, false, false, 5);
 
             hBoxColumn.PackStart(new Label("В таблиці:"), false, false, 5);
             hBoxColumn.PackStart(entryColumn, false, false, 5);
 
             //Тип
-            HBox hBoxType = new HBox() { Halign = Align.End };
+            Box hBoxType = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxType, false, false, 5);
 
             foreach (var fieldType in FieldType.DefaultList())
@@ -112,7 +117,7 @@ namespace Configurator
             hBoxType.PackStart(comboBoxType, false, false, 5);
 
             //Pointer
-            HBox hBoxPointer = new HBox() { Halign = Align.End };
+            Box hBoxPointer = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxPointer, false, false, 5);
 
             foreach (ConfigurationDirectories item in Conf.Directories.Values)
@@ -125,7 +130,7 @@ namespace Configurator
             hBoxPointer.PackStart(comboBoxPointer, false, false, 5);
 
             //Enum
-            HBox hBoxEnum = new HBox() { Halign = Align.End };
+            Box hBoxEnum = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxEnum, false, false, 5);
 
             foreach (ConfigurationEnums item in Conf.Enums.Values)
@@ -135,7 +140,7 @@ namespace Configurator
             hBoxEnum.PackStart(comboBoxEnum, false, false, 5);
 
             //Опис
-            HBox hBoxDesc = new HBox() { Halign = Align.End };
+            Box hBoxDesc = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxDesc, false, false, 5);
 
             hBoxDesc.PackStart(new Label("Опис:") { Valign = Align.Start }, false, false, 5);
@@ -145,6 +150,60 @@ namespace Configurator
             scrollTextView.Add(textViewDesc);
 
             hBoxDesc.PackStart(scrollTextView, false, false, 5);
+
+            //Налаштування для композитного типу даних
+            {
+                Expander expanderCompositePointerAllow = new Expander("Налаштування для композитного типу даних");
+                vBox.PackStart(expanderCompositePointerAllow, false, false, 5);
+
+                Box vBoxCompositePointerAllow = new Box(Orientation.Vertical, 0);
+                expanderCompositePointerAllow.Add(vBoxCompositePointerAllow);
+
+                //Заголовок
+                Box hBoxCompositePointerAllowInfo = new Box(Orientation.Horizontal, 0) { Halign = Align.Center };
+                vBoxCompositePointerAllow.PackStart(hBoxCompositePointerAllowInfo, false, false, 10);
+                hBoxCompositePointerAllowInfo.PackStart(new Label("<b>Довідники або документи доступні для вибору</b>") { UseMarkup = true }, false, false, 5);
+
+                Box hBoxCompositePointerListBoxes = new Box(Orientation.Horizontal, 0);
+                vBoxCompositePointerAllow.PackStart(hBoxCompositePointerListBoxes, false, false, 5);
+
+                //Довідники
+                {
+                    Box vBoxListBox = new Box(Orientation.Vertical, 0);
+                    hBoxCompositePointerListBoxes.PackStart(vBoxListBox, false, false, 0);
+
+                    vBoxListBox.PackStart(new Label("Довідники"), false, false, 2);
+                    vBoxListBox.PackStart(checkButtonCompositePointerNotUseDirectories, false, false, 5);
+
+                    ScrolledWindow scrollList = new ScrolledWindow() { WidthRequest = 300, HeightRequest = 400, ShadowType = ShadowType.In };
+                    scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+                    scrollList.Add(listBoxCompositePointerAllowDirectories);
+
+                    vBoxListBox.PackStart(scrollList, false, false, 5);
+                }
+
+                //Документи
+                {
+                    Box vBoxListBox = new Box(Orientation.Vertical, 0);
+                    hBoxCompositePointerListBoxes.PackStart(vBoxListBox, false, false, 5);
+
+                    vBoxListBox.PackStart(new Label("Документи"), false, false, 2);
+                    vBoxListBox.PackStart(checkButtonCompositePointerNotUseDocuments, false, false, 5);
+
+                    ScrolledWindow scrollList = new ScrolledWindow() { WidthRequest = 300, HeightRequest = 400, ShadowType = ShadowType.In };
+                    scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+                    scrollList.Add(listBoxCompositePointerAllowDocuments);
+
+                    vBoxListBox.PackStart(scrollList, false, false, 5);
+                }
+            }
+
+            hPaned.Pack1(vBox, false, false);
+        }
+
+        void CreatePack2(Paned hPaned)
+        {
+            Box vBox = new Box(Orientation.Vertical, 0);
 
             //Індексувати
             vBox.PackStart(checkButtonIndex, false, false, 5);
@@ -158,15 +217,9 @@ namespace Configurator
             //Багатострічкове поле
             vBox.PackStart(checkButtonMultiline, false, false, 5);
 
-            hPaned.Pack1(vBox, false, false);
-        }
-
-        void CreatePack2(HPaned hPaned)
-        {
-            VBox vBox = new VBox();
-
-            Expander expanderHelp = new Expander("Довідка");
-            expanderHelp.Add(vBox);
+            //Довідка
+            Box vBoxExpander = new Box(Orientation.Vertical, 0);
+            Expander expanderHelp = new Expander("Довідка") { vBoxExpander };
 
             List<string> helpList =
             [
@@ -179,8 +232,8 @@ namespace Configurator
                 "time -> TimeSpan",
                 "enum -> enum",
                 "pointer -> Довідник.Номенклатура()",
-                "composite-pointer -> UuidAndText()",
-                "any-pointer -> Guid()",
+                "composite_pointer -> UuidAndText()",
+                "any_pointer -> Guid()",
                 "byte -> byte[]",
                 "string[] -> string[]",
                 "integer[] -> int[]",
@@ -189,12 +242,14 @@ namespace Configurator
 
             foreach (var item in helpList)
             {
-                HBox hBox = new HBox() { Halign = Align.Fill };
-                vBox.PackStart(hBox, false, false, 5);
-                hBox.PackStart(new Label(item), false, false, 5);
+                Box hBox = new Box(Orientation.Horizontal, 0);
+                vBoxExpander.PackStart(hBox, false, false, 5);
+                hBox.PackStart(new Label(item) { UseUnderline = false }, false, false, 5);
             }
 
-            hPaned.Pack2(expanderHelp, false, false);
+            vBox.PackStart(expanderHelp, false, false, 5);
+
+            hPaned.Pack2(vBox, false, false);
         }
 
         #region Присвоєння / зчитування значень віджетів
@@ -227,6 +282,38 @@ namespace Configurator
             checkButtonMultiline.Active = Field.Multiline;
 
             OnComboBoxTypeChanged(comboBoxType, new EventArgs());
+
+            checkButtonCompositePointerNotUseDirectories.Active = Field.CompositePointerNotUseDirectories;
+            checkButtonCompositePointerNotUseDocuments.Active = Field.CompositePointerNotUseDocuments;
+
+            FillCompositePointerAllowDirectories();
+            FillCompositePointerAllowDocuments();
+        }
+
+        void FillCompositePointerAllowDirectories()
+        {
+            foreach (KeyValuePair<string, ConfigurationDirectories> directories in Conf.Directories)
+                listBoxCompositePointerAllowDirectories.Add(
+                    new CheckButton(directories.Key)
+                    {
+                        Name = directories.Key,
+                        Active = Field.CompositePointerAllowDirectories.Contains(directories.Key)
+                    });
+
+            listBoxCompositePointerAllowDirectories.ShowAll();
+        }
+
+        void FillCompositePointerAllowDocuments()
+        {
+            foreach (KeyValuePair<string, ConfigurationDocuments> documents in Conf.Documents)
+                listBoxCompositePointerAllowDocuments.Add(
+                    new CheckButton(documents.Key)
+                    {
+                        Name = documents.Key,
+                        Active = Field.CompositePointerAllowDocuments.Contains(documents.Key)
+                    });
+
+            listBoxCompositePointerAllowDocuments.ShowAll();
         }
 
         void GetValue()
@@ -247,14 +334,57 @@ namespace Configurator
             Field.Multiline = checkButtonMultiline.Active;
 
             Field.NameInTable = entryColumn.Text;
+
+            //Для композитного типу даних
+            Field.CompositePointerAllowDirectories.Clear();
+            Field.CompositePointerAllowDocuments.Clear();
+
+            if (Field.Type == "composite_pointer")
+            {
+                Field.CompositePointerNotUseDirectories = checkButtonCompositePointerNotUseDirectories.Active;
+                Field.CompositePointerNotUseDocuments = checkButtonCompositePointerNotUseDocuments.Active;
+
+                foreach (ListBoxRow item in listBoxCompositePointerAllowDirectories.Children)
+                {
+                    CheckButton cb = (CheckButton)item.Child;
+                    if (cb.Active)
+                        Field.CompositePointerAllowDirectories.Add(cb.Name);
+                }
+
+                foreach (ListBoxRow item in listBoxCompositePointerAllowDocuments.Children)
+                {
+                    CheckButton cb = (CheckButton)item.Child;
+                    if (cb.Active)
+                        Field.CompositePointerAllowDocuments.Add(cb.Name);
+                }
+            }
         }
 
         #endregion
 
         void OnComboBoxTypeChanged(object? sender, EventArgs args)
         {
-            comboBoxPointer.Sensitive = comboBoxType.ActiveId == "pointer";
-            comboBoxEnum.Sensitive = comboBoxType.ActiveId == "enum";
+            string typeName = comboBoxType.ActiveId;
+
+            comboBoxPointer.Parent.Sensitive = typeName == "pointer";
+            comboBoxEnum.Parent.Sensitive = typeName == "enum";
+
+            checkButtonPresentation.Sensitive =
+                typeName == "string" ||
+                typeName == "integer" ||
+                typeName == "numeric" ||
+                typeName == "boolean" ||
+                typeName == "date" ||
+                typeName == "datetime" ||
+                typeName == "time";
+
+            //string only
+            {
+                bool isString = typeName == "string";
+
+                checkButtonFullTextSearch.Sensitive = isString;
+                checkButtonMultiline.Sensitive = isString;
+            }
         }
 
         void OnSaveClick(object? sender, EventArgs args)
@@ -323,8 +453,7 @@ namespace Configurator
             GeneralForm?.LoadTreeAsync();
             GeneralForm?.RenameCurrentPageNotebook($"Поле: {Field.Name}");
 
-            if (CallBack_RefreshList != null)
-                CallBack_RefreshList.Invoke();
+            CallBack_RefreshList?.Invoke();
         }
     }
 }
