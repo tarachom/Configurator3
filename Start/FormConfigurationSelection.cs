@@ -22,7 +22,6 @@ limitations under the License.
 */
 
 using InterfaceGtk;
-using AccountingSoftware;
 
 namespace Configurator
 {
@@ -31,8 +30,7 @@ namespace Configurator
     /// </summary>
     class FormConfigurationSelection : InterfaceGtk.FormConfigurationSelection
     {
-        public override TypeForm TypeOpenForm { get; } = TypeForm.Configurator;
-        public override Kernel? ConfiguratorKernel { get; } = Program.Kernel;
+        public FormConfigurationSelection() : base(null, Program.Kernel, TypeForm.Configurator) { }
 
         public override async ValueTask<bool> OpenConfigurator(ConfigurationParam? openConfigurationParam)
         {
