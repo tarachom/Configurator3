@@ -38,7 +38,7 @@ namespace Configurator
         public string ParentType { get; set; } = "";
         public Dictionary<string, ConfigurationField> Fields = [];
         public Dictionary<string, ConfigurationTablePart> TabularParts = [];
-        public Dictionary<string, ConfigurationForms> Forms { get; set; } = new Dictionary<string, ConfigurationForms>();
+        public Dictionary<string, ConfigurationForms> Forms { get; set; } = [];
         public ConfigurationForms Form { get; set; } = new ConfigurationForms();
         public FormConfigurator? GeneralForm { get; set; }
         public System.Action? CallBack_RefreshList { get; set; }
@@ -244,7 +244,7 @@ namespace Configurator
 
         public void CreateNotePage(string tabName, Widget pageWidget)
         {
-            ScrolledWindow scroll = new ScrolledWindow() { ShadowType = ShadowType.In };
+            ScrolledWindow scroll = new ScrolledWindow();
             scroll.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
             scroll.Add(pageWidget);
 
@@ -263,13 +263,13 @@ namespace Configurator
                 vBox.PackStart(hBoxCaption, false, false, 2);
 
                 HBox hBoxScroll = new HBox();
-                ScrolledWindow scroll = new ScrolledWindow() { ShadowType = ShadowType.In, HeightRequest = 200 };
+                ScrolledWindow scroll = new ScrolledWindow() { ShadowType = ShadowType.In, HeightRequest = 500 };
                 scroll.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
 
                 scroll.Add(treeViewFormElementField);
                 hBoxScroll.PackStart(scroll, true, true, 5);
 
-                vBox.PackStart(hBoxScroll, true, true, 5);
+                vBox.PackStart(hBoxScroll, false, false, 5);
             }
 
             //Табличні частини
@@ -279,13 +279,13 @@ namespace Configurator
                 vBox.PackStart(hBoxCaption, false, false, 2);
 
                 HBox hBoxScroll = new HBox();
-                ScrolledWindow scroll = new ScrolledWindow() { ShadowType = ShadowType.In };
+                ScrolledWindow scroll = new ScrolledWindow() { ShadowType = ShadowType.In, HeightRequest = 180 };
                 scroll.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
 
                 scroll.Add(treeViewFormElementTablePart);
                 hBoxScroll.PackStart(scroll, true, true, 5);
 
-                vBox.PackStart(hBoxScroll, true, true, 5);
+                vBox.PackStart(hBoxScroll, false, false, 5);
             }
 
             CreateNotePage("Форма", vBox);
@@ -493,9 +493,9 @@ namespace Configurator
 
         void GenerateCode(string fileName, bool includeFields = false, bool includeTabularParts = false)
         {
-            if (!(ParentType == "Directory" || ParentType == "Document"))
+            if (!(ParentType == "Directory" || ParentType == "Document" || ParentType == "RegisterInformation"))
             {
-                Message.Error(GeneralForm, "Невірно вказаний тип власника форми. Має бути Directory або Document");
+                Message.Error(GeneralForm, "Невірно вказаний тип власника форми. Має бути Directory, Document, RegisterInformation");
                 return;
             }
 
