@@ -100,7 +100,7 @@ namespace Configurator
             Box vBox = new Box(Orientation.Vertical, 0);
 
             //Назва
-            Box hBoxName = new Box(Orientation.Vertical, 0) { Halign = Align.End };
+            Box hBoxName = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxName, false, false, 5);
 
             hBoxName.PackStart(new Label("Назва:"), false, false, 5);
@@ -500,7 +500,7 @@ namespace Configurator
             IsNew = false;
 
             GeneralForm?.LoadTreeAsync();
-            GeneralForm?.RenameCurrentPageNotebook($"Регістер інформації: {ConfRegister.Name}");
+            GeneralForm?.RenameCurrentPageNotebook($"Регістр інформації: {ConfRegister.Name}");
         }
 
         #region Dimension Fields
@@ -510,12 +510,11 @@ namespace Configurator
             if (args.Event.Type == Gdk.EventType.DoubleButtonPress)
             {
                 ListBoxRow[] selectedRows = listBoxDimensionFields.SelectedRows;
-
                 if (selectedRows.Length != 0)
                 {
                     ListBoxRow curRow = selectedRows[0];
 
-                    if (ConfRegister.DimensionFields.ContainsKey(curRow.Child.Name))
+                    if (ConfRegister.DimensionFields.TryGetValue(curRow.Child.Name, out ConfigurationField? dimensionFields))
                         GeneralForm?.CreateNotebookPage($"Поле: {curRow.Child.Name}", () =>
                         {
                             Dictionary<string, ConfigurationField> AllFields = Conf.CombineAllFieldForRegister
@@ -529,7 +528,7 @@ namespace Configurator
                             {
                                 AllFields = AllFields,
                                 Fields = ConfRegister.DimensionFields,
-                                Field = ConfRegister.DimensionFields[curRow.Child.Name],
+                                Field = dimensionFields,
                                 IsNew = false,
                                 GeneralForm = GeneralForm,
                                 CallBack_RefreshList = DimensionFieldsRefreshList
@@ -573,19 +572,16 @@ namespace Configurator
         void OnDimensionFieldsCopyClick(object? sender, EventArgs args)
         {
             ListBoxRow[] selectedRows = listBoxDimensionFields.SelectedRows;
-
             if (selectedRows.Length != 0)
             {
                 foreach (ListBoxRow row in selectedRows)
-                {
-                    if (ConfRegister.DimensionFields.ContainsKey(row.Child.Name))
+                    if (ConfRegister.DimensionFields.TryGetValue(row.Child.Name, out ConfigurationField? dimensionFields))
                     {
-                        ConfigurationField newField = ConfRegister.DimensionFields[row.Child.Name].Copy();
+                        ConfigurationField newField = dimensionFields.Copy();
                         newField.Name += GenerateName.GetNewName();
 
                         ConfRegister.AppendDimensionField(newField);
                     }
-                }
 
                 DimensionFieldsRefreshList();
 
@@ -604,14 +600,10 @@ namespace Configurator
         void OnDimensionFieldsRemoveClick(object? sender, EventArgs args)
         {
             ListBoxRow[] selectedRows = listBoxDimensionFields.SelectedRows;
-
             if (selectedRows.Length != 0)
             {
                 foreach (ListBoxRow row in selectedRows)
-                {
-                    if (ConfRegister.DimensionFields.ContainsKey(row.Child.Name))
-                        ConfRegister.DimensionFields.Remove(row.Child.Name);
-                }
+                    ConfRegister.DimensionFields.Remove(row.Child.Name);
 
                 DimensionFieldsRefreshList();
 
@@ -633,12 +625,11 @@ namespace Configurator
             if (args.Event.Type == Gdk.EventType.DoubleButtonPress)
             {
                 ListBoxRow[] selectedRows = listBoxResourcesFields.SelectedRows;
-
                 if (selectedRows.Length != 0)
                 {
                     ListBoxRow curRow = selectedRows[0];
 
-                    if (ConfRegister.ResourcesFields.ContainsKey(curRow.Child.Name))
+                    if (ConfRegister.ResourcesFields.TryGetValue(curRow.Child.Name, out ConfigurationField? resourcesField))
                         GeneralForm?.CreateNotebookPage($"Поле: {curRow.Child.Name}", () =>
                         {
                             Dictionary<string, ConfigurationField> AllFields = Conf.CombineAllFieldForRegister
@@ -652,7 +643,7 @@ namespace Configurator
                             {
                                 AllFields = AllFields,
                                 Fields = ConfRegister.ResourcesFields,
-                                Field = ConfRegister.ResourcesFields[curRow.Child.Name],
+                                Field = resourcesField,
                                 IsNew = false,
                                 GeneralForm = GeneralForm,
                                 CallBack_RefreshList = ResourcesFieldsRefreshList
@@ -696,19 +687,16 @@ namespace Configurator
         void OnResourcesFieldsCopyClick(object? sender, EventArgs args)
         {
             ListBoxRow[] selectedRows = listBoxResourcesFields.SelectedRows;
-
             if (selectedRows.Length != 0)
             {
                 foreach (ListBoxRow row in selectedRows)
-                {
-                    if (ConfRegister.ResourcesFields.ContainsKey(row.Child.Name))
+                    if (ConfRegister.ResourcesFields.TryGetValue(row.Child.Name, out ConfigurationField? resourcesField))
                     {
-                        ConfigurationField newField = ConfRegister.ResourcesFields[row.Child.Name].Copy();
+                        ConfigurationField newField = resourcesField.Copy();
                         newField.Name += GenerateName.GetNewName();
 
                         ConfRegister.AppendResourcesField(newField);
                     }
-                }
 
                 ResourcesFieldsRefreshList();
 
@@ -731,10 +719,7 @@ namespace Configurator
             if (selectedRows.Length != 0)
             {
                 foreach (ListBoxRow row in selectedRows)
-                {
-                    if (ConfRegister.ResourcesFields.ContainsKey(row.Child.Name))
-                        ConfRegister.ResourcesFields.Remove(row.Child.Name);
-                }
+                    ConfRegister.ResourcesFields.Remove(row.Child.Name);
 
                 ResourcesFieldsRefreshList();
 
@@ -756,12 +741,11 @@ namespace Configurator
             if (args.Event.Type == Gdk.EventType.DoubleButtonPress)
             {
                 ListBoxRow[] selectedRows = listBoxPropertyFields.SelectedRows;
-
                 if (selectedRows.Length != 0)
                 {
                     ListBoxRow curRow = selectedRows[0];
 
-                    if (ConfRegister.PropertyFields.ContainsKey(curRow.Child.Name))
+                    if (ConfRegister.PropertyFields.TryGetValue(curRow.Child.Name, out ConfigurationField? propertyField))
                         GeneralForm?.CreateNotebookPage($"Поле: {curRow.Child.Name}", () =>
                         {
                             Dictionary<string, ConfigurationField> AllFields = Conf.CombineAllFieldForRegister
@@ -775,7 +759,7 @@ namespace Configurator
                             {
                                 AllFields = AllFields,
                                 Fields = ConfRegister.PropertyFields,
-                                Field = ConfRegister.PropertyFields[curRow.Child.Name],
+                                Field = propertyField,
                                 IsNew = false,
                                 GeneralForm = GeneralForm,
                                 CallBack_RefreshList = PropertyFieldsRefreshList
@@ -819,19 +803,16 @@ namespace Configurator
         void OnPropertyFieldsCopyClick(object? sender, EventArgs args)
         {
             ListBoxRow[] selectedRows = listBoxPropertyFields.SelectedRows;
-
             if (selectedRows.Length != 0)
             {
                 foreach (ListBoxRow row in selectedRows)
-                {
-                    if (ConfRegister.PropertyFields.ContainsKey(row.Child.Name))
+                    if (ConfRegister.PropertyFields.TryGetValue(row.Child.Name, out ConfigurationField? propertyFields))
                     {
-                        ConfigurationField newField = ConfRegister.PropertyFields[row.Child.Name].Copy();
+                        ConfigurationField newField = propertyFields.Copy();
                         newField.Name += GenerateName.GetNewName();
 
                         ConfRegister.AppendPropertyField(newField);
                     }
-                }
 
                 PropertyFieldsRefreshList();
 
@@ -850,14 +831,10 @@ namespace Configurator
         void OnPropertyFieldsRemoveClick(object? sender, EventArgs args)
         {
             ListBoxRow[] selectedRows = listBoxPropertyFields.SelectedRows;
-
             if (selectedRows.Length != 0)
             {
                 foreach (ListBoxRow row in selectedRows)
-                {
-                    if (ConfRegister.PropertyFields.ContainsKey(row.Child.Name))
-                        ConfRegister.PropertyFields.Remove(row.Child.Name);
-                }
+                    ConfRegister.PropertyFields.Remove(row.Child.Name);
 
                 PropertyFieldsRefreshList();
 
@@ -879,12 +856,11 @@ namespace Configurator
             if (args.Event.Type == Gdk.EventType.DoubleButtonPress)
             {
                 ListBoxRow[] selectedRows = listBoxTabularList.SelectedRows;
-
                 if (selectedRows.Length != 0)
                 {
                     ListBoxRow curRow = selectedRows[0];
 
-                    if (ConfRegister.TabularList.ContainsKey(curRow.Child.Name))
+                    if (ConfRegister.TabularList.TryGetValue(curRow.Child.Name, out ConfigurationTabularList? tabularList))
                         GeneralForm?.CreateNotebookPage($"Табличний список: {curRow.Child.Name}", () =>
                         {
                             Dictionary<string, ConfigurationField> AllFields = Conf.CombineAllFieldForRegister
@@ -898,7 +874,7 @@ namespace Configurator
                             {
                                 Fields = AllFields,
                                 TabularLists = ConfRegister.TabularList,
-                                TabularList = ConfRegister.TabularList[curRow.Child.Name],
+                                TabularList = tabularList,
                                 IsNew = false,
                                 GeneralForm = GeneralForm,
                                 CallBack_RefreshList = TabularListRefreshList
@@ -941,19 +917,16 @@ namespace Configurator
         void OnTabularListCopyClick(object? sender, EventArgs args)
         {
             ListBoxRow[] selectedRows = listBoxTabularList.SelectedRows;
-
             if (selectedRows.Length != 0)
             {
                 foreach (ListBoxRow row in selectedRows)
-                {
-                    if (ConfRegister.TabularList.ContainsKey(row.Child.Name))
+                    if (ConfRegister.TabularList.TryGetValue(row.Child.Name, out ConfigurationTabularList? tabularList))
                     {
-                        ConfigurationTabularList newTableList = ConfRegister.TabularList[row.Child.Name].Copy();
+                        ConfigurationTabularList newTableList = tabularList.Copy();
                         newTableList.Name += GenerateName.GetNewName();
 
                         ConfRegister.AppendTableList(newTableList);
                     }
-                }
 
                 TabularListRefreshList();
 
@@ -972,14 +945,10 @@ namespace Configurator
         void OnTabularListRemoveClick(object? sender, EventArgs args)
         {
             ListBoxRow[] selectedRows = listBoxTabularList.SelectedRows;
-
             if (selectedRows.Length != 0)
             {
                 foreach (ListBoxRow row in selectedRows)
-                {
-                    if (ConfRegister.TabularList.ContainsKey(row.Child.Name))
-                        ConfRegister.TabularList.Remove(row.Child.Name);
-                }
+                    ConfRegister.TabularList.Remove(row.Child.Name);
 
                 TabularListRefreshList();
 
@@ -1001,12 +970,11 @@ namespace Configurator
             if (args.Event.Type == Gdk.EventType.DoubleButtonPress)
             {
                 ListBoxRow[] selectedRows = listBoxFormsList.SelectedRows;
-
                 if (selectedRows.Length != 0)
                 {
                     ListBoxRow curRow = selectedRows[0];
 
-                    if (ConfRegister.Forms.ContainsKey(curRow.Child.Name))
+                    if (ConfRegister.Forms.TryGetValue(curRow.Child.Name, out ConfigurationForms? form))
                         GeneralForm?.CreateNotebookPage($"Форма: {curRow.Child.Name}", () =>
                         {
                             Dictionary<string, ConfigurationField> AllFields = Conf.CombineAllFieldForRegister
@@ -1021,9 +989,11 @@ namespace Configurator
                                 ParentName = ConfRegister.Name,
                                 ParentType = "RegisterInformation",
                                 Forms = ConfRegister.Forms,
-                                Form = ConfRegister.Forms[curRow.Child.Name],
-                                TypeForm = ConfRegister.Forms[curRow.Child.Name].Type,
+                                Form = form,
+                                TypeForm = form.Type,
                                 Fields = AllFields,
+                                TabularLists = ConfRegister.TabularList,
+                                TabularList = form.TabularList,
                                 IsNew = false,
                                 GeneralForm = GeneralForm,
                                 CallBack_RefreshList = FormsListRefreshList
@@ -1064,6 +1034,7 @@ namespace Configurator
                         Forms = ConfRegister.Forms,
                         TypeForm = typeForms,
                         Fields = AllFields,
+                        TabularLists = ConfRegister.TabularList,
                         IsNew = true,
                         GeneralForm = GeneralForm,
                         CallBack_RefreshList = FormsListRefreshList,
@@ -1097,19 +1068,16 @@ namespace Configurator
         void OnFormsListCopyClick(object? sender, EventArgs args)
         {
             ListBoxRow[] selectedRows = listBoxFormsList.SelectedRows;
-
             if (selectedRows.Length != 0)
             {
                 foreach (ListBoxRow row in selectedRows)
-                {
-                    if (ConfRegister.Forms.ContainsKey(row.Child.Name))
+                    if (ConfRegister.Forms.TryGetValue(row.Child.Name, out ConfigurationForms? form))
                     {
-                        ConfigurationForms newForms = ConfRegister.Forms[row.Child.Name].Copy();
+                        ConfigurationForms newForms = form.Copy();
                         newForms.Name += GenerateName.GetNewName();
 
                         ConfRegister.AppendForms(newForms);
                     }
-                }
 
                 FormsListRefreshList();
             }
@@ -1130,8 +1098,7 @@ namespace Configurator
             if (selectedRows.Length != 0)
             {
                 foreach (ListBoxRow row in selectedRows)
-                    if (ConfRegister.Forms.ContainsKey(row.Child.Name))
-                        ConfRegister.Forms.Remove(row.Child.Name);
+                    ConfRegister.Forms.Remove(row.Child.Name);
 
                 FormsListRefreshList();
             }

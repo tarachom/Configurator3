@@ -27,17 +27,18 @@ using AccountingSoftware;
 using GtkSource;
 
 using System.Xml;
-using System.ComponentModel;
 
 namespace Configurator
 {
-    class PageForm : VBox
+    class PageForm : Box
     {
         Configuration Conf { get { return Program.Kernel.Conf; } }
         public string ParentName { get; set; } = "";
         public string ParentType { get; set; } = "";
         public Dictionary<string, ConfigurationField> Fields = [];
         public Dictionary<string, ConfigurationTablePart> TabularParts = [];
+        public Dictionary<string, ConfigurationTabularList> TabularLists = [];
+        public string TabularList { get; set; } = "";
         public Dictionary<string, ConfigurationForms> Forms { get; set; } = [];
         public ConfigurationForms Form { get; set; } = new ConfigurationForms();
         public FormConfigurator? GeneralForm { get; set; }
@@ -59,6 +60,12 @@ namespace Configurator
             TabPos = PositionType.Top
         };
         SourceView sourceViewCode = new SourceView() { ShowLineNumbers = true };
+
+        #endregion
+
+        #region FormList
+
+        ComboBoxText сomboBoxFormListTabularList = new ComboBoxText();
 
         #endregion
 
@@ -96,10 +103,9 @@ namespace Configurator
 
         #endregion
 
-        public PageForm() : base()
+        public PageForm() : base(Orientation.Vertical, 0)
         {
-            new VBox();
-            HBox hBox = new HBox();
+            Box hBox = new Box(Orientation.Horizontal, 0);
 
             Button bSave = new Button("Зберегти");
             bSave.Clicked += OnSaveClick;
@@ -119,7 +125,7 @@ namespace Configurator
             treeViewFormElementTablePart = new TreeView(listStoreFormElementTablePart);
             AddColumnTreeViewFormElementTablePart();
 
-            HPaned hPaned = new HPaned() { BorderWidth = 5 };
+            Paned hPaned = new Paned(Orientation.Horizontal) { BorderWidth = 5 };
 
             CreatePack1(hPaned);
             CreatePack2(hPaned);
@@ -195,28 +201,28 @@ namespace Configurator
 
         #endregion
 
-        void CreatePack1(HPaned hPaned)
+        void CreatePack1(Paned hPaned)
         {
-            VBox vBox = new VBox();
+            Box vBox = new Box(Orientation.Vertical, 0);
 
             //Базові поля
             {
                 //Тип форми
-                HBox hBoxType = new HBox() { Halign = Align.End };
+                Box hBoxType = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
                 vBox.PackStart(hBoxType, false, false, 5);
 
                 hBoxType.PackStart(new Label("Тип форми:"), false, false, 5);
                 hBoxType.PackStart(labelType, false, false, 5);
 
                 //Назва
-                HBox hBoxName = new HBox() { Halign = Align.End };
+                Box hBoxName = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
                 vBox.PackStart(hBoxName, false, false, 5);
 
                 hBoxName.PackStart(new Label("Назва:"), false, false, 5);
                 hBoxName.PackStart(entryName, false, false, 5);
 
                 //Опис
-                HBox hBoxDesc = new HBox() { Halign = Align.End };
+                Box hBoxDesc = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
                 vBox.PackStart(hBoxDesc, false, false, 5);
 
                 hBoxDesc.PackStart(new Label("Опис:") { Valign = Align.Start }, false, false, 5);
@@ -231,11 +237,11 @@ namespace Configurator
             hPaned.Pack1(vBox, false, false);
         }
 
-        void CreatePack2(HPaned hPaned)
+        void CreatePack2(Paned hPaned)
         {
-            VBox vBox = new VBox();
+            Box vBox = new Box(Orientation.Vertical, 0);
 
-            HBox hBox = new HBox() { Halign = Align.Fill };
+            Box hBox = new Box(Orientation.Horizontal, 0) { Halign = Align.Fill };
             hBox.PackStart(notebook, true, true, 5);
             vBox.PackStart(hBox, true, true, 0);
 
@@ -254,15 +260,15 @@ namespace Configurator
 
         public void CreateElementForm()
         {
-            VBox vBox = new VBox();
+            Box vBox = new Box(Orientation.Vertical, 0);
 
             //Поля
             {
-                HBox hBoxCaption = new HBox();
+                Box hBoxCaption = new Box(Orientation.Horizontal, 0);
                 hBoxCaption.PackStart(new Label("Поля"), false, false, 5);
                 vBox.PackStart(hBoxCaption, false, false, 2);
 
-                HBox hBoxScroll = new HBox();
+                Box hBoxScroll = new Box(Orientation.Horizontal, 0);
                 ScrolledWindow scroll = new ScrolledWindow() { ShadowType = ShadowType.In, HeightRequest = 500 };
                 scroll.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
 
@@ -274,11 +280,11 @@ namespace Configurator
 
             //Табличні частини
             {
-                HBox hBoxCaption = new HBox();
+                Box hBoxCaption = new Box(Orientation.Horizontal, 0);
                 hBoxCaption.PackStart(new Label("Табличні частини"), false, false, 5);
                 vBox.PackStart(hBoxCaption, false, false, 2);
 
-                HBox hBoxScroll = new HBox();
+                Box hBoxScroll = new Box(Orientation.Horizontal, 0);
                 ScrolledWindow scroll = new ScrolledWindow() { ShadowType = ShadowType.In, HeightRequest = 180 };
                 scroll.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
 
@@ -293,10 +299,16 @@ namespace Configurator
 
         public void CreateListForm()
         {
-            VBox vBox = new VBox();
-            HBox hBox = new HBox() { Halign = Align.Start };
+            Box vBox = new Box(Orientation.Vertical, 0);
 
-            vBox.PackStart(hBox, true, true, 0);
+            //Список табличних списків
+            {
+                Box hBox = new Box(Orientation.Horizontal, 0) { Halign = Align.Start };
+                hBox.PackStart(new Label(), false, false, 5);
+                hBox.PackStart(сomboBoxFormListTabularList, false, false, 5);
+
+                vBox.PackStart(hBox, false, false, 5);
+            }
 
             CreateNotePage("Форма", vBox);
         }
@@ -334,7 +346,7 @@ namespace Configurator
 
             //Сторінка генерування коду
             {
-                VBox vBox = new VBox();
+                Box vBox = new Box(Orientation.Vertical, 0);
 
                 Button buttonGenCode = new Button("Згенерувати код");
                 buttonGenCode.Clicked += (object? sender, EventArgs args) =>
@@ -347,11 +359,11 @@ namespace Configurator
                     }, true, true);
                 };
 
-                HBox hBoxButton = new HBox();
+                Box hBoxButton = new Box(Orientation.Horizontal, 0);
                 hBoxButton.PackStart(buttonGenCode, false, false, 5);
                 vBox.PackStart(hBoxButton, false, false, 5);
 
-                HBox hBoxCode = new HBox();
+                Box hBoxCode = new Box(Orientation.Horizontal, 0);
 
                 sourceViewCode.Buffer.Language = new LanguageManager().GetLanguage("c-sharp");
 
@@ -365,8 +377,22 @@ namespace Configurator
                 CreateNotePage("Код", vBox);
             }
 
-            FillTreeViewFormElementField();
-            FillTreeViewFormElementTablePart();
+            if (TypeForm == ConfigurationForms.TypeForms.List)
+            {
+                FillFormList();
+                сomboBoxFormListTabularList.ActiveId = TabularList;
+            }
+            else if (TypeForm == ConfigurationForms.TypeForms.Element)
+            {
+                FillTreeViewFormElementField();
+                FillTreeViewFormElementTablePart();
+            }
+        }
+
+        void FillFormList()
+        {
+            foreach (KeyValuePair<string, ConfigurationTabularList> tabularList in TabularLists)
+                сomboBoxFormListTabularList.Append(tabularList.Key, tabularList.Value.Name);
         }
 
         void FillTreeViewFormElementField()
@@ -404,40 +430,45 @@ namespace Configurator
             Form.Name = entryName.Text;
             Form.Desc = textViewDesc.Buffer.Text;
 
-            //Поля форми елементу
+            if (TypeForm == ConfigurationForms.TypeForms.List)
+                Form.TabularList = сomboBoxFormListTabularList.ActiveId;
+            else if (TypeForm == ConfigurationForms.TypeForms.Element)
             {
-                Form.ElementFields.Clear();
-                if (listStoreFormElementField.GetIterFirst(out TreeIter iter))
-                    do
-                    {
-                        if ((bool)listStoreFormElementField.GetValue(iter, (int)FormElementFieldColumns.Visible))
+                //Поля форми елементу
+                {
+                    Form.ElementFields.Clear();
+                    if (listStoreFormElementField.GetIterFirst(out TreeIter iter))
+                        do
                         {
-                            string name = (string)listStoreFormElementField.GetValue(iter, (int)FormElementFieldColumns.Name);
-                            string caption = (string)listStoreFormElementField.GetValue(iter, (int)FormElementFieldColumns.Caption);
+                            if ((bool)listStoreFormElementField.GetValue(iter, (int)FormElementFieldColumns.Visible))
+                            {
+                                string name = (string)listStoreFormElementField.GetValue(iter, (int)FormElementFieldColumns.Name);
+                                string caption = (string)listStoreFormElementField.GetValue(iter, (int)FormElementFieldColumns.Caption);
 
-                            ConfigurationField field = Fields[name];
-                            Form.AppendElementField(new ConfigurationFormsElementField(field.Name, caption));
+                                ConfigurationField field = Fields[name];
+                                Form.AppendElementField(new ConfigurationFormsElementField(field.Name, caption));
+                            }
                         }
-                    }
-                    while (listStoreFormElementField.IterNext(ref iter));
-            }
+                        while (listStoreFormElementField.IterNext(ref iter));
+                }
 
-            //Табличні частини форми елементу
-            {
-                Form.ElementTableParts.Clear();
-                if (listStoreFormElementTablePart.GetIterFirst(out TreeIter iter))
-                    do
-                    {
-                        if ((bool)listStoreFormElementTablePart.GetValue(iter, (int)FormElementTablePartColumns.Visible))
+                //Табличні частини форми елементу
+                {
+                    Form.ElementTableParts.Clear();
+                    if (listStoreFormElementTablePart.GetIterFirst(out TreeIter iter))
+                        do
                         {
-                            string name = (string)listStoreFormElementTablePart.GetValue(iter, (int)FormElementTablePartColumns.Name);
-                            string caption = (string)listStoreFormElementTablePart.GetValue(iter, (int)FormElementTablePartColumns.Caption);
+                            if ((bool)listStoreFormElementTablePart.GetValue(iter, (int)FormElementTablePartColumns.Visible))
+                            {
+                                string name = (string)listStoreFormElementTablePart.GetValue(iter, (int)FormElementTablePartColumns.Name);
+                                string caption = (string)listStoreFormElementTablePart.GetValue(iter, (int)FormElementTablePartColumns.Caption);
 
-                            ConfigurationTablePart tablePart = TabularParts[name];
-                            Form.AppendElementTablePart(new ConfigurationFormsElementTablePart(tablePart.Name, caption));
+                                ConfigurationTablePart tablePart = TabularParts[name];
+                                Form.AppendElementTablePart(new ConfigurationFormsElementTablePart(tablePart.Name, caption));
+                            }
                         }
-                    }
-                    while (listStoreFormElementTablePart.IterNext(ref iter));
+                        while (listStoreFormElementTablePart.IterNext(ref iter));
+                }
             }
         }
 
@@ -484,9 +515,7 @@ namespace Configurator
             IsNew = false;
 
             GeneralForm?.RenameCurrentPageNotebook($"Форма: {Form.Name}");
-
-            if (CallBack_RefreshList != null)
-                CallBack_RefreshList.Invoke();
+            CallBack_RefreshList?.Invoke();
         }
 
         #region Генерування коду
@@ -514,14 +543,23 @@ namespace Configurator
             nodeDirectoryName.InnerText = ParentName;
             nodeDirectory.AppendChild(nodeDirectoryName);
 
-            Configuration.SaveFormElementField(Form.ElementFields, xmlConfDocument, nodeDirectory);
-            Configuration.SaveFormElementTablePart(Form.ElementTableParts, xmlConfDocument, nodeDirectory);
+            if (TypeForm == ConfigurationForms.TypeForms.List)
+            {
+                XmlElement nodeTabularList = xmlConfDocument.CreateElement("TabularList");
+                nodeTabularList.InnerText = Form.TabularList;
+                nodeDirectory.AppendChild(nodeTabularList);
+            }
+            else if (TypeForm == ConfigurationForms.TypeForms.Element)
+            {
+                Configuration.SaveFormElementField(Form.ElementFields, xmlConfDocument, nodeDirectory);
+                Configuration.SaveFormElementTablePart(Form.ElementTableParts, xmlConfDocument, nodeDirectory);
 
-            if (includeFields)
-                Configuration.SaveFields(Fields, xmlConfDocument, nodeDirectory, ParentType);
+                if (includeFields)
+                    Configuration.SaveFields(Fields, xmlConfDocument, nodeDirectory, ParentType);
 
-            if (includeTabularParts)
-                Configuration.SaveTabularParts(TabularParts, xmlConfDocument, nodeDirectory);
+                if (includeTabularParts)
+                    Configuration.SaveTabularParts(TabularParts, xmlConfDocument, nodeDirectory);
+            }
 
             sourceViewCode.Buffer.Text = Configuration.Transform
             (
