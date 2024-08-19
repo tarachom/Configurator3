@@ -27,7 +27,7 @@ using AccountingSoftware;
 
 namespace Configurator
 {
-    class PageRegisterInformation : VBox
+    class PageRegisterInformation : Box
     {
         Configuration Conf { get { return Program.Kernel.Conf; } }
 
@@ -48,10 +48,9 @@ namespace Configurator
 
         #endregion
 
-        public PageRegisterInformation() : base()
+        public PageRegisterInformation() : base(Orientation.Vertical, 0)
         {
-            new VBox();
-            HBox hBox = new HBox();
+            Box hBox = new Box(Orientation.Horizontal, 0);
 
             Button bSave = new Button("Зберегти");
             bSave.Clicked += OnSaveClick;
@@ -65,7 +64,7 @@ namespace Configurator
 
             PackStart(hBox, false, false, 10);
 
-            HPaned hPaned = new HPaned() { BorderWidth = 5 };
+            Paned hPaned = new Paned(Orientation.Horizontal) { BorderWidth = 5 };
 
             CreatePack1(hPaned);
             CreatePack2(hPaned);
@@ -75,9 +74,9 @@ namespace Configurator
             ShowAll();
         }
 
-        void CreatePack2(HPaned hPaned)
+        void CreatePack2(Paned hPaned)
         {
-            VBox vBox = new VBox();
+            Box vBox = new Box(Orientation.Vertical, 0);
 
             //Стандартні поля
             Expander expanderDefField = new Expander("Стандартні поля");
@@ -95,33 +94,33 @@ namespace Configurator
             hPaned.Pack2(vBox, true, false);
         }
 
-        void CreatePack1(HPaned hPaned)
+        void CreatePack1(Paned hPaned)
         {
-            VBox vBox = new VBox();
+            Box vBox = new Box(Orientation.Vertical, 0);
 
             //Назва
-            HBox hBoxName = new HBox() { Halign = Align.End };
+            Box hBoxName = new Box(Orientation.Vertical, 0) { Halign = Align.End };
             vBox.PackStart(hBoxName, false, false, 5);
 
             hBoxName.PackStart(new Label("Назва:"), false, false, 5);
             hBoxName.PackStart(entryName, false, false, 5);
 
             //Повна Назва
-            HBox hBoxFullName = new HBox() { Halign = Align.End };
+            Box hBoxFullName = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxFullName, false, false, 5);
 
             hBoxFullName.PackStart(new Label("Повна назва:"), false, false, 5);
             hBoxFullName.PackStart(entryFullName, false, false, 5);
 
             //Таблиця
-            HBox hBoxTable = new HBox() { Halign = Align.End };
+            Box hBoxTable = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxTable, false, false, 5);
 
             hBoxTable.PackStart(new Label("Таблиця:"), false, false, 5);
             hBoxTable.PackStart(entryTable, false, false, 5);
 
             //Опис
-            HBox hBoxDesc = new HBox() { Halign = Align.End };
+            Box hBoxDesc = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxDesc, false, false, 5);
 
             hBoxDesc.PackStart(new Label("Опис:") { Valign = Align.Start }, false, false, 5);
@@ -137,11 +136,11 @@ namespace Configurator
                 Expander expanderForm = new Expander("Табличні списки");
                 vBox.PackStart(expanderForm, false, false, 5);
 
-                VBox vBoxForm = new VBox();
+                Box vBoxForm = new Box(Orientation.Vertical, 0);
                 expanderForm.Add(vBoxForm);
 
                 //Заголовок блоку Forms
-                HBox hBoxInterfaceCreateInfo = new HBox() { Halign = Align.Center };
+                Box hBoxInterfaceCreateInfo = new Box(Orientation.Horizontal, 0) { Halign = Align.Center };
                 vBoxForm.PackStart(hBoxInterfaceCreateInfo, false, false, 5);
                 hBoxInterfaceCreateInfo.PackStart(new Label("Табличні списки"), false, false, 5);
 
@@ -154,11 +153,11 @@ namespace Configurator
 
         #region Fields
 
-        void CreateDimensionFieldList(VBox vBoxContainer)
+        void CreateDimensionFieldList(Box vBoxContainer)
         {
-            VBox vBox = new VBox();
+            Box vBox = new Box(Orientation.Vertical, 0);
 
-            HBox hBox = new HBox();
+            Box hBox = new Box(Orientation.Horizontal, 0);
             hBox.PackStart(new Label("Виміри:"), false, false, 5);
             vBox.PackStart(hBox, false, false, 5);
 
@@ -181,7 +180,7 @@ namespace Configurator
             buttonDelete.Clicked += OnDimensionFieldsRemoveClick;
             toolbar.Add(buttonDelete);
 
-            HBox hBoxScroll = new HBox();
+            Box hBoxScroll = new Box(Orientation.Horizontal, 0);
             ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
             scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
             scrollList.SetSizeRequest(0, 150);
@@ -196,11 +195,11 @@ namespace Configurator
             vBoxContainer.PackStart(vBox, false, false, 0);
         }
 
-        void CreateResourcesFieldList(VBox vBoxContainer)
+        void CreateResourcesFieldList(Box vBoxContainer)
         {
-            VBox vBox = new VBox();
+            Box vBox = new Box(Orientation.Vertical, 0);
 
-            HBox hBox = new HBox();
+            Box hBox = new Box(Orientation.Horizontal, 0);
             hBox.PackStart(new Label("Ресурси:"), false, false, 5);
             vBox.PackStart(hBox, false, false, 5);
 
@@ -223,7 +222,7 @@ namespace Configurator
             buttonDelete.Clicked += OnResourcesFieldsRemoveClick;
             toolbar.Add(buttonDelete);
 
-            HBox hBoxScroll = new HBox();
+            Box hBoxScroll = new Box(Orientation.Horizontal, 0);
             ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
             scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
             scrollList.SetSizeRequest(0, 150);
@@ -238,11 +237,11 @@ namespace Configurator
             vBoxContainer.PackStart(vBox, false, false, 0);
         }
 
-        void CreatePropertyFieldList(VBox vBoxContainer)
+        void CreatePropertyFieldList(Box vBoxContainer)
         {
-            VBox vBox = new VBox();
+            Box vBox = new Box(Orientation.Vertical, 0);
 
-            HBox hBox = new HBox();
+            Box hBox = new Box(Orientation.Horizontal, 0);
             hBox.PackStart(new Label("Поля:"), false, false, 5);
             vBox.PackStart(hBox, false, false, 5);
 
@@ -265,7 +264,7 @@ namespace Configurator
             buttonDelete.Clicked += OnPropertyFieldsRemoveClick;
             toolbar.Add(buttonDelete);
 
-            HBox hBoxScroll = new HBox();
+            Box hBoxScroll = new Box(Orientation.Horizontal, 0);
             ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
             scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
             scrollList.SetSizeRequest(0, 150);
@@ -280,30 +279,30 @@ namespace Configurator
             vBoxContainer.PackStart(vBox, false, false, 0);
         }
 
-        void CreateTabularList(VBox vBoxContainer)
+        void CreateTabularList(Box vBoxContainer)
         {
-            VBox vBox = new VBox();
+            Box vBox = new Box(Orientation.Vertical, 0);
 
             Toolbar toolbar = new Toolbar();
             vBox.PackStart(toolbar, false, false, 0);
 
-            ToolButton buttonAdd = new ToolButton(Stock.New) { Label = "Додати", IsImportant = true };
+            ToolButton buttonAdd = new ToolButton(new Image(Stock.New, IconSize.Menu), "Додати") { Label = "Додати", IsImportant = true };
             buttonAdd.Clicked += OnTabularListAddClick;
             toolbar.Add(buttonAdd);
 
-            ToolButton buttonCopy = new ToolButton(Stock.Copy) { Label = "Копіювати", IsImportant = true };
+            ToolButton buttonCopy = new ToolButton(new Image(Stock.Copy, IconSize.Menu), "Копіювати") { Label = "Копіювати", IsImportant = true };
             buttonCopy.Clicked += OnTabularListCopyClick;
             toolbar.Add(buttonCopy);
 
-            ToolButton buttonRefresh = new ToolButton(Stock.Refresh) { Label = "Обновити", IsImportant = true };
+            ToolButton buttonRefresh = new ToolButton(new Image(Stock.Refresh, IconSize.Menu), "Обновити") { Label = "Обновити", IsImportant = true };
             buttonRefresh.Clicked += OnTabularListRefreshClick;
             toolbar.Add(buttonRefresh);
 
-            ToolButton buttonDelete = new ToolButton(Stock.Clear) { Label = "Видалити", IsImportant = true };
+            ToolButton buttonDelete = new ToolButton(new Image(Stock.Clear, IconSize.Menu), "Видалити") { Label = "Видалити", IsImportant = true };
             buttonDelete.Clicked += OnTabularListRemoveClick;
             toolbar.Add(buttonDelete);
 
-            HBox hBoxScroll = new HBox();
+            Box hBoxScroll = new Box(Orientation.Horizontal, 0);
             ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
             scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
             scrollList.SetSizeRequest(0, 100);
@@ -376,7 +375,7 @@ namespace Configurator
         {
             if (string.IsNullOrEmpty(entryFullName.Text))
                 entryFullName.Text = entryName.Text;
-                
+
             ConfRegister.Name = entryName.Text;
             ConfRegister.FullName = entryFullName.Text;
             ConfRegister.Table = entryTable.Text;

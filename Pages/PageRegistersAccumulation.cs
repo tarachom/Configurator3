@@ -41,6 +41,7 @@ namespace Configurator
         ListBox listBoxDimensionFields = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxResourcesFields = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxPropertyFields = new ListBox() { SelectionMode = SelectionMode.Single };
+        ListBox listBoxTabularList = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxTableParts = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxQueryBlock = new ListBox() { SelectionMode = SelectionMode.Single };
         Entry entryName = new Entry() { WidthRequest = 500 };
@@ -54,7 +55,6 @@ namespace Configurator
 
         public PageRegistersAccumulation() : base()
         {
-            new VBox();
             HBox hBox = new HBox();
 
             Button bSave = new Button("Зберегти");
@@ -127,38 +127,76 @@ namespace Configurator
             hBoxDesc.PackStart(scrollTextView, false, false, 5);
 
             //Заголовок списку документів
-            Expander expanderAllowDocumentSpend = new Expander("Документи які використовують цей регістер");
-            vBox.PackStart(expanderAllowDocumentSpend, false, false, 5);
+            {
+                Expander expanderAllowDocumentSpend = new Expander("Документи");
+                vBox.PackStart(expanderAllowDocumentSpend, false, false, 5);
 
-            //Список документів
-            HBox hBoxAllowDocumentSpend = new HBox() { Halign = Align.End };
-            expanderAllowDocumentSpend.Add(hBoxAllowDocumentSpend);
+                Box vBoxDocList = new Box(Orientation.Vertical, 0);
+                expanderAllowDocumentSpend.Add(vBoxDocList);
 
-            ScrolledWindow scrollAllowDocumentSpend = new ScrolledWindow() { ShadowType = ShadowType.In };
-            scrollAllowDocumentSpend.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-            scrollAllowDocumentSpend.SetSizeRequest(500, 200);
+                //Заголовок блоку
+                Box hBoxInfo = new Box(Orientation.Horizontal, 0) { Halign = Align.Center };
+                vBoxDocList.PackStart(hBoxInfo, false, false, 5);
+                hBoxInfo.PackStart(new Label("Документи які використовують цей регістр"), false, false, 5);
 
-            scrollAllowDocumentSpend.Add(listBoxAllowDocumentSpend);
-            hBoxAllowDocumentSpend.PackStart(scrollAllowDocumentSpend, true, true, 5);
+                //Список документів
+                Box hBoxAllowDocumentSpend = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
+                vBoxDocList.PackStart(hBoxAllowDocumentSpend, false, false, 5);
 
-            //Separator
-            vBox.PackStart(new Separator(Orientation.Horizontal), false, false, 5);
+                ScrolledWindow scrollAllowDocumentSpend = new ScrolledWindow() { ShadowType = ShadowType.In };
+                scrollAllowDocumentSpend.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+                scrollAllowDocumentSpend.SetSizeRequest(500, 200);
 
-            //VirtualTable
-            HBox hBoxButtonCreateVirtualTable = new HBox();
-            vBox.PackStart(hBoxButtonCreateVirtualTable, false, false, 5);
+                scrollAllowDocumentSpend.Add(listBoxAllowDocumentSpend);
+                hBoxAllowDocumentSpend.PackStart(scrollAllowDocumentSpend, true, true, 5);
+            }
 
-            Button bCreateVirtualTable = new Button("Створити");
-            bCreateVirtualTable.Clicked += OnCreateVirtualTableClick;
+            //Списки та форми
+            {
+                Expander expanderForm = new Expander("Табличні списки");
+                vBox.PackStart(expanderForm, false, false, 5);
 
-            hBoxButtonCreateVirtualTable.PackStart(bCreateVirtualTable, false, false, 5);
-            hBoxButtonCreateVirtualTable.PackStart(checkButtonNoSummary, false, false, 5);
+                Box vBoxForm = new Box(Orientation.Vertical, 0);
+                expanderForm.Add(vBoxForm);
 
-            //Табличні частини
-            CreateTablePartList(vBox);
+                //Заголовок блоку
+                Box hBoxInfo = new Box(Orientation.Horizontal, 0) { Halign = Align.Center };
+                vBoxForm.PackStart(hBoxInfo, false, false, 5);
+                hBoxInfo.PackStart(new Label("Табличні списки"), false, false, 5);
 
-            //Запити
-            CreateQueryList(vBox);
+                //Табличні списки
+                CreateTabularList(vBoxForm);
+            }
+
+            //Таблиці для розрахунків
+            {
+                Expander expanderVirtualTable = new Expander("Таблиці для розрахунків");
+                vBox.PackStart(expanderVirtualTable, false, false, 5);
+
+                Box vBoxVirtualTable = new Box(Orientation.Vertical, 0);
+                expanderVirtualTable.Add(vBoxVirtualTable);
+
+                //Заголовок блоку
+                Box hBoxInfo = new Box(Orientation.Horizontal, 0) { Halign = Align.Center };
+                vBoxVirtualTable.PackStart(hBoxInfo, false, false, 5);
+                hBoxInfo.PackStart(new Label("Таблиці та блоки запитів для розрахунків"), false, false, 5);
+
+                //Створити
+                Box hBoxButtonCreateVirtualTable = new Box(Orientation.Horizontal, 0);
+                vBoxVirtualTable.PackStart(hBoxButtonCreateVirtualTable, false, false, 5);
+
+                Button bCreateVirtualTable = new Button("Створити");
+                bCreateVirtualTable.Clicked += OnCreateVirtualTableClick;
+
+                hBoxButtonCreateVirtualTable.PackStart(bCreateVirtualTable, false, false, 5);
+                hBoxButtonCreateVirtualTable.PackStart(checkButtonNoSummary, false, false, 5);
+
+                //Табличні частини
+                CreateTablePartList(vBoxVirtualTable);
+
+                //Запити
+                CreateQueryList(vBoxVirtualTable);
+            }
 
             hPaned.Pack1(vBox, false, false);
         }
@@ -311,12 +349,50 @@ namespace Configurator
             vBoxContainer.PackStart(vBox, false, false, 0);
         }
 
-        void CreateTablePartList(VBox vBoxContainer)
+        void CreateTabularList(Box vBoxContainer)
+        {
+            Box vBox = new Box(Orientation.Vertical, 0);
+
+            Toolbar toolbar = new Toolbar();
+            vBox.PackStart(toolbar, false, false, 0);
+
+            ToolButton buttonAdd = new ToolButton(new Image(Stock.New, IconSize.Menu), "Додати") { Label = "Додати", IsImportant = true };
+            buttonAdd.Clicked += OnTabularListAddClick;
+            toolbar.Add(buttonAdd);
+
+            ToolButton buttonCopy = new ToolButton(new Image(Stock.Copy, IconSize.Menu), "Копіювати") { Label = "Копіювати", IsImportant = true };
+            buttonCopy.Clicked += OnTabularListCopyClick;
+            toolbar.Add(buttonCopy);
+
+            ToolButton buttonRefresh = new ToolButton(new Image(Stock.Refresh, IconSize.Menu), "Обновити") { Label = "Обновити", IsImportant = true };
+            buttonRefresh.Clicked += OnTabularListRefreshClick;
+            toolbar.Add(buttonRefresh);
+
+            ToolButton buttonDelete = new ToolButton(new Image(Stock.Clear, IconSize.Menu), "Видалити") { Label = "Видалити", IsImportant = true };
+            buttonDelete.Clicked += OnTabularListRemoveClick;
+            toolbar.Add(buttonDelete);
+
+            Box hBoxScroll = new Box(Orientation.Horizontal, 0);
+            ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
+            scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+            scrollList.SetSizeRequest(0, 100);
+
+            listBoxTabularList.ButtonPressEvent += OnTabularListButtonPress;
+
+            scrollList.Add(listBoxTabularList);
+            hBoxScroll.PackStart(scrollList, true, true, 5);
+
+            vBox.PackStart(hBoxScroll, false, false, 0);
+
+            vBoxContainer.PackStart(vBox, false, false, 0);
+        }
+
+        void CreateTablePartList(Box vBoxContainer)
         {
             VBox vBox = new VBox();
 
             HBox hBox = new HBox();
-            hBox.PackStart(new Label("Віртуальні таблиці:"), false, false, 5);
+            hBox.PackStart(new Label("Таблиці"), false, false, 5);
             vBox.PackStart(hBox, false, false, 5);
 
             Toolbar toolbar = new Toolbar();
@@ -353,12 +429,12 @@ namespace Configurator
             vBoxContainer.PackStart(vBox, false, false, 0);
         }
 
-        void CreateQueryList(VBox vBoxContainer)
+        void CreateQueryList(Box vBoxContainer)
         {
             VBox vBox = new VBox();
 
             HBox hBox = new HBox();
-            hBox.PackStart(new Label("Блоки запитів:"), false, false, 5);
+            hBox.PackStart(new Label("Блоки запитів"), false, false, 5);
             vBox.PackStart(hBox, false, false, 5);
 
             Toolbar toolbar = new Toolbar();
@@ -405,6 +481,7 @@ namespace Configurator
             FillDimensionFields();
             FillResourcesFields();
             FillPropertyFields();
+            FillTabularList();
             FillTabularParts();
             FillQueryBlockList();
 
@@ -455,6 +532,14 @@ namespace Configurator
                 listBoxPropertyFields.Add(new Label(field.Name) { Name = field.Name, Halign = Align.Start });
 
             listBoxPropertyFields.ShowAll();
+        }
+
+        void FillTabularList()
+        {
+            foreach (ConfigurationTabularList tableList in ConfRegister.TabularList.Values)
+                listBoxTabularList.Add(new Label(tableList.Name) { Name = tableList.Name, Halign = Align.Start });
+
+            listBoxTabularList.ShowAll();
         }
 
         void FillTabularParts()
@@ -1523,6 +1608,128 @@ HAVING";
         void PropertyFieldsRefreshList()
         {
             OnPropertyFieldsRefreshClick(null, new EventArgs());
+        }
+
+        #endregion
+
+        #region TabularList
+
+        void OnTabularListButtonPress(object? sender, ButtonPressEventArgs args)
+        {
+            if (args.Event.Type == Gdk.EventType.DoubleButtonPress)
+            {
+                ListBoxRow[] selectedRows = listBoxTabularList.SelectedRows;
+
+                if (selectedRows.Length != 0)
+                {
+                    ListBoxRow curRow = selectedRows[0];
+
+                    if (ConfRegister.TabularList.ContainsKey(curRow.Child.Name))
+                        GeneralForm?.CreateNotebookPage($"Табличний список: {curRow.Child.Name}", () =>
+                        {
+                            Dictionary<string, ConfigurationField> AllFields = Conf.CombineAllFieldForRegister
+                            (
+                                ConfRegister.DimensionFields.Values,
+                                ConfRegister.ResourcesFields.Values,
+                                ConfRegister.PropertyFields.Values
+                            );
+
+                            PageTabularList page = new PageTabularList()
+                            {
+                                Fields = AllFields,
+                                TabularLists = ConfRegister.TabularList,
+                                TabularList = ConfRegister.TabularList[curRow.Child.Name],
+                                IsNew = false,
+                                GeneralForm = GeneralForm,
+                                CallBack_RefreshList = TabularListRefreshList
+                            };
+
+                            page.SetValue();
+
+                            return page;
+                        });
+                }
+            }
+        }
+
+        void OnTabularListAddClick(object? sender, EventArgs args)
+        {
+            GeneralForm?.CreateNotebookPage("Табличний список *", () =>
+            {
+                Dictionary<string, ConfigurationField> AllFields = Conf.CombineAllFieldForRegister
+                (
+                    ConfRegister.DimensionFields.Values,
+                    ConfRegister.ResourcesFields.Values,
+                    ConfRegister.PropertyFields.Values
+                );
+
+                PageTabularList page = new PageTabularList()
+                {
+                    Fields = AllFields,
+                    TabularLists = ConfRegister.TabularList,
+                    IsNew = true,
+                    GeneralForm = GeneralForm,
+                    CallBack_RefreshList = TabularListRefreshList
+                };
+
+                page.SetValue();
+
+                return page;
+            });
+        }
+
+        void OnTabularListCopyClick(object? sender, EventArgs args)
+        {
+            ListBoxRow[] selectedRows = listBoxTabularList.SelectedRows;
+
+            if (selectedRows.Length != 0)
+            {
+                foreach (ListBoxRow row in selectedRows)
+                {
+                    if (ConfRegister.TabularList.ContainsKey(row.Child.Name))
+                    {
+                        ConfigurationTabularList newTableList = ConfRegister.TabularList[row.Child.Name].Copy();
+                        newTableList.Name += GenerateName.GetNewName();
+
+                        ConfRegister.AppendTableList(newTableList);
+                    }
+                }
+
+                TabularListRefreshList();
+
+                GeneralForm?.LoadTreeAsync();
+            }
+        }
+
+        void OnTabularListRefreshClick(object? sender, EventArgs args)
+        {
+            foreach (Widget item in listBoxTabularList.Children)
+                listBoxTabularList.Remove(item);
+
+            FillTabularList();
+        }
+
+        void OnTabularListRemoveClick(object? sender, EventArgs args)
+        {
+            ListBoxRow[] selectedRows = listBoxTabularList.SelectedRows;
+
+            if (selectedRows.Length != 0)
+            {
+                foreach (ListBoxRow row in selectedRows)
+                {
+                    if (ConfRegister.TabularList.ContainsKey(row.Child.Name))
+                        ConfRegister.TabularList.Remove(row.Child.Name);
+                }
+
+                TabularListRefreshList();
+
+                GeneralForm?.LoadTreeAsync();
+            }
+        }
+
+        void TabularListRefreshList()
+        {
+            OnTabularListRefreshClick(null, new EventArgs());
         }
 
         #endregion
