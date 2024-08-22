@@ -522,7 +522,7 @@ namespace Configurator
 
         void GenerateCode(string fileName, bool includeFields = false, bool includeTabularParts = false)
         {
-            if (!(ParentType == "Directory" || ParentType == "Document" || ParentType == "RegisterInformation"))
+            if (!(ParentType == "Directory" || ParentType == "Document" || ParentType == "RegisterInformation" || ParentType == "RegistersAccumulation"))
             {
                 Message.Error(GeneralForm, "Невірно вказаний тип власника форми. Має бути Directory, Document, RegisterInformation");
                 return;

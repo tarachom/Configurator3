@@ -42,6 +42,7 @@ namespace Configurator
         ListBox listBoxResourcesFields = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxPropertyFields = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxTabularList = new ListBox() { SelectionMode = SelectionMode.Single };
+        ListBox listBoxFormsList = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxTableParts = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxQueryBlock = new ListBox() { SelectionMode = SelectionMode.Single };
         Entry entryName = new Entry() { WidthRequest = 500 };
@@ -166,6 +167,23 @@ namespace Configurator
 
                 //Табличні списки
                 CreateTabularList(vBoxForm);
+            }
+
+            //Форми
+            {
+                Expander expanderForm = new Expander("Форми");
+                vBox.PackStart(expanderForm, false, false, 5);
+
+                Box vBoxForm = new Box(Orientation.Vertical, 0);
+                expanderForm.Add(vBoxForm);
+
+                //Заголовок блоку Forms
+                Box hBoxInterfaceCreateInfo = new Box(Orientation.Horizontal, 0) { Halign = Align.Center };
+                vBoxForm.PackStart(hBoxInterfaceCreateInfo, false, false, 5);
+                hBoxInterfaceCreateInfo.PackStart(new Label("Форми"), false, false, 5);
+
+                //Форми
+                CreateFormsList(vBoxForm);
             }
 
             //Таблиці для розрахунків
@@ -387,6 +405,54 @@ namespace Configurator
             vBoxContainer.PackStart(vBox, false, false, 0);
         }
 
+        void CreateFormsList(Box vBoxContainer)
+        {
+            VBox vBox = new VBox();
+
+            Button buttonCreateForms = new Button("Створити");
+            buttonCreateForms.Clicked += (object? sender, EventArgs args) =>
+            {
+
+            };
+
+            HBox hBox = new HBox();
+            hBox.PackStart(buttonCreateForms, false, false, 5);
+            vBox.PackStart(hBox, false, false, 5);
+
+            Toolbar toolbar = new Toolbar();
+            vBox.PackStart(toolbar, false, false, 0);
+
+            MenuToolButton buttonAdd = new MenuToolButton(new Image(Stock.New, IconSize.Menu), "Додати") { IsImportant = true, Menu = OnFormsListAddFormSubMenu() };
+            buttonAdd.Clicked += (object? sender, EventArgs arg) => { ((Menu)((MenuToolButton)sender!).Menu).Popup(); };
+            toolbar.Add(buttonAdd);
+
+            ToolButton buttonCopy = new ToolButton(Stock.Copy) { Label = "Копіювати", IsImportant = true };
+            buttonCopy.Clicked += OnFormsListCopyClick;
+            toolbar.Add(buttonCopy);
+
+            ToolButton buttonRefresh = new ToolButton(Stock.Refresh) { Label = "Обновити", IsImportant = true };
+            buttonRefresh.Clicked += OnFormsListRefreshClick;
+            toolbar.Add(buttonRefresh);
+
+            ToolButton buttonDelete = new ToolButton(Stock.Clear) { Label = "Видалити", IsImportant = true };
+            buttonDelete.Clicked += OnFormsListRemoveClick;
+            toolbar.Add(buttonDelete);
+
+            HBox hBoxScroll = new HBox();
+            ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
+            scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+            scrollList.SetSizeRequest(0, 200);
+
+            listBoxFormsList.ButtonPressEvent += OnFormsListButtonPress;
+
+            scrollList.Add(listBoxFormsList);
+            hBoxScroll.PackStart(scrollList, true, true, 5);
+
+            vBox.PackStart(hBoxScroll, false, false, 0);
+
+            vBoxContainer.PackStart(vBox, false, false, 0);
+        }
+
         void CreateTablePartList(Box vBoxContainer)
         {
             VBox vBox = new VBox();
@@ -482,6 +548,7 @@ namespace Configurator
             FillResourcesFields();
             FillPropertyFields();
             FillTabularList();
+            FillFormsList();
             FillTabularParts();
             FillQueryBlockList();
 
@@ -548,6 +615,14 @@ namespace Configurator
                 listBoxTableParts.Add(new Label(tablePart.Name) { Name = tablePart.Name, Halign = Align.Start });
 
             listBoxTableParts.ShowAll();
+        }
+
+        void FillFormsList()
+        {
+            foreach (ConfigurationForms form in ConfRegister.Forms.Values)
+                listBoxFormsList.Add(new Label(form.Name) { Name = form.Name, Halign = Align.Start });
+
+            listBoxFormsList.ShowAll();
         }
 
         void FillQueryBlockList()
@@ -1730,6 +1805,154 @@ HAVING";
         void TabularListRefreshList()
         {
             OnTabularListRefreshClick(null, new EventArgs());
+        }
+
+        #endregion
+
+        #region FormsList
+
+        void OnFormsListButtonPress(object? sender, ButtonPressEventArgs args)
+        {
+            if (args.Event.Type == Gdk.EventType.DoubleButtonPress)
+            {
+                ListBoxRow[] selectedRows = listBoxFormsList.SelectedRows;
+                if (selectedRows.Length != 0)
+                {
+                    ListBoxRow curRow = selectedRows[0];
+
+                    if (ConfRegister.Forms.TryGetValue(curRow.Child.Name, out ConfigurationForms? form))
+                        GeneralForm?.CreateNotebookPage($"Форма: {curRow.Child.Name}", () =>
+                        {
+                            Dictionary<string, ConfigurationField> AllFields = Conf.CombineAllFieldForRegister
+                            (
+                                ConfRegister.DimensionFields.Values,
+                                ConfRegister.ResourcesFields.Values,
+                                ConfRegister.PropertyFields.Values
+                            );
+
+                            PageForm page = new PageForm()
+                            {
+                                ParentName = ConfRegister.Name,
+                                ParentType = "RegistersAccumulation",
+                                Forms = ConfRegister.Forms,
+                                Form = form,
+                                TypeForm = form.Type,
+                                Fields = AllFields,
+                                TabularLists = ConfRegister.TabularList,
+                                TabularList = form.TabularList,
+                                IsNew = false,
+                                GeneralForm = GeneralForm,
+                                CallBack_RefreshList = FormsListRefreshList
+                            };
+
+                            page.SetValue();
+
+                            return page;
+                        });
+                }
+            }
+        }
+
+        Menu OnFormsListAddFormSubMenu()
+        {
+            //Внутрішня функція для субменю
+            void OnFormsListAdd(ConfigurationForms.TypeForms typeForms)
+            {
+                if (string.IsNullOrEmpty(entryName.Text))
+                {
+                    Message.Error(GeneralForm, "Назва регістру не вказана");
+                    return;
+                }
+
+                GeneralForm?.CreateNotebookPage("Форма *", () =>
+                {
+                    Dictionary<string, ConfigurationField> AllFields = Conf.CombineAllFieldForRegister
+                    (
+                        ConfRegister.DimensionFields.Values,
+                        ConfRegister.ResourcesFields.Values,
+                        ConfRegister.PropertyFields.Values
+                    );
+
+                    PageForm page = new PageForm()
+                    {
+                        ParentName = ConfRegister.Name,
+                        ParentType = "RegistersAccumulation",
+                        Forms = ConfRegister.Forms,
+                        TypeForm = typeForms,
+                        Fields = AllFields,
+                        TabularLists = ConfRegister.TabularList,
+                        IsNew = true,
+                        GeneralForm = GeneralForm,
+                        CallBack_RefreshList = FormsListRefreshList,
+                    };
+
+                    page.SetValue();
+
+                    return page;
+                });
+            }
+
+            Menu Menu = new Menu();
+
+            {
+                MenuItem item = new MenuItem("Елемент");
+                item.Activated += (object? sender, EventArgs args) => { OnFormsListAdd(ConfigurationForms.TypeForms.Element); };
+                Menu.Append(item);
+            }
+
+            {
+                MenuItem item = new MenuItem("Список");
+                item.Activated += (object? sender, EventArgs args) => { OnFormsListAdd(ConfigurationForms.TypeForms.List); };
+                Menu.Append(item);
+            }
+
+            Menu.ShowAll();
+
+            return Menu;
+        }
+
+        void OnFormsListCopyClick(object? sender, EventArgs args)
+        {
+            ListBoxRow[] selectedRows = listBoxFormsList.SelectedRows;
+            if (selectedRows.Length != 0)
+            {
+                foreach (ListBoxRow row in selectedRows)
+                    if (ConfRegister.Forms.TryGetValue(row.Child.Name, out ConfigurationForms? form))
+                    {
+                        ConfigurationForms newForms = form.Copy();
+                        newForms.Name += GenerateName.GetNewName();
+
+                        ConfRegister.AppendForms(newForms);
+                    }
+
+                FormsListRefreshList();
+            }
+        }
+
+        void OnFormsListRefreshClick(object? sender, EventArgs args)
+        {
+            foreach (Widget item in listBoxFormsList.Children)
+                listBoxFormsList.Remove(item);
+
+            FillFormsList();
+        }
+
+        void OnFormsListRemoveClick(object? sender, EventArgs args)
+        {
+            ListBoxRow[] selectedRows = listBoxFormsList.SelectedRows;
+
+            if (selectedRows.Length != 0)
+            {
+                foreach (ListBoxRow row in selectedRows)
+                    ConfRegister.Forms.Remove(row.Child.Name);
+
+                FormsListRefreshList();
+            }
+        }
+
+        void FormsListRefreshList()
+        {
+            OnFormsListRefreshClick(null, new EventArgs());
         }
 
         #endregion
