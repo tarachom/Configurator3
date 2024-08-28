@@ -877,7 +877,8 @@ namespace Configurator
                                 TabularList = tabularList,
                                 IsNew = false,
                                 GeneralForm = GeneralForm,
-                                CallBack_RefreshList = TabularListRefreshList
+                                CallBack_RefreshList = TabularListRefreshList,
+                                ConfOwnerName = "РегістриВідомостей"
                             };
 
                             page.SetValue();
@@ -905,7 +906,8 @@ namespace Configurator
                     TabularLists = ConfRegister.TabularList,
                     IsNew = true,
                     GeneralForm = GeneralForm,
-                    CallBack_RefreshList = TabularListRefreshList
+                    CallBack_RefreshList = TabularListRefreshList,
+                    ConfOwnerName = "РегістриВідомостей"
                 };
 
                 page.SetValue();

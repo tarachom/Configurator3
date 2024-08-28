@@ -1716,7 +1716,8 @@ HAVING";
                                 TabularList = ConfRegister.TabularList[curRow.Child.Name],
                                 IsNew = false,
                                 GeneralForm = GeneralForm,
-                                CallBack_RefreshList = TabularListRefreshList
+                                CallBack_RefreshList = TabularListRefreshList,
+                                ConfOwnerName = "РегістриНакопичення"
                             };
 
                             page.SetValue();
@@ -1744,7 +1745,8 @@ HAVING";
                     TabularLists = ConfRegister.TabularList,
                     IsNew = true,
                     GeneralForm = GeneralForm,
-                    CallBack_RefreshList = TabularListRefreshList
+                    CallBack_RefreshList = TabularListRefreshList,
+                    ConfOwnerName = "РегістриНакопичення"
                 };
 
                 page.SetValue();
