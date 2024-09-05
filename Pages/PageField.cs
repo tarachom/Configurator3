@@ -451,12 +451,8 @@ namespace Configurator
 
             GetValue();
 
-            if (Field.Type == "pointer" || Field.Type == "enum")
-                if (string.IsNullOrEmpty(Field.Pointer))
-                {
-                    Message.Error(GeneralForm, $"Потрібно деталізувати тип для [ pointer ] або [ enum ]\nВиберіть із списку тип для деталізації");
-                    return;
-                }
+            if ((Field.Type == "pointer" || Field.Type == "enum") && string.IsNullOrEmpty(Field.Pointer))
+                Message.Error(GeneralForm, $"Потрібно деталізувати тип для [ pointer ] або [ enum ]\nВиберіть із списку тип для деталізації");
 
             Fields.Add(Field.Name, Field);
 

@@ -40,6 +40,10 @@ namespace Configurator
 
         public string ConfOwnerName { get; set; } = ""; /* Документи, Довідники */
 
+        Entry entryName = new Entry() { WidthRequest = 150 };
+        //CheckButton checkButtonIsTree = new CheckButton("Дерево");
+        TextView textViewDesc = new TextView() { WrapMode = WrapMode.Word };
+
         #region Fields
 
         enum Columns
@@ -68,10 +72,6 @@ namespace Configurator
         );
 
         TreeView treeViewFields;
-
-        Entry entryName = new Entry() { WidthRequest = 250 };
-        CheckButton checkButtonIsTree = new CheckButton("Дерево");
-        TextView textViewDesc = new TextView() { WrapMode = WrapMode.Word };
 
         #endregion
 
@@ -221,19 +221,19 @@ namespace Configurator
 
             hBoxDesc.PackStart(new Label("Опис:") { Valign = Align.Start }, false, false, 5);
 
-            ScrolledWindow scrollTextView = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 250, HeightRequest = 100 };
+            ScrolledWindow scrollTextView = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 170, HeightRequest = 100 };
             scrollTextView.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
             scrollTextView.Add(textViewDesc);
 
             hBoxDesc.PackStart(scrollTextView, false, false, 5);
 
             //Дерево
-            Box hBoxTree = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
-            vBox.PackStart(hBoxTree, false, false, 5);
+            // Box hBoxTree = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
+            // vBox.PackStart(hBoxTree, false, false, 5);
 
-            hBoxTree.PackStart(checkButtonIsTree, false, false, 5);
+            // hBoxTree.PackStart(checkButtonIsTree, false, false, 5);
 
-            hPaned.Pack1(vBox, false, false);
+             hPaned.Pack1(vBox, false, false);
         }
 
         #region TreeView
@@ -441,7 +441,7 @@ namespace Configurator
         public void SetValue()
         {
             //Дерево доступне тільки для Довідників
-            checkButtonIsTree.Sensitive = ConfOwnerName == "Довідники";
+            //checkButtonIsTree.Sensitive = ConfOwnerName == "Довідники";
 
             FillTreeView();
             FillTreeAdditionalView();
@@ -450,7 +450,7 @@ namespace Configurator
                 TabularList.Name = "Записи";
 
             entryName.Text = TabularList.Name;
-            checkButtonIsTree.Active = TabularList.IsTree;
+            //checkButtonIsTree.Active = TabularList.IsTree;
             textViewDesc.Buffer.Text = TabularList.Desc;
 
             //Типи даних для додаткових полів
@@ -500,7 +500,7 @@ namespace Configurator
         void GetValue()
         {
             TabularList.Name = entryName.Text;
-            TabularList.IsTree = checkButtonIsTree.Active;
+            //TabularList.IsTree = checkButtonIsTree.Active;
             TabularList.Desc = textViewDesc.Buffer.Text;
 
             //Поля

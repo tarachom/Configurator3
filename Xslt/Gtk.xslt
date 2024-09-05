@@ -50,10 +50,24 @@ namespace <xsl:value-of select="Configuration/NameSpaceGenerationCode"/>.Дов�
 {
     <xsl:for-each select="Configuration/Directories/Directory">
       <xsl:variable name="DirectoryName" select="Name"/>
+      <!-- Для ієрархії -->
+      <xsl:variable name="DirectoryType" select="Type"/>
+      <xsl:variable name="StoreType">
+          <xsl:choose>
+              <xsl:when test="$DirectoryType = 'Hierarchical'">TreeStore</xsl:when>
+              <xsl:otherwise>ListStore</xsl:otherwise>
+          </xsl:choose>
+      </xsl:variable>
+      <xsl:variable name="SelectType">
+          <xsl:choose>
+              <xsl:when test="$DirectoryType = 'Hierarchical'">SelectHierarchical</xsl:when>
+              <xsl:otherwise>Select</xsl:otherwise>
+          </xsl:choose>
+      </xsl:variable>
     #region DIRECTORY "<xsl:value-of select="$DirectoryName"/>"
     
       <!-- ТАБЛИЦЯ -->
-      <xsl:for-each select="TabularLists/TabularList[IsTree = '0']">
+      <xsl:for-each select="TabularLists/TabularList">
         <xsl:variable name="TabularListName" select="Name"/>
     /* ТАБЛИЦЯ */
     public class <xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularListName"/> : ТабличнийСписок
@@ -61,7 +75,8 @@ namespace <xsl:value-of select="Configuration/NameSpaceGenerationCode"/>.Дов�
         bool DeletionLabel = false;
         string ID = "";
         <xsl:for-each select="Fields/Field">
-        string <xsl:value-of select="Name"/> = "";</xsl:for-each>
+        string <xsl:value-of select="Name"/> = "<xsl:if test="position() = 1 and $DirectoryType = 'Hierarchical'">Дерево</xsl:if>";
+        </xsl:for-each>
 
         <xsl:for-each select="Fields/AdditionalField">
         string <xsl:value-of select="Name"/> = "";</xsl:for-each>
@@ -83,7 +98,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGenerationCode"/>.Дов�
 
         public static void AddColumns(TreeView treeView)
         {
-            treeView.Model = new ListStore(
+            treeView.Model = new <xsl:value-of select="$StoreType"/>(
             [
                 /*Image*/ typeof(Gdk.Pixbuf), 
                 /*ID*/ typeof(string),
@@ -138,7 +153,9 @@ namespace <xsl:value-of select="Configuration/NameSpaceGenerationCode"/>.Дов�
         public static TreePath? FirstPath;
         public static TreePath? SelectPath;
         public static TreePath? CurrentPath;
-
+        <xsl:if test="$DirectoryType = 'Hierarchical'">
+        public static TreePath? RootPath;
+        </xsl:if>
         public static ListBox CreateFilter(TreeView treeView)
         {
             ListBox listBox = new() { SelectionMode = SelectionMode.None };
@@ -221,7 +238,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGenerationCode"/>.Дов�
         {
             FirstPath = SelectPath = CurrentPath = null;
 
-            Довідники.<xsl:value-of select="$DirectoryName"/>_Select <xsl:value-of select="$DirectoryName"/>_Select = new Довідники.<xsl:value-of select="$DirectoryName"/>_Select();
+            Довідники.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$SelectType"/><xsl:text> </xsl:text><xsl:value-of select="$DirectoryName"/>_Select = new Довідники.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$SelectType"/>();
             <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Field.AddRange(
             [
                 /*Помітка на видалення*/ "deletion_label",
@@ -273,13 +290,22 @@ namespace <xsl:value-of select="Configuration/NameSpaceGenerationCode"/>.Дов�
             /* SELECT */
             await <xsl:value-of select="$DirectoryName"/>_Select.Select();
 
-            ListStore Store = (ListStore)treeView.Model;
+            <xsl:value-of select="$StoreType"/> Store = (<xsl:value-of select="$StoreType"/>)treeView.Model;
             Store.Clear();
+
+            <xsl:if test="$DirectoryType = 'Hierarchical'">
+            Dictionary&lt;string, TreeIter&gt; nodeDictionary = new();
+            TreeIter rootIter = Store.AppendValues(new <xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularListName"/>(){ ID = Guid.Empty.ToString() }.ToArray());
+            RootPath = Store.GetPath(rootIter);
+            </xsl:if>
 
             while (<xsl:value-of select="$DirectoryName"/>_Select.MoveNext())
             {
                 Довідники.<xsl:value-of select="$DirectoryName"/>_Pointer? cur = <xsl:value-of select="$DirectoryName"/>_Select.Current;
-
+                <xsl:if test="$DirectoryType = 'Hierarchical'">
+                string Parent = <xsl:value-of select="$DirectoryName"/>_Select.Parent?.ToString() ?? Guid.Empty.ToString();
+                int Level = <xsl:value-of select="$DirectoryName"/>_Select.Level;
+                </xsl:if>
                 if (cur != null)
                 {
                     Dictionary&lt;string, object&gt; Fields = cur.Fields!;
@@ -287,9 +313,6 @@ namespace <xsl:value-of select="Configuration/NameSpaceGenerationCode"/>.Дов�
                     {
                         ID = cur.UnigueID.ToString(),
                         DeletionLabel = (bool)Fields["deletion_label"], /*Помітка на видалення*/
-                        <!--<xsl:for-each select="Fields/Field[Type = 'pointer']">
-                            <xsl:value-of select="Name"/> = Fields["<xsl:value-of select="Name"/>"].ToString() ?? "",
-                        </xsl:for-each>-->
                         <xsl:for-each select="Fields/Field">
                           <xsl:value-of select="Name"/><xsl:text> = </xsl:text>
                           <xsl:choose>
@@ -312,12 +335,26 @@ namespace <xsl:value-of select="Configuration/NameSpaceGenerationCode"/>.Дов�
                             <xsl:value-of select="Name"/> = Fields["<xsl:value-of select="Name"/>"].ToString() ?? "",
                         </xsl:for-each>
                     };
+                    
+                    <xsl:choose>
+                      <xsl:when test="$DirectoryType = 'Hierarchical'">
+                        TreeIter CurrentIter;
+                        if (Level == 1)
+                            CurrentIter = Store.AppendValues(rootIter, Record.ToArray());
+                        else
+                        {
+                            TreeIter parentIter = nodeDictionary[Parent];
+                            CurrentIter = Store.AppendValues(parentIter, Record.ToArray());
+                        }
+                        nodeDictionary.Add(Record.ID, CurrentIter);
+                      </xsl:when>
+                      <xsl:otherwise>
+                        TreeIter CurrentIter = Store.AppendValues(Record.ToArray());
+                      </xsl:otherwise>
+                    </xsl:choose>
 
-                    TreeIter CurrentIter = Store.AppendValues(Record.ToArray());
                     CurrentPath = Store.GetPath(CurrentIter);
-
-                    if (FirstPath == null)
-                        FirstPath = CurrentPath;
+                    FirstPath ??= CurrentPath;
 
                     if (DirectoryPointerItem != null || SelectPointerItem != null)
                     {
@@ -333,7 +370,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGenerationCode"/>.Дов�
 	    </xsl:for-each>
 
       <!-- ДЕРЕВО -->
-      <xsl:for-each select="TabularLists/TabularList[IsTree = '1']">
+      <xsl:for-each select="TabularLists/TabularList[IsTree = '11']">
         <xsl:variable name="TabularListName" select="Name"/>
     /* ДЕРЕВО */
     public class <xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularListName"/>
