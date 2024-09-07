@@ -49,7 +49,7 @@ namespace Configurator
         #region Fields
 
         Label labelType = new Label();
-        Entry entryName = new Entry() { WidthRequest = 250 };
+        Entry entryName = new Entry() { WidthRequest = 150 };
         TextView textViewDesc = new TextView() { WrapMode = WrapMode.Word };
         Notebook notebook = new Notebook()
         {
@@ -227,7 +227,7 @@ namespace Configurator
 
                 hBoxDesc.PackStart(new Label("Опис:") { Valign = Align.Start }, false, false, 5);
 
-                ScrolledWindow scrollTextView = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 250, HeightRequest = 100 };
+                ScrolledWindow scrollTextView = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 170, HeightRequest = 100 };
                 scrollTextView.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
                 scrollTextView.Add(textViewDesc);
 
@@ -304,7 +304,7 @@ namespace Configurator
             //Список табличних списків
             {
                 Box hBox = new Box(Orientation.Horizontal, 0) { Halign = Align.Start };
-                hBox.PackStart(new Label(), false, false, 5);
+                hBox.PackStart(new Label("Табличний список:"), false, false, 5);
                 hBox.PackStart(сomboBoxFormListTabularList, false, false, 5);
 
                 vBox.PackStart(hBox, false, false, 5);
@@ -317,18 +317,28 @@ namespace Configurator
 
         public void SetValue()
         {
-            if (IsNew)
-                Form.Type = TypeForm;
-
-            labelType.Markup = "<b>" + Form.Type switch
+            string name = TypeForm switch
             {
                 ConfigurationForms.TypeForms.Element => "Елемент",
                 ConfigurationForms.TypeForms.List => "Список",
+                ConfigurationForms.TypeForms.ListSmallSelect => "Швидкий вибір",
+                ConfigurationForms.TypeForms.PointerControl => "PointerControl",
+                ConfigurationForms.TypeForms.ListAndTree => "Список з Деревом",
                 _ => ""
-            } + "</b>";
+            };
 
-            entryName.Text = Form.Name;
-            textViewDesc.Buffer.Text = Form.Desc;
+            if (IsNew)
+            {
+                Form.Type = TypeForm;
+                entryName.Text = textViewDesc.Buffer.Text = name;
+            }
+            else
+            {
+                entryName.Text = Form.Name;
+                textViewDesc.Buffer.Text = Form.Desc;
+            }
+
+            labelType.Markup = $"<b>{name}</b>";
 
             switch (TypeForm)
             {
@@ -338,6 +348,8 @@ namespace Configurator
                         break;
                     }
                 case ConfigurationForms.TypeForms.List:
+                case ConfigurationForms.TypeForms.ListSmallSelect:
+                case ConfigurationForms.TypeForms.ListAndTree:
                     {
                         CreateListForm();
                         break;
@@ -355,8 +367,11 @@ namespace Configurator
                     {
                         ConfigurationForms.TypeForms.Element => "Element",
                         ConfigurationForms.TypeForms.List => "List",
+                        ConfigurationForms.TypeForms.ListSmallSelect => "ListSmallSelect",
+                        ConfigurationForms.TypeForms.PointerControl => "PointerControl",
+                        ConfigurationForms.TypeForms.ListAndTree => "ListAndTree",
                         _ => ""
-                    }, true, true);
+                    });
                 };
 
                 Box hBoxButton = new Box(Orientation.Horizontal, 0);
@@ -377,10 +392,13 @@ namespace Configurator
                 CreateNotePage("Код", vBox);
             }
 
-            if (TypeForm == ConfigurationForms.TypeForms.List)
+            if (TypeForm == ConfigurationForms.TypeForms.List ||
+                TypeForm == ConfigurationForms.TypeForms.ListSmallSelect ||
+                TypeForm == ConfigurationForms.TypeForms.ListAndTree)
             {
                 FillFormList();
                 сomboBoxFormListTabularList.ActiveId = TabularList;
+                if (сomboBoxFormListTabularList.Active == -1) сomboBoxFormListTabularList.Active = 0;
             }
             else if (TypeForm == ConfigurationForms.TypeForms.Element)
             {
@@ -430,7 +448,9 @@ namespace Configurator
             Form.Name = entryName.Text;
             Form.Desc = textViewDesc.Buffer.Text;
 
-            if (TypeForm == ConfigurationForms.TypeForms.List)
+            if (TypeForm == ConfigurationForms.TypeForms.List ||
+                TypeForm == ConfigurationForms.TypeForms.ListSmallSelect ||
+                TypeForm == ConfigurationForms.TypeForms.ListAndTree)
                 Form.TabularList = сomboBoxFormListTabularList.ActiveId;
             else if (TypeForm == ConfigurationForms.TypeForms.Element)
             {
@@ -476,15 +496,7 @@ namespace Configurator
 
         void OnSaveClick(object? sender, EventArgs args)
         {
-            string name = entryName.Text;
-            string errorList = Configuration.ValidateConfigurationObjectName(Program.Kernel, ref name);
-            entryName.Text = name;
-
-            if (errorList.Length > 0)
-            {
-                Message.Error(GeneralForm, $"{errorList}");
-                return;
-            }
+            entryName.Text = entryName.Text.Trim();
 
             if (IsNew)
             {
@@ -520,7 +532,7 @@ namespace Configurator
 
         #region Генерування коду
 
-        void GenerateCode(string fileName, bool includeFields = false, bool includeTabularParts = false)
+        void GenerateCode(string fileName)
         {
             if (!(ParentType == "Directory" || ParentType == "Document" || ParentType == "RegisterInformation" || ParentType == "RegistersAccumulation"))
             {
@@ -543,22 +555,23 @@ namespace Configurator
             nodeDirectoryName.InnerText = ParentName;
             nodeDirectory.AppendChild(nodeDirectoryName);
 
-            if (TypeForm == ConfigurationForms.TypeForms.List)
+            if (TypeForm == ConfigurationForms.TypeForms.List ||
+                TypeForm == ConfigurationForms.TypeForms.ListSmallSelect ||
+                TypeForm == ConfigurationForms.TypeForms.ListAndTree)
             {
                 XmlElement nodeTabularList = xmlConfDocument.CreateElement("TabularList");
                 nodeTabularList.InnerText = Form.TabularList;
                 nodeDirectory.AppendChild(nodeTabularList);
+
+                Configuration.SaveTabularParts(TabularParts, xmlConfDocument, nodeDirectory);
             }
             else if (TypeForm == ConfigurationForms.TypeForms.Element)
             {
                 Configuration.SaveFormElementField(Form.ElementFields, xmlConfDocument, nodeDirectory);
                 Configuration.SaveFormElementTablePart(Form.ElementTableParts, xmlConfDocument, nodeDirectory);
 
-                if (includeFields)
-                    Configuration.SaveFields(Fields, xmlConfDocument, nodeDirectory, ParentType);
-
-                if (includeTabularParts)
-                    Configuration.SaveTabularParts(TabularParts, xmlConfDocument, nodeDirectory);
+                Configuration.SaveFields(Fields, xmlConfDocument, nodeDirectory, ParentType);
+                Configuration.SaveTabularParts(TabularParts, xmlConfDocument, nodeDirectory);
             }
 
             sourceViewCode.Buffer.Text = Configuration.Transform
