@@ -33,18 +33,19 @@ namespace Configurator
     class PageForm : Box
     {
         Configuration Conf { get { return Program.Kernel.Conf; } }
-        public string ParentName { get; set; } = "";
-        public string ParentType { get; set; } = "";
-        public Dictionary<string, ConfigurationField> Fields = [];
-        public Dictionary<string, ConfigurationTablePart> TabularParts = [];
-        public Dictionary<string, ConfigurationTabularList> TabularLists = [];
-        public string TabularList { get; set; } = "";
-        public Dictionary<string, ConfigurationForms> Forms { get; set; } = [];
-        public ConfigurationForms Form { get; set; } = new ConfigurationForms();
+        public string ParentName { get; set; } = ""; //Назва власника
+        public string ParentType { get; set; } = ""; //Тип власника (Довідник, Документ ...)
+        public Dictionary<string, ConfigurationField> Fields = []; //Поля
+        public Dictionary<string, ConfigurationTablePart> TabularParts = []; //Табличні частини
+        public Dictionary<string, ConfigurationTabularList> TabularLists = []; //Табличні списки
+        public string TabularList { get; set; } = ""; //Табличний список зафіксований у формі
+        public Dictionary<string, ConfigurationForms> Forms { get; set; } = []; //Форми
+        public ConfigurationForms Form { get; set; } = new ConfigurationForms(); //Форма
         public FormConfigurator? GeneralForm { get; set; }
         public System.Action? CallBack_RefreshList { get; set; }
         public bool IsNew { get; set; } = true;
         public ConfigurationForms.TypeForms TypeForm { get; set; } = ConfigurationForms.TypeForms.None;
+        public DirectoryOtherInfoStruct DirectoryOtherInfo { get; set; } = new DirectoryOtherInfoStruct(); // Для ієрархічного довідника
 
         #region Fields
 
@@ -536,7 +537,7 @@ namespace Configurator
         {
             if (!(ParentType == "Directory" || ParentType == "Document" || ParentType == "RegisterInformation" || ParentType == "RegistersAccumulation"))
             {
-                Message.Error(GeneralForm, "Невірно вказаний тип власника форми. Має бути Directory, Document, RegisterInformation");
+                Message.Error(GeneralForm, "Невірно вказаний тип власника форми. Має бути Directory, Document, RegisterInformation або RegistersAccumulation");
                 return;
             }
 
@@ -555,6 +556,46 @@ namespace Configurator
             nodeDirectoryName.InnerText = ParentName;
             nodeDirectory.AppendChild(nodeDirectoryName);
 
+            if (ParentType == "Directory")
+            {
+                XmlElement nodeDirectoryType = xmlConfDocument.CreateElement("Type");
+                nodeDirectoryType.InnerText = DirectoryOtherInfo.TypeDirectory.ToString();
+                nodeDirectory.AppendChild(nodeDirectoryType);
+
+                if (DirectoryOtherInfo.TypeDirectory == ConfigurationDirectories.TypeDirectories.HierarchyInAnotherDirectory)
+                {
+                    string pointerFolders = DirectoryOtherInfo.PointerFolders;
+                    if (!string.IsNullOrEmpty(pointerFolders) && pointerFolders.Contains('.'))
+                    {
+                        string[] pointer_and_type = pointerFolders.Split(".", StringSplitOptions.None);
+                        if (pointer_and_type.Length == 2)
+                        {
+                            //Назва довідника
+                            XmlElement nodeDirectoryPointerFolders = xmlConfDocument.CreateElement("PointerFolders");
+                            nodeDirectoryPointerFolders.InnerText = pointer_and_type[1];
+                            nodeDirectory.AppendChild(nodeDirectoryPointerFolders);
+
+                            //Пошук поля Папки
+                            foreach (ConfigurationField field in Fields.Values)
+                                if (field.Type == "pointer" && field.Pointer == $"Довідники.{pointer_and_type[1]}")
+                                {
+                                    XmlElement nodeDirectoryFolder = xmlConfDocument.CreateElement("FieldFolder");
+                                    nodeDirectoryFolder.InnerText = field.Name;
+                                    nodeDirectory.AppendChild(nodeDirectoryFolder);
+
+                                    break;
+                                }
+                        }
+                    }
+                }
+                else if (DirectoryOtherInfo.TypeDirectory == ConfigurationDirectories.TypeDirectories.Hierarchical)
+                {
+                    XmlElement nodeDirectoryParentField = xmlConfDocument.CreateElement("ParentField");
+                    nodeDirectoryParentField.InnerText = DirectoryOtherInfo.ParentField;
+                    nodeDirectory.AppendChild(nodeDirectoryParentField);
+                }
+            }
+
             if (TypeForm == ConfigurationForms.TypeForms.List ||
                 TypeForm == ConfigurationForms.TypeForms.ListSmallSelect ||
                 TypeForm == ConfigurationForms.TypeForms.ListAndTree)
@@ -562,6 +603,11 @@ namespace Configurator
                 XmlElement nodeTabularList = xmlConfDocument.CreateElement("TabularList");
                 nodeTabularList.InnerText = Form.TabularList;
                 nodeDirectory.AppendChild(nodeTabularList);
+
+                if (TypeForm == ConfigurationForms.TypeForms.ListAndTree)
+                {
+
+                }
 
                 Configuration.SaveTabularParts(TabularParts, xmlConfDocument, nodeDirectory);
             }

@@ -974,7 +974,10 @@ class {entryName.Text}_Triggers
             comboBoxPointerFolders.RemoveAll();
 
             foreach (ConfigurationDirectories item in Conf.Directories.Values)
-                comboBoxPointerFolders.Append($"Довідники.{item.Name}", $"Довідники.{item.Name}");
+            {
+                if (item.TypeDirectory == ConfigurationDirectories.TypeDirectories.Hierarchical)
+                    comboBoxPointerFolders.Append($"Довідники.{item.Name}", $"Довідники.{item.Name}");
+            }
 
             comboBoxPointerFolders.ShowAll();
         }
@@ -1010,11 +1013,28 @@ class {entryName.Text}_Triggers
 
             ConfDirectory.AutomaticNumeration = checkButtonAutoNum.Active;
 
-            ConfDirectory.TypeDirectory = Enum.Parse<ConfigurationDirectories.TypeDirectories>(comboBoxTypeDir.ActiveId);
-            ConfDirectory.PointerFolders_HierarchyInAnotherDirectory = (ConfDirectory.TypeDirectory == ConfigurationDirectories.TypeDirectories.HierarchyInAnotherDirectory &&
-                comboBoxPointerFolders.Active != -1) ? comboBoxPointerFolders.ActiveId : "";
-            ConfDirectory.ParentField_Hierarchical = (ConfDirectory.TypeDirectory == ConfigurationDirectories.TypeDirectories.Hierarchical &&
-                comboBoxParentField.Active != -1) ? comboBoxParentField.ActiveId : "";
+            // Для ієрархічного довідника
+            DirectoryOtherInfoStruct directoryOtherInfo = GetDirectoryOtherInfo();
+            ConfDirectory.TypeDirectory = directoryOtherInfo.TypeDirectory;
+            ConfDirectory.PointerFolders_HierarchyInAnotherDirectory = directoryOtherInfo.PointerFolders;
+            ConfDirectory.ParentField_Hierarchical = directoryOtherInfo.ParentField;
+        }
+
+        DirectoryOtherInfoStruct GetDirectoryOtherInfo()
+        {
+            return new DirectoryOtherInfoStruct
+            (
+                //TypeDirectory
+                Enum.Parse<ConfigurationDirectories.TypeDirectories>(comboBoxTypeDir.ActiveId),
+
+                //PointerFolders
+                (ConfDirectory.TypeDirectory == ConfigurationDirectories.TypeDirectories.HierarchyInAnotherDirectory && comboBoxPointerFolders.Active != -1) ?
+                comboBoxPointerFolders.ActiveId : "",
+
+                //ParentField
+                (ConfDirectory.TypeDirectory == ConfigurationDirectories.TypeDirectories.Hierarchical && comboBoxParentField.Active != -1) ?
+                comboBoxParentField.ActiveId : ""
+            );
         }
 
         #endregion
@@ -1055,8 +1075,8 @@ class {entryName.Text}_Triggers
 
             GetValue();
 
-            if (ConfDirectory.TypeDirectory == ConfigurationDirectories.TypeDirectories.Hierarchical && string.IsNullOrEmpty(ConfDirectory.ParentField_Hierarchical))
-                Message.Error(GeneralForm, $"Потрібно вказати поле Родич для ієрархічного довідника");
+            // if (ConfDirectory.TypeDirectory == ConfigurationDirectories.TypeDirectories.Hierarchical && string.IsNullOrEmpty(ConfDirectory.ParentField_Hierarchical))
+            //     Message.Error(GeneralForm, $"Потрібно вказати поле Родич для ієрархічного довідника");
 
             Conf.AppendDirectory(ConfDirectory);
 
@@ -1422,7 +1442,8 @@ class {entryName.Text}_Triggers
                                 TabularList = form.TabularList,
                                 IsNew = false,
                                 GeneralForm = GeneralForm,
-                                CallBack_RefreshList = FormsListRefreshList
+                                CallBack_RefreshList = FormsListRefreshList,
+                                DirectoryOtherInfo = GetDirectoryOtherInfo()
                             };
 
                             page.SetValue();
@@ -1458,6 +1479,7 @@ class {entryName.Text}_Triggers
                         IsNew = true,
                         GeneralForm = GeneralForm,
                         CallBack_RefreshList = FormsListRefreshList,
+                        DirectoryOtherInfo = GetDirectoryOtherInfo()
                     };
 
                     page.SetValue();
@@ -1615,5 +1637,28 @@ class {entryName.Text}_Triggers
         }
 
         #endregion*/
+    }
+
+    /// <summary>
+    /// Структура для додаткової інформації про ієрархічний довідник
+    /// </summary>
+    struct DirectoryOtherInfoStruct(ConfigurationDirectories.TypeDirectories typeDirectory = ConfigurationDirectories.TypeDirectories.Normal,
+        string pointerFolders = "", string parentField = "")
+    {
+
+        /// <summary>
+        /// Тип довідника
+        /// </summary>
+        public ConfigurationDirectories.TypeDirectories TypeDirectory = typeDirectory;
+
+        /// <summary>
+        /// Окремий довідник для ієрархії
+        /// </summary>
+        public string PointerFolders = pointerFolders;
+
+        /// <summary>
+        /// Поле Родич для ConfigurationDirectories.TypeDirectories.Hierarchical
+        /// </summary>
+        public string ParentField = parentField;
     }
 }
