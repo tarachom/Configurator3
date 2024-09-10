@@ -228,7 +228,7 @@ namespace Configurator
 
                 hBoxDesc.PackStart(new Label("Опис:") { Valign = Align.Start }, false, false, 5);
 
-                ScrolledWindow scrollTextView = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 170, HeightRequest = 100 };
+                ScrolledWindow scrollTextView = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 168, HeightRequest = 100 };
                 scrollTextView.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
                 scrollTextView.Add(textViewDesc);
 
@@ -603,11 +603,6 @@ namespace Configurator
                 XmlElement nodeTabularList = xmlConfDocument.CreateElement("TabularList");
                 nodeTabularList.InnerText = Form.TabularList;
                 nodeDirectory.AppendChild(nodeTabularList);
-
-                if (TypeForm == ConfigurationForms.TypeForms.ListAndTree)
-                {
-
-                }
 
                 Configuration.SaveTabularParts(TabularParts, xmlConfDocument, nodeDirectory);
             }

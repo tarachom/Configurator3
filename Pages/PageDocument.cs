@@ -75,7 +75,6 @@ namespace Configurator
 
         public PageDocument() : base()
         {
-            new VBox();
             HBox hBox = new HBox();
 
             Button bSave = new Button("Зберегти");
@@ -491,7 +490,7 @@ class {entryName.Text}_Triggers
                 CreateFormsList(vBoxForm);
             }
 
-            //Генерування коду 
+            /*//Генерування коду 
             {
                 Expander expanderTemplates = new Expander("Генерування коду");
                 vBox.PackStart(expanderTemplates, false, false, 5);
@@ -520,7 +519,7 @@ class {entryName.Text}_Triggers
                     hBoxElement.PackStart(buttonConstructorPointerControl, false, false, 5);
                     buttonConstructorPointerControl.Clicked += (object? sender, EventArgs args) => { GenerateCode((Widget)sender!, "PointerControl"); };
                 }
-            }
+            }*/
 
             hPaned.Pack1(vBox, false, false);
         }
@@ -732,8 +731,8 @@ class {entryName.Text}_Triggers
 
                 //Заповнення полями
                 ConfDocument.AppendField(new ConfigurationField("Назва", "docname", "string", "", "Назва", true, true));
-                ConfDocument.AppendField(new ConfigurationField("ДатаДок", "docdate", "datetime", "", "ДатаДок", false, true));
                 ConfDocument.AppendField(new ConfigurationField("НомерДок", "docnomer", "string", "", "НомерДок", false, true));
+                ConfDocument.AppendField(new ConfigurationField("ДатаДок", "docdate", "datetime", "", "ДатаДок", false, true));
 
                 string nameInTable_Comment = Configuration.GetNewUnigueColumnName(Program.Kernel, entryTable.Text, ConfDocument.Fields);
                 ConfDocument.AppendField(new ConfigurationField("Коментар", nameInTable_Comment, "string", "", "Коментар"));
@@ -1275,6 +1274,7 @@ class {entryName.Text}_Triggers
                                 TypeForm = ConfDocument.Forms[curRow.Child.Name].Type,
                                 Fields = ConfDocument.Fields,
                                 TabularParts = ConfDocument.TabularParts,
+                                TabularLists = ConfDocument.TabularList,
                                 IsNew = false,
                                 GeneralForm = GeneralForm,
                                 CallBack_RefreshList = FormsListRefreshList
@@ -1309,6 +1309,7 @@ class {entryName.Text}_Triggers
                         TypeForm = typeForms,
                         Fields = ConfDocument.Fields,
                         TabularParts = ConfDocument.TabularParts,
+                        TabularLists = ConfDocument.TabularList,
                         IsNew = true,
                         GeneralForm = GeneralForm,
                         CallBack_RefreshList = FormsListRefreshList,
@@ -1331,6 +1332,12 @@ class {entryName.Text}_Triggers
             {
                 MenuItem item = new MenuItem("Список");
                 item.Activated += (object? sender, EventArgs args) => { OnFormsListAdd(ConfigurationForms.TypeForms.List); };
+                Menu.Append(item);
+            }
+
+            {
+                MenuItem item = new MenuItem("PointerControl");
+                item.Activated += (object? sender, EventArgs args) => { OnFormsListAdd(ConfigurationForms.TypeForms.PointerControl); };
                 Menu.Append(item);
             }
 
@@ -1389,7 +1396,7 @@ class {entryName.Text}_Triggers
 
         #endregion
 
-        #region Генерування коду
+        /*#region Генерування коду
 
         void GenerateCode(Widget relative_to, string fileName, bool includeFields = false, bool includeTabularParts = false)
         {
@@ -1450,6 +1457,6 @@ class {entryName.Text}_Triggers
             textViewCode.GrabFocus();
         }
 
-        #endregion
+        #endregion*/
     }
 }

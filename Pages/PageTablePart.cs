@@ -49,7 +49,6 @@ namespace Configurator
 
         public PageTablePart() : base()
         {
-            new VBox();
             HBox hBox = new HBox();
 
             Button bSave = new Button("Зберегти");
@@ -250,8 +249,7 @@ namespace Configurator
             GeneralForm?.LoadTreeAsync();
             GeneralForm?.RenameCurrentPageNotebook($"Таблична частина: {TablePart.Name}");
 
-            if (CallBack_RefreshList != null)
-                CallBack_RefreshList.Invoke();
+            CallBack_RefreshList?.Invoke();
         }
 
         #region OnTabularParts
