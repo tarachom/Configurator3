@@ -504,7 +504,7 @@ class {entryName.Text}_Triggers
                 hBoxTrigerConstructor.PackStart(buttonConstructor, false, false, 5);
             }
 
-            //Списки та форми
+            //Списки
             {
                 Expander expanderForm = new Expander("Табличні списки");
                 vBox.PackStart(expanderForm, false, false, 5);
@@ -1311,19 +1311,17 @@ class {entryName.Text}_Triggers
             if (args.Event.Type == Gdk.EventType.DoubleButtonPress)
             {
                 ListBoxRow[] selectedRows = listBoxTabularList.SelectedRows;
-
                 if (selectedRows.Length != 0)
                 {
                     ListBoxRow curRow = selectedRows[0];
-
-                    if (ConfDirectory.TabularList.ContainsKey(curRow.Child.Name))
+                    if (ConfDirectory.TabularList.TryGetValue(curRow.Child.Name, out ConfigurationTabularList? tableList))
                         GeneralForm?.CreateNotebookPage($"Табличний список: {curRow.Child.Name}", () =>
                         {
                             PageTabularList page = new PageTabularList()
                             {
                                 Fields = ConfDirectory.Fields,
                                 TabularLists = ConfDirectory.TabularList,
-                                TabularList = ConfDirectory.TabularList[curRow.Child.Name],
+                                TabularList = tableList,
                                 IsNew = false,
                                 GeneralForm = GeneralForm,
                                 CallBack_RefreshList = TabularListRefreshList,
@@ -1331,7 +1329,6 @@ class {entryName.Text}_Triggers
                             };
 
                             page.SetValue();
-
                             return page;
                         });
                 }
@@ -1353,7 +1350,6 @@ class {entryName.Text}_Triggers
                 };
 
                 page.SetValue();
-
                 return page;
             });
         }
@@ -1361,19 +1357,16 @@ class {entryName.Text}_Triggers
         void OnTabularListCopyClick(object? sender, EventArgs args)
         {
             ListBoxRow[] selectedRows = listBoxTabularList.SelectedRows;
-
             if (selectedRows.Length != 0)
             {
                 foreach (ListBoxRow row in selectedRows)
-                {
-                    if (ConfDirectory.TabularList.ContainsKey(row.Child.Name))
+                    if (ConfDirectory.TabularList.TryGetValue(row.Child.Name, out ConfigurationTabularList? tableList))
                     {
-                        ConfigurationTabularList newTableList = ConfDirectory.TabularList[row.Child.Name].Copy();
+                        ConfigurationTabularList newTableList = tableList.Copy();
                         newTableList.Name += GenerateName.GetNewName();
 
                         ConfDirectory.AppendTableList(newTableList);
                     }
-                }
 
                 TabularListRefreshList();
 
@@ -1392,14 +1385,10 @@ class {entryName.Text}_Triggers
         void OnTabularListRemoveClick(object? sender, EventArgs args)
         {
             ListBoxRow[] selectedRows = listBoxTabularList.SelectedRows;
-
             if (selectedRows.Length != 0)
             {
                 foreach (ListBoxRow row in selectedRows)
-                {
-                    if (ConfDirectory.TabularList.ContainsKey(row.Child.Name))
-                        ConfDirectory.TabularList.Remove(row.Child.Name);
-                }
+                    ConfDirectory.TabularList.Remove(row.Child.Name);
 
                 TabularListRefreshList();
 
@@ -1642,10 +1631,8 @@ class {entryName.Text}_Triggers
     /// <summary>
     /// Структура для додаткової інформації про ієрархічний довідник
     /// </summary>
-    struct DirectoryOtherInfoStruct(ConfigurationDirectories.TypeDirectories typeDirectory = ConfigurationDirectories.TypeDirectories.Normal,
-        string pointerFolders = "", string parentField = "")
+    struct DirectoryOtherInfoStruct(ConfigurationDirectories.TypeDirectories typeDirectory = ConfigurationDirectories.TypeDirectories.Normal, string pointerFolders = "", string parentField = "")
     {
-
         /// <summary>
         /// Тип довідника
         /// </summary>

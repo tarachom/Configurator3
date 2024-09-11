@@ -76,13 +76,17 @@ namespace Configurator
         ListStore listStoreFormElementField = new ListStore(
             typeof(bool),   //Visible
             typeof(string), //Name
-            typeof(string)  //Caption
+            typeof(string), //Caption
+            typeof(uint),   //Size
+            typeof(int)     //SortNum
         );
         enum FormElementFieldColumns
         {
             Visible,
             Name,
             Caption,
+            Size,
+            SortNum,
         }
 
         #endregion
@@ -166,6 +170,35 @@ namespace Configurator
                         listStoreFormElementField.SetValue(iter, (int)FormElementFieldColumns.Caption, args.NewText);
                 };
                 treeViewFormElementField.AppendColumn(new TreeViewColumn("Заголовок", cell, "text", FormElementFieldColumns.Caption));
+            }
+
+            //Size
+            {
+                CellRendererText cell = new CellRendererText() { Editable = true };
+                cell.Edited += (object o, EditedArgs args) =>
+                {
+                    if (listStoreFormElementField.GetIterFromString(out TreeIter iter, args.Path))
+                    {
+                        uint.TryParse(args.NewText, out uint size);
+                        listStoreFormElementField.SetValue(iter, (int)FormElementFieldColumns.Size, size);
+                    }
+                };
+                treeViewFormElementField.AppendColumn(new TreeViewColumn("Розмір", cell, "text", FormElementFieldColumns.Size));
+            }
+
+            //SortNum
+            {
+                CellRendererText cell = new CellRendererText() { Editable = true };
+                cell.Edited += (object o, EditedArgs args) =>
+                {
+                    if (listStoreFormElementField.GetIterFromString(out TreeIter iter, args.Path))
+                    {
+                        uint.TryParse(args.NewText, out uint sortNum);
+                        listStoreFormElementField.SetValue(iter, (int)FormElementFieldColumns.SortNum, sortNum);
+                    }
+                };
+                treeViewFormElementField.AppendColumn(new TreeViewColumn("Порядок", cell, "text", FormElementFieldColumns.SortNum));
+                listStoreFormElementField.SetSortColumnId((int)FormElementFieldColumns.SortNum, SortType.Ascending);
             }
         }
 
@@ -325,6 +358,7 @@ namespace Configurator
                 ConfigurationForms.TypeForms.ListSmallSelect => "Швидкий вибір",
                 ConfigurationForms.TypeForms.PointerControl => "PointerControl",
                 ConfigurationForms.TypeForms.ListAndTree => "Список з Деревом",
+                ConfigurationForms.TypeForms.TablePart => "Таблична частина",
                 _ => ""
             };
 
@@ -351,6 +385,7 @@ namespace Configurator
                 case ConfigurationForms.TypeForms.List:
                 case ConfigurationForms.TypeForms.ListSmallSelect:
                 case ConfigurationForms.TypeForms.ListAndTree:
+                case ConfigurationForms.TypeForms.TablePart:
                     {
                         CreateListForm();
                         break;
@@ -371,6 +406,7 @@ namespace Configurator
                         ConfigurationForms.TypeForms.ListSmallSelect => "ListSmallSelect",
                         ConfigurationForms.TypeForms.PointerControl => "PointerControl",
                         ConfigurationForms.TypeForms.ListAndTree => "ListAndTree",
+                        ConfigurationForms.TypeForms.TablePart => "TablePart",
                         _ => ""
                     });
                 };
@@ -395,7 +431,8 @@ namespace Configurator
 
             if (TypeForm == ConfigurationForms.TypeForms.List ||
                 TypeForm == ConfigurationForms.TypeForms.ListSmallSelect ||
-                TypeForm == ConfigurationForms.TypeForms.ListAndTree)
+                TypeForm == ConfigurationForms.TypeForms.ListAndTree ||
+                TypeForm == ConfigurationForms.TypeForms.TablePart)
             {
                 FillFormList();
                 сomboBoxFormListTabularList.ActiveId = TabularList;
@@ -424,8 +461,11 @@ namespace Configurator
                     (!string.IsNullOrEmpty(Form.ElementFields[field.Name].Caption) ?
                         Form.ElementFields[field.Name].Caption : field.Name) : field.Name;
 
+                uint size = isExistField ? Form.ElementFields[field.Name].Size : 0;
+                int sortNum = isExistField ? Form.ElementFields[field.Name].SortNum : 100;
+
                 //Для нової форми видимими стають всі поля
-                listStoreFormElementField.AppendValues(IsNew || isExistField, field.Name, caption);
+                listStoreFormElementField.AppendValues(IsNew || isExistField, field.Name, caption, size, sortNum);
             }
         }
 
@@ -451,7 +491,8 @@ namespace Configurator
 
             if (TypeForm == ConfigurationForms.TypeForms.List ||
                 TypeForm == ConfigurationForms.TypeForms.ListSmallSelect ||
-                TypeForm == ConfigurationForms.TypeForms.ListAndTree)
+                TypeForm == ConfigurationForms.TypeForms.ListAndTree ||
+                TypeForm == ConfigurationForms.TypeForms.TablePart)
                 Form.TabularList = сomboBoxFormListTabularList.ActiveId;
             else if (TypeForm == ConfigurationForms.TypeForms.Element)
             {
@@ -465,9 +506,11 @@ namespace Configurator
                             {
                                 string name = (string)listStoreFormElementField.GetValue(iter, (int)FormElementFieldColumns.Name);
                                 string caption = (string)listStoreFormElementField.GetValue(iter, (int)FormElementFieldColumns.Caption);
+                                uint size = (uint)listStoreFormElementField.GetValue(iter, (int)FormElementFieldColumns.Size);
+                                int sortNum = (int)listStoreFormElementField.GetValue(iter, (int)FormElementFieldColumns.SortNum);
 
                                 ConfigurationField field = Fields[name];
-                                Form.AppendElementField(new ConfigurationFormsElementField(field.Name, caption));
+                                Form.AppendElementField(new ConfigurationFormsElementField(field.Name, caption, size, sortNum));
                             }
                         }
                         while (listStoreFormElementField.IterNext(ref iter));
@@ -535,9 +578,11 @@ namespace Configurator
 
         void GenerateCode(string fileName)
         {
-            if (!(ParentType == "Directory" || ParentType == "Document" || ParentType == "RegisterInformation" || ParentType == "RegistersAccumulation"))
+            if (!(ParentType == "Directory" || ParentType == "Document" ||
+                ParentType == "RegisterInformation" || ParentType == "RegistersAccumulation" ||
+                ParentType == "TablePart"))
             {
-                Message.Error(GeneralForm, "Невірно вказаний тип власника форми. Має бути Directory, Document, RegisterInformation або RegistersAccumulation");
+                Message.Error(GeneralForm, "Невірно вказаний тип власника форми. Має бути Directory, Document, RegisterInformation, RegistersAccumulation або TablePart");
                 return;
             }
 
@@ -598,7 +643,8 @@ namespace Configurator
 
             if (TypeForm == ConfigurationForms.TypeForms.List ||
                 TypeForm == ConfigurationForms.TypeForms.ListSmallSelect ||
-                TypeForm == ConfigurationForms.TypeForms.ListAndTree)
+                TypeForm == ConfigurationForms.TypeForms.ListAndTree ||
+                TypeForm == ConfigurationForms.TypeForms.TablePart)
             {
                 XmlElement nodeTabularList = xmlConfDocument.CreateElement("TabularList");
                 nodeTabularList.InnerText = Form.TabularList;

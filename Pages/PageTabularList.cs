@@ -38,10 +38,9 @@ namespace Configurator
         public System.Action? CallBack_RefreshList { get; set; }
         public bool IsNew { get; set; } = true;
 
-        public string ConfOwnerName { get; set; } = ""; /* Документи, Довідники */
+        public string ConfOwnerName { get; set; } = ""; /* Документи, Довідники  !!! Видалити */
 
         Entry entryName = new Entry() { WidthRequest = 150 };
-        //CheckButton checkButtonIsTree = new CheckButton("Дерево");
         TextView textViewDesc = new TextView() { WrapMode = WrapMode.Word };
 
         #region Fields
