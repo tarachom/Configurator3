@@ -1966,25 +1966,24 @@ HAVING";
             if (args.Event.Type == Gdk.EventType.DoubleButtonPress)
             {
                 ListBoxRow[] selectedRows = listBoxTableParts.SelectedRows;
-
                 if (selectedRows.Length != 0)
                 {
                     ListBoxRow curRow = selectedRows[0];
 
-                    if (ConfRegister.TabularParts.ContainsKey(curRow.Child.Name))
+                    if (ConfRegister.TabularParts.TryGetValue(curRow.Child.Name, out ConfigurationTablePart? tablePart))
                         GeneralForm?.CreateNotebookPage($"Таблична частина: {curRow.Child.Name}", () =>
                         {
                             PageTablePart page = new PageTablePart()
                             {
                                 TabularParts = ConfRegister.TabularParts,
-                                TablePart = ConfRegister.TabularParts[curRow.Child.Name],
+                                TablePart = tablePart,
                                 IsNew = false,
+                                Owner = new OwnerTablePart(false, "", ""),
                                 GeneralForm = GeneralForm,
                                 CallBack_RefreshList = TabularPartsRefreshList
                             };
 
                             page.SetValue();
-
                             return page;
                         });
                 }
@@ -1999,12 +1998,12 @@ HAVING";
                 {
                     TabularParts = ConfRegister.TabularParts,
                     IsNew = true,
+                    Owner = new OwnerTablePart(false, "", ""),
                     GeneralForm = GeneralForm,
                     CallBack_RefreshList = TabularPartsRefreshList
                 };
 
                 page.SetValue();
-
                 return page;
             });
         }
@@ -2012,23 +2011,19 @@ HAVING";
         async void OnTabularPartsCopyClick(object? sender, EventArgs args)
         {
             ListBoxRow[] selectedRows = listBoxTableParts.SelectedRows;
-
             if (selectedRows.Length != 0)
             {
                 foreach (ListBoxRow row in selectedRows)
-                {
-                    if (ConfRegister.TabularParts.ContainsKey(row.Child.Name))
+                    if (ConfRegister.TabularParts.TryGetValue(row.Child.Name, out ConfigurationTablePart? tablePart))
                     {
-                        ConfigurationTablePart newTablePart = ConfRegister.TabularParts[row.Child.Name].Copy();
+                        ConfigurationTablePart newTablePart = tablePart.Copy();
                         newTablePart.Name += GenerateName.GetNewName();
                         newTablePart.Table = await Configuration.GetNewUnigueTableName(Program.Kernel);
 
                         ConfRegister.AppendTablePart(newTablePart);
                     }
-                }
 
                 TabularPartsRefreshList();
-
                 GeneralForm?.LoadTreeAsync();
             }
         }
@@ -2044,17 +2039,12 @@ HAVING";
         void OnTabularPartsRemoveClick(object? sender, EventArgs args)
         {
             ListBoxRow[] selectedRows = listBoxTableParts.SelectedRows;
-
             if (selectedRows.Length != 0)
             {
                 foreach (ListBoxRow row in selectedRows)
-                {
-                    if (ConfRegister.TabularParts.ContainsKey(row.Child.Name))
-                        ConfRegister.TabularParts.Remove(row.Child.Name);
-                }
+                    ConfRegister.TabularParts.Remove(row.Child.Name);
 
                 TabularPartsRefreshList();
-
                 GeneralForm?.LoadTreeAsync();
             }
         }

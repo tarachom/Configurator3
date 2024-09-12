@@ -1040,25 +1040,24 @@ class {entryName.Text}_Triggers
             if (args.Event.Type == Gdk.EventType.DoubleButtonPress)
             {
                 ListBoxRow[] selectedRows = listBoxTableParts.SelectedRows;
-
                 if (selectedRows.Length != 0)
                 {
                     ListBoxRow curRow = selectedRows[0];
 
-                    if (ConfDocument.TabularParts.ContainsKey(curRow.Child.Name))
+                    if (ConfDocument.TabularParts.TryGetValue(curRow.Child.Name, out ConfigurationTablePart? tablePart))
                         GeneralForm?.CreateNotebookPage($"Таблична частина: {curRow.Child.Name}", () =>
                         {
                             PageTablePart page = new PageTablePart()
                             {
                                 TabularParts = ConfDocument.TabularParts,
-                                TablePart = ConfDocument.TabularParts[curRow.Child.Name],
+                                TablePart = tablePart,
                                 IsNew = false,
+                                Owner = new OwnerTablePart(true, "Document", ConfDocument.Name),
                                 GeneralForm = GeneralForm,
                                 CallBack_RefreshList = TabularPartsRefreshList
                             };
 
                             page.SetValue();
-
                             return page;
                         });
                 }
@@ -1073,12 +1072,12 @@ class {entryName.Text}_Triggers
                 {
                     TabularParts = ConfDocument.TabularParts,
                     IsNew = true,
+                    Owner = new OwnerTablePart(true, "Document", ConfDocument.Name),
                     GeneralForm = GeneralForm,
                     CallBack_RefreshList = TabularPartsRefreshList
                 };
 
                 page.SetValue();
-
                 return page;
             });
         }
@@ -1086,23 +1085,19 @@ class {entryName.Text}_Triggers
         async void OnTabularPartsCopyClick(object? sender, EventArgs args)
         {
             ListBoxRow[] selectedRows = listBoxTableParts.SelectedRows;
-
             if (selectedRows.Length != 0)
             {
                 foreach (ListBoxRow row in selectedRows)
-                {
-                    if (ConfDocument.TabularParts.ContainsKey(row.Child.Name))
+                    if (ConfDocument.TabularParts.TryGetValue(row.Child.Name, out ConfigurationTablePart? tablePart))
                     {
-                        ConfigurationTablePart newTablePart = ConfDocument.TabularParts[row.Child.Name].Copy();
+                        ConfigurationTablePart newTablePart = tablePart.Copy();
                         newTablePart.Name += GenerateName.GetNewName();
                         newTablePart.Table = await Configuration.GetNewUnigueTableName(Program.Kernel);
 
                         ConfDocument.AppendTablePart(newTablePart);
                     }
-                }
 
                 TabularPartsRefreshList();
-
                 GeneralForm?.LoadTreeAsync();
             }
         }
@@ -1118,17 +1113,12 @@ class {entryName.Text}_Triggers
         void OnTabularPartsRemoveClick(object? sender, EventArgs args)
         {
             ListBoxRow[] selectedRows = listBoxTableParts.SelectedRows;
-
             if (selectedRows.Length != 0)
             {
                 foreach (ListBoxRow row in selectedRows)
-                {
-                    if (ConfDocument.TabularParts.ContainsKey(row.Child.Name))
-                        ConfDocument.TabularParts.Remove(row.Child.Name);
-                }
+                    ConfDocument.TabularParts.Remove(row.Child.Name);
 
                 TabularPartsRefreshList();
-
                 GeneralForm?.LoadTreeAsync();
             }
         }

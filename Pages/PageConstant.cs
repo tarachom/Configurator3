@@ -331,25 +331,24 @@ namespace Configurator
             if (args.Event.Type == Gdk.EventType.DoubleButtonPress)
             {
                 ListBoxRow[] selectedRows = listBoxTableParts.SelectedRows;
-
                 if (selectedRows.Length != 0)
                 {
                     ListBoxRow curRow = selectedRows[0];
 
-                    if (ConfConstants.TabularParts.ContainsKey(curRow.Child.Name))
+                    if (ConfConstants.TabularParts.TryGetValue(curRow.Child.Name, out ConfigurationTablePart? tablePart))
                         GeneralForm?.CreateNotebookPage($"Таблична частина: {curRow.Child.Name}", () =>
                         {
                             PageTablePart page = new PageTablePart()
                             {
                                 TabularParts = ConfConstants.TabularParts,
-                                TablePart = ConfConstants.TabularParts[curRow.Child.Name],
+                                TablePart = tablePart,
                                 IsNew = false,
+                                Owner = new OwnerTablePart(false, "", ""),
                                 GeneralForm = GeneralForm,
                                 CallBack_RefreshList = TabularPartsRefreshList
                             };
 
                             page.SetValue();
-
                             return page;
                         });
                 }
@@ -364,12 +363,12 @@ namespace Configurator
                 {
                     TabularParts = ConfConstants.TabularParts,
                     IsNew = true,
+                    Owner = new OwnerTablePart(false, "", ""),
                     GeneralForm = GeneralForm,
                     CallBack_RefreshList = TabularPartsRefreshList
                 };
 
                 page.SetValue();
-
                 return page;
             });
         }
@@ -377,22 +376,18 @@ namespace Configurator
         void OnTabularPartsCopyClick(object? sender, EventArgs args)
         {
             ListBoxRow[] selectedRows = listBoxTableParts.SelectedRows;
-
             if (selectedRows.Length != 0)
             {
                 foreach (ListBoxRow row in selectedRows)
-                {
-                    if (ConfConstants.TabularParts.ContainsKey(row.Child.Name))
+                    if (ConfConstants.TabularParts.TryGetValue(row.Child.Name, out ConfigurationTablePart? tablePart))
                     {
-                        ConfigurationTablePart newTablePart = ConfConstants.TabularParts[row.Child.Name].Copy();
+                        ConfigurationTablePart newTablePart = tablePart.Copy();
                         newTablePart.Name += GenerateName.GetNewName();
 
                         ConfConstants.AppendTablePart(newTablePart);
                     }
-                }
 
                 OnTabularPartsRefreshClick(null, new EventArgs());
-
                 GeneralForm?.LoadTreeAsync();
             }
         }
@@ -408,17 +403,12 @@ namespace Configurator
         void OnTabularPartsRemoveClick(object? sender, EventArgs args)
         {
             ListBoxRow[] selectedRows = listBoxTableParts.SelectedRows;
-
             if (selectedRows.Length != 0)
             {
                 foreach (ListBoxRow row in selectedRows)
-                {
-                    if (ConfConstants.TabularParts.ContainsKey(row.Child.Name))
-                        ConfConstants.TabularParts.Remove(row.Child.Name);
-                }
+                    ConfConstants.TabularParts.Remove(row.Child.Name);
 
                 OnTabularPartsRefreshClick(null, new EventArgs());
-
                 GeneralForm?.LoadTreeAsync();
             }
         }

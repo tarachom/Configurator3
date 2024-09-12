@@ -37,6 +37,7 @@ namespace Configurator
         public FormConfigurator? GeneralForm { get; set; }
         public System.Action? CallBack_RefreshList { get; set; }
         public bool IsNew { get; set; } = true;
+        public OwnerTablePart Owner { get; set; } = new OwnerTablePart();
 
         #region Fields
 
@@ -623,6 +624,7 @@ namespace Configurator
                                 TabularLists = TablePart.TabularList,
                                 TabularList = form.TabularList,
                                 IsNew = false,
+                                Owner = Owner,
                                 GeneralForm = GeneralForm,
                                 CallBack_RefreshList = FormsListRefreshList
                             };
@@ -657,6 +659,7 @@ namespace Configurator
                         Fields = TablePart.Fields,
                         TabularLists = TablePart.TabularList,
                         IsNew = true,
+                        Owner = Owner,
                         GeneralForm = GeneralForm,
                         CallBack_RefreshList = FormsListRefreshList
                     };
@@ -789,5 +792,27 @@ namespace Configurator
         }
 
         #endregion */
+    }
+
+   
+    /// <summary>
+    /// Власник табличної частини
+    /// </summary>
+    struct OwnerTablePart(bool exist = false, string type = "", string name = "")
+    {
+        /// <summary>
+        /// Наявність власника
+        /// </summary>
+        public bool Exist = exist;
+
+        /// <summary>
+        /// Тип (Довідники, Документи)
+        /// </summary>
+        public string Type = type;
+
+        /// <summary>
+        /// Назва
+        /// </summary>
+        public string Name = name;
     }
 }

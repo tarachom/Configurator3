@@ -44,6 +44,7 @@ namespace Configurator
         public FormConfigurator? GeneralForm { get; set; }
         public System.Action? CallBack_RefreshList { get; set; }
         public bool IsNew { get; set; } = true;
+        public OwnerTablePart Owner { get; set; } = new OwnerTablePart();
         public ConfigurationForms.TypeForms TypeForm { get; set; } = ConfigurationForms.TypeForms.None;
         public DirectoryOtherInfoStruct DirectoryOtherInfo { get; set; } = new DirectoryOtherInfoStruct(); // Для ієрархічного довідника
 
@@ -650,7 +651,28 @@ namespace Configurator
                 nodeTabularList.InnerText = Form.TabularList;
                 nodeDirectory.AppendChild(nodeTabularList);
 
-                Configuration.SaveTabularParts(TabularParts, xmlConfDocument, nodeDirectory);
+                //Для табличної частини 
+                if (TypeForm == ConfigurationForms.TypeForms.TablePart)
+                {
+                    XmlElement nodeOwnerExist = xmlConfDocument.CreateElement("OwnerExist");
+                    nodeOwnerExist.InnerText = Owner.Exist ? "1" : "0";
+                    nodeDirectory.AppendChild(nodeOwnerExist);
+
+                    XmlElement nodeOwnerType = xmlConfDocument.CreateElement("OwnerType");
+                    nodeOwnerType.InnerText = Owner.Type;
+                    nodeDirectory.AppendChild(nodeOwnerType);
+
+                    XmlElement nodeOwnerName = xmlConfDocument.CreateElement("OwnerName");
+                    nodeOwnerName.InnerText = Owner.Name;
+                    nodeDirectory.AppendChild(nodeOwnerName);                   
+
+                    Configuration.SaveFields(Fields, xmlConfDocument, nodeDirectory, ParentType);
+                    Configuration.SaveTabularList(Fields, TabularLists, xmlConfDocument, nodeDirectory);
+                }
+                else
+                {
+                    Configuration.SaveTabularParts(TabularParts, xmlConfDocument, nodeDirectory);
+                }
             }
             else if (TypeForm == ConfigurationForms.TypeForms.Element)
             {
