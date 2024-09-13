@@ -79,7 +79,8 @@ namespace Configurator
             typeof(string), //Name
             typeof(string), //Caption
             typeof(uint),   //Size
-            typeof(int)     //SortNum
+            typeof(int),    //SortNum
+            typeof(string)  //Type
         );
         enum FormElementFieldColumns
         {
@@ -88,6 +89,7 @@ namespace Configurator
             Caption,
             Size,
             SortNum,
+            Type
         }
 
         #endregion
@@ -201,6 +203,9 @@ namespace Configurator
                 treeViewFormElementField.AppendColumn(new TreeViewColumn("Порядок", cell, "text", FormElementFieldColumns.SortNum));
                 listStoreFormElementField.SetSortColumnId((int)FormElementFieldColumns.SortNum, SortType.Ascending);
             }
+
+            //Type
+            treeViewFormElementField.AppendColumn(new TreeViewColumn("Тип", new CellRendererText(), "text", FormElementFieldColumns.Type));
         }
 
         void AddColumnTreeViewFormElementTablePart()
@@ -293,7 +298,7 @@ namespace Configurator
             notebook.ShowAll();
         }
 
-        public void CreateElementForm()
+        public void CreateElementForm(bool existTablePart = true)
         {
             Box vBox = new Box(Orientation.Vertical, 0);
 
@@ -314,6 +319,7 @@ namespace Configurator
             }
 
             //Табличні частини
+            if (existTablePart)
             {
                 Box hBoxCaption = new Box(Orientation.Horizontal, 0);
                 hBoxCaption.PackStart(new Label("Табличні частини"), false, false, 5);
@@ -379,14 +385,14 @@ namespace Configurator
             switch (TypeForm)
             {
                 case ConfigurationForms.TypeForms.Element:
+                case ConfigurationForms.TypeForms.TablePart:
                     {
-                        CreateElementForm();
+                        CreateElementForm(!(ParentType == "RegisterInformation" || ParentType == "RegistersAccumulation" || ParentType == "TablePart"));
                         break;
                     }
                 case ConfigurationForms.TypeForms.List:
                 case ConfigurationForms.TypeForms.ListSmallSelect:
                 case ConfigurationForms.TypeForms.ListAndTree:
-                case ConfigurationForms.TypeForms.TablePart:
                     {
                         CreateListForm();
                         break;
@@ -432,8 +438,7 @@ namespace Configurator
 
             if (TypeForm == ConfigurationForms.TypeForms.List ||
                 TypeForm == ConfigurationForms.TypeForms.ListSmallSelect ||
-                TypeForm == ConfigurationForms.TypeForms.ListAndTree ||
-                TypeForm == ConfigurationForms.TypeForms.TablePart)
+                TypeForm == ConfigurationForms.TypeForms.ListAndTree)
             {
                 FillFormList();
                 сomboBoxFormListTabularList.ActiveId = TabularList;
@@ -443,6 +448,10 @@ namespace Configurator
             {
                 FillTreeViewFormElementField();
                 FillTreeViewFormElementTablePart();
+            }
+            else if (TypeForm == ConfigurationForms.TypeForms.TablePart)
+            {
+                FillTreeViewFormElementField();
             }
         }
 
@@ -464,9 +473,10 @@ namespace Configurator
 
                 uint size = isExistField ? Form.ElementFields[field.Name].Size : 0;
                 int sortNum = isExistField ? Form.ElementFields[field.Name].SortNum : 100;
+                string sType = field.Type == "pointer" || field.Type == "enum" ? field.Pointer : field.Type;
 
                 //Для нової форми видимими стають всі поля
-                listStoreFormElementField.AppendValues(IsNew || isExistField, field.Name, caption, size, sortNum);
+                listStoreFormElementField.AppendValues(IsNew || isExistField, field.Name, caption, size, sortNum, sType);
             }
         }
 
@@ -492,10 +502,9 @@ namespace Configurator
 
             if (TypeForm == ConfigurationForms.TypeForms.List ||
                 TypeForm == ConfigurationForms.TypeForms.ListSmallSelect ||
-                TypeForm == ConfigurationForms.TypeForms.ListAndTree ||
-                TypeForm == ConfigurationForms.TypeForms.TablePart)
+                TypeForm == ConfigurationForms.TypeForms.ListAndTree)
                 Form.TabularList = сomboBoxFormListTabularList.ActiveId;
-            else if (TypeForm == ConfigurationForms.TypeForms.Element)
+            else if (TypeForm == ConfigurationForms.TypeForms.Element || TypeForm == ConfigurationForms.TypeForms.TablePart)
             {
                 //Поля форми елементу
                 {
@@ -517,7 +526,8 @@ namespace Configurator
                         while (listStoreFormElementField.IterNext(ref iter));
                 }
 
-                //Табличні частини форми елементу
+                //Табличні частини 
+                if (TypeForm != ConfigurationForms.TypeForms.TablePart)
                 {
                     Form.ElementTableParts.Clear();
                     if (listStoreFormElementTablePart.GetIterFirst(out TreeIter iter))
@@ -642,45 +652,38 @@ namespace Configurator
                 }
             }
 
-            if (TypeForm == ConfigurationForms.TypeForms.List ||
-                TypeForm == ConfigurationForms.TypeForms.ListSmallSelect ||
-                TypeForm == ConfigurationForms.TypeForms.ListAndTree ||
-                TypeForm == ConfigurationForms.TypeForms.TablePart)
+            if (TypeForm == ConfigurationForms.TypeForms.List || TypeForm == ConfigurationForms.TypeForms.ListSmallSelect || TypeForm == ConfigurationForms.TypeForms.ListAndTree)
             {
                 XmlElement nodeTabularList = xmlConfDocument.CreateElement("TabularList");
                 nodeTabularList.InnerText = Form.TabularList;
                 nodeDirectory.AppendChild(nodeTabularList);
 
-                //Для табличної частини 
-                if (TypeForm == ConfigurationForms.TypeForms.TablePart)
-                {
-                    XmlElement nodeOwnerExist = xmlConfDocument.CreateElement("OwnerExist");
-                    nodeOwnerExist.InnerText = Owner.Exist ? "1" : "0";
-                    nodeDirectory.AppendChild(nodeOwnerExist);
-
-                    XmlElement nodeOwnerType = xmlConfDocument.CreateElement("OwnerType");
-                    nodeOwnerType.InnerText = Owner.Type;
-                    nodeDirectory.AppendChild(nodeOwnerType);
-
-                    XmlElement nodeOwnerName = xmlConfDocument.CreateElement("OwnerName");
-                    nodeOwnerName.InnerText = Owner.Name;
-                    nodeDirectory.AppendChild(nodeOwnerName);                   
-
-                    Configuration.SaveFields(Fields, xmlConfDocument, nodeDirectory, ParentType);
-                    Configuration.SaveTabularList(Fields, TabularLists, xmlConfDocument, nodeDirectory);
-                }
-                else
-                {
-                    Configuration.SaveTabularParts(TabularParts, xmlConfDocument, nodeDirectory);
-                }
+                Configuration.SaveTabularParts(TabularParts, xmlConfDocument, nodeDirectory);
             }
             else if (TypeForm == ConfigurationForms.TypeForms.Element)
             {
-                Configuration.SaveFormElementField(Form.ElementFields, xmlConfDocument, nodeDirectory);
-                Configuration.SaveFormElementTablePart(Form.ElementTableParts, xmlConfDocument, nodeDirectory);
+                Configuration.SaveFormElementField(Fields, Form.ElementFields, xmlConfDocument, nodeDirectory);
+                Configuration.SaveFormElementTablePart(TabularParts, Form.ElementTableParts, xmlConfDocument, nodeDirectory);
 
                 Configuration.SaveFields(Fields, xmlConfDocument, nodeDirectory, ParentType);
                 Configuration.SaveTabularParts(TabularParts, xmlConfDocument, nodeDirectory);
+            }
+            else if (TypeForm == ConfigurationForms.TypeForms.TablePart)
+            {
+                XmlElement nodeOwnerExist = xmlConfDocument.CreateElement("OwnerExist");
+                nodeOwnerExist.InnerText = Owner.Exist ? "1" : "0";
+                nodeDirectory.AppendChild(nodeOwnerExist);
+
+                XmlElement nodeOwnerType = xmlConfDocument.CreateElement("OwnerType");
+                nodeOwnerType.InnerText = Owner.Type;
+                nodeDirectory.AppendChild(nodeOwnerType);
+
+                XmlElement nodeOwnerName = xmlConfDocument.CreateElement("OwnerName");
+                nodeOwnerName.InnerText = Owner.Name;
+                nodeDirectory.AppendChild(nodeOwnerName);
+
+                Configuration.SaveFields(Fields, xmlConfDocument, nodeDirectory, ParentType); //???
+                Configuration.SaveFormElementField(Fields, Form.ElementFields, xmlConfDocument, nodeDirectory);
             }
 
             sourceViewCode.Buffer.Text = Configuration.Transform
