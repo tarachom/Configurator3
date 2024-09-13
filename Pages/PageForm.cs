@@ -658,15 +658,13 @@ namespace Configurator
                 nodeTabularList.InnerText = Form.TabularList;
                 nodeDirectory.AppendChild(nodeTabularList);
 
-                Configuration.SaveTabularParts(TabularParts, xmlConfDocument, nodeDirectory);
+                if (TypeForm != ConfigurationForms.TypeForms.ListSmallSelect)
+                    Configuration.SaveTabularParts(TabularParts, xmlConfDocument, nodeDirectory);
             }
             else if (TypeForm == ConfigurationForms.TypeForms.Element)
             {
                 Configuration.SaveFormElementField(Fields, Form.ElementFields, xmlConfDocument, nodeDirectory);
                 Configuration.SaveFormElementTablePart(TabularParts, Form.ElementTableParts, xmlConfDocument, nodeDirectory);
-
-                Configuration.SaveFields(Fields, xmlConfDocument, nodeDirectory, ParentType);
-                Configuration.SaveTabularParts(TabularParts, xmlConfDocument, nodeDirectory);
             }
             else if (TypeForm == ConfigurationForms.TypeForms.TablePart)
             {
@@ -681,8 +679,7 @@ namespace Configurator
                 XmlElement nodeOwnerName = xmlConfDocument.CreateElement("OwnerName");
                 nodeOwnerName.InnerText = Owner.Name;
                 nodeDirectory.AppendChild(nodeOwnerName);
-
-                Configuration.SaveFields(Fields, xmlConfDocument, nodeDirectory, ParentType); //???
+                
                 Configuration.SaveFormElementField(Fields, Form.ElementFields, xmlConfDocument, nodeDirectory);
             }
 

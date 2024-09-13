@@ -1897,12 +1897,6 @@ HAVING";
             Menu Menu = new Menu();
 
             {
-                MenuItem item = new MenuItem("Елемент");
-                item.Activated += (object? sender, EventArgs args) => { OnFormsListAdd(ConfigurationForms.TypeForms.Element); };
-                Menu.Append(item);
-            }
-
-            {
                 MenuItem item = new MenuItem("Список");
                 item.Activated += (object? sender, EventArgs args) => { OnFormsListAdd(ConfigurationForms.TypeForms.List); };
                 Menu.Append(item);
