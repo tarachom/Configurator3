@@ -366,6 +366,7 @@ namespace Configurator
                 ConfigurationForms.TypeForms.PointerControl => "PointerControl",
                 ConfigurationForms.TypeForms.ListAndTree => "Список з Деревом",
                 ConfigurationForms.TypeForms.TablePart => "Таблична частина",
+                ConfigurationForms.TypeForms.Function => "Функції",
                 _ => ""
             };
 
@@ -414,6 +415,7 @@ namespace Configurator
                         ConfigurationForms.TypeForms.PointerControl => "PointerControl",
                         ConfigurationForms.TypeForms.ListAndTree => "ListAndTree",
                         ConfigurationForms.TypeForms.TablePart => "TablePart",
+                        ConfigurationForms.TypeForms.Function => "Function",
                         _ => ""
                     });
                 };
@@ -652,14 +654,16 @@ namespace Configurator
                 }
             }
 
-            if (TypeForm == ConfigurationForms.TypeForms.List || TypeForm == ConfigurationForms.TypeForms.ListSmallSelect || TypeForm == ConfigurationForms.TypeForms.ListAndTree)
+            if (TypeForm == ConfigurationForms.TypeForms.List || 
+                TypeForm == ConfigurationForms.TypeForms.ListSmallSelect || 
+                TypeForm == ConfigurationForms.TypeForms.ListAndTree)
             {
                 XmlElement nodeTabularList = xmlConfDocument.CreateElement("TabularList");
                 nodeTabularList.InnerText = Form.TabularList;
                 nodeDirectory.AppendChild(nodeTabularList);
 
-                if (TypeForm != ConfigurationForms.TypeForms.ListSmallSelect)
-                    Configuration.SaveTabularParts(TabularParts, xmlConfDocument, nodeDirectory);
+                /*if (TypeForm != ConfigurationForms.TypeForms.ListSmallSelect)
+                    Configuration.SaveTabularParts(TabularParts, xmlConfDocument, nodeDirectory);*/
             }
             else if (TypeForm == ConfigurationForms.TypeForms.Element)
             {
@@ -681,6 +685,11 @@ namespace Configurator
                 nodeDirectory.AppendChild(nodeOwnerName);
                 
                 Configuration.SaveFormElementField(Fields, Form.ElementFields, xmlConfDocument, nodeDirectory);
+            }
+            else if(TypeForm == ConfigurationForms.TypeForms.Function)
+            {
+                Configuration.SaveFields(Fields, xmlConfDocument, nodeDirectory, ParentType);
+                Configuration.SaveTabularParts(TabularParts, xmlConfDocument, nodeDirectory);
             }
 
             sourceViewCode.Buffer.Text = Configuration.Transform

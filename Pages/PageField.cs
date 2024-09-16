@@ -50,6 +50,7 @@ namespace Configurator
         CheckButton checkButtonIndex = new CheckButton("Індексувати");
         CheckButton checkButtonPresentation = new CheckButton("Використовувати для представлення");
         CheckButton checkButtonFullTextSearch = new CheckButton("Повнотекстовий пошук");
+        CheckButton checkButtonSearch = new CheckButton("Пошук у списку");
         CheckButton checkButtonMultiline = new CheckButton("Багатострічкове поле");
 
         //Для композитного типу даних
@@ -167,6 +168,9 @@ namespace Configurator
             //Повнотекстовий пошук
             vBox.PackStart(checkButtonFullTextSearch, false, false, 5);
 
+            //Пошук у списку
+            vBox.PackStart(checkButtonSearch, false, false, 5);
+
             //Багатострічкове поле
             vBox.PackStart(checkButtonMultiline, false, false, 5);
 
@@ -281,6 +285,7 @@ namespace Configurator
             checkButtonIndex.Active = Field.IsIndex;
             checkButtonPresentation.Active = Field.IsPresentation;
             checkButtonFullTextSearch.Active = Field.IsFullTextSearch;
+            checkButtonSearch.Active = Field.IsSearch;
             checkButtonMultiline.Active = Field.Multiline;
 
             OnComboBoxTypeChanged(comboBoxType, new EventArgs());
@@ -333,6 +338,7 @@ namespace Configurator
             Field.IsIndex = checkButtonIndex.Active;
             Field.IsPresentation = checkButtonPresentation.Active;
             Field.IsFullTextSearch = checkButtonFullTextSearch.Active;
+            Field.IsSearch = checkButtonSearch.Active;
             Field.Multiline = checkButtonMultiline.Active;
 
             Field.NameInTable = entryColumn.Text;

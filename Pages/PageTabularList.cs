@@ -24,6 +24,7 @@ limitations under the License.
 using Gtk;
 
 using AccountingSoftware;
+using GtkSource;
 
 namespace Configurator
 {
@@ -617,8 +618,9 @@ namespace Configurator
                     if ((ColumnsAdditional)treeColumn.Data["Column"]! == ColumnsAdditional.Value)
                     {
                         Box vBox = new Box(Orientation.Vertical, 0);
-                        TextView textViewCode = new TextView();
-
+                        SourceView sourceViewCode = new SourceView();
+                        sourceViewCode.Buffer.Language = new LanguageManager().GetLanguage("sql");
+                        
                         //Кнопки
                         {
                             Box hBox = new Box(Orientation.Horizontal, 0);
@@ -627,7 +629,7 @@ namespace Configurator
                             Button bSave = new Button("Зберегти");
                             bSave.Clicked += (object? sender, EventArgs args) =>
                             {
-                                treeViewAdditional.Model.SetValue(iter, (int)ColumnsAdditional.Value, textViewCode.Buffer.Text);
+                                treeViewAdditional.Model.SetValue(iter, (int)ColumnsAdditional.Value, sourceViewCode.Buffer.Text);
                                 popoverSmallSelect.Hide();
                             };
                             hBox.PackStart(bSave, false, false, 2);
@@ -643,11 +645,11 @@ namespace Configurator
                             Box hBox = new Box(Orientation.Horizontal, 0);
                             vBox.PackStart(hBox, false, false, 5);
 
-                            textViewCode.Buffer.Text = (string)treeViewAdditional.Model.GetValue(iter, (int)ColumnsAdditional.Value);
+                            sourceViewCode.Buffer.Text = (string)treeViewAdditional.Model.GetValue(iter, (int)ColumnsAdditional.Value);
 
                             ScrolledWindow scrollCode = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 1000, HeightRequest = 600 };
                             scrollCode.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-                            scrollCode.Add(textViewCode);
+                            scrollCode.Add(sourceViewCode);
 
                             hBox.PackStart(scrollCode, false, false, 0);
                         }

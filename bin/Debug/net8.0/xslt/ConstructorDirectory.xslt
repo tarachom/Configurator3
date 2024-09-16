@@ -36,6 +36,9 @@ limitations under the License.
     <xsl:template match="root">
 
         <xsl:choose>
+            <xsl:when test="$File = 'Function'">
+                <xsl:call-template name="DirectoryFunction" />
+            </xsl:when>
             <xsl:when test="$File = 'Element'">
                 <xsl:call-template name="DirectoryElement" />
             </xsl:when>
@@ -53,6 +56,113 @@ limitations under the License.
             </xsl:when>
         </xsl:choose>
 
+    </xsl:template>
+
+<!--- 
+//
+// ============================ Function ============================
+//
+-->
+
+    <!-- Елемент -->
+    <xsl:template name="DirectoryFunction">
+        <xsl:variable name="DirectoryName" select="Directory/Name"/>
+        <xsl:variable name="Fields" select="Directory/Fields/Field"/>
+        <xsl:variable name="TabularParts" select="Directory/TabularParts/TablePart"/>
+        <xsl:variable name="TabularList" select="Directory/TabularList"/>
+
+        <!-- Відфільтровані поля по типу даних -->
+        <xsl:variable name="FieldsFilter" select="$Fields[Type = 'string' or Type = 'integer' or Type = 'numeric' or Type = 'date' or Type = 'datetime' or Type = 'time']"/>
+/*
+        <xsl:value-of select="$DirectoryName"/>_Функції.cs
+        Функції
+*/
+
+using InterfaceGtk;
+using AccountingSoftware;
+using <xsl:value-of select="$NameSpaceGenerationCode"/>.Довідники;
+
+namespace <xsl:value-of select="$NameSpace"/>
+{
+    static class <xsl:value-of select="$DirectoryName"/>_Функції
+    {
+        public static List&lt;Where&gt; Відбори(string searchText)
+        {
+            return
+            [
+                <xsl:choose>
+                    <xsl:when test="$FieldsFilter[IsSearch = '1']">
+                        <xsl:for-each select="$FieldsFilter[IsSearch = '1']">
+                //<xsl:value-of select="Name"/>
+                new Where(<xsl:if test="position() != 1">Comparison.OR, </xsl:if><xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="Name"/>, Comparison.LIKE, searchText) { FuncToField = "LOWER" },
+                        </xsl:for-each>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:if test="$FieldsFilter[Name = 'Код']">
+                //Код
+                new Where(<xsl:value-of select="$DirectoryName"/>_Const.Код, Comparison.LIKE, searchText) { FuncToField = "LOWER" },
+                        </xsl:if>
+                        <xsl:if test="$FieldsFilter[Name = 'Назва']">
+                //Назва
+                new Where(<xsl:if test="$FieldsFilter[Name = 'Код']">Comparison.OR, </xsl:if><xsl:value-of select="$DirectoryName"/>_Const.Назва, Comparison.LIKE, searchText) { FuncToField = "LOWER" },
+                        </xsl:if>
+                    </xsl:otherwise>
+                </xsl:choose>
+            ];
+        }
+
+        public static async ValueTask OpenPageElement(bool IsNew, UnigueID? unigueID = null, 
+            Action&lt;UnigueID?&gt;? сallBack_LoadRecords = null, 
+            Action&lt;UnigueID&gt;? сallBack_OnSelectPointer = null)
+        {
+            <xsl:value-of select="$DirectoryName"/>_Елемент page = new <xsl:value-of select="$DirectoryName"/>_Елемент
+            {
+                IsNew = IsNew,
+                CallBack_LoadRecords = сallBack_LoadRecords,
+                CallBack_OnSelectPointer = сallBack_OnSelectPointer
+            };
+
+            if (IsNew)
+                await page.Елемент.New();
+            else if (unigueID == null || !await page.Елемент.Read(unigueID))
+            {
+                Message.Error(Program.GeneralForm, "Не вдалось прочитати!");
+                return;
+            }
+
+            NotebookFunction.CreateNotebookPage(Program.GeneralNotebook, page.Caption, () =&gt; page);
+            page.SetValue();
+        }
+
+        public static async ValueTask SetDeletionLabel(UnigueID unigueID)
+        {
+            <xsl:value-of select="$DirectoryName"/>_Objest Обєкт = new <xsl:value-of select="$DirectoryName"/>_Objest();
+            if (await Обєкт.Read(unigueID))
+                await Обєкт.SetDeletionLabel(!Обєкт.DeletionLabel);
+            else
+                Message.Error(Program.GeneralForm, "Не вдалось прочитати!");
+        }
+
+        public static async ValueTask&lt;UnigueID?&gt; Copy(UnigueID unigueID)
+        {
+            <xsl:value-of select="$DirectoryName"/>_Objest Обєкт = new <xsl:value-of select="$DirectoryName"/>_Objest();
+            if (await Обєкт.Read(unigueID))
+            {
+                <xsl:value-of select="$DirectoryName"/>_Objest Новий = await Обєкт.Copy(true);
+                await Новий.Save();
+                <xsl:for-each select="$TabularParts">
+                    await Новий.<xsl:value-of select="Name"/>_TablePart.Save(false); // Таблична частина "<xsl:value-of select="Name"/>"
+                </xsl:for-each>
+                return Новий.UnigueID;
+            }
+            else
+            {
+                Message.Error(Program.GeneralForm, "Не вдалось прочитати!");
+                return null;
+            }
+        }
+    }
+}
     </xsl:template>
 
 <!--- 
@@ -89,7 +199,7 @@ namespace <xsl:value-of select="$NameSpace"/>
 {
     class <xsl:value-of select="$DirectoryName"/>_Елемент : ДовідникЕлемент
     {
-        public <xsl:value-of select="$DirectoryName"/>_Objest Елемент { get; set; } = new <xsl:value-of select="$DirectoryName"/>_Objest();
+        public <xsl:value-of select="$DirectoryName"/>_Objest Елемент { get; init; } = new <xsl:value-of select="$DirectoryName"/>_Objest();
         <xsl:if test="$DirectoryType = 'Hierarchical'">
             public <xsl:value-of select="$DirectoryName"/>_Pointer РодичДляНового { get; set; } = new <xsl:value-of select="$DirectoryName"/>_Pointer();
         </xsl:if>
@@ -342,7 +452,7 @@ namespace <xsl:value-of select="$NameSpace"/>
     <!-- Список -->
     <xsl:template name="DirectoryList">
         <xsl:variable name="DirectoryName" select="Directory/Name"/>
-        <xsl:variable name="TabularParts" select="Directory/TabularParts/TablePart"/>
+        <!--<xsl:variable name="TabularParts" select="Directory/TabularParts/TablePart"/>-->
         <xsl:variable name="TabularList" select="Directory/TabularList"/>
 
         <!-- Додатова інформація для ієрархічного довідника -->
@@ -356,7 +466,6 @@ namespace <xsl:value-of select="$NameSpace"/>
 using Gtk;
 using InterfaceGtk;
 using AccountingSoftware;
-using <xsl:value-of select="$NameSpaceGenerationCode"/>.Довідники;
 using ТабличніСписки = <xsl:value-of select="$NameSpaceGenerationCode"/>.Довідники.ТабличніСписки;
 
 namespace <xsl:value-of select="$NameSpace"/>
@@ -384,13 +493,17 @@ namespace <xsl:value-of select="$NameSpace"/>
         {
             ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.ОчиститиВідбір(TreeViewGrid);
 
-            //Код
-            ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.ДодатиВідбір(TreeViewGrid,
-                new Where(<xsl:value-of select="$DirectoryName"/>_Const.Код, Comparison.LIKE, searchText) { FuncToField = "LOWER" });
+            //Відбори
+            ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_Записи.ДодатиВідбір(TreeViewGrid, <xsl:value-of select="$DirectoryName"/>_Функції.Відбори(searchText), true);
+            <!--
+                //Код
+                ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.ДодатиВідбір(TreeViewGrid,
+                    new Where(<xsl:value-of select="$DirectoryName"/>_Const.Код, Comparison.LIKE, searchText) { FuncToField = "LOWER" });
 
-            //Назва
-            ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.ДодатиВідбір(TreeViewGrid,
-                new Where(Comparison.OR, <xsl:value-of select="$DirectoryName"/>_Const.Назва, Comparison.LIKE, searchText) { FuncToField = "LOWER" });
+                //Назва
+                ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.ДодатиВідбір(TreeViewGrid,
+                    new Where(Comparison.OR, <xsl:value-of select="$DirectoryName"/>_Const.Назва, Comparison.LIKE, searchText) { FuncToField = "LOWER" });
+            -->
 
             await ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.LoadRecords(TreeViewGrid, OpenFolder);
         }
@@ -402,56 +515,65 @@ namespace <xsl:value-of select="$NameSpace"/>
 
         protected override async ValueTask OpenPageElement(bool IsNew, UnigueID? unigueID = null)
         {
-            <xsl:value-of select="$DirectoryName"/>_Елемент page = new <xsl:value-of select="$DirectoryName"/>_Елемент
-            {
-                CallBack_LoadRecords = CallBack_LoadRecords,
-                IsNew = IsNew
-            };
+            await <xsl:value-of select="$DirectoryName"/>_Функції.OpenPageElement(IsNew, unigueID, CallBack_LoadRecords, null);
+            <!--
+                <xsl:value-of select="$DirectoryName"/>_Елемент page = new <xsl:value-of select="$DirectoryName"/>_Елемент
+                {
+                    CallBack_LoadRecords = CallBack_LoadRecords,
+                    IsNew = IsNew
+                };
 
-            if (IsNew)
-            {
-                await page.Елемент.New();
-                <xsl:if test="$DirectoryType = 'Hierarchical'">
-                    <xsl:text>page.РодичДляНового = new </xsl:text>
-                    <xsl:value-of select="$DirectoryName"/>_Pointer(SelectPointerItem ?? DirectoryPointerItem ?? new UnigueID());
-                </xsl:if>
-            }
-            else if (unigueID == null || !await page.Елемент.Read(unigueID))
-            {
-                Message.Error(Program.GeneralForm, "Не вдалось прочитати!");
-                return;
-            }
+                if (IsNew)
+                {
+                    await page.Елемент.New();
+                    <xsl:if test="$DirectoryType = 'Hierarchical'">
+                        <xsl:text>page.РодичДляНового = new </xsl:text>
+                        <xsl:value-of select="$DirectoryName"/>_Pointer(SelectPointerItem ?? DirectoryPointerItem ?? new UnigueID());
+                    </xsl:if>
+                }
+                else if (unigueID == null || !await page.Елемент.Read(unigueID))
+                {
+                    Message.Error(Program.GeneralForm, "Не вдалось прочитати!");
+                    return;
+                }
 
-            NotebookFunction.CreateNotebookPage(Program.GeneralNotebook, page.Caption, () =&gt; page);
-            page.SetValue();
+                NotebookFunction.CreateNotebookPage(Program.GeneralNotebook, page.Caption, () =&gt; page);
+                page.SetValue();
+            -->
         }
 
         protected override async ValueTask SetDeletionLabel(UnigueID unigueID)
         {
-            <xsl:value-of select="$DirectoryName"/>_Objest Обєкт = new <xsl:value-of select="$DirectoryName"/>_Objest();
-            if (await Обєкт.Read(unigueID))
-                await Обєкт.SetDeletionLabel(!Обєкт.DeletionLabel);
-            else
-                Message.Error(Program.GeneralForm, "Не вдалось прочитати!");
+            await <xsl:value-of select="$DirectoryName"/>_Функції.SetDeletionLabel(unigueID);
+            <!--
+                <xsl:value-of select="$DirectoryName"/>_Objest Обєкт = new <xsl:value-of select="$DirectoryName"/>_Objest();
+                if (await Обєкт.Read(unigueID))
+                    await Обєкт.SetDeletionLabel(!Обєкт.DeletionLabel);
+                else
+                    Message.Error(Program.GeneralForm, "Не вдалось прочитати!");
+            -->
         }
 
         protected override async ValueTask&lt;UnigueID?&gt; Copy(UnigueID unigueID)
         {
+            return await <xsl:value-of select="$DirectoryName"/>_Функції.Copy(unigueID);
+            <!--
             <xsl:value-of select="$DirectoryName"/>_Objest Обєкт = new <xsl:value-of select="$DirectoryName"/>_Objest();
-            if (await Обєкт.Read(unigueID))
-            {
-                <xsl:value-of select="$DirectoryName"/>_Objest Новий = await Обєкт.Copy(true);
-                await Новий.Save();
-                <xsl:for-each select="$TabularParts">
-                    await Новий.<xsl:value-of select="Name"/>_TablePart.Save(false); // Таблична частина "<xsl:value-of select="Name"/>"
-                </xsl:for-each>
-                return Новий.UnigueID;
-            }
-            else
-            {
-                Message.Error(Program.GeneralForm, "Не вдалось прочитати!");
-                return null;
-            }
+                if (await Обєкт.Read(unigueID))
+                {
+                    <xsl:value-of select="$DirectoryName"/>_Objest Новий = await Обєкт.Copy(true);
+                    await Новий.Save();
+                    <xsl:for-each select="$TabularParts">
+                        await Новий.<xsl:value-of select="Name"/>_TablePart.Save(false); // Таблична частина "<xsl:value-of select="Name"/>"
+                    </xsl:for-each>
+                    return Новий.UnigueID;
+                }
+                else
+                {
+                    Message.Error(Program.GeneralForm, "Не вдалось прочитати!");
+                    return null;
+                }
+            -->
         }
 
         #endregion
@@ -507,13 +629,8 @@ namespace <xsl:value-of select="$NameSpace"/>
         {
             ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.ОчиститиВідбір(TreeViewGrid);
 
-            //Код
-            ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.ДодатиВідбір(TreeViewGrid,
-                new Where(<xsl:value-of select="$DirectoryName"/>_Const.Код, Comparison.LIKE, searchText) { FuncToField = "LOWER" });
-
-            //Назва
-            ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.ДодатиВідбір(TreeViewGrid,
-                new Where(Comparison.OR, <xsl:value-of select="$DirectoryName"/>_Const.Назва, Comparison.LIKE, searchText) { FuncToField = "LOWER" });
+            //Відбори
+            ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_Записи.ДодатиВідбір(TreeViewGrid, <xsl:value-of select="$DirectoryName"/>_Функції.Відбори(searchText), true);
 
             await ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.LoadRecords(TreeViewGrid, OpenFolder);
         }
@@ -527,37 +644,43 @@ namespace <xsl:value-of select="$NameSpace"/>
                 OpenFolder = OpenFolder
             };
 
-            NotebookFunction.CreateNotebookPage(Program.GeneralNotebook, $"Вибір - {<xsl:value-of select="$DirectoryName"/>_Const.FULLNAME}", () =&gt; page);
+            NotebookFunction.CreateNotebookPage(Program.GeneralNotebook, <xsl:value-of select="$DirectoryName"/>_Const.FULLNAME, () =&gt; page);
             await page.SetValue();
         }
 
         protected override async ValueTask OpenPageElement(bool IsNew, UnigueID? unigueID = null)
         {
-            <xsl:value-of select="$DirectoryName"/>_Елемент page = new <xsl:value-of select="$DirectoryName"/>_Елемент
-            {
-                IsNew = IsNew,
-                CallBack_OnSelectPointer = CallBack_OnSelectPointer
-            };
+            await  <xsl:value-of select="$DirectoryName"/>_Функції.OpenPageElement(IsNew, unigueID, null, CallBack_OnSelectPointer);
+            <!--
+                <xsl:value-of select="$DirectoryName"/>_Елемент page = new <xsl:value-of select="$DirectoryName"/>_Елемент
+                {
+                    IsNew = IsNew,
+                    CallBack_OnSelectPointer = CallBack_OnSelectPointer
+                };
 
-            if (IsNew)
-                await page.Елемент.New();
-            else if (unigueID == null || !await page.Елемент.Read(unigueID))
-            {
-                Message.Error(Program.GeneralForm, "Не вдалось прочитати!");
-                return;
-            }
+                if (IsNew)
+                    await page.Елемент.New();
+                else if (unigueID == null || !await page.Елемент.Read(unigueID))
+                {
+                    Message.Error(Program.GeneralForm, "Не вдалось прочитати!");
+                    return;
+                }
 
-            NotebookFunction.CreateNotebookPage(Program.GeneralNotebook, page.Caption, () =&gt; page);
-            page.SetValue();
+                NotebookFunction.CreateNotebookPage(Program.GeneralNotebook, page.Caption, () =&gt; page);
+                page.SetValue();
+            -->
         }
 
         protected override async ValueTask SetDeletionLabel(UnigueID unigueID)
         {
-            <xsl:value-of select="$DirectoryName"/>_Objest Обєкт = new <xsl:value-of select="$DirectoryName"/>_Objest();
-            if (await Обєкт.Read(unigueID))
-                await Обєкт.SetDeletionLabel(!Обєкт.DeletionLabel);
-            else
-                Message.Error(Program.GeneralForm, "Не вдалось прочитати!");
+            await <xsl:value-of select="$DirectoryName"/>_Функції.SetDeletionLabel(unigueID);
+            <!--
+                <xsl:value-of select="$DirectoryName"/>_Objest Обєкт = new <xsl:value-of select="$DirectoryName"/>_Objest();
+                if (await Обєкт.Read(unigueID))
+                    await Обєкт.SetDeletionLabel(!Обєкт.DeletionLabel);
+                else
+                    Message.Error(Program.GeneralForm, "Не вдалось прочитати!");
+            -->
         }
     }
 }
@@ -572,7 +695,7 @@ namespace <xsl:value-of select="$NameSpace"/>
     <!-- Список з Деревом-->
     <xsl:template name="DirectoryListAndTree">
         <xsl:variable name="DirectoryName" select="Directory/Name"/>
-        <xsl:variable name="TabularParts" select="Directory/TabularParts/TablePart"/>
+        <!--<xsl:variable name="TabularParts" select="Directory/TabularParts/TablePart"/>-->
         <xsl:variable name="TabularList" select="Directory/TabularList"/>
 
         <!-- Додатова інформація для ієрархічного довідника -->
@@ -648,13 +771,8 @@ namespace <xsl:value-of select="$NameSpace"/>
         {
             ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.ОчиститиВідбір(TreeViewGrid);
 
-            //Код
-            ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.ДодатиВідбір(TreeViewGrid,
-                new Where(<xsl:value-of select="$DirectoryName"/>_Const.Код, Comparison.LIKE, searchText) { FuncToField = "LOWER" });
-
-            //Назва
-            ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.ДодатиВідбір(TreeViewGrid,
-                new Where(Comparison.OR, <xsl:value-of select="$DirectoryName"/>_Const.Назва, Comparison.LIKE, searchText) { FuncToField = "LOWER" });
+            //Відбори
+            ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_Записи.ДодатиВідбір(TreeViewGrid, <xsl:value-of select="$DirectoryName"/>_Функції.Відбори(searchText), true);
 
             await ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.LoadRecords(TreeViewGrid, OpenFolder);
         }
@@ -666,50 +784,59 @@ namespace <xsl:value-of select="$NameSpace"/>
 
         protected override async ValueTask OpenPageElement(bool IsNew, UnigueID? unigueID = null)
         {
-            <xsl:value-of select="$DirectoryName"/>_Елемент page = new <xsl:value-of select="$DirectoryName"/>_Елемент
-            {
-                CallBack_LoadRecords = CallBack_LoadRecords,
-                IsNew = IsNew
-            };
+            await  <xsl:value-of select="$DirectoryName"/>_Функції.OpenPageElement(IsNew, unigueID, CallBack_LoadRecords, null);
+            <!--
+                <xsl:value-of select="$DirectoryName"/>_Елемент page = new <xsl:value-of select="$DirectoryName"/>_Елемент
+                {
+                    CallBack_LoadRecords = CallBack_LoadRecords,
+                    IsNew = IsNew
+                };
 
-            if (IsNew)
-                await page.Елемент.New();
-            else if (unigueID == null || !await page.Елемент.Read(unigueID))
-            {
-                Message.Error(Program.GeneralForm, "Не вдалось прочитати!");
-                return;
-            }
+                if (IsNew)
+                    await page.Елемент.New();
+                else if (unigueID == null || !await page.Елемент.Read(unigueID))
+                {
+                    Message.Error(Program.GeneralForm, "Не вдалось прочитати!");
+                    return;
+                }
 
-            NotebookFunction.CreateNotebookPage(Program.GeneralNotebook, page.Caption, () =&gt; page);
-            page.SetValue();
+                NotebookFunction.CreateNotebookPage(Program.GeneralNotebook, page.Caption, () =&gt; page);
+                page.SetValue();
+            -->
         }
 
         protected override async ValueTask SetDeletionLabel(UnigueID unigueID)
         {
-            <xsl:value-of select="$DirectoryName"/>_Objest Обєкт = new <xsl:value-of select="$DirectoryName"/>_Objest();
-            if (await Обєкт.Read(unigueID))
-                await Обєкт.SetDeletionLabel(!Обєкт.DeletionLabel);
-            else
-                Message.Error(Program.GeneralForm, "Не вдалось прочитати!");
+            await  <xsl:value-of select="$DirectoryName"/>_Функції.SetDeletionLabel(unigueID);
+            <!--
+                <xsl:value-of select="$DirectoryName"/>_Objest Обєкт = new <xsl:value-of select="$DirectoryName"/>_Objest();
+                if (await Обєкт.Read(unigueID))
+                    await Обєкт.SetDeletionLabel(!Обєкт.DeletionLabel);
+                else
+                    Message.Error(Program.GeneralForm, "Не вдалось прочитати!");
+            -->
         }
 
         protected override async ValueTask&lt;UnigueID?&gt; Copy(UnigueID unigueID)
         {
-            <xsl:value-of select="$DirectoryName"/>_Objest Обєкт = new <xsl:value-of select="$DirectoryName"/>_Objest();
-            if (await Обєкт.Read(unigueID))
-            {
-                <xsl:value-of select="$DirectoryName"/>_Objest Новий = await Обєкт.Copy(true);
-                await Новий.Save();
-                <xsl:for-each select="$TabularParts">
-                    await Новий.<xsl:value-of select="Name"/>_TablePart.Save(false); // Таблична частина "<xsl:value-of select="Name"/>"
-                </xsl:for-each>
-                return Новий.UnigueID;
-            }
-            else
-            {
-                Message.Error(Program.GeneralForm, "Не вдалось прочитати!");
-                return null;
-            }
+            return await  <xsl:value-of select="$DirectoryName"/>_Функції.Copy(unigueID);
+            <!--
+                <xsl:value-of select="$DirectoryName"/>_Objest Обєкт = new <xsl:value-of select="$DirectoryName"/>_Objest();
+                if (await Обєкт.Read(unigueID))
+                {
+                    <xsl:value-of select="$DirectoryName"/>_Objest Новий = await Обєкт.Copy(true);
+                    await Новий.Save();
+                    <xsl:for-each select="$TabularParts">
+                        await Новий.<xsl:value-of select="Name"/>_TablePart.Save(false); // Таблична частина "<xsl:value-of select="Name"/>"
+                    </xsl:for-each>
+                    return Новий.UnigueID;
+                }
+                else
+                {
+                    Message.Error(Program.GeneralForm, "Не вдалось прочитати!");
+                    return null;
+                }
+            -->
         }
 
         #endregion

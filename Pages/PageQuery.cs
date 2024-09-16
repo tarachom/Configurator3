@@ -24,6 +24,7 @@ limitations under the License.
 using Gtk;
 
 using AccountingSoftware;
+using GtkSource;
 
 namespace Configurator
 {
@@ -40,13 +41,12 @@ namespace Configurator
         #region Fields
 
         Entry entryKey = new Entry() { WidthRequest = 800 };
-        TextView textViewQuery = new TextView() { WrapMode = WrapMode.Word };
+        SourceView sourceViewCode = new SourceView() { ShowLineNumbers = true };
 
         #endregion
 
         public PageQuery() : base()
         {
-            new VBox();
             HBox hBox = new HBox();
 
             Button bSave = new Button("Зберегти");
@@ -88,9 +88,11 @@ namespace Configurator
 
             hBoxQuery.PackStart(new Label("SQL:") { Valign = Align.Start }, false, false, 5);
 
+            sourceViewCode.Buffer.Language = new LanguageManager().GetLanguage("sql");
+
             ScrolledWindow scrollTextView = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 1000, HeightRequest = 700 };
             scrollTextView.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-            scrollTextView.Add(textViewQuery);
+            scrollTextView.Add(sourceViewCode);
 
             hBoxQuery.PackStart(scrollTextView, false, false, 5);
             hPaned.Pack1(vBox, false, false);
@@ -118,7 +120,7 @@ namespace Configurator
         public void SetValue()
         {
             if (!IsNew)
-                textViewQuery.Buffer.Text = QueryBlock.Query[Key];
+                sourceViewCode.Buffer.Text = QueryBlock.Query[Key];
 
             entryKey.Text = Key;
         }
@@ -164,7 +166,7 @@ namespace Configurator
 
             GetValue();
 
-            QueryBlock.Query.Add(Key, textViewQuery.Buffer.Text);
+            QueryBlock.Query.Add(Key, sourceViewCode.Buffer.Text);
 
             IsNew = false;
 
