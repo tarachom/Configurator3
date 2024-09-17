@@ -334,7 +334,7 @@ namespace Configurator
                     Box hBoxSubordinationPointerFieldOwner = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
                     vBoxSubordination.PackStart(hBoxSubordinationPointerFieldOwner, false, false, 5);
 
-                    hBoxSubordinationPointerFieldOwner.PackStart(new Label("Поле вказівник на власника:"), false, false, 2);
+                    hBoxSubordinationPointerFieldOwner.PackStart(new Label("Поле вказівник на довідник власник:"), false, false, 2);
                     hBoxSubordinationPointerFieldOwner.PackStart(comboBoxSubordinationPointerFieldOwner, false, false, 2);
                 }
 
