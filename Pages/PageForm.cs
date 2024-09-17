@@ -46,7 +46,7 @@ namespace Configurator
         public bool IsNew { get; set; } = true;
         public OwnerTablePart Owner { get; set; } = new OwnerTablePart();
         public ConfigurationForms.TypeForms TypeForm { get; set; } = ConfigurationForms.TypeForms.None;
-        public DirectoryOtherInfoStruct DirectoryOtherInfo { get; set; } = new DirectoryOtherInfoStruct(); // Для ієрархічного довідника
+        public DirectoryOtherInfoStruct DirectoryOtherInfo { get; set; } = new DirectoryOtherInfoStruct(); // Для довідника
 
         #region Fields
 
@@ -652,10 +652,20 @@ namespace Configurator
                     nodeDirectoryParentField.InnerText = DirectoryOtherInfo.ParentField;
                     nodeDirectory.AppendChild(nodeDirectoryParentField);
                 }
+
+                //Довідник власник
+                XmlElement nodeDirectoryOwner = xmlConfDocument.CreateElement("DirectoryOwner");
+                nodeDirectoryOwner.InnerText = DirectoryOtherInfo.DirectoryOwner;
+                nodeDirectory.AppendChild(nodeDirectoryOwner);
+
+                //Поле вказівник на довідник власник
+                XmlElement nodePointerFieldOwner = xmlConfDocument.CreateElement("PointerFieldOwner");
+                nodePointerFieldOwner.InnerText = DirectoryOtherInfo.PointerFieldOwner;
+                nodeDirectory.AppendChild(nodePointerFieldOwner);
             }
 
-            if (TypeForm == ConfigurationForms.TypeForms.List || 
-                TypeForm == ConfigurationForms.TypeForms.ListSmallSelect || 
+            if (TypeForm == ConfigurationForms.TypeForms.List ||
+                TypeForm == ConfigurationForms.TypeForms.ListSmallSelect ||
                 TypeForm == ConfigurationForms.TypeForms.ListAndTree)
             {
                 XmlElement nodeTabularList = xmlConfDocument.CreateElement("TabularList");
@@ -683,10 +693,10 @@ namespace Configurator
                 XmlElement nodeOwnerName = xmlConfDocument.CreateElement("OwnerName");
                 nodeOwnerName.InnerText = Owner.Name;
                 nodeDirectory.AppendChild(nodeOwnerName);
-                
+
                 Configuration.SaveFormElementField(Fields, Form.ElementFields, xmlConfDocument, nodeDirectory);
             }
-            else if(TypeForm == ConfigurationForms.TypeForms.Function)
+            else if (TypeForm == ConfigurationForms.TypeForms.Function)
             {
                 Configuration.SaveFields(Fields, xmlConfDocument, nodeDirectory, ParentType);
                 Configuration.SaveTabularParts(TabularParts, xmlConfDocument, nodeDirectory);

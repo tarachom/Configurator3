@@ -64,6 +64,12 @@ namespace <xsl:value-of select="Configuration/NameSpaceGenerationCode"/>.Дов�
               <xsl:otherwise>Select</xsl:otherwise>
           </xsl:choose>
       </xsl:variable>
+      <xsl:variable name="IconTree">
+          <xsl:choose>
+              <xsl:when test="$DirectoryType = 'Hierarchical' and IconTree = 'Folder'">ДляДерева</xsl:when>
+              <xsl:otherwise>ДляТабличногоСписку</xsl:otherwise>
+          </xsl:choose>
+      </xsl:variable>
     #region DIRECTORY "<xsl:value-of select="$DirectoryName"/>"
       <xsl:for-each select="TabularLists/TabularList">
         <xsl:variable name="TabularListName" select="Name"/>
@@ -82,7 +88,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGenerationCode"/>.Дов�
         {
             return new object[] 
             { 
-                DeletionLabel ? InterfaceGtk.Іконки.ДляТабличногоСписку.Delete : InterfaceGtk.Іконки.ДляТабличногоСписку.Normal,
+                DeletionLabel ? InterfaceGtk.Іконки.<xsl:value-of select="$IconTree"/>.Delete : InterfaceGtk.Іконки.<xsl:value-of select="$IconTree"/>.Normal,
                 ID,
                 <xsl:for-each select="Fields/Field">
                   <xsl:text>/*</xsl:text><xsl:value-of select="Name"/>*/ <xsl:value-of select="Name"/>,

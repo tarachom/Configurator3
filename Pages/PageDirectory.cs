@@ -70,6 +70,9 @@ namespace Configurator
         ComboBoxText comboBoxTypeDir = new ComboBoxText();
         ComboBoxText comboBoxPointerFolders = new ComboBoxText();
         ComboBoxText comboBoxParentField = new ComboBoxText();
+        ComboBoxText comboBoxIconTree = new ComboBoxText();
+        ComboBoxText comboBoxSubordinationDirectoryOwner = new ComboBoxText();
+        ComboBoxText comboBoxSubordinationPointerFieldOwner = new ComboBoxText();
 
         #endregion
 
@@ -164,11 +167,17 @@ namespace Configurator
 
                 //Поле родич для Ієрархічного довідника
                 {
+                    comboBoxIconTree.Append("Folder", "Папка");
+                    comboBoxIconTree.Append("Element", "Елемент");
+
                     Box hBoxParentField = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
                     vBoxHierarchical.PackStart(hBoxParentField, false, false, 5);
 
-                    hBoxParentField.PackStart(new Label("Поле <b>Родич</b> для <b>Ієрархічного</b>:") { UseMarkup = true }, false, false, 2);
+                    hBoxParentField.PackStart(new Label("Поле <b>Родич:</b>") { UseMarkup = true }, false, false, 2);
                     hBoxParentField.PackStart(comboBoxParentField, false, false, 5);
+
+                    hBoxParentField.PackStart(new Label("Іконка:"), false, false, 5);
+                    hBoxParentField.PackStart(comboBoxIconTree, false, false, 5);
                 }
 
                 //Вказівник на ієрархію в окремому довіднику
@@ -301,6 +310,35 @@ namespace Configurator
 
                     hBoxButton.PackStart(buttonAdd, false, false, 5);
                 }
+            }
+
+            //Підпорядкованість
+            {
+                Expander expanderSubordination = new Expander("Підпорядкованість");
+                vBox.PackStart(expanderSubordination, false, false, 5);
+
+                Box vBoxSubordination = new Box(Orientation.Vertical, 0);
+                expanderSubordination.Add(vBoxSubordination);
+
+                //Довідник підпорядкування
+                {
+                    Box hBoxSubordinationDirectory = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
+                    vBoxSubordination.PackStart(hBoxSubordinationDirectory, false, false, 5);
+
+                    hBoxSubordinationDirectory.PackStart(new Label("Довідник власник:"), false, false, 2);
+                    hBoxSubordinationDirectory.PackStart(comboBoxSubordinationDirectoryOwner, false, false, 2);
+                }
+
+                //Поле вказівник на власника
+                {
+                    Box hBoxSubordinationPointerFieldOwner = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
+                    vBoxSubordination.PackStart(hBoxSubordinationPointerFieldOwner, false, false, 5);
+
+                    hBoxSubordinationPointerFieldOwner.PackStart(new Label("Поле вказівник на власника:"), false, false, 2);
+                    hBoxSubordinationPointerFieldOwner.PackStart(comboBoxSubordinationPointerFieldOwner, false, false, 2);
+                }
+
+                comboBoxSubordinationDirectoryOwner.Changed += (object? sender, EventArgs args) => FillSubordinationPointerFieldOwner();
             }
 
             //Автоматична нумерація
@@ -923,6 +961,11 @@ class {entryName.Text}_Triggers
 
             FillFields();
             comboBoxParentField.ActiveId = ConfDirectory.ParentField_Hierarchical;
+            comboBoxIconTree.ActiveId = ConfDirectory.IconTree_Hierarchical;
+            if (comboBoxIconTree.Active == -1) comboBoxIconTree.Active = 0;
+
+            FillSubordinationDirectory();
+            comboBoxSubordinationDirectoryOwner.ActiveId = ConfDirectory.DirectoryOwner_Subordination;
 
             FillTabularParts();
             FillTabularList();
@@ -982,6 +1025,36 @@ class {entryName.Text}_Triggers
             comboBoxPointerFolders.ShowAll();
         }
 
+        void FillSubordinationDirectory()
+        {
+            comboBoxSubordinationDirectoryOwner.RemoveAll();
+            comboBoxSubordinationDirectoryOwner.Append("", " --- Без власника --- ");
+
+            foreach (ConfigurationDirectories item in Conf.Directories.Values)
+                comboBoxSubordinationDirectoryOwner.Append($"Довідники.{item.Name}", $"Довідники.{item.Name}");
+
+            comboBoxSubordinationDirectoryOwner.ShowAll();
+        }
+
+        void FillSubordinationPointerFieldOwner()
+        {
+            comboBoxSubordinationPointerFieldOwner.RemoveAll();
+            string directoryOwner = comboBoxSubordinationDirectoryOwner.ActiveId;
+
+            if (!string.IsNullOrEmpty(directoryOwner))
+            {
+                foreach (ConfigurationField field in ConfDirectory.Fields.Values)
+                {
+                    //Поля
+                    if (field.Type == "pointer" && field.Pointer == directoryOwner)
+                        comboBoxSubordinationPointerFieldOwner.Append(field.Name, field.Name);
+                }
+
+                comboBoxSubordinationPointerFieldOwner.ActiveId = ConfDirectory.PointerFieldOwner_Subordination;
+                if (comboBoxSubordinationPointerFieldOwner.Active == -1) comboBoxSubordinationPointerFieldOwner.Active = 0;
+            }
+        }
+
         void GetValue()
         {
             //Поле з повною назвою переноситься із назви
@@ -1018,6 +1091,9 @@ class {entryName.Text}_Triggers
             ConfDirectory.TypeDirectory = directoryOtherInfo.TypeDirectory;
             ConfDirectory.PointerFolders_HierarchyInAnotherDirectory = directoryOtherInfo.PointerFolders;
             ConfDirectory.ParentField_Hierarchical = directoryOtherInfo.ParentField;
+            ConfDirectory.IconTree_Hierarchical = comboBoxIconTree.ActiveId;
+            ConfDirectory.DirectoryOwner_Subordination = comboBoxSubordinationDirectoryOwner.ActiveId;
+            ConfDirectory.PointerFieldOwner_Subordination = comboBoxSubordinationPointerFieldOwner.ActiveId;
         }
 
         DirectoryOtherInfoStruct GetDirectoryOtherInfo()
@@ -1033,7 +1109,13 @@ class {entryName.Text}_Triggers
 
                 //ParentField
                 (ConfDirectory.TypeDirectory == ConfigurationDirectories.TypeDirectories.Hierarchical && comboBoxParentField.Active != -1) ?
-                comboBoxParentField.ActiveId : ""
+                comboBoxParentField.ActiveId : "",
+
+                //Довідник власник
+                comboBoxSubordinationDirectoryOwner.ActiveId,
+
+                //Поле вказівник на довідник власник
+                comboBoxSubordinationPointerFieldOwner.ActiveId
             );
         }
 
@@ -1627,7 +1709,9 @@ class {entryName.Text}_Triggers
     /// <summary>
     /// Структура для додаткової інформації про ієрархічний довідник
     /// </summary>
-    struct DirectoryOtherInfoStruct(ConfigurationDirectories.TypeDirectories typeDirectory = ConfigurationDirectories.TypeDirectories.Normal, string pointerFolders = "", string parentField = "")
+    struct DirectoryOtherInfoStruct(ConfigurationDirectories.TypeDirectories typeDirectory = ConfigurationDirectories.TypeDirectories.Normal,
+        string pointerFolders = "", string parentField = "",
+        string directoryOwner = "", string pointerFieldOwner = "")
     {
         /// <summary>
         /// Тип довідника
@@ -1643,5 +1727,15 @@ class {entryName.Text}_Triggers
         /// Поле Родич для ConfigurationDirectories.TypeDirectories.Hierarchical
         /// </summary>
         public string ParentField = parentField;
+
+        /// <summary>
+        /// Довідник власник
+        /// </summary>
+        public string DirectoryOwner = directoryOwner;
+
+        /// <summary>
+        /// Поле вказівник на довідник власник
+        /// </summary>
+        public string PointerFieldOwner = pointerFieldOwner;
     }
 }

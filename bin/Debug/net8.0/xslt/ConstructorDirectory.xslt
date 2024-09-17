@@ -73,6 +73,10 @@ limitations under the License.
 
         <!-- Відфільтровані поля по типу даних -->
         <xsl:variable name="FieldsFilter" select="$Fields[Type = 'string' or Type = 'integer' or Type = 'numeric' or Type = 'date' or Type = 'datetime' or Type = 'time']"/>
+
+        <!-- Додатова інформація про підпорядкування довідника -->
+        <xsl:variable name="DirectoryOwner" select="Directory/DirectoryOwner"/>
+        <xsl:variable name="PointerFieldOwner" select="Directory/PointerFieldOwner"/>
 /*
         <xsl:value-of select="$DirectoryName"/>_Функції.cs
         Функції
@@ -113,7 +117,9 @@ namespace <xsl:value-of select="$NameSpace"/>
 
         public static async ValueTask OpenPageElement(bool IsNew, UnigueID? unigueID = null, 
             Action&lt;UnigueID?&gt;? сallBack_LoadRecords = null, 
-            Action&lt;UnigueID&gt;? сallBack_OnSelectPointer = null)
+            Action&lt;UnigueID&gt;? сallBack_OnSelectPointer = null<xsl:if test="normalize-space($DirectoryOwner) != ''">,
+            <xsl:variable name="namePointer" select="substring-after($DirectoryOwner, '.')" />
+            <xsl:value-of select="$namePointer"/>_Pointer? Власник = null</xsl:if>)
         {
             <xsl:value-of select="$DirectoryName"/>_Елемент page = new <xsl:value-of select="$DirectoryName"/>_Елемент
             {
@@ -123,7 +129,14 @@ namespace <xsl:value-of select="$NameSpace"/>
             };
 
             if (IsNew)
+            {
                 await page.Елемент.New();
+                <xsl:if test="normalize-space($DirectoryOwner) != ''">
+                <xsl:variable name="namePointer" select="substring-after($DirectoryOwner, '.')" />
+                if (Власник != null)
+                    page.ВласникДляНового = Власник;
+                </xsl:if>
+            }
             else if (unigueID == null || !await page.Елемент.Read(unigueID))
             {
                 Message.Error(Program.GeneralForm, "Не вдалось прочитати!");
@@ -183,6 +196,10 @@ namespace <xsl:value-of select="$NameSpace"/>
         <!-- Додатова інформація для ієрархічного довідника -->
         <xsl:variable name="DirectoryType" select="Directory/Type"/>
         <xsl:variable name="ParentField" select="Directory/ParentField"/> <!-- Поле Родич (тільки для ієрархічного) -->
+
+        <!-- Додатова інформація про підпорядкування довідника -->
+        <xsl:variable name="DirectoryOwner" select="Directory/DirectoryOwner"/>
+        <xsl:variable name="PointerFieldOwner" select="Directory/PointerFieldOwner"/>
 /*
         <xsl:value-of select="$DirectoryName"/>_Елемент.cs
         Елемент
@@ -200,8 +217,12 @@ namespace <xsl:value-of select="$NameSpace"/>
     class <xsl:value-of select="$DirectoryName"/>_Елемент : ДовідникЕлемент
     {
         public <xsl:value-of select="$DirectoryName"/>_Objest Елемент { get; init; } = new <xsl:value-of select="$DirectoryName"/>_Objest();
+        <xsl:if test="normalize-space($DirectoryOwner) != ''">
+        <xsl:variable name="namePointer" select="substring-after($DirectoryOwner, '.')" />
+        public <xsl:value-of select="$namePointer"/>_Pointer ВласникДляНового = new <xsl:value-of select="$namePointer"/>_Pointer();
+        </xsl:if>
         <xsl:if test="$DirectoryType = 'Hierarchical'">
-            public <xsl:value-of select="$DirectoryName"/>_Pointer РодичДляНового { get; set; } = new <xsl:value-of select="$DirectoryName"/>_Pointer();
+        public <xsl:value-of select="$DirectoryName"/>_Pointer РодичДляНового { get; set; } = new <xsl:value-of select="$DirectoryName"/>_Pointer();
         </xsl:if>
         #region Fields
         <xsl:for-each select="$FieldsTL">
@@ -329,7 +350,11 @@ namespace <xsl:value-of select="$NameSpace"/>
         #region Присвоєння / зчитування значень
 
         public override void SetValue()
-        {            
+        {
+            <xsl:if test="normalize-space($DirectoryOwner) != ''">
+            if (IsNew) 
+                Елемент.<xsl:value-of select="$PointerFieldOwner"/> = ВласникДляНового;
+            </xsl:if>
             <xsl:choose>
                 <xsl:when test="$DirectoryType = 'Hierarchical'">
                     if (IsNew)
@@ -458,6 +483,10 @@ namespace <xsl:value-of select="$NameSpace"/>
         <!-- Додатова інформація для ієрархічного довідника -->
         <xsl:variable name="DirectoryType" select="Directory/Type"/>
         <xsl:variable name="ParentField" select="Directory/ParentField"/> <!-- Поле Родич (тільки для ієрархічного) -->
+
+        <!-- Додатова інформація про підпорядкування довідника -->
+        <xsl:variable name="DirectoryOwner" select="Directory/DirectoryOwner"/>
+        <xsl:variable name="PointerFieldOwner" select="Directory/PointerFieldOwner"/>
 /*     
         <xsl:value-of select="$DirectoryName"/>.cs
         Список
@@ -466,15 +495,25 @@ namespace <xsl:value-of select="$NameSpace"/>
 using Gtk;
 using InterfaceGtk;
 using AccountingSoftware;
+using <xsl:value-of select="$NameSpaceGenerationCode"/>.Довідники;
 using ТабличніСписки = <xsl:value-of select="$NameSpaceGenerationCode"/>.Довідники.ТабличніСписки;
 
 namespace <xsl:value-of select="$NameSpace"/>
 {
     public class <xsl:value-of select="$DirectoryName"/> : ДовідникЖурнал
     {
+        <xsl:if test="normalize-space($DirectoryOwner) != ''">
+        <xsl:variable name="namePointer" select="substring-after($DirectoryOwner, '.')" />
+        public <xsl:value-of select="$namePointer"/>_PointerControl Власник = new <xsl:value-of select="$namePointer"/>_PointerControl() { Caption = "<xsl:value-of select="$PointerFieldOwner"/>:" };
+        </xsl:if>
+
         public <xsl:value-of select="$DirectoryName"/>() : base()
         {
             ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.AddColumns(TreeViewGrid);
+            <xsl:if test="normalize-space($DirectoryOwner) != ''">
+            HBoxTop.PackStart(Власник, false, false, 2);
+            Власник.AfterSelectFunc = async () =&gt; await LoadRecords();
+            </xsl:if>
         }
 
         #region Override
@@ -485,25 +524,24 @@ namespace <xsl:value-of select="$NameSpace"/>
             ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.DirectoryPointerItem = DirectoryPointerItem;
 
             ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.ОчиститиВідбір(TreeViewGrid);
-
+            <xsl:if test="normalize-space($DirectoryOwner) != ''">
+            if (!Власник.Pointer.UnigueID.IsEmpty())
+                ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.ДодатиВідбір(TreeViewGrid,
+                    new Where(<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="$PointerFieldOwner"/>, Comparison.EQ, Власник.Pointer.UnigueID.UGuid));
+            </xsl:if>
             await ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.LoadRecords(TreeViewGrid, OpenFolder);
         }
 
         protected override async ValueTask LoadRecords_OnSearch(string searchText)
         {
             ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.ОчиститиВідбір(TreeViewGrid);
-
+            <xsl:if test="normalize-space($DirectoryOwner) != ''">
+            if (!Власник.Pointer.UnigueID.IsEmpty())
+                ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.ДодатиВідбір(TreeViewGrid,
+                    new Where(<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="$PointerFieldOwner"/>, Comparison.EQ, Власник.Pointer.UnigueID.UGuid));
+            </xsl:if>
             //Відбори
-            ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_Записи.ДодатиВідбір(TreeViewGrid, <xsl:value-of select="$DirectoryName"/>_Функції.Відбори(searchText), true);
-            <!--
-                //Код
-                ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.ДодатиВідбір(TreeViewGrid,
-                    new Where(<xsl:value-of select="$DirectoryName"/>_Const.Код, Comparison.LIKE, searchText) { FuncToField = "LOWER" });
-
-                //Назва
-                ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.ДодатиВідбір(TreeViewGrid,
-                    new Where(Comparison.OR, <xsl:value-of select="$DirectoryName"/>_Const.Назва, Comparison.LIKE, searchText) { FuncToField = "LOWER" });
-            -->
+            ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_Записи.ДодатиВідбір(TreeViewGrid, <xsl:value-of select="$DirectoryName"/>_Функції.Відбори(searchText));
 
             await ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.LoadRecords(TreeViewGrid, OpenFolder);
         }
@@ -515,7 +553,7 @@ namespace <xsl:value-of select="$NameSpace"/>
 
         protected override async ValueTask OpenPageElement(bool IsNew, UnigueID? unigueID = null)
         {
-            await <xsl:value-of select="$DirectoryName"/>_Функції.OpenPageElement(IsNew, unigueID, CallBack_LoadRecords, null);
+            await <xsl:value-of select="$DirectoryName"/>_Функції.OpenPageElement(IsNew, unigueID, CallBack_LoadRecords, null<xsl:if test="normalize-space($DirectoryOwner) != ''">, Власник.Pointer</xsl:if>);
             <!--
                 <xsl:value-of select="$DirectoryName"/>_Елемент page = new <xsl:value-of select="$DirectoryName"/>_Елемент
                 {
@@ -595,6 +633,10 @@ namespace <xsl:value-of select="$NameSpace"/>
         <!-- Додатова інформація для ієрархічного довідника -->
         <xsl:variable name="DirectoryType" select="Directory/Type"/>
         <xsl:variable name="ParentField" select="Directory/ParentField"/> <!-- Поле Родич (тільки для ієрархічного) -->
+
+        <!-- Додатова інформація про підпорядкування довідника -->
+        <xsl:variable name="DirectoryOwner" select="Directory/DirectoryOwner"/>
+        <xsl:variable name="PointerFieldOwner" select="Directory/PointerFieldOwner"/>
 /*     
         <xsl:value-of select="$DirectoryName"/>_ШвидкийВибір.cs
         ШвидкийВибір
@@ -610,9 +652,18 @@ namespace <xsl:value-of select="$NameSpace"/>
 {
     class <xsl:value-of select="$DirectoryName"/>_ШвидкийВибір : ДовідникШвидкийВибір
     {
+        <xsl:if test="normalize-space($DirectoryOwner) != ''">
+        <xsl:variable name="namePointer" select="substring-after($DirectoryOwner, '.')" />
+        public <xsl:value-of select="$namePointer"/>_PointerControl Власник = new <xsl:value-of select="$namePointer"/>_PointerControl() { Caption = "<xsl:value-of select="$PointerFieldOwner"/>:" };
+        </xsl:if>
+        
         public <xsl:value-of select="$DirectoryName"/>_ШвидкийВибір() : base()
         {
             ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.AddColumns(TreeViewGrid);
+            <xsl:if test="normalize-space($DirectoryOwner) != ''">
+            HBoxTop.PackStart(Власник, false, false, 2); //Власник
+            Власник.AfterSelectFunc = async () =&gt; await LoadRecords();
+            </xsl:if>
         }
 
         protected override async ValueTask LoadRecords()
@@ -621,16 +672,24 @@ namespace <xsl:value-of select="$NameSpace"/>
             ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.DirectoryPointerItem = DirectoryPointerItem;
 
             ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.ОчиститиВідбір(TreeViewGrid);
-
+            <xsl:if test="normalize-space($DirectoryOwner) != ''">
+            if (!Власник.Pointer.UnigueID.IsEmpty())
+                ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.ДодатиВідбір(TreeViewGrid,
+                    new Where(<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="$PointerFieldOwner"/>, Comparison.EQ, Власник.Pointer.UnigueID.UGuid));
+            </xsl:if>
             await ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.LoadRecords(TreeViewGrid, OpenFolder);
         }
 
         protected override async ValueTask LoadRecords_OnSearch(string searchText)
         {
             ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.ОчиститиВідбір(TreeViewGrid);
-
+            <xsl:if test="normalize-space($DirectoryOwner) != ''">
+            if (!Власник.Pointer.UnigueID.IsEmpty())
+                ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.ДодатиВідбір(TreeViewGrid,
+                    new Where(<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="$PointerFieldOwner"/>, Comparison.EQ, Власник.Pointer.UnigueID.UGuid));
+            </xsl:if>            
             //Відбори
-            ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_Записи.ДодатиВідбір(TreeViewGrid, <xsl:value-of select="$DirectoryName"/>_Функції.Відбори(searchText), true);
+            ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_Записи.ДодатиВідбір(TreeViewGrid, <xsl:value-of select="$DirectoryName"/>_Функції.Відбори(searchText));
 
             await ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.LoadRecords(TreeViewGrid, OpenFolder);
         }
@@ -643,14 +702,16 @@ namespace <xsl:value-of select="$NameSpace"/>
                 CallBack_OnSelectPointer = CallBack_OnSelectPointer,
                 OpenFolder = OpenFolder
             };
-
+            <xsl:if test="normalize-space($DirectoryOwner) != ''">
+            page.Власник.Pointer = Власник.Pointer;
+            </xsl:if>
             NotebookFunction.CreateNotebookPage(Program.GeneralNotebook, <xsl:value-of select="$DirectoryName"/>_Const.FULLNAME, () =&gt; page);
             await page.SetValue();
         }
 
         protected override async ValueTask OpenPageElement(bool IsNew, UnigueID? unigueID = null)
         {
-            await  <xsl:value-of select="$DirectoryName"/>_Функції.OpenPageElement(IsNew, unigueID, null, CallBack_OnSelectPointer);
+            await  <xsl:value-of select="$DirectoryName"/>_Функції.OpenPageElement(IsNew, unigueID, null, CallBack_OnSelectPointer<xsl:if test="normalize-space($DirectoryOwner) != ''">, Власник.Pointer</xsl:if>);
             <!--
                 <xsl:value-of select="$DirectoryName"/>_Елемент page = new <xsl:value-of select="$DirectoryName"/>_Елемент
                 {
@@ -709,6 +770,10 @@ namespace <xsl:value-of select="$NameSpace"/>
                 <xsl:otherwise>Папка</xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
+
+        <!-- Додатова інформація про підпорядкування довідника -->
+        <xsl:variable name="DirectoryOwner" select="Directory/DirectoryOwner"/>
+        <xsl:variable name="PointerFieldOwner" select="Directory/PointerFieldOwner"/>
 /*     
         <xsl:value-of select="$DirectoryName"/>.cs 
         Список з Деревом
@@ -726,8 +791,12 @@ namespace <xsl:value-of select="$NameSpace"/>
     {
         CheckButton checkButtonIsHierarchy = new CheckButton("Ієрархія папок") { Active = true };
         <xsl:value-of select="$PointerFolders"/> ДеревоПапок;
+        <xsl:if test="normalize-space($DirectoryOwner) != ''">
+        <xsl:variable name="namePointer" select="substring-after($DirectoryOwner, '.')" />
+        public <xsl:value-of select="$namePointer"/>_PointerControl Власник = new <xsl:value-of select="$namePointer"/>_PointerControl() { Caption = "<xsl:value-of select="$PointerFieldOwner"/>:" };
+        </xsl:if>
 
-        public <xsl:value-of select="$DirectoryName"/>() : base()
+        public <xsl:value-of select="$DirectoryName"/>()
         {
             //Враховувати ієрархію папок
             checkButtonIsHierarchy.Clicked += async (object? sender, EventArgs args) =&gt; await LoadRecords();
@@ -738,6 +807,10 @@ namespace <xsl:value-of select="$NameSpace"/>
             HPanedTable.Pack2(ДеревоПапок, false, true);
 
             ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.AddColumns(TreeViewGrid);
+            <xsl:if test="normalize-space($DirectoryOwner) != ''">
+            HBoxTop.PackStart(Власник, false, false, 2); //Власник
+            Власник.AfterSelectFunc = () =&gt; ДеревоПапок.Власник.Pointer = Власник.Pointer;
+            </xsl:if>
         }
 
         #region Override
@@ -759,7 +832,11 @@ namespace <xsl:value-of select="$NameSpace"/>
             ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.DirectoryPointerItem = DirectoryPointerItem;
 
             ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.ОчиститиВідбір(TreeViewGrid);
-
+            <xsl:if test="normalize-space($DirectoryOwner) != ''">
+            if (!Власник.Pointer.UnigueID.IsEmpty())
+                ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.ДодатиВідбір(TreeViewGrid,
+                    new Where(<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="$PointerFieldOwner"/>, Comparison.EQ, Власник.Pointer.UnigueID.UGuid));
+            </xsl:if>
             if (checkButtonIsHierarchy.Active)
                 ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.ДодатиВідбір(TreeViewGrid,
                     new Where(<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="$FieldFolder"/>, Comparison.EQ, ДеревоПапок.SelectPointerItem?.UGuid ?? new UnigueID().UGuid));
@@ -770,9 +847,13 @@ namespace <xsl:value-of select="$NameSpace"/>
         protected override async ValueTask LoadRecords_OnSearch(string searchText)
         {
             ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.ОчиститиВідбір(TreeViewGrid);
-
+            <xsl:if test="normalize-space($DirectoryOwner) != ''">
+            if (!Власник.Pointer.UnigueID.IsEmpty())
+                ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.ДодатиВідбір(TreeViewGrid,
+                    new Where(<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="$PointerFieldOwner"/>, Comparison.EQ, Власник.Pointer.UnigueID.UGuid));
+            </xsl:if>
             //Відбори
-            ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_Записи.ДодатиВідбір(TreeViewGrid, <xsl:value-of select="$DirectoryName"/>_Функції.Відбори(searchText), true);
+            ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_Записи.ДодатиВідбір(TreeViewGrid, <xsl:value-of select="$DirectoryName"/>_Функції.Відбори(searchText));
 
             await ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.LoadRecords(TreeViewGrid, OpenFolder);
         }
@@ -784,7 +865,7 @@ namespace <xsl:value-of select="$NameSpace"/>
 
         protected override async ValueTask OpenPageElement(bool IsNew, UnigueID? unigueID = null)
         {
-            await  <xsl:value-of select="$DirectoryName"/>_Функції.OpenPageElement(IsNew, unigueID, CallBack_LoadRecords, null);
+            await  <xsl:value-of select="$DirectoryName"/>_Функції.OpenPageElement(IsNew, unigueID, CallBack_LoadRecords, null<xsl:if test="normalize-space($DirectoryOwner) != ''">, Власник.Pointer</xsl:if>);
             <!--
                 <xsl:value-of select="$DirectoryName"/>_Елемент page = new <xsl:value-of select="$DirectoryName"/>_Елемент
                 {
@@ -853,6 +934,10 @@ namespace <xsl:value-of select="$NameSpace"/>
     <!-- PointerControl -->
     <xsl:template name="DirectoryPointerControl">
         <xsl:variable name="DirectoryName" select="Directory/Name"/>
+
+        <!-- Додатова інформація про підпорядкування довідника -->
+        <xsl:variable name="DirectoryOwner" select="Directory/DirectoryOwner"/>
+        <xsl:variable name="PointerFieldOwner" select="Directory/PointerFieldOwner"/>
 /*     
         <xsl:value-of select="$DirectoryName"/>_PointerControl.cs
         PointerControl (Список)
@@ -894,6 +979,11 @@ namespace <xsl:value-of select="$NameSpace"/>
             }
         }
 
+        <xsl:if test="normalize-space($DirectoryOwner) != ''">
+        <xsl:variable name="namePointer" select="substring-after($DirectoryOwner, '.')" />
+        public <xsl:value-of select="$namePointer"/>_Pointer Власник { get; set; } = new <xsl:value-of select="$namePointer"/>_Pointer();
+        </xsl:if>
+
         protected override async void OpenSelect(object? sender, EventArgs args)
         {
             Popover popover = new Popover((Button)sender!) { Position = PositionType.Bottom, BorderWidth = 2 };
@@ -909,6 +999,9 @@ namespace <xsl:value-of select="$NameSpace"/>
                     AfterSelectFunc?.Invoke();
                 }
             };
+            <xsl:if test="normalize-space($DirectoryOwner) != ''">
+            page.Власник.Pointer = Власник;
+            </xsl:if>
             popover.Add(page);
             popover.ShowAll();
 
