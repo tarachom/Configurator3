@@ -1314,6 +1314,12 @@ class {entryName.Text}_Triggers
             Menu Menu = new Menu();
 
             {
+                MenuItem item = new MenuItem("Функції");
+                item.Activated += (object? sender, EventArgs args) => { OnFormsListAdd(ConfigurationForms.TypeForms.Function); };
+                Menu.Append(item);
+            }
+            
+            {
                 MenuItem item = new MenuItem("Елемент");
                 item.Activated += (object? sender, EventArgs args) => { OnFormsListAdd(ConfigurationForms.TypeForms.Element); };
                 Menu.Append(item);

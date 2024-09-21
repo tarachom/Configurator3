@@ -50,7 +50,7 @@ namespace Configurator
         CheckButton checkButtonIndex = new CheckButton("Індексувати");
         CheckButton checkButtonPresentation = new CheckButton("Використовувати для представлення");
         CheckButton checkButtonFullTextSearch = new CheckButton("Повнотекстовий пошук");
-        CheckButton checkButtonSearch = new CheckButton("Пошук у списку");
+        CheckButton checkButtonSearch = new CheckButton("Пошук в журналах");
         CheckButton checkButtonMultiline = new CheckButton("Багатострічкове поле");
 
         //Для композитного типу даних
