@@ -182,19 +182,19 @@ namespace Configurator
             Toolbar toolbar = new Toolbar();
             vBox.PackStart(toolbar, false, false, 0);
 
-            ToolButton buttonAdd = new ToolButton(Stock.New) { Label = "Додати", IsImportant = true };
+            ToolButton buttonAdd = new ToolButton(new Image(Stock.New, IconSize.Menu), "Додати") { Label = "Додати", IsImportant = true };
             buttonAdd.Clicked += OnDimensionFieldsAddClick;
             toolbar.Add(buttonAdd);
 
-            ToolButton buttonCopy = new ToolButton(Stock.Copy) { Label = "Копіювати", IsImportant = true };
+            ToolButton buttonCopy = new ToolButton(new Image(Stock.Copy, IconSize.Menu), "Копіювати") { Label = "Копіювати", IsImportant = true };
             buttonCopy.Clicked += OnDimensionFieldsCopyClick;
             toolbar.Add(buttonCopy);
 
-            ToolButton buttonRefresh = new ToolButton(Stock.Refresh) { Label = "Обновити", IsImportant = true };
+            ToolButton buttonRefresh = new ToolButton(new Image(Stock.Refresh, IconSize.Menu), "Обновити") { Label = "Обновити", IsImportant = true };
             buttonRefresh.Clicked += OnDimensionFieldsRefreshClick;
             toolbar.Add(buttonRefresh);
 
-            ToolButton buttonDelete = new ToolButton(Stock.Clear) { Label = "Видалити", IsImportant = true };
+            ToolButton buttonDelete = new ToolButton(new Image(Stock.Clear, IconSize.Menu), "Видалити") { Label = "Видалити", IsImportant = true };
             buttonDelete.Clicked += OnDimensionFieldsRemoveClick;
             toolbar.Add(buttonDelete);
 
@@ -224,19 +224,19 @@ namespace Configurator
             Toolbar toolbar = new Toolbar();
             vBox.PackStart(toolbar, false, false, 0);
 
-            ToolButton buttonAdd = new ToolButton(Stock.New) { Label = "Додати", IsImportant = true };
+            ToolButton buttonAdd = new ToolButton(new Image(Stock.New, IconSize.Menu), "Додати") { Label = "Додати", IsImportant = true };
             buttonAdd.Clicked += OnResourcesFieldsAddClick;
             toolbar.Add(buttonAdd);
 
-            ToolButton buttonCopy = new ToolButton(Stock.Copy) { Label = "Копіювати", IsImportant = true };
+            ToolButton buttonCopy = new ToolButton(new Image(Stock.Copy, IconSize.Menu), "Копіювати") { Label = "Копіювати", IsImportant = true };
             buttonCopy.Clicked += OnResourcesFieldsCopyClick;
             toolbar.Add(buttonCopy);
 
-            ToolButton buttonRefresh = new ToolButton(Stock.Refresh) { Label = "Обновити", IsImportant = true };
+            ToolButton buttonRefresh = new ToolButton(new Image(Stock.Refresh, IconSize.Menu), "Обновити") { Label = "Обновити", IsImportant = true };
             buttonRefresh.Clicked += OnResourcesFieldsRefreshClick;
             toolbar.Add(buttonRefresh);
 
-            ToolButton buttonDelete = new ToolButton(Stock.Clear) { Label = "Видалити", IsImportant = true };
+            ToolButton buttonDelete = new ToolButton(new Image(Stock.Clear, IconSize.Menu), "Видалити") { Label = "Видалити", IsImportant = true };
             buttonDelete.Clicked += OnResourcesFieldsRemoveClick;
             toolbar.Add(buttonDelete);
 
@@ -266,19 +266,19 @@ namespace Configurator
             Toolbar toolbar = new Toolbar();
             vBox.PackStart(toolbar, false, false, 0);
 
-            ToolButton buttonAdd = new ToolButton(Stock.New) { Label = "Додати", IsImportant = true };
+            ToolButton buttonAdd = new ToolButton(new Image(Stock.New, IconSize.Menu), "Додати") { Label = "Додати", IsImportant = true };
             buttonAdd.Clicked += OnPropertyFieldsAddClick;
             toolbar.Add(buttonAdd);
 
-            ToolButton buttonCopy = new ToolButton(Stock.Copy) { Label = "Копіювати", IsImportant = true };
+            ToolButton buttonCopy = new ToolButton(new Image(Stock.Copy, IconSize.Menu), "Копіювати") { Label = "Копіювати", IsImportant = true };
             buttonCopy.Clicked += OnPropertyFieldsCopyClick;
             toolbar.Add(buttonCopy);
 
-            ToolButton buttonRefresh = new ToolButton(Stock.Refresh) { Label = "Обновити", IsImportant = true };
+            ToolButton buttonRefresh = new ToolButton(new Image(Stock.Refresh, IconSize.Menu), "Обновити") { Label = "Обновити", IsImportant = true };
             buttonRefresh.Clicked += OnPropertyFieldsRefreshClick;
             toolbar.Add(buttonRefresh);
 
-            ToolButton buttonDelete = new ToolButton(Stock.Clear) { Label = "Видалити", IsImportant = true };
+            ToolButton buttonDelete = new ToolButton(new Image(Stock.Clear, IconSize.Menu), "Видалити") { Label = "Видалити", IsImportant = true };
             buttonDelete.Clicked += OnPropertyFieldsRemoveClick;
             toolbar.Add(buttonDelete);
 
@@ -337,7 +337,7 @@ namespace Configurator
 
         void CreateFormsList(Box vBoxContainer)
         {
-            VBox vBox = new VBox();
+            Box vBox = new Box(Orientation.Vertical, 0);
 
             Button buttonCreateForms = new Button("Створити");
             buttonCreateForms.Clicked += (object? sender, EventArgs args) =>
@@ -345,7 +345,7 @@ namespace Configurator
 
             };
 
-            HBox hBox = new HBox();
+            Box hBox = new Box(Orientation.Horizontal, 0);
             hBox.PackStart(buttonCreateForms, false, false, 5);
             vBox.PackStart(hBox, false, false, 5);
 
@@ -356,19 +356,19 @@ namespace Configurator
             buttonAdd.Clicked += (object? sender, EventArgs arg) => { ((Menu)((MenuToolButton)sender!).Menu).Popup(); };
             toolbar.Add(buttonAdd);
 
-            ToolButton buttonCopy = new ToolButton(Stock.Copy) { Label = "Копіювати", IsImportant = true };
+            ToolButton buttonCopy = new ToolButton(new Image(Stock.Copy, IconSize.Menu), "Копіювати") { Label = "Копіювати", IsImportant = true };
             buttonCopy.Clicked += OnFormsListCopyClick;
             toolbar.Add(buttonCopy);
 
-            ToolButton buttonRefresh = new ToolButton(Stock.Refresh) { Label = "Обновити", IsImportant = true };
+            ToolButton buttonRefresh = new ToolButton(new Image(Stock.Refresh, IconSize.Menu), "Обновити") { Label = "Обновити", IsImportant = true };
             buttonRefresh.Clicked += OnFormsListRefreshClick;
             toolbar.Add(buttonRefresh);
 
-            ToolButton buttonDelete = new ToolButton(Stock.Clear) { Label = "Видалити", IsImportant = true };
+            ToolButton buttonDelete = new ToolButton(new Image(Stock.Clear, IconSize.Menu), "Видалити") { Label = "Видалити", IsImportant = true };
             buttonDelete.Clicked += OnFormsListRemoveClick;
             toolbar.Add(buttonDelete);
 
-            HBox hBoxScroll = new HBox();
+            Box hBoxScroll = new Box(Orientation.Horizontal, 0);
             ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
             scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
             scrollList.SetSizeRequest(0, 200);
@@ -409,7 +409,7 @@ namespace Configurator
         void FillDimensionFields()
         {
             foreach (ConfigurationField field in ConfRegister.DimensionFields.Values)
-                listBoxDimensionFields.Add(new Label(field.Name) { Name = field.Name, Halign = Align.Start });
+                listBoxDimensionFields.Add(new Label(field.Name) { Name = field.Name, Halign = Align.Start, UseUnderline = false });
 
             listBoxDimensionFields.ShowAll();
         }
@@ -417,7 +417,7 @@ namespace Configurator
         void FillResourcesFields()
         {
             foreach (ConfigurationField field in ConfRegister.ResourcesFields.Values)
-                listBoxResourcesFields.Add(new Label(field.Name) { Name = field.Name, Halign = Align.Start });
+                listBoxResourcesFields.Add(new Label(field.Name) { Name = field.Name, Halign = Align.Start, UseUnderline = false });
 
             listBoxResourcesFields.ShowAll();
         }
@@ -425,7 +425,7 @@ namespace Configurator
         void FillPropertyFields()
         {
             foreach (ConfigurationField field in ConfRegister.PropertyFields.Values)
-                listBoxPropertyFields.Add(new Label(field.Name) { Name = field.Name, Halign = Align.Start });
+                listBoxPropertyFields.Add(new Label(field.Name) { Name = field.Name, Halign = Align.Start, UseUnderline = false });
 
             listBoxPropertyFields.ShowAll();
         }
@@ -433,7 +433,7 @@ namespace Configurator
         void FillTabularList()
         {
             foreach (ConfigurationTabularList tableList in ConfRegister.TabularList.Values)
-                listBoxTabularList.Add(new Label(tableList.Name) { Name = tableList.Name, Halign = Align.Start });
+                listBoxTabularList.Add(new Label(tableList.Name) { Name = tableList.Name, Halign = Align.Start, UseUnderline = false });
 
             listBoxTabularList.ShowAll();
         }
@@ -441,7 +441,7 @@ namespace Configurator
         void FillFormsList()
         {
             foreach (ConfigurationForms form in ConfRegister.Forms.Values)
-                listBoxFormsList.Add(new Label(form.Name) { Name = form.Name, Halign = Align.Start });
+                listBoxFormsList.Add(new Label(form.Name) { Name = form.Name, Halign = Align.Start, UseUnderline = false });
 
             listBoxFormsList.ShowAll();
         }
@@ -535,7 +535,6 @@ namespace Configurator
                             };
 
                             page.SetValue();
-
                             return page;
                         });
                 }
@@ -564,7 +563,6 @@ namespace Configurator
                 };
 
                 page.SetValue();
-
                 return page;
             });
         }
@@ -584,7 +582,6 @@ namespace Configurator
                     }
 
                 DimensionFieldsRefreshList();
-
                 GeneralForm?.LoadTreeAsync();
             }
         }
@@ -606,7 +603,6 @@ namespace Configurator
                     ConfRegister.DimensionFields.Remove(row.Child.Name);
 
                 DimensionFieldsRefreshList();
-
                 GeneralForm?.LoadTreeAsync();
             }
         }
@@ -628,7 +624,6 @@ namespace Configurator
                 if (selectedRows.Length != 0)
                 {
                     ListBoxRow curRow = selectedRows[0];
-
                     if (ConfRegister.ResourcesFields.TryGetValue(curRow.Child.Name, out ConfigurationField? resourcesField))
                         GeneralForm?.CreateNotebookPage($"Поле: {curRow.Child.Name}", () =>
                         {
@@ -650,7 +645,6 @@ namespace Configurator
                             };
 
                             page.SetValue();
-
                             return page;
                         });
                 }
@@ -679,7 +673,6 @@ namespace Configurator
                 };
 
                 page.SetValue();
-
                 return page;
             });
         }
@@ -699,7 +692,6 @@ namespace Configurator
                     }
 
                 ResourcesFieldsRefreshList();
-
                 GeneralForm?.LoadTreeAsync();
             }
         }
@@ -722,7 +714,6 @@ namespace Configurator
                     ConfRegister.ResourcesFields.Remove(row.Child.Name);
 
                 ResourcesFieldsRefreshList();
-
                 GeneralForm?.LoadTreeAsync();
             }
         }
@@ -744,7 +735,6 @@ namespace Configurator
                 if (selectedRows.Length != 0)
                 {
                     ListBoxRow curRow = selectedRows[0];
-
                     if (ConfRegister.PropertyFields.TryGetValue(curRow.Child.Name, out ConfigurationField? propertyField))
                         GeneralForm?.CreateNotebookPage($"Поле: {curRow.Child.Name}", () =>
                         {
@@ -766,7 +756,6 @@ namespace Configurator
                             };
 
                             page.SetValue();
-
                             return page;
                         });
                 }
@@ -795,7 +784,6 @@ namespace Configurator
                 };
 
                 page.SetValue();
-
                 return page;
             });
         }
@@ -815,7 +803,6 @@ namespace Configurator
                     }
 
                 PropertyFieldsRefreshList();
-
                 GeneralForm?.LoadTreeAsync();
             }
         }
@@ -837,7 +824,6 @@ namespace Configurator
                     ConfRegister.PropertyFields.Remove(row.Child.Name);
 
                 PropertyFieldsRefreshList();
-
                 GeneralForm?.LoadTreeAsync();
             }
         }
@@ -882,7 +868,6 @@ namespace Configurator
                             };
 
                             page.SetValue();
-
                             return page;
                         });
                 }
@@ -911,7 +896,6 @@ namespace Configurator
                 };
 
                 page.SetValue();
-
                 return page;
             });
         }
@@ -931,7 +915,6 @@ namespace Configurator
                     }
 
                 TabularListRefreshList();
-
                 GeneralForm?.LoadTreeAsync();
             }
         }
@@ -953,7 +936,6 @@ namespace Configurator
                     ConfRegister.TabularList.Remove(row.Child.Name);
 
                 TabularListRefreshList();
-
                 GeneralForm?.LoadTreeAsync();
             }
         }
@@ -975,7 +957,6 @@ namespace Configurator
                 if (selectedRows.Length != 0)
                 {
                     ListBoxRow curRow = selectedRows[0];
-
                     if (ConfRegister.Forms.TryGetValue(curRow.Child.Name, out ConfigurationForms? form))
                         GeneralForm?.CreateNotebookPage($"Форма: {curRow.Child.Name}", () =>
                         {
@@ -1002,7 +983,6 @@ namespace Configurator
                             };
 
                             page.SetValue();
-
                             return page;
                         });
                 }
@@ -1043,7 +1023,6 @@ namespace Configurator
                     };
 
                     page.SetValue();
-
                     return page;
                 });
             }

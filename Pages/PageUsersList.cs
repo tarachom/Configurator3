@@ -26,7 +26,7 @@ using Gtk;
 
 namespace Configurator
 {
-    class PageUsersList : VBox
+    class PageUsersList : Box
     {
         public FormConfigurator? GeneralForm { get; set; }
 
@@ -57,9 +57,9 @@ namespace Configurator
 
         #endregion
 
-        public PageUsersList() : base()
+        public PageUsersList() : base(Orientation.Vertical, 0)
         {
-            HBox hBox = new HBox();
+            Box hBox = new Box(Orientation.Horizontal, 0);
 
             Button bClose = new Button("Закрити");
             bClose.Clicked += (object? sender, EventArgs args) => { GeneralForm?.CloseCurrentPageNotebook(); };
@@ -76,7 +76,7 @@ namespace Configurator
 
             CreateToolbar();
 
-            HBox hBoxList = new HBox();
+            Box hBoxList = new Box(Orientation.Horizontal, 0);
 
             ScrolledWindow scrollTree = new ScrolledWindow() { ShadowType = ShadowType.In };
             scrollTree.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
@@ -85,7 +85,7 @@ namespace Configurator
             hBoxList.PackStart(scrollTree, true, true, 5);
             PackStart(hBoxList, true, true, 0);
 
-            HBox hBoxBottom = new HBox();
+            Box hBoxBottom = new Box(Orientation.Horizontal, 0);
             PackStart(hBoxBottom, false, false, 2);
 
             ShowAll();
@@ -113,24 +113,24 @@ namespace Configurator
 
         void CreateToolbar()
         {
-            HBox hBoxToolbar = new HBox();
+            Box hBoxToolbar = new Box(Orientation.Horizontal, 0);
 
             Toolbar toolbar = new Toolbar();
             hBoxToolbar.PackStart(toolbar, true, true, 5);
 
-            ToolButton addButton = new ToolButton(Stock.Add) { TooltipText = "Додати" };
+            ToolButton addButton = new ToolButton(new Image(Stock.New, IconSize.Menu), "Додати") { TooltipText = "Додати" };
             addButton.Clicked += OnAddClick;
             toolbar.Add(addButton);
 
-            ToolButton upButton = new ToolButton(Stock.Edit) { TooltipText = "Редагувати" };
+            ToolButton upButton = new ToolButton(new Image(Stock.Edit, IconSize.Menu), "Редагувати") { TooltipText = "Редагувати" };
             upButton.Clicked += OnEditClick;
             toolbar.Add(upButton);
 
-            ToolButton deleteButton = new ToolButton(Stock.Delete) { TooltipText = "Видалити" };
+            ToolButton deleteButton = new ToolButton(new Image(Stock.Delete, IconSize.Menu), "Видалити") { TooltipText = "Видалити" };
             deleteButton.Clicked += OnDeleteClick;
             toolbar.Add(deleteButton);
 
-            ToolButton refreshButton = new ToolButton(Stock.Refresh) { TooltipText = "Обновити" };
+            ToolButton refreshButton = new ToolButton(new Image(Stock.Refresh, IconSize.Menu), "Обновити") { TooltipText = "Обновити" };
             refreshButton.Clicked += OnRefreshClick;
             toolbar.Add(refreshButton);
 
@@ -175,9 +175,7 @@ namespace Configurator
         void OnEditClick(object? sender, EventArgs args)
         {
             if (TreeViewGrid.Selection.CountSelectedRows() != 0)
-            {
-                TreeIter iter;
-                if (TreeViewGrid.Model.GetIter(out iter, TreeViewGrid.Selection.GetSelectedRows()[0]))
+                if (TreeViewGrid.Model.GetIter(out TreeIter iter, TreeViewGrid.Selection.GetSelectedRows()[0]))
                 {
                     string uid = (string)TreeViewGrid.Model.GetValue(iter, (int)Columns.UID);
                     string fullName = (string)TreeViewGrid.Model.GetValue(iter, (int)Columns.FullName);
@@ -193,11 +191,9 @@ namespace Configurator
                         };
 
                         page.SetValue();
-
                         return page;
                     });
                 }
-            }
         }
 
         void OnRowActivated(object sender, RowActivatedArgs args)
@@ -213,15 +209,12 @@ namespace Configurator
         async void OnDeleteClick(object? sender, EventArgs args)
         {
             if (TreeViewGrid.Selection.CountSelectedRows() != 0)
-            {
                 if (Message.Request(GeneralForm, "Видалити?") == ResponseType.Yes)
                 {
                     TreePath[] selectionRows = TreeViewGrid.Selection.GetSelectedRows();
-
                     foreach (TreePath itemPath in selectionRows)
                     {
-                        TreeIter iter;
-                        TreeViewGrid.Model.GetIter(out iter, itemPath);
+                        TreeViewGrid.Model.GetIter(out TreeIter iter, itemPath);
 
                         string uid = (string)TreeViewGrid.Model.GetValue(iter, 1);
                         string name = (string)TreeViewGrid.Model.GetValue(iter, (int)Columns.Name);
@@ -232,7 +225,6 @@ namespace Configurator
 
                     LoadRecords();
                 }
-            }
         }
 
         #endregion

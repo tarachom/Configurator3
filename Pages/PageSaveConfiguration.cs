@@ -30,7 +30,7 @@ using InterfaceGtk;
 
 namespace Configurator
 {
-    class PageSaveConfiguration : VBox
+    class PageSaveConfiguration : Box
     {
         Configuration Conf { get { return Program.Kernel.Conf; } }
 
@@ -55,24 +55,22 @@ namespace Configurator
 
         #endregion
 
-        public PageSaveConfiguration() : base()
+        public PageSaveConfiguration() : base(Orientation.Vertical, 0)
         {
-            new VBox();
-
             Expander expanderParams = new Expander("Параметри та додаткові налаштування");
             PackStart(expanderParams, false, false, 10);
 
-            VBox vBoxParams = new VBox();
+            Box vBoxParams = new Box(Orientation.Vertical, 0);
             expanderParams.Add(vBoxParams);
 
             //Параметри 1
-            HBox hBoxParamIsGenerate = new HBox();
+            Box hBoxParamIsGenerate = new Box(Orientation.Horizontal, 0);
             vBoxParams.PackStart(hBoxParamIsGenerate, false, false, 5);
 
             hBoxParamIsGenerate.PackStart(checkButtonIsGenerate, false, false, 5);
 
             //Параметри 2
-            HBox hBoxParamPath = new HBox();
+            Box hBoxParamPath = new Box(Orientation.Horizontal, 0);
             vBoxParams.PackStart(hBoxParamPath, false, false, 5);
 
             hBoxParamPath.PackStart(new Label("Шлях до папки куди генерувати код:"), false, false, 10);
@@ -85,7 +83,7 @@ namespace Configurator
             hBoxParamPath.PackStart(new Label("За замовчуванням код генерується в каталог програми"), false, false, 5);
 
             //Параметри 3
-            HBox hBoxParamCompileProgram = new HBox();
+            Box hBoxParamCompileProgram = new Box(Orientation.Horizontal, 0);
             vBoxParams.PackStart(hBoxParamCompileProgram, false, false, 5);
 
             hBoxParamCompileProgram.PackStart(new Label("Шлях до папки скомпільованої програми:"), false, false, 10);
@@ -98,7 +96,7 @@ namespace Configurator
             hBoxParamCompileProgram.PackStart(new Label("Наприклад bin/Debug/net8.0/ \nВ цю папку буде скопійований файл Confa.xml"), false, false, 5);
 
             //Save
-            HBox hBoxSaveParam = new HBox();
+            Box hBoxSaveParam = new Box(Orientation.Horizontal, 0);
             vBoxParams.PackStart(hBoxSaveParam, false, false, 5);
 
             bSaveParam = new Button("Зберегти параметри");
@@ -108,7 +106,7 @@ namespace Configurator
             PackStart(new Separator(Orientation.Horizontal), false, false, 10);
 
             //Кнопки
-            HBox hBox = new HBox();
+            Box hBox = new Box(Orientation.Horizontal, 0);
 
             bAnalize = new Button("Аналіз змін");
             bAnalize.Clicked += OnAnalizeClick;
@@ -129,7 +127,7 @@ namespace Configurator
             PackStart(hBox, false, false, 10);
 
             //Terminal
-            HBox hBoxTerminal = new HBox();
+            Box hBoxTerminal = new Box(Orientation.Horizontal, 0);
             PackStart(hBoxTerminal, true, true, 5);
 
             scrollListBoxTerminal = new ScrolledWindow() { KineticScrolling = true };
@@ -146,16 +144,16 @@ namespace Configurator
             if (GeneralForm != null)
             {
                 //1
-                if (GeneralForm.OpenConfigurationParam!.OtherParam.ContainsKey("IsGenerateCode"))
-                    checkButtonIsGenerate.Active = GeneralForm.OpenConfigurationParam.OtherParam["IsGenerateCode"] == "True";
+                if (GeneralForm.OpenConfigurationParam!.OtherParam.TryGetValue("IsGenerateCode", out string? IsGenerateCode))
+                    checkButtonIsGenerate.Active = IsGenerateCode == "True";
 
                 //2
-                if (GeneralForm.OpenConfigurationParam!.OtherParam.ContainsKey("GenerateCodePath"))
-                    entryGenerateCodePath.Text = GeneralForm.OpenConfigurationParam.OtherParam["GenerateCodePath"];
+                if (GeneralForm.OpenConfigurationParam!.OtherParam.TryGetValue("GenerateCodePath", out string? GenerateCodePath))
+                    entryGenerateCodePath.Text = GenerateCodePath;
 
                 //3
-                if (GeneralForm.OpenConfigurationParam!.OtherParam.ContainsKey("CompileProgramPath"))
-                    entryCompileProgramPath.Text = GeneralForm.OpenConfigurationParam.OtherParam["CompileProgramPath"];
+                if (GeneralForm.OpenConfigurationParam!.OtherParam.TryGetValue("CompileProgramPath", out string? CompileProgramPath))
+                    entryCompileProgramPath.Text = CompileProgramPath;
             }
         }
 
@@ -253,7 +251,7 @@ namespace Configurator
 
         void ButtonSensitive(bool sensitive)
         {
-            Gtk.Application.Invoke
+            Application.Invoke
             (
                 delegate
                 {
@@ -269,7 +267,7 @@ namespace Configurator
 
         void ApendLine(string text)
         {
-            Gtk.Application.Invoke
+            Application.Invoke
             (
                 delegate
                 {
@@ -281,7 +279,7 @@ namespace Configurator
 
         void ClearListBoxTerminal()
         {
-            Gtk.Application.Invoke
+            Application.Invoke
             (
                 delegate
                 {
@@ -292,41 +290,20 @@ namespace Configurator
 
         string GetNameFromType(string Type)
         {
-            switch (Type)
+            return Type switch
             {
-                case "Constants":
-                    return "Константи";
-
-                case "Constants.TablePart":
-                    return "Константи.Таблична частина";
-
-                case "Directory":
-                    return "Довідник";
-
-                case "Directory.TablePart":
-                    return "Довідник.Таблична частина";
-
-                case "Document":
-                    return "Документ";
-
-                case "Document.TablePart":
-                    return "Документ.Таблична частина";
-
-                case "RegisterInformation":
-                    return "Регістер відомостей";
-
-                case "RegisterInformation.TablePart":
-                    return "Регістер відомостей.Таблична частина";
-
-                case "RegisterAccumulation":
-                    return "Регістер накопичення";
-
-                case "RegisterAccumulation.TablePart":
-                    return "Регістер накопичення.Таблична частина";
-
-                default:
-                    return "<Невідомий тип>";
-            }
+                "Constants" => "Константи",
+                "Constants.TablePart" => "Константи.Таблична частина",
+                "Directory" => "Довідник",
+                "Directory.TablePart" => "Довідник.Таблична частина",
+                "Document" => "Документ",
+                "Document.TablePart" => "Документ.Таблична частина",
+                "RegisterInformation" => "Регістер відомостей",
+                "RegisterInformation.TablePart" => "Регістер відомостей.Таблична частина",
+                "RegisterAccumulation" => "Регістер накопичення",
+                "RegisterAccumulation.TablePart" => "Регістер накопичення.Таблична частина",
+                _ => "<Невідомий тип>",
+            };
         }
 
         async void SaveAndAnalize()

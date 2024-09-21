@@ -27,7 +27,7 @@ using AccountingSoftware;
 
 namespace Configurator
 {
-    class PageMaintenance : VBox
+    class PageMaintenance : Box
     {
         Configuration Conf { get { return Program.Kernel.Conf; } }
 
@@ -45,10 +45,9 @@ namespace Configurator
 
         #endregion
 
-        public PageMaintenance() : base()
+        public PageMaintenance() : base(Orientation.Vertical, 0)
         {
-            new VBox();
-            HBox hBox = new HBox();
+            Box hBox = new Box(Orientation.Horizontal, 0);
 
             bOk = new Button("Оптимізувати");
             bOk.Clicked += OnOkClick;
@@ -61,14 +60,14 @@ namespace Configurator
             hBox.PackStart(bStop, false, false, 10);
 
             bClose = new Button("Закрити");
-            bClose.Clicked += (object? sender, EventArgs args) => { GeneralForm?.CloseCurrentPageNotebook(); };
+            bClose.Clicked += (object? sender, EventArgs args) => GeneralForm?.CloseCurrentPageNotebook();
 
             hBox.PackStart(bClose, false, false, 10);
 
             PackStart(hBox, false, false, 10);
 
             //Terminal
-            HBox hBoxTerminal = new HBox();
+            Box hBoxTerminal = new Box(Orientation.Horizontal, 0);
             PackStart(hBoxTerminal, true, true, 5);
 
             scrollListBoxTerminal = new ScrolledWindow();
@@ -95,7 +94,7 @@ namespace Configurator
 
         void ButtonSensitive(bool sensitive)
         {
-            Gtk.Application.Invoke
+            Application.Invoke
             (
                 delegate
                 {
@@ -111,7 +110,7 @@ namespace Configurator
 
         void ApendLine(string text)
         {
-            Gtk.Application.Invoke
+            Application.Invoke
             (
                 delegate
                 {
@@ -123,7 +122,7 @@ namespace Configurator
 
         void ClearListBoxTerminal()
         {
-            Gtk.Application.Invoke
+            Application.Invoke
             (
                 delegate
                 {

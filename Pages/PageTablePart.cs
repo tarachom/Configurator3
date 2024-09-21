@@ -24,11 +24,10 @@ limitations under the License.
 using Gtk;
 
 using AccountingSoftware;
-using System.Xml;
 
 namespace Configurator
 {
-    class PageTablePart : VBox
+    class PageTablePart : Box
     {
         Configuration Conf { get { return Program.Kernel.Conf; } }
 
@@ -51,9 +50,9 @@ namespace Configurator
 
         #endregion
 
-        public PageTablePart() : base()
+        public PageTablePart() : base(Orientation.Vertical, 0)
         {
-            HBox hBox = new HBox();
+            Box hBox = new Box(Orientation.Horizontal, 0);
 
             Button bSave = new Button("Зберегти");
             bSave.Clicked += OnSaveClick;
@@ -67,7 +66,7 @@ namespace Configurator
 
             PackStart(hBox, false, false, 10);
 
-            HPaned hPaned = new HPaned() { BorderWidth = 5 };
+            Paned hPaned = new Paned(Orientation.Horizontal) { BorderWidth = 5 };
 
             CreatePack1(hPaned);
             CreatePack2(hPaned);
@@ -77,28 +76,28 @@ namespace Configurator
             ShowAll();
         }
 
-        void CreatePack1(HPaned hPaned)
+        void CreatePack1(Paned hPaned)
         {
-            VBox vBox = new VBox();
+            Box vBox = new Box(Orientation.Vertical, 0);
 
             //Базові поля
             {
                 //Назва
-                HBox hBoxName = new HBox() { Halign = Align.End };
+                Box hBoxName = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
                 vBox.PackStart(hBoxName, false, false, 5);
 
                 hBoxName.PackStart(new Label("Назва:"), false, false, 5);
                 hBoxName.PackStart(entryName, false, false, 5);
 
                 //Таблиця
-                HBox hBoxTable = new HBox() { Halign = Align.End };
+                Box hBoxTable = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
                 vBox.PackStart(hBoxTable, false, false, 5);
 
                 hBoxTable.PackStart(new Label("Таблиця:"), false, false, 5);
                 hBoxTable.PackStart(entryTable, false, false, 5);
 
                 //Опис
-                HBox hBoxDesc = new HBox() { Halign = Align.End };
+                Box hBoxDesc = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
                 vBox.PackStart(hBoxDesc, false, false, 5);
 
                 hBoxDesc.PackStart(new Label("Опис:") { Valign = Align.Start }, false, false, 5);
@@ -144,60 +143,37 @@ namespace Configurator
                 CreateFormsList(vBoxForm);
             }
 
-            //Генерування коду 
-            /*{
-                Expander expanderTemplates = new Expander("Генерування коду");
-                vBox.PackStart(expanderTemplates, false, false, 5);
-
-                VBox vBoxTemplates = new VBox();
-                expanderTemplates.Add(vBoxTemplates);
-
-                //Заголовок
-                HBox hBoxInfo = new HBox() { Halign = Align.Start };
-                vBoxTemplates.PackStart(hBoxInfo, false, false, 5);
-                hBoxInfo.PackStart(new Label("Таблична частина") { UseMarkup = true, Selectable = true }, false, false, 5);
-
-                //Таблична частина
-                HBox hBox = new HBox() { Halign = Align.Start };
-                vBoxTemplates.PackStart(hBox, false, false, 5);
-                {
-                    Button buttonConstructorElement = new Button("Таблична частина");
-                    hBox.PackStart(buttonConstructorElement, false, false, 5);
-                    buttonConstructorElement.Clicked += (object? sender, EventArgs args) => { GenerateCode((Widget)sender!, "TablePart"); };
-                }
-            }*/
-
             hPaned.Pack1(vBox, false, false);
         }
 
-        void CreatePack2(HPaned hPaned)
+        void CreatePack2(Paned hPaned)
         {
-            VBox vBox = new VBox();
+            Box vBox = new Box(Orientation.Vertical, 0);
 
-            HBox hBox = new HBox();
+            Box hBox = new Box(Orientation.Horizontal, 0);
             hBox.PackStart(new Label("Поля:"), false, false, 5);
             vBox.PackStart(hBox, false, false, 5);
 
             Toolbar toolbar = new Toolbar();
             vBox.PackStart(toolbar, false, false, 0);
 
-            ToolButton buttonAdd = new ToolButton(Stock.New) { Label = "Додати", IsImportant = true };
+            ToolButton buttonAdd = new ToolButton(new Image(Stock.New, IconSize.Menu), "Додати") { Label = "Додати", IsImportant = true };
             buttonAdd.Clicked += OnTabularPartsAddClick;
             toolbar.Add(buttonAdd);
 
-            ToolButton buttonCopy = new ToolButton(Stock.Copy) { Label = "Копіювати", IsImportant = true };
+            ToolButton buttonCopy = new ToolButton(new Image(Stock.Copy, IconSize.Menu), "Копіювати") { Label = "Копіювати", IsImportant = true };
             buttonCopy.Clicked += OnTabularPartsCopyClick;
             toolbar.Add(buttonCopy);
 
-            ToolButton buttonRefresh = new ToolButton(Stock.Refresh) { Label = "Обновити", IsImportant = true };
+            ToolButton buttonRefresh = new ToolButton(new Image(Stock.Refresh, IconSize.Menu), "Обновити") { Label = "Обновити", IsImportant = true };
             buttonRefresh.Clicked += OnTabularPartsRefreshClick;
             toolbar.Add(buttonRefresh);
 
-            ToolButton buttonDelete = new ToolButton(Stock.Clear) { Label = "Видалити", IsImportant = true };
+            ToolButton buttonDelete = new ToolButton(new Image(Stock.Clear, IconSize.Menu), "Видалити") { Label = "Видалити", IsImportant = true };
             buttonDelete.Clicked += OnTabularPartsRemoveClick;
             toolbar.Add(buttonDelete);
 
-            HBox hBoxScroll = new HBox();
+            Box hBoxScroll = new Box(Orientation.Horizontal, 0);
             ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
             scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
             scrollList.SetSizeRequest(0, 500);
@@ -318,7 +294,7 @@ namespace Configurator
         void FillTabularParts()
         {
             foreach (ConfigurationField field in TablePart.Fields.Values)
-                listBoxFields.Add(new Label(field.Name) { Name = field.Name, Halign = Align.Start });
+                listBoxFields.Add(new Label(field.Name) { Name = field.Name, Halign = Align.Start, UseUnderline = false });
 
             listBoxFields.ShowAll();
         }
@@ -326,7 +302,7 @@ namespace Configurator
         void FillTabularList()
         {
             foreach (ConfigurationTabularList tableList in TablePart.TabularList.Values)
-                listBoxTabularList.Add(new Label(tableList.Name) { Name = tableList.Name, Halign = Align.Start });
+                listBoxTabularList.Add(new Label(tableList.Name) { Name = tableList.Name, Halign = Align.Start, UseUnderline = false });
 
             listBoxTabularList.ShowAll();
         }
@@ -334,7 +310,7 @@ namespace Configurator
         void FillFormsList()
         {
             foreach (ConfigurationForms form in TablePart.Forms.Values)
-                listBoxFormsList.Add(new Label(form.Name) { Name = form.Name, Halign = Align.Start });
+                listBoxFormsList.Add(new Label(form.Name) { Name = form.Name, Halign = Align.Start, UseUnderline = false });
 
             listBoxFormsList.ShowAll();
         }
@@ -395,30 +371,28 @@ namespace Configurator
         }
 
         #region OnTabularParts
+
         void OnTabularPartsButtonPress(object? sender, ButtonPressEventArgs args)
         {
             if (args.Event.Type == Gdk.EventType.DoubleButtonPress)
             {
                 ListBoxRow[] selectedRows = listBoxFields.SelectedRows;
-
                 if (selectedRows.Length != 0)
                 {
                     ListBoxRow curRow = selectedRows[0];
-
-                    if (TablePart.Fields.ContainsKey(curRow.Child.Name))
+                    if (TablePart.Fields.TryGetValue(curRow.Child.Name, out ConfigurationField? field))
                         GeneralForm?.CreateNotebookPage($"Поле: {curRow.Child.Name}", () =>
                         {
                             PageField page = new PageField()
                             {
                                 Fields = TablePart.Fields,
-                                Field = TablePart.Fields[curRow.Child.Name],
+                                Field = field,
                                 IsNew = false,
                                 GeneralForm = GeneralForm,
                                 CallBack_RefreshList = TabularPartsRefreshList
                             };
 
                             page.SetValue();
-
                             return page;
                         });
                 }
@@ -439,7 +413,6 @@ namespace Configurator
                 };
 
                 page.SetValue();
-
                 return page;
             });
         }
@@ -447,23 +420,19 @@ namespace Configurator
         void OnTabularPartsCopyClick(object? sender, EventArgs args)
         {
             ListBoxRow[] selectedRows = listBoxFields.SelectedRows;
-
             if (selectedRows.Length != 0)
             {
                 foreach (ListBoxRow row in selectedRows)
-                {
-                    if (TablePart.Fields.ContainsKey(row.Child.Name))
+                    if (TablePart.Fields.TryGetValue(row.Child.Name, out ConfigurationField? field))
                     {
-                        ConfigurationField newField = TablePart.Fields[row.Child.Name].Copy();
+                        ConfigurationField newField = field.Copy();
                         newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, TablePart.Table, TablePart.Fields);
                         newField.Name += GenerateName.GetNewName();
 
                         TablePart.AppendField(newField);
                     }
-                }
 
                 OnTabularPartsRefreshClick(null, new EventArgs());
-
                 GeneralForm?.LoadTreeAsync();
             }
         }
@@ -479,17 +448,12 @@ namespace Configurator
         void OnTabularPartsRemoveClick(object? sender, EventArgs args)
         {
             ListBoxRow[] selectedRows = listBoxFields.SelectedRows;
-
             if (selectedRows.Length != 0)
             {
                 foreach (ListBoxRow row in selectedRows)
-                {
-                    if (TablePart.Fields.ContainsKey(row.Child.Name))
-                        TablePart.Fields.Remove(row.Child.Name);
-                }
+                    TablePart.Fields.Remove(row.Child.Name);
 
                 OnTabularPartsRefreshClick(null, new EventArgs());
-
                 GeneralForm?.LoadTreeAsync();
             }
         }
@@ -498,6 +462,7 @@ namespace Configurator
         {
             OnTabularPartsRefreshClick(null, new EventArgs());
         }
+
         #endregion
 
         #region TabularList
@@ -565,7 +530,6 @@ namespace Configurator
                     }
 
                 TabularListRefreshList();
-
                 GeneralForm?.LoadTreeAsync();
             }
         }
@@ -587,7 +551,6 @@ namespace Configurator
                     TablePart.TabularList.Remove(row.Child.Name);
 
                 TabularListRefreshList();
-
                 GeneralForm?.LoadTreeAsync();
             }
         }
@@ -609,7 +572,6 @@ namespace Configurator
                 if (selectedRows.Length != 0)
                 {
                     ListBoxRow curRow = selectedRows[0];
-
                     if (TablePart.Forms.TryGetValue(curRow.Child.Name, out ConfigurationForms? form))
                         GeneralForm?.CreateNotebookPage($"Форма: {curRow.Child.Name}", () =>
                         {
@@ -630,7 +592,6 @@ namespace Configurator
                             };
 
                             page.SetValue();
-
                             return page;
                         });
                 }
@@ -665,7 +626,6 @@ namespace Configurator
                     };
 
                     page.SetValue();
-
                     return page;
                 });
             }
@@ -692,19 +652,16 @@ namespace Configurator
         void OnFormsListCopyClick(object? sender, EventArgs args)
         {
             ListBoxRow[] selectedRows = listBoxFormsList.SelectedRows;
-
             if (selectedRows.Length != 0)
             {
                 foreach (ListBoxRow row in selectedRows)
-                {
-                    if (TablePart.Forms.ContainsKey(row.Child.Name))
+                    if (TablePart.Forms.TryGetValue(row.Child.Name, out ConfigurationForms? form))
                     {
-                        ConfigurationForms newForms = TablePart.Forms[row.Child.Name].Copy();
+                        ConfigurationForms newForms = form.Copy();
                         newForms.Name += GenerateName.GetNewName();
 
                         TablePart.AppendForms(newForms);
                     }
-                }
 
                 FormsListRefreshList();
             }
@@ -721,12 +678,10 @@ namespace Configurator
         void OnFormsListRemoveClick(object? sender, EventArgs args)
         {
             ListBoxRow[] selectedRows = listBoxFormsList.SelectedRows;
-
             if (selectedRows.Length != 0)
             {
                 foreach (ListBoxRow row in selectedRows)
-                    if (TablePart.Forms.ContainsKey(row.Child.Name))
-                        TablePart.Forms.Remove(row.Child.Name);
+                    TablePart.Forms.Remove(row.Child.Name);
 
                 FormsListRefreshList();
             }
@@ -738,63 +693,8 @@ namespace Configurator
         }
 
         #endregion
-
-        /* #region Генерування коду
-
-        void GenerateCode(Widget relative_to, string fileName)
-        {
-            if (string.IsNullOrEmpty(entryName.Text))
-            {
-                Message.Error(GeneralForm, "Назва табличної частини не вказана");
-                return;
-            }
-
-            if (!TabularParts.ContainsKey(entryName.Text))
-            {
-                Message.Error(GeneralForm, "Таблична частина не збережена в колекцію, потрібно спочатку зберегти");
-                return;
-            }
-
-            XmlDocument xmlConfDocument = new XmlDocument();
-            xmlConfDocument.AppendChild(xmlConfDocument.CreateXmlDeclaration("1.0", "utf-8", ""));
-
-            XmlElement rootNode = xmlConfDocument.CreateElement("root");
-            xmlConfDocument.AppendChild(rootNode);
-
-            XmlElement nodeTablePart = xmlConfDocument.CreateElement("TablePart");
-            rootNode.AppendChild(nodeTablePart);
-
-            XmlElement nodeTablePartName = xmlConfDocument.CreateElement("Name");
-            nodeTablePartName.InnerText = TablePart.Name;
-            nodeTablePart.AppendChild(nodeTablePartName);
-
-            Configuration.SaveFields(TablePart.Fields, xmlConfDocument, nodeTablePart, "TablePart");
-
-            TextView textViewCode = new TextView();
-
-            ScrolledWindow scrollCode = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 600, HeightRequest = 300 };
-            scrollCode.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-            scrollCode.Add(textViewCode);
-
-            Popover popover = new Popover(relative_to) { BorderWidth = 5 };
-            popover.Add(scrollCode);
-            popover.ShowAll();
-
-            textViewCode.Buffer.Text = Configuration.Transform
-            (
-                xmlConfDocument,
-                System.IO.Path.Combine(AppContext.BaseDirectory, "xslt/ConstructorTablePart.xslt"),
-                new Dictionary<string, object> { { "File", fileName } }
-            );
-
-            textViewCode.Buffer.SelectRange(textViewCode.Buffer.StartIter, textViewCode.Buffer.EndIter);
-            textViewCode.GrabFocus();
-        }
-
-        #endregion */
     }
 
-   
     /// <summary>
     /// Власник табличної частини
     /// </summary>

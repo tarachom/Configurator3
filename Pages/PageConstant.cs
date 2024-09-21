@@ -58,7 +58,7 @@ namespace Configurator
             hBox.PackStart(bSave, false, false, 10);
 
             Button bClose = new Button("Закрити");
-            bClose.Clicked += (object? sender, EventArgs args) => { GeneralForm?.CloseCurrentPageNotebook(); };
+            bClose.Clicked += (object? sender, EventArgs args) => GeneralForm?.CloseCurrentPageNotebook();
 
             hBox.PackStart(bClose, false, false, 10);
 
@@ -229,7 +229,7 @@ namespace Configurator
         void FillTabularParts()
         {
             foreach (ConfigurationTablePart tablePart in ConfConstants.TabularParts.Values)
-                listBoxTableParts.Add(new Label(tablePart.Name) { Name = tablePart.Name, Halign = Align.Start });
+                listBoxTableParts.Add(new Label(tablePart.Name) { Name = tablePart.Name, Halign = Align.Start, UseUnderline = false });
 
             listBoxTableParts.ShowAll();
         }

@@ -31,7 +31,7 @@ using AccountingSoftware;
 
 namespace Configurator
 {
-    class PageUnloadingAndLoadingData : VBox
+    class PageUnloadingAndLoadingData : Box
     {
         Configuration Conf { get { return Program.Kernel.Conf; } }
 
@@ -52,10 +52,9 @@ namespace Configurator
 
         #endregion
 
-        public PageUnloadingAndLoadingData() : base()
+        public PageUnloadingAndLoadingData() : base(Orientation.Vertical, 0)
         {
-            new VBox();
-            HBox hBox = new HBox();
+            Box hBox = new Box(Orientation.Horizontal, 0);
 
             bLoading = new Button("Вигрузка");
             bLoading.Clicked += OnLoadingClick;
@@ -77,7 +76,7 @@ namespace Configurator
             PackStart(hBox, false, false, 10);
 
             //Terminal
-            HBox hBoxTerminal = new HBox();
+            Box hBoxTerminal = new Box(Orientation.Horizontal, 0);
             PackStart(hBoxTerminal, true, true, 5);
 
             scrollListBoxTerminal = new ScrolledWindow();
@@ -108,7 +107,7 @@ namespace Configurator
 
             if (fc.Run() == (int)ResponseType.Accept)
             {
-                if (!String.IsNullOrEmpty(fc.Filename))
+                if (!string.IsNullOrEmpty(fc.Filename))
                 {
                     fileImport = fc.Filename;
                     fileSelect = true;
@@ -138,7 +137,7 @@ namespace Configurator
 
             if (fc.Run() == (int)ResponseType.Accept)
             {
-                if (!String.IsNullOrEmpty(fc.CurrentFolder))
+                if (!string.IsNullOrEmpty(fc.CurrentFolder))
                 {
                     fullPath = System.IO.Path.Combine(fc.CurrentFolder, fileName);
                     fileSelect = true;
@@ -158,7 +157,7 @@ namespace Configurator
 
         void ButtonSensitive(bool sensitive)
         {
-            Gtk.Application.Invoke
+            Application.Invoke
             (
                 delegate
                 {
@@ -175,7 +174,7 @@ namespace Configurator
 
         void ApendLine(string text)
         {
-            Gtk.Application.Invoke
+            Application.Invoke
             (
                 delegate
                 {
@@ -187,7 +186,7 @@ namespace Configurator
 
         void ApendInfo(string text)
         {
-            Gtk.Application.Invoke
+            Application.Invoke
             (
                 delegate
                 {
@@ -199,7 +198,7 @@ namespace Configurator
 
         void ClearListBoxTerminal()
         {
-            Gtk.Application.Invoke
+            Application.Invoke
             (
                 delegate
                 {
@@ -488,7 +487,7 @@ namespace Configurator
             xmlWriter.WriteEndElement();
         }
 
-        void WriteTabularPartsInfo(XmlWriter xmlWriter, Dictionary<string, ConfigurationTablePart> tabularParts)
+        /*void WriteTabularPartsInfo(XmlWriter xmlWriter, Dictionary<string, ConfigurationTablePart> tabularParts)
         {
             if (tabularParts.Count > 0)
             {
@@ -497,7 +496,7 @@ namespace Configurator
                     WriteTablePartInfo(xmlWriter, tablePart);
                 xmlWriter.WriteEndElement(); //TabularPartsInfo
             }
-        }
+        }*/
 
         #endregion
 
@@ -597,7 +596,7 @@ namespace Configurator
                 ApendLine(" --> Крок 1");
                 pathToXmlResultStepOne = TransformXmlDataStepOne(fileImportPath);
 
-                if (String.IsNullOrEmpty(pathToXmlResultStepOne) && !System.IO.File.Exists(pathToXmlResultStepOne))
+                if (string.IsNullOrEmpty(pathToXmlResultStepOne) && !System.IO.File.Exists(pathToXmlResultStepOne))
                 {
                     ButtonSensitive(true);
                     return;
@@ -611,7 +610,7 @@ namespace Configurator
                 ApendLine(" --> Крок 2");
                 pathToXmlResultStepSQL = TransformStepOneToStepSQL(fileImportPath, pathToXmlResultStepOne);
 
-                if (String.IsNullOrEmpty(pathToXmlResultStepSQL) && !System.IO.File.Exists(pathToXmlResultStepSQL))
+                if (string.IsNullOrEmpty(pathToXmlResultStepSQL) && !System.IO.File.Exists(pathToXmlResultStepSQL))
                 {
                     if (System.IO.File.Exists(pathToXmlResultStepOne))
                         try
@@ -867,7 +866,7 @@ namespace Configurator
                     param.Add(paramName, paramObj);
                 }
 
-                int result = await Program.Kernel.DataBase.ExecuteSQL(sqlText, param, transactionID);
+                await Program.Kernel.DataBase.ExecuteSQL(sqlText, param, transactionID);
 
                 if (iter > 100)
                 {

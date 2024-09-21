@@ -27,7 +27,7 @@ using AccountingSoftware;
 
 namespace Configurator
 {
-    class PageJournalField : VBox
+    class PageJournalField : Box
     {
         Configuration Conf { get { return Program.Kernel.Conf; } }
 
@@ -47,10 +47,9 @@ namespace Configurator
 
         #endregion
 
-        public PageJournalField() : base()
+        public PageJournalField() : base(Orientation.Vertical, 0)
         {
-            new VBox();
-            HBox hBox = new HBox();
+            Box hBox = new Box(Orientation.Horizontal, 0);
 
             Button bSave = new Button("Зберегти");
             bSave.Clicked += OnSaveClick;
@@ -58,13 +57,13 @@ namespace Configurator
             hBox.PackStart(bSave, false, false, 10);
 
             Button bClose = new Button("Закрити");
-            bClose.Clicked += (object? sender, EventArgs args) => { GeneralForm?.CloseCurrentPageNotebook(); };
+            bClose.Clicked += (object? sender, EventArgs args) => GeneralForm?.CloseCurrentPageNotebook();
 
             hBox.PackStart(bClose, false, false, 10);
 
             PackStart(hBox, false, false, 10);
 
-            HPaned hPaned = new HPaned() { BorderWidth = 5, Position = 500 };
+            Paned hPaned = new Paned(Orientation.Horizontal) { BorderWidth = 5, Position = 500 };
 
             CreatePack1(hPaned);
             CreatePack2(hPaned);
@@ -74,19 +73,19 @@ namespace Configurator
             ShowAll();
         }
 
-        void CreatePack1(HPaned hPaned)
+        void CreatePack1(Paned hPaned)
         {
-            VBox vBox = new VBox();
+            Box vBox = new Box(Orientation.Vertical, 0);
 
             //Назва
-            HBox hBoxName = new HBox() { Halign = Align.End };
+            Box hBoxName = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxName, false, false, 5);
 
             hBoxName.PackStart(new Label("Назва:"), false, false, 5);
             hBoxName.PackStart(entryName, false, false, 5);
 
             //Опис
-            HBox hBoxDesc = new HBox() { Halign = Align.End };
+            Box hBoxDesc = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxDesc, false, false, 5);
 
             hBoxDesc.PackStart(new Label("Опис:") { Valign = Align.Start }, false, false, 5);
@@ -98,14 +97,14 @@ namespace Configurator
             hBoxDesc.PackStart(scrollTextView, false, false, 5);
 
             //Тип
-            HBox hBoxType = new HBox() { Halign = Align.End };
+            Box hBoxType = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxType, false, false, 5);
 
             hBoxType.PackStart(new Label("SQL Тип:"), false, false, 5);
             hBoxType.PackStart(entryType, false, false, 5);
 
             //Сортувати
-            HBox hBoxOrder = new HBox() { Halign = Align.End };
+            Box hBoxOrder = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxOrder, false, false, 5);
 
             hBoxOrder.PackStart(checkButtonSort, false, false, 5);
@@ -114,16 +113,13 @@ namespace Configurator
             hPaned.Pack1(vBox, false, false);
         }
 
-        void CreatePack2(HPaned hPaned)
+        void CreatePack2(Paned hPaned)
         {
-            VBox vBox = new VBox();
+            Box vBox = new Box(Orientation.Vertical, 0);
 
-            Expander expanderHelp = new Expander("Довідка")
-            {
-                vBox
-            };
+            Expander expanderHelp = new Expander("Довідка") { vBox };
 
-            HBox hBox = new HBox() { Halign = Align.Fill };
+            Box hBox = new Box(Orientation.Horizontal, 0) { Halign = Align.Fill };
             vBox.PackStart(hBox, false, false, 5);
 
             hBox.PackStart(new Label("Поле журналу"), false, false, 5);
@@ -196,8 +192,7 @@ namespace Configurator
             GeneralForm?.LoadTreeAsync();
             GeneralForm?.RenameCurrentPageNotebook($"Поле: {Field.Name}");
 
-            if (CallBack_RefreshList != null)
-                CallBack_RefreshList.Invoke();
+            CallBack_RefreshList?.Invoke();
         }
     }
 }

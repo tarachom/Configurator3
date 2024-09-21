@@ -27,18 +27,17 @@ using AccountingSoftware;
 
 namespace Configurator
 {
-    class PageShema : VBox
+    class PageShema : Box
     {
-        readonly object loked = new Object();
+        readonly object loked = new object();
         public FormConfigurator? GeneralForm { get; set; }
 
         TreeStore? Store;
         TreeView? treeView;
 
-        public PageShema() : base()
+        public PageShema() : base(Orientation.Vertical, 0)
         {
-            new VBox();
-            HBox hBox = new HBox();
+            Box hBox = new Box(Orientation.Horizontal, 0);
 
             Button bClose = new Button("Закрити");
             bClose.Clicked += (object? sender, EventArgs args) => { GeneralForm?.CloseCurrentPageNotebook(); };
@@ -53,7 +52,7 @@ namespace Configurator
             PackStart(hBox, false, false, 10);
 
             //Shema
-            HBox hBoxShema = new HBox();
+            Box hBoxShema = new Box(Orientation.Horizontal, 0);
             PackStart(hBoxShema, true, true, 5);
 
             AddColumn();
@@ -90,7 +89,7 @@ namespace Configurator
 
             lock (loked)
             {
-                Gtk.Application.Invoke(
+                Application.Invoke(
                     delegate
                     {
                         Store!.Clear();

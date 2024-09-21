@@ -27,7 +27,7 @@ using AccountingSoftware;
 
 namespace Configurator
 {
-    class PageJournal : VBox
+    class PageJournal : Box
     {
         Configuration Conf { get { return Program.Kernel.Conf; } }
 
@@ -45,10 +45,9 @@ namespace Configurator
 
         #endregion
 
-        public PageJournal() : base()
+        public PageJournal() : base(Orientation.Vertical, 0)
         {
-            new VBox();
-            HBox hBox = new HBox();
+            Box hBox = new Box(Orientation.Horizontal, 0);
 
             Button bSave = new Button("Зберегти");
             bSave.Clicked += OnSaveClick;
@@ -56,13 +55,13 @@ namespace Configurator
             hBox.PackStart(bSave, false, false, 10);
 
             Button bClose = new Button("Закрити");
-            bClose.Clicked += (object? sender, EventArgs args) => { GeneralForm?.CloseCurrentPageNotebook(); };
+            bClose.Clicked += (object? sender, EventArgs args) => GeneralForm?.CloseCurrentPageNotebook();
 
             hBox.PackStart(bClose, false, false, 10);
 
             PackStart(hBox, false, false, 10);
 
-            HPaned hPaned = new HPaned() { BorderWidth = 5 };
+            Paned hPaned = new Paned(Orientation.Horizontal) { BorderWidth = 5 };
 
             CreatePack1(hPaned);
             CreatePack2(hPaned);
@@ -72,19 +71,19 @@ namespace Configurator
             ShowAll();
         }
 
-        void CreatePack1(HPaned hPaned)
+        void CreatePack1(Paned hPaned)
         {
-            VBox vBox = new VBox();
+            Box vBox = new Box(Orientation.Vertical, 0);
 
             //Назва
-            HBox hBoxName = new HBox() { Halign = Align.End };
+            Box hBoxName = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxName, false, false, 5);
 
             hBoxName.PackStart(new Label("Назва:"), false, false, 5);
             hBoxName.PackStart(entryName, false, false, 5);
 
             //Опис
-            HBox hBoxDesc = new HBox() { Halign = Align.End };
+            Box hBoxDesc = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxDesc, false, false, 5);
 
             hBoxDesc.PackStart(new Label("Опис:") { Valign = Align.Start }, false, false, 5);
@@ -100,10 +99,10 @@ namespace Configurator
                 Expander expanderDocuments = new Expander("Документи які входять в журнал");
                 vBox.PackStart(expanderDocuments, false, false, 5);
 
-                VBox vBoxDocument = new VBox();
+                Box vBoxDocument = new Box(Orientation.Vertical, 0);
                 expanderDocuments.Add(vBoxDocument);
 
-                HBox hBoxDocument = new HBox() { Halign = Align.End };
+                Box hBoxDocument = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
                 vBoxDocument.PackStart(hBoxDocument, false, false, 5);
 
                 ScrolledWindow scrollAllowList = new ScrolledWindow() { ShadowType = ShadowType.In };
@@ -114,7 +113,7 @@ namespace Configurator
                 hBoxDocument.PackStart(scrollAllowList, true, true, 5);
 
                 //Заповнити
-                HBox hBoxFillDoc = new HBox() { Halign = Align.End };
+                Box hBoxFillDoc = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
                 vBoxDocument.PackStart(hBoxFillDoc, false, false, 5);
 
                 Button bFillDoc = new Button("Заповнити список налаштування");
@@ -128,11 +127,11 @@ namespace Configurator
                 Expander expanderForm = new Expander("Налаштування для документів") { Expanded = true };
                 vBox.PackStart(expanderForm, false, false, 5);
 
-                VBox vBoxForm = new VBox();
+                Box vBoxForm = new Box(Orientation.Vertical, 0);
                 expanderForm.Add(vBoxForm);
 
                 //Заголовок блоку Forms
-                HBox hBoxInterfaceCreateInfo = new HBox() { Halign = Align.Center };
+                Box hBoxInterfaceCreateInfo = new Box(Orientation.Horizontal, 0) { Halign = Align.Center };
                 vBoxForm.PackStart(hBoxInterfaceCreateInfo, false, false, 5);
                 hBoxInterfaceCreateInfo.PackStart(new Label("Документи"), false, false, 5);
 
@@ -143,9 +142,9 @@ namespace Configurator
             hPaned.Pack1(vBox, false, false);
         }
 
-        void CreatePack2(HPaned hPaned)
+        void CreatePack2(Paned hPaned)
         {
-            VBox vBox = new VBox();
+            Box vBox = new Box(Orientation.Vertical, 0);
 
             //Поля
             CreateFieldList(vBox);
@@ -153,34 +152,34 @@ namespace Configurator
             hPaned.Pack2(vBox, true, false);
         }
 
-        void CreateFieldList(VBox vBoxContainer)
+        void CreateFieldList(Box vBoxContainer)
         {
-            VBox vBox = new VBox();
+            Box vBox = new Box(Orientation.Vertical, 0);
 
-            HBox hBox = new HBox();
+            Box hBox = new Box(Orientation.Horizontal, 0);
             hBox.PackStart(new Label("Поля:"), false, false, 5);
             vBox.PackStart(hBox, false, false, 5);
 
             Toolbar toolbar = new Toolbar();
             vBox.PackStart(toolbar, false, false, 0);
 
-            ToolButton buttonAdd = new ToolButton(Stock.New) { Label = "Додати", IsImportant = true };
+            ToolButton buttonAdd = new ToolButton(new Image(Stock.New, IconSize.Menu), "Додати") { Label = "Додати", IsImportant = true };
             buttonAdd.Clicked += OnFieldsAddClick;
             toolbar.Add(buttonAdd);
 
-            ToolButton buttonCopy = new ToolButton(Stock.Copy) { Label = "Копіювати", IsImportant = true };
+            ToolButton buttonCopy = new ToolButton(new Image(Stock.Copy, IconSize.Menu), "Копіювати") { Label = "Копіювати", IsImportant = true };
             buttonCopy.Clicked += OnFieldsCopyClick;
             toolbar.Add(buttonCopy);
 
-            ToolButton buttonRefresh = new ToolButton(Stock.Refresh) { Label = "Обновити", IsImportant = true };
+            ToolButton buttonRefresh = new ToolButton(new Image(Stock.Refresh, IconSize.Menu), "Обновити") { Label = "Обновити", IsImportant = true };
             buttonRefresh.Clicked += OnFieldsRefreshClick;
             toolbar.Add(buttonRefresh);
 
-            ToolButton buttonDelete = new ToolButton(Stock.Clear) { Label = "Видалити", IsImportant = true };
+            ToolButton buttonDelete = new ToolButton(new Image(Stock.Clear, IconSize.Menu), "Видалити") { Label = "Видалити", IsImportant = true };
             buttonDelete.Clicked += OnFieldsRemoveClick;
             toolbar.Add(buttonDelete);
 
-            HBox hBoxScroll = new HBox();
+            Box hBoxScroll = new Box(Orientation.Horizontal, 0);
             ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
             scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
             scrollList.SetSizeRequest(0, 400);
@@ -195,18 +194,18 @@ namespace Configurator
             vBoxContainer.PackStart(vBox, false, false, 0);
         }
 
-        void CreateTabularList(VBox vBoxContainer)
+        void CreateTabularList(Box vBoxContainer)
         {
-            VBox vBox = new VBox();
+            Box vBox = new Box(Orientation.Vertical, 0);
 
             Toolbar toolbar = new Toolbar();
             vBox.PackStart(toolbar, false, false, 0);
 
-            ToolButton buttonDelete = new ToolButton(Stock.Clear) { Label = "Видалити", IsImportant = true };
+            ToolButton buttonDelete = new ToolButton(new Image(Stock.Clear, IconSize.Menu), "Видалити") { Label = "Видалити", IsImportant = true };
             buttonDelete.Clicked += OnTabularListRemoveClick;
             toolbar.Add(buttonDelete);
 
-            HBox hBoxScroll = new HBox();
+            Box hBoxScroll = new Box(Orientation.Horizontal, 0);
             ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
             scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
             scrollList.SetSizeRequest(0, 500);
@@ -236,7 +235,7 @@ namespace Configurator
         void FillFields()
         {
             foreach (ConfigurationJournalField field in ConfJournals.Fields.Values)
-                listBoxFields.Add(new Label($"{field.Name}" + (field.SortField ? " [Order]" : "") + (field.WherePeriod ? " [WherePeriod]" : "")) { Name = field.Name, Halign = Align.Start });
+                listBoxFields.Add(new Label($"{field.Name}" + (field.SortField ? " [Order]" : "") + (field.WherePeriod ? " [WherePeriod]" : "")) { Name = field.Name, Halign = Align.Start, UseUnderline = false });
 
             listBoxFields.ShowAll();
         }
@@ -257,7 +256,7 @@ namespace Configurator
         void FillTabularList()
         {
             foreach (ConfigurationTabularList tableList in ConfJournals.TabularList.Values)
-                listBoxTabularList.Add(new Label(tableList.Name) { Name = tableList.Name, Halign = Align.Start });
+                listBoxTabularList.Add(new Label(tableList.Name) { Name = tableList.Name, Halign = Align.Start, UseUnderline = false });
 
             listBoxTabularList.ShowAll();
         }
@@ -289,14 +288,8 @@ namespace Configurator
             {
                 CheckButton cb = (CheckButton)item.Child;
                 if (cb.Active)
-                {
                     if (!Keys.Contains(cb.Name))
                         ConfJournals.AppendTableList(new ConfigurationTabularList(cb.Name, ""));
-                }
-                else
-                {
-                    //Delete
-                }
             }
 
             TabularListRefreshList();
@@ -353,25 +346,22 @@ namespace Configurator
             if (args.Event.Type == Gdk.EventType.DoubleButtonPress)
             {
                 ListBoxRow[] selectedRows = listBoxFields.SelectedRows;
-
                 if (selectedRows.Length != 0)
                 {
                     ListBoxRow curRow = selectedRows[0];
-
-                    if (ConfJournals.Fields.ContainsKey(curRow.Child.Name))
+                    if (ConfJournals.Fields.TryGetValue(curRow.Child.Name, out ConfigurationJournalField? field))
                         GeneralForm?.CreateNotebookPage($"Поле: {curRow.Child.Name}", () =>
                         {
                             PageJournalField page = new PageJournalField()
                             {
                                 Fields = ConfJournals.Fields,
-                                Field = ConfJournals.Fields[curRow.Child.Name],
+                                Field = field,
                                 IsNew = false,
                                 GeneralForm = GeneralForm,
                                 CallBack_RefreshList = FieldsRefreshList
                             };
 
                             page.SetValue();
-
                             return page;
                         });
                 }
@@ -392,7 +382,6 @@ namespace Configurator
                 };
 
                 page.SetValue();
-
                 return page;
             });
         }
@@ -400,22 +389,18 @@ namespace Configurator
         void OnFieldsCopyClick(object? sender, EventArgs args)
         {
             ListBoxRow[] selectedRows = listBoxFields.SelectedRows;
-
             if (selectedRows.Length != 0)
             {
                 foreach (ListBoxRow row in selectedRows)
-                {
-                    if (ConfJournals.Fields.ContainsKey(row.Child.Name))
+                    if (ConfJournals.Fields.TryGetValue(row.Child.Name, out ConfigurationJournalField? field))
                     {
-                        ConfigurationJournalField newField = ConfJournals.Fields[row.Child.Name].Copy();
+                        ConfigurationJournalField newField = field.Copy();
                         newField.Name += GenerateName.GetNewName();
 
                         ConfJournals.AppendField(newField);
                     }
-                }
 
                 FieldsRefreshList();
-
                 GeneralForm?.LoadTreeAsync();
             }
         }
@@ -431,17 +416,12 @@ namespace Configurator
         void OnFieldsRemoveClick(object? sender, EventArgs args)
         {
             ListBoxRow[] selectedRows = listBoxFields.SelectedRows;
-
             if (selectedRows.Length != 0)
             {
                 foreach (ListBoxRow row in selectedRows)
-                {
-                    if (ConfJournals.Fields.ContainsKey(row.Child.Name))
-                        ConfJournals.Fields.Remove(row.Child.Name);
-                }
+                    ConfJournals.Fields.Remove(row.Child.Name);
 
                 FieldsRefreshList();
-
                 GeneralForm?.LoadTreeAsync();
             }
         }
@@ -460,25 +440,22 @@ namespace Configurator
             if (args.Event.Type == Gdk.EventType.DoubleButtonPress)
             {
                 ListBoxRow[] selectedRows = listBoxTabularList.SelectedRows;
-
                 if (selectedRows.Length != 0)
                 {
                     ListBoxRow curRow = selectedRows[0];
-
-                    if (ConfJournals.TabularList.ContainsKey(curRow.Child.Name))
+                    if (ConfJournals.TabularList.TryGetValue(curRow.Child.Name, out ConfigurationTabularList? tabularList))
                         GeneralForm?.CreateNotebookPage($"Налаштування: {curRow.Child.Name}", () =>
                         {
                             PageJournalTabularList page = new PageJournalTabularList()
                             {
                                 Fields = ConfJournals.Fields,
                                 TabularLists = ConfJournals.TabularList,
-                                TabularList = ConfJournals.TabularList[curRow.Child.Name],
+                                TabularList = tabularList,
                                 GeneralForm = GeneralForm,
                                 CallBack_RefreshList = TabularListRefreshList
                             };
 
                             page.SetValue();
-
                             return page;
                         });
                 }
@@ -488,17 +465,12 @@ namespace Configurator
         void OnTabularListRemoveClick(object? sender, EventArgs args)
         {
             ListBoxRow[] selectedRows = listBoxTabularList.SelectedRows;
-
             if (selectedRows.Length != 0)
             {
                 foreach (ListBoxRow row in selectedRows)
-                {
-                    if (ConfJournals.TabularList.ContainsKey(row.Child.Name))
-                        ConfJournals.TabularList.Remove(row.Child.Name);
-                }
+                    ConfJournals.TabularList.Remove(row.Child.Name);
 
                 TabularListRefreshList();
-
                 GeneralForm?.LoadTreeAsync();
             }
         }

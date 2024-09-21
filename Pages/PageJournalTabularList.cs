@@ -27,7 +27,7 @@ using AccountingSoftware;
 
 namespace Configurator
 {
-    class PageJournalTabularList : VBox
+    class PageJournalTabularList : Box
     {
         Configuration Conf { get { return Program.Kernel.Conf; } }
 
@@ -59,10 +59,9 @@ namespace Configurator
 
         #endregion
 
-        public PageJournalTabularList() : base()
+        public PageJournalTabularList() : base(Orientation.Vertical, 0)
         {
-            new VBox();
-            HBox hBox = new HBox();
+            Box hBox = new Box(Orientation.Horizontal, 0);
 
             Button bSave = new Button("Зберегти");
             bSave.Clicked += OnSaveClick;
@@ -70,7 +69,7 @@ namespace Configurator
             hBox.PackStart(bSave, false, false, 10);
 
             Button bClose = new Button("Закрити");
-            bClose.Clicked += (object? sender, EventArgs args) => { GeneralForm?.CloseCurrentPageNotebook(); };
+            bClose.Clicked += (object? sender, EventArgs args) => GeneralForm?.CloseCurrentPageNotebook();
 
             hBox.PackStart(bClose, false, false, 10);
 
@@ -79,7 +78,7 @@ namespace Configurator
             treeViewFields = new TreeView(listStore);
             AddColumnTreeViewFields();
 
-            HPaned hPaned = new HPaned() { BorderWidth = 5 };
+            Paned hPaned = new Paned(Orientation.Horizontal) { BorderWidth = 5 };
 
             CreatePack1(hPaned);
             CreatePack2(hPaned);
@@ -89,15 +88,15 @@ namespace Configurator
             ShowAll();
         }
 
-        void CreatePack2(HPaned hPaned)
+        void CreatePack2(Paned hPaned)
         {
-            VBox vBox = new VBox();
+            Box vBox = new Box(Orientation.Vertical, 0);
 
-            HBox hBoxTreeView = new HBox();
+            Box hBoxTreeView = new Box(Orientation.Horizontal, 0);
             hBoxTreeView.PackStart(new Label("Поля:"), false, false, 5);
             vBox.PackStart(hBoxTreeView, false, false, 5);
 
-            HBox hBoxScrollTreeView = new HBox();
+            Box hBoxScrollTreeView = new Box(Orientation.Horizontal, 0);
             ScrolledWindow scrollTreeView = new ScrolledWindow() { ShadowType = ShadowType.In };
             scrollTreeView.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
             scrollTreeView.SetSizeRequest(0, 500);
@@ -109,19 +108,19 @@ namespace Configurator
             hPaned.Pack2(vBox, true, false);
         }
 
-        void CreatePack1(HPaned hPaned)
+        void CreatePack1(Paned hPaned)
         {
-            VBox vBox = new VBox();
+            Box vBox = new Box(Orientation.Vertical, 0);
 
             //Назва
-            HBox hBoxName = new HBox() { Halign = Align.End };
+            Box hBoxName = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxName, false, false, 5);
 
             hBoxName.PackStart(new Label("Назва:"), false, false, 5);
             hBoxName.PackStart(entryName, false, false, 5);
 
             //Опис
-            HBox hBoxDesc = new HBox() { Halign = Align.End };
+            Box hBoxDesc = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxDesc, false, false, 5);
 
             hBoxDesc.PackStart(new Label("Опис:") { Valign = Align.Start }, false, false, 5);
@@ -135,7 +134,6 @@ namespace Configurator
             hPaned.Pack1(vBox, false, false);
         }
 
-
         #region TreeView
 
         void AddColumnTreeViewFields()
@@ -146,14 +144,12 @@ namespace Configurator
             DocField.Edited += DocFieldChanged;
 
             treeViewFields.AppendColumn(new TreeViewColumn("Поле документу", DocField, "text", (int)Columns.DocField) { MinWidth = 400 });
-
             treeViewFields.AppendColumn(new TreeViewColumn());
         }
 
         void DocFieldChanged(object sender, EditedArgs args)
         {
-            TreeIter iter;
-            if (listStore.GetIterFromString(out iter, args.Path))
+            if (listStore.GetIterFromString(out TreeIter iter, args.Path))
                 listStore.SetValue(iter, (int)Columns.DocField, args.NewText);
         }
 
@@ -166,8 +162,8 @@ namespace Configurator
         {
             FillTreeView();
 
-            if (Conf.Documents.ContainsKey(TabularList.Name))
-                foreach (string field in Conf.Documents[TabularList.Name].Fields.Keys)
+            if (Conf.Documents.TryGetValue(TabularList.Name, out ConfigurationDocuments? document))
+                foreach (string field in document.Fields.Keys)
                     listStoreDocFields.AppendValues(field);
 
             entryName.Text = TabularList.Name;
@@ -181,9 +177,9 @@ namespace Configurator
             {
                 string docField = "";
 
-                if (TabularList.Fields.ContainsKey(field.Name))
+                if (TabularList.Fields.TryGetValue(field.Name, out ConfigurationTabularListField? value))
                 {
-                    ConfigurationTabularListField tabularListField = TabularList.Fields[field.Name];
+                    ConfigurationTabularListField tabularListField = value;
                     docField = tabularListField.DocField;
                 }
 
@@ -199,8 +195,7 @@ namespace Configurator
             //Доспупні поля
             TabularList.Fields.Clear();
 
-            TreeIter iter;
-            if (listStore.GetIterFirst(out iter))
+            if (listStore.GetIterFirst(out TreeIter iter))
                 do
                 {
                     string name = (string)listStore.GetValue(iter, (int)Columns.Name);
@@ -217,7 +212,6 @@ namespace Configurator
         void OnSaveClick(object? sender, EventArgs args)
         {
             GetValue();
-
             TabularLists[TabularList.Name] = TabularList;
         }
     }

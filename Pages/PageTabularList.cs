@@ -227,13 +227,7 @@ namespace Configurator
 
             hBoxDesc.PackStart(scrollTextView, false, false, 5);
 
-            //Дерево
-            // Box hBoxTree = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
-            // vBox.PackStart(hBoxTree, false, false, 5);
-
-            // hBoxTree.PackStart(checkButtonIsTree, false, false, 5);
-
-             hPaned.Pack1(vBox, false, false);
+            hPaned.Pack1(vBox, false, false);
         }
 
         #region TreeView
@@ -386,8 +380,7 @@ namespace Configurator
                 CellRendererText cell = new CellRendererText() { Editable = true };
                 cell.Edited += (object o, EditedArgs args) =>
                 {
-                    TreeIter iter;
-                    if (listStoreAdditional.GetIterFromString(out iter, args.Path))
+                    if (listStoreAdditional.GetIterFromString(out TreeIter iter, args.Path))
                     {
                         uint.TryParse(args.NewText, out uint size);
                         listStoreAdditional.SetValue(iter, (int)ColumnsAdditional.Size, size);
@@ -440,9 +433,6 @@ namespace Configurator
 
         public void SetValue()
         {
-            //Дерево доступне тільки для Довідників
-            //checkButtonIsTree.Sensitive = ConfOwnerName == "Довідники";
-
             FillTreeView();
             FillTreeAdditionalView();
 
@@ -500,7 +490,6 @@ namespace Configurator
         void GetValue()
         {
             TabularList.Name = entryName.Text;
-            //TabularList.IsTree = checkButtonIsTree.Active;
             TabularList.Desc = textViewDesc.Buffer.Text;
 
             //Поля
@@ -620,7 +609,7 @@ namespace Configurator
                         Box vBox = new Box(Orientation.Vertical, 0);
                         SourceView sourceViewCode = new SourceView();
                         sourceViewCode.Buffer.Language = new LanguageManager().GetLanguage("sql");
-                        
+
                         //Кнопки
                         {
                             Box hBox = new Box(Orientation.Horizontal, 0);

@@ -71,7 +71,7 @@ namespace Configurator
             hBox.PackStart(bSave, false, false, 10);
 
             Button bClose = new Button("Закрити");
-            bClose.Clicked += (object? sender, EventArgs args) => { GeneralForm?.CloseCurrentPageNotebook(); };
+            bClose.Clicked += (object? sender, EventArgs args) => GeneralForm?.CloseCurrentPageNotebook();
 
             hBox.PackStart(bClose, false, false, 10);
 
@@ -229,21 +229,21 @@ namespace Configurator
                 List<string> helpList =
                 [
                     "Типи даних та їх відповідники в C#:",
-                "integer -> int",
-                "numeric -> decimal",
-                "boolean -> bool",
-                "date -> DateTime",
-                "datetime -> DateTime",
-                "time -> TimeSpan",
-                "enum -> enum",
-                "pointer -> Довідник.Номенклатура()",
-                "composite_pointer -> UuidAndText()",
-                "any_pointer -> Guid()",
-                "byte -> byte[]",
-                "string[] -> string[]",
-                "integer[] -> int[]",
-                "numeric[] -> decimal[]",
-            ];
+                    "integer -> int",
+                    "numeric -> decimal",
+                    "boolean -> bool",
+                    "date -> DateTime",
+                    "datetime -> DateTime",
+                    "time -> TimeSpan",
+                    "enum -> enum",
+                    "pointer -> Довідник.Номенклатура",
+                    "composite_pointer -> UuidAndText",
+                    "any_pointer -> Guid",
+                    "byte -> byte[]",
+                    "string[] -> string[]",
+                    "integer[] -> int[]",
+                    "numeric[] -> decimal[]",
+                ];
 
                 foreach (var item in helpList)
                 {

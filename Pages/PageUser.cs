@@ -27,7 +27,7 @@ using AccountingSoftware;
 
 namespace Configurator
 {
-    class PageUser : VBox
+    class PageUser : Box
     {
         public FormConfigurator? GeneralForm { get; set; }
         public System.Action? CallBack_RefreshList { get; set; }
@@ -43,10 +43,9 @@ namespace Configurator
 
         #endregion
 
-        public PageUser() : base()
+        public PageUser() : base(Orientation.Vertical, 0)
         {
-            new VBox();
-            HBox hBox = new HBox();
+            Box hBox = new Box(Orientation.Horizontal, 0);
 
             Button bSave = new Button("Зберегти");
             bSave.Clicked += OnSaveClick;
@@ -54,13 +53,13 @@ namespace Configurator
             hBox.PackStart(bSave, false, false, 10);
 
             Button bClose = new Button("Закрити");
-            bClose.Clicked += (object? sender, EventArgs args) => { GeneralForm?.CloseCurrentPageNotebook(); };
+            bClose.Clicked += (object? sender, EventArgs args) => GeneralForm?.CloseCurrentPageNotebook();
 
             hBox.PackStart(bClose, false, false, 10);
 
             PackStart(hBox, false, false, 10);
 
-            HPaned hPaned = new HPaned() { BorderWidth = 5, Position = 500 };
+            Paned hPaned = new Paned(Orientation.Horizontal) { BorderWidth = 5, Position = 500 };
 
             CreatePack1(hPaned);
             CreatePack2(hPaned);
@@ -70,33 +69,33 @@ namespace Configurator
             ShowAll();
         }
 
-        void CreatePack1(HPaned hPaned)
+        void CreatePack1(Paned hPaned)
         {
-            VBox vBox = new VBox();
+            Box vBox = new Box(Orientation.Vertical, 0);
 
             //Логін
-            HBox hBoxLogin = new HBox() { Halign = Align.End };
+            Box hBoxLogin = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxLogin, false, false, 5);
 
             hBoxLogin.PackStart(new Label("Логін:"), false, false, 5);
             hBoxLogin.PackStart(entryLogin, false, false, 5);
 
             //Назва
-            HBox hBoxName = new HBox() { Halign = Align.End };
+            Box hBoxName = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxName, false, false, 5);
 
             hBoxName.PackStart(new Label("Назва:"), false, false, 5);
             hBoxName.PackStart(entryName, false, false, 5);
 
             //Пароль
-            HBox hBoxPassword = new HBox() { Halign = Align.End };
+            Box hBoxPassword = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxPassword, false, false, 5);
 
             hBoxPassword.PackStart(new Label("Пароль:"), false, false, 5);
             hBoxPassword.PackStart(entryPassword, false, false, 5);
 
             //Опис
-            HBox hBoxDesc = new HBox() { Halign = Align.End };
+            Box hBoxDesc = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxDesc, false, false, 5);
 
             hBoxDesc.PackStart(new Label("Опис:") { Valign = Align.Start }, false, false, 5);
@@ -110,11 +109,9 @@ namespace Configurator
             hPaned.Pack1(vBox, false, false);
         }
 
-        void CreatePack2(HPaned hPaned)
+        void CreatePack2(Paned hPaned)
         {
-            VBox vBox = new VBox();
-
-
+            Box vBox = new Box(Orientation.Vertical, 0);
 
             hPaned.Pack2(vBox, false, false);
         }
@@ -139,7 +136,7 @@ namespace Configurator
         }
 
         //Login, Name, Pass, Info
-        (string, string, string, string) GetValue()
+        (string Login, string Name, string Pass, string Info) GetValue()
         {
             return
             (
@@ -156,7 +153,7 @@ namespace Configurator
         {
             var value = GetValue();
 
-            string name = value.Item1;
+            string name = value.Login;
             string errorList = Configuration.ValidateConfigurationObjectName(Program.Kernel, ref name);
 
             if (errorList.Length > 0)
@@ -167,13 +164,13 @@ namespace Configurator
 
             if (IsNew)
             {
-                if (await Program.Kernel.DataBase.SpetialTableUsersIsExistUser(value.Item1))
+                if (await Program.Kernel.DataBase.SpetialTableUsersIsExistUser(value.Login))
                 {
                     Message.Error(GeneralForm, "Назва користувача не унікальна");
                     return;
                 }
 
-                Guid? UserUID = await Program.Kernel.DataBase.SpetialTableUsersAddOrUpdate(IsNew, null, value.Item1, value.Item2, value.Item3, value.Item4);
+                Guid? UserUID = await Program.Kernel.DataBase.SpetialTableUsersAddOrUpdate(IsNew, null, value.Login, value.Name, value.Pass, value.Info);
 
                 if (UserUID.HasValue)
                 {
@@ -188,19 +185,17 @@ namespace Configurator
             }
             else
             {
-                if (await Program.Kernel.DataBase.SpetialTableUsersIsExistUser(value.Item1, null, UID))
+                if (await Program.Kernel.DataBase.SpetialTableUsersIsExistUser(value.Login, null, UID))
                 {
                     Message.Error(GeneralForm, "Назва користувача не унікальна");
                     return;
                 }
 
-                await Program.Kernel.DataBase.SpetialTableUsersAddOrUpdate(IsNew, UID, value.Item1, value.Item2, value.Item3, value.Item4);
+                await Program.Kernel.DataBase.SpetialTableUsersAddOrUpdate(IsNew, UID, value.Login, value.Name, value.Pass, value.Info);
             }
 
-            if (CallBack_RefreshList != null)
-                CallBack_RefreshList.Invoke();
-
-            GeneralForm?.RenameCurrentPageNotebook($"Користувач: {value.Item2}");
+            CallBack_RefreshList?.Invoke();
+            GeneralForm?.RenameCurrentPageNotebook($"Користувач: {value.Name}");
         }
     }
 }

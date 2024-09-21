@@ -28,7 +28,7 @@ using GtkSource;
 
 namespace Configurator
 {
-    class PageQuery : VBox
+    class PageQuery : Box
     {
         Configuration Conf { get { return Program.Kernel.Conf; } }
 
@@ -45,9 +45,9 @@ namespace Configurator
 
         #endregion
 
-        public PageQuery() : base()
+        public PageQuery() : base(Orientation.Vertical, 0)
         {
-            HBox hBox = new HBox();
+            Box hBox = new Box(Orientation.Horizontal, 0);
 
             Button bSave = new Button("Зберегти");
             bSave.Clicked += OnSaveClick;
@@ -61,7 +61,7 @@ namespace Configurator
 
             PackStart(hBox, false, false, 10);
 
-            HPaned hPaned = new HPaned() { BorderWidth = 5, Position = 800 };
+            Paned hPaned = new Paned(Orientation.Horizontal) { BorderWidth = 5, Position = 800 };
 
             CreatePack1(hPaned);
             CreatePack2(hPaned);
@@ -71,19 +71,19 @@ namespace Configurator
             ShowAll();
         }
 
-        void CreatePack1(HPaned hPaned)
+        void CreatePack1(Paned hPaned)
         {
-            VBox vBox = new VBox();
+            Box vBox = new Box(Orientation.Vertical, 0);
 
             //Ключ
-            HBox hBoxKey = new HBox() { Halign = Align.End };
+            Box hBoxKey = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxKey, false, false, 5);
 
             hBoxKey.PackStart(new Label("Ключ:"), false, false, 5);
             hBoxKey.PackStart(entryKey, false, false, 5);
 
             //Query
-            HBox hBoxQuery = new HBox() { Halign = Align.End };
+            Box hBoxQuery = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxQuery, false, false, 5);
 
             hBoxQuery.PackStart(new Label("SQL:") { Valign = Align.Start }, false, false, 5);
@@ -98,16 +98,13 @@ namespace Configurator
             hPaned.Pack1(vBox, false, false);
         }
 
-        void CreatePack2(HPaned hPaned)
+        void CreatePack2(Paned hPaned)
         {
-            VBox vBox = new VBox();
+            Box vBox = new Box(Orientation.Vertical, 0);
 
-            Expander expanderHelp = new Expander("Довідка")
-            {
-                vBox
-            };
+            Expander expanderHelp = new Expander("Довідка") { vBox };
 
-            HBox hBox = new HBox() { Halign = Align.Fill };
+            Box hBox = new Box(Orientation.Horizontal, 0) { Halign = Align.Fill };
             vBox.PackStart(hBox, false, false, 5);
 
             hBox.PackStart(new Label("help"), false, false, 5);
@@ -171,9 +168,7 @@ namespace Configurator
             IsNew = false;
 
             GeneralForm?.RenameCurrentPageNotebook($"Запит: {Key}");
-
-            if (CallBack_RefreshList != null)
-                CallBack_RefreshList.Invoke();
+            CallBack_RefreshList?.Invoke();
         }
     }
 }

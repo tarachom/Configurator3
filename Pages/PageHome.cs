@@ -25,15 +25,13 @@ using Gtk;
 
 namespace Configurator
 {
-    class PageHome : VBox
+    class PageHome : Box
     {
-        public PageHome() : base()
+        public PageHome() : base(Orientation.Vertical, 0)
         {
-            new VBox();
-            HBox hBox = new HBox();
+            Box hBox = new Box(Orientation.Horizontal, 0);
 
             PackStart(hBox, false, false, 10);
-
             ShowAll();
         }
     }

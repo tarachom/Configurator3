@@ -27,7 +27,7 @@ using AccountingSoftware;
 
 namespace Configurator
 {
-    class PageEnum : VBox
+    class PageEnum : Box
     {
         Configuration Conf { get { return Program.Kernel.Conf; } }
 
@@ -43,10 +43,9 @@ namespace Configurator
 
         #endregion
 
-        public PageEnum() : base()
+        public PageEnum() : base(Orientation.Vertical, 0)
         {
-            new VBox();
-            HBox hBox = new HBox();
+            Box hBox = new Box(Orientation.Horizontal, 0);
 
             Button bSave = new Button("Зберегти");
             bSave.Clicked += OnSaveClick;
@@ -54,13 +53,13 @@ namespace Configurator
             hBox.PackStart(bSave, false, false, 10);
 
             Button bClose = new Button("Закрити");
-            bClose.Clicked += (object? sender, EventArgs args) => { GeneralForm?.CloseCurrentPageNotebook(); };
+            bClose.Clicked += (object? sender, EventArgs args) => GeneralForm?.CloseCurrentPageNotebook();
 
             hBox.PackStart(bClose, false, false, 10);
 
             PackStart(hBox, false, false, 10);
 
-            HPaned hPaned = new HPaned() { BorderWidth = 5 };
+            Paned hPaned = new Paned(Orientation.Horizontal) { BorderWidth = 5 };
 
             CreatePack1(hPaned);
             CreatePack2(hPaned);
@@ -70,19 +69,19 @@ namespace Configurator
             ShowAll();
         }
 
-        void CreatePack1(HPaned hPaned)
+        void CreatePack1(Paned hPaned)
         {
-            VBox vBox = new VBox();
+            Box vBox = new Box(Orientation.Vertical, 0);
 
             //Назва
-            HBox hBoxName = new HBox() { Halign = Align.End };
+            Box hBoxName = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxName, false, false, 5);
 
             hBoxName.PackStart(new Label("Назва:"), false, false, 5);
             hBoxName.PackStart(entryName, false, false, 5);
 
             //Опис
-            HBox hBoxDesc = new HBox() { Halign = Align.End };
+            Box hBoxDesc = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxDesc, false, false, 5);
 
             hBoxDesc.PackStart(new Label("Опис:") { Valign = Align.Start }, false, false, 5);
@@ -96,9 +95,9 @@ namespace Configurator
             hPaned.Pack1(vBox, false, false);
         }
 
-        void CreatePack2(HPaned hPaned)
+        void CreatePack2(Paned hPaned)
         {
-            VBox vBox = new VBox();
+            Box vBox = new Box(Orientation.Vertical, 0);
 
             //Поля
             CreateFieldList(vBox);
@@ -106,34 +105,34 @@ namespace Configurator
             hPaned.Pack2(vBox, true, false);
         }
 
-        void CreateFieldList(VBox vBoxContainer)
+        void CreateFieldList(Box vBoxContainer)
         {
-            VBox vBox = new VBox();
+            Box vBox = new Box(Orientation.Vertical, 0);
 
-            HBox hBox = new HBox();
+            Box hBox = new Box(Orientation.Horizontal, 0);
             hBox.PackStart(new Label("Поля:"), false, false, 5);
             vBox.PackStart(hBox, false, false, 5);
 
             Toolbar toolbar = new Toolbar();
             vBox.PackStart(toolbar, false, false, 0);
 
-            ToolButton buttonAdd = new ToolButton(Stock.New) { Label = "Додати", IsImportant = true };
+            ToolButton buttonAdd = new ToolButton(new Image(Stock.New, IconSize.Menu), "Додати") { Label = "Додати", IsImportant = true };
             buttonAdd.Clicked += OnFieldsAddClick;
             toolbar.Add(buttonAdd);
 
-            ToolButton buttonCopy = new ToolButton(Stock.Copy) { Label = "Копіювати", IsImportant = true };
+            ToolButton buttonCopy = new ToolButton(new Image(Stock.Copy, IconSize.Menu), "Копіювати") { Label = "Копіювати", IsImportant = true };
             buttonCopy.Clicked += OnFieldsCopyClick;
             toolbar.Add(buttonCopy);
 
-            ToolButton buttonRefresh = new ToolButton(Stock.Refresh) { Label = "Обновити", IsImportant = true };
+            ToolButton buttonRefresh = new ToolButton(new Image(Stock.Refresh, IconSize.Menu), "Обновити") { Label = "Обновити", IsImportant = true };
             buttonRefresh.Clicked += OnFieldsRefreshClick;
             toolbar.Add(buttonRefresh);
 
-            ToolButton buttonDelete = new ToolButton(Stock.Clear) { Label = "Видалити", IsImportant = true };
+            ToolButton buttonDelete = new ToolButton(new Image(Stock.Clear, IconSize.Menu), "Видалити") { Label = "Видалити", IsImportant = true };
             buttonDelete.Clicked += OnFieldsRemoveClick;
             toolbar.Add(buttonDelete);
 
-            HBox hBoxScroll = new HBox();
+            Box hBoxScroll = new Box(Orientation.Horizontal, 0);
             ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
             scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
             scrollList.SetSizeRequest(0, 400);
@@ -161,7 +160,7 @@ namespace Configurator
         void FillFields()
         {
             foreach (ConfigurationEnumField field in ConfEnum.Fields.Values)
-                listBoxFields.Add(new Label($"{field.Name} = {field.Value}") { Name = field.Name, Halign = Align.Start });
+                listBoxFields.Add(new Label($"{field.Name} = {field.Value}") { Name = field.Name, Halign = Align.Start, UseUnderline = false });
 
             listBoxFields.ShowAll();
         }
@@ -185,7 +184,7 @@ namespace Configurator
                 Message.Error(GeneralForm, $"{errorList}");
                 return;
             }
-            
+
             if (IsNew)
             {
                 if (Conf.Enums.ContainsKey(entryName.Text))
@@ -225,25 +224,22 @@ namespace Configurator
             if (args.Event.Type == Gdk.EventType.DoubleButtonPress)
             {
                 ListBoxRow[] selectedRows = listBoxFields.SelectedRows;
-
                 if (selectedRows.Length != 0)
                 {
                     ListBoxRow curRow = selectedRows[0];
-
-                    if (ConfEnum.Fields.ContainsKey(curRow.Child.Name))
+                    if (ConfEnum.Fields.TryGetValue(curRow.Child.Name, out ConfigurationEnumField? field))
                         GeneralForm?.CreateNotebookPage($"Поле: {curRow.Child.Name}", () =>
                         {
                             PageEnumField page = new PageEnumField()
                             {
                                 Fields = ConfEnum.Fields,
-                                Field = ConfEnum.Fields[curRow.Child.Name],
+                                Field = field,
                                 IsNew = false,
                                 GeneralForm = GeneralForm,
                                 CallBack_RefreshList = FieldsRefreshList
                             };
 
                             page.SetValue();
-
                             return page;
                         });
                 }
@@ -264,7 +260,6 @@ namespace Configurator
                 };
 
                 page.SetValue();
-
                 return page;
             });
         }
@@ -272,22 +267,18 @@ namespace Configurator
         void OnFieldsCopyClick(object? sender, EventArgs args)
         {
             ListBoxRow[] selectedRows = listBoxFields.SelectedRows;
-
             if (selectedRows.Length != 0)
             {
                 foreach (ListBoxRow row in selectedRows)
-                {
-                    if (ConfEnum.Fields.ContainsKey(row.Child.Name))
+                    if (ConfEnum.Fields.TryGetValue(row.Child.Name, out ConfigurationEnumField? field))
                     {
-                        ConfigurationEnumField newField = ConfEnum.Fields[row.Child.Name].Copy(++ConfEnum.SerialNumber);
+                        ConfigurationEnumField newField = field.Copy(++ConfEnum.SerialNumber);
                         newField.Name += GenerateName.GetNewName();
 
                         ConfEnum.AppendField(newField);
                     }
-                }
 
                 FieldsRefreshList();
-
                 GeneralForm?.LoadTreeAsync();
             }
         }
@@ -303,17 +294,12 @@ namespace Configurator
         void OnFieldsRemoveClick(object? sender, EventArgs args)
         {
             ListBoxRow[] selectedRows = listBoxFields.SelectedRows;
-
             if (selectedRows.Length != 0)
             {
                 foreach (ListBoxRow row in selectedRows)
-                {
-                    if (ConfEnum.Fields.ContainsKey(row.Child.Name))
-                        ConfEnum.Fields.Remove(row.Child.Name);
-                }
+                    ConfEnum.Fields.Remove(row.Child.Name);
 
                 FieldsRefreshList();
-
                 GeneralForm?.LoadTreeAsync();
             }
         }

@@ -27,7 +27,7 @@ using AccountingSoftware;
 
 namespace Configurator
 {
-    class PageQueryBlock : VBox
+    class PageQueryBlock : Box
     {
         Configuration Conf { get { return Program.Kernel.Conf; } }
 
@@ -45,10 +45,9 @@ namespace Configurator
 
         #endregion
 
-        public PageQueryBlock() : base()
+        public PageQueryBlock() : base(Orientation.Vertical, 0)
         {
-            new VBox();
-            HBox hBox = new HBox();
+            Box hBox = new Box(Orientation.Horizontal, 0);
 
             Button bSave = new Button("Зберегти");
             bSave.Clicked += OnSaveClick;
@@ -62,7 +61,7 @@ namespace Configurator
 
             PackStart(hBox, false, false, 10);
 
-            HPaned hPaned = new HPaned() { BorderWidth = 5, Position = 800 };
+            Paned hPaned = new Paned(Orientation.Horizontal) { BorderWidth = 5, Position = 800 };
 
             CreatePack1(hPaned);
             CreatePack2(hPaned);
@@ -72,56 +71,56 @@ namespace Configurator
             ShowAll();
         }
 
-        void CreatePack1(HPaned hPaned)
+        void CreatePack1(Paned hPaned)
         {
-            VBox vBox = new VBox();
+            Box vBox = new Box(Orientation.Vertical, 0);
 
             //Назва
-            HBox hBoxName = new HBox() { Halign = Align.End };
+            Box hBoxName = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxName, false, false, 5);
 
             hBoxName.PackStart(new Label("Назва:"), false, false, 5);
             hBoxName.PackStart(entryName, false, false, 5);
 
             //finalCalculation
-            HBox hBoxFinalCalculation = new HBox() { Halign = Align.Start };
+            Box hBoxFinalCalculation = new Box(Orientation.Horizontal, 0) { Halign = Align.Start };
             vBox.PackStart(hBoxFinalCalculation, false, false, 5);
 
             hBoxFinalCalculation.PackStart(finalCalculation, false, false, 5);
 
             //Список
-            HBox hBox = new HBox();
+            Box hBox = new Box(Orientation.Horizontal, 0);
             hBox.PackStart(new Label("Поля:"), false, false, 5);
             vBox.PackStart(hBox, false, false, 5);
 
             Toolbar toolbar = new Toolbar();
             vBox.PackStart(toolbar, false, false, 0);
 
-            ToolButton buttonAdd = new ToolButton(Stock.New) { Label = "Додати", IsImportant = true };
+            ToolButton buttonAdd = new ToolButton(new Image(Stock.New, IconSize.Menu), "Додати") { Label = "Додати", IsImportant = true };
             buttonAdd.Clicked += OnQueryListAddClick;
             toolbar.Add(buttonAdd);
 
-            ToolButton buttonCopy = new ToolButton(Stock.Copy) { Label = "Копіювати", IsImportant = true };
+            ToolButton buttonCopy = new ToolButton(new Image(Stock.Copy, IconSize.Menu), "Копіювати") { Label = "Копіювати", IsImportant = true };
             buttonCopy.Clicked += OnQueryListCopyClick;
             toolbar.Add(buttonCopy);
 
-            ToolButton buttonRefresh = new ToolButton(Stock.Refresh) { Label = "Обновити", IsImportant = true };
+            ToolButton buttonRefresh = new ToolButton(new Image(Stock.Refresh, IconSize.Menu), "Обновити") { Label = "Обновити", IsImportant = true };
             buttonRefresh.Clicked += OnQueryListRefreshClick;
             toolbar.Add(buttonRefresh);
 
-            ToolButton buttonDelete = new ToolButton(Stock.Clear) { Label = "Видалити", IsImportant = true };
+            ToolButton buttonDelete = new ToolButton(new Image(Stock.Clear, IconSize.Menu), "Видалити") { Label = "Видалити", IsImportant = true };
             buttonDelete.Clicked += OnQueryListRemoveClick;
             toolbar.Add(buttonDelete);
 
-            ToolButton buttonGoUp = new ToolButton(Stock.GoUp) { Label = "Вверх", IsImportant = true };
+            ToolButton buttonGoUp = new ToolButton(new Image(Stock.GoUp, IconSize.Menu), "Вверх") { Label = "Вверх", IsImportant = true };
             buttonGoUp.Clicked += OnQueryListGoUpClick;
             toolbar.Add(buttonGoUp);
 
-            ToolButton buttonGoDown = new ToolButton(Stock.GoDown) { Label = "Вниз", IsImportant = true };
+            ToolButton buttonGoDown = new ToolButton(new Image(Stock.GoDown, IconSize.Menu), "Вниз") { Label = "Вниз", IsImportant = true };
             buttonGoDown.Clicked += OnQueryListGoDownClick;
             toolbar.Add(buttonGoDown);
 
-            HBox hBoxScroll = new HBox();
+            Box hBoxScroll = new Box(Orientation.Horizontal, 0);
             ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
             scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
             scrollList.SetSizeRequest(0, 300);
@@ -136,18 +135,16 @@ namespace Configurator
             hPaned.Pack1(vBox, false, false);
         }
 
-        void CreatePack2(HPaned hPaned)
+        void CreatePack2(Paned hPaned)
         {
-            VBox vBox = new VBox();
+            Box vBox = new Box(Orientation.Vertical, 0);
 
-            Expander expanderHelp = new Expander("Довідка");
-            expanderHelp.Add(vBox);
+            Expander expanderHelp = new Expander("Довідка") { vBox };
 
-            HBox hBox = new HBox() { Halign = Align.Fill };
+            Box hBox = new Box(Orientation.Horizontal, 0) { Halign = Align.Fill };
             vBox.PackStart(hBox, false, false, 5);
 
             hBox.PackStart(new Label("help"), false, false, 5);
-
             hPaned.Pack2(expanderHelp, false, false);
         }
 
@@ -164,7 +161,7 @@ namespace Configurator
         void FillQueryList()
         {
             foreach (KeyValuePair<string, string> query in QueryBlock.Query)
-                listBoxQuery.Add(new Label(query.Key) { Name = query.Key.ToString(), Halign = Align.Start });
+                listBoxQuery.Add(new Label(query.Key) { Name = query.Key.ToString(), Halign = Align.Start, UseUnderline = false });
 
             listBoxQuery.ShowAll();
         }
@@ -214,9 +211,7 @@ namespace Configurator
             IsNew = false;
 
             GeneralForm?.RenameCurrentPageNotebook($"Блок запитів: {QueryBlock.Name}");
-
-            if (CallBack_RefreshList != null)
-                CallBack_RefreshList.Invoke();
+            CallBack_RefreshList?.Invoke();
         }
 
         #region QueryList
@@ -226,11 +221,9 @@ namespace Configurator
             if (args.Event.Type == Gdk.EventType.DoubleButtonPress)
             {
                 ListBoxRow[] selectedRows = listBoxQuery.SelectedRows;
-
                 if (selectedRows.Length != 0)
                 {
                     ListBoxRow curRow = selectedRows[0];
-
                     if (QueryBlock.Query.ContainsKey(curRow.Child.Name))
                         GeneralForm?.CreateNotebookPage($"Запит: {curRow.Child.Name}", () =>
                         {
@@ -244,7 +237,6 @@ namespace Configurator
                             };
 
                             page.SetValue();
-
                             return page;
                         });
                 }
@@ -264,7 +256,6 @@ namespace Configurator
                 };
 
                 page.SetValue();
-
                 return page;
             });
         }
@@ -272,14 +263,13 @@ namespace Configurator
         void OnQueryListCopyClick(object? sender, EventArgs args)
         {
             ListBoxRow[] selectedRows = listBoxQuery.SelectedRows;
-
             if (selectedRows.Length != 0)
             {
                 foreach (ListBoxRow row in selectedRows)
                 {
-                    if (QueryBlock.Query.ContainsKey(row.Child.Name))
+                    if (QueryBlock.Query.TryGetValue(row.Child.Name, out string? value))
                     {
-                        string query = QueryBlock.Query[row.Child.Name];
+                        string query = value;
                         string newKey = row.Child.Name + GenerateName.GetNewName();
 
                         QueryBlock.Query.Add(newKey, query);
@@ -287,7 +277,6 @@ namespace Configurator
                 }
 
                 QueryListRefreshList();
-
                 GeneralForm?.LoadTreeAsync();
             }
         }
@@ -303,14 +292,10 @@ namespace Configurator
         void OnQueryListRemoveClick(object? sender, EventArgs args)
         {
             ListBoxRow[] selectedRows = listBoxQuery.SelectedRows;
-
             if (selectedRows.Length != 0)
             {
                 foreach (ListBoxRow row in selectedRows)
-                {
-                    if (QueryBlock.Query.ContainsKey(row.Child.Name))
-                        QueryBlock.Query.Remove(row.Child.Name);
-                }
+                    QueryBlock.Query.Remove(row.Child.Name);
 
                 QueryListRefreshList();
             }
@@ -319,7 +304,6 @@ namespace Configurator
         void OnQueryListGoUpClick(object? sender, EventArgs args)
         {
             ListBoxRow[] selectedRows = listBoxQuery.SelectedRows;
-
             if (selectedRows.Length != 0)
             {
                 ListBoxRow curRow = selectedRows[0];
@@ -345,7 +329,6 @@ namespace Configurator
         void OnQueryListGoDownClick(object? sender, EventArgs args)
         {
             ListBoxRow[] selectedRows = listBoxQuery.SelectedRows;
-
             if (selectedRows.Length != 0)
             {
                 ListBoxRow curRow = selectedRows[0];

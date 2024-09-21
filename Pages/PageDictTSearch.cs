@@ -49,7 +49,7 @@ namespace Configurator
             hBox.PackStart(bSave, false, false, 10);
 
             Button bClose = new Button("Закрити");
-            bClose.Clicked += (object? sender, EventArgs args) => { GeneralForm?.CloseCurrentPageNotebook(); };
+            bClose.Clicked += (object? sender, EventArgs args) => GeneralForm?.CloseCurrentPageNotebook();
 
             hBox.PackStart(bClose, false, false, 10);
 
@@ -137,7 +137,8 @@ ALTER TEXT SEARCH CONFIGURATION ukrainian ALTER MAPPING FOR asciihword, asciiwor
                 {
                     Wrap = true,
                     UseMarkup = true,
-                    Selectable = true
+                    Selectable = true,
+                    UseUnderline = false
                 };
 
                 hBoxSql.PackStart(labelSQL, false, false, 10);
@@ -170,7 +171,6 @@ ALTER TEXT SEARCH CONFIGURATION ukrainian ALTER MAPPING FOR asciihword, asciiwor
                     ];
 
                     foreach (string sql in sql_list)
-                    {
                         try
                         {
                             await Program.Kernel.DataBase.ExecuteSQL(sql);
@@ -179,7 +179,6 @@ ALTER TEXT SEARCH CONFIGURATION ukrainian ALTER MAPPING FOR asciihword, asciiwor
                         {
                             Message.Error(GeneralForm, ex.Message);
                         }
-                    }
 
                     Conf.DictTSearch = "ukrainian";
                     SetValue();

@@ -671,9 +671,6 @@ namespace Configurator
                 XmlElement nodeTabularList = xmlConfDocument.CreateElement("TabularList");
                 nodeTabularList.InnerText = Form.TabularList;
                 nodeDirectory.AppendChild(nodeTabularList);
-
-                /*if (TypeForm != ConfigurationForms.TypeForms.ListSmallSelect)
-                    Configuration.SaveTabularParts(TabularParts, xmlConfDocument, nodeDirectory);*/
             }
             else if (TypeForm == ConfigurationForms.TypeForms.Element)
             {

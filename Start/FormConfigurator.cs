@@ -42,7 +42,7 @@ namespace Configurator
 
         #region Fields
 
-        HPaned hPaned;
+        Paned hPaned;
         TreeView treeConfiguration;
         TreeStore treeStore;
         Notebook topNotebook;
@@ -505,7 +505,7 @@ namespace Configurator
 
             DeleteEvent += delegate { Application.Quit(); };
 
-            VBox vbox = new VBox();
+            Box vbox = new Box(Orientation.Vertical, 0);
             Add(vbox);
 
             //MenuBar
@@ -514,7 +514,7 @@ namespace Configurator
             //Toolbar
             vbox.PackStart(CreateToolbar(), false, false, 0);
 
-            hPaned = new HPaned { Position = 200 };
+            hPaned = new Paned(Orientation.Horizontal) { Position = 200 };
 
             ScrolledWindow scrollTree = new ScrolledWindow() { ShadowType = ShadowType.In };
             scrollTree.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
@@ -540,10 +540,7 @@ namespace Configurator
                 TabPos = PositionType.Top
             };
 
-            CreateNotebookPage("Стартова", () =>
-            {
-                return new PageHome();
-            });
+            CreateNotebookPage("Стартова", () => new PageHome());
 
             hPaned.Pack2(topNotebook, false, true);
 
@@ -555,7 +552,7 @@ namespace Configurator
             ShowAll();
         }
 
-        VBox CreateMenuBar()
+        Box CreateMenuBar()
         {
             MenuBar mb = new MenuBar();
 
@@ -627,7 +624,7 @@ namespace Configurator
 
             mb.Append(aboutMenuItem);
 
-            VBox vbox = new VBox(false, 2);
+            Box vbox = new Box(Orientation.Vertical, 0);
             vbox.PackStart(mb, false, false, 0);
 
             return vbox;
@@ -637,20 +634,20 @@ namespace Configurator
         {
             Toolbar toolbar = new Toolbar();
 
-            MenuToolButton menuToolButton = new MenuToolButton(Stock.New) { Label = "Додати", IsImportant = true };
+            MenuToolButton menuToolButton = new MenuToolButton(new Image(Stock.New, IconSize.Menu), "Додати") { Label = "Додати", IsImportant = true };
             menuToolButton.Clicked += (object? sender, EventArgs arg) => { ((Menu)((MenuToolButton)(MenuToolButton)sender!).Menu).Popup(); };
             menuToolButton.Menu = CreateAddMenu();
             toolbar.Add(menuToolButton);
 
-            ToolButton refreshButton = new ToolButton(Stock.Refresh) { Label = "Обновити", IsImportant = true };
+            ToolButton refreshButton = new ToolButton(new Image(Stock.Refresh, IconSize.Menu), "Обновити") { Label = "Обновити", IsImportant = true };
             refreshButton.Clicked += OnRefreshClick;
             toolbar.Add(refreshButton);
 
-            ToolButton deleteButton = new ToolButton(Stock.Clear) { Label = "Видалити", IsImportant = true };
+            ToolButton deleteButton = new ToolButton(new Image(Stock.Clear, IconSize.Menu), "Видалити") { Label = "Видалити", IsImportant = true };
             deleteButton.Clicked += OnDeleteClick;
             toolbar.Add(deleteButton);
 
-            ToolButton copyButton = new ToolButton(Stock.Copy) { Label = "Копіювати", IsImportant = true };
+            ToolButton copyButton = new ToolButton(new Image(Stock.Copy, IconSize.Menu), "Копіювати") { Label = "Копіювати", IsImportant = true };
             copyButton.Clicked += OnCopyClick;
             toolbar.Add(copyButton);
 
