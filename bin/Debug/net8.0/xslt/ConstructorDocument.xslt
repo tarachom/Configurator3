@@ -268,7 +268,7 @@ namespace <xsl:value-of select="$NameSpace"/>
 
             CreateDocName(<xsl:value-of select="$DocumentName"/>_Const.FULLNAME, НомерДок, ДатаДок);
             <xsl:if test="$FieldsTL[Name = 'Коментар']">
-            CreateField(HBoxComment, "<xsl:value-of select="Caption"/>:", Коментар);
+            CreateField(HBoxComment, "<xsl:value-of select="$FieldsTL[Name = 'Коментар']/Caption"/>:", Коментар);
             </xsl:if>
 
             <xsl:if test="count($TabularPartsTL) != 0">
@@ -339,7 +339,7 @@ namespace <xsl:value-of select="$NameSpace"/>
 
         #region Присвоєння / зчитування значень
 
-        public override async void SetValue()
+        public override <xsl:if test="count($TabularPartsTL) != 0">async</xsl:if> void SetValue()
         {
             <!-- Крім скритого поля Назва яке формується перед збереженням -->
             <xsl:for-each select="$FieldsTL[Name != 'Назва']">

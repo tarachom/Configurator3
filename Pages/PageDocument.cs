@@ -259,27 +259,40 @@ namespace Configurator
                         entryClearSpend.Text = entryName.Text + "_SpendTheDocument.ClearSpend";
 
                         sourceViewCode.Buffer.Text = @$"
-class {entryName.Text}_SpendTheDocument
+/*
+    {entryName.Text}_SpendTheDocument.cs
+    Модуль проведення для документу {entryName.Text}
+*/
+
+using {Conf.NameSpaceGenerationCode}.Константи;
+using {Conf.NameSpaceGenerationCode}.Довідники;
+using {Conf.NameSpaceGenerationCode}.Документи;
+using {Conf.NameSpaceGenerationCode}.РегістриНакопичення;
+
+namespace {Conf.NameSpaceGenerationCode}.Документи
 {{
-    public static async ValueTask<bool> Spend({entryName.Text}_Objest ДокументОбєкт)
+    class {entryName.Text}_SpendTheDocument
     {{
-        try
+        public static async ValueTask<bool> Spend({entryName.Text}_Objest ДокументОбєкт)
         {{
-            // проведення документу
-            // ...
+            try
+            {{
+                // проведення документу
+                // ...
 
-            return true;
+                return true;
+            }}
+            catch (Exception ex)
+            {{
+                await СпільніФункції.ДокументНеПроводиться(ДокументОбєкт, ДокументОбєкт.Назва, ex.Message);
+                return false;
+            }}
         }}
-        catch (Exception ex)
+
+        public static async ValueTask ClearSpend({entryName.Text}_Objest ДокументОбєкт)
         {{
-            await СпільніФункції.ДокументНеПроводиться(ДокументОбєкт, ДокументОбєкт.Назва, ex.Message);
-            return false;
+            await ValueTask.FromResult(true);
         }}
-    }}
-
-    public static async ValueTask ClearSpend({entryName.Text}_Objest ДокументОбєкт)
-    {{
-        await ValueTask.FromResult(true);
     }}
 }}
 ";
@@ -389,40 +402,50 @@ class {entryName.Text}_SpendTheDocument
                         string CopyingCode = "ДокументОбєкт.Назва += \" - Копія\";";
 
                         sourceViewCode.Buffer.Text = @$"
-class {entryName.Text}_Triggers
+/*
+    {entryName.Text}_Triggers.cs
+    Тригери для документу {entryName.Text}
+*/
+
+using {Conf.NameSpaceGenerationCode}.Константи;
+
+namespace {Conf.NameSpaceGenerationCode}.Документи
 {{
-    public static async ValueTask New({entryName.Text}_Objest ДокументОбєкт)
+    class {entryName.Text}_Triggers
     {{
-        {AutoNumCode}
-        {NewCode}
-        await ValueTask.FromResult(true);
-    }}
+        public static async ValueTask New({entryName.Text}_Objest ДокументОбєкт)
+        {{
+            {AutoNumCode}
+            {NewCode}
+            await ValueTask.FromResult(true);
+        }}
 
-    public static async ValueTask Copying({entryName.Text}_Objest ДокументОбєкт, {entryName.Text}_Objest Основа)
-    {{
-        {CopyingCode}
-        await ValueTask.FromResult(true);
-    }}
+        public static async ValueTask Copying({entryName.Text}_Objest ДокументОбєкт, {entryName.Text}_Objest Основа)
+        {{
+            {CopyingCode}
+            await ValueTask.FromResult(true);
+        }}
 
-    public static async ValueTask BeforeSave({entryName.Text}_Objest ДокументОбєкт)
-    {{
-        ДокументОбєкт.Назва = $""{{{entryName.Text}_Const.FULLNAME}} №{{ДокументОбєкт.НомерДок}} від {{ДокументОбєкт.ДатаДок.ToShortDateString()}}"";
-        await ValueTask.FromResult(true);
-    }}
+        public static async ValueTask BeforeSave({entryName.Text}_Objest ДокументОбєкт)
+        {{
+            ДокументОбєкт.Назва = $""{{{entryName.Text}_Const.FULLNAME}} №{{ДокументОбєкт.НомерДок}} від {{ДокументОбєкт.ДатаДок.ToShortDateString()}}"";
+            await ValueTask.FromResult(true);
+        }}
 
-    public static async ValueTask AfterSave({entryName.Text}_Objest ДокументОбєкт)
-    {{
-        await ValueTask.FromResult(true);
-    }}
+        public static async ValueTask AfterSave({entryName.Text}_Objest ДокументОбєкт)
+        {{
+            await ValueTask.FromResult(true);
+        }}
 
-    public static async ValueTask SetDeletionLabel({entryName.Text}_Objest ДокументОбєкт, bool label)
-    {{
-        await ValueTask.FromResult(true);
-    }}
+        public static async ValueTask SetDeletionLabel({entryName.Text}_Objest ДокументОбєкт, bool label)
+        {{
+            await ValueTask.FromResult(true);
+        }}
 
-    public static async ValueTask BeforeDelete({entryName.Text}_Objest ДокументОбєкт)
-    {{
-        await ValueTask.FromResult(true);
+        public static async ValueTask BeforeDelete({entryName.Text}_Objest ДокументОбєкт)
+        {{
+            await ValueTask.FromResult(true);
+        }}
     }}
 }}
 ";

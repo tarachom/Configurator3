@@ -500,38 +500,48 @@ namespace Configurator
                     string CopyingCode = "ДовідникОбєкт.Назва += \" - Копія\";";
 
                     sourceViewCode.Buffer.Text = @$"
-class {entryName.Text}_Triggers
+/*
+    {entryName.Text}_Triggers.cs
+    Тригери для довідника {entryName.Text}
+*/
+
+using {Conf.NameSpaceGenerationCode}.Константи;
+
+namespace {Conf.NameSpaceGenerationCode}.Довідники
 {{
-    public static async ValueTask New({entryName.Text}_Objest ДовідникОбєкт)
+    class {entryName.Text}_Triggers
     {{
-        {AutoNumCode}
-        await ValueTask.FromResult(true);
-    }}
+        public static async ValueTask New({entryName.Text}_Objest ДовідникОбєкт)
+        {{
+            {AutoNumCode}
+            await ValueTask.FromResult(true);
+        }}
 
-    public static async ValueTask Copying({entryName.Text}_Objest ДовідникОбєкт, {entryName.Text}_Objest Основа)
-    {{
-        {CopyingCode}
-        await ValueTask.FromResult(true);
-    }}
+        public static async ValueTask Copying({entryName.Text}_Objest ДовідникОбєкт, {entryName.Text}_Objest Основа)
+        {{
+            {CopyingCode}
+            await ValueTask.FromResult(true);
+        }}
 
-    public static async ValueTask BeforeSave({entryName.Text}_Objest ДовідникОбєкт)
-    {{
-        await ValueTask.FromResult(true);
-    }}
+        public static async ValueTask BeforeSave({entryName.Text}_Objest ДовідникОбєкт)
+        {{
+            await ValueTask.FromResult(true);
+        }}
 
-    public static async ValueTask AfterSave({entryName.Text}_Objest ДовідникОбєкт)
-    {{
-        await ValueTask.FromResult(true);
-    }}
+        public static async ValueTask AfterSave({entryName.Text}_Objest ДовідникОбєкт)
+        {{
+            await ValueTask.FromResult(true);
+        }}
 
-    public static async ValueTask SetDeletionLabel({entryName.Text}_Objest ДовідникОбєкт, bool label)
-    {{
-        await ValueTask.FromResult(true);
-    }}
+        public static async ValueTask SetDeletionLabel({entryName.Text}_Objest ДовідникОбєкт, bool label)
+        {{
+            await ValueTask.FromResult(true);
+        }}
 
-    public static async ValueTask BeforeDelete({entryName.Text}_Objest ДовідникОбєкт)
-    {{
-        await ValueTask.FromResult(true);
+        public static async ValueTask BeforeDelete({entryName.Text}_Objest ДовідникОбєкт)
+        {{
+            await ValueTask.FromResult(true);
+        }}
     }}
 }}
 ";
