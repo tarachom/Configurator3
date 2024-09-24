@@ -27,7 +27,7 @@ using AccountingSoftware;
 
 namespace Configurator
 {
-    class PageRegistersAccumulation : Box
+    class PageRegisterAccumulation : Box
     {
         Configuration Conf { get { return Program.Kernel.Conf; } }
 
@@ -54,7 +54,7 @@ namespace Configurator
 
         #endregion
 
-        public PageRegistersAccumulation() : base(Orientation.Vertical, 0)
+        public PageRegisterAccumulation() : base(Orientation.Vertical, 0)
         {
             Box hBox = new Box(Orientation.Horizontal, 0);
 
@@ -642,6 +642,14 @@ namespace Configurator
             ConfRegister.TypeRegistersAccumulation = Enum.Parse<TypeRegistersAccumulation>(comboBoxTypeReg.ActiveId);
             ConfRegister.Desc = textViewDesc.Buffer.Text;
             ConfRegister.NoSummary = checkButtonNoSummary.Active;
+        }
+
+        RegisterAccumulationOtherInfoStruct GetRegisterAccumulationOtherInfo()
+        {
+            return new RegisterAccumulationOtherInfoStruct
+            (
+                Enum.Parse<TypeRegistersAccumulation>(comboBoxTypeReg.ActiveId)
+            );
         }
 
         #endregion
@@ -1781,7 +1789,7 @@ HAVING";
                             PageForm page = new PageForm()
                             {
                                 ParentName = ConfRegister.Name,
-                                ParentType = "RegistersAccumulation",
+                                ParentType = "RegisterAccumulation",
                                 Forms = ConfRegister.Forms,
                                 Form = form,
                                 TypeForm = form.Type,
@@ -1790,7 +1798,8 @@ HAVING";
                                 TabularList = form.TabularList,
                                 IsNew = false,
                                 GeneralForm = GeneralForm,
-                                CallBack_RefreshList = FormsListRefreshList
+                                CallBack_RefreshList = FormsListRefreshList,
+                                RegistersAccumulationOtherInfo = GetRegisterAccumulationOtherInfo()
                             };
 
                             page.SetValue();
@@ -1823,7 +1832,7 @@ HAVING";
                     PageForm page = new PageForm()
                     {
                         ParentName = ConfRegister.Name,
-                        ParentType = "RegistersAccumulation",
+                        ParentType = "RegisterAccumulation",
                         Forms = ConfRegister.Forms,
                         TypeForm = typeForms,
                         Fields = AllFields,
@@ -1831,6 +1840,7 @@ HAVING";
                         IsNew = true,
                         GeneralForm = GeneralForm,
                         CallBack_RefreshList = FormsListRefreshList,
+                        RegistersAccumulationOtherInfo = GetRegisterAccumulationOtherInfo()
                     };
 
                     page.SetValue();
@@ -2082,5 +2092,16 @@ HAVING";
         }
 
         #endregion
+    }
+
+    /// <summary>
+    /// Структура для додаткової інформації про регістр
+    /// </summary>
+    struct RegisterAccumulationOtherInfoStruct(TypeRegistersAccumulation typeRegistersAccumulation = TypeRegistersAccumulation.Residues)
+    {
+        /// <summary>
+        /// Тип регістру
+        /// </summary>
+        public TypeRegistersAccumulation TypeReg = typeRegistersAccumulation;
     }
 }

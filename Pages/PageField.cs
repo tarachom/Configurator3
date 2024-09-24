@@ -51,6 +51,7 @@ namespace Configurator
         CheckButton checkButtonPresentation = new CheckButton("Використовувати для представлення");
         CheckButton checkButtonFullTextSearch = new CheckButton("Повнотекстовий пошук");
         CheckButton checkButtonSearch = new CheckButton("Пошук в журналах");
+        CheckButton checkButtonExport = new CheckButton("Дозволити експорт");
         CheckButton checkButtonMultiline = new CheckButton("Багатострічкове поле");
 
         //Для композитного типу даних
@@ -174,6 +175,9 @@ namespace Configurator
             //Багатострічкове поле
             vBox.PackStart(checkButtonMultiline, false, false, 5);
 
+            //Дозволити експорт
+            vBox.PackStart(checkButtonExport, false, false, 5);
+
             //Налаштування для композитного типу даних
             {
                 Expander expanderCompositePointerAllow = new Expander("Налаштування для композитного типу даних");
@@ -286,6 +290,7 @@ namespace Configurator
             checkButtonPresentation.Active = Field.IsPresentation;
             checkButtonFullTextSearch.Active = Field.IsFullTextSearch;
             checkButtonSearch.Active = Field.IsSearch;
+            checkButtonExport.Active = Field.IsExport;
             checkButtonMultiline.Active = Field.Multiline;
 
             OnComboBoxTypeChanged(comboBoxType, new EventArgs());
@@ -339,6 +344,7 @@ namespace Configurator
             Field.IsPresentation = checkButtonPresentation.Active;
             Field.IsFullTextSearch = checkButtonFullTextSearch.Active;
             Field.IsSearch = checkButtonSearch.Active;
+            Field.IsExport = checkButtonExport.Active;
             Field.Multiline = checkButtonMultiline.Active;
 
             Field.NameInTable = entryColumn.Text;
@@ -393,6 +399,14 @@ namespace Configurator
                 checkButtonFullTextSearch.Sensitive = isString;
                 checkButtonMultiline.Sensitive = isString;
             }
+
+            checkButtonSearch.Sensitive =
+                typeName == "string" ||
+                typeName == "integer" ||
+                typeName == "numeric" ||
+                typeName == "date" ||
+                typeName == "datetime" ||
+                typeName == "time";
 
             //composite_pointer
             {

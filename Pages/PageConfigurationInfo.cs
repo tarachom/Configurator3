@@ -36,6 +36,7 @@ namespace Configurator
         #region Fields
 
         Entry entryName = new Entry() { WidthRequest = 500 };
+        Entry entrySubtitle = new Entry() { WidthRequest = 500 };
         Entry entryNameSpaceGenerationCode = new Entry() { WidthRequest = 500 };
         Entry entryNameSpace = new Entry() { WidthRequest = 500 };
         Entry entryAutor = new Entry() { WidthRequest = 500 };
@@ -79,6 +80,13 @@ namespace Configurator
 
             hBoxName.PackStart(new Label("Назва:"), false, false, 5);
             hBoxName.PackStart(entryName, false, false, 5);
+
+            //Підзаголовок
+            Box hBoxSubtitle = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
+            vBox.PackStart(hBoxSubtitle, false, false, 5);
+
+            hBoxSubtitle.PackStart(new Label("Підзаголовок:"), false, false, 5);
+            hBoxSubtitle.PackStart(entrySubtitle, false, false, 5);
 
             //Простір імен
             Box hBoxNameSpaceGenerationCode = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
@@ -133,6 +141,7 @@ namespace Configurator
         public void SetValue()
         {
             entryName.Text = Conf.Name;
+            entrySubtitle.Text = Conf.Subtitle;
             entryNameSpaceGenerationCode.Text = Conf.NameSpaceGenerationCode;
             entryNameSpace.Text = Conf.NameSpace;
             entryAutor.Text = Conf.Author;
@@ -142,6 +151,7 @@ namespace Configurator
         void GetValue()
         {
             Conf.Name = entryName.Text;
+            Conf.Subtitle = entrySubtitle.Text;
             Conf.NameSpaceGenerationCode = entryNameSpaceGenerationCode.Text;
             Conf.NameSpace = entryNameSpace.Text;
             Conf.Author = entryAutor.Text;

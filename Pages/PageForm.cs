@@ -47,6 +47,7 @@ namespace Configurator
         public OwnerTablePart Owner { get; set; } = new OwnerTablePart();
         public ConfigurationForms.TypeForms TypeForm { get; set; } = ConfigurationForms.TypeForms.None;
         public DirectoryOtherInfoStruct DirectoryOtherInfo { get; set; } = new DirectoryOtherInfoStruct(); // Для довідника
+        public RegisterAccumulationOtherInfoStruct RegistersAccumulationOtherInfo { get; set; } = new RegisterAccumulationOtherInfoStruct(); // Для регістру накопичення
 
         #region Fields
 
@@ -388,7 +389,7 @@ namespace Configurator
                 case ConfigurationForms.TypeForms.Element:
                 case ConfigurationForms.TypeForms.TablePart:
                     {
-                        CreateElementForm(!(ParentType == "RegisterInformation" || ParentType == "RegistersAccumulation" || ParentType == "TablePart"));
+                        CreateElementForm(!(ParentType == "RegisterInformation" || ParentType == "RegisterAccumulation" || ParentType == "TablePart"));
                         break;
                     }
                 case ConfigurationForms.TypeForms.List:
@@ -592,10 +593,10 @@ namespace Configurator
         void GenerateCode(string fileName)
         {
             if (!(ParentType == "Directory" || ParentType == "Document" ||
-                ParentType == "RegisterInformation" || ParentType == "RegistersAccumulation" ||
+                ParentType == "RegisterInformation" || ParentType == "RegisterAccumulation" ||
                 ParentType == "TablePart"))
             {
-                Message.Error(GeneralForm, "Невірно вказаний тип власника форми. Має бути Directory, Document, RegisterInformation, RegistersAccumulation або TablePart");
+                Message.Error(GeneralForm, "Невірно вказаний тип власника форми. Має бути Directory, Document, RegisterInformation, RegisterAccumulation або TablePart");
                 return;
             }
 
@@ -664,9 +665,16 @@ namespace Configurator
                 nodeDirectory.AppendChild(nodePointerFieldOwner);
             }
 
+            if (ParentType == "RegisterAccumulation")
+            {
+                XmlElement nodeRegisterAccumulationType = xmlConfDocument.CreateElement("Type");
+                nodeRegisterAccumulationType.InnerText = RegistersAccumulationOtherInfo.TypeReg.ToString();
+                nodeDirectory.AppendChild(nodeRegisterAccumulationType);
+            }
+
             if (TypeForm == ConfigurationForms.TypeForms.List ||
-                TypeForm == ConfigurationForms.TypeForms.ListSmallSelect ||
-                TypeForm == ConfigurationForms.TypeForms.ListAndTree)
+            TypeForm == ConfigurationForms.TypeForms.ListSmallSelect ||
+            TypeForm == ConfigurationForms.TypeForms.ListAndTree)
             {
                 XmlElement nodeTabularList = xmlConfDocument.CreateElement("TabularList");
                 nodeTabularList.InnerText = Form.TabularList;

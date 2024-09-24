@@ -1290,7 +1290,7 @@ namespace Configurator
                                 {
                                     CreateNotebookPage($"Регістер накопичення: {register}", () =>
                                     {
-                                        PageRegistersAccumulation page = new PageRegistersAccumulation()
+                                        PageRegisterAccumulation page = new PageRegisterAccumulation()
                                         {
                                             ConfRegister = Conf.RegistersAccumulation[register],
                                             IsNew = false,
@@ -2492,7 +2492,7 @@ namespace Configurator
         {
             CreateNotebookPage($"Регістер накопичення: *", () =>
             {
-                PageRegistersAccumulation page = new PageRegistersAccumulation()
+                PageRegisterAccumulation page = new PageRegisterAccumulation()
                 {
                     IsNew = true,
                     GeneralForm = this

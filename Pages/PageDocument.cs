@@ -70,6 +70,7 @@ namespace Configurator
 
         TextView textViewDesc = new TextView() { WrapMode = WrapMode.Word };
         CheckButton checkButtonAutoNum = new CheckButton("Автоматична нумерація");
+        CheckButton checkButtonExportXml = new CheckButton("Формат XML");
 
         #endregion
 
@@ -198,31 +199,6 @@ namespace Configurator
                         GeneralForm?.LoadTreeAsync();
                     }
                 };
-            }
-
-            //Регістри накопичення
-            {
-                Expander expanderRegAccum = new Expander("Регістри накопичення");
-                vBox.PackStart(expanderRegAccum, false, false, 5);
-
-                Box vBoxRegAccum = new Box(Orientation.Vertical, 0);
-                expanderRegAccum.Add(vBoxRegAccum);
-
-                //Заголовок списку регістрів
-                Box hBoxAllowRegAcummInfo = new Box(Orientation.Horizontal, 0) { Halign = Align.Center };
-                vBoxRegAccum.PackStart(hBoxAllowRegAcummInfo, false, false, 5);
-                hBoxAllowRegAcummInfo.PackStart(new Label("Регістри накопичення які використовує документ"), false, false, 5);
-
-                //Робить рухи по регістрах
-                Box hBoxAllowRegAcumm = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
-                vBoxRegAccum.PackStart(hBoxAllowRegAcumm, false, false, 5);
-
-                ScrolledWindow scrollAllowList = new ScrolledWindow() { ShadowType = ShadowType.In };
-                scrollAllowList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-                scrollAllowList.SetSizeRequest(500, 500);
-
-                scrollAllowList.Add(listBoxAllowRegAccum);
-                hBoxAllowRegAcumm.PackStart(scrollAllowList, true, true, 5);
             }
 
             //Функції та тригери
@@ -492,6 +468,70 @@ class {entryName.Text}_Triggers
                 CreateFormsList(vBoxForm);
             }
 
+            //Регістри накопичення
+            {
+                Expander expanderRegAccum = new Expander("Регістри накопичення");
+                vBox.PackStart(expanderRegAccum, false, false, 5);
+
+                Box vBoxRegAccum = new Box(Orientation.Vertical, 0);
+                expanderRegAccum.Add(vBoxRegAccum);
+
+                //Заголовок списку регістрів
+                Box hBoxAllowRegAcummInfo = new Box(Orientation.Horizontal, 0) { Halign = Align.Center };
+                vBoxRegAccum.PackStart(hBoxAllowRegAcummInfo, false, false, 5);
+                hBoxAllowRegAcummInfo.PackStart(new Label("Регістри накопичення які використовує документ"), false, false, 5);
+
+                //Робить рухи по регістрах
+                Box hBoxAllowRegAcumm = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
+                vBoxRegAccum.PackStart(hBoxAllowRegAcumm, false, false, 5);
+
+                ScrolledWindow scrollAllowList = new ScrolledWindow() { ShadowType = ShadowType.In };
+                scrollAllowList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+                scrollAllowList.SetSizeRequest(500, 500);
+
+                scrollAllowList.Add(listBoxAllowRegAccum);
+                hBoxAllowRegAcumm.PackStart(scrollAllowList, true, true, 5);
+            }
+
+            //Експорт
+            {
+                Expander expanderExport = new Expander("Експорт");
+                vBox.PackStart(expanderExport, false, false, 5);
+
+                Box vBoxExport = new Box(Orientation.Vertical, 0);
+                expanderExport.Add(vBoxExport);
+
+                //Прапорець
+                Box hBoxExportXml = new Box(Orientation.Horizontal, 0) { Halign = Align.Start };
+                vBoxExport.PackStart(hBoxExportXml, false, false, 10);
+                hBoxExportXml.PackStart(checkButtonExportXml, false, false, 5);
+
+                //Заголовок
+                Box hBoxExportXmlInfo = new Box(Orientation.Horizontal, 0) { Halign = Align.Start };
+                vBoxExport.PackStart(hBoxExportXmlInfo, false, false, 5);
+                hBoxExportXmlInfo.PackStart(new Label("Для кожного поля додатково потрібно дозволити експорт") { Wrap = true, UseMarkup = true }, false, false, 5);
+
+                //Кнопка
+                Box hBoxExportButton = new Box(Orientation.Horizontal, 0) { Halign = Align.Start };
+                vBoxExport.PackStart(hBoxExportButton, false, false, 5);
+
+                Button buttonExportOn = new Button("Дозволити експорт для всіх полів");
+                hBoxExportButton.PackStart(buttonExportOn, false, false, 5);
+
+                buttonExportOn.Clicked += (object? sender, EventArgs args) =>
+                {
+                    //Еспорт для всіх полів
+                    foreach (ConfigurationField field in ConfDocument.Fields.Values)
+                        field.IsExport = true;
+
+                    //Обхід всіх табличних частин
+                    foreach (ConfigurationTablePart tablePart in ConfDocument.TabularParts.Values)
+                        //Еспорт для всіх полів
+                        foreach (ConfigurationField field in tablePart.Fields.Values)
+                            field.IsExport = true;
+                };
+            }
+
             hPaned.Pack1(vBox, false, false);
         }
 
@@ -747,6 +787,7 @@ class {entryName.Text}_Triggers
             #endregion
 
             checkButtonAutoNum.Active = ConfDocument.AutomaticNumeration;
+            checkButtonExportXml.Active = ConfDocument.ExportXml;
 
             FillAllowRegAccum();
             FillFields();
@@ -833,6 +874,7 @@ class {entryName.Text}_Triggers
             #endregion
 
             ConfDocument.AutomaticNumeration = checkButtonAutoNum.Active;
+            ConfDocument.ExportXml = checkButtonExportXml.Active;
 
             //Доспупні регістри
             ConfDocument.AllowRegisterAccumulation.Clear();
