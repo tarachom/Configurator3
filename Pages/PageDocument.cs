@@ -457,40 +457,6 @@ namespace {Conf.NameSpaceGenerationCode}.Документи
                 }
             }
 
-            //Списки та форми
-            {
-                Expander expanderForm = new Expander("Табличні списки");
-                vBox.PackStart(expanderForm, false, false, 5);
-
-                Box vBoxForm = new Box(Orientation.Vertical, 0);
-                expanderForm.Add(vBoxForm);
-
-                //Заголовок блоку Forms
-                Box hBoxInterfaceCreateInfo = new Box(Orientation.Horizontal, 0) { Halign = Align.Center };
-                vBoxForm.PackStart(hBoxInterfaceCreateInfo, false, false, 5);
-                hBoxInterfaceCreateInfo.PackStart(new Label("Табличні списки"), false, false, 5);
-
-                //Табличні списки
-                CreateTabularList(vBoxForm);
-            }
-
-            //Форми
-            {
-                Expander expanderForm = new Expander("Форми");
-                vBox.PackStart(expanderForm, false, false, 5);
-
-                Box vBoxForm = new Box(Orientation.Vertical, 0);
-                expanderForm.Add(vBoxForm);
-
-                //Заголовок блоку Forms
-                Box hBoxInterfaceCreateInfo = new Box(Orientation.Horizontal, 0) { Halign = Align.Center };
-                vBoxForm.PackStart(hBoxInterfaceCreateInfo, false, false, 5);
-                hBoxInterfaceCreateInfo.PackStart(new Label("Форми"), false, false, 5);
-
-                //Форми
-                CreateFormsList(vBoxForm);
-            }
-
             //Регістри накопичення
             {
                 Expander expanderRegAccum = new Expander("Регістри накопичення");
@@ -518,7 +484,7 @@ namespace {Conf.NameSpaceGenerationCode}.Документи
 
             //Експорт
             {
-                Expander expanderExport = new Expander("Експорт");
+                Expander expanderExport = new Expander("Вигрузка у файл");
                 vBox.PackStart(expanderExport, false, false, 5);
 
                 Box vBoxExport = new Box(Orientation.Vertical, 0);
@@ -553,6 +519,40 @@ namespace {Conf.NameSpaceGenerationCode}.Документи
                         foreach (ConfigurationField field in tablePart.Fields.Values)
                             field.IsExport = true;
                 };
+            }
+
+            //Списки та форми
+            {
+                Expander expanderForm = new Expander("Табличні списки");
+                vBox.PackStart(expanderForm, false, false, 5);
+
+                Box vBoxForm = new Box(Orientation.Vertical, 0);
+                expanderForm.Add(vBoxForm);
+
+                //Заголовок блоку Forms
+                Box hBoxInterfaceCreateInfo = new Box(Orientation.Horizontal, 0) { Halign = Align.Center };
+                vBoxForm.PackStart(hBoxInterfaceCreateInfo, false, false, 5);
+                hBoxInterfaceCreateInfo.PackStart(new Label("Табличні списки"), false, false, 5);
+
+                //Табличні списки
+                CreateTabularList(vBoxForm);
+            }
+
+            //Форми
+            {
+                Expander expanderForm = new Expander("Форми");
+                vBox.PackStart(expanderForm, false, false, 5);
+
+                Box vBoxForm = new Box(Orientation.Vertical, 0);
+                expanderForm.Add(vBoxForm);
+
+                //Заголовок блоку Forms
+                Box hBoxInterfaceCreateInfo = new Box(Orientation.Horizontal, 0) { Halign = Align.Center };
+                vBoxForm.PackStart(hBoxInterfaceCreateInfo, false, false, 5);
+                hBoxInterfaceCreateInfo.PackStart(new Label("Форми"), false, false, 5);
+
+                //Форми
+                CreateFormsList(vBoxForm);
             }
 
             hPaned.Pack1(vBox, false, false);
