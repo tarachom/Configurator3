@@ -47,6 +47,7 @@ namespace Configurator
         public OwnerTablePart Owner { get; set; } = new OwnerTablePart();
         public ConfigurationForms.TypeForms TypeForm { get; set; } = ConfigurationForms.TypeForms.None;
         public DirectoryOtherInfoStruct DirectoryOtherInfo { get; set; } = new DirectoryOtherInfoStruct(); // Для довідника
+        public DocumentOtherInfoStruct DocumentOtherInfo { get; set; } = new DocumentOtherInfoStruct(); // Для документу
         public RegisterAccumulationOtherInfoStruct RegistersAccumulationOtherInfo { get; set; } = new RegisterAccumulationOtherInfoStruct(); // Для регістру накопичення
 
         #region Fields
@@ -608,18 +609,18 @@ namespace Configurator
             XmlElement rootNode = xmlConfDocument.CreateElement("root");
             xmlConfDocument.AppendChild(rootNode);
 
-            XmlElement nodeDirectory = xmlConfDocument.CreateElement(ParentType);
-            rootNode.AppendChild(nodeDirectory);
+            XmlElement nodeParentType = xmlConfDocument.CreateElement(ParentType);
+            rootNode.AppendChild(nodeParentType);
 
-            XmlElement nodeDirectoryName = xmlConfDocument.CreateElement("Name");
-            nodeDirectoryName.InnerText = ParentName;
-            nodeDirectory.AppendChild(nodeDirectoryName);
+            XmlElement nodeName = xmlConfDocument.CreateElement("Name");
+            nodeName.InnerText = ParentName;
+            nodeParentType.AppendChild(nodeName);
 
             if (ParentType == "Directory")
             {
                 XmlElement nodeDirectoryType = xmlConfDocument.CreateElement("Type");
                 nodeDirectoryType.InnerText = DirectoryOtherInfo.TypeDirectory.ToString();
-                nodeDirectory.AppendChild(nodeDirectoryType);
+                nodeParentType.AppendChild(nodeDirectoryType);
 
                 if (DirectoryOtherInfo.TypeDirectory == ConfigurationDirectories.TypeDirectories.HierarchyInAnotherDirectory)
                 {
@@ -632,7 +633,7 @@ namespace Configurator
                             //Назва довідника
                             XmlElement nodeDirectoryPointerFolders = xmlConfDocument.CreateElement("PointerFolders");
                             nodeDirectoryPointerFolders.InnerText = pointer_and_type[1];
-                            nodeDirectory.AppendChild(nodeDirectoryPointerFolders);
+                            nodeParentType.AppendChild(nodeDirectoryPointerFolders);
 
                             //Пошук поля Папки
                             foreach (ConfigurationField field in Fields.Values)
@@ -640,7 +641,7 @@ namespace Configurator
                                 {
                                     XmlElement nodeDirectoryFolder = xmlConfDocument.CreateElement("FieldFolder");
                                     nodeDirectoryFolder.InnerText = field.Name;
-                                    nodeDirectory.AppendChild(nodeDirectoryFolder);
+                                    nodeParentType.AppendChild(nodeDirectoryFolder);
 
                                     break;
                                 }
@@ -651,60 +652,65 @@ namespace Configurator
                 {
                     XmlElement nodeDirectoryParentField = xmlConfDocument.CreateElement("ParentField");
                     nodeDirectoryParentField.InnerText = DirectoryOtherInfo.ParentField;
-                    nodeDirectory.AppendChild(nodeDirectoryParentField);
+                    nodeParentType.AppendChild(nodeDirectoryParentField);
                 }
 
                 //Довідник власник
                 XmlElement nodeDirectoryOwner = xmlConfDocument.CreateElement("DirectoryOwner");
                 nodeDirectoryOwner.InnerText = DirectoryOtherInfo.DirectoryOwner;
-                nodeDirectory.AppendChild(nodeDirectoryOwner);
+                nodeParentType.AppendChild(nodeDirectoryOwner);
 
                 //Поле вказівник на довідник власник
                 XmlElement nodePointerFieldOwner = xmlConfDocument.CreateElement("PointerFieldOwner");
                 nodePointerFieldOwner.InnerText = DirectoryOtherInfo.PointerFieldOwner;
-                nodeDirectory.AppendChild(nodePointerFieldOwner);
+                nodeParentType.AppendChild(nodePointerFieldOwner);
+            }
+
+            if (ParentType == "Document")
+            {
+                XmlElement nodeDocumentExportXML = xmlConfDocument.CreateElement("ExportXML");
+                nodeDocumentExportXML.InnerText = DocumentOtherInfo.ExportXML ? "1" : "0";
+                nodeParentType.AppendChild(nodeDocumentExportXML);
             }
 
             if (ParentType == "RegisterAccumulation")
             {
                 XmlElement nodeRegisterAccumulationType = xmlConfDocument.CreateElement("Type");
                 nodeRegisterAccumulationType.InnerText = RegistersAccumulationOtherInfo.TypeReg.ToString();
-                nodeDirectory.AppendChild(nodeRegisterAccumulationType);
+                nodeParentType.AppendChild(nodeRegisterAccumulationType);
             }
 
-            if (TypeForm == ConfigurationForms.TypeForms.List ||
-            TypeForm == ConfigurationForms.TypeForms.ListSmallSelect ||
-            TypeForm == ConfigurationForms.TypeForms.ListAndTree)
+            if (TypeForm == ConfigurationForms.TypeForms.List || TypeForm == ConfigurationForms.TypeForms.ListSmallSelect || TypeForm == ConfigurationForms.TypeForms.ListAndTree)
             {
                 XmlElement nodeTabularList = xmlConfDocument.CreateElement("TabularList");
                 nodeTabularList.InnerText = Form.TabularList;
-                nodeDirectory.AppendChild(nodeTabularList);
+                nodeParentType.AppendChild(nodeTabularList);
             }
             else if (TypeForm == ConfigurationForms.TypeForms.Element)
             {
-                Configuration.SaveFormElementField(Fields, Form.ElementFields, xmlConfDocument, nodeDirectory);
-                Configuration.SaveFormElementTablePart(TabularParts, Form.ElementTableParts, xmlConfDocument, nodeDirectory);
+                Configuration.SaveFormElementField(Fields, Form.ElementFields, xmlConfDocument, nodeParentType);
+                Configuration.SaveFormElementTablePart(TabularParts, Form.ElementTableParts, xmlConfDocument, nodeParentType);
             }
             else if (TypeForm == ConfigurationForms.TypeForms.TablePart)
             {
                 XmlElement nodeOwnerExist = xmlConfDocument.CreateElement("OwnerExist");
                 nodeOwnerExist.InnerText = Owner.Exist ? "1" : "0";
-                nodeDirectory.AppendChild(nodeOwnerExist);
+                nodeParentType.AppendChild(nodeOwnerExist);
 
                 XmlElement nodeOwnerType = xmlConfDocument.CreateElement("OwnerType");
                 nodeOwnerType.InnerText = Owner.Type;
-                nodeDirectory.AppendChild(nodeOwnerType);
+                nodeParentType.AppendChild(nodeOwnerType);
 
                 XmlElement nodeOwnerName = xmlConfDocument.CreateElement("OwnerName");
                 nodeOwnerName.InnerText = Owner.Name;
-                nodeDirectory.AppendChild(nodeOwnerName);
+                nodeParentType.AppendChild(nodeOwnerName);
 
-                Configuration.SaveFormElementField(Fields, Form.ElementFields, xmlConfDocument, nodeDirectory);
+                Configuration.SaveFormElementField(Fields, Form.ElementFields, xmlConfDocument, nodeParentType);
             }
             else if (TypeForm == ConfigurationForms.TypeForms.Function)
             {
-                Configuration.SaveFields(Fields, xmlConfDocument, nodeDirectory, ParentType);
-                Configuration.SaveTabularParts(TabularParts, xmlConfDocument, nodeDirectory);
+                Configuration.SaveFields(Fields, xmlConfDocument, nodeParentType, ParentType);
+                Configuration.SaveTabularParts(TabularParts, xmlConfDocument, nodeParentType);
             }
 
             sourceViewCode.Buffer.Text = Configuration.Transform

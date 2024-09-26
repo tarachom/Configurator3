@@ -509,15 +509,18 @@ namespace {Conf.NameSpaceGenerationCode}.Документи
 
                 buttonExportOn.Clicked += (object? sender, EventArgs args) =>
                 {
-                    //Еспорт для всіх полів
-                    foreach (ConfigurationField field in ConfDocument.Fields.Values)
-                        field.IsExport = true;
-
-                    //Обхід всіх табличних частин
-                    foreach (ConfigurationTablePart tablePart in ConfDocument.TabularParts.Values)
+                    if (Message.Request(GeneralForm, "Дозволити експорт для всіх полів документу та всіх полів табличних частин?") == ResponseType.Yes)
+                    {
                         //Еспорт для всіх полів
-                        foreach (ConfigurationField field in tablePart.Fields.Values)
+                        foreach (ConfigurationField field in ConfDocument.Fields.Values)
                             field.IsExport = true;
+
+                        //Обхід всіх табличних частин
+                        foreach (ConfigurationTablePart tablePart in ConfDocument.TabularParts.Values)
+                            //Еспорт для всіх полів
+                            foreach (ConfigurationField field in tablePart.Fields.Values)
+                                field.IsExport = true;
+                    }
                 };
             }
 
@@ -910,6 +913,11 @@ namespace {Conf.NameSpaceGenerationCode}.Документи
             }
         }
 
+        DocumentOtherInfoStruct GetDocumentOtherInfo()
+        {
+            return new DocumentOtherInfoStruct(checkButtonExportXml.Active);
+        }
+
         #endregion
 
         void OnSaveClick(object? sender, EventArgs args)
@@ -1271,7 +1279,8 @@ namespace {Conf.NameSpaceGenerationCode}.Документи
                                 TabularLists = ConfDocument.TabularList,
                                 IsNew = false,
                                 GeneralForm = GeneralForm,
-                                CallBack_RefreshList = FormsListRefreshList
+                                CallBack_RefreshList = FormsListRefreshList,
+                                DocumentOtherInfo = GetDocumentOtherInfo()
                             };
 
                             page.SetValue();
@@ -1306,6 +1315,7 @@ namespace {Conf.NameSpaceGenerationCode}.Документи
                         IsNew = true,
                         GeneralForm = GeneralForm,
                         CallBack_RefreshList = FormsListRefreshList,
+                        DocumentOtherInfo = GetDocumentOtherInfo()
                     };
 
                     page.SetValue();
@@ -1388,5 +1398,16 @@ namespace {Conf.NameSpaceGenerationCode}.Документи
         }
 
         #endregion
+    }
+
+    /// <summary>
+    /// Структура для додаткової інформації про документ
+    /// </summary>
+    struct DocumentOtherInfoStruct(bool exportXML = false)
+    {
+        /// <summary>
+        /// Тип регістру
+        /// </summary>
+        public bool ExportXML = exportXML;
     }
 }
