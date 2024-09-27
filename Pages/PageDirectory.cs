@@ -535,6 +535,12 @@ namespace {Conf.NameSpaceGenerationCode}.Довідники
 
         public static async ValueTask SetDeletionLabel({entryName.Text}_Objest ДовідникОбєкт, bool label)
         {{
+            /* В цьому тригері треба перевіряти чи зчитані всі поля чи тільки базові. 
+               Якщо потрібний доступ до всіх полів треба перечитати ДовідникОбєкт заново */
+            
+            //Перечитати всі поля
+            //if (ДовідникОбєкт.IsReadOnlyBaseFields) await ДовідникОбєкт.Read(ДовідникОбєкт.UnigueID);
+
             await ValueTask.FromResult(true);
         }}
 

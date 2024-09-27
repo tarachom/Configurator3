@@ -439,6 +439,12 @@ namespace {Conf.NameSpaceGenerationCode}.Документи
 
         public static async ValueTask SetDeletionLabel({entryName.Text}_Objest ДокументОбєкт, bool label)
         {{
+            /* В цьому тригері треба перевіряти чи зчитані всі поля чи тільки базові. 
+               Якщо потрібний доступ до всіх полів треба перечитати ДокументОбєкт заново */
+            
+            //Перечитати всі поля
+            //if (ДокументОбєкт.IsReadOnlyBaseFields) await ДокументОбєкт.Read(ДокументОбєкт.UnigueID);
+
             await ValueTask.FromResult(true);
         }}
 
