@@ -44,8 +44,9 @@ namespace Configurator
         public FormConfigurator? GeneralForm { get; set; }
         public System.Action? CallBack_RefreshList { get; set; }
         public bool IsNew { get; set; } = true;
-        public OwnerTablePart Owner { get; set; } = new OwnerTablePart();
         public ConfigurationForms.TypeForms TypeForm { get; set; } = ConfigurationForms.TypeForms.None;
+
+        public OwnerTablePart Owner { get; set; } = new OwnerTablePart(); // Власник табличної частини
         public DirectoryOtherInfoStruct DirectoryOtherInfo { get; set; } = new DirectoryOtherInfoStruct(); // Для довідника
         public DocumentOtherInfoStruct DocumentOtherInfo { get; set; } = new DocumentOtherInfoStruct(); // Для документу
         public RegisterAccumulationOtherInfoStruct RegistersAccumulationOtherInfo { get; set; } = new RegisterAccumulationOtherInfoStruct(); // Для регістру накопичення
@@ -81,6 +82,7 @@ namespace Configurator
             typeof(string), //Name
             typeof(string), //Caption
             typeof(uint),   //Size
+            typeof(uint),   //Height
             typeof(int),    //SortNum
             typeof(string)  //Type
         );
@@ -90,6 +92,7 @@ namespace Configurator
             Name,
             Caption,
             Size,
+            Height,
             SortNum,
             Type
         }
@@ -102,14 +105,26 @@ namespace Configurator
         ListStore listStoreFormElementTablePart = new ListStore(
             typeof(bool),   //Visible
             typeof(string), //Name
-            typeof(string)  //Caption
+            typeof(string), //Caption
+            typeof(uint),   //Size
+            typeof(uint),   //Height
+            typeof(int)     //SortNum
         );
         enum FormElementTablePartColumns
         {
             Visible,
             Name,
             Caption,
+            Size,
+            Height,
+            SortNum
         }
+
+        #endregion
+
+        #region FormTablePart
+
+        CheckButton checkButtonIncludeIconColumn = new CheckButton("Вставити поле з іконкою в табличну частину");
 
         #endregion
 
@@ -179,7 +194,7 @@ namespace Configurator
 
             //Size
             {
-                CellRendererText cell = new CellRendererText() { Editable = true };
+                CellRendererText cell = new CellRendererText() { Editable = true, Xalign = 1 };
                 cell.Edited += (object o, EditedArgs args) =>
                 {
                     if (listStoreFormElementField.GetIterFromString(out TreeIter iter, args.Path))
@@ -188,12 +203,26 @@ namespace Configurator
                         listStoreFormElementField.SetValue(iter, (int)FormElementFieldColumns.Size, size);
                     }
                 };
-                treeViewFormElementField.AppendColumn(new TreeViewColumn("Розмір", cell, "text", FormElementFieldColumns.Size));
+                treeViewFormElementField.AppendColumn(new TreeViewColumn("Ширина", cell, "text", FormElementFieldColumns.Size) { Alignment = 1 });
+            }
+
+            //Height
+            {
+                CellRendererText cell = new CellRendererText() { Editable = true, Xalign = 1 };
+                cell.Edited += (object o, EditedArgs args) =>
+                {
+                    if (listStoreFormElementField.GetIterFromString(out TreeIter iter, args.Path))
+                    {
+                        uint.TryParse(args.NewText, out uint height);
+                        listStoreFormElementField.SetValue(iter, (int)FormElementFieldColumns.Height, height);
+                    }
+                };
+                treeViewFormElementField.AppendColumn(new TreeViewColumn("Висота", cell, "text", FormElementFieldColumns.Height) { Alignment = 1 });
             }
 
             //SortNum
             {
-                CellRendererText cell = new CellRendererText() { Editable = true };
+                CellRendererText cell = new CellRendererText() { Editable = true, Xalign = 1 };
                 cell.Edited += (object o, EditedArgs args) =>
                 {
                     if (listStoreFormElementField.GetIterFromString(out TreeIter iter, args.Path))
@@ -202,12 +231,15 @@ namespace Configurator
                         listStoreFormElementField.SetValue(iter, (int)FormElementFieldColumns.SortNum, sortNum);
                     }
                 };
-                treeViewFormElementField.AppendColumn(new TreeViewColumn("Порядок", cell, "text", FormElementFieldColumns.SortNum));
+                treeViewFormElementField.AppendColumn(new TreeViewColumn("Порядок", cell, "text", FormElementFieldColumns.SortNum) { Alignment = 1 });
                 listStoreFormElementField.SetSortColumnId((int)FormElementFieldColumns.SortNum, SortType.Ascending);
             }
 
             //Type
             treeViewFormElementField.AppendColumn(new TreeViewColumn("Тип", new CellRendererText(), "text", FormElementFieldColumns.Type));
+
+            //Пустишка
+            treeViewFormElementField.AppendColumn(new TreeViewColumn());
         }
 
         void AddColumnTreeViewFormElementTablePart()
@@ -239,6 +271,52 @@ namespace Configurator
                 };
                 treeViewFormElementTablePart.AppendColumn(new TreeViewColumn("Заголовок", cell, "text", FormElementTablePartColumns.Caption));
             }
+
+            //Size
+            {
+                CellRendererText cell = new CellRendererText() { Editable = true, Xalign = 1 };
+                cell.Edited += (object o, EditedArgs args) =>
+                {
+                    if (listStoreFormElementTablePart.GetIterFromString(out TreeIter iter, args.Path))
+                    {
+                        uint.TryParse(args.NewText, out uint size);
+                        listStoreFormElementTablePart.SetValue(iter, (int)FormElementTablePartColumns.Size, size);
+                    }
+                };
+                treeViewFormElementTablePart.AppendColumn(new TreeViewColumn("Ширина", cell, "text", FormElementTablePartColumns.Size) { Alignment = 1 });
+            }
+
+            //Height
+            {
+                CellRendererText cell = new CellRendererText() { Editable = true, Xalign = 1 };
+                cell.Edited += (object o, EditedArgs args) =>
+                {
+                    if (listStoreFormElementTablePart.GetIterFromString(out TreeIter iter, args.Path))
+                    {
+                        uint.TryParse(args.NewText, out uint height);
+                        listStoreFormElementTablePart.SetValue(iter, (int)FormElementTablePartColumns.Height, height);
+                    }
+                };
+                treeViewFormElementTablePart.AppendColumn(new TreeViewColumn("Висота", cell, "text", FormElementTablePartColumns.Height) { Alignment = 1 });
+            }
+
+            //SortNum
+            {
+                CellRendererText cell = new CellRendererText() { Editable = true, Xalign = 1 };
+                cell.Edited += (object o, EditedArgs args) =>
+                {
+                    if (listStoreFormElementTablePart.GetIterFromString(out TreeIter iter, args.Path))
+                    {
+                        uint.TryParse(args.NewText, out uint sortNum);
+                        listStoreFormElementTablePart.SetValue(iter, (int)FormElementTablePartColumns.SortNum, sortNum);
+                    }
+                };
+                treeViewFormElementTablePart.AppendColumn(new TreeViewColumn("Порядок", cell, "text", FormElementTablePartColumns.SortNum) { Alignment = 1 });
+                listStoreFormElementTablePart.SetSortColumnId((int)FormElementTablePartColumns.SortNum, SortType.Ascending);
+            }
+
+            //Пустишка
+            treeViewFormElementTablePart.AppendColumn(new TreeViewColumn());
         }
 
         #endregion
@@ -290,7 +368,9 @@ namespace Configurator
             hPaned.Pack2(vBox, true, false);
         }
 
-        public void CreateNotePage(string tabName, Widget pageWidget)
+        #region CreateFunc
+
+        void CreateNotePage(string tabName, Widget pageWidget)
         {
             ScrolledWindow scroll = new ScrolledWindow();
             scroll.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
@@ -300,7 +380,67 @@ namespace Configurator
             notebook.ShowAll();
         }
 
-        public void CreateElementForm(bool existTablePart = true)
+        void CreateToolbarFormElementField(Box vBox)
+        {
+            void Process(bool income)
+            {
+                if (treeViewFormElementField.Selection.CountSelectedRows() != 0)
+                {
+                    treeViewFormElementField.Model.GetIter(out TreeIter iter, treeViewFormElementField.Selection.GetSelectedRows()[0]);
+                    int sortNum = (int)treeViewFormElementField.Model.GetValue(iter, (int)FormElementFieldColumns.SortNum);
+
+                    if (income)
+                        ++sortNum;
+                    else if (sortNum > 0)
+                        --sortNum;
+
+                    listStoreFormElementField.SetValue(iter, (int)FormElementFieldColumns.SortNum, sortNum);
+                }
+            }
+
+            Toolbar toolbar = new Toolbar();
+            vBox.PackStart(toolbar, false, false, 0);
+
+            ToolButton addUp = new ToolButton(new Image(Stock.GoUp, IconSize.Menu), "Up") { TooltipText = "Up" };
+            addUp.Clicked += (object? sender, EventArgs args) => Process(false);
+            toolbar.Add(addUp);
+
+            ToolButton addDown = new ToolButton(new Image(Stock.GoDown, IconSize.Menu), "Down") { TooltipText = "Down" };
+            addDown.Clicked += (object? sender, EventArgs args) => Process(true);
+            toolbar.Add(addDown);
+        }
+
+        void CreateToolbarFormElementTablePart(Box vBox)
+        {
+            void Process(bool income)
+            {
+                if (treeViewFormElementTablePart.Selection.CountSelectedRows() != 0)
+                {
+                    treeViewFormElementTablePart.Model.GetIter(out TreeIter iter, treeViewFormElementTablePart.Selection.GetSelectedRows()[0]);
+                    int sortNum = (int)treeViewFormElementTablePart.Model.GetValue(iter, (int)FormElementTablePartColumns.SortNum);
+
+                    if (income)
+                        ++sortNum;
+                    else if (sortNum > 0)
+                        --sortNum;
+
+                    listStoreFormElementTablePart.SetValue(iter, (int)FormElementTablePartColumns.SortNum, sortNum);
+                }
+            }
+
+            Toolbar toolbar = new Toolbar();
+            vBox.PackStart(toolbar, false, false, 0);
+
+            ToolButton addUp = new ToolButton(new Image(Stock.GoUp, IconSize.Menu), "Up") { TooltipText = "Up" };
+            addUp.Clicked += (object? sender, EventArgs args) => Process(false);
+            toolbar.Add(addUp);
+
+            ToolButton addDown = new ToolButton(new Image(Stock.GoDown, IconSize.Menu), "Down") { TooltipText = "Down" };
+            addDown.Clicked += (object? sender, EventArgs args) => Process(true);
+            toolbar.Add(addDown);
+        }
+
+        void CreateElementForm(bool existTablePart = true)
         {
             Box vBox = new Box(Orientation.Vertical, 0);
 
@@ -308,7 +448,9 @@ namespace Configurator
             {
                 Box hBoxCaption = new Box(Orientation.Horizontal, 0);
                 hBoxCaption.PackStart(new Label("Поля"), false, false, 5);
-                vBox.PackStart(hBoxCaption, false, false, 2);
+                vBox.PackStart(hBoxCaption, false, false, 5);
+
+                CreateToolbarFormElementField(vBox);
 
                 Box hBoxScroll = new Box(Orientation.Horizontal, 0);
                 ScrolledWindow scroll = new ScrolledWindow() { ShadowType = ShadowType.In, HeightRequest = 500 };
@@ -317,7 +459,7 @@ namespace Configurator
                 scroll.Add(treeViewFormElementField);
                 hBoxScroll.PackStart(scroll, true, true, 5);
 
-                vBox.PackStart(hBoxScroll, false, false, 5);
+                vBox.PackStart(hBoxScroll, false, false, 0);
             }
 
             //Табличні частини
@@ -325,7 +467,9 @@ namespace Configurator
             {
                 Box hBoxCaption = new Box(Orientation.Horizontal, 0);
                 hBoxCaption.PackStart(new Label("Табличні частини"), false, false, 5);
-                vBox.PackStart(hBoxCaption, false, false, 2);
+                vBox.PackStart(hBoxCaption, false, false, 5);
+
+                CreateToolbarFormElementTablePart(vBox);
 
                 Box hBoxScroll = new Box(Orientation.Horizontal, 0);
                 ScrolledWindow scroll = new ScrolledWindow() { ShadowType = ShadowType.In, HeightRequest = 180 };
@@ -334,10 +478,32 @@ namespace Configurator
                 scroll.Add(treeViewFormElementTablePart);
                 hBoxScroll.PackStart(scroll, true, true, 5);
 
-                vBox.PackStart(hBoxScroll, false, false, 5);
+                vBox.PackStart(hBoxScroll, false, false, 0);
             }
 
             CreateNotePage("Форма", vBox);
+        }
+
+        void CreateSettingsTablePartForm()
+        {
+            Box vBox = new Box(Orientation.Vertical, 0);
+
+            {
+                Box hBox = new Box(Orientation.Horizontal, 0);
+                vBox.PackStart(hBox, false, false, 10);
+
+                hBox.PackStart(new Label("<b>Додаткові параметри для табличної частини</b>") { UseMarkup = true, UseUnderline = false }, false, false, 10);
+            }
+
+            {
+                Box hBox = new Box(Orientation.Horizontal, 0);
+                vBox.PackStart(hBox, false, false, 5);
+
+                // Вставити поле з іконкою в табличну частину
+                hBox.PackStart(checkButtonIncludeIconColumn, false, false, 5);
+            }
+
+            CreateNotePage("Додатково", vBox);
         }
 
         public void CreateListForm()
@@ -355,6 +521,8 @@ namespace Configurator
 
             CreateNotePage("Форма", vBox);
         }
+
+        #endregion
 
         #region Присвоєння / зчитування значень віджетів
 
@@ -388,9 +556,16 @@ namespace Configurator
             switch (TypeForm)
             {
                 case ConfigurationForms.TypeForms.Element:
+                    {
+                        CreateElementForm(!(ParentType == "RegisterInformation" || ParentType == "RegisterAccumulation"));
+                        break;
+                    }
                 case ConfigurationForms.TypeForms.TablePart:
                     {
-                        CreateElementForm(!(ParentType == "RegisterInformation" || ParentType == "RegisterAccumulation" || ParentType == "TablePart"));
+                        checkButtonIncludeIconColumn.Active = Form.IncludeIconColumn;
+
+                        CreateElementForm(false);
+                        CreateSettingsTablePartForm();
                         break;
                     }
                 case ConfigurationForms.TypeForms.List:
@@ -476,11 +651,12 @@ namespace Configurator
                         Form.ElementFields[field.Name].Caption : field.Name) : field.Name;
 
                 uint size = isExistField ? Form.ElementFields[field.Name].Size : 0;
+                uint height = isExistField ? Form.ElementFields[field.Name].Height : 0;
                 int sortNum = isExistField ? Form.ElementFields[field.Name].SortNum : 100;
                 string sType = field.Type == "pointer" || field.Type == "enum" ? field.Pointer : field.Type;
 
                 //Для нової форми видимими стають всі поля
-                listStoreFormElementField.AppendValues(IsNew || isExistField, field.Name, caption, size, sortNum, sType);
+                listStoreFormElementField.AppendValues(IsNew || isExistField, field.Name, caption, size, height, sortNum, sType);
             }
         }
 
@@ -494,8 +670,12 @@ namespace Configurator
                     (!string.IsNullOrEmpty(Form.ElementTableParts[tablePart.Name].Caption) ?
                         Form.ElementTableParts[tablePart.Name].Caption : tablePart.Name) : tablePart.Name;
 
+                uint size = isExistField ? Form.ElementTableParts[tablePart.Name].Size : 0;
+                uint height = isExistField ? Form.ElementTableParts[tablePart.Name].Height : 0;
+                int sortNum = isExistField ? Form.ElementTableParts[tablePart.Name].SortNum : 100;
+
                 //Для нової форми видимими стають таб частини
-                listStoreFormElementTablePart.AppendValues(IsNew || isExistField, tablePart.Name, caption);
+                listStoreFormElementTablePart.AppendValues(IsNew || isExistField, tablePart.Name, caption, size, height, sortNum);
             }
         }
 
@@ -521,10 +701,11 @@ namespace Configurator
                                 string name = (string)listStoreFormElementField.GetValue(iter, (int)FormElementFieldColumns.Name);
                                 string caption = (string)listStoreFormElementField.GetValue(iter, (int)FormElementFieldColumns.Caption);
                                 uint size = (uint)listStoreFormElementField.GetValue(iter, (int)FormElementFieldColumns.Size);
+                                uint height = (uint)listStoreFormElementField.GetValue(iter, (int)FormElementFieldColumns.Height);
                                 int sortNum = (int)listStoreFormElementField.GetValue(iter, (int)FormElementFieldColumns.SortNum);
 
                                 ConfigurationField field = Fields[name];
-                                Form.AppendElementField(new ConfigurationFormsElementField(field.Name, caption, size, sortNum));
+                                Form.AppendElementField(new ConfigurationFormsElementField(field.Name, caption, size, height, sortNum));
                             }
                         }
                         while (listStoreFormElementField.IterNext(ref iter));
@@ -541,13 +722,18 @@ namespace Configurator
                             {
                                 string name = (string)listStoreFormElementTablePart.GetValue(iter, (int)FormElementTablePartColumns.Name);
                                 string caption = (string)listStoreFormElementTablePart.GetValue(iter, (int)FormElementTablePartColumns.Caption);
+                                uint size = (uint)listStoreFormElementTablePart.GetValue(iter, (int)FormElementTablePartColumns.Size);
+                                uint height = (uint)listStoreFormElementTablePart.GetValue(iter, (int)FormElementTablePartColumns.Height);
+                                int sortNum = (int)listStoreFormElementTablePart.GetValue(iter, (int)FormElementTablePartColumns.SortNum);
 
                                 ConfigurationTablePart tablePart = TabularParts[name];
-                                Form.AppendElementTablePart(new ConfigurationFormsElementTablePart(tablePart.Name, caption));
+                                Form.AppendElementTablePart(new ConfigurationFormsElementTablePart(tablePart.Name, caption, size, height, sortNum));
                             }
                         }
                         while (listStoreFormElementTablePart.IterNext(ref iter));
                 }
+                else
+                    Form.IncludeIconColumn = checkButtonIncludeIconColumn.Active;
             }
         }
 
@@ -704,6 +890,10 @@ namespace Configurator
                 XmlElement nodeOwnerName = xmlConfDocument.CreateElement("OwnerName");
                 nodeOwnerName.InnerText = Owner.Name;
                 nodeParentType.AppendChild(nodeOwnerName);
+
+                XmlElement nodeIncludeIconColumn = xmlConfDocument.CreateElement("IncludeIconColumn");
+                nodeIncludeIconColumn.InnerText = checkButtonIncludeIconColumn.Active ? "1" : "0";
+                nodeParentType.AppendChild(nodeIncludeIconColumn);
 
                 Configuration.SaveFormElementField(Fields, Form.ElementFields, xmlConfDocument, nodeParentType);
             }
