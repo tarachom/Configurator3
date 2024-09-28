@@ -150,7 +150,7 @@ namespace <xsl:value-of select="$NameSpace"/>
         public static async ValueTask SetDeletionLabel(UnigueID unigueID)
         {
             <xsl:value-of select="$DirectoryName"/>_Objest Обєкт = new <xsl:value-of select="$DirectoryName"/>_Objest();
-            if (await Обєкт.Read(unigueID, false, true))
+            if (await Обєкт.Read(unigueID))
                 await Обєкт.SetDeletionLabel(!Обєкт.DeletionLabel);
             else
                 Message.Error(Program.GeneralForm, "Не вдалось прочитати!");
