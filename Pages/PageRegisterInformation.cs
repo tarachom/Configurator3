@@ -75,26 +75,6 @@ namespace Configurator
             ShowAll();
         }
 
-        void CreatePack2(Paned hPaned)
-        {
-            Box vBox = new Box(Orientation.Vertical, 0);
-
-            //Стандартні поля
-            Expander expanderDefField = new Expander("Стандартні поля");
-            vBox.PackStart(expanderDefField, false, false, 5);
-
-            expanderDefField.Add(new Label(" period - дата та час запису \n owner - власник запису") { Halign = Align.Start });
-
-            //Поля
-            CreateDimensionFieldList(vBox);
-
-            CreateResourcesFieldList(vBox);
-
-            CreatePropertyFieldList(vBox);
-
-            hPaned.Pack2(vBox, true, false);
-        }
-
         void CreatePack1(Paned hPaned)
         {
             Box vBox = new Box(Orientation.Vertical, 0);
@@ -167,6 +147,26 @@ namespace Configurator
             }
 
             hPaned.Pack1(vBox, false, false);
+        }
+
+        void CreatePack2(Paned hPaned)
+        {
+            Box vBox = new Box(Orientation.Vertical, 0);
+
+            //Стандартні поля
+            Expander expanderDefField = new Expander("Стандартні поля");
+            vBox.PackStart(expanderDefField, false, false, 5);
+
+            expanderDefField.Add(new Label(" <b>uid</b> \n <b>period</b> - дата та час запису \n <b>owner</b> - власник запису") { Halign = Align.Start, UseMarkup = true, UseUnderline = false, Selectable = true });
+
+            //Поля
+            CreateDimensionFieldList(vBox);
+
+            CreateResourcesFieldList(vBox);
+
+            CreatePropertyFieldList(vBox);
+
+            hPaned.Pack2(vBox, true, false);
         }
 
         #region Fields
@@ -500,7 +500,7 @@ namespace Configurator
             IsNew = false;
 
             GeneralForm?.LoadTreeAsync();
-            GeneralForm?.RenameCurrentPageNotebook($"Регістр інформації: {ConfRegister.Name}");
+            GeneralForm?.RenameCurrentPageNotebook($"Регістр відомостей: {ConfRegister.Name}");
         }
 
         #region Dimension Fields

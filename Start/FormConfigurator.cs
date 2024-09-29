@@ -425,7 +425,7 @@ namespace Configurator
                         LoadJournals(journalsIter);
                         IsExpand(journalsIter);
 
-                        TreeIter registersInformationIter = treeStore.AppendValues("Регістри інформації");
+                        TreeIter registersInformationIter = treeStore.AppendValues("Регістри відомостей");
                         LoadRegistersInformation(registersInformationIter);
                         IsExpand(registersInformationIter);
 
@@ -682,7 +682,7 @@ namespace Configurator
             AddJournal.Activated += OnAddJournal;
             Menu.Append(AddJournal);
 
-            MenuItem AddRegistersInformation = new MenuItem("Регістр інформації");
+            MenuItem AddRegistersInformation = new MenuItem("Регістр відомостей");
             AddRegistersInformation.Activated += OnAddRegisterInformation;
             Menu.Append(AddRegistersInformation);
 
@@ -2474,7 +2474,7 @@ namespace Configurator
 
         void OnAddRegisterInformation(object? sender, EventArgs args)
         {
-            CreateNotebookPage($"Регістер інформації: *", () =>
+            CreateNotebookPage($"Регістр відомостей: *", () =>
             {
                 PageRegisterInformation page = new PageRegisterInformation()
                 {
@@ -2490,7 +2490,7 @@ namespace Configurator
 
         void OnAddRegisterAccumulation(object? sender, EventArgs args)
         {
-            CreateNotebookPage($"Регістер накопичення: *", () =>
+            CreateNotebookPage($"Регістр накопичення: *", () =>
             {
                 PageRegisterAccumulation page = new PageRegisterAccumulation()
                 {

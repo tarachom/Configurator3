@@ -227,7 +227,7 @@ namespace Configurator
             Expander expanderDefField = new Expander("Стандартні поля");
             vBox.PackStart(expanderDefField, false, false, 5);
 
-            expanderDefField.Add(new Label(" period - дата та час запису \n income - дохід (true), розхід (false) \n owner - власник запису") { Halign = Align.Start });
+            expanderDefField.Add(new Label(" <b>uid</b> \n <b>period</b> - дата та час запису \n <b>income</b> - дохід (true), розхід (false) \n <b>owner</b> - власник запису") { Halign = Align.Start, UseMarkup = true, UseUnderline = false, Selectable = true });
 
             //Поля
             CreateDimensionFieldList(vBox);
@@ -695,7 +695,7 @@ namespace Configurator
             IsNew = false;
 
             GeneralForm?.LoadTreeAsync();
-            GeneralForm?.RenameCurrentPageNotebook($"Регістер накопичення: {ConfRegister.Name}");
+            GeneralForm?.RenameCurrentPageNotebook($"Регістр накопичення: {ConfRegister.Name}");
         }
 
         #region QueryBlock

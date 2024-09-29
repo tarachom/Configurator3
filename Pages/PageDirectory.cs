@@ -593,6 +593,12 @@ namespace {Conf.NameSpaceGenerationCode}.Довідники
         {
             Box vBox = new Box(Orientation.Vertical, 0);
 
+            //Стандартні поля
+            Expander expanderDefField = new Expander("Стандартні поля");
+            vBox.PackStart(expanderDefField, false, false, 5);
+
+            expanderDefField.Add(new Label(" <b>uid</b> \n <b>deletion_label</b> - помітка на видалення") { Halign = Align.Start, UseMarkup = true, UseUnderline = false, Selectable = true });
+
             //Поля
             CreateFieldList(vBox);
 
