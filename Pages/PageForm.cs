@@ -382,61 +382,29 @@ namespace Configurator
 
         void CreateToolbarFormElementField(Box vBox)
         {
-            void Process(bool income)
-            {
-                if (treeViewFormElementField.Selection.CountSelectedRows() != 0)
-                {
-                    treeViewFormElementField.Model.GetIter(out TreeIter iter, treeViewFormElementField.Selection.GetSelectedRows()[0]);
-                    int sortNum = (int)treeViewFormElementField.Model.GetValue(iter, (int)FormElementFieldColumns.SortNum);
-
-                    if (income)
-                        ++sortNum;
-                    else if (sortNum > 0)
-                        --sortNum;
-
-                    listStoreFormElementField.SetValue(iter, (int)FormElementFieldColumns.SortNum, sortNum);
-                }
-            }
-
             Toolbar toolbar = new Toolbar();
             vBox.PackStart(toolbar, false, false, 0);
 
             ToolButton addUp = new ToolButton(new Image(Stock.GoUp, IconSize.Menu), "Up") { TooltipText = "Up" };
-            addUp.Clicked += (object? sender, EventArgs args) => Process(false);
+            addUp.Clicked += (object? sender, EventArgs args) => TreeViewFunc.SortTreeView(treeViewFormElementField, (int)FormElementFieldColumns.SortNum, false);
             toolbar.Add(addUp);
 
             ToolButton addDown = new ToolButton(new Image(Stock.GoDown, IconSize.Menu), "Down") { TooltipText = "Down" };
-            addDown.Clicked += (object? sender, EventArgs args) => Process(true);
+            addDown.Clicked += (object? sender, EventArgs args) => TreeViewFunc.SortTreeView(treeViewFormElementField, (int)FormElementFieldColumns.SortNum, true);
             toolbar.Add(addDown);
         }
 
         void CreateToolbarFormElementTablePart(Box vBox)
         {
-            void Process(bool income)
-            {
-                if (treeViewFormElementTablePart.Selection.CountSelectedRows() != 0)
-                {
-                    treeViewFormElementTablePart.Model.GetIter(out TreeIter iter, treeViewFormElementTablePart.Selection.GetSelectedRows()[0]);
-                    int sortNum = (int)treeViewFormElementTablePart.Model.GetValue(iter, (int)FormElementTablePartColumns.SortNum);
-
-                    if (income)
-                        ++sortNum;
-                    else if (sortNum > 0)
-                        --sortNum;
-
-                    listStoreFormElementTablePart.SetValue(iter, (int)FormElementTablePartColumns.SortNum, sortNum);
-                }
-            }
-
             Toolbar toolbar = new Toolbar();
             vBox.PackStart(toolbar, false, false, 0);
 
             ToolButton addUp = new ToolButton(new Image(Stock.GoUp, IconSize.Menu), "Up") { TooltipText = "Up" };
-            addUp.Clicked += (object? sender, EventArgs args) => Process(false);
+            addUp.Clicked += (object? sender, EventArgs args) => TreeViewFunc.SortTreeView(treeViewFormElementTablePart, (int)FormElementTablePartColumns.SortNum, false);
             toolbar.Add(addUp);
 
             ToolButton addDown = new ToolButton(new Image(Stock.GoDown, IconSize.Menu), "Down") { TooltipText = "Down" };
-            addDown.Clicked += (object? sender, EventArgs args) => Process(true);
+            addDown.Clicked += (object? sender, EventArgs args) => TreeViewFunc.SortTreeView(treeViewFormElementTablePart, (int)FormElementTablePartColumns.SortNum, true);
             toolbar.Add(addDown);
         }
 
@@ -642,6 +610,7 @@ namespace Configurator
 
         void FillTreeViewFormElementField()
         {
+            int counter = 0;
             foreach (ConfigurationField field in Fields.Values)
             {
                 bool isExistField = Form.ElementFields.ContainsKey(field.Name);
@@ -652,7 +621,7 @@ namespace Configurator
 
                 uint size = isExistField ? Form.ElementFields[field.Name].Size : 0;
                 uint height = isExistField ? Form.ElementFields[field.Name].Height : 0;
-                int sortNum = isExistField ? Form.ElementFields[field.Name].SortNum : 100;
+                int sortNum = isExistField ? Form.ElementFields[field.Name].SortNum : IsNew ? ++counter : 100;
                 string sType = field.Type == "pointer" || field.Type == "enum" ? field.Pointer : field.Type;
 
                 //Для нової форми видимими стають всі поля
@@ -662,6 +631,7 @@ namespace Configurator
 
         void FillTreeViewFormElementTablePart()
         {
+            int counter = 0;
             foreach (ConfigurationTablePart tablePart in TabularParts.Values)
             {
                 bool isExistField = Form.ElementTableParts.ContainsKey(tablePart.Name);
@@ -672,7 +642,7 @@ namespace Configurator
 
                 uint size = isExistField ? Form.ElementTableParts[tablePart.Name].Size : 0;
                 uint height = isExistField ? Form.ElementTableParts[tablePart.Name].Height : 0;
-                int sortNum = isExistField ? Form.ElementTableParts[tablePart.Name].SortNum : 100;
+                int sortNum = isExistField ? Form.ElementTableParts[tablePart.Name].SortNum : IsNew ? ++counter : 100;
 
                 //Для нової форми видимими стають таб частини
                 listStoreFormElementTablePart.AppendValues(IsNew || isExistField, tablePart.Name, caption, size, height, sortNum);

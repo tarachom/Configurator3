@@ -605,7 +605,7 @@ namespace Configurator
             {
                 if (string.IsNullOrEmpty(entryName.Text))
                 {
-                    Message.Error(GeneralForm, "Назва довідника не вказана");
+                    Message.Error(GeneralForm, "Назва табличної частини не вказана");
                     return;
                 }
 

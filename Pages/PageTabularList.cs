@@ -105,7 +105,7 @@ namespace Configurator
             typeof(string) //Name
         );
 
-        string[] AdditionalTypeList = ["string", "integer", "numeric", "boolean", "image"];
+        string[] AdditionalTypeList = ["string"]; //, "integer", "numeric", "boolean", "image"];
 
         TreeView treeViewAdditional;
 
@@ -155,6 +155,8 @@ namespace Configurator
                 hBoxCaption.PackStart(new Label("Поля:"), false, false, 5);
                 vBox.PackStart(hBoxCaption, false, false, 5);
 
+                CreateToolbarField(vBox);
+
                 Box hBoxScroll = new Box(Orientation.Horizontal, 0);
                 ScrolledWindow scroll = new ScrolledWindow() { ShadowType = ShadowType.In };
                 scroll.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
@@ -173,21 +175,7 @@ namespace Configurator
                 hBoxCaption.PackStart(new Label("Додаткові поля:"), false, false, 5);
                 vBox.PackStart(hBoxCaption, false, false, 5);
 
-                //Toolbar
-                Toolbar toolbar = new Toolbar();
-                vBox.PackStart(toolbar, false, false, 0);
-
-                ToolButton buttonAdd = new ToolButton(new Image(Stock.New, IconSize.Menu), "Додати") { IsImportant = true };
-                buttonAdd.Clicked += OnAdditionalFieldsAddClick;
-                toolbar.Add(buttonAdd);
-
-                ToolButton buttonCopy = new ToolButton(new Image(Stock.Copy, IconSize.Menu), "Копіювати") { IsImportant = true };
-                buttonCopy.Clicked += OnAdditionalFieldsCopyClick;
-                toolbar.Add(buttonCopy);
-
-                ToolButton buttonDelete = new ToolButton(new Image(Stock.Clear, IconSize.Menu), "Видалити") { IsImportant = true };
-                buttonDelete.Clicked += OnAdditionalFieldsRemoveClick;
-                toolbar.Add(buttonDelete);
+                CreateToolbarAdditionalField(vBox);
 
                 //Tree
                 Box hBoxScroll = new Box(Orientation.Horizontal, 0);
@@ -232,6 +220,58 @@ namespace Configurator
 
         #region TreeView
 
+        void CreateToolbarField(Box vBox)
+        {
+            void SelectAll()
+            {
+                if (listStore.GetIterFirst(out TreeIter iter))
+                    do
+                        listStore.SetValue(iter, (int)Columns.Visible, true);
+                    while (listStore.IterNext(ref iter));
+            }
+
+            Toolbar toolbar = new Toolbar();
+            vBox.PackStart(toolbar, false, false, 0);
+
+            ToolButton buttonAll = new ToolButton(new Image(Stock.SortAscending, IconSize.Menu), "Вибрати всі") { TooltipText = "Вибрати всі" };
+            buttonAll.Clicked += (object? sender, EventArgs args) => SelectAll();
+            toolbar.Add(buttonAll);
+
+            ToolButton addUp = new ToolButton(new Image(Stock.GoUp, IconSize.Menu), "Up") { TooltipText = "Up" };
+            addUp.Clicked += (object? sender, EventArgs args) => TreeViewFunc.SortTreeView(treeViewFields, (int)Columns.SortNum, false);
+            toolbar.Add(addUp);
+
+            ToolButton addDown = new ToolButton(new Image(Stock.GoDown, IconSize.Menu), "Down") { TooltipText = "Down" };
+            addDown.Clicked += (object? sender, EventArgs args) => TreeViewFunc.SortTreeView(treeViewFields, (int)Columns.SortNum, true);
+            toolbar.Add(addDown);
+        }
+
+        void CreateToolbarAdditionalField(Box vBox)
+        {
+            Toolbar toolbar = new Toolbar();
+            vBox.PackStart(toolbar, false, false, 0);
+
+            ToolButton buttonAdd = new ToolButton(new Image(Stock.New, IconSize.Menu), "Додати") { IsImportant = true };
+            buttonAdd.Clicked += OnAdditionalFieldsAddClick;
+            toolbar.Add(buttonAdd);
+
+            ToolButton buttonCopy = new ToolButton(new Image(Stock.Copy, IconSize.Menu), "Копіювати") { IsImportant = true };
+            buttonCopy.Clicked += OnAdditionalFieldsCopyClick;
+            toolbar.Add(buttonCopy);
+
+            ToolButton buttonDelete = new ToolButton(new Image(Stock.Clear, IconSize.Menu), "Видалити") { IsImportant = true };
+            buttonDelete.Clicked += OnAdditionalFieldsRemoveClick;
+            toolbar.Add(buttonDelete);
+
+            ToolButton addUp = new ToolButton(new Image(Stock.GoUp, IconSize.Menu), "Up") { TooltipText = "Up" };
+            addUp.Clicked += (object? sender, EventArgs args) => TreeViewFunc.SortTreeView(treeViewAdditional, (int)Columns.SortNum, false);
+            toolbar.Add(addUp);
+
+            ToolButton addDown = new ToolButton(new Image(Stock.GoDown, IconSize.Menu), "Down") { TooltipText = "Down" };
+            addDown.Clicked += (object? sender, EventArgs args) => TreeViewFunc.SortTreeView(treeViewAdditional, (int)Columns.SortNum, true);
+            toolbar.Add(addDown);
+        }
+
         void AddColumnTreeViewFields()
         {
             //Visible
@@ -264,7 +304,7 @@ namespace Configurator
 
             //Size
             {
-                CellRendererText cell = new CellRendererText() { Editable = true };
+                CellRendererText cell = new CellRendererText() { Editable = true, Xalign = 1 };
                 cell.Edited += (object o, EditedArgs args) =>
                 {
                     if (listStore.GetIterFromString(out TreeIter iter, args.Path))
@@ -273,12 +313,12 @@ namespace Configurator
                         listStore.SetValue(iter, (int)Columns.Size, size);
                     }
                 };
-                treeViewFields.AppendColumn(new TreeViewColumn("Розмір", cell, "text", Columns.Size));
+                treeViewFields.AppendColumn(new TreeViewColumn("Розмір", cell, "text", Columns.Size) { Alignment = 1 });
             }
 
             //SortNum
             {
-                CellRendererText cell = new CellRendererText() { Editable = true };
+                CellRendererText cell = new CellRendererText() { Editable = true, Xalign = 1 };
                 cell.Edited += (object o, EditedArgs args) =>
                 {
                     if (listStore.GetIterFromString(out TreeIter iter, args.Path))
@@ -287,36 +327,47 @@ namespace Configurator
                         listStore.SetValue(iter, (int)Columns.SortNum, sortNum);
                     }
                 };
-                treeViewFields.AppendColumn(new TreeViewColumn("Порядок", cell, "text", Columns.SortNum));
+                treeViewFields.AppendColumn(new TreeViewColumn("Порядок", cell, "text", Columns.SortNum) { Alignment = 1 });
                 listStore.SetSortColumnId((int)Columns.SortNum, SortType.Ascending);
             }
 
             //SortField
             {
-                CellRendererToggle cell = new CellRendererToggle();
-                cell.Toggled += (object o, ToggledArgs args) =>
+                TreeViewColumn treeViewColumn = new TreeViewColumn() { Title = "Сортувати|Desc" };
+                
+                //Sort
                 {
-                    if (listStore.GetIterFromString(out TreeIter iter, args.Path))
+                    CellRendererToggle cell = new CellRendererToggle() { Xalign = 0.5f };
+                    cell.Toggled += (object o, ToggledArgs args) =>
                     {
-                        bool val = (bool)listStore.GetValue(iter, (int)Columns.SortField);
-                        listStore.SetValue(iter, (int)Columns.SortField, !val);
-                    }
-                };
-                treeViewFields.AppendColumn(new TreeViewColumn("Сортувати", cell, "active", Columns.SortField));
-            }
+                        if (listStore.GetIterFromString(out TreeIter iter, args.Path))
+                        {
+                            bool val = (bool)listStore.GetValue(iter, (int)Columns.SortField);
+                            listStore.SetValue(iter, (int)Columns.SortField, !val);
+                        }
+                    };
 
-            //SortDirection
-            {
-                CellRendererToggle cell = new CellRendererToggle();
-                cell.Toggled += (object o, ToggledArgs args) =>
+                    treeViewColumn.PackStart(cell, true);
+                    treeViewColumn.AddAttribute(cell, "active", (int)Columns.SortField);
+                }
+
+                //Direction
                 {
-                    if (listStore.GetIterFromString(out TreeIter iter, args.Path))
+                    CellRendererToggle cell = new CellRendererToggle() { Xalign = 0.5f };
+                    cell.Toggled += (object o, ToggledArgs args) =>
                     {
-                        bool val = (bool)listStore.GetValue(iter, (int)Columns.SortDirection);
-                        listStore.SetValue(iter, (int)Columns.SortDirection, !val);
-                    }
-                };
-                treeViewFields.AppendColumn(new TreeViewColumn("Зворотнє сортування", cell, "active", Columns.SortDirection));
+                        if (listStore.GetIterFromString(out TreeIter iter, args.Path))
+                        {
+                            bool val = (bool)listStore.GetValue(iter, (int)Columns.SortDirection);
+                            listStore.SetValue(iter, (int)Columns.SortDirection, !val);
+                        }
+                    };
+
+                    treeViewColumn.PackEnd(cell, true);
+                    treeViewColumn.AddAttribute(cell, "active", (int)Columns.SortDirection);
+                }
+
+                treeViewFields.AppendColumn(treeViewColumn);
             }
 
             //FilterField
@@ -330,7 +381,7 @@ namespace Configurator
                         listStore.SetValue(iter, (int)Columns.FilterField, !val);
                     }
                 };
-                treeViewFields.AppendColumn(new TreeViewColumn("Фільтрувати", cell, "active", Columns.FilterField));
+                treeViewFields.AppendColumn(new TreeViewColumn("Фільтр", cell, "active", Columns.FilterField));
             }
 
             //Type
@@ -377,7 +428,7 @@ namespace Configurator
 
             //Size
             {
-                CellRendererText cell = new CellRendererText() { Editable = true };
+                CellRendererText cell = new CellRendererText() { Editable = true, Xalign = 1 };
                 cell.Edited += (object o, EditedArgs args) =>
                 {
                     if (listStoreAdditional.GetIterFromString(out TreeIter iter, args.Path))
@@ -386,12 +437,12 @@ namespace Configurator
                         listStoreAdditional.SetValue(iter, (int)ColumnsAdditional.Size, size);
                     }
                 };
-                treeViewAdditional.AppendColumn(new TreeViewColumn("Розмір", cell, "text", ColumnsAdditional.Size));
+                treeViewAdditional.AppendColumn(new TreeViewColumn("Розмір", cell, "text", ColumnsAdditional.Size) { Alignment = 1 });
             }
 
             //SortNum
             {
-                CellRendererText cell = new CellRendererText() { Editable = true };
+                CellRendererText cell = new CellRendererText() { Editable = true, Xalign = 1 };
                 cell.Edited += (object o, EditedArgs args) =>
                 {
                     if (listStoreAdditional.GetIterFromString(out TreeIter iter, args.Path))
@@ -400,7 +451,7 @@ namespace Configurator
                         listStoreAdditional.SetValue(iter, (int)ColumnsAdditional.SortNum, sortNum);
                     }
                 };
-                treeViewAdditional.AppendColumn(new TreeViewColumn("Порядок", cell, "text", ColumnsAdditional.SortNum));
+                treeViewAdditional.AppendColumn(new TreeViewColumn("Порядок", cell, "text", ColumnsAdditional.SortNum) { Alignment = 1 });
                 listStoreAdditional.SetSortColumnId((int)ColumnsAdditional.SortNum, SortType.Ascending);
             }
 
@@ -450,6 +501,7 @@ namespace Configurator
 
         void FillTreeView()
         {
+            int counter = 0;
             foreach (ConfigurationField field in Fields.Values)
             {
                 bool isExistField = TabularList.Fields.ContainsKey(field.Name);
@@ -459,7 +511,7 @@ namespace Configurator
                         TabularList.Fields[field.Name].Caption : field.Name) : field.Name;
 
                 uint size = isExistField ? TabularList.Fields[field.Name].Size : 0;
-                int sortNum = isExistField ? TabularList.Fields[field.Name].SortNum : 100;
+                int sortNum = isExistField ? TabularList.Fields[field.Name].SortNum : IsNew ? ++counter : 100;
                 bool sortField = isExistField ? TabularList.Fields[field.Name].SortField : false;
                 bool sortDirection = isExistField ? TabularList.Fields[field.Name].SortDirection : false;
                 bool filterField = isExistField ? TabularList.Fields[field.Name].FilterField : false;
@@ -472,18 +524,17 @@ namespace Configurator
         void FillTreeAdditionalView()
         {
             listStoreAdditional.Clear();
-
             foreach (ConfigurationTabularListAdditionalField field in TabularList.AdditionalFields.Values)
             {
-                listStoreAdditional.AppendValues(
+                listStoreAdditional.AppendValues([
                     field.Visible,
                     field.Name,
                     field.Caption,
                     field.Size,
-                    field.SortNum,
+                    field.SortNum ,
                     field.Type,
                     field.Value
-                );
+                ]);
             }
         }
 
