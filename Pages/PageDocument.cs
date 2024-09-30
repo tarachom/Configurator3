@@ -428,7 +428,7 @@ namespace {Conf.NameSpaceGenerationCode}.Документи
 
         public static async ValueTask BeforeSave({entryName.Text}_Objest ДокументОбєкт)
         {{
-            ДокументОбєкт.Назва = $""{{{entryName.Text}_Const.FULLNAME}} №{{ДокументОбєкт.НомерДок}} від {{ДокументОбєкт.ДатаДок.ToShortDateString()}}"";
+            ДокументОбєкт.Назва = $""{{{entryName.Text}_Const.FULLNAME}} №{{ДокументОбєкт.НомерДок}} від {{ДокументОбєкт.ДатаДок.ToString(""dd.MM.yyyy"")}}"";
             await ValueTask.FromResult(true);
         }}
 
