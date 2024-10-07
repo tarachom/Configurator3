@@ -860,7 +860,7 @@ namespace Configurator
                 Configuration.SaveFormElementField(Conf, Fields, Form.ElementFields, xmlConfDocument, nodeParentType);
                 Configuration.SaveFormElementTablePart(TabularParts, Form.ElementTableParts, xmlConfDocument, nodeParentType);
             }
-            else if (TypeForm == ConfigurationForms.TypeForms.TablePart || TypeForm == ConfigurationForms.TypeForms.Report)
+            else if (TypeForm == ConfigurationForms.TypeForms.TablePart)
             {
                 XmlElement nodeOwnerExist = xmlConfDocument.CreateElement("OwnerExist");
                 nodeOwnerExist.InnerText = Owner.Exist ? "1" : "0";
@@ -874,15 +874,23 @@ namespace Configurator
                 nodeOwnerName.InnerText = Owner.Name;
                 nodeParentType.AppendChild(nodeOwnerName);
 
-                XmlElement nodeOwnerBlockName = xmlConfDocument.CreateElement("OwnerBlockName");
-                nodeOwnerBlockName.InnerText = Owner.BlockName;
-                nodeParentType.AppendChild(nodeOwnerBlockName);
+                XmlElement nodeIncludeIconColumn = xmlConfDocument.CreateElement("IncludeIconColumn");
+                nodeIncludeIconColumn.InnerText = checkButtonIncludeIconColumn.Active ? "1" : "0";
+                nodeParentType.AppendChild(nodeIncludeIconColumn);
 
-                if (TypeForm == ConfigurationForms.TypeForms.TablePart)
+                Configuration.SaveFormElementField(Conf, Fields, Form.ElementFields, xmlConfDocument, nodeParentType);
+            }
+            else if (TypeForm == ConfigurationForms.TypeForms.Report)
+            {
+                if (ParentType == "TablePart")
                 {
-                    XmlElement nodeIncludeIconColumn = xmlConfDocument.CreateElement("IncludeIconColumn");
-                    nodeIncludeIconColumn.InnerText = checkButtonIncludeIconColumn.Active ? "1" : "0";
-                    nodeParentType.AppendChild(nodeIncludeIconColumn);
+                    XmlElement nodeOwnerName = xmlConfDocument.CreateElement("OwnerName");
+                    nodeOwnerName.InnerText = Owner.Name;
+                    nodeParentType.AppendChild(nodeOwnerName);
+
+                    XmlElement nodeOwnerBlockName = xmlConfDocument.CreateElement("OwnerBlockName");
+                    nodeOwnerBlockName.InnerText = Owner.BlockName;
+                    nodeParentType.AppendChild(nodeOwnerBlockName);
                 }
 
                 Configuration.SaveFormElementField(Conf, Fields, Form.ElementFields, xmlConfDocument, nodeParentType);

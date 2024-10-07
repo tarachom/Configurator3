@@ -535,7 +535,6 @@ namespace <xsl:value-of select="$NameSpace"/>
         <xsl:variable name="TablePartName" select="TablePart/Name"/>
         <xsl:variable name="FieldsTL" select="TablePart/ElementFields/Field"/>
 
-        <xsl:variable name="OwnerExist" select="TablePart/OwnerExist"/>
         <xsl:variable name="OwnerName" select="TablePart/OwnerName"/>
         <xsl:variable name="OwnerBlockName">
             <xsl:if test="TablePart/OwnerType = 'Constants' and normalize-space(TablePart/OwnerBlockName) != ''">
@@ -577,7 +576,7 @@ SELECT
                 <xsl:when test="PresetntationFields/@Count &gt; 1">
                     <xsl:text>concat_ws (', '</xsl:text>
                     <xsl:for-each select="PresetntationFields/Field">
-                        <xsl:value-of select="concat(', ', $namePointer, '_Const.', text())"/>
+                        <xsl:value-of select="concat(', ', $nameGroup, '_', $namePointer, '.{', $namePointer, '_Const.', text(), '}')"/>
                     </xsl:for-each>
                     <xsl:text>)</xsl:text>
                 </xsl:when>

@@ -1355,6 +1355,12 @@ namespace {Conf.NameSpaceGenerationCode}.Документи
                 Menu.Append(item);
             }
 
+            {
+                MenuItem item = new MenuItem("Звіт");
+                item.Activated += (object? sender, EventArgs args) => { OnFormsListAdd(ConfigurationForms.TypeForms.Report); };
+                Menu.Append(item);
+            }
+
             Menu.ShowAll();
 
             return Menu;
