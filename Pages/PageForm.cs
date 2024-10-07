@@ -505,6 +505,7 @@ namespace Configurator
                 ConfigurationForms.TypeForms.ListAndTree => "Список з Деревом",
                 ConfigurationForms.TypeForms.TablePart => "Таблична частина",
                 ConfigurationForms.TypeForms.Function => "Функції",
+                ConfigurationForms.TypeForms.Report => "Звіт",
                 _ => ""
             };
 
@@ -536,6 +537,11 @@ namespace Configurator
                         CreateSettingsTablePartForm();
                         break;
                     }
+                case ConfigurationForms.TypeForms.Report:
+                    {
+                        CreateElementForm(false);
+                        break;
+                    }
                 case ConfigurationForms.TypeForms.List:
                 case ConfigurationForms.TypeForms.ListSmallSelect:
                 case ConfigurationForms.TypeForms.ListAndTree:
@@ -561,6 +567,7 @@ namespace Configurator
                         ConfigurationForms.TypeForms.ListAndTree => "ListAndTree",
                         ConfigurationForms.TypeForms.TablePart => "TablePart",
                         ConfigurationForms.TypeForms.Function => "Function",
+                        ConfigurationForms.TypeForms.Report => "Report",
                         _ => ""
                     });
                 };
@@ -597,6 +604,10 @@ namespace Configurator
                 FillTreeViewFormElementTablePart();
             }
             else if (TypeForm == ConfigurationForms.TypeForms.TablePart)
+            {
+                FillTreeViewFormElementField();
+            }
+            else if (TypeForm == ConfigurationForms.TypeForms.Report)
             {
                 FillTreeViewFormElementField();
             }
@@ -658,7 +669,9 @@ namespace Configurator
                 TypeForm == ConfigurationForms.TypeForms.ListSmallSelect ||
                 TypeForm == ConfigurationForms.TypeForms.ListAndTree)
                 Form.TabularList = сomboBoxFormListTabularList.ActiveId;
-            else if (TypeForm == ConfigurationForms.TypeForms.Element || TypeForm == ConfigurationForms.TypeForms.TablePart)
+            else if (TypeForm == ConfigurationForms.TypeForms.Element ||
+                TypeForm == ConfigurationForms.TypeForms.TablePart ||
+                TypeForm == ConfigurationForms.TypeForms.Report)
             {
                 //Поля форми елементу
                 {
@@ -681,8 +694,8 @@ namespace Configurator
                         while (listStoreFormElementField.IterNext(ref iter));
                 }
 
-                //Табличні частини 
-                if (TypeForm != ConfigurationForms.TypeForms.TablePart)
+                //Табличні частини тільки для елементу
+                if (TypeForm == ConfigurationForms.TypeForms.Element)
                 {
                     Form.ElementTableParts.Clear();
                     if (listStoreFormElementTablePart.GetIterFirst(out TreeIter iter))
@@ -702,7 +715,7 @@ namespace Configurator
                         }
                         while (listStoreFormElementTablePart.IterNext(ref iter));
                 }
-                else
+                else if (TypeForm == ConfigurationForms.TypeForms.TablePart)
                     Form.IncludeIconColumn = checkButtonIncludeIconColumn.Active;
             }
         }
@@ -844,10 +857,10 @@ namespace Configurator
             }
             else if (TypeForm == ConfigurationForms.TypeForms.Element)
             {
-                Configuration.SaveFormElementField(Fields, Form.ElementFields, xmlConfDocument, nodeParentType);
+                Configuration.SaveFormElementField(Conf, Fields, Form.ElementFields, xmlConfDocument, nodeParentType);
                 Configuration.SaveFormElementTablePart(TabularParts, Form.ElementTableParts, xmlConfDocument, nodeParentType);
             }
-            else if (TypeForm == ConfigurationForms.TypeForms.TablePart)
+            else if (TypeForm == ConfigurationForms.TypeForms.TablePart || TypeForm == ConfigurationForms.TypeForms.Report)
             {
                 XmlElement nodeOwnerExist = xmlConfDocument.CreateElement("OwnerExist");
                 nodeOwnerExist.InnerText = Owner.Exist ? "1" : "0";
@@ -861,16 +874,23 @@ namespace Configurator
                 nodeOwnerName.InnerText = Owner.Name;
                 nodeParentType.AppendChild(nodeOwnerName);
 
-                XmlElement nodeIncludeIconColumn = xmlConfDocument.CreateElement("IncludeIconColumn");
-                nodeIncludeIconColumn.InnerText = checkButtonIncludeIconColumn.Active ? "1" : "0";
-                nodeParentType.AppendChild(nodeIncludeIconColumn);
+                XmlElement nodeOwnerBlockName = xmlConfDocument.CreateElement("OwnerBlockName");
+                nodeOwnerBlockName.InnerText = Owner.BlockName;
+                nodeParentType.AppendChild(nodeOwnerBlockName);
 
-                Configuration.SaveFormElementField(Fields, Form.ElementFields, xmlConfDocument, nodeParentType);
+                if (TypeForm == ConfigurationForms.TypeForms.TablePart)
+                {
+                    XmlElement nodeIncludeIconColumn = xmlConfDocument.CreateElement("IncludeIconColumn");
+                    nodeIncludeIconColumn.InnerText = checkButtonIncludeIconColumn.Active ? "1" : "0";
+                    nodeParentType.AppendChild(nodeIncludeIconColumn);
+                }
+
+                Configuration.SaveFormElementField(Conf, Fields, Form.ElementFields, xmlConfDocument, nodeParentType);
             }
             else if (TypeForm == ConfigurationForms.TypeForms.Function)
             {
                 Configuration.SaveFields(Fields, xmlConfDocument, nodeParentType, ParentType);
-                Configuration.SaveTabularParts(TabularParts, xmlConfDocument, nodeParentType);
+                Configuration.SaveTabularParts(Conf, TabularParts, xmlConfDocument, nodeParentType);
             }
 
             sourceViewCode.Buffer.Text = Configuration.Transform

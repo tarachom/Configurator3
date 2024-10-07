@@ -327,7 +327,7 @@ namespace Configurator
         void OnSaveClick(object? sender, EventArgs args)
         {
             string name = entryName.Text;
-            string errorList = Configuration.ValidateConfigurationObjectName(Program.Kernel, ref name);
+            string errorList = Configuration.ValidateConfigurationObjectName(ref name);
             entryName.Text = name;
 
             if (errorList.Length > 0)
@@ -644,6 +644,12 @@ namespace Configurator
                 Menu.Append(item);
             }
 
+            {
+                MenuItem item = new MenuItem("Звіт");
+                item.Activated += (object? sender, EventArgs args) => { OnFormsListAdd(ConfigurationForms.TypeForms.Report); };
+                Menu.Append(item);
+            }
+
             Menu.ShowAll();
 
             return Menu;
@@ -698,7 +704,7 @@ namespace Configurator
     /// <summary>
     /// Власник табличної частини
     /// </summary>
-    struct OwnerTablePart(bool exist = false, string type = "", string name = "")
+    struct OwnerTablePart(bool exist = false, string type = "", string name = "", string blockName = "")
     {
         /// <summary>
         /// Наявність власника
@@ -706,7 +712,7 @@ namespace Configurator
         public bool Exist = exist;
 
         /// <summary>
-        /// Тип (Довідники, Документи)
+        /// Тип (Константи, Довідники, Документи, РегістриНакопичення)
         /// </summary>
         public string Type = type;
 
@@ -714,5 +720,10 @@ namespace Configurator
         /// Назва
         /// </summary>
         public string Name = name;
+
+        /// <summary>
+        /// Блок для Константи
+        /// </summary>
+        public string BlockName = blockName;
     }
 }

@@ -1009,7 +1009,7 @@ namespace {Conf.NameSpaceGenerationCode}.Довідники
         void OnSaveClick(object? sender, EventArgs args)
         {
             string name = entryName.Text;
-            string errorList = Configuration.ValidateConfigurationObjectName(Program.Kernel, ref name);
+            string errorList = Configuration.ValidateConfigurationObjectName(ref name);
             entryName.Text = name;
 
             if (errorList.Length > 0)

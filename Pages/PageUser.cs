@@ -154,7 +154,7 @@ namespace Configurator
             var value = GetValue();
 
             string name = value.Login;
-            string errorList = Configuration.ValidateConfigurationObjectName(Program.Kernel, ref name);
+            string errorList = Configuration.ValidateConfigurationObjectName(ref name);
 
             if (errorList.Length > 0)
             {

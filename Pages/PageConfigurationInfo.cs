@@ -163,7 +163,7 @@ namespace Configurator
         void OnSaveClick(object? sender, EventArgs args)
         {
             string name = entryNameSpace.Text;
-            string errorList = Configuration.ValidateConfigurationObjectName(Program.Kernel, ref name);
+            string errorList = Configuration.ValidateConfigurationObjectName(ref name);
             entryNameSpace.Text = name;
 
             if (errorList.Length > 0)

@@ -657,7 +657,7 @@ namespace Configurator
         void OnSaveClick(object? sender, EventArgs args)
         {
             string name = entryName.Text;
-            string errorList = Configuration.ValidateConfigurationObjectName(Program.Kernel, ref name);
+            string errorList = Configuration.ValidateConfigurationObjectName(ref name);
             entryName.Text = name;
 
             if (errorList.Length > 0)
@@ -1924,7 +1924,7 @@ HAVING";
                                 TabularParts = ConfRegister.TabularParts,
                                 TablePart = tablePart,
                                 IsNew = false,
-                                Owner = new OwnerTablePart(false, "", ""),
+                                Owner = new OwnerTablePart(false, "RegistersAccumulation", ConfRegister.Name),
                                 GeneralForm = GeneralForm,
                                 CallBack_RefreshList = TabularPartsRefreshList
                             };
@@ -1944,7 +1944,7 @@ HAVING";
                 {
                     TabularParts = ConfRegister.TabularParts,
                     IsNew = true,
-                    Owner = new OwnerTablePart(false, "", ""),
+                    Owner = new OwnerTablePart(false, "RegistersAccumulation", ConfRegister.Name),
                     GeneralForm = GeneralForm,
                     CallBack_RefreshList = TabularPartsRefreshList
                 };
