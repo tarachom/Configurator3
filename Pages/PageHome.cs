@@ -22,16 +22,22 @@ limitations under the License.
 */
 
 using Gtk;
+using InterfaceGtk;
 
 namespace Configurator
 {
     class PageHome : Box
     {
+        public БлокДляСторінки_АктивніКористувачі АктивніКористувачі = new БлокДляСторінки_АктивніКористувачі(Program.Kernel) { WidthRequest = 600, HeightRequest = 600 };
+
         public PageHome() : base(Orientation.Vertical, 0)
         {
-            Box hBox = new Box(Orientation.Horizontal, 0);
+            {
+                Box hBox = new Box(Orientation.Horizontal, 0);
+                hBox.PackStart(АктивніКористувачі, false, false, 5);
+                PackStart(hBox, false, false, 5);
+            }
 
-            PackStart(hBox, false, false, 10);
             ShowAll();
         }
     }

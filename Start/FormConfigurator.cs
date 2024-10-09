@@ -489,6 +489,15 @@ namespace Configurator
                 statusBar.Add(new Label($" База даних: {OpenConfigurationParam.DataBaseBaseName} ") { UseUnderline = false });
                 statusBar.ShowAll();
             }
+
+            //Стартова
+            {
+                PageHome page = new PageHome();
+                CreateNotebookPage("Стартова", () => page);
+
+                //Активні користувачі
+                page.АктивніКористувачі.AutoRefreshRun();
+            }
         }
 
         #endregion
@@ -539,8 +548,6 @@ namespace Configurator
                 ShowBorder = false,
                 TabPos = PositionType.Top
             };
-
-            CreateNotebookPage("Стартова", () => new PageHome());
 
             hPaned.Pack2(topNotebook, false, true);
 
@@ -1209,7 +1216,7 @@ namespace Configurator
                         {
                             case 1:
                                 {
-                                    CreateNotebookPage($"Регістер інформації: {register}", () =>
+                                    CreateNotebookPage($"Регістр інформації: {register}", () =>
                                     {
                                         PageRegisterInformation page = new PageRegisterInformation()
                                         {
@@ -1288,7 +1295,7 @@ namespace Configurator
                         {
                             case 1:
                                 {
-                                    CreateNotebookPage($"Регістер накопичення: {register}", () =>
+                                    CreateNotebookPage($"Регістр накопичення: {register}", () =>
                                     {
                                         PageRegisterAccumulation page = new PageRegisterAccumulation()
                                         {
