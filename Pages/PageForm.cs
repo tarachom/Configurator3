@@ -874,6 +874,10 @@ namespace Configurator
                 nodeOwnerName.InnerText = Owner.Name;
                 nodeParentType.AppendChild(nodeOwnerName);
 
+                XmlElement nodeOwnerBlockName = xmlConfDocument.CreateElement("OwnerBlockName");
+                nodeOwnerBlockName.InnerText = Owner.BlockName;
+                nodeParentType.AppendChild(nodeOwnerBlockName);
+
                 XmlElement nodeIncludeIconColumn = xmlConfDocument.CreateElement("IncludeIconColumn");
                 nodeIncludeIconColumn.InnerText = checkButtonIncludeIconColumn.Active ? "1" : "0";
                 nodeParentType.AppendChild(nodeIncludeIconColumn);
