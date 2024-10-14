@@ -29,7 +29,7 @@ namespace Configurator
     {
         public static string GetNewName()
         {
-            string[] EnglishAlphabet = Configuration.GetEnglishAlphabet();
+            string[] EnglishAlphabet = Configuration.GetUkrainianAlphabet();
 
             string random = "";
 

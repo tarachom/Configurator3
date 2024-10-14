@@ -35,7 +35,7 @@ namespace Configurator
         Configuration Conf { get { return Program.Kernel.Conf; } }
 
         // Список відритих віток
-        List<string> TreeRowExpanded;
+        List<string> TreeRowExpanded = [];
 
         // Поточний рядок для позиціонування при перегрузці
         TreePath? SelectionCurrentPath;
@@ -99,9 +99,8 @@ namespace Configurator
                 TreeIter contantsBlockIter = treeStore.AppendValues(rootIter, ConfConstantsBlock.Value.BlockName, "", key);
 
                 foreach (ConfigurationConstants ConfConstants in ConfConstantsBlock.Value.Constants.Values)
-                {
                     LoadConstant(contantsBlockIter, ConfConstants);
-                }
+
                 IsExpand(contantsBlockIter);
             }
         }
@@ -150,9 +149,7 @@ namespace Configurator
         void LoadDirectories(TreeIter rootIter)
         {
             foreach (ConfigurationDirectories ConfDirectory in Conf.Directories.Values)
-            {
                 LoadDirectory(rootIter, ConfDirectory);
-            }
         }
 
         void LoadDocument(TreeIter rootIter, ConfigurationDocuments confDocument)
@@ -199,9 +196,7 @@ namespace Configurator
         void LoadDocuments(TreeIter rootIter)
         {
             foreach (ConfigurationDocuments ConfDocuments in Conf.Documents.Values)
-            {
                 LoadDocument(rootIter, ConfDocuments);
-            }
         }
 
         void LoadEnum(TreeIter rootIter, ConfigurationEnums confEnum)
@@ -223,9 +218,7 @@ namespace Configurator
         void LoadEnums(TreeIter rootIter)
         {
             foreach (ConfigurationEnums ConfEnum in Conf.Enums.Values)
-            {
                 LoadEnum(rootIter, ConfEnum);
-            }
         }
 
         void LoadJournal(TreeIter rootIter, ConfigurationJournals confJournal)
@@ -247,9 +240,7 @@ namespace Configurator
         void LoadJournals(TreeIter rootIter)
         {
             foreach (ConfigurationJournals ConfJournal in Conf.Journals.Values)
-            {
                 LoadJournal(rootIter, ConfJournal);
-            }
         }
 
         void LoadRegisterInformation(TreeIter rootIter, ConfigurationRegistersInformation confRegisterInformation)
@@ -303,9 +294,7 @@ namespace Configurator
         void LoadRegistersInformation(TreeIter rootIter)
         {
             foreach (ConfigurationRegistersInformation ConfRegistersInformation in Conf.RegistersInformation.Values)
-            {
                 LoadRegisterInformation(rootIter, ConfRegistersInformation);
-            }
         }
 
         void LoadRegisterAccumulation(TreeIter rootIter, ConfigurationRegistersAccumulation confRegisterAccumulation)
@@ -322,7 +311,7 @@ namespace Configurator
                 string info = GetTypeInfo(ConfDimensionFields.Value.Type, ConfDimensionFields.Value.Pointer);
                 string keyField = $"{key}/Dimension:{ConfDimensionFields.Value.Name}";
 
-                TreeIter fieldIter = treeStore.AppendValues(dimensionFieldsIter, ConfDimensionFields.Value.Name, info, keyField);
+                treeStore.AppendValues(dimensionFieldsIter, ConfDimensionFields.Value.Name, info, keyField);
             }
 
             IsExpand(dimensionFieldsIter);
@@ -335,7 +324,7 @@ namespace Configurator
                 string info = GetTypeInfo(ConfResourcesFields.Value.Type, ConfResourcesFields.Value.Pointer);
                 string keyField = $"{key}/Resources:{ConfResourcesFields.Value.Name}";
 
-                TreeIter fieldIter = treeStore.AppendValues(resourcesFieldsIter, ConfResourcesFields.Value.Name, info, keyField);
+                treeStore.AppendValues(resourcesFieldsIter, ConfResourcesFields.Value.Name, info, keyField);
             }
 
             IsExpand(resourcesFieldsIter);
@@ -348,7 +337,7 @@ namespace Configurator
                 string info = GetTypeInfo(ConfPropertyFields.Value.Type, ConfPropertyFields.Value.Pointer);
                 string keyField = $"{key}/Property:{ConfPropertyFields.Value.Name}";
 
-                TreeIter fieldIter = treeStore.AppendValues(propertyFieldsIter, ConfPropertyFields.Value.Name, info, keyField);
+                treeStore.AppendValues(propertyFieldsIter, ConfPropertyFields.Value.Name, info, keyField);
             }
 
             IsExpand(propertyFieldsIter);
@@ -383,9 +372,7 @@ namespace Configurator
         void LoadRegistersAccumulation(TreeIter rootIter)
         {
             foreach (ConfigurationRegistersAccumulation ConfRegistersAccumulation in Conf.RegistersAccumulation.Values)
-            {
                 LoadRegisterAccumulation(rootIter, ConfRegistersAccumulation);
-            }
         }
 
         void IsExpand(TreeIter iter)
@@ -464,15 +451,14 @@ namespace Configurator
 
         public Dictionary<string, ConfigurationField> GetConstantsAllFields()
         {
-            Dictionary<string, ConfigurationField> ConstantsAllFields = new Dictionary<string, ConfigurationField>();
+            Dictionary<string, ConfigurationField> ConstantsAllFields = [];
+
             foreach (ConfigurationConstantsBlock block in Conf.ConstantsBlock.Values)
-            {
                 foreach (ConfigurationConstants constants in block.Constants.Values)
                 {
                     string fullName = block.BlockName + "." + constants.Name;
                     ConstantsAllFields.Add(fullName, new ConfigurationField(fullName, constants.NameInTable, constants.Type, constants.Pointer, constants.Desc));
                 }
-            }
 
             return ConstantsAllFields;
         }
@@ -532,8 +518,6 @@ namespace Configurator
             treeConfiguration.RowActivated += OnRowActivated;
             treeConfiguration.RowExpanded += OnRowExpanded;
             treeConfiguration.RowCollapsed += OnRowCollapsed;
-
-            TreeRowExpanded = new List<string>();
 
             scrollTree.Add(treeConfiguration);
             treeStore = AddTreeColumn();
@@ -642,7 +626,7 @@ namespace Configurator
             Toolbar toolbar = new Toolbar();
 
             MenuToolButton menuToolButton = new MenuToolButton(new Image(Stock.New, IconSize.Menu), "Додати") { Label = "Додати", IsImportant = true };
-            menuToolButton.Clicked += (object? sender, EventArgs arg) => { ((Menu)((MenuToolButton)(MenuToolButton)sender!).Menu).Popup(); };
+            menuToolButton.Clicked += (object? sender, EventArgs arg) => { ((Menu)((MenuToolButton)sender!).Menu).Popup(); };
             menuToolButton.Menu = CreateAddMenu();
             toolbar.Add(menuToolButton);
 
@@ -737,13 +721,8 @@ namespace Configurator
         {
             CreateNotebookPage("Збереження конфігурації", () =>
             {
-                PageSaveConfiguration page = new PageSaveConfiguration()
-                {
-                    GeneralForm = this
-                };
-
+                PageSaveConfiguration page = new PageSaveConfiguration() { GeneralForm = this };
                 page.SetValue();
-
                 return page;
             });
         }
@@ -752,13 +731,8 @@ namespace Configurator
         {
             CreateNotebookPage("Параметри конфігурації", () =>
             {
-                PageConfigurationInfo page = new PageConfigurationInfo()
-                {
-                    GeneralForm = this
-                };
-
+                PageConfigurationInfo page = new PageConfigurationInfo() { GeneralForm = this };
                 page.SetValue();
-
                 return page;
             });
         }
@@ -783,8 +757,7 @@ namespace Configurator
                 FileChooserAction.SelectFolder, "Закрити", ResponseType.Cancel, "Вибрати", ResponseType.Accept);
 
             if (fc.Run() == (int)ResponseType.Accept)
-            {
-                if (!String.IsNullOrEmpty(fc.CurrentFolder))
+                if (!string.IsNullOrEmpty(fc.CurrentFolder))
                 {
                     string fileConf = System.IO.Path.Combine(fc.CurrentFolder, fileConfName);
                     Configuration.Save(fileConf, Conf);
@@ -792,7 +765,6 @@ namespace Configurator
                     folderSave = fc.CurrentFolder;
                     saveOk = true;
                 }
-            }
 
             fc.Dispose();
             fc.Destroy();
@@ -812,19 +784,15 @@ namespace Configurator
             fc.Filter.AddPattern("*.xml");
 
             if (fc.Run() == (int)ResponseType.Accept)
-            {
                 if (!string.IsNullOrEmpty(fc.Filename))
                 {
-                    Configuration openConf;
-                    Configuration.Load(fc.Filename, out openConf);
-
+                    Configuration.Load(fc.Filename, out Configuration openConf);
                     openConf.PathToXmlFileConfiguration = Conf.PathToXmlFileConfiguration;
 
                     Program.Kernel.Conf = openConf;
 
                     loadOk = true;
                 }
-            }
 
             fc.Dispose();
             fc.Destroy();
@@ -837,13 +805,8 @@ namespace Configurator
         {
             CreateNotebookPage("Список користувачів", () =>
             {
-                PageUsersList page = new PageUsersList()
-                {
-                    GeneralForm = this
-                };
-
+                PageUsersList page = new PageUsersList() { GeneralForm = this };
                 page.LoadRecords();
-
                 return page;
             });
         }
@@ -852,11 +815,7 @@ namespace Configurator
         {
             CreateNotebookPage("Вигрузка та загрузка даних", () =>
             {
-                PageUnloadingAndLoadingData page = new PageUnloadingAndLoadingData()
-                {
-                    GeneralForm = this
-                };
-
+                PageUnloadingAndLoadingData page = new PageUnloadingAndLoadingData() { GeneralForm = this };
                 return page;
             });
         }
@@ -865,11 +824,7 @@ namespace Configurator
         {
             CreateNotebookPage("Оптимізація таблиць", () =>
             {
-                PageMaintenance page = new PageMaintenance()
-                {
-                    GeneralForm = this
-                };
-
+                PageMaintenance page = new PageMaintenance() { GeneralForm = this };
                 return page;
             });
         }
@@ -878,11 +833,7 @@ namespace Configurator
         {
             CreateNotebookPage("Схема бази даних", () =>
             {
-                PageShema page = new PageShema()
-                {
-                    GeneralForm = this
-                };
-
+                PageShema page = new PageShema() { GeneralForm = this };
                 page.LoadShema();
 
                 return page;
@@ -895,7 +846,7 @@ namespace Configurator
             about.ProgramName = "Конфігуратор";
             about.Version = "Версія 3.0";
             about.Copyright = "(c) Тарахомин Юрій Іванович";
-            about.Comments = @"Проектування бази даних PostgreSQL";
+            about.Comments = "Проектування бази даних PostgreSQL";
             about.Website = "https://accounting.org.ua";
 
             string logo_file_name = AppContext.BaseDirectory + "images/logo.jpg";
@@ -919,7 +870,7 @@ namespace Configurator
                 return;
 
             string keyComposite = (string)treeConfiguration.Model.GetValue(iter, 2);
-            if (string.IsNullOrEmpty(keyComposite) || !keyComposite.Contains('.', StringComparison.CurrentCulture))
+            if (string.IsNullOrEmpty(keyComposite) || !keyComposite.Contains('.'))
                 return;
 
             SelectionCurrentPath = treeConfiguration.Model.GetPath(iter);
@@ -983,7 +934,8 @@ namespace Configurator
                                             GeneralForm = this,
                                             TabularParts = Conf.ConstantsBlock[blockConst].Constants[nameConst].TabularParts,
                                             TablePart = Conf.ConstantsBlock[blockConst].Constants[nameConst].TabularParts[nameTablePart],
-                                            IsNew = false
+                                            IsNew = false,
+                                            Owner = new OwnerTablePart(false, "Constants", nameConst, blockConst),
                                         };
 
                                         page.SetValue();
@@ -1028,7 +980,7 @@ namespace Configurator
                         {
                             case 1:
                                 {
-                                    if (directory.IndexOf(":") != -1)
+                                    if (directory.Contains(':'))
                                     {
                                         string[] directoryAndField = directory.Split(":");
                                         string directoryName = directoryAndField[0];
@@ -1078,7 +1030,8 @@ namespace Configurator
                                             GeneralForm = this,
                                             TabularParts = Conf.Directories[directory].TabularParts,
                                             TablePart = Conf.Directories[directory].TabularParts[nameTablePart],
-                                            IsNew = false
+                                            IsNew = false,
+                                            Owner = new OwnerTablePart(true, "Directory", directory)
                                         };
 
                                         page.SetValue();
@@ -1122,7 +1075,7 @@ namespace Configurator
                         {
                             case 1:
                                 {
-                                    if (document.IndexOf(":") != -1)
+                                    if (document.Contains(':'))
                                     {
                                         string[] documentAndField = document.Split(":");
                                         string documentName = documentAndField[0];
@@ -1172,7 +1125,8 @@ namespace Configurator
                                             GeneralForm = this,
                                             TabularParts = Conf.Documents[document].TabularParts,
                                             TablePart = Conf.Documents[document].TabularParts[nameTablePart],
-                                            IsNew = false
+                                            IsNew = false,
+                                            Owner = new OwnerTablePart(true, "Document", document)
                                         };
 
                                         page.SetValue();
@@ -1313,7 +1267,7 @@ namespace Configurator
                                 }
                             case 2:
                                 {
-                                    if (registerPath[1].IndexOf(":") != -1)
+                                    if (registerPath[1].Contains(':'))
                                     {
                                         string[] typeAndField = registerPath[1].Split(":");
                                         string typeName = typeAndField[0];
@@ -1372,7 +1326,8 @@ namespace Configurator
                                                 GeneralForm = this,
                                                 TabularParts = Conf.RegistersAccumulation[register].TabularParts,
                                                 TablePart = Conf.RegistersAccumulation[register].TabularParts[nameTablePart],
-                                                IsNew = false
+                                                IsNew = false,
+                                                Owner = new OwnerTablePart(false, "RegistersAccumulation", register)
                                             };
 
                                             page.SetValue();
@@ -1411,7 +1366,7 @@ namespace Configurator
                     }
                 case "Перелічення":
                     {
-                        if (name.IndexOf(":") != -1)
+                        if (name.Contains(':'))
                         {
                             string[] enumAndField = name.Split(":");
                             string enumName = enumAndField[0];
@@ -1452,7 +1407,7 @@ namespace Configurator
                     }
                 case "Журнал":
                     {
-                        if (name.IndexOf(":") != -1)
+                        if (name.Contains(':'))
                         {
                             string[] journalAndField = name.Split(":");
                             string journalName = journalAndField[0];
@@ -1514,16 +1469,13 @@ namespace Configurator
 
         void OnDeleteClick(object? sender, EventArgs args)
         {
-            TreeIter iter;
-
-            if (!treeConfiguration.Selection.GetSelected(out iter))
+            if (!treeConfiguration.Selection.GetSelected(out TreeIter iter))
                 return;
 
             TreePath pathRemove = treeConfiguration.Model.GetPath(iter);
-
             string keyComposite = (string)treeConfiguration.Model.GetValue(iter, 2);
 
-            if (String.IsNullOrEmpty(keyComposite) || keyComposite.IndexOf(".") == -1)
+            if (string.IsNullOrEmpty(keyComposite) || !keyComposite.Contains('.'))
                 return;
 
             bool reloadTree = false;
@@ -1596,7 +1548,7 @@ namespace Configurator
                         {
                             case 1:
                                 {
-                                    if (directory.IndexOf(":") != -1)
+                                    if (directory.Contains(':'))
                                     {
                                         string[] directoryAndField = directory.Split(":");
                                         string directoryName = directoryAndField[0];
@@ -1670,7 +1622,7 @@ namespace Configurator
                         {
                             case 1:
                                 {
-                                    if (document.IndexOf(":") != -1)
+                                    if (document.Contains(':'))
                                     {
                                         string[] documentAndField = document.Split(":");
                                         string documentName = documentAndField[0];
@@ -1793,7 +1745,7 @@ namespace Configurator
                                 }
                             case 2:
                                 {
-                                    if (registerPath[1].IndexOf(":") != -1)
+                                    if (registerPath[1].Contains(':'))
                                     {
                                         string[] typeAndField = registerPath[1].Split(":");
                                         string typeName = typeAndField[0];
@@ -1843,7 +1795,7 @@ namespace Configurator
                     }
                 case "Перелічення":
                     {
-                        if (name.IndexOf(":") != -1)
+                        if (name.Contains(':'))
                         {
                             string[] enumAndField = name.Split(":");
                             string enumName = enumAndField[0];
@@ -1884,7 +1836,7 @@ namespace Configurator
                     }
                 case "Журнал":
                     {
-                        if (name.IndexOf(":") != -1)
+                        if (name.Contains(':'))
                         {
                             string[] journalAndField = name.Split(":");
                             string journalName = journalAndField[0];
@@ -1920,16 +1872,13 @@ namespace Configurator
 
         async void OnCopyClick(object? sender, EventArgs args)
         {
-            TreeIter iter;
-
-            if (!treeConfiguration.Selection.GetSelected(out iter))
+            if (!treeConfiguration.Selection.GetSelected(out TreeIter iter))
                 return;
 
             TreePath pathRemove = treeConfiguration.Model.GetPath(iter);
-
             string keyComposite = (string)treeConfiguration.Model.GetValue(iter, 2);
 
-            if (String.IsNullOrEmpty(keyComposite) || keyComposite.IndexOf(".") == -1)
+            if (string.IsNullOrEmpty(keyComposite) || !keyComposite.Contains('.'))
                 return;
 
             string[] keySplit = keyComposite.Split(".");
@@ -2025,7 +1974,7 @@ namespace Configurator
                         {
                             case 1:
                                 {
-                                    if (directory.IndexOf(":") != -1)
+                                    if (directory.Contains(':'))
                                     {
                                         string[] directoryAndField = directory.Split(":");
                                         string directoryName = directoryAndField[0];
@@ -2095,7 +2044,7 @@ namespace Configurator
                         {
                             case 1:
                                 {
-                                    if (document.IndexOf(":") != -1)
+                                    if (document.Contains(':'))
                                     {
                                         string[] documentAndField = document.Split(":");
                                         string documentName = documentAndField[0];
@@ -2247,7 +2196,7 @@ namespace Configurator
                                 }
                             case 2:
                                 {
-                                    if (registerPath[1].IndexOf(":") != -1)
+                                    if (registerPath[1].Contains(':'))
                                     {
                                         string[] typeAndField = registerPath[1].Split(":");
                                         string typeName = typeAndField[0];
@@ -2324,7 +2273,7 @@ namespace Configurator
                     }
                 case "Перелічення":
                     {
-                        if (name.IndexOf(":") != -1)
+                        if (name.Contains(':'))
                         {
                             string[] enumAndField = name.Split(":");
                             string enumName = enumAndField[0];
@@ -2350,7 +2299,7 @@ namespace Configurator
                     }
                 case "Журнал":
                     {
-                        if (name.IndexOf(":") != -1)
+                        if (name.Contains(':'))
                         {
                             string[] journalAndField = name.Split(":");
                             string journalName = journalAndField[0];

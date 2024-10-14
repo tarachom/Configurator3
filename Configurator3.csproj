@@ -18,4 +18,8 @@
     <ProjectReference Include="..\AccountingSoftwareLib\InterfaceGtk\InterfaceGtk.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="xslt/*.xslt" CopyToOutputDirectory="Always" />
+  </ItemGroup>
+
 </Project>
