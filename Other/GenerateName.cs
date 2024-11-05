@@ -29,12 +29,12 @@ namespace Configurator
     {
         public static string GetNewName()
         {
-            string[] EnglishAlphabet = Configuration.GetUkrainianAlphabet();
+            string[] Alphabet = Configuration.GetUkrainianAlphabet();
 
             string random = "";
 
-            for (int i = 0; i < 5; i++)
-                random += EnglishAlphabet[new Random().Next(EnglishAlphabet.Length)];
+            for (int i = 0; i < 6; i++)
+                random += Alphabet[new Random().Next(Alphabet.Length)];
 
             return $"_{random}";
         }
