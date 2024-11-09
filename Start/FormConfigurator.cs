@@ -480,9 +480,6 @@ namespace Configurator
             {
                 PageHome page = new PageHome();
                 CreateNotebookPage("Стартова", () => page);
-
-                //Активні користувачі
-                page.АктивніКористувачі.AutoRefreshRun();
             }
         }
 

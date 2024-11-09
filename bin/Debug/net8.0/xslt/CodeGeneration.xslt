@@ -661,7 +661,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGenerationCode"/>.Дов�
         public event EventHandler&lt;UnigueID&gt;? UnigueIDChanged;
         public event EventHandler&lt;string&gt;? CaptionChanged;
 
-        public <xsl:value-of select="$DirectoryName"/>_Objest() : base(Config.Kernel, "<xsl:value-of select="Table"/>",
+        public <xsl:value-of select="$DirectoryName"/>_Objest() : base(Config.Kernel, "<xsl:value-of select="Table"/>", "<xsl:value-of select="$DirectoryName"/>",
              <xsl:text>[</xsl:text>
              <xsl:for-each select="Fields/Field">
                <xsl:text>"</xsl:text><xsl:value-of select="NameInTable"/><xsl:text>", </xsl:text>
