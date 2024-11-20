@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="GtkSharp" Version="3.24.24.117-develop" />
-    <PackageReference Include="GtkSourceSharp" Version="3.24.24.95" />
+    <PackageReference Include="GtkSourceSharp" Version="3.24.24.117-develop" />
   </ItemGroup>
 
   <ItemGroup>
