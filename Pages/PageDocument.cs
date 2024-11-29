@@ -780,6 +780,9 @@ namespace {Conf.NameSpaceGenerationCode}.Документи
                 string nameInTable_Comment = Configuration.GetNewUnigueColumnName(Program.Kernel, entryTable.Text, ConfDocument.Fields);
                 ConfDocument.AppendField(new ConfigurationField("Коментар", nameInTable_Comment, "string", "", "Коментар"));
 
+                string nameInTable_Basis = Configuration.GetNewUnigueColumnName(Program.Kernel, entryTable.Text, ConfDocument.Fields);
+                ConfDocument.AppendField(new ConfigurationField("Основа", nameInTable_Basis, "composite_pointer", "", "Основа"));
+
                 //Заповнення списків
                 ConfDocument.AppendTableList(new ConfigurationTabularList("Записи"));
 

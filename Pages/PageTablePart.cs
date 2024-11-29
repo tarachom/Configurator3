@@ -280,7 +280,16 @@ namespace Configurator
             entryName.Text = TablePart.Name;
 
             if (IsNew)
+            {
                 entryTable.Text = await Configuration.GetNewUnigueTableName(Program.Kernel);
+
+                //Для нового документу автоматично добавляється поле НомерРядка
+                if (Owner.Exist && Owner.Type == "Document")
+                {
+                    string nameInTable_RowNumber = Configuration.GetNewUnigueColumnName(Program.Kernel, entryTable.Text, TablePart.Fields);
+                    TablePart.AppendField(new ConfigurationField("НомерРядка", nameInTable_RowNumber, "integer", "", "НомерРядка"));
+                }
+            }
             else
                 entryTable.Text = TablePart.Table;
 
