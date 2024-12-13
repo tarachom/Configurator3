@@ -652,7 +652,7 @@ namespace {Conf.NameSpaceGenerationCode}.Документи
             Box hBoxScroll = new Box(Orientation.Horizontal, 0);
             ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
             scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-            scrollList.SetSizeRequest(0, 100);
+            scrollList.SetSizeRequest(0, 200);
 
             listBoxTableParts.ButtonPressEvent += OnTabularPartsButtonPress;
 
