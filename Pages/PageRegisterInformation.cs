@@ -517,7 +517,7 @@ namespace Configurator
                     if (ConfRegister.DimensionFields.TryGetValue(curRow.Child.Name, out ConfigurationField? dimensionFields))
                         GeneralForm?.CreateNotebookPage($"Поле: {curRow.Child.Name}", () =>
                         {
-                            Dictionary<string, ConfigurationField> AllFields = Conf.CombineAllFieldForRegister
+                            Dictionary<string, ConfigurationField> AllFields = Configuration.CombineAllFieldForRegister
                             (
                                 ConfRegister.DimensionFields.Values,
                                 ConfRegister.ResourcesFields.Values,
@@ -545,7 +545,7 @@ namespace Configurator
         {
             GeneralForm?.CreateNotebookPage("Поле *", () =>
             {
-                Dictionary<string, ConfigurationField> AllFields = Conf.CombineAllFieldForRegister
+                Dictionary<string, ConfigurationField> AllFields = Configuration.CombineAllFieldForRegister
                 (
                     ConfRegister.DimensionFields.Values,
                     ConfRegister.ResourcesFields.Values,
@@ -627,7 +627,7 @@ namespace Configurator
                     if (ConfRegister.ResourcesFields.TryGetValue(curRow.Child.Name, out ConfigurationField? resourcesField))
                         GeneralForm?.CreateNotebookPage($"Поле: {curRow.Child.Name}", () =>
                         {
-                            Dictionary<string, ConfigurationField> AllFields = Conf.CombineAllFieldForRegister
+                            Dictionary<string, ConfigurationField> AllFields = Configuration.CombineAllFieldForRegister
                             (
                                 ConfRegister.DimensionFields.Values,
                                 ConfRegister.ResourcesFields.Values,
@@ -655,7 +655,7 @@ namespace Configurator
         {
             GeneralForm?.CreateNotebookPage("Поле *", () =>
             {
-                Dictionary<string, ConfigurationField> AllFields = Conf.CombineAllFieldForRegister
+                Dictionary<string, ConfigurationField> AllFields = Configuration.CombineAllFieldForRegister
                 (
                     ConfRegister.DimensionFields.Values,
                     ConfRegister.ResourcesFields.Values,
@@ -738,7 +738,7 @@ namespace Configurator
                     if (ConfRegister.PropertyFields.TryGetValue(curRow.Child.Name, out ConfigurationField? propertyField))
                         GeneralForm?.CreateNotebookPage($"Поле: {curRow.Child.Name}", () =>
                         {
-                            Dictionary<string, ConfigurationField> AllFields = Conf.CombineAllFieldForRegister
+                            Dictionary<string, ConfigurationField> AllFields = Configuration.CombineAllFieldForRegister
                             (
                                 ConfRegister.DimensionFields.Values,
                                 ConfRegister.ResourcesFields.Values,
@@ -766,7 +766,7 @@ namespace Configurator
         {
             GeneralForm?.CreateNotebookPage("Поле *", () =>
             {
-                Dictionary<string, ConfigurationField> AllFields = Conf.CombineAllFieldForRegister
+                Dictionary<string, ConfigurationField> AllFields = Configuration.CombineAllFieldForRegister
                  (
                      ConfRegister.DimensionFields.Values,
                      ConfRegister.ResourcesFields.Values,
@@ -849,7 +849,7 @@ namespace Configurator
                     if (ConfRegister.TabularList.TryGetValue(curRow.Child.Name, out ConfigurationTabularList? tabularList))
                         GeneralForm?.CreateNotebookPage($"Табличний список: {curRow.Child.Name}", () =>
                         {
-                            Dictionary<string, ConfigurationField> AllFields = Conf.CombineAllFieldForRegister
+                            Dictionary<string, ConfigurationField> AllFields = Configuration.CombineAllFieldForRegister
                             (
                                 ConfRegister.DimensionFields.Values,
                                 ConfRegister.ResourcesFields.Values,
@@ -878,7 +878,7 @@ namespace Configurator
         {
             GeneralForm?.CreateNotebookPage("Табличний список *", () =>
             {
-                Dictionary<string, ConfigurationField> AllFields = Conf.CombineAllFieldForRegister
+                Dictionary<string, ConfigurationField> AllFields = Configuration.CombineAllFieldForRegister
                 (
                     ConfRegister.DimensionFields.Values,
                     ConfRegister.ResourcesFields.Values,
@@ -960,7 +960,7 @@ namespace Configurator
                     if (ConfRegister.Forms.TryGetValue(curRow.Child.Name, out ConfigurationForms? form))
                         GeneralForm?.CreateNotebookPage($"Форма: {curRow.Child.Name}", () =>
                         {
-                            Dictionary<string, ConfigurationField> AllFields = Conf.CombineAllFieldForRegister
+                            Dictionary<string, ConfigurationField> AllFields = Configuration.CombineAllFieldForRegister
                             (
                                 ConfRegister.DimensionFields.Values,
                                 ConfRegister.ResourcesFields.Values,
@@ -1002,7 +1002,7 @@ namespace Configurator
 
                 GeneralForm?.CreateNotebookPage("Форма *", () =>
                 {
-                    Dictionary<string, ConfigurationField> AllFields = Conf.CombineAllFieldForRegister
+                    Dictionary<string, ConfigurationField> AllFields = Configuration.CombineAllFieldForRegister
                     (
                         ConfRegister.DimensionFields.Values,
                         ConfRegister.ResourcesFields.Values,

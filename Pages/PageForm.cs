@@ -84,6 +84,7 @@ namespace Configurator
             typeof(uint),   //Size
             typeof(uint),   //Height
             typeof(int),    //SortNum
+            typeof(bool),   //MultipleSelect
             typeof(string)  //Type
         );
         enum FormElementFieldColumns
@@ -94,6 +95,7 @@ namespace Configurator
             Size,
             Height,
             SortNum,
+            MultipleSelect,
             Type
         }
 
@@ -233,6 +235,20 @@ namespace Configurator
                 };
                 treeViewFormElementField.AppendColumn(new TreeViewColumn("Порядок", cell, "text", FormElementFieldColumns.SortNum) { Alignment = 1 });
                 listStoreFormElementField.SetSortColumnId((int)FormElementFieldColumns.SortNum, SortType.Ascending);
+            }
+
+            //MultipleSelect
+            {
+                CellRendererToggle cell = new CellRendererToggle();
+                cell.Toggled += (object o, ToggledArgs args) =>
+                {
+                    if (listStoreFormElementField.GetIterFromString(out TreeIter iter, args.Path))
+                    {
+                        bool val = (bool)listStoreFormElementField.GetValue(iter, (int)FormElementFieldColumns.MultipleSelect);
+                        listStoreFormElementField.SetValue(iter, (int)FormElementFieldColumns.MultipleSelect, !val);
+                    }
+                };
+                treeViewFormElementField.AppendColumn(new TreeViewColumn("Підбір", cell, "active", FormElementFieldColumns.MultipleSelect));
             }
 
             //Type
@@ -633,10 +649,11 @@ namespace Configurator
                 uint size = isExistField ? Form.ElementFields[field.Name].Size : 0;
                 uint height = isExistField ? Form.ElementFields[field.Name].Height : 0;
                 int sortNum = isExistField ? Form.ElementFields[field.Name].SortNum : IsNew ? ++counter : 100;
+                bool multipleSelect = isExistField ? Form.ElementFields[field.Name].MultipleSelect : false;
                 string sType = field.Type == "pointer" || field.Type == "enum" ? field.Pointer : field.Type;
 
                 //Для нової форми видимими стають всі поля
-                listStoreFormElementField.AppendValues(IsNew || isExistField, field.Name, caption, size, height, sortNum, sType);
+                listStoreFormElementField.AppendValues(IsNew || isExistField, field.Name, caption, size, height, sortNum, multipleSelect, sType);
             }
         }
 
@@ -686,9 +703,10 @@ namespace Configurator
                                 uint size = (uint)listStoreFormElementField.GetValue(iter, (int)FormElementFieldColumns.Size);
                                 uint height = (uint)listStoreFormElementField.GetValue(iter, (int)FormElementFieldColumns.Height);
                                 int sortNum = (int)listStoreFormElementField.GetValue(iter, (int)FormElementFieldColumns.SortNum);
+                                bool multipleSelect = (bool)listStoreFormElementField.GetValue(iter, (int)FormElementFieldColumns.MultipleSelect);
 
                                 ConfigurationField field = Fields[name];
-                                Form.AppendElementField(new ConfigurationFormsElementField(field.Name, caption, size, height, sortNum));
+                                Form.AppendElementField(new ConfigurationFormsElementField(field.Name, caption, size, height, sortNum, multipleSelect));
                             }
                         }
                         while (listStoreFormElementField.IterNext(ref iter));

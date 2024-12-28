@@ -1191,7 +1191,7 @@ namespace Configurator
 
                                     CreateNotebookPage($"Поле: {fieldName}", () =>
                                     {
-                                        Dictionary<string, ConfigurationField> AllFields = Conf.CombineAllFieldForRegister
+                                        Dictionary<string, ConfigurationField> AllFields = Configuration.CombineAllFieldForRegister
                                         (
                                             Conf.RegistersInformation[register].DimensionFields.Values,
                                             Conf.RegistersInformation[register].ResourcesFields.Values,
@@ -1272,7 +1272,7 @@ namespace Configurator
 
                                         CreateNotebookPage($"Поле: {fieldName}", () =>
                                         {
-                                            Dictionary<string, ConfigurationField> AllFields = Conf.CombineAllFieldForRegister
+                                            Dictionary<string, ConfigurationField> AllFields = Configuration.CombineAllFieldForRegister
                                             (
                                                 Conf.RegistersAccumulation[register].DimensionFields.Values,
                                                 Conf.RegistersAccumulation[register].ResourcesFields.Values,
@@ -2127,7 +2127,7 @@ namespace Configurator
                                     string typeName = typeAndField[0];
                                     string fieldName = typeAndField[1];
 
-                                    Dictionary<string, ConfigurationField> AllFields = Conf.CombineAllFieldForRegister
+                                    Dictionary<string, ConfigurationField> AllFields = Configuration.CombineAllFieldForRegister
                                     (
                                         Conf.RegistersInformation[register].DimensionFields.Values,
                                         Conf.RegistersInformation[register].ResourcesFields.Values,
@@ -2199,7 +2199,7 @@ namespace Configurator
                                         string typeName = typeAndField[0];
                                         string fieldName = typeAndField[1];
 
-                                        Dictionary<string, ConfigurationField> AllFields = Conf.CombineAllFieldForRegister
+                                        Dictionary<string, ConfigurationField> AllFields = Configuration.CombineAllFieldForRegister
                                         (
                                             Conf.RegistersInformation[register].DimensionFields.Values,
                                             Conf.RegistersInformation[register].ResourcesFields.Values,

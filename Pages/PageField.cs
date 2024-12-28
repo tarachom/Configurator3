@@ -247,6 +247,7 @@ namespace Configurator
                     "string[] -> string[]",
                     "integer[] -> int[]",
                     "numeric[] -> decimal[]",
+                    "uuid[] -> Guid[]",
                 ];
 
                 foreach (var item in helpList)

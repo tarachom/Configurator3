@@ -454,7 +454,7 @@ namespace Configurator
                     while (nodeDirectoryClearField!.MoveNext())
                     {
                         XPathNavigator? nodeFieldName = nodeDirectoryClearField?.Current?.SelectSingleNode("../Name");
-                        ApendLine("\t Поле: " + nodeFieldName?.Value + " -> змінений тип даних. Можлива втрата даних, або колонка буде скопійована!" + "\n");
+                        ApendLine("\t Поле: " + nodeFieldName?.Value + " -> змінений тип даних. Можлива втрата даних!" + "\n");
                     }
 
                     XPathNodeIterator? nodeDirectoryExistField = nodeDirectoryExist?.Current?.Select("Control_Field[IsExist = 'yes']/Type[Coincide = 'no']");
@@ -472,7 +472,7 @@ namespace Configurator
                         XPathNavigator? nodeUdtName = nodeDirectoryExistField?.Current?.SelectSingleNode("UdtName");
                         XPathNavigator? nodeDataTypeCreate = nodeDirectoryExistField?.Current?.SelectSingleNode("DataTypeCreate");
 
-                        ApendLine("\t Поле: " + nodeFieldName?.Value + " -> змінений тип даних (Тип в базі: " + nodeDataType?.Value + "(" + nodeUdtName?.Value + ")" + " -> Новий тип: " + nodeDataTypeCreate?.Value + "). Можлива втрата даних, або колонка буде скопійована!" + "\n");
+                        ApendLine("\t Поле: " + nodeFieldName?.Value + " -> змінений тип даних (Тип в базі: " + nodeDataType?.Value + "(" + nodeUdtName?.Value + ")" + " -> Новий тип: " + nodeDataTypeCreate?.Value + "). Можлива втрата даних!" + "\n");
                     }
 
                     XPathNodeIterator? nodeDirectoryNewTabularParts = nodeDirectoryExist?.Current?.Select("Control_TabularParts[IsExist = 'no']");
@@ -549,7 +549,7 @@ namespace Configurator
                             XPathNavigator? nodeDataType = nodeDirectoryTabularPartsField?.Current?.SelectSingleNode("DataType");
                             XPathNavigator? nodeDataTypeCreate = nodeDirectoryTabularPartsField?.Current?.SelectSingleNode("DataTypeCreate");
 
-                            ApendLine("\t\t Поле: " + nodeFieldName?.Value + " -> змінений тип даних (Тип в базі: " + nodeDataType?.Value + " -> Новий тип: " + nodeDataTypeCreate?.Value + "). Можлива втрата даних, або колонка буде скопійована!" + "\n");
+                            ApendLine("\t\t Поле: " + nodeFieldName?.Value + " -> змінений тип даних (Тип в базі: " + nodeDataType?.Value + " -> Новий тип: " + nodeDataTypeCreate?.Value + "). Можлива втрата даних!" + "\n");
                         }
                     }
                 }
@@ -587,8 +587,6 @@ namespace Configurator
 
             ApendLine("[ АНАЛІЗ ]\n");
 
-            string replacementColumn = "yes"; //(checkBoxReplacement.Checked ? "yes" : "no");
-
             ApendLine("1. Створення копії файлу конфігурації");
             Conf.PathToCopyXmlFileConfiguration = Configuration.CreateCopyConfigurationFile(Conf.PathToXmlFileConfiguration, Conf.PathToCopyXmlFileConfiguration);
             ApendLine(" --> " + Conf.PathToCopyXmlFileConfiguration + "\n");
@@ -625,7 +623,7 @@ namespace Configurator
             Configuration.ComparisonAnalizeGeneration(
                 System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, "Comparison.xml"),
                 System.IO.Path.Combine(PathToXsltTemplate, "xslt/ComparisonAnalize.xslt"),
-                System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, "ComparisonAnalize.xml"), replacementColumn);
+                System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, "ComparisonAnalize.xml"));
 
             if (informationSchema.Tables.Count > 0)
             {
