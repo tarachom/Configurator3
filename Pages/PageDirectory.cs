@@ -1450,6 +1450,12 @@ namespace {Conf.NameSpaceGenerationCode}.Довідники
             }
 
             {
+                MenuItem item = new MenuItem("MultiplePointerControl");
+                item.Activated += (object? sender, EventArgs args) => { OnFormsListAdd(ConfigurationForms.TypeForms.MultiplePointerControl); };
+                Menu.Append(item);
+            }
+
+            {
                 MenuItem item = new MenuItem("Список з деревом");
                 item.Activated += (object? sender, EventArgs args) => { OnFormsListAdd(ConfigurationForms.TypeForms.ListAndTree); };
                 Menu.Append(item);
