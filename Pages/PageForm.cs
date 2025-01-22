@@ -35,6 +35,8 @@ namespace Configurator
         Configuration Conf { get { return Program.Kernel.Conf; } }
         public string ParentName { get; set; } = ""; //Назва власника
         public string ParentType { get; set; } = ""; //Тип власника (Довідник, Документ ...)
+        public ConfigurationTriggerFunctions? TriggerFunctions;
+        public ConfigurationSpendFunctions? SpendFunctions;
         public Dictionary<string, ConfigurationField> Fields = []; //Поля
         public Dictionary<string, ConfigurationTablePart> TabularParts = []; //Табличні частини
         public Dictionary<string, ConfigurationTabularList> TabularLists = []; //Табличні списки
@@ -522,6 +524,8 @@ namespace Configurator
                 ConfigurationForms.TypeForms.ListAndTree => "Список з Деревом",
                 ConfigurationForms.TypeForms.TablePart => "Таблична частина",
                 ConfigurationForms.TypeForms.Function => "Функції",
+                ConfigurationForms.TypeForms.Triggers => "Тригери",
+                ConfigurationForms.TypeForms.SpendTheDocument => "Проведення документу",
                 ConfigurationForms.TypeForms.Report => "Звіт",
                 _ => ""
             };
@@ -585,6 +589,8 @@ namespace Configurator
                         ConfigurationForms.TypeForms.ListAndTree => "ListAndTree",
                         ConfigurationForms.TypeForms.TablePart => "TablePart",
                         ConfigurationForms.TypeForms.Function => "Function",
+                        ConfigurationForms.TypeForms.Triggers => "Triggers",
+                        ConfigurationForms.TypeForms.SpendTheDocument => "SpendTheDocument",
                         ConfigurationForms.TypeForms.Report => "Report",
                         _ => ""
                     });
@@ -807,6 +813,13 @@ namespace Configurator
 
             if (ParentType == "Directory")
             {
+                XmlElement nodeDirectoryAutomaticNumeration = xmlConfDocument.CreateElement("AutomaticNumeration");
+                nodeDirectoryAutomaticNumeration.InnerText = DirectoryOtherInfo.AutomaticNumeration ? "1" : "0";
+                nodeParentType.AppendChild(nodeDirectoryAutomaticNumeration);
+
+                if (TriggerFunctions != null)
+                    Configuration.SaveTriggerFunctions(TriggerFunctions, xmlConfDocument, nodeParentType);
+
                 XmlElement nodeDirectoryType = xmlConfDocument.CreateElement("Type");
                 nodeDirectoryType.InnerText = DirectoryOtherInfo.TypeDirectory.ToString();
                 nodeParentType.AppendChild(nodeDirectoryType);
@@ -857,6 +870,16 @@ namespace Configurator
 
             if (ParentType == "Document")
             {
+                XmlElement nodeDocumentAutomaticNumeration = xmlConfDocument.CreateElement("AutomaticNumeration");
+                nodeDocumentAutomaticNumeration.InnerText = DocumentOtherInfo.AutomaticNumeration ? "1" : "0";
+                nodeParentType.AppendChild(nodeDocumentAutomaticNumeration);
+
+                if (TriggerFunctions != null)
+                    Configuration.SaveTriggerFunctions(TriggerFunctions, xmlConfDocument, nodeParentType);
+
+                if (SpendFunctions != null)
+                    Configuration.SaveSpendFunctions(SpendFunctions, xmlConfDocument, nodeParentType);
+
                 XmlElement nodeDocumentExportXML = xmlConfDocument.CreateElement("ExportXML");
                 nodeDocumentExportXML.InnerText = DocumentOtherInfo.ExportXML ? "1" : "0";
                 nodeParentType.AppendChild(nodeDocumentExportXML);

@@ -416,140 +416,64 @@ namespace Configurator
                 hBoxTrigerInfo.PackStart(new Label("Тригери"), false, false, 5);
 
                 //Новий
-                Box hBoxTrigerNew = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
-                vBoxTriger.PackStart(hBoxTrigerNew, false, false, 5);
+                {
+                    Box hBox = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
+                    vBoxTriger.PackStart(hBox, false, false, 5);
 
-                hBoxTrigerNew.PackStart(new Label("Новий:"), false, false, 5);
-                hBoxTrigerNew.PackStart(entryNew, false, false, 0);
-                CreateSwitch(hBoxTrigerNew, switchNew);
+                    hBox.PackStart(new Label("Новий:"), false, false, 5);
+                    hBox.PackStart(entryNew, false, false, 0);
+                    CreateSwitch(hBox, switchNew);
+                }
 
                 //Копіювання
-                Box hBoxTrigerCopying = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
-                vBoxTriger.PackStart(hBoxTrigerCopying, false, false, 5);
+                {
+                    Box hBox = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
+                    vBoxTriger.PackStart(hBox, false, false, 5);
 
-                hBoxTrigerCopying.PackStart(new Label("Копіювання:"), false, false, 5);
-                hBoxTrigerCopying.PackStart(entryCopying, false, false, 0);
-                CreateSwitch(hBoxTrigerCopying, switchCopying);
+                    hBox.PackStart(new Label("Копіювання:"), false, false, 5);
+                    hBox.PackStart(entryCopying, false, false, 0);
+                    CreateSwitch(hBox, switchCopying);
+                }
 
                 //Перед записом
-                Box hBoxTrigerBeforeSave = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
-                vBoxTriger.PackStart(hBoxTrigerBeforeSave, false, false, 5);
+                {
+                    Box hBox = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
+                    vBoxTriger.PackStart(hBox, false, false, 5);
 
-                hBoxTrigerBeforeSave.PackStart(new Label("Перед записом:"), false, false, 5);
-                hBoxTrigerBeforeSave.PackStart(entryBeforeSave, false, false, 0);
-                CreateSwitch(hBoxTrigerBeforeSave, switchBeforeSave);
+                    hBox.PackStart(new Label("Перед записом:"), false, false, 5);
+                    hBox.PackStart(entryBeforeSave, false, false, 0);
+                    CreateSwitch(hBox, switchBeforeSave);
+                }
 
                 //Після запису
-                Box hBoxTrigerAfterSave = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
-                vBoxTriger.PackStart(hBoxTrigerAfterSave, false, false, 5);
+                {
+                    Box hBox = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
+                    vBoxTriger.PackStart(hBox, false, false, 5);
 
-                hBoxTrigerAfterSave.PackStart(new Label("Після запису:"), false, false, 5);
-                hBoxTrigerAfterSave.PackStart(entryAfterSave, false, false, 0);
-                CreateSwitch(hBoxTrigerAfterSave, switchAfterSave);
+                    hBox.PackStart(new Label("Після запису:"), false, false, 5);
+                    hBox.PackStart(entryAfterSave, false, false, 0);
+                    CreateSwitch(hBox, switchAfterSave);
+                }
 
                 //Перед встановлення мітки на виделення
-                Box hBoxTrigerSetDeletionLabel = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
-                vBoxTriger.PackStart(hBoxTrigerSetDeletionLabel, false, false, 5);
+                {
+                    Box hBox = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
+                    vBoxTriger.PackStart(hBox, false, false, 5);
 
-                hBoxTrigerSetDeletionLabel.PackStart(new Label("Встановлення мітки:"), false, false, 5);
-                hBoxTrigerSetDeletionLabel.PackStart(entrySetDeletionLabel, false, false, 0);
-                CreateSwitch(hBoxTrigerSetDeletionLabel, switchSetDeletionLabel);
+                    hBox.PackStart(new Label("Встановлення мітки:"), false, false, 5);
+                    hBox.PackStart(entrySetDeletionLabel, false, false, 0);
+                    CreateSwitch(hBox, switchSetDeletionLabel);
+                }
 
                 //Перед видаленням
-                Box hBoxTrigerBeforeDelete = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
-                vBoxTriger.PackStart(hBoxTrigerBeforeDelete, false, false, 5);
-
-                hBoxTrigerBeforeDelete.PackStart(new Label("Перед видаленням:"), false, false, 5);
-                hBoxTrigerBeforeDelete.PackStart(entryBeforeDelete, false, false, 5);
-                CreateSwitch(hBoxTrigerBeforeDelete, switchBeforeDelete);
-
-                //
-                // Конструктор для генерування класу тригерів
-                //
-
-                Box hBoxTrigerConstructor = new Box(Orientation.Horizontal, 0) { Halign = Align.Center };
-                vBoxTriger.PackStart(hBoxTrigerConstructor, false, false, 5);
-
-                Button buttonConstructor = new Button("Конструктор");
-                buttonConstructor.Clicked += (object? sender, EventArgs args) =>
                 {
-                    SourceView sourceViewCode = new SourceView();
-                    sourceViewCode.Buffer.Language = new LanguageManager().GetLanguage("c-sharp");
+                    Box hBox = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
+                    vBoxTriger.PackStart(hBox, false, false, 5);
 
-                    ScrolledWindow scrollCode = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 800, HeightRequest = 500 };
-                    scrollCode.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-                    scrollCode.Add(sourceViewCode);
-
-                    Popover popover = new Popover((Widget)sender!) { BorderWidth = 5 };
-                    popover.Add(scrollCode);
-                    popover.ShowAll();
-
-                    if (string.IsNullOrEmpty(entryNew.Text)) switchNew.Active = true;
-                    if (string.IsNullOrEmpty(entryCopying.Text)) switchCopying.Active = true;
-
-                    entryNew.Text = entryName.Text + "_Triggers.New";
-                    entryCopying.Text = entryName.Text + "_Triggers.Copying";
-                    entryBeforeSave.Text = entryName.Text + "_Triggers.BeforeSave";
-                    entryAfterSave.Text = entryName.Text + "_Triggers.AfterSave";
-                    entrySetDeletionLabel.Text = entryName.Text + "_Triggers.SetDeletionLabel";
-                    entryBeforeDelete.Text = entryName.Text + "_Triggers.BeforeDelete";
-
-                    string AutoNumCode = checkButtonAutoNum.Active ?
-                        $"ДовідникОбєкт.Код = (++НумераціяДовідників.{entryName.Text}_Const).ToString(\"D6\");" : "";
-
-                    string CopyingCode = "ДовідникОбєкт.Назва += \" - Копія\";";
-
-                    sourceViewCode.Buffer.Text = @$"
-/*
-    {entryName.Text}_Triggers.cs
-    Тригери для довідника {entryName.Text}
-*/
-
-using {Conf.NameSpaceGenerationCode}.Константи;
-
-namespace {Conf.NameSpaceGenerationCode}.Довідники
-{{
-    class {entryName.Text}_Triggers
-    {{
-        public static async ValueTask New({entryName.Text}_Objest ДовідникОбєкт)
-        {{
-            {AutoNumCode}
-            await ValueTask.FromResult(true);
-        }}
-
-        public static async ValueTask Copying({entryName.Text}_Objest ДовідникОбєкт, {entryName.Text}_Objest Основа)
-        {{
-            {CopyingCode}
-            await ValueTask.FromResult(true);
-        }}
-
-        public static async ValueTask BeforeSave({entryName.Text}_Objest ДовідникОбєкт)
-        {{
-            await ValueTask.FromResult(true);
-        }}
-
-        public static async ValueTask AfterSave({entryName.Text}_Objest ДовідникОбєкт)
-        {{
-            await ValueTask.FromResult(true);
-        }}
-
-        public static async ValueTask SetDeletionLabel({entryName.Text}_Objest ДовідникОбєкт, bool label)
-        {{
-            await ValueTask.FromResult(true);
-        }}
-
-        public static async ValueTask BeforeDelete({entryName.Text}_Objest ДовідникОбєкт)
-        {{
-            await ValueTask.FromResult(true);
-        }}
-    }}
-}}
-";
-                    sourceViewCode.Buffer.SelectRange(sourceViewCode.Buffer.StartIter, sourceViewCode.Buffer.EndIter);
-                    sourceViewCode.GrabFocus();
-                };
-
-                hBoxTrigerConstructor.PackStart(buttonConstructor, false, false, 5);
+                    hBox.PackStart(new Label("Перед видаленням:"), false, false, 5);
+                    hBox.PackStart(entryBeforeDelete, false, false, 0);
+                    CreateSwitch(hBox, switchBeforeDelete);
+                }
             }
 
             //Списки
@@ -816,6 +740,10 @@ namespace {Conf.NameSpaceGenerationCode}.Довідники
                 foreach (var item in ConfDirectory.Fields.Values)
                     ConfDirectory.TabularList["Записи"].AppendField(
                         new ConfigurationTabularListField(item.Name, item.Name, 0, ++sortNum, item.Name == "Назва"));
+
+                //Тригери
+                ConfDirectory.TriggerFunctions.NewAction = true;
+                ConfDirectory.TriggerFunctions.CopyingAction = true;
             }
             else
                 entryTable.Text = ConfDirectory.Table;
@@ -985,6 +913,9 @@ namespace {Conf.NameSpaceGenerationCode}.Довідники
         {
             return new DirectoryOtherInfoStruct
             (
+                //AutomaticNumeration
+                ConfDirectory.AutomaticNumeration,
+
                 //TypeDirectory
                 Enum.Parse<ConfigurationDirectories.TypeDirectories>(comboBoxTypeDir.ActiveId),
 
@@ -1365,6 +1296,7 @@ namespace {Conf.NameSpaceGenerationCode}.Довідники
                                 Forms = ConfDirectory.Forms,
                                 Form = ConfDirectory.Forms[curRow.Child.Name],
                                 TypeForm = ConfDirectory.Forms[curRow.Child.Name].Type,
+                                TriggerFunctions = ConfDirectory.TriggerFunctions,
                                 Fields = ConfDirectory.Fields,
                                 TabularParts = ConfDirectory.TabularParts,
                                 TabularLists = ConfDirectory.TabularList,
@@ -1402,6 +1334,7 @@ namespace {Conf.NameSpaceGenerationCode}.Довідники
                         ParentType = "Directory",
                         Forms = ConfDirectory.Forms,
                         TypeForm = typeForms,
+                        TriggerFunctions = ConfDirectory.TriggerFunctions,
                         Fields = ConfDirectory.Fields,
                         TabularParts = ConfDirectory.TabularParts,
                         TabularLists = ConfDirectory.TabularList,
@@ -1418,6 +1351,12 @@ namespace {Conf.NameSpaceGenerationCode}.Довідники
             }
 
             Menu Menu = new Menu();
+
+            {
+                MenuItem item = new MenuItem("Тригери");
+                item.Activated += (object? sender, EventArgs args) => { OnFormsListAdd(ConfigurationForms.TypeForms.Triggers); };
+                Menu.Append(item);
+            }
 
             {
                 MenuItem item = new MenuItem("Функції");
@@ -1521,10 +1460,13 @@ namespace {Conf.NameSpaceGenerationCode}.Довідники
     /// <summary>
     /// Структура для додаткової інформації про ієрархічний довідник
     /// </summary>
-    struct DirectoryOtherInfoStruct(ConfigurationDirectories.TypeDirectories typeDirectory = ConfigurationDirectories.TypeDirectories.Normal,
+    struct DirectoryOtherInfoStruct(bool automaticNumeration = false,
+        ConfigurationDirectories.TypeDirectories typeDirectory = ConfigurationDirectories.TypeDirectories.Normal,
         string pointerFolders = "", string parentField = "",
         string directoryOwner = "", string pointerFieldOwner = "")
     {
+        public bool AutomaticNumeration = automaticNumeration;
+
         /// <summary>
         /// Тип довідника
         /// </summary>

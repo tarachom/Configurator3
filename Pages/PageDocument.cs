@@ -217,90 +217,22 @@ namespace Configurator
                     hBoxSpendInfo.PackStart(new Label("Функції"), false, false, 5);
 
                     //Проведення
-                    Box hBoxSpend = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
-                    vBoxFunc.PackStart(hBoxSpend, false, false, 5);
+                    {
+                        Box hBox = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
+                        vBoxFunc.PackStart(hBox, false, false, 5);
 
-                    hBoxSpend.PackStart(new Label("Проведення:"), false, false, 5);
-                    hBoxSpend.PackStart(entrySpend, false, false, 5);
+                        hBox.PackStart(new Label("Проведення:"), false, false, 5);
+                        hBox.PackStart(entrySpend, false, false, 5);
+                    }
 
                     //Очищення
-                    Box hBoxClearSpend = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
-                    vBoxFunc.PackStart(hBoxClearSpend, false, false, 5);
-
-                    hBoxClearSpend.PackStart(new Label("Очищення:"), false, false, 5);
-                    hBoxClearSpend.PackStart(entryClearSpend, false, false, 5);
-
-                    //
-                    // Конструктор для генерування класу проведення
-                    //
-
-                    Box hBoxTrigerConstructorSpend = new Box(Orientation.Horizontal, 0) { Halign = Align.Center };
-                    vBoxFunc.PackStart(hBoxTrigerConstructorSpend, false, false, 5);
-
-                    Button buttonConstructorSpend = new Button("Конструктор");
-                    buttonConstructorSpend.Clicked += (object? sender, EventArgs args) =>
                     {
-                        SourceView sourceViewCode = new SourceView();
-                        sourceViewCode.Buffer.Language = new LanguageManager().GetLanguage("c-sharp");
+                        Box hBox = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
+                        vBoxFunc.PackStart(hBox, false, false, 5);
 
-                        ScrolledWindow scrollCode = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 800, HeightRequest = 500 };
-                        scrollCode.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-                        scrollCode.Add(sourceViewCode);
-
-                        Popover popover = new Popover((Widget)sender!) { BorderWidth = 5 };
-                        popover.Add(scrollCode);
-                        popover.ShowAll();
-
-                        //
-                        // Code
-                        //
-
-                        entrySpend.Text = entryName.Text + "_SpendTheDocument.Spend";
-                        entryClearSpend.Text = entryName.Text + "_SpendTheDocument.ClearSpend";
-
-                        sourceViewCode.Buffer.Text = @$"
-/*
-    {entryName.Text}_SpendTheDocument.cs
-    Модуль проведення для документу {entryName.Text}
-*/
-
-using {Conf.NameSpaceGenerationCode}.Константи;
-using {Conf.NameSpaceGenerationCode}.Довідники;
-using {Conf.NameSpaceGenerationCode}.Документи;
-using {Conf.NameSpaceGenerationCode}.РегістриНакопичення;
-
-namespace {Conf.NameSpaceGenerationCode}.Документи
-{{
-    class {entryName.Text}_SpendTheDocument
-    {{
-        public static async ValueTask<bool> Spend({entryName.Text}_Objest ДокументОбєкт)
-        {{
-            try
-            {{
-                // проведення документу
-                // ...
-
-                return true;
-            }}
-            catch (Exception ex)
-            {{
-                await СпільніФункції.ДокументНеПроводиться(ДокументОбєкт, ДокументОбєкт.Назва, ex.Message);
-                return false;
-            }}
-        }}
-
-        public static async ValueTask ClearSpend({entryName.Text}_Objest ДокументОбєкт)
-        {{
-            await ValueTask.FromResult(true);
-        }}
-    }}
-}}
-";
-                        sourceViewCode.Buffer.SelectRange(sourceViewCode.Buffer.StartIter, sourceViewCode.Buffer.EndIter);
-                        sourceViewCode.GrabFocus();
-                    };
-
-                    hBoxTrigerConstructorSpend.PackStart(buttonConstructorSpend, false, false, 5);
+                        hBox.PackStart(new Label("Очищення:"), false, false, 5);
+                        hBox.PackStart(entryClearSpend, false, false, 5);
+                    }
                 }
 
                 //Тригери
@@ -311,149 +243,64 @@ namespace {Conf.NameSpaceGenerationCode}.Документи
                     hBoxTrigerInfo.PackStart(new Label("Тригери"), false, false, 5);
 
                     //Новий
-                    Box hBoxTrigerNew = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
-                    vBoxFunc.PackStart(hBoxTrigerNew, false, false, 5);
+                    {
+                        Box hBox = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
+                        vBoxFunc.PackStart(hBox, false, false, 5);
 
-                    hBoxTrigerNew.PackStart(new Label("Новий:"), false, false, 5);
-                    hBoxTrigerNew.PackStart(entryNew, false, false, 5);
-                    CreateSwitch(hBoxTrigerNew, switchNew);
+                        hBox.PackStart(new Label("Новий:"), false, false, 5);
+                        hBox.PackStart(entryNew, false, false, 0);
+                        CreateSwitch(hBox, switchNew);
+                    }
 
                     //Копіювання
-                    Box hBoxTrigerCopying = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
-                    vBoxFunc.PackStart(hBoxTrigerCopying, false, false, 5);
+                    {
+                        Box hBox = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
+                        vBoxFunc.PackStart(hBox, false, false, 5);
 
-                    hBoxTrigerCopying.PackStart(new Label("Копіювання:"), false, false, 5);
-                    hBoxTrigerCopying.PackStart(entryCopying, false, false, 5);
-                    CreateSwitch(hBoxTrigerCopying, switchCopying);
+                        hBox.PackStart(new Label("Копіювання:"), false, false, 5);
+                        hBox.PackStart(entryCopying, false, false, 0);
+                        CreateSwitch(hBox, switchCopying);
+                    }
 
                     //Перед записом
-                    Box hBoxTrigerBeforeSave = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
-                    vBoxFunc.PackStart(hBoxTrigerBeforeSave, false, false, 5);
+                    {
+                        Box hBox = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
+                        vBoxFunc.PackStart(hBox, false, false, 5);
 
-                    hBoxTrigerBeforeSave.PackStart(new Label("Перед записом:"), false, false, 5);
-                    hBoxTrigerBeforeSave.PackStart(entryBeforeSave, false, false, 5);
-                    CreateSwitch(hBoxTrigerBeforeSave, switchBeforeSave);
+                        hBox.PackStart(new Label("Перед записом:"), false, false, 5);
+                        hBox.PackStart(entryBeforeSave, false, false, 0);
+                        CreateSwitch(hBox, switchBeforeSave);
+                    }
 
                     //Після запису
-                    Box hBoxTrigerAfterSave = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
-                    vBoxFunc.PackStart(hBoxTrigerAfterSave, false, false, 5);
+                    {
+                        Box hBox = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
+                        vBoxFunc.PackStart(hBox, false, false, 5);
 
-                    hBoxTrigerAfterSave.PackStart(new Label("Після запису:"), false, false, 5);
-                    hBoxTrigerAfterSave.PackStart(entryAfterSave, false, false, 5);
-                    CreateSwitch(hBoxTrigerAfterSave, switchAfterSave);
+                        hBox.PackStart(new Label("Після запису:"), false, false, 5);
+                        hBox.PackStart(entryAfterSave, false, false, 0);
+                        CreateSwitch(hBox, switchAfterSave);
+                    }
 
                     //Перед встановлення мітки на виделення
-                    Box hBoxTrigerSetDeletionLabel = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
-                    vBoxFunc.PackStart(hBoxTrigerSetDeletionLabel, false, false, 5);
+                    {
+                        Box hBox = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
+                        vBoxFunc.PackStart(hBox, false, false, 5);
 
-                    hBoxTrigerSetDeletionLabel.PackStart(new Label("Встановлення мітки:"), false, false, 5);
-                    hBoxTrigerSetDeletionLabel.PackStart(entrySetDeletionLabel, false, false, 5);
-                    CreateSwitch(hBoxTrigerSetDeletionLabel, switchSetDeletionLabel);
+                        hBox.PackStart(new Label("Встановлення мітки:"), false, false, 5);
+                        hBox.PackStart(entrySetDeletionLabel, false, false, 0);
+                        CreateSwitch(hBox, switchSetDeletionLabel);
+                    }
 
                     //Перед видаленням
-                    Box hBoxTrigerBeforeDelete = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
-                    vBoxFunc.PackStart(hBoxTrigerBeforeDelete, false, false, 5);
-
-                    hBoxTrigerBeforeDelete.PackStart(new Label("Перед видаленням:"), false, false, 5);
-                    hBoxTrigerBeforeDelete.PackStart(entryBeforeDelete, false, false, 5);
-                    CreateSwitch(hBoxTrigerBeforeDelete, switchBeforeDelete);
-
-                    //
-                    // Конструктор для генерування класу тригерів
-                    //
-
-                    Box hBoxTrigerConstructor = new Box(Orientation.Horizontal, 0) { Halign = Align.Center };
-                    vBoxFunc.PackStart(hBoxTrigerConstructor, false, false, 5);
-
-                    Button buttonConstructor = new Button("Конструктор");
-                    buttonConstructor.Clicked += (object? sender, EventArgs args) =>
                     {
-                        SourceView sourceViewCode = new SourceView();
-                        sourceViewCode.Buffer.Language = new LanguageManager().GetLanguage("c-sharp");
+                        Box hBox = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
+                        vBoxFunc.PackStart(hBox, false, false, 5);
 
-                        ScrolledWindow scrollCode = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 800, HeightRequest = 500 };
-                        scrollCode.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-                        scrollCode.Add(sourceViewCode);
-
-                        Popover popover = new Popover((Widget)sender!) { BorderWidth = 5 };
-                        popover.Add(scrollCode);
-                        popover.ShowAll();
-
-                        //
-                        // Code
-                        //
-
-                        if (string.IsNullOrEmpty(entryNew.Text)) switchNew.Active = true;
-                        if (string.IsNullOrEmpty(entryCopying.Text)) switchCopying.Active = true;
-                        if (string.IsNullOrEmpty(entryBeforeSave.Text)) switchBeforeSave.Active = true;
-
-                        entryNew.Text = entryName.Text + "_Triggers.New";
-                        entryCopying.Text = entryName.Text + "_Triggers.Copying";
-                        entryBeforeSave.Text = entryName.Text + "_Triggers.BeforeSave";
-                        entryAfterSave.Text = entryName.Text + "_Triggers.AfterSave";
-                        entrySetDeletionLabel.Text = entryName.Text + "_Triggers.SetDeletionLabel";
-                        entryBeforeDelete.Text = entryName.Text + "_Triggers.BeforeDelete";
-
-                        string AutoNumCode = checkButtonAutoNum.Active ?
-                            $"ДокументОбєкт.НомерДок = (++НумераціяДокументів.{entryName.Text}_Const).ToString(\"D8\");" : "";
-
-                        string NewCode = "ДокументОбєкт.ДатаДок = DateTime.Now;";
-
-                        string CopyingCode = "ДокументОбєкт.Назва += \" - Копія\";";
-
-                        sourceViewCode.Buffer.Text = @$"
-/*
-    {entryName.Text}_Triggers.cs
-    Тригери для документу {entryName.Text}
-*/
-
-using {Conf.NameSpaceGenerationCode}.Константи;
-
-namespace {Conf.NameSpaceGenerationCode}.Документи
-{{
-    class {entryName.Text}_Triggers
-    {{
-        public static async ValueTask New({entryName.Text}_Objest ДокументОбєкт)
-        {{
-            {AutoNumCode}
-            {NewCode}
-            await ValueTask.FromResult(true);
-        }}
-
-        public static async ValueTask Copying({entryName.Text}_Objest ДокументОбєкт, {entryName.Text}_Objest Основа)
-        {{
-            {CopyingCode}
-            await ValueTask.FromResult(true);
-        }}
-
-        public static async ValueTask BeforeSave({entryName.Text}_Objest ДокументОбєкт)
-        {{
-            ДокументОбєкт.Назва = $""{{{entryName.Text}_Const.FULLNAME}} №{{ДокументОбєкт.НомерДок}} від {{ДокументОбєкт.ДатаДок.ToString(""dd.MM.yyyy"")}}"";
-            await ValueTask.FromResult(true);
-        }}
-
-        public static async ValueTask AfterSave({entryName.Text}_Objest ДокументОбєкт)
-        {{
-            await ValueTask.FromResult(true);
-        }}
-
-        public static async ValueTask SetDeletionLabel({entryName.Text}_Objest ДокументОбєкт, bool label)
-        {{
-            await ValueTask.FromResult(true);
-        }}
-
-        public static async ValueTask BeforeDelete({entryName.Text}_Objest ДокументОбєкт)
-        {{
-            await ValueTask.FromResult(true);
-        }}
-    }}
-}}
-";
-                        sourceViewCode.Buffer.SelectRange(sourceViewCode.Buffer.StartIter, sourceViewCode.Buffer.EndIter);
-                        sourceViewCode.GrabFocus();
-                    };
-
-                    hBoxTrigerConstructor.PackStart(buttonConstructor, false, false, 5);
+                        hBox.PackStart(new Label("Перед видаленням:"), false, false, 5);
+                        hBox.PackStart(entryBeforeDelete, false, false, 0);
+                        CreateSwitch(hBox, switchBeforeDelete);
+                    }
                 }
             }
 
@@ -794,6 +641,11 @@ namespace {Conf.NameSpaceGenerationCode}.Документи
                     string caption = item.Name switch { "ДатаДок" => "Дата", "НомерДок" => "Номер", _ => item.Name };
                     ConfDocument.TabularList["Записи"].AppendField(new ConfigurationTabularListField(item.Name, caption, 0, ++sortNum, item.Name == "ДатаДок"));
                 }
+
+                //Тригери
+                ConfDocument.TriggerFunctions.NewAction = true;
+                ConfDocument.TriggerFunctions.CopyingAction = true;
+                ConfDocument.TriggerFunctions.BeforeSaveAction = true;
             }
             else
                 entryTable.Text = ConfDocument.Table;
@@ -924,7 +776,7 @@ namespace {Conf.NameSpaceGenerationCode}.Документи
 
         DocumentOtherInfoStruct GetDocumentOtherInfo()
         {
-            return new DocumentOtherInfoStruct(checkButtonExportXml.Active);
+            return new DocumentOtherInfoStruct(ConfDocument.AutomaticNumeration, checkButtonExportXml.Active);
         }
 
         #endregion
@@ -1283,6 +1135,8 @@ namespace {Conf.NameSpaceGenerationCode}.Документи
                                 Forms = ConfDocument.Forms,
                                 Form = form,
                                 TypeForm = form.Type,
+                                TriggerFunctions = ConfDocument.TriggerFunctions,
+                                SpendFunctions = ConfDocument.SpendFunctions,
                                 Fields = ConfDocument.Fields,
                                 TabularParts = ConfDocument.TabularParts,
                                 TabularLists = ConfDocument.TabularList,
@@ -1318,6 +1172,8 @@ namespace {Conf.NameSpaceGenerationCode}.Документи
                         ParentType = "Document",
                         Forms = ConfDocument.Forms,
                         TypeForm = typeForms,
+                        TriggerFunctions = ConfDocument.TriggerFunctions,
+                        SpendFunctions = ConfDocument.SpendFunctions,
                         Fields = ConfDocument.Fields,
                         TabularParts = ConfDocument.TabularParts,
                         TabularLists = ConfDocument.TabularList,
@@ -1333,6 +1189,18 @@ namespace {Conf.NameSpaceGenerationCode}.Документи
             }
 
             Menu Menu = new Menu();
+
+            {
+                MenuItem item = new MenuItem("Тригери");
+                item.Activated += (object? sender, EventArgs args) => { OnFormsListAdd(ConfigurationForms.TypeForms.Triggers); };
+                Menu.Append(item);
+            }
+
+            {
+                MenuItem item = new MenuItem("Проведення документу");
+                item.Activated += (object? sender, EventArgs args) => { OnFormsListAdd(ConfigurationForms.TypeForms.SpendTheDocument); };
+                Menu.Append(item);
+            }
 
             {
                 MenuItem item = new MenuItem("Функції");
@@ -1418,8 +1286,10 @@ namespace {Conf.NameSpaceGenerationCode}.Документи
     /// <summary>
     /// Структура для додаткової інформації про документ
     /// </summary>
-    struct DocumentOtherInfoStruct(bool exportXML = false)
+    struct DocumentOtherInfoStruct(bool automaticNumeration = false, bool exportXML = false)
     {
+        public bool AutomaticNumeration = automaticNumeration;
+
         /// <summary>
         /// Тип регістру
         /// </summary>

@@ -12,6 +12,9 @@
     <xsl:template match="root">
 
         <xsl:choose>
+            <xsl:when test="$File = 'Triggers'">
+                <xsl:call-template name="DirectoryTriggers" />
+            </xsl:when>
             <xsl:when test="$File = 'Function'">
                 <xsl:call-template name="DirectoryFunction" />
             </xsl:when>
@@ -38,6 +41,70 @@
             </xsl:when>
         </xsl:choose>
 
+    </xsl:template>
+
+<!--- 
+//
+// ============================ Triggers ============================
+//
+-->
+
+    <xsl:template name="DirectoryTriggers">
+        <xsl:variable name="DirectoryName" select="Directory/Name"/>
+        <xsl:variable name="DirectoryAutomaticNumeration" select="Directory/AutomaticNumeration"/>
+
+        <!-- Назви функцій -->
+        <xsl:variable name="TriggerFunctions" select="Directory/TriggerFunctions"/>
+
+/*
+        <xsl:value-of select="$DirectoryName"/>_Triggers.cs
+        Тригери
+*/
+
+using <xsl:value-of select="$NameSpaceGenerationCode"/>.Константи;
+using AccountingSoftware;
+
+namespace <xsl:value-of select="$NameSpaceGenerationCode"/>.Довідники
+{
+    static class <xsl:value-of select="$DirectoryName"/>_Triggers
+    {
+        public static async ValueTask <xsl:value-of select="$TriggerFunctions/New"/>(<xsl:value-of select="$DirectoryName"/>_Objest ДовідникОбєкт)
+        {
+            <xsl:if test="$DirectoryAutomaticNumeration = '1'">
+                <xsl:text>ДовідникОбєкт.Код = (++НумераціяДовідників.</xsl:text>
+                <xsl:value-of select="$DirectoryName"/>
+                <xsl:text>_Const).ToString("D6");</xsl:text>
+            </xsl:if>
+            await ValueTask.FromResult(true);
+        }
+
+        public static async ValueTask <xsl:value-of select="$TriggerFunctions/Copying"/>(<xsl:value-of select="$DirectoryName"/>_Objest ДовідникОбєкт, <xsl:value-of select="$DirectoryName"/>_Objest Основа)
+        {
+            ДовідникОбєкт.Назва += " - Копія";
+            await ValueTask.FromResult(true);
+        }
+
+        public static async ValueTask <xsl:value-of select="$TriggerFunctions/BeforeSave"/>(<xsl:value-of select="$DirectoryName"/>_Objest ДовідникОбєкт)
+        {
+            await ValueTask.FromResult(true);
+        }
+
+        public static async ValueTask <xsl:value-of select="$TriggerFunctions/AfterSave"/>(<xsl:value-of select="$DirectoryName"/>_Objest ДовідникОбєкт)
+        {
+            await ValueTask.FromResult(true);
+        }
+
+        public static async ValueTask <xsl:value-of select="$TriggerFunctions/SetDeletionLabel"/>(<xsl:value-of select="$DirectoryName"/>_Objest ДовідникОбєкт, bool label)
+        {
+            await ValueTask.FromResult(true);
+        }
+
+        public static async ValueTask <xsl:value-of select="$TriggerFunctions/BeforeDelete"/>(<xsl:value-of select="$DirectoryName"/>_Objest ДовідникОбєкт)
+        {
+            await ValueTask.FromResult(true);
+        }
+    }
+}
     </xsl:template>
 
 <!--- 
