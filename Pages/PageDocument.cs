@@ -47,8 +47,8 @@ namespace Configurator
         Entry entryName = new Entry() { WidthRequest = 500 };
         Entry entryFullName = new Entry() { WidthRequest = 500 };
         Entry entryTable = new Entry() { WidthRequest = 500 };
-        Entry entrySpend = new Entry() { WidthRequest = 460 };
-        Entry entryClearSpend = new Entry() { WidthRequest = 460 };
+        Entry entrySpend = new Entry() { WidthRequest = 455 };
+        Entry entryClearSpend = new Entry() { WidthRequest = 455 };
 
         #region Trigers
 
@@ -201,20 +201,20 @@ namespace Configurator
                 };
             }
 
-            //Функції та тригери
+            //Проведення та тригери
             {
-                Expander expanderFuncAndTriger = new Expander("Функції та тригери");
+                Expander expanderFuncAndTriger = new Expander("Проведення документу та тригери");
                 vBox.PackStart(expanderFuncAndTriger, false, false, 5);
 
                 Box vBoxFunc = new Box(Orientation.Vertical, 0);
                 expanderFuncAndTriger.Add(vBoxFunc);
 
-                //Функції
+                //Проведення
                 {
-                    //Заголовок блоку Функції
+                    //Заголовок блоку Проведення
                     Box hBoxSpendInfo = new Box(Orientation.Horizontal, 0) { Halign = Align.Center };
                     vBoxFunc.PackStart(hBoxSpendInfo, false, false, 5);
-                    hBoxSpendInfo.PackStart(new Label("Функції"), false, false, 5);
+                    hBoxSpendInfo.PackStart(new Label("Проведення документу"), false, false, 5);
 
                     //Проведення
                     {
