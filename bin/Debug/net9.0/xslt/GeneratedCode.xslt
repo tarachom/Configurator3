@@ -388,7 +388,7 @@
  * Дата конфігурації: <xsl:value-of select="Configuration/DateTimeSave"/>
  *
  *
- * Цей код згенерований в Конфігураторі 3. Шаблон CodeGeneration.xslt
+ * Цей код згенерований в Конфігураторі 3. Шаблон GeneratedCode.xslt
  *
  */
 
