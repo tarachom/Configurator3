@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2019-2023 TARAKHOMYN YURIY IVANOVYCH
+Copyright (C) 2019-2025 TARAKHOMYN YURIY IVANOVYCH
 All rights reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -752,22 +752,22 @@ namespace Configurator
                     ApendLine("\n[ Генерування коду ]\n");
                     ApendLine("Папка: " + folderGenerateCode + "\n");
 
-                    if (File.Exists(System.IO.Path.Combine(PathToXsltTemplate, "xslt/CodeGeneration.xslt")))
+                    if (File.Exists(System.IO.Path.Combine(PathToXsltTemplate, "xslt/GeneratedCode.xslt")))
                     {
                         Configuration.GenerationCode(Conf.PathToXmlFileConfiguration,
-                            System.IO.Path.Combine(PathToXsltTemplate, "xslt/CodeGeneration.xslt"),
-                            System.IO.Path.Combine(folderGenerateCode, "CodeGeneration.cs"));
+                            System.IO.Path.Combine(PathToXsltTemplate, "xslt/GeneratedCode.xslt"),
+                            System.IO.Path.Combine(folderGenerateCode, "GeneratedCode.cs"));
 
-                        ApendLine("Файл 'CodeGeneration.cs' згенерований\n");
+                        ApendLine("Файл 'GeneratedCode.cs' згенерований\n");
                     }
 
                     if (File.Exists(System.IO.Path.Combine(PathToXsltTemplate, "xslt/Gtk.xslt")))
                     {
                         Configuration.GenerationCode(Conf.PathToXmlFileConfiguration,
                             System.IO.Path.Combine(PathToXsltTemplate, "xslt/Gtk.xslt"),
-                            System.IO.Path.Combine(folderGenerateCode, "CodeGenerationGtk.cs"));
+                            System.IO.Path.Combine(folderGenerateCode, "GeneratedCodeGtk.cs"));
 
-                        ApendLine("Файл 'CodeGenerationGtk.cs' згенерований\n");
+                        ApendLine("Файл 'GeneratedCodeGtk.cs' згенерований\n");
                     }
                 }
                 else
