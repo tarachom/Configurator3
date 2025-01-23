@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Configuration>
   <Name>Зберігання та Торгівля 3.0</Name>
-  <NameSpaceGenerationCode>StorageAndTrade_1_0</NameSpaceGenerationCode>
+  <NameSpaceGeneratedCode>StorageAndTrade_1_0</NameSpaceGeneratedCode>
   <NameSpace>StorageAndTrade</NameSpace>
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"

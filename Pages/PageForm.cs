@@ -955,7 +955,7 @@ namespace Configurator
                 new Dictionary<string, object>
                 {
                     { "File", fileName },
-                    { "NameSpaceGenerationCode", Conf.NameSpaceGenerationCode },
+                    { "NameSpaceGeneratedCode", Conf.NameSpaceGeneratedCode },
                     { "NameSpace", Conf.NameSpace }
                 }
             );

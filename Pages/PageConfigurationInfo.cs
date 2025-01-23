@@ -37,7 +37,7 @@ namespace Configurator
 
         Entry entryName = new Entry() { WidthRequest = 500 };
         Entry entrySubtitle = new Entry() { WidthRequest = 500 };
-        Entry entryNameSpaceGenerationCode = new Entry() { WidthRequest = 500 };
+        Entry entryNameSpaceGeneratedCode = new Entry() { WidthRequest = 500 };
         Entry entryNameSpace = new Entry() { WidthRequest = 500 };
         Entry entryAutor = new Entry() { WidthRequest = 500 };
         TextView textViewDesc = new TextView() { WrapMode = WrapMode.Word };
@@ -89,11 +89,11 @@ namespace Configurator
             hBoxSubtitle.PackStart(entrySubtitle, false, false, 5);
 
             //Простір імен
-            Box hBoxNameSpaceGenerationCode = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
-            vBox.PackStart(hBoxNameSpaceGenerationCode, false, false, 5);
+            Box hBoxNameSpaceGeneratedCode = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
+            vBox.PackStart(hBoxNameSpaceGeneratedCode, false, false, 5);
 
-            hBoxNameSpaceGenerationCode.PackStart(new Label("Простір імен згенерованого коду:"), false, false, 5);
-            hBoxNameSpaceGenerationCode.PackStart(entryNameSpaceGenerationCode, false, false, 5);
+            hBoxNameSpaceGeneratedCode.PackStart(new Label("Простір імен згенерованого коду:"), false, false, 5);
+            hBoxNameSpaceGeneratedCode.PackStart(entryNameSpaceGeneratedCode, false, false, 5);
 
             //Простір імен
             Box hBoxNameSpace = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
@@ -142,7 +142,7 @@ namespace Configurator
         {
             entryName.Text = Conf.Name;
             entrySubtitle.Text = Conf.Subtitle;
-            entryNameSpaceGenerationCode.Text = Conf.NameSpaceGenerationCode;
+            entryNameSpaceGeneratedCode.Text = Conf.NameSpaceGeneratedCode;
             entryNameSpace.Text = Conf.NameSpace;
             entryAutor.Text = Conf.Author;
             textViewDesc.Buffer.Text = Conf.Desc;
@@ -152,7 +152,7 @@ namespace Configurator
         {
             Conf.Name = entryName.Text;
             Conf.Subtitle = entrySubtitle.Text;
-            Conf.NameSpaceGenerationCode = entryNameSpaceGenerationCode.Text;
+            Conf.NameSpaceGeneratedCode = entryNameSpaceGeneratedCode.Text;
             Conf.NameSpace = entryNameSpace.Text;
             Conf.Author = entryAutor.Text;
             Conf.Desc = textViewDesc.Buffer.Text;

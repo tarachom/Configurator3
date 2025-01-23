@@ -754,7 +754,7 @@ namespace Configurator
 
                     if (File.Exists(System.IO.Path.Combine(PathToXsltTemplate, "xslt/GeneratedCode.xslt")))
                     {
-                        Configuration.GenerationCode(Conf.PathToXmlFileConfiguration,
+                        Configuration.GeneratedCode(Conf.PathToXmlFileConfiguration,
                             System.IO.Path.Combine(PathToXsltTemplate, "xslt/GeneratedCode.xslt"),
                             System.IO.Path.Combine(folderGenerateCode, "GeneratedCode.cs"));
 
@@ -763,7 +763,7 @@ namespace Configurator
 
                     if (File.Exists(System.IO.Path.Combine(PathToXsltTemplate, "xslt/Gtk.xslt")))
                     {
-                        Configuration.GenerationCode(Conf.PathToXmlFileConfiguration,
+                        Configuration.GeneratedCode(Conf.PathToXmlFileConfiguration,
                             System.IO.Path.Combine(PathToXsltTemplate, "xslt/Gtk.xslt"),
                             System.IO.Path.Combine(folderGenerateCode, "GeneratedCodeGtk.cs"));
 
