@@ -53,10 +53,12 @@ namespace Configurator
         public DocumentOtherInfoStruct DocumentOtherInfo { get; set; } = new DocumentOtherInfoStruct(); // Для документу
         public RegisterAccumulationOtherInfoStruct RegistersAccumulationOtherInfo { get; set; } = new RegisterAccumulationOtherInfoStruct(); // Для регістру накопичення
 
+        string FileName { get; set; } = ""; //Назва файлу для генерування коду
+
         #region Fields
 
         Label labelType = new Label();
-        Entry entryName = new Entry() { WidthRequest = 150 };
+        Entry entryName = new Entry() { WidthRequest = 500 };
         TextView textViewDesc = new TextView() { WrapMode = WrapMode.Word };
         Notebook notebook = new Notebook()
         {
@@ -67,6 +69,7 @@ namespace Configurator
             TabPos = PositionType.Top
         };
         SourceView sourceViewCode = new SourceView() { ShowLineNumbers = true };
+        CheckButton checkButtonNotSaveToFile = new CheckButton("Не зберігати форму в файл");
 
         #endregion
 
@@ -142,7 +145,7 @@ namespace Configurator
             hBox.PackStart(bSave, false, false, 10);
 
             Button bClose = new Button("Закрити");
-            bClose.Clicked += (object? sender, EventArgs args) => { GeneralForm?.CloseCurrentPageNotebook(); };
+            bClose.Clicked += (object? sender, EventArgs args) => GeneralForm?.CloseCurrentPageNotebook();
 
             hBox.PackStart(bClose, false, false, 10);
 
@@ -154,12 +157,9 @@ namespace Configurator
             treeViewFormElementTablePart = new TreeView(listStoreFormElementTablePart);
             AddColumnTreeViewFormElementTablePart();
 
-            Paned hPaned = new Paned(Orientation.Horizontal) { BorderWidth = 5 };
+            PackStart(notebook, true, true, 5);
 
-            CreatePack1(hPaned);
-            CreatePack2(hPaned);
-
-            PackStart(hPaned, true, true, 5);
+            CreateFirstPage();
 
             ShowAll();
         }
@@ -339,51 +339,51 @@ namespace Configurator
 
         #endregion
 
-        void CreatePack1(Paned hPaned)
+        void CreateFirstPage()
         {
-            Box vBox = new Box(Orientation.Vertical, 0);
-
             //Базові поля
             {
+                Box vBox = new Box(Orientation.Vertical, 0);
+
+                Box hBoxContainer = new Box(Orientation.Horizontal, 0);
+                vBox.PackStart(hBoxContainer, false, false, 0);
+
+                Box vBoxContainer1 = new Box(Orientation.Vertical, 0) { WidthRequest = 500 };
+                hBoxContainer.PackStart(vBoxContainer1, false, false, 5);
+
                 //Тип форми
                 Box hBoxType = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
-                vBox.PackStart(hBoxType, false, false, 5);
+                vBoxContainer1.PackStart(hBoxType, false, false, 5);
 
                 hBoxType.PackStart(new Label("Тип форми:"), false, false, 5);
                 hBoxType.PackStart(labelType, false, false, 5);
 
                 //Назва
                 Box hBoxName = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
-                vBox.PackStart(hBoxName, false, false, 5);
+                vBoxContainer1.PackStart(hBoxName, false, false, 5);
 
                 hBoxName.PackStart(new Label("Назва:"), false, false, 5);
                 hBoxName.PackStart(entryName, false, false, 5);
 
                 //Опис
                 Box hBoxDesc = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
-                vBox.PackStart(hBoxDesc, false, false, 5);
+                vBoxContainer1.PackStart(hBoxDesc, false, false, 5);
 
                 hBoxDesc.PackStart(new Label("Опис:") { Valign = Align.Start }, false, false, 5);
 
-                ScrolledWindow scrollTextView = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 168, HeightRequest = 100 };
+                ScrolledWindow scrollTextView = new ScrolledWindow() { ShadowType = ShadowType.In, WidthRequest = 500, HeightRequest = 100 };
                 scrollTextView.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
                 scrollTextView.Add(textViewDesc);
 
                 hBoxDesc.PackStart(scrollTextView, false, false, 5);
+
+                //Не зберігати форму в файл
+                Box hBoxNotSaveToFile = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
+                vBoxContainer1.PackStart(hBoxNotSaveToFile, false, false, 5);
+                hBoxNotSaveToFile.PackStart(checkButtonNotSaveToFile, false, false, 5);
+
+                CreateNotePage("Форма", vBox);
             }
-
-            hPaned.Pack1(vBox, false, false);
-        }
-
-        void CreatePack2(Paned hPaned)
-        {
-            Box vBox = new Box(Orientation.Vertical, 0);
-
-            Box hBox = new Box(Orientation.Horizontal, 0) { Halign = Align.Fill };
-            hBox.PackStart(notebook, true, true, 5);
-            vBox.PackStart(hBox, true, true, 0);
-
-            hPaned.Pack2(vBox, true, false);
         }
 
         #region CreateFunc
@@ -467,7 +467,7 @@ namespace Configurator
                 vBox.PackStart(hBoxScroll, false, false, 0);
             }
 
-            CreateNotePage("Форма", vBox);
+            CreateNotePage("Налаштування", vBox);
         }
 
         void CreateSettingsTablePartForm()
@@ -505,7 +505,7 @@ namespace Configurator
                 vBox.PackStart(hBox, false, false, 5);
             }
 
-            CreateNotePage("Форма", vBox);
+            CreateNotePage("Налаштування", vBox);
         }
 
         #endregion
@@ -522,11 +522,27 @@ namespace Configurator
                 ConfigurationForms.TypeForms.PointerControl => "PointerControl",
                 ConfigurationForms.TypeForms.MultiplePointerControl => "MultiplePointerControl",
                 ConfigurationForms.TypeForms.ListAndTree => "Список з Деревом",
-                ConfigurationForms.TypeForms.TablePart => "Таблична частина",
+                ConfigurationForms.TypeForms.TablePart => $"Таблична частина {ParentName}",
                 ConfigurationForms.TypeForms.Function => "Функції",
                 ConfigurationForms.TypeForms.Triggers => "Тригери",
                 ConfigurationForms.TypeForms.SpendTheDocument => "Проведення документу",
                 ConfigurationForms.TypeForms.Report => "Звіт",
+                _ => ""
+            };
+
+            FileName = TypeForm switch
+            {
+                ConfigurationForms.TypeForms.Element => "Element",
+                ConfigurationForms.TypeForms.List => "List",
+                ConfigurationForms.TypeForms.ListSmallSelect => "ListSmallSelect",
+                ConfigurationForms.TypeForms.PointerControl => "PointerControl",
+                ConfigurationForms.TypeForms.MultiplePointerControl => "MultiplePointerControl",
+                ConfigurationForms.TypeForms.ListAndTree => "ListAndTree",
+                ConfigurationForms.TypeForms.TablePart => "TablePart",
+                ConfigurationForms.TypeForms.Function => "Function",
+                ConfigurationForms.TypeForms.Triggers => "Triggers",
+                ConfigurationForms.TypeForms.SpendTheDocument => "SpendTheDocument",
+                ConfigurationForms.TypeForms.Report => "Report",
                 _ => ""
             };
 
@@ -539,6 +555,7 @@ namespace Configurator
             {
                 entryName.Text = Form.Name;
                 textViewDesc.Buffer.Text = Form.Desc;
+                checkButtonNotSaveToFile.Active = Form.NotSaveToFile;
             }
 
             labelType.Markup = $"<b>{name}</b>";
@@ -576,33 +593,126 @@ namespace Configurator
             {
                 Box vBox = new Box(Orientation.Vertical, 0);
 
-                Button buttonGenCode = new Button("Згенерувати код");
-                buttonGenCode.Clicked += (object? sender, EventArgs args) =>
-                {
-                    GenerateCode(Form.Type switch
-                    {
-                        ConfigurationForms.TypeForms.Element => "Element",
-                        ConfigurationForms.TypeForms.List => "List",
-                        ConfigurationForms.TypeForms.ListSmallSelect => "ListSmallSelect",
-                        ConfigurationForms.TypeForms.PointerControl => "PointerControl",
-                        ConfigurationForms.TypeForms.MultiplePointerControl => "MultiplePointerControl",
-                        ConfigurationForms.TypeForms.ListAndTree => "ListAndTree",
-                        ConfigurationForms.TypeForms.TablePart => "TablePart",
-                        ConfigurationForms.TypeForms.Function => "Function",
-                        ConfigurationForms.TypeForms.Triggers => "Triggers",
-                        ConfigurationForms.TypeForms.SpendTheDocument => "SpendTheDocument",
-                        ConfigurationForms.TypeForms.Report => "Report",
-                        _ => ""
-                    });
-                };
-
                 Box hBoxButton = new Box(Orientation.Horizontal, 0);
-                hBoxButton.PackStart(buttonGenCode, false, false, 5);
                 vBox.PackStart(hBoxButton, false, false, 5);
+
+                Button buttonGenCode = new Button("Згенерувати код");
+                buttonGenCode.Clicked += (object? sender, EventArgs args) => GenerateCode();
+                hBoxButton.PackStart(buttonGenCode, false, false, 5);
+
+                /*
+                Button buttonSaveCode = new Button("Зберегти в файл");
+                buttonSaveCode.Clicked += (object? sender, EventArgs args) =>
+                {
+                    string saveFileName = "";
+
+                    if (Form.Type == ConfigurationForms.TypeForms.TablePart)
+                        saveFileName = Owner.Name + "_ТабличнаЧастина_" + ParentName + ".cs";
+                    else
+                    {
+                        saveFileName = ParentName + Form.Type switch
+                        {
+                            ConfigurationForms.TypeForms.Element => "_Елемент",
+                            ConfigurationForms.TypeForms.List => "",
+                            ConfigurationForms.TypeForms.ListSmallSelect => "_ШвидкийВибір",
+                            ConfigurationForms.TypeForms.PointerControl => "_PointerControl",
+                            ConfigurationForms.TypeForms.MultiplePointerControl => "_MultiplePointerControl",
+                            ConfigurationForms.TypeForms.ListAndTree => "",
+                            ConfigurationForms.TypeForms.Function => "_Функції",
+                            ConfigurationForms.TypeForms.Triggers => "_Triggers",
+                            ConfigurationForms.TypeForms.SpendTheDocument => "_SpendTheDocument",
+                            ConfigurationForms.TypeForms.Report => "_Звіт",
+                            _ => "_Інше"
+                        } + ".cs";
+                    }
+
+                    string currentFolder = "";
+
+                    string? generateCodeFolder = null;
+                    GeneralForm?.OpenConfigurationParam?.OtherParam.TryGetValue("GenerateCodePath", out generateCodeFolder);
+                    if (generateCodeFolder != null)
+                    {
+                        currentFolder = generateCodeFolder;
+                        string parentFolder = "";
+
+                        if (Form.Type == ConfigurationForms.TypeForms.TablePart)
+                        {
+                            parentFolder = Owner.Type switch
+                            {
+                                "Directory" => "Довідники",
+                                "Document" => "Документи",
+                                "RegisterAccumulation" => "РегістриНакопичення",
+                                _ => ""
+                            } + "/" + Owner.Name;
+
+                            Console.WriteLine(Owner.Type);
+                            Console.WriteLine(Owner.Name);
+                            Console.WriteLine(parentFolder);
+
+                            if (!string.IsNullOrEmpty(parentFolder))
+                            {
+                                currentFolder = System.IO.Path.Combine(currentFolder, "../", parentFolder);
+                                Console.WriteLine(currentFolder);
+                                if (!Directory.Exists(currentFolder)) Directory.CreateDirectory(currentFolder);
+                            }
+                        }
+                        else
+                        {
+                            parentFolder = ParentType switch
+                            {
+                                "Directory" => "Довідники",
+                                "Document" => "Документи",
+                                "RegisterInformation" => "РегістриВідомостей",
+                                "RegisterAccumulation" => "РегістриНакопичення",
+                                _ => ""
+                            };
+
+                            if (!string.IsNullOrEmpty(parentFolder))
+                            {
+                                currentFolder = System.IO.Path.Combine(currentFolder, "../", parentFolder, ParentName);
+                                if (!Directory.Exists(currentFolder)) Directory.CreateDirectory(currentFolder);
+                            }
+                        }
+                    }
+
+                    FileChooserDialog fc = new FileChooserDialog("Виберіть каталог", GeneralForm,
+                        FileChooserAction.Save, "Закрити", ResponseType.Cancel, "Вибрати", ResponseType.Accept);
+
+                    fc.SetCurrentFolder(currentFolder);
+                    fc.CurrentName = saveFileName;
+
+                    if (fc.Run() == (int)ResponseType.Accept)
+                    {
+                        currentFolder = fc.CurrentFolder;
+                        saveFileName = fc.CurrentName;
+                    }
+
+                    fc.Dispose();
+                    fc.Destroy();
+
+                    string fullPath = System.IO.Path.Combine(currentFolder, saveFileName);
+                    if (System.IO.File.Exists(fullPath))
+                    {
+                        TextWriter sw = new System.IO.StreamWriter(fullPath, false);
+                        sw.Write(sourceViewCode.Buffer.Text);
+                        sw.Flush();
+                        sw.Close();
+                    }
+                    else
+                    {
+                        TextWriter sw = System.IO.File.CreateText(fullPath);
+                        sw.Write(sourceViewCode.Buffer.Text);
+                        sw.Flush();
+                        sw.Close();
+                    }
+                };
+                hBoxButton.PackStart(buttonSaveCode, false, false, 5);
+                */
 
                 Box hBoxCode = new Box(Orientation.Horizontal, 0);
 
                 sourceViewCode.Buffer.Language = new LanguageManager().GetLanguage("c-sharp");
+                sourceViewCode.Buffer.Text = Form.GeneratedCode;
 
                 ScrolledWindow scrollCode = new ScrolledWindow() { ShadowType = ShadowType.In };
                 scrollCode.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
@@ -689,6 +799,9 @@ namespace Configurator
         {
             Form.Name = entryName.Text;
             Form.Desc = textViewDesc.Buffer.Text;
+            Form.GeneratedCode = sourceViewCode.Buffer.Text;
+            Form.Modified = true;
+            Form.NotSaveToFile = checkButtonNotSaveToFile.Active;
 
             if (TypeForm == ConfigurationForms.TypeForms.List ||
                 TypeForm == ConfigurationForms.TypeForms.ListSmallSelect ||
@@ -748,7 +861,7 @@ namespace Configurator
 
         #endregion
 
-        void OnSaveClick(object? sender, EventArgs args)
+        public void OnSaveClick(object? sender, EventArgs args)
         {
             entryName.Text = entryName.Text.Trim();
 
@@ -786,7 +899,7 @@ namespace Configurator
 
         #region Генерування коду
 
-        void GenerateCode(string fileName)
+        public void GenerateCode()
         {
             if (!(ParentType == "Directory" || ParentType == "Document" ||
                 ParentType == "RegisterInformation" || ParentType == "RegisterAccumulation" ||
@@ -954,7 +1067,7 @@ namespace Configurator
                 System.IO.Path.Combine(AppContext.BaseDirectory, $"xslt/Constructor{ParentType}.xslt"),
                 new Dictionary<string, object>
                 {
-                    { "File", fileName },
+                    { "File", FileName },
                     { "NameSpaceGeneratedCode", Conf.NameSpaceGeneratedCode },
                     { "NameSpace", Conf.NameSpace }
                 }

@@ -239,8 +239,13 @@ namespace Configurator
                             newConfDirectory.AppendField(new ConfigurationField("Родич", nameInTable_Parent, "pointer", $"Довідники.{newConfDirectory.Name}", "Родич", false, true));
 
                             //Заповнення списків
-                            newConfDirectory.AppendTableList(new ConfigurationTabularList("Записи", ""));
-                            newConfDirectory.AppendTableList(new ConfigurationTabularList("ЗаписиШвидкийВибір", ""));
+                            ConfigurationTabularList Записи = new ConfigurationTabularList("Записи", "");
+                            Записи.Fields.Add("Назва", new ConfigurationTabularListField("Назва", "", 0, 1, true));
+                            newConfDirectory.AppendTableList(Записи);
+
+                            //Тригери
+                            newConfDirectory.TriggerFunctions.NewAction = true;
+                            newConfDirectory.TriggerFunctions.CopyingAction = true;
 
                             Conf.AppendDirectory(newConfDirectory);
 
@@ -661,7 +666,42 @@ namespace Configurator
             Button buttonCreateForms = new Button("Створити");
             buttonCreateForms.Clicked += (object? sender, EventArgs args) =>
             {
+                void CreateForm(ConfigurationForms.TypeForms typeForms)
+                {
+                    //Перевірка чи вже є така форма
+                    if (ConfDirectory.Forms.Values.Any(x => x.Type == typeForms)) return;
 
+                    PageForm page = new PageForm()
+                    {
+                        ParentName = ConfDirectory.Name,
+                        ParentType = "Directory",
+                        Forms = ConfDirectory.Forms,
+                        TypeForm = typeForms,
+                        TriggerFunctions = ConfDirectory.TriggerFunctions,
+                        Fields = ConfDirectory.Fields,
+                        TabularParts = ConfDirectory.TabularParts,
+                        TabularLists = ConfDirectory.TabularList,
+                        IsNew = true,
+                        GeneralForm = GeneralForm,
+                        CallBack_RefreshList = FormsListRefreshList,
+                        DirectoryOtherInfo = GetDirectoryOtherInfo()
+                    };
+
+                    page.SetValue();
+                    page.GenerateCode();
+                    page.OnSaveClick(page, new());
+                }
+
+                CreateForm(ConfigurationForms.TypeForms.Triggers);
+                CreateForm(ConfigurationForms.TypeForms.Function);
+                CreateForm(ConfigurationForms.TypeForms.Element);
+
+                CreateForm(ConfDirectory.TypeDirectory == ConfigurationDirectories.TypeDirectories.Normal ||
+                           ConfDirectory.TypeDirectory == ConfigurationDirectories.TypeDirectories.Hierarchical ?
+                    ConfigurationForms.TypeForms.List : ConfigurationForms.TypeForms.ListAndTree);
+
+                CreateForm(ConfigurationForms.TypeForms.ListSmallSelect);
+                CreateForm(ConfigurationForms.TypeForms.PointerControl);
             };
 
             Box hBox = new Box(Orientation.Horizontal, 0);

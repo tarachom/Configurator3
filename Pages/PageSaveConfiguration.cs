@@ -769,6 +769,45 @@ namespace Configurator
 
                         ApendLine("Файл 'GeneratedCodeGtk.cs' згенерований\n");
                     }
+
+
+                    ApendLine("\n[ Генерування форм ]\n");
+
+                    static string CreateFolder(string rootPath, string name)
+                    {
+                        string folderPath = System.IO.Path.Combine(rootPath, name);
+                        if (!System.IO.Directory.Exists(folderPath)) System.IO.Directory.CreateDirectory(folderPath);
+
+                        return folderPath;
+                    }
+
+                    //Довідники
+                    string folderPathDirectories = CreateFolder(folderGenerateCode, "Довідники");
+
+                    foreach (ConfigurationDirectories directory in Conf.Directories.Values)
+                    {
+                        string folderPathDirectory = "";
+                        bool existAnyForm = false;
+
+                        foreach (ConfigurationForms form in directory.Forms.Values)
+                            if (form.Modified && !form.NotSaveToFile)
+                            {
+                                if (!existAnyForm)
+                                {
+                                    folderPathDirectory = CreateFolder(folderPathDirectories, directory.Name);
+                                    existAnyForm = true;
+                                }
+
+                                string formPath = System.IO.Path.Combine(folderPathDirectory, form.Name + ".cs");
+
+                                TextWriter tw = System.IO.File.CreateText(formPath);
+                                tw.Write(form.GeneratedCode);
+                                tw.Flush();
+                                tw.Close();
+
+                                form.Modified = false;
+                            }
+                    }
                 }
                 else
                     ApendLine("\nError: Не знайдена папка " + folderGenerateCode + "\nКод не згенерований\n");

@@ -1930,7 +1930,7 @@ HAVING";
                                 TabularParts = ConfRegister.TabularParts,
                                 TablePart = tablePart,
                                 IsNew = false,
-                                Owner = new OwnerTablePart(false, "RegistersAccumulation", ConfRegister.Name),
+                                Owner = new OwnerTablePart(false, "RegisterAccumulation", ConfRegister.Name),
                                 GeneralForm = GeneralForm,
                                 CallBack_RefreshList = TabularPartsRefreshList
                             };
@@ -1950,7 +1950,7 @@ HAVING";
                 {
                     TabularParts = ConfRegister.TabularParts,
                     IsNew = true,
-                    Owner = new OwnerTablePart(false, "RegistersAccumulation", ConfRegister.Name),
+                    Owner = new OwnerTablePart(false, "RegisterAccumulation", ConfRegister.Name),
                     GeneralForm = GeneralForm,
                     CallBack_RefreshList = TabularPartsRefreshList
                 };
