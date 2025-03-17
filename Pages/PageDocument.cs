@@ -554,9 +554,41 @@ namespace Configurator
             Box vBox = new Box(Orientation.Vertical, 0);
 
             Button buttonCreateForms = new Button("Створити");
-            buttonCreateForms.Clicked += (object? sender, EventArgs args) =>
+            buttonCreateForms.Clicked += (sender, args) =>
             {
+                void CreateForm(ConfigurationForms.TypeForms typeForms)
+                {
+                    //Перевірка чи вже є така форма
+                    if (ConfDocument.Forms.Values.Any(x => x.Type == typeForms)) return;
 
+                    PageForm page = new PageForm()
+                    {
+                        ParentName = ConfDocument.Name,
+                        ParentType = "Document",
+                        Forms = ConfDocument.Forms,
+                        TypeForm = typeForms,
+                        TriggerFunctions = ConfDocument.TriggerFunctions,
+                        SpendFunctions = ConfDocument.SpendFunctions,
+                        Fields = ConfDocument.Fields,
+                        TabularParts = ConfDocument.TabularParts,
+                        TabularLists = ConfDocument.TabularList,
+                        IsNew = true,
+                        GeneralForm = GeneralForm,
+                        CallBack_RefreshList = FormsListRefreshList,
+                        DocumentOtherInfo = GetDocumentOtherInfo()
+                    };
+
+                    page.SetValue();
+                    page.GenerateCode();
+                    page.OnSaveClick(page, new());
+                }
+
+                CreateForm(ConfigurationForms.TypeForms.Triggers);
+                CreateForm(ConfigurationForms.TypeForms.SpendTheDocument);
+                CreateForm(ConfigurationForms.TypeForms.Function);
+                CreateForm(ConfigurationForms.TypeForms.Element);
+                CreateForm(ConfigurationForms.TypeForms.List);
+                CreateForm(ConfigurationForms.TypeForms.PointerControl);
             };
 
             Box hBox = new Box(Orientation.Horizontal, 0);
@@ -567,7 +599,7 @@ namespace Configurator
             vBox.PackStart(toolbar, false, false, 0);
 
             MenuToolButton buttonAdd = new MenuToolButton(new Image(Stock.New, IconSize.Menu), "Додати") { IsImportant = true, Menu = OnFormsListAddFormSubMenu() };
-            buttonAdd.Clicked += (object? sender, EventArgs arg) => { ((Menu)((MenuToolButton)sender!).Menu).Popup(); };
+            buttonAdd.Clicked += (sender, arg) => { ((Menu)((MenuToolButton)sender!).Menu).Popup(); };
             toolbar.Add(buttonAdd);
 
             ToolButton buttonCopy = new ToolButton(new Image(Stock.Copy, IconSize.Menu), "Копіювати") { Label = "Копіювати", IsImportant = true };
@@ -635,8 +667,8 @@ namespace Configurator
 
                 int sortNum = 0;
 
-                //Заповнення полями списків
-                foreach (var item in ConfDocument.Fields.Values)
+                //Заповнення полями списків (крім типів які ігноруються)
+                foreach (var item in ConfDocument.Fields.Values.Where(x => { string[] typesIgnor = ["composite_pointer"]; return !typesIgnor.Contains(x.Type); }))
                 {
                     string caption = item.Name switch { "ДатаДок" => "Дата", "НомерДок" => "Номер", _ => item.Name };
                     ConfDocument.TabularList["Записи"].AppendField(new ConfigurationTabularListField(item.Name, caption, 0, ++sortNum, item.Name == "ДатаДок"));

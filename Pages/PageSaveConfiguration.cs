@@ -807,6 +807,76 @@ namespace Configurator
 
                                 form.Modified = false;
                             }
+
+                        //Табличні частини
+                        foreach (ConfigurationTablePart tabularPart in directory.TabularParts.Values)
+                            foreach (ConfigurationForms form in tabularPart.Forms.Values)
+                                if (form.Modified && !form.NotSaveToFile)
+                                {
+                                    if (!existAnyForm)
+                                    {
+                                        folderPathDirectory = CreateFolder(folderPathDirectories, directory.Name);
+                                        existAnyForm = true;
+                                    }
+
+                                    string formPath = System.IO.Path.Combine(folderPathDirectory, directory.Name + "_" + form.Name + ".cs");
+
+                                    TextWriter tw = System.IO.File.CreateText(formPath);
+                                    tw.Write(form.GeneratedCode);
+                                    tw.Flush();
+                                    tw.Close();
+
+                                    form.Modified = false;
+                                }
+                    }
+
+                    //Документи
+                    string folderPathDocuments = CreateFolder(folderGenerateCode, "Документи");
+
+                    foreach (ConfigurationDocuments document in Conf.Documents.Values)
+                    {
+                        string folderPathDocument = "";
+                        bool existAnyForm = false;
+
+                        foreach (ConfigurationForms form in document.Forms.Values)
+                            if (form.Modified && !form.NotSaveToFile)
+                            {
+                                if (!existAnyForm)
+                                {
+                                    folderPathDocument = CreateFolder(folderPathDocuments, document.Name);
+                                    existAnyForm = true;
+                                }
+
+                                string formPath = System.IO.Path.Combine(folderPathDocument, form.Name + ".cs");
+
+                                TextWriter tw = System.IO.File.CreateText(formPath);
+                                tw.Write(form.GeneratedCode);
+                                tw.Flush();
+                                tw.Close();
+
+                                form.Modified = false;
+                            }
+
+                        //Табличні частини
+                        foreach (ConfigurationTablePart tabularPart in document.TabularParts.Values)
+                            foreach (ConfigurationForms form in tabularPart.Forms.Values)
+                                if (form.Modified && !form.NotSaveToFile)
+                                {
+                                    if (!existAnyForm)
+                                    {
+                                        folderPathDocument = CreateFolder(folderPathDocuments, document.Name);
+                                        existAnyForm = true;
+                                    }
+
+                                    string formPath = System.IO.Path.Combine(folderPathDocument, document.Name + "_" + form.Name + ".cs");
+
+                                    TextWriter tw = System.IO.File.CreateText(formPath);
+                                    tw.Write(form.GeneratedCode);
+                                    tw.Flush();
+                                    tw.Close();
+
+                                    form.Modified = false;
+                                }
                     }
                 }
                 else

@@ -664,7 +664,7 @@ namespace Configurator
             Box vBox = new Box(Orientation.Vertical, 0);
 
             Button buttonCreateForms = new Button("Створити");
-            buttonCreateForms.Clicked += (object? sender, EventArgs args) =>
+            buttonCreateForms.Clicked += (sender, args) =>
             {
                 void CreateForm(ConfigurationForms.TypeForms typeForms)
                 {
@@ -712,7 +712,7 @@ namespace Configurator
             vBox.PackStart(toolbar, false, false, 0);
 
             MenuToolButton buttonAdd = new MenuToolButton(new Image(Stock.New, IconSize.Menu), "Додати") { IsImportant = true, Menu = OnFormsListAddFormSubMenu() };
-            buttonAdd.Clicked += (object? sender, EventArgs arg) => ((Menu)((MenuToolButton)sender!).Menu).Popup();
+            buttonAdd.Clicked += (sender, arg) => ((Menu)((MenuToolButton)sender!).Menu).Popup();
             toolbar.Add(buttonAdd);
 
             ToolButton buttonCopy = new ToolButton(new Image(Stock.Copy, IconSize.Menu), "Копіювати") { Label = "Копіювати", IsImportant = true };
@@ -1394,55 +1394,55 @@ namespace Configurator
 
             {
                 MenuItem item = new MenuItem("Тригери");
-                item.Activated += (object? sender, EventArgs args) => { OnFormsListAdd(ConfigurationForms.TypeForms.Triggers); };
+                item.Activated += (sender, args) => { OnFormsListAdd(ConfigurationForms.TypeForms.Triggers); };
                 Menu.Append(item);
             }
 
             {
                 MenuItem item = new MenuItem("Функції");
-                item.Activated += (object? sender, EventArgs args) => { OnFormsListAdd(ConfigurationForms.TypeForms.Function); };
+                item.Activated += (sender, args) => { OnFormsListAdd(ConfigurationForms.TypeForms.Function); };
                 Menu.Append(item);
             }
 
             {
                 MenuItem item = new MenuItem("Елемент");
-                item.Activated += (object? sender, EventArgs args) => { OnFormsListAdd(ConfigurationForms.TypeForms.Element); };
+                item.Activated += (sender, args) => { OnFormsListAdd(ConfigurationForms.TypeForms.Element); };
                 Menu.Append(item);
             }
 
             {
                 MenuItem item = new MenuItem("Список");
-                item.Activated += (object? sender, EventArgs args) => { OnFormsListAdd(ConfigurationForms.TypeForms.List); };
+                item.Activated += (sender, args) => { OnFormsListAdd(ConfigurationForms.TypeForms.List); };
                 Menu.Append(item);
             }
 
             {
                 MenuItem item = new MenuItem("Швидкий вибір");
-                item.Activated += (object? sender, EventArgs args) => { OnFormsListAdd(ConfigurationForms.TypeForms.ListSmallSelect); };
+                item.Activated += (sender, args) => { OnFormsListAdd(ConfigurationForms.TypeForms.ListSmallSelect); };
                 Menu.Append(item);
             }
 
             {
                 MenuItem item = new MenuItem("PointerControl");
-                item.Activated += (object? sender, EventArgs args) => { OnFormsListAdd(ConfigurationForms.TypeForms.PointerControl); };
+                item.Activated += (sender, args) => { OnFormsListAdd(ConfigurationForms.TypeForms.PointerControl); };
                 Menu.Append(item);
             }
 
             {
                 MenuItem item = new MenuItem("MultiplePointerControl");
-                item.Activated += (object? sender, EventArgs args) => { OnFormsListAdd(ConfigurationForms.TypeForms.MultiplePointerControl); };
+                item.Activated += (sender, args) => { OnFormsListAdd(ConfigurationForms.TypeForms.MultiplePointerControl); };
                 Menu.Append(item);
             }
 
             {
                 MenuItem item = new MenuItem("Список з деревом");
-                item.Activated += (object? sender, EventArgs args) => { OnFormsListAdd(ConfigurationForms.TypeForms.ListAndTree); };
+                item.Activated += (sender, args) => { OnFormsListAdd(ConfigurationForms.TypeForms.ListAndTree); };
                 Menu.Append(item);
             }
 
             {
                 MenuItem item = new MenuItem("Звіт");
-                item.Activated += (object? sender, EventArgs args) => { OnFormsListAdd(ConfigurationForms.TypeForms.Report); };
+                item.Activated += (sender, args) => { OnFormsListAdd(ConfigurationForms.TypeForms.Report); };
                 Menu.Append(item);
             }
 
