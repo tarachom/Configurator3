@@ -35,8 +35,8 @@ namespace Configurator
         Configuration Conf { get { return Program.Kernel.Conf; } }
         public string ParentName { get; set; } = ""; //Назва власника
         public string ParentType { get; set; } = ""; //Тип власника (Довідник, Документ ...)
-        public ConfigurationTriggerFunctions? TriggerFunctions;
-        public ConfigurationSpendFunctions? SpendFunctions;
+        public ConfigurationTriggerFunctions? TriggerFunctions; //Для довідника та документу
+        public ConfigurationSpendFunctions? SpendFunctions; //Для документу
         public Dictionary<string, ConfigurationField> Fields = []; //Поля
         public Dictionary<string, ConfigurationTablePart> TabularParts = []; //Табличні частини
         public Dictionary<string, ConfigurationTabularList> TabularLists = []; //Табличні списки
@@ -171,7 +171,7 @@ namespace Configurator
             //Visible
             {
                 CellRendererToggle cell = new CellRendererToggle();
-                cell.Toggled += (object o, ToggledArgs args) =>
+                cell.Toggled += (o, args) =>
                 {
                     if (listStoreFormElementField.GetIterFromString(out TreeIter iter, args.Path))
                     {
@@ -188,7 +188,7 @@ namespace Configurator
             //Caption
             {
                 CellRendererText cell = new CellRendererText() { Editable = true };
-                cell.Edited += (object o, EditedArgs args) =>
+                cell.Edited += (o, args) =>
                 {
                     if (listStoreFormElementField.GetIterFromString(out TreeIter iter, args.Path))
                         listStoreFormElementField.SetValue(iter, (int)FormElementFieldColumns.Caption, args.NewText);
@@ -199,7 +199,7 @@ namespace Configurator
             //Size
             {
                 CellRendererText cell = new CellRendererText() { Editable = true, Xalign = 1 };
-                cell.Edited += (object o, EditedArgs args) =>
+                cell.Edited += (o, args) =>
                 {
                     if (listStoreFormElementField.GetIterFromString(out TreeIter iter, args.Path))
                     {
@@ -213,7 +213,7 @@ namespace Configurator
             //Height
             {
                 CellRendererText cell = new CellRendererText() { Editable = true, Xalign = 1 };
-                cell.Edited += (object o, EditedArgs args) =>
+                cell.Edited += (o, args) =>
                 {
                     if (listStoreFormElementField.GetIterFromString(out TreeIter iter, args.Path))
                     {
@@ -227,7 +227,7 @@ namespace Configurator
             //SortNum
             {
                 CellRendererText cell = new CellRendererText() { Editable = true, Xalign = 1 };
-                cell.Edited += (object o, EditedArgs args) =>
+                cell.Edited += (o, args) =>
                 {
                     if (listStoreFormElementField.GetIterFromString(out TreeIter iter, args.Path))
                     {
@@ -242,7 +242,7 @@ namespace Configurator
             //MultipleSelect
             {
                 CellRendererToggle cell = new CellRendererToggle();
-                cell.Toggled += (object o, ToggledArgs args) =>
+                cell.Toggled += (o, args) =>
                 {
                     if (listStoreFormElementField.GetIterFromString(out TreeIter iter, args.Path))
                     {
@@ -250,7 +250,7 @@ namespace Configurator
                         listStoreFormElementField.SetValue(iter, (int)FormElementFieldColumns.MultipleSelect, !val);
                     }
                 };
-                treeViewFormElementField.AppendColumn(new TreeViewColumn("Підбір", cell, "active", FormElementFieldColumns.MultipleSelect));
+                treeViewFormElementField.AppendColumn(new TreeViewColumn("Підбір", cell, "active", FormElementFieldColumns.MultipleSelect) { Visible = false });
             }
 
             //Type
@@ -265,7 +265,7 @@ namespace Configurator
             //Visible
             {
                 CellRendererToggle cell = new CellRendererToggle();
-                cell.Toggled += (object o, ToggledArgs args) =>
+                cell.Toggled += (o, args) =>
                 {
                     if (listStoreFormElementTablePart.GetIterFromString(out TreeIter iter, args.Path))
                     {
@@ -282,7 +282,7 @@ namespace Configurator
             //Caption
             {
                 CellRendererText cell = new CellRendererText() { Editable = true };
-                cell.Edited += (object o, EditedArgs args) =>
+                cell.Edited += (o, args) =>
                 {
                     if (listStoreFormElementTablePart.GetIterFromString(out TreeIter iter, args.Path))
                         listStoreFormElementTablePart.SetValue(iter, (int)FormElementTablePartColumns.Caption, args.NewText);
@@ -293,7 +293,7 @@ namespace Configurator
             //Size
             {
                 CellRendererText cell = new CellRendererText() { Editable = true, Xalign = 1 };
-                cell.Edited += (object o, EditedArgs args) =>
+                cell.Edited += (o, args) =>
                 {
                     if (listStoreFormElementTablePart.GetIterFromString(out TreeIter iter, args.Path))
                     {
@@ -307,7 +307,7 @@ namespace Configurator
             //Height
             {
                 CellRendererText cell = new CellRendererText() { Editable = true, Xalign = 1 };
-                cell.Edited += (object o, EditedArgs args) =>
+                cell.Edited += (o, args) =>
                 {
                     if (listStoreFormElementTablePart.GetIterFromString(out TreeIter iter, args.Path))
                     {
@@ -321,7 +321,7 @@ namespace Configurator
             //SortNum
             {
                 CellRendererText cell = new CellRendererText() { Editable = true, Xalign = 1 };
-                cell.Edited += (object o, EditedArgs args) =>
+                cell.Edited += (o, args) =>
                 {
                     if (listStoreFormElementTablePart.GetIterFromString(out TreeIter iter, args.Path))
                     {
@@ -404,11 +404,11 @@ namespace Configurator
             vBox.PackStart(toolbar, false, false, 0);
 
             ToolButton addUp = new ToolButton(new Image(Stock.GoUp, IconSize.Menu), "Up") { TooltipText = "Up" };
-            addUp.Clicked += (object? sender, EventArgs args) => TreeViewFunc.SortTreeView(treeViewFormElementField, (int)FormElementFieldColumns.SortNum, false);
+            addUp.Clicked += (sender, args) => TreeViewFunc.SortTreeView(treeViewFormElementField, (int)FormElementFieldColumns.SortNum, false);
             toolbar.Add(addUp);
 
             ToolButton addDown = new ToolButton(new Image(Stock.GoDown, IconSize.Menu), "Down") { TooltipText = "Down" };
-            addDown.Clicked += (object? sender, EventArgs args) => TreeViewFunc.SortTreeView(treeViewFormElementField, (int)FormElementFieldColumns.SortNum, true);
+            addDown.Clicked += (sender, args) => TreeViewFunc.SortTreeView(treeViewFormElementField, (int)FormElementFieldColumns.SortNum, true);
             toolbar.Add(addDown);
         }
 
@@ -418,11 +418,11 @@ namespace Configurator
             vBox.PackStart(toolbar, false, false, 0);
 
             ToolButton addUp = new ToolButton(new Image(Stock.GoUp, IconSize.Menu), "Up") { TooltipText = "Up" };
-            addUp.Clicked += (object? sender, EventArgs args) => TreeViewFunc.SortTreeView(treeViewFormElementTablePart, (int)FormElementTablePartColumns.SortNum, false);
+            addUp.Clicked += (sender, args) => TreeViewFunc.SortTreeView(treeViewFormElementTablePart, (int)FormElementTablePartColumns.SortNum, false);
             toolbar.Add(addUp);
 
             ToolButton addDown = new ToolButton(new Image(Stock.GoDown, IconSize.Menu), "Down") { TooltipText = "Down" };
-            addDown.Clicked += (object? sender, EventArgs args) => TreeViewFunc.SortTreeView(treeViewFormElementTablePart, (int)FormElementTablePartColumns.SortNum, true);
+            addDown.Clicked += (sender, args) => TreeViewFunc.SortTreeView(treeViewFormElementTablePart, (int)FormElementTablePartColumns.SortNum, true);
             toolbar.Add(addDown);
         }
 
@@ -573,6 +573,10 @@ namespace Configurator
 
                         CreateElementForm(false);
                         CreateSettingsTablePartForm();
+
+                        //Видимість колонки Підбір для табличної частини (MultipleSelect)
+                        treeViewFormElementField.Columns[(int)FormElementFieldColumns.MultipleSelect].Visible = true;
+
                         break;
                     }
                 case ConfigurationForms.TypeForms.Report:
@@ -876,13 +880,11 @@ namespace Configurator
             else
             {
                 if (Form.Name != entryName.Text)
-                {
                     if (Forms.ContainsKey(entryName.Text))
                     {
                         Message.Error(GeneralForm, $"Назва форми не унікальна");
                         return;
                     }
-                }
 
                 Forms.Remove(Form.Name);
             }
