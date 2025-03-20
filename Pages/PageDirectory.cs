@@ -684,7 +684,8 @@ namespace Configurator
                         IsNew = true,
                         GeneralForm = GeneralForm,
                         CallBack_RefreshList = FormsListRefreshList,
-                        DirectoryOtherInfo = GetDirectoryOtherInfo()
+                        DirectoryOtherInfo = GetDirectoryOtherInfo(),
+                        ModeOperation = PageForm.FormModeOperation.Automatic
                     };
 
                     page.SetValue();

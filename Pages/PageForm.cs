@@ -45,6 +45,7 @@ namespace Configurator
         public ConfigurationForms Form { get; set; } = new ConfigurationForms(); //Форма
         public FormConfigurator? GeneralForm { get; set; }
         public System.Action? CallBack_RefreshList { get; set; }
+        public FormModeOperation ModeOperation { get; set; } = FormModeOperation.Normal;
         public bool IsNew { get; set; } = true;
         public ConfigurationForms.TypeForms TypeForm { get; set; } = ConfigurationForms.TypeForms.None;
 
@@ -895,7 +896,9 @@ namespace Configurator
 
             IsNew = false;
 
-            GeneralForm?.RenameCurrentPageNotebook($"Форма: {Form.Name}");
+            if (ModeOperation == FormModeOperation.Normal)
+                GeneralForm?.RenameCurrentPageNotebook($"Форма: {Form.Name}");
+                
             CallBack_RefreshList?.Invoke();
         }
 
@@ -1077,5 +1080,11 @@ namespace Configurator
         }
 
         #endregion
+
+        public enum FormModeOperation
+        {
+            Normal,
+            Automatic
+        }
     }
 }

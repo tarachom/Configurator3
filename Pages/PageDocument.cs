@@ -575,7 +575,8 @@ namespace Configurator
                         IsNew = true,
                         GeneralForm = GeneralForm,
                         CallBack_RefreshList = FormsListRefreshList,
-                        DocumentOtherInfo = GetDocumentOtherInfo()
+                        DocumentOtherInfo = GetDocumentOtherInfo(),
+                        ModeOperation = PageForm.FormModeOperation.Automatic
                     };
 
                     page.SetValue();
