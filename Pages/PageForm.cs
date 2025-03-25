@@ -898,7 +898,7 @@ namespace Configurator
 
             if (ModeOperation == FormModeOperation.Normal)
                 GeneralForm?.RenameCurrentPageNotebook($"Форма: {Form.Name}");
-                
+
             CallBack_RefreshList?.Invoke();
         }
 
@@ -1060,7 +1060,7 @@ namespace Configurator
 
                 Configuration.SaveFormElementField(Conf, Fields, Form.ElementFields, xmlConfDocument, nodeParentType);
             }
-            else if (TypeForm == ConfigurationForms.TypeForms.Function)
+            else if (TypeForm == ConfigurationForms.TypeForms.Triggers || TypeForm == ConfigurationForms.TypeForms.Function)
             {
                 Configuration.SaveFields(Fields, xmlConfDocument, nodeParentType, ParentType);
                 Configuration.SaveTabularParts(Conf, TabularParts, xmlConfDocument, nodeParentType);
