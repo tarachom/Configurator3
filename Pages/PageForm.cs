@@ -77,6 +77,7 @@ namespace Configurator
         #region FormList
 
         ComboBoxText сomboBoxFormListTabularList = new ComboBoxText();
+        CheckButton checkButtonUsePages = new CheckButton("Використовувати розбивку на сторінки");
 
         #endregion
 
@@ -506,6 +507,14 @@ namespace Configurator
                 vBox.PackStart(hBox, false, false, 5);
             }
 
+            {
+                Box hBox = new Box(Orientation.Horizontal, 0);
+                vBox.PackStart(hBox, false, false, 5);
+
+                // Використовувати розбивку на сторінки
+                hBox.PackStart(checkButtonUsePages, false, false, 5);
+            }
+
             CreateNotePage("Налаштування", vBox);
         }
 
@@ -736,6 +745,8 @@ namespace Configurator
                 FillFormList();
                 сomboBoxFormListTabularList.ActiveId = TabularList;
                 if (сomboBoxFormListTabularList.Active == -1) сomboBoxFormListTabularList.Active = 0;
+
+                checkButtonUsePages.Active = Form.UsePages;
             }
             else if (TypeForm == ConfigurationForms.TypeForms.Element)
             {
@@ -811,7 +822,10 @@ namespace Configurator
             if (TypeForm == ConfigurationForms.TypeForms.List ||
                 TypeForm == ConfigurationForms.TypeForms.ListSmallSelect ||
                 TypeForm == ConfigurationForms.TypeForms.ListAndTree)
+            {
                 Form.TabularList = сomboBoxFormListTabularList.ActiveId;
+                Form.UsePages = checkButtonUsePages.Active;
+            }
             else if (TypeForm == ConfigurationForms.TypeForms.Element ||
                 TypeForm == ConfigurationForms.TypeForms.TablePart ||
                 TypeForm == ConfigurationForms.TypeForms.Report)
@@ -1015,6 +1029,10 @@ namespace Configurator
                 XmlElement nodeTabularList = xmlConfDocument.CreateElement("TabularList");
                 nodeTabularList.InnerText = Form.TabularList;
                 nodeParentType.AppendChild(nodeTabularList);
+
+                XmlElement nodeUsePages = xmlConfDocument.CreateElement("UsePages");
+                nodeUsePages.InnerText = Form.UsePages ? "1" : "0";
+                nodeParentType.AppendChild(nodeUsePages);
             }
             else if (TypeForm == ConfigurationForms.TypeForms.Element)
             {

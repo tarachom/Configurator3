@@ -814,12 +814,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
         {
             return new <xsl:value-of select="$DirectoryName"/>_Pointer(UnigueID.UGuid);
         }
-        <!--
-        public override UuidAndText GetBasis()
-        {
-            return new UuidAndText(UnigueID.UGuid, <xsl:value-of select="$DirectoryName"/>_Const.POINTER);
-        }
-        -->
+
         public async ValueTask&lt;string&gt; GetPresentation()
         {
             return await base.BasePresentation(<xsl:value-of select="$DirectoryName"/>_Const.PRESENTATION_FIELDS);
@@ -839,7 +834,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
         <xsl:for-each select="TabularParts/TablePart">
             <xsl:variable name="TablePartName" select="concat(Name, '_TablePart')"/>
             <xsl:text>public </xsl:text><xsl:value-of select="concat($DirectoryName, '_', $TablePartName)"/><xsl:text> </xsl:text>
-            <xsl:value-of select="$TablePartName"/><xsl:text> { get; set; </xsl:text>}
+            <xsl:value-of select="$TablePartName"/><xsl:text> { get; private set; </xsl:text>}
         </xsl:for-each>
     }
 
@@ -858,8 +853,8 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
         public async ValueTask&lt;<xsl:value-of select="$DirectoryName"/>_Objest?&gt; GetDirectoryObject(bool readAllTablePart = false)
         {
             if (this.IsEmpty()) return null;
-            <xsl:value-of select="$DirectoryName"/>_Objest <xsl:value-of select="$DirectoryName"/>ObjestItem = new <xsl:value-of select="$DirectoryName"/>_Objest();
-            return await <xsl:value-of select="$DirectoryName"/>ObjestItem.Read(base.UnigueID, readAllTablePart) ? <xsl:value-of select="$DirectoryName"/>ObjestItem : null;
+            <xsl:value-of select="$DirectoryName"/>_Objest obj = new <xsl:value-of select="$DirectoryName"/>_Objest();
+            return await obj.Read(base.UnigueID, readAllTablePart) ? obj : null;
         }
 
         public <xsl:value-of select="$DirectoryName"/>_Pointer Copy()
@@ -898,12 +893,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
         {
             return new <xsl:value-of select="$DirectoryName"/>_Pointer();
         }
-        <!--
-        public UuidAndText GetBasis()
-        {
-            return new UuidAndText(UnigueID.UGuid, <xsl:value-of select="$DirectoryName"/>_Const.POINTER);
-        }
-        -->
+
         public void Clear()
         {
             Init(new UnigueID(), null);
@@ -1014,7 +1004,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
                   {
                     <xsl:for-each select="Fields/Field">
                         <xsl:if test="Type = 'pointer'">
-                          <xsl:text>record.</xsl:text><xsl:value-of select="Name"/>.Назва = ItemValue["<xsl:value-of select="Name"/>"];
+                          <xsl:text>record.</xsl:text><xsl:value-of select="Name"/>.Name = ItemValue["<xsl:value-of select="Name"/>"];
                         </xsl:if>
                     </xsl:for-each>
                   }
@@ -1412,12 +1402,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
         {
             return new <xsl:value-of select="$DocumentName"/>_Pointer(UnigueID.UGuid);
         }
-        <!--
-        public override UuidAndText GetBasis()
-        {
-            return new UuidAndText(UnigueID.UGuid, <xsl:value-of select="$DocumentName"/>_Const.POINTER);
-        }
-        -->
+
         public async ValueTask&lt;string&gt; GetPresentation()
         {
             return await base.BasePresentation(<xsl:value-of select="$DocumentName"/>_Const.PRESENTATION_FIELDS);
@@ -1512,18 +1497,12 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
         {
             return new <xsl:value-of select="$DocumentName"/>_Pointer();
         }
-        <!--
-        public override UuidAndText GetBasis()
-        {
-            return new UuidAndText(UnigueID.UGuid, <xsl:value-of select="$DocumentName"/>_Const.POINTER);
-        }
-        -->
+
         public async ValueTask&lt;<xsl:value-of select="$DocumentName"/>_Objest?&gt; GetDocumentObject(bool readAllTablePart = false)
         {
             if (this.IsEmpty()) return null;
-            <xsl:value-of select="$DocumentName"/>_Objest <xsl:value-of select="$DocumentName"/>ObjestItem = new <xsl:value-of select="$DocumentName"/>_Objest();
-            if (!await <xsl:value-of select="$DocumentName"/>ObjestItem.Read(base.UnigueID, readAllTablePart)) return null;
-            return <xsl:value-of select="$DocumentName"/>ObjestItem;
+            <xsl:value-of select="$DocumentName"/>_Objest obj = new <xsl:value-of select="$DocumentName"/>_Objest();
+            return await obj.Read(base.UnigueID, readAllTablePart) ? obj : null;
         }
 
         public void Clear()
@@ -1619,7 +1598,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
                   {
                     <xsl:for-each select="Fields/Field">
                         <xsl:if test="Type = 'pointer'">
-                          <xsl:text>record.</xsl:text><xsl:value-of select="Name"/>.Назва = ItemValue["<xsl:value-of select="Name"/>"];
+                          <xsl:text>record.</xsl:text><xsl:value-of select="Name"/>.Name = ItemValue["<xsl:value-of select="Name"/>"];
                         </xsl:if>
                     </xsl:for-each>
                   }
@@ -1929,7 +1908,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
                   {
                     <xsl:for-each select="(DimensionFields|ResourcesFields|PropertyFields)/Fields/Field">
                         <xsl:if test="Type = 'pointer'">
-                          <xsl:text>record.</xsl:text><xsl:value-of select="Name"/>.Назва = ItemValue["<xsl:value-of select="Name"/>"];
+                          <xsl:text>record.</xsl:text><xsl:value-of select="Name"/>.Name = ItemValue["<xsl:value-of select="Name"/>"];
                         </xsl:if>
                     </xsl:for-each>
                   }
@@ -2263,7 +2242,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
                       if (ItemValue.TryGetValue("docname", out var ownerName)) record.OwnerName = ownerName;
                       <xsl:for-each select="(DimensionFields|ResourcesFields|PropertyFields)/Fields/Field">
                           <xsl:if test="Type = 'pointer'">
-                            <xsl:text>record.</xsl:text><xsl:value-of select="Name"/>.Назва = ItemValue["<xsl:value-of select="Name"/>"];
+                            <xsl:text>record.</xsl:text><xsl:value-of select="Name"/>.Name = ItemValue["<xsl:value-of select="Name"/>"];
                           </xsl:if>
                       </xsl:for-each>
                   }
