@@ -613,7 +613,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
       <xsl:variable name="AllowDocument" select="AllowDocument"/>
     #region JOURNAL "<xsl:value-of select="$JournalName"/>"
     
-    public class Журнали_<xsl:value-of select="$JournalName"/>
+    public class Журнали_<xsl:value-of select="$JournalName"/> : ТабличнийСписок
     {
         bool DeletionLabel = false;
         bool Spend = false;
@@ -623,10 +623,10 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
         string <xsl:value-of select="Name"/> = "";</xsl:for-each>
 
         // Масив для запису стрічки в Store
-        Array ToArray()
+        object[] ToArray()
         {
-            return new object[] 
-            { 
+            return 
+            [
                 DeletionLabel ? InterfaceGtk.Іконки.ДляТабличногоСписку.Delete : InterfaceGtk.Іконки.ДляТабличногоСписку.Normal, 
                 ID, 
                 Type, 
@@ -635,7 +635,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
                   <xsl:text>/*</xsl:text><xsl:value-of select="Name"/><xsl:text>*/ </xsl:text>
                   <xsl:value-of select="Name"/>,
                 </xsl:for-each> 
-            };
+            ];
         }
 
         // Добавлення колонок в список
@@ -687,11 +687,11 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
             </xsl:for-each>
         }
 
-        public static void ОчиститиВідбір(TreeView treeView)
+        <!--public static void ОчиститиВідбір(TreeView treeView)
         {
             if (treeView.Data.ContainsKey("Where"))
                 treeView.Data["Where"] = null;
-        }
+        }-->
 
         // Список документів які входять в журнал
         public static Dictionary&lt;string, string&gt; AllowDocument()
@@ -704,14 +704,11 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
             };
         }
 
-        public static UnigueID? SelectPointerItem { get; set; }
-        public static TreePath? SelectPath { get; private set; }
-        public static TreePath? CurrentPath { get; private set; }
-
         // Завантаження даних
-        public static async ValueTask LoadRecords(TreeView treeView) 
+        public static async ValueTask LoadRecords(TreeView treeView, UnigueID? selectPointerItem = null) 
         {
-            SelectPath = CurrentPath = null;
+            TreePath? SelectPath = null, CurrentPath = null;
+            ListStore Store = (ListStore)treeView.Model;
 
             List&lt;string&gt; allQuery = [];
             Dictionary&lt;string, object&gt; paramQuery = [];
@@ -785,11 +782,16 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
                 <xsl:text>";</xsl:text>
             </xsl:if>
 
-            var recordResult = await Config.Kernel.DataBase.SelectRequest(unionAllQuery, paramQuery);
+            /* Pages */
+            var pages = treeView.Data["Pages"];
+            Сторінки.Налаштування? settingsPages = pages != null ? (Сторінки.Налаштування)pages : null;
+            if (settingsPages != null)
+               unionAllQuery = await ЗаповнитиСторінки(Config.Kernel.DataBase.SplitSelectToPagesForJournal, settingsPages, unionAllQuery, paramQuery);
 
-            ListStore Store = (ListStore)treeView.Model;
+            var recordResult = await Config.Kernel.DataBase.SelectRequest(unionAllQuery, paramQuery);
             Store.Clear();
 
+            string? uidSelect = selectPointerItem?.ToString();
             foreach (Dictionary&lt;string, object&gt; row in recordResult.ListRow)
             {
                 Журнали_<xsl:value-of select="$JournalName"/> record = new Журнали_<xsl:value-of select="$JournalName"/>
@@ -805,11 +807,11 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
 
                 TreeIter CurrentIter = Store.AppendValues(record.ToArray());
                 CurrentPath = Store.GetPath(CurrentIter);
-                if (SelectPointerItem != null &amp;&amp; record.ID == SelectPointerItem.ToString()) SelectPath = CurrentPath;
+                if (uidSelect != null &amp;&amp; record.ID == uidSelect) SelectPath = CurrentPath;
             }
             if (SelectPath != null)
                 treeView.SetCursor(SelectPath, treeView.Columns[0], false);
-            else if (CurrentPath != null)
+            else if (CurrentPath != null &amp;&amp; settingsPages != null &amp;&amp; settingsPages.CurrentPage == settingsPages.Record.Pages) //Для останньої сторінки
                 treeView.SetCursor(CurrentPath, treeView.Columns[0], false);
           </xsl:if>
         }
