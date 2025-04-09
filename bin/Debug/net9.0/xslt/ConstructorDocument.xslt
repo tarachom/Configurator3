@@ -698,14 +698,13 @@ namespace <xsl:value-of select="$NameSpace"/>
         protected override async ValueTask BeforeSetValue()
         {
             await ФункціїНалаштуванняКористувача.ОтриматиПеріодДляЖурналу(КлючНалаштуванняКористувача + KeyForSetting, Період);
-            NotebookFunction.AddChangeFunc(Program.GeneralNotebook, Name, LoadRecords, <xsl:value-of select="$DocumentName"/>_Const.POINTER);
+            NotebookFunction.AddChangeFunc(Program.GeneralNotebook, Name, ReLoadRecords, <xsl:value-of select="$DocumentName"/>_Const.POINTER);
         }
 
         protected override async void PeriodChanged()
         {
             ФункціїНалаштуванняКористувача.ЗаписатиПеріодДляЖурналу(КлючНалаштуванняКористувача + KeyForSetting, Період.Period.ToString(), Період.DateStart, Період.DateStop);
-            ClearPages();
-            await LoadRecords();
+            await ReLoadRecords();
         }
 
         protected override async ValueTask SpendTheDocument(UnigueID unigueID, bool spendDoc)

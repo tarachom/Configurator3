@@ -97,8 +97,7 @@ namespace <xsl:value-of select="$NameSpace"/>
         protected override async void PeriodChanged()
         {
             ФункціїНалаштуванняКористувача.ЗаписатиПеріодДляЖурналу(КлючНалаштуванняКористувача, Період.Period.ToString(), Період.DateStart, Період.DateStop);
-            ClearPages();
-            await LoadRecords();           
+            await ReLoadRecords();           
         }
 
         #endregion

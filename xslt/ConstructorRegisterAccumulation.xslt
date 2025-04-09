@@ -98,7 +98,7 @@ namespace <xsl:value-of select="$NameSpace"/>
         {
             ФункціїНалаштуванняКористувача.ЗаписатиПеріодДляЖурналу(КлючНалаштуванняКористувача, Період.Period.ToString(), Період.DateStart, Період.DateStop);
             ClearPages();
-            await LoadRecords();           
+            await LoadRecords();
         }
 
         #endregion
