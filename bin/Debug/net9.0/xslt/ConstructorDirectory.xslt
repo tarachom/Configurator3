@@ -652,7 +652,7 @@ namespace <xsl:value-of select="$NameSpace"/>
 
         protected override async ValueTask BeforeSetValue()
         {
-            NotebookFunction.AddChangeFunc(Program.GeneralNotebook, Name, ReLoadRecords, <xsl:value-of select="$DirectoryName"/>_Const.POINTER);
+            NotebookFunction.AddChangeFunc(Program.GeneralNotebook, Name, LoadRecords, <xsl:value-of select="$DirectoryName"/>_Const.POINTER);
             <xsl:if test="normalize-space($DirectoryType) = 'Hierarchical'">if (!LiteMode)</xsl:if> await LoadRecords();
         }
 

@@ -859,7 +859,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
 
         public <xsl:value-of select="$DirectoryName"/>_Pointer Copy()
         {
-            return new <xsl:value-of select="$DirectoryName"/>_Pointer(base.UnigueID, base.Fields) { Назва = Назва };
+            return new <xsl:value-of select="$DirectoryName"/>_Pointer(base.UnigueID, base.Fields) { Name = Name };
         }
 
         public string Назва
@@ -897,7 +897,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
         public void Clear()
         {
             Init(new UnigueID(), null);
-            Назва = "";
+            Name = "";
         }
     }
     
@@ -1490,7 +1490,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
 
         public <xsl:value-of select="$DocumentName"/>_Pointer Copy()
         {
-            return new <xsl:value-of select="$DocumentName"/>_Pointer(base.UnigueID, base.Fields) { Назва = Назва };
+            return new <xsl:value-of select="$DocumentName"/>_Pointer(base.UnigueID, base.Fields) { Name = Name };
         }
 
         public <xsl:value-of select="$DocumentName"/>_Pointer GetEmptyPointer()
@@ -1508,7 +1508,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
         public void Clear()
         {
             Init(new UnigueID(), null);
-            Назва = "";
+            Name = "";
         }
     }
 
