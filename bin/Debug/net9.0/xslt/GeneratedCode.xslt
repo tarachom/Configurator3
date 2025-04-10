@@ -1000,14 +1000,15 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
                 };
                 Records.Add(record);
                 <xsl:if test="count(Fields/Field[Type = 'pointer']) != 0">
-                  if (JoinValue.TryGetValue(record.UID.ToString(), out var ItemValue))
-                  {
-                    <xsl:for-each select="Fields/Field">
-                        <xsl:if test="Type = 'pointer'">
-                          <xsl:text>record.</xsl:text><xsl:value-of select="Name"/>.Name = ItemValue["<xsl:value-of select="Name"/>"];
-                        </xsl:if>
-                    </xsl:for-each>
-                  }
+                if (JoinValue.TryGetValue(record.UID.ToString(), out var ItemValue))
+                {
+                  record.JoinItemValue = ItemValue;
+                  <xsl:for-each select="Fields/Field">
+                      <xsl:if test="Type = 'pointer'">
+                        <xsl:text>record.</xsl:text><xsl:value-of select="Name"/>.Name = ItemValue["<xsl:value-of select="Name"/>"];
+                      </xsl:if>
+                  </xsl:for-each>
+                }
                 </xsl:if>
             }
             
@@ -1594,14 +1595,15 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
                 };
                 Records.Add(record);
                 <xsl:if test="count(Fields/Field[Type = 'pointer']) != 0">
-                  if (JoinValue.TryGetValue(record.UID.ToString(), out var ItemValue))
-                  {
-                    <xsl:for-each select="Fields/Field">
-                        <xsl:if test="Type = 'pointer'">
-                          <xsl:text>record.</xsl:text><xsl:value-of select="Name"/>.Name = ItemValue["<xsl:value-of select="Name"/>"];
-                        </xsl:if>
-                    </xsl:for-each>
-                  }
+                if (JoinValue.TryGetValue(record.UID.ToString(), out var ItemValue))
+                {
+                  record.JoinItemValue = ItemValue;
+                  <xsl:for-each select="Fields/Field">
+                      <xsl:if test="Type = 'pointer'">
+                        <xsl:text>record.</xsl:text><xsl:value-of select="Name"/>.Name = ItemValue["<xsl:value-of select="Name"/>"];
+                      </xsl:if>
+                  </xsl:for-each>
+                }
                 </xsl:if>
             }
             
@@ -2237,15 +2239,16 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
                 };
                 Records.Add(record);
                 <xsl:if test="count((DimensionFields|ResourcesFields|PropertyFields)/Fields/Field[Type = 'pointer']) != 0">
-                  if (JoinValue.TryGetValue(record.UID.ToString(), out var ItemValue))
-                  {
-                      if (ItemValue.TryGetValue("docname", out var ownerName)) record.OwnerName = ownerName;
-                      <xsl:for-each select="(DimensionFields|ResourcesFields|PropertyFields)/Fields/Field">
-                          <xsl:if test="Type = 'pointer'">
-                            <xsl:text>record.</xsl:text><xsl:value-of select="Name"/>.Name = ItemValue["<xsl:value-of select="Name"/>"];
-                          </xsl:if>
-                      </xsl:for-each>
-                  }
+                if (JoinValue.TryGetValue(record.UID.ToString(), out var ItemValue))
+                {
+                    record.JoinItemValue = ItemValue;
+                    if (ItemValue.TryGetValue("docname", out var ownerName)) record.OwnerName = ownerName;
+                    <xsl:for-each select="(DimensionFields|ResourcesFields|PropertyFields)/Fields/Field">
+                        <xsl:if test="Type = 'pointer'">
+                          <xsl:text>record.</xsl:text><xsl:value-of select="Name"/>.Name = ItemValue["<xsl:value-of select="Name"/>"];
+                        </xsl:if>
+                    </xsl:for-each>
+                }
                 </xsl:if>
             }
             base.BaseClear();
