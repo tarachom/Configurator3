@@ -48,7 +48,7 @@ using InterfaceGtk;
 using AccountingSoftware;
 using ТабличніСписки = <xsl:value-of select="$NameSpaceGeneratedCode"/>.РегістриНакопичення.ТабличніСписки;
 
-namespace <xsl:value-of select="$NameSpace"/>
+namespace <xsl:value-of select="$NameSpace"/>.РегістриНакопичення
 {
     public class <xsl:value-of select="$RegisterAccumulationName"/> : РегістриНакопиченняЖурнал
     {
@@ -64,10 +64,9 @@ namespace <xsl:value-of select="$NameSpace"/>
 
         public override async ValueTask LoadRecords()
         {
-            ТабличніСписки.<xsl:value-of select="$RegisterAccumulationName"/>_<xsl:value-of select="$TabularList"/>.SelectPointerItem = SelectPointerItem;
             ТабличніСписки.<xsl:value-of select="$RegisterAccumulationName"/>_<xsl:value-of select="$TabularList"/>.ДодатиВідбірПоПеріоду(TreeViewGrid, Період.Period, Період.DateStart, Період.DateStop);
 
-            await ТабличніСписки.<xsl:value-of select="$RegisterAccumulationName"/>_<xsl:value-of select="$TabularList"/>.LoadRecords(TreeViewGrid);
+            await ТабличніСписки.<xsl:value-of select="$RegisterAccumulationName"/>_<xsl:value-of select="$TabularList"/>.LoadRecords(TreeViewGrid, SelectPointerItem);
             <xsl:if test="$UsePages = '1'">
             PagesShow(LoadRecords);
             </xsl:if>

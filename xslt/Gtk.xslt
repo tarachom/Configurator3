@@ -956,8 +956,8 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
     {
         string ID = "";
         bool Income = false;
-        string Період = "";
-        string Документ = "";
+        string Period = "";
+        string OwnerName = "";
         <xsl:for-each select="Fields/Field">
         string <xsl:value-of select="Name"/> = "";</xsl:for-each>
 
@@ -968,8 +968,8 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
                 InterfaceGtk.Іконки.ДляТабличногоСписку.Normal, 
                 ID, 
                 Income ? "+" : "-", 
-                Період, 
-                Документ,
+                Period, 
+                OwnerName,
                 <xsl:for-each select="Fields/Field">
                   <xsl:text>/*</xsl:text><xsl:value-of select="Name"/><xsl:text>*/ </xsl:text><xsl:value-of select="Name"/>,
                 </xsl:for-each> 
@@ -983,8 +983,8 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
                 /*Image*/ typeof(Gdk.Pixbuf), 
                 /*ID*/ typeof(string), 
                 /*Income*/ typeof(string), 
-                /*Період*/ typeof(string),
-                /*Документ*/ typeof(string),
+                /*Period*/ typeof(string),
+                /*OwnerName*/ typeof(string),
                 <xsl:for-each select="Fields/Field">
                     <xsl:text>/*</xsl:text><xsl:value-of select="Name"/>*/ typeof(string),
                 </xsl:for-each>
@@ -996,7 +996,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
             treeView.AppendColumn(new TreeViewColumn("ID", new CellRendererText(), "text", 1) { Visible = false });
             treeView.AppendColumn(new TreeViewColumn("Рух", new CellRendererText() { Xalign = 0.5f }, "text", 2) { Visible = IsHiddenColumn("income") });
             treeView.AppendColumn(new TreeViewColumn("Період", new CellRendererText(), "text", 3) { Visible = IsHiddenColumn("period") });
-            treeView.AppendColumn(new TreeViewColumn("Документ", new CellRendererText(), "text", 4) { Visible = IsHiddenColumn("owner") });
+            treeView.AppendColumn(new TreeViewColumn("Регістратор", new CellRendererText(), "text", 4) { Visible = IsHiddenColumn("owner") });
             /* */
             <xsl:for-each select="Fields/Field">
               <xsl:text>treeView.AppendColumn(new TreeViewColumn("</xsl:text><xsl:value-of select="normalize-space(Caption)"/>
@@ -1032,6 +1032,21 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
             var where = treeView.Data["Where"];
             if (where != null) <xsl:value-of select="$RegisterName"/>_RecordsSet.QuerySelect.Where = (List&lt;Where&gt;)where;
 
+            <xsl:for-each select="Fields/Field[SortField = 'True']">
+              <xsl:variable name="SortDirection">
+                  <xsl:choose>
+                      <xsl:when test="SortDirection = 'True'">SelectOrder.DESC</xsl:when>
+                      <xsl:otherwise>SelectOrder.ASC</xsl:otherwise>
+                  </xsl:choose>
+              </xsl:variable>
+              <xsl:value-of select="$RegisterName"/>_RecordsSet.QuerySelect.Order.Add(
+              <xsl:choose>
+                  <xsl:when test="Type = 'pointer'">"<xsl:value-of select="Name"/>"</xsl:when>
+                  <xsl:otherwise>РегістриНакопичення.<xsl:value-of select="$RegisterName"/>_Const.<xsl:value-of select="Name"/></xsl:otherwise>
+              </xsl:choose>
+              <xsl:text>, </xsl:text><xsl:value-of select="$SortDirection"/>);
+            </xsl:for-each>
+
             /* Pages */
             var pages = treeView.Data["Pages"];
             Сторінки.Налаштування? settingsPages = pages != null ? (Сторінки.Налаштування)pages : null;
@@ -1048,9 +1063,9 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
                 <xsl:value-of select="$RegisterName"/>_<xsl:value-of select="$TabularListName"/> row = new <xsl:value-of select="$RegisterName"/>_<xsl:value-of select="$TabularListName"/>
                 {
                     ID = record.UID.ToString(),
-                    Період = record.Period.ToString(),
+                    Period = record.Period.ToString(),
                     Income = record.Income,
-                    Документ = record.OwnerName,
+                    OwnerName = record.OwnerName,
                     <xsl:for-each select="Fields/Field">
                       <xsl:value-of select="Name"/><xsl:text> = </xsl:text>
                       <xsl:choose>
@@ -1079,8 +1094,8 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
             {
                 if (SelectPath != null)
                     treeView.SetCursor(SelectPath, treeView.Columns[0], false);
-                else if (CurrentPath != null &amp;&amp; settingsPages != null &amp;&amp; settingsPages.CurrentPage == settingsPages.Record.Pages) //Для останньої сторінки
-                treeView.SetCursor(CurrentPath, treeView.Columns[0], false);
+                /*else if (CurrentPath != null &amp;&amp; settingsPages != null &amp;&amp; settingsPages.CurrentPage == settingsPages.Record.Pages) //Для останньої сторінки
+                treeView.SetCursor(CurrentPath, treeView.Columns[0], false);*/
             }
         }
     }

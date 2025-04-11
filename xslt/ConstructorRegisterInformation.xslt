@@ -305,7 +305,7 @@ using AccountingSoftware;
 using <xsl:value-of select="$NameSpaceGeneratedCode"/>.РегістриВідомостей;
 using ТабличніСписки = <xsl:value-of select="$NameSpaceGeneratedCode"/>.РегістриВідомостей.ТабличніСписки;
 
-namespace <xsl:value-of select="$NameSpace"/>
+namespace <xsl:value-of select="$NameSpace"/>.РегістриВідомостей
 {
     public class <xsl:value-of select="$RegisterInformationName"/> : РегістриВідомостейЖурнал
     {

@@ -2241,7 +2241,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
                 <xsl:if test="count((DimensionFields|ResourcesFields|PropertyFields)/Fields/Field[Type = 'pointer']) != 0">
                 if (JoinValue.TryGetValue(record.UID.ToString(), out var ItemValue))
                 {
-                    record.JoinItemValue = ItemValue;
+                    //record.JoinItemValue = ItemValue;
                     if (ItemValue.TryGetValue("docname", out var ownerName)) record.OwnerName = ownerName;
                     <xsl:for-each select="(DimensionFields|ResourcesFields|PropertyFields)/Fields/Field">
                         <xsl:if test="Type = 'pointer'">
