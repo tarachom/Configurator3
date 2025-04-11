@@ -136,7 +136,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             treeView.AppendColumn(new TreeViewColumn());
         }
 
-        public static ListBox CreateFilter(TreeView treeView)
+        public static ListBox CreateFilter(TreeView treeView, System.Action? funcPagesShow = null)
         {
             ListBox listBox = new() { SelectionMode = SelectionMode.None };
             <xsl:choose>
@@ -195,7 +195,9 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
                           if (listWhere.Count != 0)
                           {
                               ДодатиВідбір(treeView, listWhere, true);
+                              ОчиститиСторінки(treeView);
                               await LoadRecords(treeView);
+                              funcPagesShow?.Invoke();
                           }
                       };
 
@@ -420,10 +422,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
             if (where != null) ДодатиВідбір(treeView, where);               
         }
 
-        <!-- public static UnigueID? DocumentPointerItem { get; set; }
-        public static UnigueID? SelectPointerItem { get; set; } -->
-
-        public static ListBox CreateFilter(TreeView treeView)
+        public static ListBox CreateFilter(TreeView treeView, System.Action? funcPagesShow = null)
         {
             ListBox listBox = new() { SelectionMode = SelectionMode.None };
             <xsl:choose>
@@ -482,7 +481,9 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
                           if (listWhere.Count != 0)
                           {
                               ДодатиВідбір(treeView, listWhere, true);
+                              ОчиститиСторінки(treeView);
                               await LoadRecords(treeView);
+                              funcPagesShow?.Invoke();
                           }
                       };
 
