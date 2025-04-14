@@ -651,7 +651,7 @@ namespace <xsl:value-of select="$NameSpace"/>
         protected override async ValueTask BeforeSetValue()
         {
             NotebookFunction.AddChangeFunc(Program.GeneralNotebook, Name, LoadRecords, <xsl:value-of select="$DirectoryName"/>_Const.POINTER);
-            <xsl:if test="normalize-space($DirectoryType) = 'Hierarchical'">if (!LiteMode)</xsl:if> await LoadRecords();
+            <xsl:if test="normalize-space($DirectoryType) = 'Hierarchical'">if (!CompositeMode)</xsl:if> await LoadRecords();
         }
 
         #endregion
@@ -872,7 +872,7 @@ namespace <xsl:value-of select="$NameSpace"/>
                         await LoadRecords_TreeCallBack();
                     }
                 },
-                LiteMode = true
+                CompositeMode = true
             };
             ДеревоПапок.SetValue();
             HPanedTable.Pack2(ДеревоПапок, false, true);
