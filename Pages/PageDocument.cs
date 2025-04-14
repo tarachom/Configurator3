@@ -47,8 +47,16 @@ namespace Configurator
         Entry entryName = new Entry() { WidthRequest = 500 };
         Entry entryFullName = new Entry() { WidthRequest = 500 };
         Entry entryTable = new Entry() { WidthRequest = 500 };
-        Entry entrySpend = new Entry() { WidthRequest = 455 };
-        Entry entryClearSpend = new Entry() { WidthRequest = 455 };
+
+        #region Функції проведення і очищення
+
+        Entry entrySpend = new Entry() { WidthRequest = 400 };
+        Entry entryClearSpend = new Entry() { WidthRequest = 400 };
+
+        Switch switchSpend = new Switch();
+        Switch switchClearSpend = new Switch();
+
+        #endregion
 
         #region Trigers
 
@@ -223,6 +231,7 @@ namespace Configurator
 
                         hBox.PackStart(new Label("Проведення:"), false, false, 5);
                         hBox.PackStart(entrySpend, false, false, 5);
+                        CreateSwitch(hBox, switchSpend);
                     }
 
                     //Очищення
@@ -232,6 +241,7 @@ namespace Configurator
 
                         hBox.PackStart(new Label("Очищення:"), false, false, 5);
                         hBox.PackStart(entryClearSpend, false, false, 5);
+                        CreateSwitch(hBox, switchClearSpend);
                     }
                 }
 
@@ -685,8 +695,15 @@ namespace Configurator
 
             textViewDesc.Buffer.Text = ConfDocument.Desc;
 
+            #region Functions
+
             entrySpend.Text = ConfDocument.SpendFunctions.Spend;
             entryClearSpend.Text = ConfDocument.SpendFunctions.ClearSpend;
+
+            switchSpend.Active = ConfDocument.SpendFunctions.SpendAction;
+            switchClearSpend.Active = ConfDocument.SpendFunctions.ClearSpendAction;
+
+            #endregion
 
             #region Trigers
 
@@ -772,8 +789,15 @@ namespace Configurator
             ConfDocument.Table = entryTable.Text;
             ConfDocument.Desc = textViewDesc.Buffer.Text;
 
+            #region Functions
+
             ConfDocument.SpendFunctions.Spend = entrySpend.Text;
             ConfDocument.SpendFunctions.ClearSpend = entryClearSpend.Text;
+
+            ConfDocument.SpendFunctions.SpendAction = switchSpend.Active;
+            ConfDocument.SpendFunctions.ClearSpendAction = switchClearSpend.Active;
+
+            #endregion
 
             #region Trigers
 

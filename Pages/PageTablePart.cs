@@ -287,7 +287,7 @@ namespace Configurator
                 if (Owner.Exist && Owner.Type == "Document")
                 {
                     string nameInTable_RowNumber = Configuration.GetNewUnigueColumnName(Program.Kernel, entryTable.Text, TablePart.Fields);
-                    TablePart.AppendField(new ConfigurationField("НомерРядка", nameInTable_RowNumber, "integer", "", "НомерРядка"));
+                    TablePart.AppendField(new ConfigurationField("НомерРядка", nameInTable_RowNumber, "integer", "", "НомерРядка") { AutomaticNumbering = true });
                 }
             }
             else

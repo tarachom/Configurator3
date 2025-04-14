@@ -52,7 +52,12 @@ namespace Configurator
         CheckButton checkButtonFullTextSearch = new CheckButton("Повнотекстовий пошук");
         CheckButton checkButtonSearch = new CheckButton("Пошук в журналах");
         CheckButton checkButtonExport = new CheckButton("Дозволити експорт");
+
+        //Для текстового типу
         CheckButton checkButtonMultiline = new CheckButton("Багатострічкове поле");
+
+        //Для типу integer
+        CheckButton checkButtonAutomaticNumbering = new CheckButton("Автоматична нумерація");
 
         //Для композитного типу даних
         CheckButton checkButtonCompositePointerNotUseDirectories = new CheckButton("Не викоритовувати");
@@ -175,6 +180,9 @@ namespace Configurator
             //Багатострічкове поле
             vBox.PackStart(checkButtonMultiline, false, false, 5);
 
+            //Автоматична нумерація
+            vBox.PackStart(checkButtonAutomaticNumbering, false, false, 5);
+
             //Дозволити експорт
             vBox.PackStart(checkButtonExport, false, false, 5);
 
@@ -293,6 +301,7 @@ namespace Configurator
             checkButtonSearch.Active = Field.IsSearch;
             checkButtonExport.Active = Field.IsExport;
             checkButtonMultiline.Active = Field.Multiline;
+            checkButtonAutomaticNumbering.Active = Field.AutomaticNumbering;
 
             OnComboBoxTypeChanged(comboBoxType, new EventArgs());
 
@@ -347,6 +356,7 @@ namespace Configurator
             Field.IsSearch = checkButtonSearch.Active;
             Field.IsExport = checkButtonExport.Active;
             Field.Multiline = checkButtonMultiline.Active;
+            Field.AutomaticNumbering = checkButtonAutomaticNumbering.Active;
 
             Field.NameInTable = entryColumn.Text;
 
@@ -401,6 +411,13 @@ namespace Configurator
                 checkButtonMultiline.Sensitive = isString;
             }
 
+            //integer only
+            {
+                bool isInteger = typeName == "integer";
+
+                checkButtonAutomaticNumbering.Sensitive = isInteger;
+            }
+
             checkButtonSearch.Sensitive =
                 typeName == "string" ||
                 typeName == "integer" ||
@@ -409,7 +426,7 @@ namespace Configurator
                 typeName == "datetime" ||
                 typeName == "time";
 
-            //composite_pointer
+            //composite_pointer only
             {
                 bool isCompositePointer = typeName == "composite_pointer";
 

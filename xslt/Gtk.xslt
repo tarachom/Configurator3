@@ -146,7 +146,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
                   { /* <xsl:value-of select="Name"/>, <xsl:value-of select="Type"/> */
                       Switch sw = new();
                       <xsl:choose>
-                          <xsl:when test="Type = 'string'">Entry <xsl:value-of select="Name"/> = new() { WidthRequest = 400 };</xsl:when>
+                          <xsl:when test="Type = 'string'">Entry <xsl:value-of select="Name"/> = new() { WidthRequest = 300 };</xsl:when>
                           <xsl:when test="Type = 'boolean'">CheckButton <xsl:value-of select="Name"/> = new();
                           <xsl:value-of select="Name"/>.Clicked += (object? sender, EventArgs args) =&gt; sw.Active = <xsl:value-of select="Name"/>.Active;
                           </xsl:when>
@@ -432,7 +432,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
                   { /* <xsl:value-of select="Name"/>, <xsl:value-of select="Type"/> */
                       Switch sw = new();
                       <xsl:choose>
-                          <xsl:when test="Type = 'string'">Entry <xsl:value-of select="Name"/> = new() { WidthRequest = 400 };</xsl:when>
+                          <xsl:when test="Type = 'string'">Entry <xsl:value-of select="Name"/> = new() { WidthRequest = 300 };</xsl:when>
                           <xsl:when test="Type = 'boolean'">CheckButton <xsl:value-of select="Name"/> = new();
                           <xsl:value-of select="Name"/>.Clicked += (object? sender, EventArgs args) =&gt; sw.Active = <xsl:value-of select="Name"/>.Active;
                           </xsl:when>

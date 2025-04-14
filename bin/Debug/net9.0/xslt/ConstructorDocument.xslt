@@ -234,11 +234,9 @@ namespace <xsl:value-of select="$NameSpace"/>
 
         public static async ValueTask SetDeletionLabel(UnigueID unigueID)
         {
-            <xsl:value-of select="$DocumentName"/>_Objest Обєкт = new <xsl:value-of select="$DocumentName"/>_Objest();
-            if (await Обєкт.Read(unigueID))
-                await Обєкт.SetDeletionLabel(!Обєкт.DeletionLabel);
-            else
-                Message.Error(Program.GeneralForm, "Не вдалось прочитати!");
+            <xsl:value-of select="$DocumentName"/>_Pointer Вказівник = new(unigueID);
+            bool? label = await Вказівник.GetDeletionLabel();
+            if (label.HasValue) await Вказівник.SetDeletionLabel(!label.Value);
         }
 
         public static async ValueTask&lt;UnigueID?&gt; Copy(UnigueID unigueID)
