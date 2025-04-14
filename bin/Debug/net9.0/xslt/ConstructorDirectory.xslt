@@ -591,7 +591,11 @@ namespace <xsl:value-of select="$NameSpace"/>
             </xsl:if>
             <xsl:if test="normalize-space($DirectoryOwner) != ''">
             HBoxTop.PackStart(Власник, false, false, 2);
-            Власник.AfterSelectFunc = async () =&gt; await LoadRecords();
+            Власник.AfterSelectFunc = async () =&gt; 
+            {
+                ClearPages();
+                await LoadRecords();
+            };
             </xsl:if>
         }
 
@@ -628,9 +632,15 @@ namespace <xsl:value-of select="$NameSpace"/>
             </xsl:if>
         }
 
+        async ValueTask LoadRecords_OnFilter()
+        {
+            await ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.LoadRecords(TreeViewGrid);
+            PagesShow(LoadRecords_OnFilter);
+        }
+
         protected override Widget? FilterRecords(Box hBox)
         {
-            return ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.CreateFilter(TreeViewGrid, () =&gt; PagesShow());
+            return ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.CreateFilter(TreeViewGrid, () =&gt; PagesShow(LoadRecords_OnFilter));
         }
 
         protected override async ValueTask OpenPageElement(bool IsNew, UnigueID? unigueID = null)
@@ -651,7 +661,7 @@ namespace <xsl:value-of select="$NameSpace"/>
         protected override async ValueTask BeforeSetValue()
         {
             NotebookFunction.AddChangeFunc(Program.GeneralNotebook, Name, LoadRecords, <xsl:value-of select="$DirectoryName"/>_Const.POINTER);
-            <xsl:if test="normalize-space($DirectoryType) = 'Hierarchical'">if (!LiteMode)</xsl:if> await LoadRecords();
+            <xsl:if test="normalize-space($DirectoryType) = 'Hierarchical'">if (!CompositeMode)</xsl:if> await LoadRecords();
         }
 
         #endregion
@@ -706,7 +716,11 @@ namespace <xsl:value-of select="$NameSpace"/>
             </xsl:if>
             <xsl:if test="normalize-space($DirectoryOwner) != ''">
             HBoxTop.PackStart(Власник, false, false, 2); //Власник
-            Власник.AfterSelectFunc = async () =&gt; await LoadRecords();
+            Власник.AfterSelectFunc = async () =&gt; 
+            {
+                ClearPages();
+                await LoadRecords();
+            };
             </xsl:if>
         }
 
@@ -872,7 +886,7 @@ namespace <xsl:value-of select="$NameSpace"/>
                         await LoadRecords_TreeCallBack();
                     }
                 },
-                LiteMode = true
+                CompositeMode = true
             };
             ДеревоПапок.SetValue();
             HPanedTable.Pack2(ДеревоПапок, false, true);
@@ -940,9 +954,15 @@ namespace <xsl:value-of select="$NameSpace"/>
             </xsl:if>
         }
 
+        async ValueTask LoadRecords_OnFilter()
+        {
+            await ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.LoadRecords(TreeViewGrid);
+            PagesShow(LoadRecords_OnFilter);
+        }
+
         protected override Widget? FilterRecords(Box hBox)
         {
-            return ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.CreateFilter(TreeViewGrid);
+            return ТабличніСписки.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularList"/>.CreateFilter(TreeViewGrid, () =&gt; PagesShow(LoadRecords_OnFilter));
         }
 
         protected override async ValueTask OpenPageElement(bool IsNew, UnigueID? unigueID = null)
