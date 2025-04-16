@@ -607,6 +607,9 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Конс
 
                 foreach (Record record in Records)
                 {
+                    <xsl:for-each select="Fields/Field[Type = 'integer' and AutomaticNumbering = '1']">
+                    record.<xsl:value-of select="Name"/> = ++sequenceNumber_<xsl:value-of select="Name"/>;
+                    </xsl:for-each>
                     Dictionary&lt;string, object&gt; fieldValue = new Dictionary&lt;string, object&gt;()
                     {
                         <xsl:for-each select="Fields/Field">
@@ -615,15 +618,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Конс
                             <xsl:if test="Type = 'enum'">
                                 <xsl:text>(int)</xsl:text>
                             </xsl:if>
-                            <xsl:choose>
-                                <xsl:when test="Type = 'integer' and AutomaticNumbering = '1'">
-                                    <xsl:text>++sequenceNumber_</xsl:text>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:text>record.</xsl:text>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                            <xsl:value-of select="Name"/>
+                            <xsl:text>record.</xsl:text><xsl:value-of select="Name"/>
                             <xsl:choose>
                                 <xsl:when test="Type = 'pointer'">
                                     <xsl:text>.UnigueID.UGuid</xsl:text>
@@ -1061,6 +1056,9 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             
             foreach (Record record in Records)
             {
+                <xsl:for-each select="Fields/Field[Type = 'integer' and AutomaticNumbering = '1']">
+                record.<xsl:value-of select="Name"/> = ++sequenceNumber_<xsl:value-of select="Name"/>;
+                </xsl:for-each>
                 Dictionary&lt;string, object&gt; fieldValue = new()
                 {
                     <xsl:for-each select="Fields/Field">
@@ -1069,15 +1067,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
                         <xsl:if test="Type = 'enum'">
                           <xsl:text>(int)</xsl:text>
                         </xsl:if>
-                        <xsl:choose>
-                            <xsl:when test="Type = 'integer' and AutomaticNumbering = '1'">
-                                <xsl:text>++sequenceNumber_</xsl:text>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:text>record.</xsl:text>
-                            </xsl:otherwise>
-                        </xsl:choose>
-                        <xsl:value-of select="Name"/>
+                        <xsl:text>record.</xsl:text><xsl:value-of select="Name"/>
                         <xsl:choose>
                             <xsl:when test="Type = 'pointer'">
                                 <xsl:text>.UnigueID.UGuid</xsl:text>
@@ -1678,6 +1668,9 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
 
             foreach (Record record in Records)
             {
+                <xsl:for-each select="Fields/Field[Type = 'integer' and AutomaticNumbering = '1']">
+                record.<xsl:value-of select="Name"/> = ++sequenceNumber_<xsl:value-of select="Name"/>;
+                </xsl:for-each>
                 Dictionary&lt;string, object&gt; fieldValue = new Dictionary&lt;string, object&gt;()
                 {
                     <xsl:for-each select="Fields/Field">
@@ -1686,15 +1679,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
                         <xsl:if test="Type = 'enum'">
                           <xsl:text>(int)</xsl:text>
                         </xsl:if>
-                        <xsl:choose>
-                            <xsl:when test="Type = 'integer' and AutomaticNumbering = '1'">
-                                <xsl:text>++sequenceNumber_</xsl:text>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:text>record.</xsl:text>
-                            </xsl:otherwise>
-                        </xsl:choose>
-                        <xsl:value-of select="Name"/>
+                        <xsl:text>record.</xsl:text><xsl:value-of select="Name"/>
                         <xsl:choose>
                             <xsl:when test="Type = 'pointer'">
                                 <xsl:text>.UnigueID.UGuid</xsl:text>
