@@ -276,11 +276,9 @@ namespace <xsl:value-of select="$NameSpace"/>
             <xsl:choose>
                 <xsl:when test="$OwnerType = 'Constants'">
             Таблиця.QuerySelect.Clear();
-
                 <xsl:for-each select="$FieldsTL[AutomaticNumbering = '1']">
             Таблиця.QuerySelect.Order.Add(<xsl:value-of select="$OwnerBlockName"/><xsl:value-of select="$OwnerName"/>_<xsl:value-of select="$TablePartName"/>_TablePart.<xsl:value-of select="Name"/>, SelectOrder.ASC);
                 </xsl:for-each>
-
             await Таблиця.Read();
                 </xsl:when>
                 <xsl:otherwise>
