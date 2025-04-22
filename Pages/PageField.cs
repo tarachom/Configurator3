@@ -57,7 +57,7 @@ namespace Configurator
         CheckButton checkButtonMultiline = new CheckButton("Багатострічкове поле");
 
         //Для типу integer
-        CheckButton checkButtonAutomaticNumbering = new CheckButton("Автоматична нумерація");
+        CheckButton checkButtonAutomaticNumbering = new CheckButton("Автоматична нумерація та сортування");
 
         //Для композитного типу даних
         CheckButton checkButtonCompositePointerNotUseDirectories = new CheckButton("Не викоритовувати");
