@@ -407,7 +407,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
         {
             ОчиститиВідбір(treeView);
             Where? where = ПеріодДляЖурналу.ВідбірПоПеріоду(Документи.<xsl:value-of select="$DocumentName"/>_Const.ДатаДок, типПеріоду, start, stop);
-            if (where != null) ДодатиВідбір(treeView, where);               
+            if (where != null) ДодатиВідбір(treeView, where);
         }
 
         public static void CreateFilter(TreeView treeView, ListFilterControl filterControl)
@@ -466,6 +466,13 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
             filterControl.GetWhere = () =&gt;
             {
                 List&lt;Where&gt; listWhere = [];
+
+                if (filterControl.Період != null &amp;&amp; filterControl.UsePeriod.Active)
+                {
+                    Where? where = ПеріодДляЖурналу.ВідбірПоПеріоду(Документи.<xsl:value-of select="$DocumentName"/>_Const.ДатаДок, filterControl.Період.Period, filterControl.Період.DateStart, filterControl.Період.DateStop);
+                    if (where != null) listWhere.Add(where);
+                }
+
                 ДодатиВідбір(treeView, listWhere, true);
                 foreach (var filter in filterList)
                     if (filter.IsOn.Active)
