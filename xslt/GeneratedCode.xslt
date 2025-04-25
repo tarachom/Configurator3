@@ -1062,6 +1062,10 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
         {
             if (!await base.IsExistOwner(Owner.UnigueID, "<xsl:value-of select="$DirectoryTable"/>"))
                 throw new Exception("Owner not exist");
+
+            <xsl:if test="normalize-space(TriggerFunctions/BeforeSave) != '' and TriggerFunctions/BeforeSave[@Action = '1']">
+            await <xsl:value-of select="$TablePartFullName"/>_Triggers.<xsl:value-of select="TriggerFunctions/BeforeSave"/>(Owner, this);
+            </xsl:if>
                 
             await base.BaseBeginTransaction();
                 
@@ -1098,6 +1102,10 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             }
                 
             await base.BaseCommitTransaction();
+
+            <xsl:if test="normalize-space(TriggerFunctions/AfterSave) != '' and TriggerFunctions/AfterSave[@Action = '1']">
+            await <xsl:value-of select="$TablePartFullName"/>_Triggers.<xsl:value-of select="TriggerFunctions/AfterSave"/>(Owner, this);
+            </xsl:if>
         }
 
         public async ValueTask Remove(Record record)
@@ -1200,7 +1208,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Пере
             };
         }
 
-        public static <xsl:value-of select="$EnumName"/>? <xsl:value-of select="$EnumName"/>_FindByName(string name)
+        public static <xsl:value-of select="$EnumName"/><xsl:text> </xsl:text><xsl:value-of select="$EnumName"/>_FindByName(string name)
         {
             return name switch
             {
@@ -1217,7 +1225,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Пере
                   </xsl:variable>
                   <xsl:text>"</xsl:text><xsl:value-of select="$ReturnValue"/>" =&gt; <xsl:value-of select="$EnumName"/>.<xsl:value-of select="Name"/>,
                 </xsl:for-each>
-                <xsl:text>_ =&gt; null</xsl:text>
+                <xsl:text>_ =&gt; 0</xsl:text>
             };
         }
 
@@ -1688,6 +1696,10 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
             if (!await base.IsExistOwner(Owner.UnigueID, "<xsl:value-of select="$DocumentTable"/>"))
                 throw new Exception("Owner not exist");
 
+            <xsl:if test="normalize-space(TriggerFunctions/BeforeSave) != '' and TriggerFunctions/BeforeSave[@Action = '1']">
+            await <xsl:value-of select="$TablePartFullName"/>_Triggers.<xsl:value-of select="TriggerFunctions/BeforeSave"/>(Owner, this);
+            </xsl:if>
+
             await base.BaseBeginTransaction();
                 
             if (clear_all_before_save)
@@ -1723,6 +1735,10 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
             }
             
             await base.BaseCommitTransaction();
+
+            <xsl:if test="normalize-space(TriggerFunctions/AfterSave) != '' and TriggerFunctions/AfterSave[@Action = '1']">
+            await <xsl:value-of select="$TablePartFullName"/>_Triggers.<xsl:value-of select="TriggerFunctions/AfterSave"/>(Owner, this);
+            </xsl:if>
         }
 
         public async ValueTask Remove(Record record)

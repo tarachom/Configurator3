@@ -50,6 +50,16 @@ namespace Configurator
 
         #endregion
 
+        #region Trigers
+
+        Entry entryBeforeSave = new Entry() { WidthRequest = 400 };
+        Entry entryAfterSave = new Entry() { WidthRequest = 400 };
+
+        Switch switchBeforeSave = new Switch();
+        Switch switchAfterSave = new Switch();
+
+        #endregion
+
         public PageTablePart() : base(Orientation.Vertical, 0)
         {
             Box hBox = new Box(Orientation.Horizontal, 0);
@@ -107,6 +117,40 @@ namespace Configurator
                 scrollTextView.Add(textViewDesc);
 
                 hBoxDesc.PackStart(scrollTextView, false, false, 5);
+            }
+
+            //Функції та тригери
+            {
+                Expander expanderTriger = new Expander("Тригери");
+                vBox.PackStart(expanderTriger, false, false, 5);
+
+                Box vBoxTriger = new Box(Orientation.Vertical, 0);
+                expanderTriger.Add(vBoxTriger);
+
+                //Заголовок блоку Тригери
+                Box hBoxTrigerInfo = new Box(Orientation.Horizontal, 0) { Halign = Align.Center };
+                vBoxTriger.PackStart(hBoxTrigerInfo, false, false, 5);
+                hBoxTrigerInfo.PackStart(new Label("Тригери"), false, false, 5);
+
+                //Перед записом
+                {
+                    Box hBox = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
+                    vBoxTriger.PackStart(hBox, false, false, 5);
+
+                    hBox.PackStart(new Label("Перед записом:"), false, false, 5);
+                    hBox.PackStart(entryBeforeSave, false, false, 0);
+                    CreateSwitch(hBox, switchBeforeSave);
+                }
+
+                //Після запису
+                {
+                    Box hBox = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
+                    vBoxTriger.PackStart(hBox, false, false, 5);
+
+                    hBox.PackStart(new Label("Після запису:"), false, false, 5);
+                    hBox.PackStart(entryAfterSave, false, false, 0);
+                    CreateSwitch(hBox, switchAfterSave);
+                }
             }
 
             //Списки
@@ -273,6 +317,17 @@ namespace Configurator
             vBoxContainer.PackStart(vBox, false, false, 0);
         }
 
+        void CreateSwitch(Box hBoxContainer, Switch switchWidget)
+        {
+            Box hBoxSwitch = new Box(Orientation.Horizontal, 0);
+            hBoxSwitch.PackStart(switchWidget, false, false, 0);
+
+            Box vBoxSwitch = new Box(Orientation.Vertical, 0) { Valign = Align.Center };
+            vBoxSwitch.PackStart(hBoxSwitch, true, true, 0);
+
+            hBoxContainer.PackEnd(vBoxSwitch, false, false, 5);
+        }
+
         #region Присвоєння / зчитування значень віджетів
 
         public async void SetValue()
@@ -294,6 +349,16 @@ namespace Configurator
                 entryTable.Text = TablePart.Table;
 
             textViewDesc.Buffer.Text = TablePart.Desc;
+
+            #region Trigers
+
+            entryBeforeSave.Text = TablePart.TriggerFunctions.BeforeSave;
+            entryAfterSave.Text = TablePart.TriggerFunctions.AfterSave;
+
+            switchBeforeSave.Active = TablePart.TriggerFunctions.BeforeSaveAction;
+            switchAfterSave.Active = TablePart.TriggerFunctions.AfterSaveAction;
+
+            #endregion
 
             FillTabularParts();
             FillTabularList();
@@ -329,6 +394,16 @@ namespace Configurator
             TablePart.Name = entryName.Text;
             TablePart.Table = entryTable.Text;
             TablePart.Desc = textViewDesc.Buffer.Text;
+
+            #region Trigers
+
+            TablePart.TriggerFunctions.BeforeSave = entryBeforeSave.Text;
+            TablePart.TriggerFunctions.AfterSave = entryAfterSave.Text;
+
+            TablePart.TriggerFunctions.BeforeSaveAction = switchBeforeSave.Active;
+            TablePart.TriggerFunctions.AfterSaveAction = switchAfterSave.Active;
+
+            #endregion
         }
 
         #endregion
@@ -591,6 +666,7 @@ namespace Configurator
                                 Forms = TablePart.Forms,
                                 Form = TablePart.Forms[curRow.Child.Name],
                                 TypeForm = TablePart.Forms[curRow.Child.Name].Type,
+                                TriggerTablePartFunctions = TablePart.TriggerFunctions,
                                 Fields = TablePart.Fields,
                                 TabularLists = TablePart.TabularList,
                                 TabularList = form.TabularList,
@@ -626,6 +702,7 @@ namespace Configurator
                         ParentType = "TablePart",
                         Forms = TablePart.Forms,
                         TypeForm = typeForms,
+                        TriggerTablePartFunctions = TablePart.TriggerFunctions,
                         Fields = TablePart.Fields,
                         TabularLists = TablePart.TabularList,
                         IsNew = true,
@@ -640,6 +717,12 @@ namespace Configurator
             }
 
             Menu Menu = new Menu();
+
+            {
+                MenuItem item = new MenuItem("Тригери");
+                item.Activated += (sender, args) => { OnFormsListAdd(ConfigurationForms.TypeForms.TriggersTablePart); };
+                Menu.Append(item);
+            }
 
             {
                 MenuItem item = new MenuItem("Таблична частина");

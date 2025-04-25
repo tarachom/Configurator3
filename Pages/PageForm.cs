@@ -36,6 +36,7 @@ namespace Configurator
         public string ParentName { get; set; } = ""; //Назва власника
         public string ParentType { get; set; } = ""; //Тип власника (Довідник, Документ ...)
         public ConfigurationTriggerFunctions? TriggerFunctions; //Для довідника та документу
+        public ConfigurationTriggerTablePartFunctions? TriggerTablePartFunctions; //Для табличної частини
         public ConfigurationSpendFunctions? SpendFunctions; //Для документу
         public Dictionary<string, ConfigurationField> Fields = []; //Поля
         public Dictionary<string, ConfigurationTablePart> TabularParts = []; //Табличні частини
@@ -535,8 +536,15 @@ namespace Configurator
                 ConfigurationForms.TypeForms.TablePart => $"Таблична частина {ParentName}",
                 ConfigurationForms.TypeForms.Function => "Функції",
                 ConfigurationForms.TypeForms.Triggers => "Тригери",
+                ConfigurationForms.TypeForms.TriggersTablePart => "Тригери",
                 ConfigurationForms.TypeForms.SpendTheDocument => "Проведення документу",
                 ConfigurationForms.TypeForms.Report => "Звіт",
+                _ => ""
+            };
+
+            string shortName = TypeForm switch
+            {
+                ConfigurationForms.TypeForms.TriggersTablePart => " " + ParentName,
                 _ => ""
             };
 
@@ -551,6 +559,7 @@ namespace Configurator
                 ConfigurationForms.TypeForms.TablePart => "TablePart",
                 ConfigurationForms.TypeForms.Function => "Function",
                 ConfigurationForms.TypeForms.Triggers => "Triggers",
+                ConfigurationForms.TypeForms.TriggersTablePart => "Triggers",
                 ConfigurationForms.TypeForms.SpendTheDocument => "SpendTheDocument",
                 ConfigurationForms.TypeForms.Report => "Report",
                 _ => ""
@@ -559,7 +568,7 @@ namespace Configurator
             if (IsNew)
             {
                 Form.Type = TypeForm;
-                entryName.Text = textViewDesc.Buffer.Text = name;
+                entryName.Text = textViewDesc.Buffer.Text = name + shortName;
             }
             else
             {
@@ -613,115 +622,6 @@ namespace Configurator
                 Button buttonGenCode = new Button("Згенерувати код");
                 buttonGenCode.Clicked += (object? sender, EventArgs args) => GenerateCode();
                 hBoxButton.PackStart(buttonGenCode, false, false, 5);
-
-                /*
-                Button buttonSaveCode = new Button("Зберегти в файл");
-                buttonSaveCode.Clicked += (object? sender, EventArgs args) =>
-                {
-                    string saveFileName = "";
-
-                    if (Form.Type == ConfigurationForms.TypeForms.TablePart)
-                        saveFileName = Owner.Name + "_ТабличнаЧастина_" + ParentName + ".cs";
-                    else
-                    {
-                        saveFileName = ParentName + Form.Type switch
-                        {
-                            ConfigurationForms.TypeForms.Element => "_Елемент",
-                            ConfigurationForms.TypeForms.List => "",
-                            ConfigurationForms.TypeForms.ListSmallSelect => "_ШвидкийВибір",
-                            ConfigurationForms.TypeForms.PointerControl => "_PointerControl",
-                            ConfigurationForms.TypeForms.MultiplePointerControl => "_MultiplePointerControl",
-                            ConfigurationForms.TypeForms.ListAndTree => "",
-                            ConfigurationForms.TypeForms.Function => "_Функції",
-                            ConfigurationForms.TypeForms.Triggers => "_Triggers",
-                            ConfigurationForms.TypeForms.SpendTheDocument => "_SpendTheDocument",
-                            ConfigurationForms.TypeForms.Report => "_Звіт",
-                            _ => "_Інше"
-                        } + ".cs";
-                    }
-
-                    string currentFolder = "";
-
-                    string? generateCodeFolder = null;
-                    GeneralForm?.OpenConfigurationParam?.OtherParam.TryGetValue("GenerateCodePath", out generateCodeFolder);
-                    if (generateCodeFolder != null)
-                    {
-                        currentFolder = generateCodeFolder;
-                        string parentFolder = "";
-
-                        if (Form.Type == ConfigurationForms.TypeForms.TablePart)
-                        {
-                            parentFolder = Owner.Type switch
-                            {
-                                "Directory" => "Довідники",
-                                "Document" => "Документи",
-                                "RegisterAccumulation" => "РегістриНакопичення",
-                                _ => ""
-                            } + "/" + Owner.Name;
-
-                            Console.WriteLine(Owner.Type);
-                            Console.WriteLine(Owner.Name);
-                            Console.WriteLine(parentFolder);
-
-                            if (!string.IsNullOrEmpty(parentFolder))
-                            {
-                                currentFolder = System.IO.Path.Combine(currentFolder, "../", parentFolder);
-                                Console.WriteLine(currentFolder);
-                                if (!Directory.Exists(currentFolder)) Directory.CreateDirectory(currentFolder);
-                            }
-                        }
-                        else
-                        {
-                            parentFolder = ParentType switch
-                            {
-                                "Directory" => "Довідники",
-                                "Document" => "Документи",
-                                "RegisterInformation" => "РегістриВідомостей",
-                                "RegisterAccumulation" => "РегістриНакопичення",
-                                _ => ""
-                            };
-
-                            if (!string.IsNullOrEmpty(parentFolder))
-                            {
-                                currentFolder = System.IO.Path.Combine(currentFolder, "../", parentFolder, ParentName);
-                                if (!Directory.Exists(currentFolder)) Directory.CreateDirectory(currentFolder);
-                            }
-                        }
-                    }
-
-                    FileChooserDialog fc = new FileChooserDialog("Виберіть каталог", GeneralForm,
-                        FileChooserAction.Save, "Закрити", ResponseType.Cancel, "Вибрати", ResponseType.Accept);
-
-                    fc.SetCurrentFolder(currentFolder);
-                    fc.CurrentName = saveFileName;
-
-                    if (fc.Run() == (int)ResponseType.Accept)
-                    {
-                        currentFolder = fc.CurrentFolder;
-                        saveFileName = fc.CurrentName;
-                    }
-
-                    fc.Dispose();
-                    fc.Destroy();
-
-                    string fullPath = System.IO.Path.Combine(currentFolder, saveFileName);
-                    if (System.IO.File.Exists(fullPath))
-                    {
-                        TextWriter sw = new System.IO.StreamWriter(fullPath, false);
-                        sw.Write(sourceViewCode.Buffer.Text);
-                        sw.Flush();
-                        sw.Close();
-                    }
-                    else
-                    {
-                        TextWriter sw = System.IO.File.CreateText(fullPath);
-                        sw.Write(sourceViewCode.Buffer.Text);
-                        sw.Flush();
-                        sw.Close();
-                    }
-                };
-                hBoxButton.PackStart(buttonSaveCode, false, false, 5);
-                */
 
                 Box hBoxCode = new Box(Orientation.Horizontal, 0);
 
@@ -1039,8 +939,11 @@ namespace Configurator
                 Configuration.SaveFormElementField(Conf, Fields, Form.ElementFields, xmlConfDocument, nodeParentType);
                 Configuration.SaveFormElementTablePart(TabularParts, Form.ElementTableParts, xmlConfDocument, nodeParentType);
             }
-            else if (TypeForm == ConfigurationForms.TypeForms.TablePart)
+            else if (TypeForm == ConfigurationForms.TypeForms.TablePart || TypeForm == ConfigurationForms.TypeForms.TriggersTablePart)
             {
+                if (TypeForm == ConfigurationForms.TypeForms.TriggersTablePart && TriggerTablePartFunctions != null)
+                    Configuration.SaveTriggerTablePartFunctions(TriggerTablePartFunctions, xmlConfDocument, nodeParentType);
+
                 XmlElement nodeOwnerExist = xmlConfDocument.CreateElement("OwnerExist");
                 nodeOwnerExist.InnerText = Owner.Exist ? "1" : "0";
                 nodeParentType.AppendChild(nodeOwnerExist);
