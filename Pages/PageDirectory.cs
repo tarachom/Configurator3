@@ -67,6 +67,7 @@ namespace Configurator
 
         TextView textViewDesc = new TextView() { WrapMode = WrapMode.Word };
         CheckButton checkButtonAutoNum = new CheckButton("Автоматична нумерація");
+        CheckButton checkButtonVersionsHistory = new CheckButton("Вести історію версій");
         ComboBoxText comboBoxTypeDir = new ComboBoxText();
         ComboBoxText comboBoxPointerFolders = new ComboBoxText();
         ComboBoxText comboBoxParentField = new ComboBoxText();
@@ -405,6 +406,20 @@ namespace Configurator
                         GeneralForm?.LoadTreeAsync();
                     }
                 };
+            }
+
+            //Історія версій
+            {
+                Expander expanderVersionsHistory = new Expander("Історія версій");
+                vBox.PackStart(expanderVersionsHistory, false, false, 5);
+
+                Box vBoxVersionsHistory = new Box(Orientation.Vertical, 0);
+                expanderVersionsHistory.Add(vBoxVersionsHistory);
+
+                //Прапорець
+                Box hBoxVersionsHistory = new Box(Orientation.Horizontal, 0) { Halign = Align.Start };
+                vBoxVersionsHistory.PackStart(hBoxVersionsHistory, false, false, 10);
+                hBoxVersionsHistory.PackStart(checkButtonVersionsHistory, false, false, 5);
             }
 
             //Функції та тригери
@@ -811,6 +826,7 @@ namespace Configurator
 
             checkButtonAutoNum.Active = ConfDirectory.AutomaticNumeration;
             comboBoxTypeDir.ActiveId = ConfDirectory.TypeDirectory.ToString();
+            checkButtonVersionsHistory.Active = ConfDirectory.VersionsHistory;
 
             FillPointerFolders();
             comboBoxPointerFolders.ActiveId = ConfDirectory.PointerFolders_HierarchyInAnotherDirectory;
@@ -939,6 +955,7 @@ namespace Configurator
             #endregion
 
             ConfDirectory.AutomaticNumeration = checkButtonAutoNum.Active;
+            ConfDirectory.VersionsHistory = checkButtonVersionsHistory.Active;
 
             // Для ієрархічного довідника
             DirectoryOtherInfoStruct directoryOtherInfo = GetDirectoryOtherInfo();

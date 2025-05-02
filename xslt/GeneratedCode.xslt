@@ -716,7 +716,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
              <xsl:text>[</xsl:text>
              <xsl:for-each select="Fields/Field">
                <xsl:text>"</xsl:text><xsl:value-of select="NameInTable"/><xsl:text>", </xsl:text>
-             </xsl:for-each>]) 
+             </xsl:for-each>]<xsl:if test="VersionsHistory = '1'">, true</xsl:if>)
         {
             <xsl:if test="count(TabularParts/TablePart) &gt; 0">
                 //Табличні частини
@@ -1283,7 +1283,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
              <xsl:text>[</xsl:text>
              <xsl:for-each select="Fields/Field">
                <xsl:text>"</xsl:text><xsl:value-of select="NameInTable"/><xsl:text>", </xsl:text>
-             </xsl:for-each>])
+             </xsl:for-each>]<xsl:if test="VersionsHistory = '1'">, true</xsl:if>)
         {
             <xsl:if test="count(TabularParts/TablePart) &gt; 0">
                 //Табличні частини

@@ -78,6 +78,7 @@ namespace Configurator
 
         TextView textViewDesc = new TextView() { WrapMode = WrapMode.Word };
         CheckButton checkButtonAutoNum = new CheckButton("Автоматична нумерація");
+        CheckButton checkButtonVersionsHistory = new CheckButton("Вести історію версій");
         CheckButton checkButtonExportXml = new CheckButton("Формат XML");
 
         #endregion
@@ -207,6 +208,20 @@ namespace Configurator
                         GeneralForm?.LoadTreeAsync();
                     }
                 };
+            }
+
+            //Історія версій
+            {
+                Expander expanderVersionsHistory = new Expander("Історія версій");
+                vBox.PackStart(expanderVersionsHistory, false, false, 5);
+
+                Box vBoxVersionsHistory = new Box(Orientation.Vertical, 0);
+                expanderVersionsHistory.Add(vBoxVersionsHistory);
+
+                //Прапорець
+                Box hBoxVersionsHistory = new Box(Orientation.Horizontal, 0) { Halign = Align.Start };
+                vBoxVersionsHistory.PackStart(hBoxVersionsHistory, false, false, 10);
+                hBoxVersionsHistory.PackStart(checkButtonVersionsHistory, false, false, 5);
             }
 
             //Проведення та тригери
@@ -724,6 +739,7 @@ namespace Configurator
             #endregion
 
             checkButtonAutoNum.Active = ConfDocument.AutomaticNumeration;
+            checkButtonVersionsHistory.Active = ConfDocument.VersionsHistory;
             checkButtonExportXml.Active = ConfDocument.ExportXml;
 
             FillAllowRegAccum();
@@ -818,6 +834,7 @@ namespace Configurator
             #endregion
 
             ConfDocument.AutomaticNumeration = checkButtonAutoNum.Active;
+            ConfDocument.VersionsHistory = checkButtonVersionsHistory.Active;
             ConfDocument.ExportXml = checkButtonExportXml.Active;
 
             //Доспупні регістри
