@@ -984,7 +984,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
              <xsl:text>[</xsl:text>
              <xsl:for-each select="Fields/Field">
                <xsl:text>"</xsl:text><xsl:value-of select="NameInTable"/><xsl:text>", </xsl:text>
-             </xsl:for-each>])
+             </xsl:for-each>]<xsl:if test="VersionsHistory = '1'">, true</xsl:if>)
         {
             if (owner == null) throw new Exception("owner null");
             Owner = owner;
@@ -1067,16 +1067,20 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
         {
             if (!await base.IsExistOwner(Owner.UnigueID, "<xsl:value-of select="$DirectoryTable"/>"))
                 throw new Exception("Owner not exist");
-
+            <xsl:if test="VersionsHistory = '1'">
+            OwnerVersionID = Owner.VersionID;
+            OwnerBasis = Owner.GetBasis();
+            </xsl:if>
             <xsl:if test="normalize-space(TriggerFunctions/BeforeSave) != '' and TriggerFunctions/BeforeSave[@Action = '1']">
             await <xsl:value-of select="$TablePartFullName"/>_Triggers.<xsl:value-of select="TriggerFunctions/BeforeSave"/>(Owner, this);
             </xsl:if>
                 
             await base.BaseBeginTransaction();
-                
+            <xsl:if test="VersionsHistory = '1'">
+            await IsExistOwnerVersion();
+            </xsl:if>
             if (clear_all_before_save)
                 await base.BaseDelete(Owner.UnigueID);
-
             <xsl:for-each select="Fields/Field[Type = 'integer' and AutomaticNumbering = '1']">
             int sequenceNumber_<xsl:value-of select="Name"/> = 0;
             </xsl:for-each>
@@ -1113,7 +1117,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             </xsl:if>
             Saved?.Invoke(this, new EventArgs());
         }
-
+        <!--
         public async ValueTask Remove(Record record)
         {
             await base.BaseRemove(record.UID, Owner.UnigueID);
@@ -1139,7 +1143,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
         {
             await base.BaseDelete(Owner.UnigueID);
         }
-
+        -->
         public List&lt;Record&gt; Copy()
         {
             List&lt;Record&gt; copyRecords = new(Records);
@@ -1613,7 +1617,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
              <xsl:text>[</xsl:text>
              <xsl:for-each select="Fields/Field">
                <xsl:text>"</xsl:text><xsl:value-of select="NameInTable"/><xsl:text>", </xsl:text>
-             </xsl:for-each>])
+             </xsl:for-each>]<xsl:if test="VersionsHistory = '1'">, true</xsl:if>)
         {
             if (owner == null) throw new Exception("owner null");
             Owner = owner;
@@ -1696,16 +1700,20 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
         {
             if (!await base.IsExistOwner(Owner.UnigueID, "<xsl:value-of select="$DocumentTable"/>"))
                 throw new Exception("Owner not exist");
-
+            <xsl:if test="VersionsHistory = '1'">
+            OwnerVersionID = Owner.VersionID;
+            OwnerBasis = Owner.GetBasis();
+            </xsl:if>
             <xsl:if test="normalize-space(TriggerFunctions/BeforeSave) != '' and TriggerFunctions/BeforeSave[@Action = '1']">
             await <xsl:value-of select="$TablePartFullName"/>_Triggers.<xsl:value-of select="TriggerFunctions/BeforeSave"/>(Owner, this);
             </xsl:if>
 
             await base.BaseBeginTransaction();
-                
+            <xsl:if test="VersionsHistory = '1'">
+            await IsExistOwnerVersion();
+            </xsl:if>
             if (clear_all_before_save)
                 await base.BaseDelete(Owner.UnigueID);
-
             <xsl:for-each select="Fields/Field[Type = 'integer' and AutomaticNumbering = '1']">
             int sequenceNumber_<xsl:value-of select="Name"/> = 0;
             </xsl:for-each>
@@ -1742,7 +1750,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
             </xsl:if>
             Saved?.Invoke(this, new EventArgs());
         }
-
+        <!--
         public async ValueTask Remove(Record record)
         {
             await base.BaseRemove(record.UID, Owner.UnigueID);
@@ -1768,7 +1776,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
         {
             await base.BaseDelete(Owner.UnigueID);
         }
-
+        -->
         public List&lt;Record&gt; Copy()
         {
             List&lt;Record&gt; copyRecords = new(Records);
@@ -2468,7 +2476,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
             }
             await base.BaseCommitTransaction();
         }
-
+        
         public async ValueTask Remove(Record record)
         {
             await base.BaseRemove(record.UID);
