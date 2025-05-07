@@ -78,7 +78,7 @@ namespace Configurator
 
         TextView textViewDesc = new TextView() { WrapMode = WrapMode.Word };
         CheckButton checkButtonAutoNum = new CheckButton("Автоматична нумерація");
-        CheckButton checkButtonVersionsHistory = new CheckButton("Вести історію версій");
+        CheckButton checkButtonVersionsHistory = new CheckButton("Зберігати історію зміни даних");
         CheckButton checkButtonExportXml = new CheckButton("Формат XML");
 
         #endregion
@@ -210,9 +210,9 @@ namespace Configurator
                 };
             }
 
-            //Історія версій
+            //Історія зміни даних
             {
-                Expander expanderVersionsHistory = new Expander("Історія версій");
+                Expander expanderVersionsHistory = new Expander("Історія зміни даних");
                 vBox.PackStart(expanderVersionsHistory, false, false, 5);
 
                 Box vBoxVersionsHistory = new Box(Orientation.Vertical, 0);
@@ -222,6 +222,13 @@ namespace Configurator
                 Box hBoxVersionsHistory = new Box(Orientation.Horizontal, 0) { Halign = Align.Start };
                 vBoxVersionsHistory.PackStart(hBoxVersionsHistory, false, false, 10);
                 hBoxVersionsHistory.PackStart(checkButtonVersionsHistory, false, false, 5);
+
+                //Підказка
+                Box hBoxVersionsHistoryInfo = new Box(Orientation.Horizontal, 0) { Halign = Align.Start };
+                vBoxVersionsHistory.PackStart(hBoxVersionsHistoryInfo, false, false, 5);
+                hBoxVersionsHistoryInfo.PackStart(new Label(
+                    "При кожному збереженні об'єкта додатково буде зберігатися копія даних в історію змін")
+                { Wrap = true, UseMarkup = true }, false, false, 5);
             }
 
             //Проведення та тригери
@@ -678,9 +685,9 @@ namespace Configurator
                 entryTable.Text = await Configuration.GetNewUnigueTableName(Program.Kernel);
 
                 //Заповнення полями
-                ConfDocument.AppendField(new ConfigurationField("Назва", "docname", "string", "", "Назва", true, true));
-                ConfDocument.AppendField(new ConfigurationField("НомерДок", "docnomer", "string", "", "НомерДок", false, true));
-                ConfDocument.AppendField(new ConfigurationField("ДатаДок", "docdate", "datetime", "", "ДатаДок", false, true));
+                ConfDocument.AppendField(new ConfigurationField("Назва", "Назва", "docname", "string", "", "Назва", true, true));
+                ConfDocument.AppendField(new ConfigurationField("НомерДок", "Номер", "docnomer", "string", "", "Номер документу", false, true));
+                ConfDocument.AppendField(new ConfigurationField("ДатаДок", "Дата", "docdate", "datetime", "", "Дата документу", false, true));
 
                 string nameInTable_Comment = Configuration.GetNewUnigueColumnName(Program.Kernel, entryTable.Text, ConfDocument.Fields);
                 ConfDocument.AppendField(new ConfigurationField("Коментар", nameInTable_Comment, "string", "", "Коментар"));
@@ -798,7 +805,7 @@ namespace Configurator
         {
             //Поле з повною назвою переноситься із назви
             if (string.IsNullOrEmpty(entryFullName.Text))
-                entryFullName.Text = entryName.Text;
+                entryFullName.Text = Configuration.CreateFullName(entryName.Text);
 
             ConfDocument.Name = entryName.Text;
             ConfDocument.FullName = entryFullName.Text;

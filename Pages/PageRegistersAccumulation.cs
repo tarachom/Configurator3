@@ -634,7 +634,7 @@ namespace Configurator
         void GetValue()
         {
             if (string.IsNullOrEmpty(entryFullName.Text))
-                entryFullName.Text = entryName.Text;
+                entryFullName.Text = Configuration.CreateFullName(entryName.Text);
 
             ConfRegister.Name = entryName.Text;
             ConfRegister.FullName = entryFullName.Text;
@@ -1149,7 +1149,7 @@ HAVING";
             ConfigurationTablePart TablePart = await CreateVirtualTable_Table("Залишки");
 
             int index = 0;
-            CreateVirtualTable_Field(TablePart, new ConfigurationField("Період", "", "date", "", "", false, true));
+            CreateVirtualTable_Field(TablePart, new ConfigurationField("Період", "Період", "", "date", "", "", false, true));
 
             //Виміри
             foreach (ConfigurationField field in ConfRegister.DimensionFields.Values)
@@ -1169,7 +1169,7 @@ HAVING";
             ConfigurationTablePart TablePart = await CreateVirtualTable_Table("ЗалишкиТаОбороти");
 
             int index = 0;
-            CreateVirtualTable_Field(TablePart, new ConfigurationField("Період", "", "date", "", "", false, true));
+            CreateVirtualTable_Field(TablePart, new ConfigurationField("Період", "Період", "", "date", "", "", false, true));
 
             //Виміри
             foreach (ConfigurationField field in ConfRegister.DimensionFields.Values)
@@ -1195,7 +1195,7 @@ HAVING";
             ConfigurationTablePart TablePart = await CreateVirtualTable_Table("Обороти");
 
             int index = 0;
-            CreateVirtualTable_Field(TablePart, new ConfigurationField("Період", "", "date", "", "", false, true));
+            CreateVirtualTable_Field(TablePart, new ConfigurationField("Період", "Період", "", "date", "", "", false, true));
 
             //Виміри
             foreach (ConfigurationField field in ConfRegister.DimensionFields.Values)
@@ -1258,13 +1258,13 @@ HAVING";
                     TablePart.Fields.Clear();
 
                     listFields.Insert(index, new KeyValuePair<string, ConfigurationField>(fieldAndPrefix,
-                        new ConfigurationField(fieldAndPrefix, fieldColumnName, field.Type, field.Pointer, field.Desc, false, field.IsIndex)));
+                        new ConfigurationField(fieldAndPrefix, fieldAndPrefix, fieldColumnName, field.Type, field.Pointer, field.Desc, false, field.IsIndex)));
 
                     foreach (KeyValuePair<string, ConfigurationField> itemField in listFields)
                         TablePart.AppendField(itemField.Value);
                 }
                 else
-                    TablePart.AppendField(new ConfigurationField(fieldAndPrefix, fieldColumnName, field.Type, field.Pointer, field.Desc, false, field.IsIndex));
+                    TablePart.AppendField(new ConfigurationField(fieldAndPrefix, fieldAndPrefix, fieldColumnName, field.Type, field.Pointer, field.Desc, false, field.IsIndex));
             }
         }
 

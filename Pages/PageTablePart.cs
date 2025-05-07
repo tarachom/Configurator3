@@ -60,6 +60,8 @@ namespace Configurator
 
         #endregion
 
+        CheckButton checkButtonVersionsHistory = new CheckButton("Зберігати історію зміни даних");
+
         public PageTablePart() : base(Orientation.Vertical, 0)
         {
             Box hBox = new Box(Orientation.Horizontal, 0);
@@ -117,6 +119,27 @@ namespace Configurator
                 scrollTextView.Add(textViewDesc);
 
                 hBoxDesc.PackStart(scrollTextView, false, false, 5);
+            }
+
+            //Історія зміни даних
+            {
+                Expander expanderVersionsHistory = new Expander("Історія зміни даних");
+                vBox.PackStart(expanderVersionsHistory, false, false, 5);
+
+                Box vBoxVersionsHistory = new Box(Orientation.Vertical, 0);
+                expanderVersionsHistory.Add(vBoxVersionsHistory);
+
+                //Прапорець
+                Box hBoxVersionsHistory = new Box(Orientation.Horizontal, 0) { Halign = Align.Start };
+                vBoxVersionsHistory.PackStart(hBoxVersionsHistory, false, false, 10);
+                hBoxVersionsHistory.PackStart(checkButtonVersionsHistory, false, false, 5);
+
+                //Підказка
+                Box hBoxVersionsHistoryInfo = new Box(Orientation.Horizontal, 0) { Halign = Align.Start };
+                vBoxVersionsHistory.PackStart(hBoxVersionsHistoryInfo, false, false, 5);
+                hBoxVersionsHistoryInfo.PackStart(new Label(
+                    "При кожному збереженні додатково буде зберігатися копія даних в історію змін")
+                { Wrap = true, UseMarkup = true }, false, false, 5);
             }
 
             //Функції та тригери
@@ -360,6 +383,8 @@ namespace Configurator
 
             #endregion
 
+            checkButtonVersionsHistory.Active = TablePart.VersionsHistory;
+
             FillTabularParts();
             FillTabularList();
             FillFormsList();
@@ -404,6 +429,8 @@ namespace Configurator
             TablePart.TriggerFunctions.AfterSaveAction = switchAfterSave.Active;
 
             #endregion
+
+            TablePart.VersionsHistory = checkButtonVersionsHistory.Active;
         }
 
         #endregion

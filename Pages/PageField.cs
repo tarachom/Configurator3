@@ -42,6 +42,7 @@ namespace Configurator
         #region Fields
 
         Entry entryName = new Entry() { WidthRequest = 500 };
+        Entry entryFullName = new Entry() { WidthRequest = 500 };
         Entry entryColumn = new Entry() { WidthRequest = 500 };
         TextView textViewDesc = new TextView() { WrapMode = WrapMode.Word };
         ComboBoxText comboBoxType = new ComboBoxText();
@@ -103,6 +104,13 @@ namespace Configurator
 
             hBoxName.PackStart(new Label("Назва:"), false, false, 5);
             hBoxName.PackStart(entryName, false, false, 5);
+
+            //Повна Назва
+            Box hBoxFullName = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
+            vBox.PackStart(hBoxFullName, false, false, 5);
+
+            hBoxFullName.PackStart(new Label("Повна назва:"), false, false, 5);
+            hBoxFullName.PackStart(entryFullName, false, false, 5);
 
             //Поле
             Box hBoxColumn = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
@@ -276,6 +284,7 @@ namespace Configurator
         public void SetValue()
         {
             entryName.Text = Field.Name;
+            entryFullName.Text = Field.FullName;
 
             if (IsNew)
                 entryColumn.Text = Configuration.GetNewUnigueColumnName(Program.Kernel, Table, AllFields ?? Fields);
@@ -340,7 +349,12 @@ namespace Configurator
 
         void GetValue()
         {
+            //Поле з повною назвою переноситься із назви
+            if (string.IsNullOrEmpty(entryFullName.Text))
+                entryFullName.Text = Configuration.CreateFullName(entryName.Text);
+
             Field.Name = entryName.Text;
+            Field.FullName = entryFullName.Text;
             Field.Desc = textViewDesc.Buffer.Text;
             Field.Type = comboBoxType.ActiveId;
 

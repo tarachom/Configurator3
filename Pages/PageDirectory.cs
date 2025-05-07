@@ -24,7 +24,6 @@ limitations under the License.
 using Gtk;
 
 using AccountingSoftware;
-using GtkSource;
 
 namespace Configurator
 {
@@ -67,7 +66,7 @@ namespace Configurator
 
         TextView textViewDesc = new TextView() { WrapMode = WrapMode.Word };
         CheckButton checkButtonAutoNum = new CheckButton("Автоматична нумерація");
-        CheckButton checkButtonVersionsHistory = new CheckButton("Вести історію версій");
+        CheckButton checkButtonVersionsHistory = new CheckButton("Зберігати історію зміни даних");
         ComboBoxText comboBoxTypeDir = new ComboBoxText();
         ComboBoxText comboBoxPointerFolders = new ComboBoxText();
         ComboBoxText comboBoxParentField = new ComboBoxText();
@@ -229,15 +228,15 @@ namespace Configurator
 
                             //Код
                             string nameInTable_Code = Configuration.GetNewUnigueColumnName(Program.Kernel, newConfDirectory.Table, newConfDirectory.Fields);
-                            newConfDirectory.AppendField(new ConfigurationField("Код", nameInTable_Code, "string", "", "Код", false, true));
+                            newConfDirectory.AppendField(new ConfigurationField("Код", "Код", nameInTable_Code, "string", "", "Код", false, true));
 
                             //Назва
                             string nameInTable_Name = Configuration.GetNewUnigueColumnName(Program.Kernel, newConfDirectory.Table, newConfDirectory.Fields);
-                            newConfDirectory.AppendField(new ConfigurationField("Назва", nameInTable_Name, "string", "", "Назва", true, true));
+                            newConfDirectory.AppendField(new ConfigurationField("Назва", "Назва", nameInTable_Name, "string", "", "Назва", true, true));
 
                             //Родич
                             string nameInTable_Parent = Configuration.GetNewUnigueColumnName(Program.Kernel, newConfDirectory.Table, newConfDirectory.Fields);
-                            newConfDirectory.AppendField(new ConfigurationField("Родич", nameInTable_Parent, "pointer", $"Довідники.{newConfDirectory.Name}", "Родич", false, true));
+                            newConfDirectory.AppendField(new ConfigurationField("Родич", "Родич", nameInTable_Parent, "pointer", $"Довідники.{newConfDirectory.Name}", "Родич", false, true));
 
                             //Заповнення списків
                             ConfigurationTabularList Записи = new ConfigurationTabularList("Записи", "");
@@ -260,7 +259,7 @@ namespace Configurator
                             if (!ConfDirectory.Fields.ContainsKey("Папка"))
                             {
                                 string nameInTable_Folder = Configuration.GetNewUnigueColumnName(Program.Kernel, ConfDirectory.Table, ConfDirectory.Fields);
-                                ConfDirectory.AppendField(new ConfigurationField("Папка", nameInTable_Folder, "pointer", $"Довідники.{newConfDirectory.Name}", "Папка", false, true));
+                                ConfDirectory.AppendField(new ConfigurationField("Папка", "Папка", nameInTable_Folder, "pointer", $"Довідники.{newConfDirectory.Name}", "Папка", false, true));
                             }
 
                             //Перевантажити список полів
@@ -280,7 +279,7 @@ namespace Configurator
                         {
                             // Родич
                             string nameInTable_Parent = Configuration.GetNewUnigueColumnName(Program.Kernel, ConfDirectory.Table, ConfDirectory.Fields);
-                            ConfDirectory.AppendField(new ConfigurationField("Родич", nameInTable_Parent, "pointer", $"Довідники.{ConfDirectory.Name}", "Родич", false, true));
+                            ConfDirectory.AppendField(new ConfigurationField("Родич", "Родич", nameInTable_Parent, "pointer", $"Довідники.{ConfDirectory.Name}", "Родич", false, true));
                             ConfDirectory.ParentField_Hierarchical = "Родич";
 
                             //Перевантажити список полів
@@ -408,9 +407,9 @@ namespace Configurator
                 };
             }
 
-            //Історія версій
+            //Історія зміни даних
             {
-                Expander expanderVersionsHistory = new Expander("Історія версій");
+                Expander expanderVersionsHistory = new Expander("Історія зміни даних");
                 vBox.PackStart(expanderVersionsHistory, false, false, 5);
 
                 Box vBoxVersionsHistory = new Box(Orientation.Vertical, 0);
@@ -420,6 +419,13 @@ namespace Configurator
                 Box hBoxVersionsHistory = new Box(Orientation.Horizontal, 0) { Halign = Align.Start };
                 vBoxVersionsHistory.PackStart(hBoxVersionsHistory, false, false, 10);
                 hBoxVersionsHistory.PackStart(checkButtonVersionsHistory, false, false, 5);
+
+                //Підказка
+                Box hBoxVersionsHistoryInfo = new Box(Orientation.Horizontal, 0) { Halign = Align.Start };
+                vBoxVersionsHistory.PackStart(hBoxVersionsHistoryInfo, false, false, 5);
+                hBoxVersionsHistoryInfo.PackStart(new Label(
+                    "При кожному збереженні об'єкта додатково буде зберігатися копія даних в історію змін")
+                { Wrap = true, UseMarkup = true }, false, false, 5);
             }
 
             //Функції та тригери
@@ -782,10 +788,10 @@ namespace Configurator
 
                 //Заповнення полями
                 string nameInTable_Code = Configuration.GetNewUnigueColumnName(Program.Kernel, entryTable.Text, ConfDirectory.Fields);
-                ConfDirectory.AppendField(new ConfigurationField("Код", nameInTable_Code, "string", "", "Код", false, true));
+                ConfDirectory.AppendField(new ConfigurationField("Код", "Код", nameInTable_Code, "string", "", "Код", false, true));
 
                 string nameInTable_Name = Configuration.GetNewUnigueColumnName(Program.Kernel, entryTable.Text, ConfDirectory.Fields);
-                ConfDirectory.AppendField(new ConfigurationField("Назва", nameInTable_Name, "string", "", "Назва", true, true));
+                ConfDirectory.AppendField(new ConfigurationField("Назва", "Назва", nameInTable_Name, "string", "", "Назва", true, true));
 
                 //Заповнення списку
                 ConfDirectory.AppendTableList(new ConfigurationTabularList("Записи"));
@@ -929,7 +935,7 @@ namespace Configurator
         {
             //Поле з повною назвою переноситься із назви
             if (string.IsNullOrEmpty(entryFullName.Text))
-                entryFullName.Text = entryName.Text;
+                entryFullName.Text = Configuration.CreateFullName(entryName.Text);
 
             ConfDirectory.Name = entryName.Text;
             ConfDirectory.FullName = entryFullName.Text;

@@ -449,7 +449,7 @@ namespace Configurator
         void GetValue()
         {
             if (string.IsNullOrEmpty(entryFullName.Text))
-                entryFullName.Text = entryName.Text;
+                entryFullName.Text = Configuration.CreateFullName(entryName.Text);
 
             ConfRegister.Name = entryName.Text;
             ConfRegister.FullName = entryFullName.Text;
