@@ -1396,7 +1396,15 @@ HAVING";
                 foreach (ListBoxRow row in selectedRows)
                     if (ConfRegister.DimensionFields.TryGetValue(row.Child.Name, out ConfigurationField? field))
                     {
+                        Dictionary<string, ConfigurationField> AllFields = Configuration.CombineAllFieldForRegister
+                        (
+                            ConfRegister.DimensionFields.Values,
+                            ConfRegister.ResourcesFields.Values,
+                            ConfRegister.PropertyFields.Values
+                        );
+
                         ConfigurationField newField = field.Copy();
+                        newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, ConfRegister.Table, AllFields);
                         newField.Name += GenerateName.GetNewName();
 
                         ConfRegister.AppendDimensionField(newField);
@@ -1506,8 +1514,16 @@ HAVING";
                 foreach (ListBoxRow row in selectedRows)
                     if (ConfRegister.ResourcesFields.TryGetValue(row.Child.Name, out ConfigurationField? field))
                     {
+                        Dictionary<string, ConfigurationField> AllFields = Configuration.CombineAllFieldForRegister
+                        (
+                            ConfRegister.DimensionFields.Values,
+                            ConfRegister.ResourcesFields.Values,
+                            ConfRegister.PropertyFields.Values
+                        );
+
                         ConfigurationField newField = field.Copy();
                         newField.Name += GenerateName.GetNewName();
+                        newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, ConfRegister.Table, AllFields);
 
                         ConfRegister.AppendResourcesField(newField);
                     }
@@ -1616,8 +1632,16 @@ HAVING";
                 foreach (ListBoxRow row in selectedRows)
                     if (ConfRegister.PropertyFields.TryGetValue(row.Child.Name, out ConfigurationField? field))
                     {
+                        Dictionary<string, ConfigurationField> AllFields = Configuration.CombineAllFieldForRegister
+                        (
+                            ConfRegister.DimensionFields.Values,
+                            ConfRegister.ResourcesFields.Values,
+                            ConfRegister.PropertyFields.Values
+                        );
+
                         ConfigurationField newField = field.Copy();
                         newField.Name += GenerateName.GetNewName();
+                        newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, ConfRegister.Table, AllFields);
 
                         ConfRegister.AppendPropertyField(newField);
                     }

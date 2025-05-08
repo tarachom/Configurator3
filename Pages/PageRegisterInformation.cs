@@ -575,8 +575,16 @@ namespace Configurator
                 foreach (ListBoxRow row in selectedRows)
                     if (ConfRegister.DimensionFields.TryGetValue(row.Child.Name, out ConfigurationField? dimensionFields))
                     {
+                        Dictionary<string, ConfigurationField> AllFields = Configuration.CombineAllFieldForRegister
+                        (
+                            ConfRegister.DimensionFields.Values,
+                            ConfRegister.ResourcesFields.Values,
+                            ConfRegister.PropertyFields.Values
+                        );
+
                         ConfigurationField newField = dimensionFields.Copy();
                         newField.Name += GenerateName.GetNewName();
+                        newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, ConfRegister.Table, AllFields);
 
                         ConfRegister.AppendDimensionField(newField);
                     }
@@ -685,8 +693,16 @@ namespace Configurator
                 foreach (ListBoxRow row in selectedRows)
                     if (ConfRegister.ResourcesFields.TryGetValue(row.Child.Name, out ConfigurationField? resourcesField))
                     {
+                        Dictionary<string, ConfigurationField> AllFields = Configuration.CombineAllFieldForRegister
+                        (
+                            ConfRegister.DimensionFields.Values,
+                            ConfRegister.ResourcesFields.Values,
+                            ConfRegister.PropertyFields.Values
+                        );
+
                         ConfigurationField newField = resourcesField.Copy();
                         newField.Name += GenerateName.GetNewName();
+                        newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, ConfRegister.Table, AllFields);
 
                         ConfRegister.AppendResourcesField(newField);
                     }
@@ -796,9 +812,17 @@ namespace Configurator
                 foreach (ListBoxRow row in selectedRows)
                     if (ConfRegister.PropertyFields.TryGetValue(row.Child.Name, out ConfigurationField? propertyFields))
                     {
+                        Dictionary<string, ConfigurationField> AllFields = Configuration.CombineAllFieldForRegister
+                        (
+                            ConfRegister.DimensionFields.Values,
+                            ConfRegister.ResourcesFields.Values,
+                            ConfRegister.PropertyFields.Values
+                        );
+
                         ConfigurationField newField = propertyFields.Copy();
                         newField.Name += GenerateName.GetNewName();
-
+                        newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, ConfRegister.Table, AllFields);
+                        
                         ConfRegister.AppendPropertyField(newField);
                     }
 
