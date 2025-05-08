@@ -45,6 +45,7 @@ namespace Configurator
         ListBox listBoxFormsList = new ListBox() { SelectionMode = SelectionMode.Single };
 
         Entry entryName = new Entry() { WidthRequest = 500 };
+        Entry entryFullName = new Entry() { WidthRequest = 500 };
         Entry entryTable = new Entry() { WidthRequest = 500 };
         TextView textViewDesc = new TextView() { WrapMode = WrapMode.Word };
 
@@ -100,6 +101,13 @@ namespace Configurator
 
                 hBoxName.PackStart(new Label("Назва:"), false, false, 5);
                 hBoxName.PackStart(entryName, false, false, 5);
+
+                //Повна Назва
+                Box hBoxFullName = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
+                vBox.PackStart(hBoxFullName, false, false, 5);
+
+                hBoxFullName.PackStart(new Label("Повна назва:"), false, false, 5);
+                hBoxFullName.PackStart(entryFullName, false, false, 5);
 
                 //Таблиця
                 Box hBoxTable = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
@@ -356,6 +364,7 @@ namespace Configurator
         public async void SetValue()
         {
             entryName.Text = TablePart.Name;
+            entryFullName.Text = TablePart.FullName;
 
             if (IsNew)
             {
@@ -416,7 +425,12 @@ namespace Configurator
 
         void GetValue()
         {
+            //Поле з повною назвою переноситься із назви
+            if (string.IsNullOrEmpty(entryFullName.Text))
+                entryFullName.Text = Configuration.CreateFullName(entryName.Text);
+
             TablePart.Name = entryName.Text;
+            TablePart.FullName = entryFullName.Text;
             TablePart.Table = entryTable.Text;
             TablePart.Desc = textViewDesc.Buffer.Text;
 

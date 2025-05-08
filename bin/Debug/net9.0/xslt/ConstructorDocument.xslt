@@ -598,6 +598,13 @@ namespace <xsl:value-of select="$NameSpace"/>
         {
             СпільніФорми_РухДокументуПоРегістрах.СформуватиЗвіт(new <xsl:value-of select="$DocumentName"/>_Pointer(unigueID));
         }
+
+        protected override async ValueTask InJournal(UnigueID unigueID)
+        {
+            <xsl:value-of select="$DocumentName"/> page = new <xsl:value-of select="$DocumentName"/>() { SelectPointerItem = unigueID };
+            NotebookFunction.CreateNotebookPage(Program.GeneralNotebook, <xsl:value-of select="$DocumentName"/>_Const.FULLNAME, () => page);
+            await page.SetValue();
+        }
     }
 }
     </xsl:template>
