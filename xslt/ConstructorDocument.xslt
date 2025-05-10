@@ -165,6 +165,13 @@ namespace <xsl:value-of select="$NameSpaceGeneratedCode"/>.Документи
 //
 -->
 
+    <xsl:template name="Function_FuncToField">
+        <xsl:choose>
+            <xsl:when test="Type = 'string'">FuncToField = "LOWER"</xsl:when>
+            <xsl:otherwise>FuncToField = "TO_CHAR", FuncToField_Param1 = "''"</xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
     <!-- Елемент -->
     <xsl:template name="DocumentFunction">
         <xsl:variable name="DocumentName" select="Document/Name"/>
@@ -196,13 +203,13 @@ namespace <xsl:value-of select="$NameSpace"/>
                     <xsl:when test="$FieldsFilter[IsSearch = '1']">
                         <xsl:for-each select="$FieldsFilter[IsSearch = '1']">
                 //<xsl:value-of select="Name"/>
-                new Where(<xsl:if test="position() != 1">Comparison.OR, </xsl:if><xsl:value-of select="$DocumentName"/>_Const.<xsl:value-of select="Name"/>, Comparison.LIKE, searchText) { FuncToField = "LOWER" },
+                new Where(<xsl:if test="position() != 1">Comparison.OR, </xsl:if><xsl:value-of select="$DocumentName"/>_Const.<xsl:value-of select="Name"/>, Comparison.LIKE, searchText) { <xsl:call-template name="Function_FuncToField" /> },
                         </xsl:for-each>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:if test="$FieldsFilter[Name = 'Назва']">
                 //Назва
-                new Where(<xsl:if test="$FieldsFilter[Name = 'Код']">Comparison.OR, </xsl:if><xsl:value-of select="$DocumentName"/>_Const.Назва, Comparison.LIKE, searchText) { FuncToField = "LOWER" },
+                new Where(<xsl:if test="$FieldsFilter[Name = 'Код']">Comparison.OR, </xsl:if><xsl:value-of select="$DocumentName"/>_Const.Назва, Comparison.LIKE, searchText) { <xsl:call-template name="Function_FuncToField" /> },
                         </xsl:if>
                     </xsl:otherwise>
                 </xsl:choose>
