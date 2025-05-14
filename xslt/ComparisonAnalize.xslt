@@ -355,7 +355,8 @@
                               Type/DataType = 'time without time zone' or 
                               Type/DataType = 'timestamp without time zone' or 
                               Type/DataType = 'uuid' or
-						      (Type/DataType = 'USER-DEFINED' and Type/UdtName = 'uuidtext') ">
+						                  (Type/DataType = 'USER-DEFINED' and Type/UdtName = 'uuidtext') or
+						                  (Type/DataType = 'USER-DEFINED' and Type/UdtName = 'nametext') ">
                 <xsl:choose>
                   <!-- Значення в Текст -->
                   <xsl:when test="Type/ConfType = 'string'">

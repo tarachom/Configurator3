@@ -258,6 +258,7 @@ namespace Configurator
                     "enum -> enum",
                     "pointer -> Довідник.Номенклатура",
                     "composite_pointer -> UuidAndText",
+                    "composite_text -> NameAndText",
                     "any_pointer -> Guid",
                     "byte -> byte[]",
                     "string[] -> string[]",

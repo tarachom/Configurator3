@@ -227,7 +227,7 @@ namespace Configurator
             Expander expanderDefField = new Expander("Стандартні поля");
             vBox.PackStart(expanderDefField, false, false, 5);
 
-            expanderDefField.Add(new Label(" <b>uid</b> \n <b>period</b> - дата та час запису \n <b>income</b> - дохід (true), розхід (false) \n <b>owner</b> - власник запису") { Halign = Align.Start, UseMarkup = true, UseUnderline = false, Selectable = true });
+            expanderDefField.Add(new Label(" <b>uid</b> \n <b>period</b> - дата та час запису \n <b>income</b> - дохід (true), розхід (false) \n <b>owner</b> - власник запису, \n <b>ownertype</b> - тип власника запису") { Halign = Align.Start, UseMarkup = true, UseUnderline = false, Selectable = true });
 
             //Поля
             CreateDimensionFieldList(vBox);

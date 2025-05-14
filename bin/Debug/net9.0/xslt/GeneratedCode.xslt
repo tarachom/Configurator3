@@ -42,6 +42,9 @@
       <xsl:when test="Type = 'composite_pointer'">
         <xsl:text>UuidAndText</xsl:text>
       </xsl:when>
+      <xsl:when test="Type = 'composite_text'">
+        <xsl:text>NameAndText</xsl:text>
+      </xsl:when>
       <xsl:when test="Type = 'enum'">
         <xsl:value-of select="Pointer"/>
       </xsl:when>
@@ -95,6 +98,9 @@
       <xsl:when test="Type = 'composite_pointer'">
         <xsl:text>new UuidAndText()</xsl:text>
       </xsl:when>
+      <xsl:when test="Type = 'composite_text'">
+        <xsl:text>new NameAndText()</xsl:text>
+      </xsl:when>
       <xsl:when test="Type = 'enum'">
         <xsl:text>0</xsl:text>
       </xsl:when>
@@ -142,8 +148,11 @@
       </xsl:when>
       <xsl:when test="Type = 'any_pointer'">
         <xsl:text>Guid.Empty</xsl:text>
-        </xsl:when>
+      </xsl:when>
       <xsl:when test="Type = 'composite_pointer'">
+        <xsl:text>null</xsl:text>
+      </xsl:when>
+      <xsl:when test="Type = 'composite_text'">
         <xsl:text>null</xsl:text>
       </xsl:when>
       <xsl:when test="Type = 'enum'">
@@ -216,9 +225,14 @@
           <xsl:text> : Guid.Empty</xsl:text>
         </xsl:when>
         <xsl:when test="Type = 'composite_pointer'">
-		    <xsl:text>(</xsl:text><xsl:value-of select="$BaseFieldContainer"/><xsl:text>["</xsl:text><xsl:value-of select="NameInTable"/><xsl:text>"] != DBNull.Value) ? </xsl:text>
+          <xsl:text>(</xsl:text><xsl:value-of select="$BaseFieldContainer"/><xsl:text>["</xsl:text><xsl:value-of select="NameInTable"/><xsl:text>"] != DBNull.Value) ? </xsl:text>
           <xsl:text>(UuidAndText)</xsl:text><xsl:value-of select="$BaseFieldContainer"/><xsl:text>["</xsl:text><xsl:value-of select="NameInTable"/><xsl:text>"]</xsl:text>
           <xsl:text> : new UuidAndText()</xsl:text>
+        </xsl:when>
+        <xsl:when test="Type = 'composite_text'">
+          <xsl:text>(</xsl:text><xsl:value-of select="$BaseFieldContainer"/><xsl:text>["</xsl:text><xsl:value-of select="NameInTable"/><xsl:text>"] != DBNull.Value) ? </xsl:text>
+          <xsl:text>(NameAndText)</xsl:text><xsl:value-of select="$BaseFieldContainer"/><xsl:text>["</xsl:text><xsl:value-of select="NameInTable"/><xsl:text>"]</xsl:text>
+          <xsl:text> : new NameAndText()</xsl:text>
         </xsl:when>
         <xsl:when test="Type = 'enum'">
           <xsl:text>(</xsl:text><xsl:value-of select="$BaseFieldContainer"/><xsl:text>["</xsl:text><xsl:value-of select="NameInTable"/><xsl:text>"] != DBNull.Value) ? </xsl:text>
@@ -297,9 +311,14 @@
           <xsl:text> : Guid.Empty</xsl:text>
         </xsl:when>
         <xsl:when test="Type = 'composite_pointer'">
-		    <xsl:text>(</xsl:text><xsl:value-of select="$BaseFieldContainer"/><xsl:text> != DBNull.Value) ? </xsl:text>
+          <xsl:text>(</xsl:text><xsl:value-of select="$BaseFieldContainer"/><xsl:text> != DBNull.Value) ? </xsl:text>
           <xsl:text>(UuidAndText)</xsl:text><xsl:value-of select="$BaseFieldContainer"/>
           <xsl:text> : new UuidAndText()</xsl:text>
+        </xsl:when>
+        <xsl:when test="Type = 'composite_text'">
+          <xsl:text>(</xsl:text><xsl:value-of select="$BaseFieldContainer"/><xsl:text> != DBNull.Value) ? </xsl:text>
+          <xsl:text>(NameAndText)</xsl:text><xsl:value-of select="$BaseFieldContainer"/>
+          <xsl:text> : new NameAndText()</xsl:text>
         </xsl:when>
         <xsl:when test="Type = 'enum'">
           <xsl:text>(</xsl:text><xsl:value-of select="$BaseFieldContainer"/><xsl:text> != DBNull.Value) ? </xsl:text>
@@ -1847,6 +1866,9 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
               <xsl:when test="Type = 'composite_pointer'">
                 xmlWriter.WriteRaw(((UuidAndText)obj.<xsl:value-of select="Name"/>).ToXml());
               </xsl:when>
+              <xsl:when test="Type = 'composite_text'">
+                xmlWriter.WriteRaw(((NameAndText)obj.<xsl:value-of select="Name"/>).ToXml());
+              </xsl:when>
               <xsl:otherwise>
                 xmlWriter.WriteValue(obj.<xsl:value-of select="Name"/>);
               </xsl:otherwise>
@@ -1900,6 +1922,9 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
                           </xsl:when>
                           <xsl:when test="Type = 'composite_pointer'">
                             xmlWriter.WriteRaw(((UuidAndText)record.<xsl:value-of select="Name"/>).ToXml());
+                          </xsl:when>
+                          <xsl:when test="Type = 'composite_text'">
+                            xmlWriter.WriteRaw(((NameAndText)record.<xsl:value-of select="Name"/>).ToXml());
                           </xsl:when>
                           <xsl:otherwise>
                             xmlWriter.WriteValue(record.<xsl:value-of select="Name"/>);
@@ -1967,7 +1992,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
 
     public class <xsl:value-of select="$RegisterName"/>_RecordsSet : RegisterInformationRecordsSet
     {
-        public <xsl:value-of select="$RegisterName"/>_RecordsSet() : base(Config.Kernel, "<xsl:value-of select="Table"/>",
+        public <xsl:value-of select="$RegisterName"/>_RecordsSet() : base(Config.Kernel, "<xsl:value-of select="Table"/>", "<xsl:value-of select="$RegisterName"/>",
              <xsl:text>[</xsl:text>
              <xsl:for-each select="(DimensionFields|ResourcesFields|PropertyFields)/Fields/Field">
                <xsl:text>"</xsl:text><xsl:value-of select="NameInTable"/><xsl:text>", </xsl:text>
@@ -2002,6 +2027,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
                     UID = (Guid)fieldValue["uid"],
                     Period = DateTime.Parse(fieldValue["period"]?.ToString() ?? DateTime.MinValue.ToString()),
                     Owner = (Guid)fieldValue["owner"],
+                    OwnerType = fieldValue["ownertype"] != DBNull.Value ? (NameAndText)fieldValue["ownertype"] : new NameAndText(),
                     <xsl:for-each select="(DimensionFields|ResourcesFields|PropertyFields)/Fields/Field">
                       <xsl:value-of select="Name"/>
                       <xsl:text> = </xsl:text>
@@ -2025,14 +2051,15 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
             base.BaseClear();
         }
         
-        public async ValueTask Save(DateTime period, Guid owner)
+        public async ValueTask Save(DateTime period, UuidAndText owner)
         {
             await base.BaseBeginTransaction();
-            await base.BaseDelete(owner);
+            await base.BaseDelete(owner.Uuid);
             foreach (Record record in Records)
             {
                 record.Period = period;
-                record.Owner = owner;
+                record.Owner = owner.Uuid;
+                record.OwnerType = owner.GetNameAndText();
                 Dictionary&lt;string, object&gt; fieldValue = new Dictionary&lt;string, object&gt;()
                 {
                     <xsl:for-each select="(DimensionFields|ResourcesFields|PropertyFields)/Fields/Field">
@@ -2048,7 +2075,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
                         <xsl:text>}</xsl:text>,
                     </xsl:for-each>
                 };
-                record.UID = await base.BaseSave(record.UID, period, owner, fieldValue);
+                record.UID = await base.BaseSave(record.UID, record.Period, record.Owner, record.OwnerType, fieldValue);
             }
             await base.BaseCommitTransaction();
         }
@@ -2335,6 +2362,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
                     Period = DateTime.Parse(fieldValue["period"]?.ToString() ?? DateTime.MinValue.ToString()),
                     Income = (bool)fieldValue["income"],
                     Owner = (Guid)fieldValue["owner"],
+                    OwnerType = fieldValue["ownertype"] != DBNull.Value ? (NameAndText)fieldValue["ownertype"] : new NameAndText(),
                     <xsl:for-each select="(DimensionFields|ResourcesFields|PropertyFields)/Fields/Field">
                       <xsl:value-of select="Name"/>
                       <xsl:text> = </xsl:text>
@@ -2360,16 +2388,17 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
             base.BaseClear();
         }
         
-        public async ValueTask Save(DateTime period, Guid owner) 
+        public async ValueTask Save(DateTime period, UuidAndText owner) 
         {
             await base.BaseBeginTransaction();
-            await base.BaseSelectPeriodForOwner(owner, period);
-            await base.BaseDelete(owner);
+            await base.BaseSelectPeriodForOwner(owner.Uuid, period);
+            await base.BaseDelete(owner.Uuid);
             foreach (Record record in Records)
             {
                 record.Period = period;
-                record.Owner = owner;
-                Dictionary&lt;string, object&gt; fieldValue = new Dictionary&lt;string, object&gt;()
+                record.Owner = owner.Uuid;
+                record.OwnerType = owner.GetNameAndText();
+                Dictionary&lt;string, object&gt; fieldValue = new()
                 {
                     <xsl:for-each select="(DimensionFields|ResourcesFields|PropertyFields)/Fields/Field">
                         <xsl:text>{"</xsl:text>
@@ -2384,9 +2413,9 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
                         <xsl:text>}</xsl:text>,
                     </xsl:for-each>
                 };
-                record.UID = await base.BaseSave(record.UID, period, record.Income, owner, fieldValue);
+                record.UID = await base.BaseSave(record.UID, record.Period, record.Income, record.Owner, record.OwnerType, fieldValue);
             }
-            await base.BaseTrigerAdd(period, owner);
+            await base.BaseTrigerAdd(period, owner.Uuid);
             await base.BaseCommitTransaction();
         }
 
