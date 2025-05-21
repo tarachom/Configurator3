@@ -457,7 +457,7 @@ namespace Configurator
                 foreach (ConfigurationConstants constants in block.Constants.Values)
                 {
                     string fullName = block.BlockName + "." + constants.Name;
-                    ConstantsAllFields.Add(fullName, new ConfigurationField(fullName, constants.NameInTable, constants.Type, constants.Pointer, constants.Desc));
+                    ConstantsAllFields.Add(fullName, new ConfigurationField(fullName, fullName, constants.NameInTable, constants.Type, constants.Pointer, constants.Desc));
                 }
 
             return ConstantsAllFields;
