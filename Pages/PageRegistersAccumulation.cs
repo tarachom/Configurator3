@@ -1238,7 +1238,7 @@ HAVING";
             if (!ConfRegister.TabularParts.ContainsKey(tableName))
             {
                 string table = await Configuration.GetNewUnigueTableName(Program.Kernel);
-                ConfRegister.AppendTablePart(new ConfigurationTablePart(tableName, table, "Віртуальна таблиця"));
+                ConfRegister.AppendTablePart(new ConfigurationTablePart(tableName, tableName, table, "Віртуальна таблиця"));
             }
 
             return ConfRegister.TabularParts[tableName];
