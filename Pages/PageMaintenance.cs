@@ -153,7 +153,8 @@ namespace Configurator
 
                 string query = $@"VACUUM FULL {table.TableName};";
 
-                await Program.Kernel.DataBase.ExecuteSQL(query);
+                // 5 хв таймаут 
+                await Program.Kernel.DataBase.ExecuteSQL(query, 0, 300);
             }
 
             ApendLine("");
