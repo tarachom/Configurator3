@@ -961,9 +961,9 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
         public bool MoveNext() { if (base.MoveToPosition() &amp;&amp; base.CurrentPointerPosition.HasValue) { Current = new <xsl:value-of select="$DirectoryName"/>_Pointer(base.CurrentPointerPosition.Value.UnigueID, base.CurrentPointerPosition.Value.Fields); return true; } else { Current = null; return false; } }
         public <xsl:value-of select="$DirectoryName"/>_Pointer? Current { get; private set; }
         
-        public async ValueTask&lt;<xsl:value-of select="$DirectoryName"/>_Pointer&gt; FindByField(string name, object value)
+        public async ValueTask&lt;<xsl:value-of select="$DirectoryName"/>_Pointer&gt; FindByField(string name, object value, string funcToField = "", string funcToField_Param1 = "")
         {
-            UnigueID? pointer = await base.BaseFindByField(name, value);
+            UnigueID? pointer = await base.BaseFindByField(name, value, funcToField, funcToField_Param1);
             return pointer != null ? new <xsl:value-of select="$DirectoryName"/>_Pointer(pointer) : new <xsl:value-of select="$DirectoryName"/>_Pointer();
         }
         
@@ -1611,9 +1611,9 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
         public bool MoveNext() { if (base.MoveToPosition() &amp;&amp; base.CurrentPointerPosition.HasValue) { Current = new <xsl:value-of select="$DocumentName"/>_Pointer(base.CurrentPointerPosition.Value.UnigueID, base.CurrentPointerPosition.Value.Fields); return true; } else { Current = null; return false; } }
         public <xsl:value-of select="$DocumentName"/>_Pointer? Current { get; private set; }
 
-        public async ValueTask&lt;<xsl:value-of select="$DocumentName"/>_Pointer&gt; FindByField(string name, object value)
+        public async ValueTask&lt;<xsl:value-of select="$DocumentName"/>_Pointer&gt; FindByField(string name, object value, string funcToField = "", string funcToField_Param1 = "")
         {
-            UnigueID? pointer = await base.BaseFindByField(name, value);
+            UnigueID? pointer = await base.BaseFindByField(name, value, funcToField, funcToField_Param1);
             return pointer != null ? new <xsl:value-of select="$DocumentName"/>_Pointer(pointer) : new <xsl:value-of select="$DocumentName"/>_Pointer();
         }
         
