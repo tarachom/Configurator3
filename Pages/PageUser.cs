@@ -22,7 +22,6 @@ limitations under the License.
 */
 
 using Gtk;
-
 using AccountingSoftware;
 
 namespace Configurator
@@ -38,7 +37,7 @@ namespace Configurator
 
         Entry entryLogin = new Entry() { WidthRequest = 500 };
         Entry entryName = new Entry() { WidthRequest = 500 };
-        Entry entryPassword = new Entry() { WidthRequest = 500 };
+        Entry entryPassword = new Entry() { WidthRequest = 500 /*, Visibility = false */ };
         TextView textViewInfo = new TextView() { WrapMode = WrapMode.Word };
 
         #endregion
@@ -53,7 +52,7 @@ namespace Configurator
             hBox.PackStart(bSave, false, false, 10);
 
             Button bClose = new Button("Закрити");
-            bClose.Clicked += (object? sender, EventArgs args) => GeneralForm?.CloseCurrentPageNotebook();
+            bClose.Clicked += (sender, args) => GeneralForm?.CloseCurrentPageNotebook();
 
             hBox.PackStart(bClose, false, false, 10);
 
