@@ -1096,15 +1096,13 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             </xsl:if>
                 
             await base.BaseBeginTransaction();
-            <xsl:if test="VersionsHistory = '1'">
-            await BeforeSaveOwnerVersion();
-            </xsl:if>
+
             if (clear_all_before_save)
                 await base.BaseDelete(Owner.UnigueID);
+            
             <xsl:for-each select="Fields/Field[Type = 'integer' and AutomaticNumbering = '1']">
             int sequenceNumber_<xsl:value-of select="Name"/> = 0;
             </xsl:for-each>
-            
             foreach (Record record in Records)
             {
                 <xsl:for-each select="Fields/Field[Type = 'integer' and AutomaticNumbering = '1']">
