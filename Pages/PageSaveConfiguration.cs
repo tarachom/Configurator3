@@ -26,7 +26,7 @@ using Gtk;
 using System.Xml.XPath;
 
 using AccountingSoftware;
-using InterfaceGtk;
+using InterfaceGtk3;
 
 namespace Configurator
 {

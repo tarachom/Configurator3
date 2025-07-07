@@ -22,14 +22,14 @@ limitations under the License.
 */
 
 using AccountingSoftware;
-using InterfaceGtk;
+using InterfaceGtk3;
 
 namespace Configurator
 {
     /// <summary>
     /// Переоприділення форми вибору бази
     /// </summary>
-    class FormConfigurationSelection : InterfaceGtk.FormConfigurationSelection
+    class FormConfigurationSelection : InterfaceGtk3.FormConfigurationSelection
     {
         public FormConfigurationSelection() : base(null, Program.Kernel, TypeForm.Configurator) { }
 

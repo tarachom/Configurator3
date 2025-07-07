@@ -5,7 +5,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Version>3.1.0.7</Version>
+    <Version>3.1.0.8</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,11 +15,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AccountingSoftwareLib\AccountingSoftware\AccountingSoftware.csproj" />
-    <ProjectReference Include="..\AccountingSoftwareLib\InterfaceGtk\InterfaceGtk.csproj" />
+    <ProjectReference Include="..\AccountingSoftwareLib\InterfaceGtk3\InterfaceGtk3.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="xslt/*.xslt" CopyToOutputDirectory="Always" />
+    <Content Include="xslt/*.xslt" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>
