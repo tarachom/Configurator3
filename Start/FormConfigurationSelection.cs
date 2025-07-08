@@ -22,7 +22,7 @@ limitations under the License.
 */
 
 using AccountingSoftware;
-using InterfaceGtk3;
+using InterfaceGtkLib;
 
 namespace Configurator
 {
