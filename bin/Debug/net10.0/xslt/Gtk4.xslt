@@ -46,10 +46,39 @@ using AccountingSoftware;
 using <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Перелічення;
 using <xsl:value-of select="Configuration/NameSpace"/>;
 
+namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Rows
+{
+    [Subclass&lt;GObject.Object&gt;]
+    public partial class Row
+    {
+        public UnigueID UID { get; set; } = new();
+        public bool DeletionLabel { get; set; } = false;
+    }
+
+    <xsl:for-each select="Configuration/Directories/Directory">
+        <xsl:variable name="DirectoryName" select="Name"/>
+        <xsl:variable name="DirectoryIndex" select="position()"/>
+    #region DIRECTORY "<xsl:value-of select="$DirectoryName"/>"
+        <xsl:for-each select="TabularLists/TabularList">
+    public partial class Row_<xsl:value-of select="$DirectoryIndex"/>_<xsl:value-of select="position()"/> : Row
+    {
+        <xsl:for-each select="Fields/Field">
+        public string <xsl:value-of select="Name"/> { get; set; } = "";
+        </xsl:for-each>
+        <xsl:for-each select="Fields/AdditionalField[Visible = 'True']">
+        public string <xsl:value-of select="Name"/> { get; set; } = "";
+        </xsl:for-each>
+    }
+        </xsl:for-each>
+    #endregion
+    </xsl:for-each>
+}
+
 namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Довідники.ТабличніСписки
 {
     <xsl:for-each select="Configuration/Directories/Directory">
       <xsl:variable name="DirectoryName" select="Name"/>
+      <xsl:variable name="DirectoryIndex" select="position()"/>
       <!-- Для ієрархії -->
       <xsl:variable name="DirectoryType" select="Type"/>
       <xsl:variable name="SelectType">
@@ -61,23 +90,14 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
     #region DIRECTORY "<xsl:value-of select="$DirectoryName"/>"
         <xsl:for-each select="TabularLists/TabularList">
             <xsl:variable name="TabularListName" select="Name"/>
+            <xsl:variable name="RowClassName">
+                <xsl:value-of select="/Configuration/NameSpaceGeneratedCode"/>.Rows.Row_<xsl:value-of select="$DirectoryIndex"/>_<xsl:value-of select="position()"/>
+            </xsl:variable>
     public partial class <xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularListName"/>
     {
-        [Subclass&lt;GObject.Object&gt;]
-        partial class Row
+        public static Gio.ListStore Create(ColumnView columnView)
         {
-            public UnigueID UID { get; set; } = new();
-            public bool DeletionLabel { get; set; } = false;
-            <xsl:for-each select="Fields/Field">
-            public string <xsl:value-of select="Name"/> { get; set; } = "";
-            </xsl:for-each>
-            <xsl:for-each select="Fields/AdditionalField[Visible = 'True']">
-            public string <xsl:value-of select="Name"/> { get; set; } = "";</xsl:for-each>
-        }
-
-        public static void AddColumns(ColumnView columnView)
-        {
-            var store = Gio.ListStore.New(Row.GetGType());
+            Gio.ListStore store = Gio.ListStore.New(<xsl:value-of select="$RowClassName"/>.GetGType());
 
             SingleSelection model = SingleSelection.New(store);
             model.Autoselect = true;
@@ -87,18 +107,71 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             //Image
             {
                 SignalListItemFactory factory = SignalListItemFactory.New();
-                factory.OnBind += (factory, e) =&gt;
+                factory.OnBind += (_, args) =&gt;
                 {
-                    ListItem listitem = (ListItem)e.Object;
-                    listitem.SetChild(Image.NewFromIconName("window-close-symbolic"));
+                    ListItem listItem = (ListItem)args.Object;
+                    <xsl:value-of select="$RowClassName"/>? row = (<xsl:value-of select="$RowClassName"/>?)listItem.Item;
+                    listItem.SetChild(Picture.NewForPixbuf((row?.DeletionLabel ?? false) ? InterfaceGtk4.Іконки.ДляТабличногоСписку.Delete : InterfaceGtk4.Іконки.ДляТабличногоСписку.Normal));
                 };
 
                 ColumnViewColumn column = ColumnViewColumn.New("", factory);
                 columnView.AppendColumn(column);
             }
+
+            <xsl:for-each select="Fields/Field">
+            {
+                SignalListItemFactory factory = SignalListItemFactory.New();
+                factory.OnSetup += (_, args) =&gt;
+                {
+                    ListItem listItem = (ListItem)args.Object;
+                    Label label = Label.New(null);
+                    label.Halign = Align.Start;
+                    listItem.Child = label;
+                };
+                factory.OnBind += (_, args) =&gt;
+                {
+                    ListItem listItem = (ListItem)args.Object;
+                    Label? label = (Label?)listItem.Child;
+                    <xsl:value-of select="$RowClassName"/>? row = (<xsl:value-of select="$RowClassName"/>?)listItem.Item;
+                    if (label != null &amp;&amp; row != null)
+                        label.SetText(row.<xsl:value-of select="Name"/>);
+                };
+
+                ColumnViewColumn column = ColumnViewColumn.New("<xsl:value-of select="Caption"/>", factory);
+                column.Resizable = true;
+                columnView.AppendColumn(column);
+            }
+            </xsl:for-each>
+
+            <xsl:for-each select="Fields/AdditionalField[Visible = 'True']">
+            {
+                SignalListItemFactory factory = SignalListItemFactory.New();
+                factory.OnSetup += (_, args) =&gt;
+                {
+                    ListItem listItem = (ListItem)args.Object;
+                    Label label = Label.New(null);
+                    label.Halign = Align.Start;
+                    listItem.Child = label;
+                };
+                factory.OnBind += (_, args) =&gt;
+                {
+                    ListItem listItem = (ListItem)args.Object;
+                    Label? label = (Label?)listItem.Child;
+                    <xsl:value-of select="$RowClassName"/>? row = (<xsl:value-of select="$RowClassName"/>?)listItem.Item;
+                    if (label != null &amp;&amp; row != null)
+                        label.SetText(row.<xsl:value-of select="Name"/>);
+                };
+
+                ColumnViewColumn column = ColumnViewColumn.New("<xsl:value-of select="Caption"/>", factory);
+                column.Resizable = true;
+                columnView.AppendColumn(column);
+            }
+            </xsl:for-each>
+
+            return store;
         }
 
-        public static async ValueTask LoadRecords()
+        public static async ValueTask LoadRecords(Gio.ListStore store)
         {
             <!-- Вибірка -->
             Довідники.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$SelectType"/><xsl:text> </xsl:text><xsl:value-of select="$DirectoryName"/>_Select = new();
@@ -139,28 +212,31 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
               <xsl:text>, </xsl:text><xsl:value-of select="$SortDirection"/>);
             </xsl:for-each>
 
-            <!-- Приєднання таблиць, JOIN -->
+            /* Приєднання таблиць, JOIN */
             <xsl:for-each select="Fields/Field[Type = 'pointer']">
                 <xsl:value-of select="substring-before(Pointer, '.')"/>.<xsl:value-of select="substring-after(Pointer, '.')"/>_Pointer.GetJoin(<xsl:value-of select="$DirectoryName"/>_Select.QuerySelect, Довідники.<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="Name"/>,
                 <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Table, "join_tab_<xsl:value-of select="position()"/>", "<xsl:value-of select="Name"/>");
             </xsl:for-each>
 
+            <xsl:if test="Fields/AdditionalField[Visible = 'True']">
             <!-- Додаткові поля -->
             <xsl:for-each select="Fields/AdditionalField[Visible = 'True']">
-                /* Additional Field */
+                /* Додаткове поле: <xsl:value-of select="Name"/> */
                 <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.FieldAndAlias.Add(
                     new ValueName&lt;string&gt;(@$"(<xsl:value-of select="normalize-space(Value)"/>)", "<xsl:value-of select="Name"/>"));
             </xsl:for-each>
+            </xsl:if>
 
             <!-- Вибрати дані -->
             await <xsl:value-of select="$DirectoryName"/>_Select.Select();
+            store.RemoveAll();
             while (<xsl:value-of select="$DirectoryName"/>_Select.MoveNext())
             {
                 Довідники.<xsl:value-of select="$DirectoryName"/>_Pointer? curr = <xsl:value-of select="$DirectoryName"/>_Select.Current;
                 if (curr != null)
                 {
                     Dictionary&lt;string, object&gt; fields = curr.Fields;
-                    Row row = new()
+                    <xsl:value-of select="$RowClassName"/> row = new()
                     {
                         UID = curr.UnigueID,
                         DeletionLabel = (bool)fields["deletion_label"],
@@ -186,6 +262,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
                             <xsl:value-of select="Name"/> = fields["<xsl:value-of select="Name"/>"].ToString() ?? "",
                         </xsl:for-each>
                     };
+                    store.Append(row);
                 }
             }
         }
