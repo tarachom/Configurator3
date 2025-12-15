@@ -27,6 +27,27 @@ limitations under the License.
 */
   </xsl:template>
 
+  <!-- Для задання значення поля -->
+  <xsl:template name="FieldValue">
+    <xsl:param name="ConfTypeName" />
+    <xsl:choose>
+        <xsl:when test="Type = 'pointer'">
+            <xsl:text>Fields["</xsl:text><xsl:value-of select="Name"/><xsl:text>"].ToString() ?? ""</xsl:text>
+        </xsl:when>
+        <xsl:when test="Type = 'enum'">
+            <xsl:text>Перелічення.ПсевдонімиПерелічення.</xsl:text><xsl:value-of select="substring-after(Pointer, '.')"/><xsl:text>_Alias((</xsl:text>
+            <xsl:value-of select="Pointer"/><xsl:text>)(Fields[</xsl:text><xsl:value-of select="$ConfTypeName"/><xsl:text>_Const.</xsl:text><xsl:value-of select="Name"/>
+            <xsl:text>] != DBNull.Value ? Fields[</xsl:text><xsl:value-of select="$ConfTypeName"/><xsl:text>_Const.</xsl:text><xsl:value-of select="Name"/><xsl:text>] : 0) )</xsl:text>
+        </xsl:when>
+        <xsl:when test="Type = 'boolean'">
+            <xsl:text>(Fields[</xsl:text><xsl:value-of select="$ConfTypeName"/><xsl:text>_Const.</xsl:text><xsl:value-of select="Name"/><xsl:text>] != DBNull.Value &amp;&amp; (bool)Fields[</xsl:text><xsl:value-of select="$ConfTypeName"/><xsl:text>_Const.</xsl:text><xsl:value-of select="Name"/><xsl:text>]) ? "Так" : ""</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+            <xsl:text>Fields[</xsl:text><xsl:value-of select="$ConfTypeName"/><xsl:text>_Const.</xsl:text><xsl:value-of select="Name"/>]<xsl:text>.ToString() ?? ""</xsl:text>
+        </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
   <xsl:template match="/">
 /*
  *
@@ -46,39 +67,10 @@ using AccountingSoftware;
 using <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Перелічення;
 using <xsl:value-of select="Configuration/NameSpace"/>;
 
-namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Rows
-{
-    [Subclass&lt;GObject.Object&gt;]
-    public partial class Row
-    {
-        public UnigueID UID { get; set; } = new();
-        public bool DeletionLabel { get; set; } = false;
-    }
-
-    <xsl:for-each select="Configuration/Directories/Directory">
-        <xsl:variable name="DirectoryName" select="Name"/>
-        <xsl:variable name="DirectoryIndex" select="position()"/>
-    #region DIRECTORY "<xsl:value-of select="$DirectoryName"/>"
-        <xsl:for-each select="TabularLists/TabularList">
-    public partial class Row_<xsl:value-of select="$DirectoryIndex"/>_<xsl:value-of select="position()"/> : Row
-    {
-        <xsl:for-each select="Fields/Field">
-        public string <xsl:value-of select="Name"/> { get; set; } = "";
-        </xsl:for-each>
-        <xsl:for-each select="Fields/AdditionalField[Visible = 'True']">
-        public string <xsl:value-of select="Name"/> { get; set; } = "";
-        </xsl:for-each>
-    }
-        </xsl:for-each>
-    #endregion
-    </xsl:for-each>
-}
-
 namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Довідники.ТабличніСписки
 {
     <xsl:for-each select="Configuration/Directories/Directory">
       <xsl:variable name="DirectoryName" select="Name"/>
-      <xsl:variable name="DirectoryIndex" select="position()"/>
       <!-- Для ієрархії -->
       <xsl:variable name="DirectoryType" select="Type"/>
       <xsl:variable name="SelectType">
@@ -90,14 +82,11 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
     #region DIRECTORY "<xsl:value-of select="$DirectoryName"/>"
         <xsl:for-each select="TabularLists/TabularList">
             <xsl:variable name="TabularListName" select="Name"/>
-            <xsl:variable name="RowClassName">
-                <xsl:value-of select="/Configuration/NameSpaceGeneratedCode"/>.Rows.Row_<xsl:value-of select="$DirectoryIndex"/>_<xsl:value-of select="position()"/>
-            </xsl:variable>
     public partial class <xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularListName"/>
     {
         public static Gio.ListStore Create(ColumnView columnView)
         {
-            Gio.ListStore store = Gio.ListStore.New(<xsl:value-of select="$RowClassName"/>.GetGType());
+            Gio.ListStore store = Gio.ListStore.New(DirectoryRow.GetGType());
 
             SingleSelection model = SingleSelection.New(store);
             model.Autoselect = true;
@@ -110,8 +99,8 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
                 factory.OnBind += (_, args) =&gt;
                 {
                     ListItem listItem = (ListItem)args.Object;
-                    <xsl:value-of select="$RowClassName"/>? row = (<xsl:value-of select="$RowClassName"/>?)listItem.Item;
-                    listItem.SetChild(Picture.NewForPixbuf((row?.DeletionLabel ?? false) ? InterfaceGtk4.Іконки.ДляТабличногоСписку.Delete : InterfaceGtk4.Іконки.ДляТабличногоСписку.Normal));
+                    DirectoryRow? row = (DirectoryRow?)listItem.Item;
+                    listItem.SetChild(Picture.NewForPixbuf((row?.DeletionLabel ?? false) ? InterfaceGtk4.Icon.ForTabularLists.Delete : InterfaceGtk4.Icon.ForTabularLists.Normal));
                 };
 
                 ColumnViewColumn column = ColumnViewColumn.New("", factory);
@@ -132,9 +121,9 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
                 {
                     ListItem listItem = (ListItem)args.Object;
                     Label? label = (Label?)listItem.Child;
-                    <xsl:value-of select="$RowClassName"/>? row = (<xsl:value-of select="$RowClassName"/>?)listItem.Item;
+                    DirectoryRow? row = (DirectoryRow?)listItem.Item;
                     if (label != null &amp;&amp; row != null)
-                        label.SetText(row.<xsl:value-of select="Name"/>);
+                        label.SetText(row.Fields["<xsl:value-of select="Name"/>"]);
                 };
 
                 ColumnViewColumn column = ColumnViewColumn.New("<xsl:value-of select="Caption"/>", factory);
@@ -157,9 +146,9 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
                 {
                     ListItem listItem = (ListItem)args.Object;
                     Label? label = (Label?)listItem.Child;
-                    <xsl:value-of select="$RowClassName"/>? row = (<xsl:value-of select="$RowClassName"/>?)listItem.Item;
+                    DirectoryRow? row = (DirectoryRow?)listItem.Item;
                     if (label != null &amp;&amp; row != null)
-                        label.SetText(row.<xsl:value-of select="Name"/>);
+                        label.SetText(row.Fields["<xsl:value-of select="Name"/>"]);
                 };
 
                 ColumnViewColumn column = ColumnViewColumn.New("<xsl:value-of select="Caption"/>", factory);
@@ -198,34 +187,34 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
 
             <!-- Сортування -->
              <xsl:for-each select="Fields/Field[SortField = 'True']">
-              <xsl:variable name="SortDirection">
-                  <xsl:choose>
-                      <xsl:when test="SortDirection = 'True'">SelectOrder.DESC</xsl:when>
-                      <xsl:otherwise>SelectOrder.ASC</xsl:otherwise>
-                  </xsl:choose>
-              </xsl:variable>
-              <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Order.Add(
-              <xsl:choose>
-                  <xsl:when test="Type = 'pointer'">"<xsl:value-of select="Name"/>"</xsl:when>
-                  <xsl:otherwise> Довідники.<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="Name"/></xsl:otherwise>
-              </xsl:choose>
-              <xsl:text>, </xsl:text><xsl:value-of select="$SortDirection"/>);
+                /* Sort */
+                <xsl:variable name="SortDirection">
+                    <xsl:choose>
+                        <xsl:when test="SortDirection = 'True'">SelectOrder.DESC</xsl:when>
+                        <xsl:otherwise>SelectOrder.ASC</xsl:otherwise>
+                    </xsl:choose>
+                </xsl:variable>
+                <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Order.Add(
+                <xsl:choose>
+                    <xsl:when test="Type = 'pointer'">"<xsl:value-of select="Name"/>"</xsl:when>
+                    <xsl:otherwise> Довідники.<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="Name"/></xsl:otherwise>
+                </xsl:choose>
+                <xsl:text>, </xsl:text><xsl:value-of select="$SortDirection"/>);
             </xsl:for-each>
 
-            /* Приєднання таблиць, JOIN */
+            <!-- Приєднання таблиць -->
             <xsl:for-each select="Fields/Field[Type = 'pointer']">
+                /* Join */
                 <xsl:value-of select="substring-before(Pointer, '.')"/>.<xsl:value-of select="substring-after(Pointer, '.')"/>_Pointer.GetJoin(<xsl:value-of select="$DirectoryName"/>_Select.QuerySelect, Довідники.<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="Name"/>,
                 <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Table, "join_tab_<xsl:value-of select="position()"/>", "<xsl:value-of select="Name"/>");
             </xsl:for-each>
 
-            <xsl:if test="Fields/AdditionalField[Visible = 'True']">
             <!-- Додаткові поля -->
             <xsl:for-each select="Fields/AdditionalField[Visible = 'True']">
                 /* Додаткове поле: <xsl:value-of select="Name"/> */
                 <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.FieldAndAlias.Add(
                     new ValueName&lt;string&gt;(@$"(<xsl:value-of select="normalize-space(Value)"/>)", "<xsl:value-of select="Name"/>"));
             </xsl:for-each>
-            </xsl:if>
 
             <!-- Вибрати дані -->
             await <xsl:value-of select="$DirectoryName"/>_Select.Select();
@@ -235,33 +224,14 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
                 Довідники.<xsl:value-of select="$DirectoryName"/>_Pointer? curr = <xsl:value-of select="$DirectoryName"/>_Select.Current;
                 if (curr != null)
                 {
-                    Dictionary&lt;string, object&gt; fields = curr.Fields;
-                    <xsl:value-of select="$RowClassName"/> row = new()
-                    {
-                        UID = curr.UnigueID,
-                        DeletionLabel = (bool)fields["deletion_label"],
-                        <xsl:for-each select="Fields/Field">
-                          <xsl:value-of select="Name"/><xsl:text> = </xsl:text>
-                          <xsl:choose>
-                            <xsl:when test="Type = 'pointer'">
-                              <xsl:text>fields["</xsl:text><xsl:value-of select="Name"/>"].ToString() ?? "",
-                            </xsl:when>
-                            <xsl:when test="Type = 'enum'">
-                              <xsl:text>Перелічення.ПсевдонімиПерелічення.</xsl:text><xsl:value-of select="substring-after(Pointer, '.')"/>_Alias((
-                              <xsl:text>(</xsl:text><xsl:value-of select="Pointer"/>)(fields[<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="Name"/>] != DBNull.Value ? fields[<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="Name"/>] : 0)) ),
-                            </xsl:when>
-                            <xsl:when test="Type = 'boolean'">
-                              <xsl:text>(fields[</xsl:text><xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="Name"/>] != DBNull.Value ? (bool)fields[<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="Name"/>] : false) ? "Так" : "",
-                            </xsl:when>
-                            <xsl:otherwise>
-                              <xsl:text>fields[</xsl:text><xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="Name"/>].ToString() ?? "",
-                            </xsl:otherwise>
-                          </xsl:choose>
-                        </xsl:for-each>
-                        <xsl:for-each select="Fields/AdditionalField[Visible = 'True']">
-                            <xsl:value-of select="Name"/> = fields["<xsl:value-of select="Name"/>"].ToString() ?? "",
-                        </xsl:for-each>
-                    };
+                    Dictionary&lt;string, object&gt; Fields = curr.Fields;
+                    DirectoryRow row = new() { UID = curr.UnigueID, DeletionLabel = (bool)Fields["deletion_label"] };
+                    <xsl:for-each select="Fields/Field">
+                        <xsl:text>row.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", <xsl:call-template name="FieldValue"><xsl:with-param name="ConfTypeName"><xsl:value-of select="$DirectoryName"/></xsl:with-param></xsl:call-template>);
+                    </xsl:for-each>
+                    <xsl:for-each select="Fields/AdditionalField[Visible = 'True']">
+                        <xsl:text>row.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", Fields["<xsl:value-of select="Name"/>"].ToString() ?? "");
+                    </xsl:for-each>
                     store.Append(row);
                 }
             }
