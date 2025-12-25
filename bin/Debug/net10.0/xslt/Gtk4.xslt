@@ -307,7 +307,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
                         <xsl:text>row.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", Fields["<xsl:value-of select="Name"/>"].ToString() ?? "");
                     </xsl:for-each>
                     form.Store.Append(row);
-                    if (row.UnigueID.Equals(unigueIDSelect)) selectPosition = form.Store.NItems;
+                    if (row.UnigueID.Equals(unigueIDSelect)) selectPosition = form.Store.GetNItems();
                 }
             }
             form.AfterRecordsLoaded(selectPosition);
