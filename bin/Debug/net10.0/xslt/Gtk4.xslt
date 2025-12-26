@@ -310,7 +310,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
                     if (row.UnigueID.Equals(unigueIDSelect)) selectPosition = form.Store.GetNItems();
                 }
             }
-            form.AfterRecordsLoaded(selectPosition);
+            form.AfterLoadRecords(selectPosition);
         }
     }
         </xsl:for-each>
