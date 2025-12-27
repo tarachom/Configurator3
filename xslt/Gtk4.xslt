@@ -255,7 +255,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             </xsl:for-each>
 
             <!-- Відбори -->
-            if (form.WhereList != null) <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where = (List&lt;Where&gt;)form.WhereList;
+            if (form.WhereList != null) <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where = form.WhereList;
 
             <!-- Сортування -->
              <xsl:for-each select="Fields/Field[SortField = 'True']">
