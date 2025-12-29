@@ -227,7 +227,101 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
           </xsl:if>
         }
 
-        
+        public static async ValueTask UpdateRecords(DocumentJournal form)
+        {
+            List&lt;ObjectChanged&gt; records = [];
+            lock (form.Loсked)
+                while(form.RecordsChangedQueue.Count &gt; 0)
+                    records.AddRange(form.RecordsChangedQueue.Dequeue());
+            
+            <!-- Вибірка -->
+            Довідники.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$SelectType"/><xsl:text> </xsl:text><xsl:value-of select="$DirectoryName"/>_Select = new();
+            <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Field.AddRange(
+            [
+                "deletion_label",
+                <xsl:for-each select="Fields/Field[Type != 'pointer']">
+                    <xsl:text>/*</xsl:text><xsl:value-of select="Name"/><xsl:text>*/ </xsl:text>
+                    <xsl:text>Довідники.</xsl:text>
+                    <xsl:value-of select="$DirectoryName"/>
+                    <xsl:text>_Const.</xsl:text>
+                    <xsl:value-of select="Name"/>,
+                </xsl:for-each>
+            ]);
+
+            <!-- Добавлення Sql функції для полів тип яких date -->
+            <xsl:for-each select="Fields/Field[Type = 'date']">
+                <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.SqlFunc.Add(new SqlFunc(Довідники.<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="Name"/>, "TO_CHAR", ["'dd.mm.yyyy'"]));
+            </xsl:for-each>
+
+            <!-- Відбори -->
+            <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where.Add(new Where("uid", Comparison.IN, "'" + string.Join("', '", records.Select(x =&gt; x.Uid)) + "'", true));
+
+            <!-- Сортування -->
+            <xsl:for-each select="Fields/Field[SortField = 'True']">
+                /* Sort */
+                <xsl:variable name="SortDirection">
+                    <xsl:choose>
+                        <xsl:when test="SortDirection = 'True'">SelectOrder.DESC</xsl:when>
+                        <xsl:otherwise>SelectOrder.ASC</xsl:otherwise>
+                    </xsl:choose>
+                </xsl:variable>
+                <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Order.Add(
+                <xsl:choose>
+                    <xsl:when test="Type = 'pointer'">"<xsl:value-of select="Name"/>"</xsl:when>
+                    <xsl:otherwise> Довідники.<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="Name"/></xsl:otherwise>
+                </xsl:choose>
+                <xsl:text>, </xsl:text><xsl:value-of select="$SortDirection"/>);
+            </xsl:for-each>
+
+            <!-- Приєднання таблиць -->
+            <xsl:for-each select="Fields/Field[Type = 'pointer']">
+                /* Join */
+                <xsl:value-of select="substring-before(Pointer, '.')"/>.<xsl:value-of select="substring-after(Pointer, '.')"/>_Pointer.GetJoin(<xsl:value-of select="$DirectoryName"/>_Select.QuerySelect, Довідники.<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="Name"/>,
+                <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Table, "join_tab_<xsl:value-of select="position()"/>", "<xsl:value-of select="Name"/>");
+            </xsl:for-each>
+
+            <!-- Додаткові поля -->
+            <xsl:for-each select="Fields/AdditionalField[Visible = 'True']">
+                /* Додаткове поле: <xsl:value-of select="Name"/> */
+                <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.FieldAndAlias.Add(
+                    new ValueName&lt;string&gt;(@$"(<xsl:value-of select="normalize-space(Value)"/>)", "<xsl:value-of select="Name"/>"));
+            </xsl:for-each>
+
+            <!-- Вибрати дані -->
+            await <xsl:value-of select="$DirectoryName"/>_Select.Select();
+            while (<xsl:value-of select="$DirectoryName"/>_Select.MoveNext())
+            {
+                Довідники.<xsl:value-of select="$DirectoryName"/>_Pointer? curr = <xsl:value-of select="$DirectoryName"/>_Select.Current;
+                if (curr != null)
+                {
+                    Dictionary&lt;string, object&gt; Fields = curr.Fields;
+                    DirectoryRow row = new() { UnigueID = curr.UnigueID, DeletionLabel = (bool)Fields["deletion_label"] };
+                    <xsl:for-each select="Fields/Field">
+                        <xsl:text>row.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", <xsl:call-template name="FieldValue"><xsl:with-param name="ConfTypeName"><xsl:value-of select="$DirectoryName"/></xsl:with-param></xsl:call-template>);
+                    </xsl:for-each>
+                    <xsl:for-each select="Fields/AdditionalField[Visible = 'True']">
+                        <xsl:text>row.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", Fields["<xsl:value-of select="Name"/>"].ToString() ?? "");
+                    </xsl:for-each>
+                    ObjectChanged? obj = records.Find(x =&gt; x.Uid.Equals(curr.UnigueID.UGuid));
+                    if (obj != null)
+                    {
+                        if (obj.Type == TypeObjectChanged.Add)
+                            form.Store.Append(row);
+                        else if (obj.Type == TypeObjectChanged.Update)
+                            for (uint i = 0; i &lt; form.Store.GetNItems(); i++)
+                            {
+                                Row? item = (Row?)form.Store.GetObject(i);
+                                if (item != null &amp;&amp; item.UnigueID.Equals(curr.UnigueID))
+                                {
+                                    form.Store.Remove(i);
+                                    form.Store.Insert(i, row);
+                                    break;
+                                }
+                            }
+                    }
+                }
+            }
+        }
 
         public static async ValueTask LoadRecords(DocumentJournal form)
         {
@@ -258,7 +352,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             if (form.WhereList != null) <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where = form.WhereList;
 
             <!-- Сортування -->
-             <xsl:for-each select="Fields/Field[SortField = 'True']">
+            <xsl:for-each select="Fields/Field[SortField = 'True']">
                 /* Sort */
                 <xsl:variable name="SortDirection">
                     <xsl:choose>

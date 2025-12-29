@@ -7,7 +7,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>27.12.2025 17:03:55</DateTimeSave>
+  <DateTimeSave>29.12.2025 20:00:50</DateTimeSave>
   <DictTSearch>simple</DictTSearch>
   <ConstantsBlocks>
     <ConstantsBlock>
@@ -1941,7 +1941,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
               <Caption>Код</Caption>
               <Size>0</Size>
               <SortNum>1</SortNum>
-              <SortField>False</SortField>
+              <SortField>True</SortField>
               <SortDirection>False</SortDirection>
               <FilterField>False</FilterField>
               <Type>string</Type>
@@ -1952,7 +1952,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
               <Caption>Назва</Caption>
               <Size>0</Size>
               <SortNum>2</SortNum>
-              <SortField>True</SortField>
+              <SortField>False</SortField>
               <SortDirection>False</SortDirection>
               <FilterField>False</FilterField>
               <Type>string</Type>
@@ -2108,7 +2108,7 @@ END]]></Value>
               <Caption>Код</Caption>
               <Size>0</Size>
               <SortNum>1</SortNum>
-              <SortField>False</SortField>
+              <SortField>True</SortField>
               <SortDirection>False</SortDirection>
               <FilterField>False</FilterField>
               <Type>string</Type>
@@ -2119,7 +2119,7 @@ END]]></Value>
               <Caption>Номенклатура</Caption>
               <Size>0</Size>
               <SortNum>2</SortNum>
-              <SortField>True</SortField>
+              <SortField>False</SortField>
               <SortDirection>False</SortDirection>
               <FilterField>False</FilterField>
               <Type>string</Type>
