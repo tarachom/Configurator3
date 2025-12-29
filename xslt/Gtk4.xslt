@@ -313,8 +313,9 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
                                 Row? item = (Row?)form.Store.GetObject(i);
                                 if (item != null &amp;&amp; item.UnigueID.Equals(curr.UnigueID))
                                 {
-                                    form.Store.Remove(i);
-                                    form.Store.Insert(i, row);
+                                    bool sel = form.Grid.Model.IsSelected(i);
+                                    form.Store.Splice(i, 1, [row], 1);
+                                    if (sel) form.Grid.Model.SelectItem(i, false);
                                     break;
                                 }
                             }
