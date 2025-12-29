@@ -231,8 +231,10 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
         {
             List&lt;ObjectChanged&gt; records = [];
             lock (form.Loсked)
+            {
                 while(form.RecordsChangedQueue.Count &gt; 0)
                     records.AddRange(form.RecordsChangedQueue.Dequeue());
+            }
             
             <!-- Вибірка -->
             Довідники.<xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$SelectType"/><xsl:text> </xsl:text><xsl:value-of select="$DirectoryName"/>_Select = new();
