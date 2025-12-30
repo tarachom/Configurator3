@@ -125,12 +125,7 @@ limitations under the License.
                 {
                     ListItem listItem = (ListItem)args.Object;
                     <xsl:value-of select="$RowType"/>? row = (<xsl:value-of select="$RowType"/>?)listItem.Item;
-                    Box vbox = Box.New(Orientation.Vertical, 0);
-                    vbox.Halign = vbox.Valign = Align.Center;
-                    Box hbox = Box.New(Orientation.Horizontal, 0);
-                    vbox.Append(hbox);
-                    hbox.Append(Picture.NewForPixbuf((row?.DeletionLabel ?? false) ? InterfaceGtk4.Icon.ForTabularLists.Delete : InterfaceGtk4.Icon.ForTabularLists.Normal));
-                    listItem.SetChild(vbox);
+                    listItem.SetChild(Picture.NewForPixbuf((row?.DeletionLabel ?? false) ? InterfaceGtk4.Icon.ForTabularLists.Delete : InterfaceGtk4.Icon.ForTabularLists.Normal));
                 };
                 ColumnViewColumn column = ColumnViewColumn.New("", factory);
                 form.Grid.AppendColumn(column);
@@ -141,19 +136,20 @@ limitations under the License.
             //Spend
             {
                 SignalListItemFactory factory = SignalListItemFactory.New();
+                factory.OnSetup += (_, args) =&gt;
+                {
+                    ListItem listItem = (ListItem)args.Object;
+                    CheckButton check = CheckButton.New();
+                    check.Sensitive = false;
+                    listItem.Child = check;
+                };
                 factory.OnBind += (_, args) =&gt;
                 {
                     ListItem listItem = (ListItem)args.Object;
                     DocumentRow? row = (DocumentRow?)listItem.Item;
-                    CheckButton check = CheckButton.New();
-                    check.Sensitive = false;
-                    if (row != null) check.SetActive((bool)row.Spend);
-                    Box vbox = Box.New(Orientation.Vertical, 0);
-                    vbox.Halign = vbox.Valign = Align.Center;
-                    Box hbox = Box.New(Orientation.Horizontal, 0);
-                    vbox.Append(hbox);
-                    hbox.Append(check);
-                    listItem.SetChild(vbox);
+                    CheckButton? check = (CheckButton?)listItem.Child;
+                    if (check != null &amp;&amp; row != null)
+                        check.SetActive(row.Spend);
                 };
                 ColumnViewColumn column = ColumnViewColumn.New("", factory);
                 form.Grid.AppendColumn(column);
