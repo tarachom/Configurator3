@@ -140,7 +140,7 @@ limitations under the License.
                 {
                     ListItem listItem = (ListItem)args.Object;
                     DocumentRow? row = (DocumentRow?)listItem.Item;
-                    listItem.SetChild(Picture.NewForPixbuf((row?.Spend ?? false) ? InterfaceGtk4.Icon.ForInformation.Ok : null));
+                    listItem.SetChild(Picture.NewForPixbuf((row?.Spend ?? false) ? InterfaceGtk4.Icon.ForInformation.Check : null));
                 };
                 ColumnViewColumn column = ColumnViewColumn.New("", factory);
                 form.Grid.AppendColumn(column);
