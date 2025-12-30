@@ -136,20 +136,11 @@ limitations under the License.
             //Spend
             {
                 SignalListItemFactory factory = SignalListItemFactory.New();
-                factory.OnSetup += (_, args) =&gt;
-                {
-                    ListItem listItem = (ListItem)args.Object;
-                    CheckButton check = CheckButton.New();
-                    check.Sensitive = false;
-                    listItem.Child = check;
-                };
                 factory.OnBind += (_, args) =&gt;
                 {
                     ListItem listItem = (ListItem)args.Object;
                     DocumentRow? row = (DocumentRow?)listItem.Item;
-                    CheckButton? check = (CheckButton?)listItem.Child;
-                    if (check != null &amp;&amp; row != null)
-                        check.SetActive(row.Spend);
+                    listItem.SetChild(Picture.NewForPixbuf((row?.Spend ?? false) ? InterfaceGtk4.Icon.ForInformation.Ok : null));
                 };
                 ColumnViewColumn column = ColumnViewColumn.New("", factory);
                 form.Grid.AppendColumn(column);
