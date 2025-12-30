@@ -7,7 +7,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>29.12.2025 23:15:35</DateTimeSave>
+  <DateTimeSave>30.12.2025 19:38:39</DateTimeSave>
   <DictTSearch>simple</DictTSearch>
   <ConstantsBlocks>
     <ConstantsBlock>
@@ -1986,7 +1986,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
               <Caption>Залишок</Caption>
               <Size>0</Size>
               <SortNum>1</SortNum>
-              <Type>string</Type>
+              <Type>numeric</Type>
               <Value><![CDATA[CASE WHEN 
 {Довідники.Номенклатура_Const.TABLE}.{Довідники.Номенклатура_Const.ТипНоменклатури} = {(int)Перелічення.ТипиНоменклатури.Товар} 
 THEN
@@ -2016,7 +2016,7 @@ END]]></Value>
               <Caption>В резерві</Caption>
               <Size>0</Size>
               <SortNum>2</SortNum>
-              <Type>string</Type>
+              <Type>numeric</Type>
               <Value><![CDATA[CASE WHEN 
 {Довідники.Номенклатура_Const.TABLE}.{Довідники.Номенклатура_Const.ТипНоменклатури} = {(int)Перелічення.ТипиНоменклатури.Товар} 
 THEN
@@ -2045,7 +2045,7 @@ END]]></Value>
               <Caption>Під замовлення</Caption>
               <Size>0</Size>
               <SortNum>3</SortNum>
-              <Type>string</Type>
+              <Type>numeric</Type>
               <Value><![CDATA[CASE WHEN 
 {Довідники.Номенклатура_Const.TABLE}.{Довідники.Номенклатура_Const.ТипНоменклатури} = {(int)Перелічення.ТипиНоменклатури.Товар} 
 THEN
@@ -2074,7 +2074,7 @@ END]]></Value>
               <Caption>В комірках</Caption>
               <Size>0</Size>
               <SortNum>4</SortNum>
-              <Type>string</Type>
+              <Type>numeric</Type>
               <Value><![CDATA[CASE WHEN 
 {Довідники.Номенклатура_Const.TABLE}.{Довідники.Номенклатура_Const.ТипНоменклатури} = {(int)Перелічення.ТипиНоменклатури.Товар}
 THEN
@@ -2142,7 +2142,7 @@ END]]></Value>
               <Caption>Залишок</Caption>
               <Size>0</Size>
               <SortNum>1</SortNum>
-              <Type>string</Type>
+              <Type>numeric</Type>
               <Value><![CDATA[CASE WHEN 
 {Довідники.Номенклатура_Const.TABLE}.{Довідники.Номенклатура_Const.ТипНоменклатури} = {(int)Перелічення.ТипиНоменклатури.Товар} 
 THEN
@@ -2172,7 +2172,7 @@ END]]></Value>
               <Caption>В резерві</Caption>
               <Size>0</Size>
               <SortNum>2</SortNum>
-              <Type>string</Type>
+              <Type>numeric</Type>
               <Value><![CDATA[CASE WHEN 
 {Довідники.Номенклатура_Const.TABLE}.{Довідники.Номенклатура_Const.ТипНоменклатури} = {(int)Перелічення.ТипиНоменклатури.Товар} 
 THEN
@@ -2201,7 +2201,7 @@ END]]></Value>
               <Caption>Під замовлення</Caption>
               <Size>0</Size>
               <SortNum>3</SortNum>
-              <Type>string</Type>
+              <Type>numeric</Type>
               <Value><![CDATA[CASE WHEN 
 {Довідники.Номенклатура_Const.TABLE}.{Довідники.Номенклатура_Const.ТипНоменклатури} = {(int)Перелічення.ТипиНоменклатури.Товар} 
 THEN

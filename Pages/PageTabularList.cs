@@ -105,7 +105,7 @@ namespace Configurator
             typeof(string) //Name
         );
 
-        string[] AdditionalTypeList = ["string"]; //, "integer", "numeric", "boolean", "image"];
+        string[] AdditionalTypeList = ["string", "numeric"]; //, "integer", "numeric", "boolean", "image"];
 
         TreeView treeViewAdditional;
 
