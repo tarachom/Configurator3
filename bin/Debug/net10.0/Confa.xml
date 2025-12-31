@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Configuration>
   <Name>"Зберігання та Торгівля" для України</Name>
-  <Subtitle>Облік складу, торгівлі та фінансів. Версія 3.1</Subtitle>
+  <Subtitle>Облік складу, торгівлі та фінансів | 4.0</Subtitle>
   <NameSpaceGeneratedCode>GeneratedCode</NameSpaceGeneratedCode>
   <NameSpace>StorageAndTrade</NameSpace>
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>30.12.2025 21:31:10</DateTimeSave>
+  <DateTimeSave>31.12.2025 13:04:53</DateTimeSave>
   <DictTSearch>simple</DictTSearch>
   <ConstantsBlocks>
     <ConstantsBlock>

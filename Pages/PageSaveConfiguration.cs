@@ -758,8 +758,10 @@ namespace Configurator
             //Копіювання файлу конфігурації Confa.xml в каталог зкомпільованої програми
             if (!string.IsNullOrEmpty(entryCompileProgramPath.Text))
             {
+                /*
                 if (entryCompileProgramPath.Text.Substring(entryCompileProgramPath.Text.Length - 1, 1) != "/")
                     entryCompileProgramPath.Text += "/";
+                */
 
                 string folderCompileProgramPath = System.IO.Path.GetDirectoryName(entryCompileProgramPath.Text)!;
 
