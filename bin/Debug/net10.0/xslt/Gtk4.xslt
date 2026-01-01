@@ -385,7 +385,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             </xsl:call-template>
 
             /* Відбори */
-            if (form.WhereList != null) <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where = form.WhereList;
+            if (form.WhereList != null) <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where.AddRange(form.WhereList);
 
             /* Cторінки */
             await form.SplitPages(<xsl:value-of select="$DirectoryName"/>_Select.SplitSelectToPages, <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect, unigueIDSelect);
@@ -529,7 +529,14 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
             </xsl:call-template>
 
             /* Відбори */
-            if (form.WhereList != null) <xsl:value-of select="$DocumentName"/>_Select.QuerySelect.Where = form.WhereList;
+            if (form.WhereList != null) <xsl:value-of select="$DocumentName"/>_Select.QuerySelect.Where.AddRange(form.WhereList);
+
+            /* Відбір за період */
+             if (form.TypeWhereState == InterfaceGtk4.FormJournal.TypeWhere.Standart || (form.TypeWhereState == InterfaceGtk4.FormJournal.TypeWhere.Filter &amp;&amp; form.Filter.IsUsePeriod))
+            {
+                Where? where = InterfaceGtk4.PeriodForJournal.ВідбірПоПеріоду(Документи.<xsl:value-of select="$DocumentName"/>_Const.ДатаДок, form.Period.Period, form.Period.DateStart, form.Period.DateStop);
+                if (where != null) <xsl:value-of select="$DocumentName"/>_Select.QuerySelect.Where.Add(where);
+            }
 
             /* Cторінки */
             await form.SplitPages(<xsl:value-of select="$DocumentName"/>_Select.SplitSelectToPages, <xsl:value-of select="$DocumentName"/>_Select.QuerySelect, unigueIDSelect);
