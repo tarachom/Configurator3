@@ -7,7 +7,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>01.01.2026 14:43:36</DateTimeSave>
+  <DateTimeSave>02.01.2026 14:52:53</DateTimeSave>
   <DictTSearch>simple</DictTSearch>
   <ConstantsBlocks>
     <ConstantsBlock>
@@ -2101,7 +2101,7 @@ END]]></Value>
           </Fields>
         </TabularList>
         <TabularList>
-          <Name>ЗаписиШвидкийВибір</Name>
+          <Name>ЗаписиМіні</Name>
           <Fields>
             <Field>
               <Name>Код</Name>
@@ -2110,7 +2110,7 @@ END]]></Value>
               <SortNum>1</SortNum>
               <SortField>True</SortField>
               <SortDirection>False</SortDirection>
-              <FilterField>False</FilterField>
+              <FilterField>True</FilterField>
               <Type>string</Type>
               <Multiline>0</Multiline>
             </Field>
@@ -2121,7 +2121,7 @@ END]]></Value>
               <SortNum>2</SortNum>
               <SortField>False</SortField>
               <SortDirection>False</SortDirection>
-              <FilterField>False</FilterField>
+              <FilterField>True</FilterField>
               <Type>string</Type>
               <Multiline>0</Multiline>
             </Field>
@@ -2132,7 +2132,7 @@ END]]></Value>
               <SortNum>3</SortNum>
               <SortField>False</SortField>
               <SortDirection>False</SortDirection>
-              <FilterField>False</FilterField>
+              <FilterField>True</FilterField>
               <Type>pointer</Type>
               <Pointer>Довідники.ПакуванняОдиниціВиміру</Pointer>
             </Field>
@@ -15579,6 +15579,119 @@ namespace StorageAndTrade
               <FilterField>False</FilterField>
               <Type>string</Type>
               <Multiline>0</Multiline>
+            </Field>
+          </Fields>
+        </TabularList>
+        <TabularList>
+          <Name>ЗаписиМіні</Name>
+          <Fields>
+            <Field>
+              <Name>Назва</Name>
+              <Caption>Назва</Caption>
+              <Size>0</Size>
+              <SortNum>1</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>False</FilterField>
+              <Type>string</Type>
+              <Multiline>0</Multiline>
+            </Field>
+            <Field>
+              <Name>НомерДок</Name>
+              <Caption>Номер</Caption>
+              <Size>0</Size>
+              <SortNum>2</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>False</FilterField>
+              <Type>string</Type>
+              <Multiline>0</Multiline>
+            </Field>
+            <Field>
+              <Name>ДатаДок</Name>
+              <Caption>Дата</Caption>
+              <Size>0</Size>
+              <SortNum>3</SortNum>
+              <SortField>True</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>False</FilterField>
+              <Type>datetime</Type>
+            </Field>
+            <Field>
+              <Name>Організація</Name>
+              <Caption>Організація</Caption>
+              <Size>0</Size>
+              <SortNum>4</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>True</FilterField>
+              <Type>pointer</Type>
+              <Pointer>Довідники.Організації</Pointer>
+            </Field>
+            <Field>
+              <Name>Склад</Name>
+              <Caption>Склад</Caption>
+              <Size>0</Size>
+              <SortNum>5</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>True</FilterField>
+              <Type>pointer</Type>
+              <Pointer>Довідники.Склади</Pointer>
+            </Field>
+            <Field>
+              <Name>Контрагент</Name>
+              <Caption>Контрагент</Caption>
+              <Size>0</Size>
+              <SortNum>6</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>True</FilterField>
+              <Type>pointer</Type>
+              <Pointer>Довідники.Контрагенти</Pointer>
+            </Field>
+            <Field>
+              <Name>Валюта</Name>
+              <Caption>Валюта</Caption>
+              <Size>0</Size>
+              <SortNum>7</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>True</FilterField>
+              <Type>pointer</Type>
+              <Pointer>Довідники.Валюти</Pointer>
+            </Field>
+            <Field>
+              <Name>Каса</Name>
+              <Caption>Каса</Caption>
+              <Size>0</Size>
+              <SortNum>8</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>True</FilterField>
+              <Type>pointer</Type>
+              <Pointer>Довідники.Каси</Pointer>
+            </Field>
+            <Field>
+              <Name>СумаДокументу</Name>
+              <Caption>Сума</Caption>
+              <Size>0</Size>
+              <SortNum>9</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>True</FilterField>
+              <Type>numeric</Type>
+            </Field>
+            <Field>
+              <Name>Автор</Name>
+              <Caption>Автор</Caption>
+              <Size>0</Size>
+              <SortNum>98</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>True</FilterField>
+              <Type>pointer</Type>
+              <Pointer>Довідники.Користувачі</Pointer>
             </Field>
           </Fields>
         </TabularList>

@@ -287,7 +287,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             <xsl:variable name="TabularListName" select="Name"/>
     public static class <xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularListName"/>
     {
-        public static void AddColumn(DirectoryJournal form)
+        public static void AddColumn(DirectoryJournalBase form)
         {
             <xsl:call-template name="AddColumnImage">
                 <xsl:with-param name="RowType">DirectoryRow</xsl:with-param>
@@ -308,14 +308,14 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             <xsl:call-template name="AddColumnEmpty" />
         }
 
-        public static void CreateFilter(DirectoryJournal form)
+        public static void CreateFilter(DirectoryJournalBase form)
         {
             <xsl:call-template name="CreateFilter">
                 <xsl:with-param name="ConfTypeName"><xsl:value-of select="$DirectoryName"/></xsl:with-param>
             </xsl:call-template>
         }
 
-        public static async ValueTask UpdateRecords(DirectoryJournal form)
+        public static async ValueTask UpdateRecords(DirectoryJournalBase form)
         {
             List&lt;ObjectChanged&gt; records = [];
             lock (form.Loсked)
@@ -372,7 +372,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             }
         }
 
-        public static async ValueTask LoadRecords(DirectoryJournal form)
+        public static async ValueTask LoadRecords(DirectoryJournalBase form)
         {
             form.BeforeLoadRecords();
             UnigueID? unigueIDSelect = form.SelectPointerItem ?? form.DirectoryPointerItem;
@@ -429,7 +429,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
             <xsl:variable name="TabularListName" select="Name"/>
     public static class <xsl:value-of select="$DocumentName"/>_<xsl:value-of select="$TabularListName"/>
     {
-        public static void AddColumn(DocumentJournal form)
+        public static void AddColumn(DocumentJournalBase form)
         {
             <xsl:call-template name="AddColumnImage">
                 <xsl:with-param name="RowType">DocumentRow</xsl:with-param>
@@ -452,14 +452,14 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
             <xsl:call-template name="AddColumnEmpty" />
         }
 
-        public static void CreateFilter(DocumentJournal form)
+        public static void CreateFilter(DocumentJournalBase form)
         {
             <xsl:call-template name="CreateFilter">
                 <xsl:with-param name="ConfTypeName"><xsl:value-of select="$DocumentName"/></xsl:with-param>
             </xsl:call-template>
         }
 
-        public static async ValueTask UpdateRecords(DocumentJournal form)
+        public static async ValueTask UpdateRecords(DocumentJournalBase form)
         {
             List&lt;ObjectChanged&gt; records = [];
             lock (form.Loсked)
@@ -516,7 +516,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
             }
         }
 
-        public static async ValueTask LoadRecords(DocumentJournal form)
+        public static async ValueTask LoadRecords(DocumentJournalBase form)
         {
             form.BeforeLoadRecords();
             UnigueID? unigueIDSelect = form.SelectPointerItem ?? form.DocumentPointerItem;
