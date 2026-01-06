@@ -125,7 +125,7 @@ limitations under the License.
                 {
                     ListItem listItem = (ListItem)args.Object;
                     <xsl:value-of select="$RowType"/>? row = (<xsl:value-of select="$RowType"/>?)listItem.Item;
-                    listItem.SetChild(ImageTablePartControl.NewForPixbuf((row?.DeletionLabel ?? false) ? InterfaceGtk4.Icon.ForTabularLists.Delete : InterfaceGtk4.Icon.ForTabularLists.Normal));
+                    listItem.SetChild(ImageTablePartCell.NewForPixbuf((row?.DeletionLabel ?? false) ? InterfaceGtk4.Icon.ForTabularLists.Delete : InterfaceGtk4.Icon.ForTabularLists.Normal));
                 };
                 ColumnViewColumn column = ColumnViewColumn.New("", factory);
                 form.Grid.AppendColumn(column);
@@ -140,7 +140,7 @@ limitations under the License.
                 {
                     ListItem listItem = (ListItem)args.Object;
                     DocumentRowJournal? row = (DocumentRowJournal?)listItem.Item;
-                    listItem.SetChild(ImageTablePartControl.NewForPixbuf((row?.Spend ?? false) ? InterfaceGtk4.Icon.ForInformation.Check : null));
+                    listItem.SetChild(ImageTablePartCell.NewForPixbuf((row?.Spend ?? false) ? InterfaceGtk4.Icon.ForInformation.Check : null));
                 };
                 ColumnViewColumn column = ColumnViewColumn.New("", factory);
                 form.Grid.AppendColumn(column);
@@ -158,12 +158,12 @@ limitations under the License.
                 factory.OnSetup += (_, args) =&gt;
                 {
                     ListItem listItem = (ListItem)args.Object;
-                    listItem.Child = LabelTablePartControl.NewFromType("<xsl:value-of select="Type"/>");
+                    listItem.Child = LabelTablePartCell.NewFromType("<xsl:value-of select="Type"/>");
                 };
                 factory.OnBind += (_, args) =&gt;
                 {
                     ListItem listItem = (ListItem)args.Object;
-                    LabelTablePartControl? labelControl = (LabelTablePartControl?)listItem.Child;
+                    LabelTablePartCell? labelControl = (LabelTablePartCell?)listItem.Child;
                     <xsl:value-of select="$RowType"/>? row = (<xsl:value-of select="$RowType"/>?)listItem.Item;
                     if (labelControl != null &amp;&amp; row != null)
                         labelControl.SetText(row.Fields["<xsl:value-of select="Name"/>"]);
