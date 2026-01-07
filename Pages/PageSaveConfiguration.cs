@@ -43,8 +43,6 @@ namespace Configurator
         CheckButton checkButtonIsGenerate = new CheckButton("Генерувати код");
         Entry entryGenerateCodePath = new Entry() { WidthRequest = 500 };
         Entry entryCompileProgramPath = new Entry() { WidthRequest = 500 };
-        ComboBoxText comboBoxGtkVersion = new ComboBoxText();
-        List<NameValue<string>> GtkVersion = [new("gtk3", "Gtk 3"), new("gtk4", "Gtk 4")];
         Button bSaveParam;
 
         Button bAnalize;
@@ -96,18 +94,6 @@ namespace Configurator
             hBoxParamCompileProgram.PackStart(bSelectFolderCompileProgram, false, false, 5);
 
             hBoxParamCompileProgram.PackStart(new Label("Наприклад bin/Debug/net10.0/ \nВ цю папку буде скопійований файл Confa.xml"), false, false, 5);
-
-            //Параметри 4
-            Box hBoxParamGtkVersion = new Box(Orientation.Horizontal, 0);
-            vBoxParams.PackStart(hBoxParamGtkVersion, false, false, 5);
-
-            hBoxParamGtkVersion.PackStart(new Label("Версія Gtk:"), false, false, 10);
-            hBoxParamGtkVersion.PackStart(comboBoxGtkVersion, false, false, 5);
-
-            foreach (var version in GtkVersion)
-                comboBoxGtkVersion.Append(version.Name, version.Value);
-
-            comboBoxGtkVersion.Active = 0;
 
             //Save
             Box hBoxSaveParam = new Box(Orientation.Horizontal, 0);
@@ -168,11 +154,6 @@ namespace Configurator
                 //3
                 if (GeneralForm.OpenConfigurationParam!.OtherParam.TryGetValue("CompileProgramPath", out string? CompileProgramPath))
                     entryCompileProgramPath.Text = CompileProgramPath;
-
-                //4
-                if (GeneralForm.OpenConfigurationParam!.OtherParam.TryGetValue("GtkVersion", out string? version))
-                    if (GtkVersion.Exists(x => x.Name == version))
-                        comboBoxGtkVersion.ActiveId = version;
             }
         }
 
@@ -237,12 +218,6 @@ namespace Configurator
                     GeneralForm.OpenConfigurationParam!.OtherParam["CompileProgramPath"] = entryCompileProgramPath.Text;
                 else
                     GeneralForm.OpenConfigurationParam!.OtherParam.Add("CompileProgramPath", entryCompileProgramPath.Text);
-
-                //4
-                if (GeneralForm.OpenConfigurationParam!.OtherParam.ContainsKey("GtkVersion"))
-                    GeneralForm.OpenConfigurationParam!.OtherParam["GtkVersion"] = comboBoxGtkVersion.ActiveId;
-                else
-                    GeneralForm.OpenConfigurationParam!.OtherParam.Add("GtkVersion", comboBoxGtkVersion.ActiveId);
 
                 ConfigurationParamCollection.SaveConfigurationParamFromXML(ConfigurationParamCollection.PathToXML);
             }
@@ -794,9 +769,9 @@ namespace Configurator
                         ApendLine("Файл 'GeneratedCode.cs' згенерований\n");
                     }
 
-                    ApendLine($"Версія {comboBoxGtkVersion.ActiveText}\n");
+                    ApendLine($"Версія {Conf.GtkLibVersion}\n");
 
-                    if (comboBoxGtkVersion.ActiveId == "gtk4")
+                    if (Conf.GtkLibVersion == Configuration.GtkVersion.Gtk4)
                     {
                         if (File.Exists(System.IO.Path.Combine(PathToXsltTemplate, "xslt/Gtk4.xslt")))
                         {

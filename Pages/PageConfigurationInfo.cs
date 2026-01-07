@@ -41,6 +41,7 @@ namespace Configurator
         Entry entryNameSpace = new Entry() { WidthRequest = 500 };
         Entry entryAutor = new Entry() { WidthRequest = 500 };
         TextView textViewDesc = new TextView() { WrapMode = WrapMode.Word };
+        ComboBoxText comboBoxGtkVersion = new ComboBoxText();
 
         #endregion
 
@@ -121,6 +122,18 @@ namespace Configurator
 
             hBoxDesc.PackStart(scrollTextView, false, false, 5);
 
+            //Версія Gtk
+            Box hBoxGtkVersion = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
+            vBox.PackStart(hBoxGtkVersion, false, false, 5);
+
+            hBoxGtkVersion.PackStart(new Label("Версія бібліотек Gtk:"), false, false, 5);
+
+            foreach (var gtkversion in Enum.GetNames<Configuration.GtkVersion>())
+                comboBoxGtkVersion.Append(gtkversion, gtkversion);
+            comboBoxGtkVersion.Active = 0;
+
+            hBoxGtkVersion.PackStart(comboBoxGtkVersion, false, false, 5);
+
             hPaned.Pack1(vBox, false, false);
         }
 
@@ -146,6 +159,7 @@ namespace Configurator
             entryNameSpace.Text = Conf.NameSpace;
             entryAutor.Text = Conf.Author;
             textViewDesc.Buffer.Text = Conf.Desc;
+            comboBoxGtkVersion.ActiveId = Conf.GtkLibVersion.ToString();
         }
 
         void GetValue()
@@ -156,6 +170,7 @@ namespace Configurator
             Conf.NameSpace = entryNameSpace.Text;
             Conf.Author = entryAutor.Text;
             Conf.Desc = textViewDesc.Buffer.Text;
+            Conf.GtkLibVersion = Enum.TryParse(comboBoxGtkVersion.ActiveId, out Configuration.GtkVersion gtkversion) ? gtkversion : Configuration.GtkVersion.Gtk3;
         }
 
         #endregion

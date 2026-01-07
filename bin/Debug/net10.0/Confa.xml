@@ -7,8 +7,9 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>06.01.2026 13:41:15</DateTimeSave>
+  <DateTimeSave>07.01.2026 14:48:00</DateTimeSave>
   <DictTSearch>simple</DictTSearch>
+  <GtkVersion>Gtk4</GtkVersion>
   <ConstantsBlocks>
     <ConstantsBlock>
       <Name>ЗначенняТипові</Name>
