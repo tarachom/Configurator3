@@ -1453,6 +1453,12 @@ namespace Configurator
             }
 
             {
+                MenuItem item = new MenuItem("PointerTablePartCell");
+                item.Activated += (sender, args) => { OnFormsListAdd(ConfigurationForms.TypeForms.PointerTablePartCell); };
+                Menu.Append(item);
+            }
+
+            {
                 MenuItem item = new MenuItem("MultiplePointerControl");
                 item.Activated += (sender, args) => { OnFormsListAdd(ConfigurationForms.TypeForms.MultiplePointerControl); };
                 Menu.Append(item);

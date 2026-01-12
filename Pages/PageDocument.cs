@@ -24,7 +24,6 @@ limitations under the License.
 using Gtk;
 
 using AccountingSoftware;
-using GtkSource;
 
 namespace Configurator
 {
@@ -1221,6 +1220,7 @@ namespace Configurator
                                 Fields = ConfDocument.Fields,
                                 TabularParts = ConfDocument.TabularParts,
                                 TabularLists = ConfDocument.TabularList,
+                                TabularList = form.TabularList,
                                 IsNew = false,
                                 GeneralForm = GeneralForm,
                                 CallBack_RefreshList = FormsListRefreshList,
@@ -1273,43 +1273,55 @@ namespace Configurator
 
             {
                 MenuItem item = new MenuItem("Тригери");
-                item.Activated += (object? sender, EventArgs args) => { OnFormsListAdd(ConfigurationForms.TypeForms.Triggers); };
+                item.Activated += (sender, args) => { OnFormsListAdd(ConfigurationForms.TypeForms.Triggers); };
                 Menu.Append(item);
             }
 
             {
                 MenuItem item = new MenuItem("Проведення документу");
-                item.Activated += (object? sender, EventArgs args) => { OnFormsListAdd(ConfigurationForms.TypeForms.SpendTheDocument); };
+                item.Activated += (sender, args) => { OnFormsListAdd(ConfigurationForms.TypeForms.SpendTheDocument); };
                 Menu.Append(item);
             }
 
             {
                 MenuItem item = new MenuItem("Функції");
-                item.Activated += (object? sender, EventArgs args) => { OnFormsListAdd(ConfigurationForms.TypeForms.Function); };
+                item.Activated += (sender, args) => { OnFormsListAdd(ConfigurationForms.TypeForms.Function); };
                 Menu.Append(item);
             }
 
             {
                 MenuItem item = new MenuItem("Елемент");
-                item.Activated += (object? sender, EventArgs args) => { OnFormsListAdd(ConfigurationForms.TypeForms.Element); };
+                item.Activated += (sender, args) => { OnFormsListAdd(ConfigurationForms.TypeForms.Element); };
                 Menu.Append(item);
             }
 
             {
                 MenuItem item = new MenuItem("Список");
-                item.Activated += (object? sender, EventArgs args) => { OnFormsListAdd(ConfigurationForms.TypeForms.List); };
+                item.Activated += (sender, args) => { OnFormsListAdd(ConfigurationForms.TypeForms.List); };
+                Menu.Append(item);
+            }
+
+            {
+                MenuItem item = new MenuItem("Швидкий вибір");
+                item.Activated += (sender, args) => { OnFormsListAdd(ConfigurationForms.TypeForms.ListSmallSelect); };
                 Menu.Append(item);
             }
 
             {
                 MenuItem item = new MenuItem("PointerControl");
-                item.Activated += (object? sender, EventArgs args) => { OnFormsListAdd(ConfigurationForms.TypeForms.PointerControl); };
+                item.Activated += (sender, args) => { OnFormsListAdd(ConfigurationForms.TypeForms.PointerControl); };
+                Menu.Append(item);
+            }
+
+            {
+                MenuItem item = new MenuItem("PointerTablePartCell");
+                item.Activated += (sender, args) => { OnFormsListAdd(ConfigurationForms.TypeForms.PointerTablePartCell); };
                 Menu.Append(item);
             }
 
             {
                 MenuItem item = new MenuItem("Звіт");
-                item.Activated += (object? sender, EventArgs args) => { OnFormsListAdd(ConfigurationForms.TypeForms.Report); };
+                item.Activated += (sender, args) => { OnFormsListAdd(ConfigurationForms.TypeForms.Report); };
                 Menu.Append(item);
             }
 

@@ -51,9 +51,9 @@ limitations under the License.
   <!-- Для формування фільтрів -->
   <xsl:template name="CreateFilter">
     <xsl:param name="ConfTypeName" />
-        <xsl:if test="count(Fields/Field[FilterField = 'True' and Type != 'pointer']) != 0">
+        <xsl:if test="count(Fields/Field[FilterField = 'True']) != 0">
             List&lt;FilterControl.FilterListItem&gt; filterList = [];
-            <xsl:for-each select="Fields/Field[FilterField = 'True' and Type != 'pointer']">
+            <xsl:for-each select="Fields/Field[FilterField = 'True']">
             { /* <xsl:value-of select="Name"/>, <xsl:value-of select="Type"/> */
                 Switch sw = Switch.New();
                 <xsl:choose>
@@ -83,10 +83,10 @@ limitations under the License.
                         TimeControl <xsl:value-of select="Name"/> = new();
                         object get() =&gt; <xsl:value-of select="Name"/>.Value;
                     </xsl:when>
-                    <!--<xsl:when test="Type = 'pointer'">
+                    <xsl:when test="Type = 'pointer'">
                         <xsl:value-of select="substring-after(Pointer, '.')"/>_PointerControl <xsl:value-of select="Name"/> = new() { Caption = "", AfterSelectFunc = () =&gt; sw.Active = true };
                         object get() =&gt; <xsl:value-of select="Name"/>.Pointer.UnigueID.UGuid;
-                    </xsl:when>-->
+                    </xsl:when>
                     <xsl:when test="Type = 'enum'">
                         ComboBoxText <xsl:value-of select="Name"/> = new();
                         foreach (var item in ПсевдонімиПерелічення.<xsl:value-of select="substring-after(Pointer, '.')"/>_List())

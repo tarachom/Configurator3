@@ -92,6 +92,7 @@ namespace Configurator
             typeof(uint),   //Height
             typeof(int),    //SortNum
             typeof(bool),   //MultipleSelect
+            typeof(bool),   //ReadOnly
             typeof(string)  //Type
         );
         enum FormElementFieldColumns
@@ -103,6 +104,7 @@ namespace Configurator
             Height,
             SortNum,
             MultipleSelect,
+            ReadOnly,
             Type
         }
 
@@ -253,6 +255,20 @@ namespace Configurator
                     }
                 };
                 treeViewFormElementField.AppendColumn(new TreeViewColumn("Підбір", cell, "active", FormElementFieldColumns.MultipleSelect) { Visible = false });
+            }
+
+            //ReadOnly
+            {
+                CellRendererToggle cell = new CellRendererToggle();
+                cell.Toggled += (o, args) =>
+                {
+                    if (listStoreFormElementField.GetIterFromString(out TreeIter iter, args.Path))
+                    {
+                        bool val = (bool)listStoreFormElementField.GetValue(iter, (int)FormElementFieldColumns.ReadOnly);
+                        listStoreFormElementField.SetValue(iter, (int)FormElementFieldColumns.ReadOnly, !val);
+                    }
+                };
+                treeViewFormElementField.AppendColumn(new TreeViewColumn("Тільки читання", cell, "active", FormElementFieldColumns.ReadOnly) { Visible = false });
             }
 
             //Type
@@ -527,6 +543,7 @@ namespace Configurator
                 ConfigurationForms.TypeForms.List => "Список",
                 ConfigurationForms.TypeForms.ListSmallSelect => "Швидкий вибір",
                 ConfigurationForms.TypeForms.PointerControl => "PointerControl",
+                ConfigurationForms.TypeForms.PointerTablePartCell => "PointerTablePartCell",
                 ConfigurationForms.TypeForms.MultiplePointerControl => "MultiplePointerControl",
                 ConfigurationForms.TypeForms.ListAndTree => "Список з Деревом",
                 ConfigurationForms.TypeForms.TablePart => $"Таблична частина {ParentName}",
@@ -550,6 +567,7 @@ namespace Configurator
                 ConfigurationForms.TypeForms.List => "List",
                 ConfigurationForms.TypeForms.ListSmallSelect => "ListSmallSelect",
                 ConfigurationForms.TypeForms.PointerControl => "PointerControl",
+                ConfigurationForms.TypeForms.PointerTablePartCell => "PointerTablePartCell",
                 ConfigurationForms.TypeForms.MultiplePointerControl => "MultiplePointerControl",
                 ConfigurationForms.TypeForms.ListAndTree => "ListAndTree",
                 ConfigurationForms.TypeForms.TablePart => "TablePart",
@@ -591,6 +609,9 @@ namespace Configurator
 
                         //Видимість колонки Підбір для табличної частини (MultipleSelect)
                         treeViewFormElementField.Columns[(int)FormElementFieldColumns.MultipleSelect].Visible = true;
+
+                        //Видимість колонки Підбір для табличної частини (ReadOnly)
+                        treeViewFormElementField.Columns[(int)FormElementFieldColumns.ReadOnly].Visible = true;
 
                         break;
                     }
@@ -678,10 +699,11 @@ namespace Configurator
                 uint height = isExistField ? Form.ElementFields[field.Name].Height : 0;
                 int sortNum = isExistField ? Form.ElementFields[field.Name].SortNum : IsNew ? ++counter : 100;
                 bool multipleSelect = isExistField ? Form.ElementFields[field.Name].MultipleSelect : false;
+                bool readOnly = isExistField ? Form.ElementFields[field.Name].ReadOnly : false;
                 string sType = field.Type == "pointer" || field.Type == "enum" ? field.Pointer : field.Type;
 
                 //Для нової форми видимими стають всі поля
-                listStoreFormElementField.AppendValues(IsNew || isExistField, field.Name, caption, size, height, sortNum, multipleSelect, sType);
+                listStoreFormElementField.AppendValues(IsNew || isExistField, field.Name, caption, size, height, sortNum, multipleSelect, readOnly, sType);
             }
         }
 
@@ -737,9 +759,10 @@ namespace Configurator
                                 uint height = (uint)listStoreFormElementField.GetValue(iter, (int)FormElementFieldColumns.Height);
                                 int sortNum = (int)listStoreFormElementField.GetValue(iter, (int)FormElementFieldColumns.SortNum);
                                 bool multipleSelect = (bool)listStoreFormElementField.GetValue(iter, (int)FormElementFieldColumns.MultipleSelect);
+                                bool readOnly = (bool)listStoreFormElementField.GetValue(iter, (int)FormElementFieldColumns.ReadOnly);
 
                                 ConfigurationField field = Fields[name];
-                                Form.AppendElementField(new ConfigurationFormsElementField(field.Name, caption, size, height, sortNum, multipleSelect));
+                                Form.AppendElementField(new ConfigurationFormsElementField(field.Name, caption, size, height, sortNum, multipleSelect, readOnly));
                             }
                         }
                         while (listStoreFormElementField.IterNext(ref iter));
@@ -813,6 +836,9 @@ namespace Configurator
 
         public void GenerateCode()
         {
+            //Версія Gtk для вибору шаблону. Для Gtk4 добавляється цифра 4, для Gtk3 все залишається як було
+            string gtkVersion = Conf.GtkLibVersion == Configuration.GtkVersion.Gtk4 ? "4" : "";
+
             if (!(ParentType == "Directory" || ParentType == "Document" ||
                 ParentType == "RegisterInformation" || ParentType == "RegisterAccumulation" ||
                 ParentType == "TablePart"))
@@ -979,7 +1005,7 @@ namespace Configurator
             sourceViewCode.Buffer.Text = Configuration.Transform
             (
                 xmlConfDocument,
-                System.IO.Path.Combine(AppContext.BaseDirectory, $"xslt/Constructor{ParentType}.xslt"),
+                System.IO.Path.Combine(AppContext.BaseDirectory, $"xslt/Constructor{ParentType}{gtkVersion}.xslt"),
                 new Dictionary<string, object>
                 {
                     { "File", FileName },

@@ -1212,7 +1212,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Пере
             };
         }
 
-        public static <xsl:value-of select="$EnumName"/><xsl:text> </xsl:text><xsl:value-of select="$EnumName"/>_FindByName(string name)
+        public static <xsl:value-of select="$EnumName"/><xsl:text> </xsl:text><xsl:value-of select="$EnumName"/>_FindByName(string? name)
         {
             return name switch
             {
