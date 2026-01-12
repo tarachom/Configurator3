@@ -297,7 +297,7 @@ class <xsl:value-of select="$DirectoryName"/>_Елемент : DirectoryFormElem
         <xsl:variable name="Size">
             <xsl:choose>
                 <xsl:when test="Size != '0'"><xsl:value-of select="Size"/></xsl:when>
-                <xsl:otherwise>500</xsl:otherwise>
+                <xsl:otherwise>300</xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
         <xsl:choose>

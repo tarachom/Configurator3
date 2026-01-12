@@ -150,7 +150,6 @@ using AccountingSoftware;
 using <xsl:value-of select="$NameSpaceGeneratedCode"/>.Довідники;
 using <xsl:value-of select="$NameSpaceGeneratedCode"/>.Документи;
 using <xsl:value-of select="$NameSpaceGeneratedCode"/>.Перелічення;
-<xsl:if test="$IncludeIconColumn = '1'">using InterfaceGtk3.Іконки;</xsl:if>
 
 namespace <xsl:value-of select="$NameSpace"/>;
 
@@ -232,7 +231,18 @@ class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина_<xsl:va
     protected override void Columns()
     {
         <xsl:if test="$IncludeIconColumn = '1'">
-        
+        //Image
+        {
+            SignalListItemFactory factory = SignalListItemFactory.New();
+            factory.OnBind += (_, args) =&gt;
+            {
+                ListItem listItem = (ListItem)args.Object;
+                ItemRow? row = (ItemRow?)listItem.Item;
+                listItem.SetChild(ImageTablePartCell.NewForPixbuf(InterfaceGtk4.Icon.ForTabularLists.Normal));
+            };
+            ColumnViewColumn column = ColumnViewColumn.New("", factory);
+            Grid.AppendColumn(column);
+        }
         </xsl:if>
         <xsl:for-each select="$FieldsTL">
         //<xsl:value-of select="Name"/>
@@ -245,6 +255,7 @@ class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина_<xsl:va
                     <xsl:when test="Type = 'string' and ReadOnly = '0'">new TextTablePartCell()</xsl:when>
                     <xsl:when test="Type = 'integer' and ReadOnly = '0'">new IntegerTablePartCell()</xsl:when>
                     <xsl:when test="Type = 'numeric' and ReadOnly = '0'">new NumericTablePartCell()</xsl:when>
+                    <xsl:when test="Type = 'boolean'">new CheckTablePartCell()</xsl:when>
                     <xsl:when test="Type = 'pointer'">new <xsl:value-of select="substring-after(Pointer, '.')"/>_PointerTablePartCell()</xsl:when>
                     <xsl:when test="Type = 'enum'">new ComboTextTablePartCell();
                 foreach (var field in ПсевдонімиПерелічення.<xsl:value-of select="substring-after(Pointer, '.')"/>_List())
@@ -254,6 +265,9 @@ class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина_<xsl:va
                 <xsl:choose>
                     <xsl:when test="(Type = 'integer' or Type = 'numeric') and ReadOnly = '1'">
                 cell.Halign = Align.End;
+                    </xsl:when>
+                    <xsl:when test="Type = 'boolean'">
+                cell.Halign = Align.Center;
                     </xsl:when>
                 </xsl:choose>
                 listItem.Child = cell;
@@ -265,6 +279,7 @@ class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина_<xsl:va
                     <xsl:when test="Type = 'string'">TextTablePartCell</xsl:when>
                     <xsl:when test="Type = 'integer' and ReadOnly = '0'">IntegerTablePartCell</xsl:when>
                     <xsl:when test="Type = 'numeric'">NumericTablePartCell</xsl:when>
+                    <xsl:when test="Type = 'boolean'">CheckTablePartCell</xsl:when>
                     <xsl:when test="Type = 'pointer'"><xsl:value-of select="substring-after(Pointer, '.')"/>_PointerTablePartCell</xsl:when>
                     <xsl:when test="Type = 'enum'">ComboTextTablePartCell</xsl:when>
                     <xsl:otherwise>LabelTablePartCell</xsl:otherwise>
@@ -275,6 +290,10 @@ class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина_<xsl:va
                     <xsl:choose>
                         <xsl:when test="(Type = 'string' or Type = 'integer' or Type = 'numeric') and ReadOnly = '0'">
                     cell.OnСhanged = () =&gt; row.<xsl:value-of select="Name"/> = cell.Value;
+                    (row.Сhanged_<xsl:value-of select="Name"/> = () =&gt; cell.Value = row.<xsl:value-of select="Name"/>).Invoke();
+                        </xsl:when>
+                        <xsl:when test="Type = 'boolean'">
+                    cell.OnСhanged = () =&gt; row.<xsl:value-of select="Name"/> = cell.Check.Active;
                     (row.Сhanged_<xsl:value-of select="Name"/> = () =&gt; cell.Value = row.<xsl:value-of select="Name"/>).Invoke();
                         </xsl:when>
                         <xsl:when test="Type = 'pointer'">
