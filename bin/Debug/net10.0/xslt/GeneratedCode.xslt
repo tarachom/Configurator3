@@ -2240,6 +2240,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
     #region REGISTER "<xsl:value-of select="$RegisterName"/>"
     public static class <xsl:value-of select="$RegisterName"/>_Const
     {
+        public const string TYPENAME = "РегістриНакопичення.<xsl:value-of select="$RegisterName"/>";
         public const string FULLNAME = "<xsl:value-of select="normalize-space(FullName)"/>";
         public const string TABLE = "<xsl:value-of select="Table"/>";
 		    public static readonly string[] AllowDocumentSpendTable = [<xsl:for-each select="AllowDocumentSpend/Name">

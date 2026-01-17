@@ -7,7 +7,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>17.01.2026 13:13:29</DateTimeSave>
+  <DateTimeSave>17.01.2026 21:54:39</DateTimeSave>
   <DictTSearch>simple</DictTSearch>
   <GtkVersion>Gtk4</GtkVersion>
   <ConstantsBlocks>
@@ -7770,7 +7770,7 @@ public class Валюти_PointerTablePartCell : PointerTablePartCell
             <AfterSave Action="0">AfterSave</AfterSave>
           </TriggerFunctions>
           <Forms>
-            <Form Modified="1">
+            <Form Modified="0">
               <Name>Таблична частин Контакти</Name>
               <Desc>Таблична частина</Desc>
               <Type>TablePart</Type>
@@ -99951,7 +99951,7 @@ HAVING
               <SortNum>100</SortNum>
               <SortField>False</SortField>
               <SortDirection>False</SortDirection>
-              <FilterField>False</FilterField>
+              <FilterField>True</FilterField>
               <Type>pointer</Type>
               <Pointer>Довідники.Номенклатура</Pointer>
             </Field>
@@ -99962,7 +99962,7 @@ HAVING
               <SortNum>100</SortNum>
               <SortField>False</SortField>
               <SortDirection>False</SortDirection>
-              <FilterField>False</FilterField>
+              <FilterField>True</FilterField>
               <Type>pointer</Type>
               <Pointer>Довідники.ХарактеристикиНоменклатури</Pointer>
             </Field>
@@ -99973,7 +99973,7 @@ HAVING
               <SortNum>100</SortNum>
               <SortField>False</SortField>
               <SortDirection>False</SortDirection>
-              <FilterField>False</FilterField>
+              <FilterField>True</FilterField>
               <Type>pointer</Type>
               <Pointer>Довідники.Склади</Pointer>
             </Field>
@@ -99984,7 +99984,7 @@ HAVING
               <SortNum>100</SortNum>
               <SortField>False</SortField>
               <SortDirection>False</SortDirection>
-              <FilterField>False</FilterField>
+              <FilterField>True</FilterField>
               <Type>pointer</Type>
               <Pointer>Довідники.СеріїНоменклатури</Pointer>
             </Field>
@@ -99995,7 +99995,7 @@ HAVING
               <SortNum>100</SortNum>
               <SortField>False</SortField>
               <SortDirection>False</SortDirection>
-              <FilterField>False</FilterField>
+              <FilterField>True</FilterField>
               <Type>numeric</Type>
             </Field>
           </Fields>
@@ -100005,7 +100005,61 @@ HAVING
         <Form Modified="0">
           <Name>Список</Name>
           <Type>List</Type>
-          <GeneratedCode><![CDATA[]]></GeneratedCode>
+          <GeneratedCode><![CDATA[
+
+/*     
+        ТовариНаСкладах.cs
+        Список
+
+        Табличний список - Записи
+*/
+
+using InterfaceGtk4;
+using AccountingSoftware;
+
+using ТабличнийСписок = GeneratedCode.Документи.ТабличніСписки.ТовариНаСкладах_Записи;
+
+namespace StorageAndTrade.РегістриНакопичення;
+
+public class ТовариНаСкладах : РегістриНакопиченняЖурнал
+{
+    public ТовариНаСкладах_Список() : base(Program.BasicForm?.NotebookFunc)
+    {
+        TypeName = ТовариНаСкладах_Const.POINTER;
+        ТабличнийСписок.AddColumn(this);
+        SetPagesSettings(50);
+    }
+
+    #region Override
+
+    public override async ValueTask LoadRecords()
+    {
+        await ТабличнийСписок.LoadRecords(this);
+    }
+
+    protected override async void SetSearch(string searchText)
+    {
+        WhereList = Функції.Відбори(searchText);
+    }
+
+    protected override void FillFilter(FilterControl filterControl)
+    {
+        ТабличнийСписок.CreateFilter(this);
+    }
+
+    protected override async ValueTask BeforeSetValue()
+    {
+        await ФункціїНалаштуванняКористувача.ОтриматиПеріодДляЖурналу(FormKey, Period);
+    }
+
+    protected override async void PeriodChanged()
+    {
+        ФункціїНалаштуванняКористувача.ЗаписатиПеріодДляЖурналу(FormKey, Period.Period.ToString(), Period.DateStart, Period.DateStop);
+    }
+
+    #endregion
+}
+    ]]></GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>

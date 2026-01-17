@@ -48,6 +48,31 @@ limitations under the License.
     </xsl:choose>
   </xsl:template>
 
+  <xsl:template name="FieldValueReg">
+    <xsl:param name="VarName" />
+    <xsl:choose>
+        <xsl:when test="Type = 'pointer'">
+            <xsl:value-of select="$VarName"/>.<xsl:value-of select="Name"/><xsl:text>.Name</xsl:text>
+        </xsl:when>
+        <xsl:when test="Type = 'enum'">
+            <xsl:text>Перелічення.ПсевдонімиПерелічення.</xsl:text>
+            <xsl:value-of select="substring-after(Pointer, '.')"/>_Alias(<xsl:value-of select="$VarName"/>.<xsl:value-of select="Name"/><xsl:text>)</xsl:text>
+        </xsl:when>
+        <xsl:when test="Type = 'boolean'">
+            <xsl:value-of select="$VarName"/>.<xsl:value-of select="Name"/><xsl:text> ? "Так" : ""</xsl:text>
+        </xsl:when>
+        <xsl:when test="Type = 'date'">
+            <xsl:value-of select="$VarName"/>.<xsl:value-of select="Name"/><xsl:text>.ToString("dd.MM.yyyy")</xsl:text>
+        </xsl:when>
+        <xsl:when test="Type = 'time'">
+            <xsl:value-of select="$VarName"/>.<xsl:value-of select="Name"/><xsl:text>.ToString(@"hh\:mm\:ss")</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+            <xsl:value-of select="$VarName"/>.<xsl:value-of select="Name"/><xsl:text>.ToString()</xsl:text>
+        </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
   <!-- Для формування фільтрів -->
   <xsl:template name="CreateFilter">
     <xsl:param name="ConfTypeName" />
@@ -147,6 +172,122 @@ limitations under the License.
             }
   </xsl:template>
 
+  <xsl:template name="AddColumnIncome">
+            //Income
+            {
+                SignalListItemFactory factory = SignalListItemFactory.New();
+                factory.OnSetup += (_, args) =&gt;
+                {
+                    ListItem listItem = (ListItem)args.Object;
+                    var cell = LabelTablePartCell.New(null);
+                    cell.Halign = Align.Center;
+                    listItem.Child = cell;
+                };
+                factory.OnBind += (_, args) =&gt;
+                {
+                    ListItem listItem = (ListItem)args.Object;
+                    LabelTablePartCell? labelControl = (LabelTablePartCell?)listItem.Child;
+                    RegisterAccumulationRowJournal? row = (RegisterAccumulationRowJournal?)listItem.Item;
+                    if (labelControl != null &amp;&amp; row != null)
+                        labelControl.SetText(row.Income ? "+" : "-");
+                };
+                ColumnViewColumn column = ColumnViewColumn.New("Рух", factory);
+                form.Grid.AppendColumn(column);
+            }
+  </xsl:template>
+
+  <xsl:template name="AddColumnPeriod">
+        <xsl:param name="RowType" />
+            //Period
+            {
+                SignalListItemFactory factory = SignalListItemFactory.New();
+                factory.OnSetup += (_, args) =&gt;
+                {
+                    ListItem listItem = (ListItem)args.Object;
+                    listItem.Child = LabelTablePartCell.New(null);
+                };
+                factory.OnBind += (_, args) =&gt;
+                {
+                    ListItem listItem = (ListItem)args.Object;
+                    LabelTablePartCell? labelControl = (LabelTablePartCell?)listItem.Child;
+                    <xsl:value-of select="$RowType"/>? row = (<xsl:value-of select="$RowType"/>?)listItem.Item;
+                    if (labelControl != null &amp;&amp; row != null)
+                        labelControl.SetText(row.Period);
+                };
+                ColumnViewColumn column = ColumnViewColumn.New("Період", factory);
+                form.Grid.AppendColumn(column);
+            }
+  </xsl:template>
+
+  <xsl:template name="AddColumnOwner">
+        <xsl:param name="RowType" />
+            //Owner
+            {
+                SignalListItemFactory factory = SignalListItemFactory.New();
+                factory.OnSetup += (_, args) =&gt;
+                {
+                    ListItem listItem = (ListItem)args.Object;
+                    listItem.Child = LabelTablePartCell.New(null);
+                };
+                factory.OnBind += (_, args) =&gt;
+                {
+                    ListItem listItem = (ListItem)args.Object;
+                    LabelTablePartCell? labelControl = (LabelTablePartCell?)listItem.Child;
+                    <xsl:value-of select="$RowType"/>? row = (<xsl:value-of select="$RowType"/>?)listItem.Item;
+                    if (labelControl != null &amp;&amp; row != null)
+                        labelControl.SetText(row.Owner.ToString());
+                };
+                ColumnViewColumn column = ColumnViewColumn.New("Власник", factory);
+                form.Grid.AppendColumn(column);
+            }
+  </xsl:template>
+
+  <xsl:template name="AddColumnOwnerType">
+        <xsl:param name="RowType" />
+            //OwnerType
+            {
+                SignalListItemFactory factory = SignalListItemFactory.New();
+                factory.OnSetup += (_, args) =&gt;
+                {
+                    ListItem listItem = (ListItem)args.Object;
+                    listItem.Child = LabelTablePartCell.New(null);
+                };
+                factory.OnBind += (_, args) =&gt;
+                {
+                    ListItem listItem = (ListItem)args.Object;
+                    LabelTablePartCell? labelControl = (LabelTablePartCell?)listItem.Child;
+                    <xsl:value-of select="$RowType"/>? row = (<xsl:value-of select="$RowType"/>?)listItem.Item;
+                    if (labelControl != null &amp;&amp; row != null)
+                        labelControl.SetText(row.OwnerType.ToString());
+                };
+                ColumnViewColumn column = ColumnViewColumn.New("Тип власника", factory);
+                form.Grid.AppendColumn(column);
+            }
+  </xsl:template>
+
+  <xsl:template name="AddColumnOwnerName">
+        <xsl:param name="RowType" />
+            //OwnerName
+            {
+                SignalListItemFactory factory = SignalListItemFactory.New();
+                factory.OnSetup += (_, args) =&gt;
+                {
+                    ListItem listItem = (ListItem)args.Object;
+                    listItem.Child = LabelTablePartCell.New(null);
+                };
+                factory.OnBind += (_, args) =&gt;
+                {
+                    ListItem listItem = (ListItem)args.Object;
+                    LabelTablePartCell? labelControl = (LabelTablePartCell?)listItem.Child;
+                    <xsl:value-of select="$RowType"/>? row = (<xsl:value-of select="$RowType"/>?)listItem.Item;
+                    if (labelControl != null &amp;&amp; row != null)
+                        labelControl.SetText(row.OwnerName.ToString());
+                };
+                ColumnViewColumn column = ColumnViewColumn.New("Власник назва", factory);
+                form.Grid.AppendColumn(column);
+            }
+  </xsl:template>
+
   <xsl:template name="AddColumnLabel">
     <xsl:param name="ConfTypeName" />
     <xsl:param name="RowType" />
@@ -191,17 +332,19 @@ limitations under the License.
     <xsl:param name="ConfTypeName" />
     <xsl:param name="SelectType" />
             <xsl:value-of select="$ConfTypeGroup"/>.<xsl:value-of select="$ConfTypeName"/>_<xsl:value-of select="$SelectType"/><xsl:text> </xsl:text><xsl:value-of select="$ConfTypeName"/>_Select = new();
-            <xsl:value-of select="$ConfTypeName"/>_Select.QuerySelect.Field.AddRange(
-            [
-                "deletion_label",
-                <xsl:if test="$ConfTypeGroup = 'Документи'"><!-- Для документів додаткове поле spend -->
-                    <xsl:text>"spend"</xsl:text>,
-                </xsl:if> 
-                <xsl:for-each select="Fields/Field[Type != 'pointer']">
-                    <xsl:text>/*</xsl:text><xsl:value-of select="Name"/><xsl:text>*/ </xsl:text>
-                    <xsl:value-of select="concat($ConfTypeGroup, '.', $ConfTypeName, '_Const.', Name)"/>,
-                </xsl:for-each>
-            ]);
+            <xsl:if test="$ConfTypeGroup = 'Довідники' or $ConfTypeGroup = 'Документи'"><!-- Для довідників та документів -->
+                <xsl:value-of select="$ConfTypeName"/>_Select.QuerySelect.Field.AddRange(
+                [
+                    <xsl:text>"deletion_label"</xsl:text>,
+                    <xsl:if test="$ConfTypeGroup = 'Документи'"><!-- Для документів додаткове поле spend -->
+                        <xsl:text>"spend"</xsl:text>,
+                    </xsl:if>
+                    <xsl:for-each select="Fields/Field[Type != 'pointer']">
+                        <xsl:text>/*</xsl:text><xsl:value-of select="Name"/><xsl:text>*/ </xsl:text>
+                        <xsl:value-of select="concat($ConfTypeGroup, '.', $ConfTypeName, '_Const.', Name)"/>,
+                    </xsl:for-each>
+                ]);
+            </xsl:if>
 
             <!-- Добавлення Sql функції для полів тип яких date -->
             <xsl:for-each select="Fields/Field[Type = 'date']">
@@ -209,29 +352,31 @@ limitations under the License.
                 <xsl:value-of select="$ConfTypeName"/>_Select.QuerySelect.SqlFunc.Add(new SqlFunc(<xsl:value-of select="$ConfTypeGroup"/>.<xsl:value-of select="$ConfTypeName"/>_Const.<xsl:value-of select="Name"/>, "TO_CHAR", ["'dd.mm.yyyy'"]));
             </xsl:for-each>
 
-            <!-- Сортування -->
-            <xsl:for-each select="Fields/Field[SortField = 'True']">
-                /* Сортування */
-                <xsl:variable name="SortDirection">
+            <xsl:if test="$ConfTypeGroup = 'Довідники' or $ConfTypeGroup = 'Документи'"><!-- Для довідників та документів -->
+                <!-- Сортування -->
+                <xsl:for-each select="Fields/Field[SortField = 'True']">
+                    /* Сортування */
+                    <xsl:variable name="SortDirection">
+                        <xsl:choose>
+                            <xsl:when test="SortDirection = 'True'">SelectOrder.DESC</xsl:when>
+                            <xsl:otherwise>SelectOrder.ASC</xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:variable>
+                    <xsl:value-of select="$ConfTypeName"/>_Select.QuerySelect.Order.Add(
                     <xsl:choose>
-                        <xsl:when test="SortDirection = 'True'">SelectOrder.DESC</xsl:when>
-                        <xsl:otherwise>SelectOrder.ASC</xsl:otherwise>
+                        <xsl:when test="Type = 'pointer'">"<xsl:value-of select="Name"/>"</xsl:when>
+                        <xsl:otherwise> <xsl:value-of select="$ConfTypeGroup"/>.<xsl:value-of select="$ConfTypeName"/>_Const.<xsl:value-of select="Name"/></xsl:otherwise>
                     </xsl:choose>
-                </xsl:variable>
-                <xsl:value-of select="$ConfTypeName"/>_Select.QuerySelect.Order.Add(
-                <xsl:choose>
-                    <xsl:when test="Type = 'pointer'">"<xsl:value-of select="Name"/>"</xsl:when>
-                    <xsl:otherwise> <xsl:value-of select="$ConfTypeGroup"/>.<xsl:value-of select="$ConfTypeName"/>_Const.<xsl:value-of select="Name"/></xsl:otherwise>
-                </xsl:choose>
-                <xsl:text>, </xsl:text><xsl:value-of select="$SortDirection"/>);
-            </xsl:for-each>
+                    <xsl:text>, </xsl:text><xsl:value-of select="$SortDirection"/>);
+                </xsl:for-each>
 
-            <!-- Приєднання таблиць -->
-            <xsl:for-each select="Fields/Field[Type = 'pointer']">
-                /* Приєднання */
-                <xsl:value-of select="substring-before(Pointer, '.')"/>.<xsl:value-of select="substring-after(Pointer, '.')"/>_Pointer.GetJoin(<xsl:value-of select="$ConfTypeName"/>_Select.QuerySelect, <xsl:value-of select="$ConfTypeGroup"/>.<xsl:value-of select="$ConfTypeName"/>_Const.<xsl:value-of select="Name"/>,
-                <xsl:value-of select="$ConfTypeName"/>_Select.QuerySelect.Table, "join_tab_<xsl:value-of select="position()"/>", "<xsl:value-of select="Name"/>");
-            </xsl:for-each>
+                <!-- Приєднання таблиць -->
+                <xsl:for-each select="Fields/Field[Type = 'pointer']">
+                    /* Приєднання */
+                    <xsl:value-of select="substring-before(Pointer, '.')"/>.<xsl:value-of select="substring-after(Pointer, '.')"/>_Pointer.GetJoin(<xsl:value-of select="$ConfTypeName"/>_Select.QuerySelect, <xsl:value-of select="$ConfTypeGroup"/>.<xsl:value-of select="$ConfTypeName"/>_Const.<xsl:value-of select="Name"/>,
+                    <xsl:value-of select="$ConfTypeName"/>_Select.QuerySelect.Table, "join_tab_<xsl:value-of select="position()"/>", "<xsl:value-of select="Name"/>");
+                </xsl:for-each>
+            </xsl:if> 
 
             <!-- Додаткові поля -->
             <xsl:for-each select="Fields/AdditionalField[Visible = 'True']">
@@ -556,6 +701,101 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
         }
     }
         </xsl:for-each>
+    #endregion
+    </xsl:for-each>
+}
+
+namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.РегістриНакопичення.ТабличніСписки
+{
+    <xsl:for-each select="Configuration/RegistersAccumulation/RegisterAccumulation">
+      <xsl:variable name="RegisterName" select="Name"/>
+      <xsl:variable name="SelectType">RecordsSet</xsl:variable>
+    #region REGISTER "<xsl:value-of select="$RegisterName"/>"
+    
+      <xsl:for-each select="TabularLists/TabularList">
+        <xsl:variable name="TabularListName" select="Name"/>
+    public static class <xsl:value-of select="$RegisterName"/>_<xsl:value-of select="$TabularListName"/>
+    {
+        public static void AddColumn(RegisterAccumulationFormJournalBase form)
+        {
+            <xsl:call-template name="AddColumnIncome" />
+            <xsl:call-template name="AddColumnPeriod">
+                <xsl:with-param name="RowType">RegisterAccumulationRowJournal</xsl:with-param>
+            </xsl:call-template>
+            <xsl:call-template name="AddColumnOwner">
+                <xsl:with-param name="RowType">RegisterAccumulationRowJournal</xsl:with-param>
+            </xsl:call-template>
+            <xsl:call-template name="AddColumnOwnerType">
+                <xsl:with-param name="RowType">RegisterAccumulationRowJournal</xsl:with-param>
+            </xsl:call-template>
+            <xsl:call-template name="AddColumnOwnerName">
+                <xsl:with-param name="RowType">RegisterAccumulationRowJournal</xsl:with-param>
+            </xsl:call-template>
+            
+            <xsl:call-template name="AddColumnLabel">
+                <xsl:with-param name="ConfTypeName"><xsl:value-of select="$RegisterName"/></xsl:with-param>
+                <xsl:with-param name="RowType">RegisterAccumulationRowJournal</xsl:with-param>
+                <xsl:with-param name="Fields" select="Fields/Field" />
+            </xsl:call-template>
+
+            <xsl:call-template name="AddColumnEmpty" />
+        }
+
+        public static void CreateFilter(RegisterAccumulationFormJournalBase form)
+        {
+            <xsl:call-template name="CreateFilter">
+                <xsl:with-param name="ConfTypeName"><xsl:value-of select="$RegisterName"/></xsl:with-param>
+            </xsl:call-template>
+        }
+
+        public static async ValueTask LoadRecords(RegisterAccumulationFormJournalBase form)
+        {
+            form.BeforeLoadRecords();
+            UnigueID? unigueIDSelect = form.SelectPointerItem;
+
+            /* Вибірка */
+            <xsl:call-template name="Select">
+                <xsl:with-param name="ConfTypeGroup">РегістриНакопичення</xsl:with-param>
+                <xsl:with-param name="ConfTypeName"><xsl:value-of select="$RegisterName"/></xsl:with-param>
+                <xsl:with-param name="SelectType"><xsl:value-of select="$SelectType"/></xsl:with-param>
+            </xsl:call-template>
+
+            /* Приєднання */
+            <xsl:value-of select="$RegisterName"/>_Select.FillJoin(["period"]);
+
+            /* Відбори */
+            if (form.WhereList != null) <xsl:value-of select="$RegisterName"/>_Select.QuerySelect.Where.AddRange(form.WhereList);
+
+            /* Відбір за період */
+            if (form.TypeWhereState == InterfaceGtk4.FormJournal.TypeWhere.Standart || (form.TypeWhereState == InterfaceGtk4.FormJournal.TypeWhere.Filter &amp;&amp; form.Filter.IsUsePeriod))
+            {
+                Where? where = InterfaceGtk4.PeriodForJournal.ВідбірПоПеріоду("period", form.Period.Period, form.Period.DateStart, form.Period.DateStop);
+                if (where != null) <xsl:value-of select="$RegisterName"/>_Select.QuerySelect.Where.Add(where);
+            }
+
+            /* Cторінки */
+            await form.SplitPages(<xsl:value-of select="$RegisterName"/>_Select.SplitSelectToPages, <xsl:value-of select="$RegisterName"/>_Select.QuerySelect, unigueIDSelect);
+
+            <!-- Вибрати дані -->
+            await <xsl:value-of select="$RegisterName"/>_Select.Read();
+            form.Store.RemoveAll();
+            uint selectPosition = 0;
+            foreach (<xsl:value-of select="$RegisterName"/>_<xsl:value-of select="$SelectType"/>.Record record in <xsl:value-of select="$RegisterName"/>_Select.Records)
+            {
+                RegisterAccumulationRowJournal row = new() { UnigueID = new UnigueID(record.UID), Income = record.Income, Period = record.Period, Owner = record.Owner, OwnerType = record.OwnerType, OwnerName = record.OwnerName };
+                <xsl:for-each select="Fields/Field">
+                    <xsl:text>row.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", <xsl:call-template name="FieldValueReg"><xsl:with-param name="VarName">record</xsl:with-param></xsl:call-template>);
+                </xsl:for-each>
+                <xsl:for-each select="Fields/AdditionalField[Visible = 'True']">
+                    <xsl:text>row.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", Fields["<xsl:value-of select="Name"/>"].ToString() ?? "");
+                </xsl:for-each>
+                form.Store.Append(row);
+                if (row.UnigueID.Equals(unigueIDSelect)) selectPosition = form.Store.GetNItems();
+            }
+            form.AfterLoadRecords(selectPosition);
+        }
+    }
+	    </xsl:for-each>
     #endregion
     </xsl:for-each>
 }
