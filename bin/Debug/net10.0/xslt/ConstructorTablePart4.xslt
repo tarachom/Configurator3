@@ -260,6 +260,8 @@ class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина_<xsl:va
                     <xsl:when test="Type = 'enum'">new ComboTextTablePartCell();
                 foreach (var field in ПсевдонімиПерелічення.<xsl:value-of select="substring-after(Pointer, '.')"/>_List())
                     cell.Combo.Append(field.Value.ToString(), field.Name)</xsl:when>
+                    <xsl:when test="Type = 'date' or Type = 'datetime'">new DateTimeTablePartCell()</xsl:when>
+                    <xsl:when test="Type = 'time'">new TimeTablePartCell()</xsl:when>
                     <xsl:otherwise>LabelTablePartCell.New(null)</xsl:otherwise>
                 </xsl:choose>;
                 <xsl:choose>
@@ -268,6 +270,9 @@ class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина_<xsl:va
                     </xsl:when>
                     <xsl:when test="Type = 'boolean'">
                 cell.Halign = Align.Center;
+                    </xsl:when>
+                    <xsl:when test="Type = 'date'">
+                cell.OnlyDate = true;
                     </xsl:when>
                 </xsl:choose>
                 listItem.Child = cell;
@@ -282,6 +287,8 @@ class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина_<xsl:va
                     <xsl:when test="Type = 'boolean'">CheckTablePartCell</xsl:when>
                     <xsl:when test="Type = 'pointer'"><xsl:value-of select="substring-after(Pointer, '.')"/>_PointerTablePartCell</xsl:when>
                     <xsl:when test="Type = 'enum'">ComboTextTablePartCell</xsl:when>
+                    <xsl:when test="Type = 'date' or Type = 'datetime'">DateTimeTablePartCell</xsl:when>
+                    <xsl:when test="Type = 'time'">TimeTablePartCell</xsl:when>
                     <xsl:otherwise>LabelTablePartCell</xsl:otherwise>
                 </xsl:choose>?)listItem.Child;
                 ItemRow? row = (ItemRow?)listItem.Item;
@@ -303,6 +310,10 @@ class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина_<xsl:va
                         <xsl:when test="Type = 'enum'">
                     cell.OnСhanged = () =&gt; row.<xsl:value-of select="Name"/> = ПсевдонімиПерелічення.<xsl:value-of select="substring-after(Pointer, '.')"/>_FindByName(cell.Combo.ActiveId);
                     (row.Сhanged_<xsl:value-of select="Name"/> = () =&gt; cell.Value = row.<xsl:value-of select="Name"/>.ToString()).Invoke();
+                        </xsl:when>
+                        <xsl:when test="Type = 'date' or Type = 'datetime' or Type = 'time'">
+                    cell.OnСhanged = () =&gt; row.<xsl:value-of select="Name"/> = cell.Value;
+                    (row.Сhanged_<xsl:value-of select="Name"/> = () =&gt; cell.Value = row.<xsl:value-of select="Name"/>).Invoke();
                         </xsl:when>
                         <xsl:otherwise>
                     (row.Сhanged_<xsl:value-of select="Name"/> = () =&gt; cell.SetText(row.<xsl:value-of select="Name"/>)).Invoke();
@@ -358,7 +369,7 @@ class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина_<xsl:va
                 <xsl:otherwise>ЕлементВласник.<xsl:value-of select="$TablePartName"/>_TablePart</xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        foreach (<xsl:value-of select="$OwnerBlockName"/><xsl:value-of select="$OwnerName"/>_<xsl:value-of select="$TablePartName"/>_TablePart.Record record in <xsl:value-of select="$InRecords"/>.Records)
+        foreach (var record in <xsl:value-of select="$InRecords"/>.Records)
         {
             Store.Append(new ItemRow()
             {
@@ -406,7 +417,23 @@ class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина_<xsl:va
             }
         }
         await <xsl:value-of select="$Records"/>.Save(true);
-        await LoadRecords();
+        //Update
+        {
+            uint position = 0;
+            foreach (var record in <xsl:value-of select="$InRecords"/>.Records)
+            {
+                bool sel = Grid.Model.IsSelected(position);
+                Store.Splice(position, 1, [new ItemRow()
+                {
+                    UnigueID = new(record.UID),
+                    <xsl:for-each select="$FieldsTL">
+                    <xsl:value-of select="Name"/> = record.<xsl:value-of select="Name"/>,
+                    </xsl:for-each>
+                }], 1);
+                if (sel) Grid.Model.SelectItem(position, false);
+                position++;
+            }
+        }
         <xsl:if test="$OwnerType != 'Constants'">}</xsl:if><!-- закриття if -->
     }
 

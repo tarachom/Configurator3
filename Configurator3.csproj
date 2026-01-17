@@ -16,6 +16,9 @@
   <ItemGroup>
     <ProjectReference Include="..\AccountingSoftwareLib\AccountingSoftware\AccountingSoftware.csproj" />
     <ProjectReference Include="..\AccountingSoftwareLib\InterfaceGtk3\InterfaceGtk3.csproj" />
+    <Reference Include="Configurator">
+      <HintPath>..\Configurator3\bin\Debug\net10.0\Configurator3.exe</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>
