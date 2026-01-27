@@ -619,13 +619,13 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
                 <xsl:otherwise>
             /* Cторінки */
             await form.SplitPages(<xsl:value-of select="$DirectoryName"/>_Select.SplitSelectToPages, <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect, unigueIDSelect);
+            uint selectPosition = 0;
                 </xsl:otherwise>
             </xsl:choose>
 
             <!-- Вибрати дані -->
             await <xsl:value-of select="$DirectoryName"/>_Select.Select();
             form.Store.RemoveAll();
-            uint selectPosition = 0;
             while (<xsl:value-of select="$DirectoryName"/>_Select.MoveNext())
             {
                 Довідники.<xsl:value-of select="$DirectoryName"/>_Pointer? curr = <xsl:value-of select="$DirectoryName"/>_Select.Current;
@@ -650,17 +650,22 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
                         </xsl:when>
                         <xsl:otherwise>
                     form.Store.Append(row);
+                    if (row.UnigueID.Equals(unigueIDSelect)) selectPosition = form.Store.GetNItems();
                         </xsl:otherwise>
                     </xsl:choose>
-                    if (row.UnigueID.Equals(unigueIDSelect)) selectPosition = form.Store.GetNItems();
                 }
             }
-            <xsl:if test="$DirectoryType = 'Hierarchical'">
+            <xsl:choose>
+                <xsl:when test="$DirectoryType = 'Hierarchical'">
             /*Заповнення сховища*/
             foreach (<xsl:value-of select="$RowType"/> row in topRows) 
                 form.Store.Append(row);
-            </xsl:if>
+            form.AfterLoadRecords(unigueIDSelect);
+                </xsl:when>
+                <xsl:otherwise>
             form.AfterLoadRecords(selectPosition);
+                </xsl:otherwise>
+            </xsl:choose>
         }
     }
         </xsl:for-each>
