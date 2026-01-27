@@ -611,6 +611,10 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             /* Відбори */
             if (form.WhereList != null) <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where.AddRange(form.WhereList);
 
+            /* Додатковий відбір */
+            if (form.ParentWhereList != null &amp;&amp; form.TypeWhereState == InterfaceGtk4.FormJournal.TypeWhere.Standart)
+                <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where.AddRange(form.ParentWhereList);
+
             <xsl:choose>
                 <xsl:when test="$DirectoryType = 'Hierarchical'">
             Dictionary&lt;string, DirectoryHierarchicalRow&gt; rows = [];
