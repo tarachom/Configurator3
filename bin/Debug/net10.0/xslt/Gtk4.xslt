@@ -186,10 +186,10 @@ limitations under the License.
                 factory.OnBind += (_, args) =&gt;
                 {
                     ListItem listItem = (ListItem)args.Object;
-                    LabelTablePartCell? labelControl = (LabelTablePartCell?)listItem.Child;
+                    LabelTablePartCell? cell = (LabelTablePartCell?)listItem.Child;
                     RegisterAccumulationRowJournal? row = (RegisterAccumulationRowJournal?)listItem.Item;
-                    if (labelControl != null &amp;&amp; row != null)
-                        labelControl.SetText(row.Income ? "+" : "-");
+                    if (cell != null &amp;&amp; row != null)
+                        cell.SetText(row.Income ? "+" : "-");
                 };
                 ColumnViewColumn column = ColumnViewColumn.New("Рух", factory);
                 form.Grid.AppendColumn(column);
@@ -209,10 +209,10 @@ limitations under the License.
                 factory.OnBind += (_, args) =&gt;
                 {
                     ListItem listItem = (ListItem)args.Object;
-                    LabelTablePartCell? labelControl = (LabelTablePartCell?)listItem.Child;
+                    LabelTablePartCell? cell = (LabelTablePartCell?)listItem.Child;
                     <xsl:value-of select="$RowType"/>? row = (<xsl:value-of select="$RowType"/>?)listItem.Item;
-                    if (labelControl != null &amp;&amp; row != null)
-                        labelControl.SetText(row.Period);
+                    if (cell != null &amp;&amp; row != null)
+                        cell.SetText(row.Period);
                 };
                 ColumnViewColumn column = ColumnViewColumn.New("Період", factory);
                 form.Grid.AppendColumn(column);
@@ -232,10 +232,10 @@ limitations under the License.
                 factory.OnBind += (_, args) =&gt;
                 {
                     ListItem listItem = (ListItem)args.Object;
-                    LabelTablePartCell? labelControl = (LabelTablePartCell?)listItem.Child;
+                    LabelTablePartCell? cell = (LabelTablePartCell?)listItem.Child;
                     <xsl:value-of select="$RowType"/>? row = (<xsl:value-of select="$RowType"/>?)listItem.Item;
-                    if (labelControl != null &amp;&amp; row != null)
-                        labelControl.SetText(row.Owner.ToString());
+                    if (cell != null &amp;&amp; row != null)
+                        cell.SetText(row.Owner.ToString());
                 };
                 ColumnViewColumn column = ColumnViewColumn.New("Власник", factory);
                 form.Grid.AppendColumn(column);
@@ -255,10 +255,10 @@ limitations under the License.
                 factory.OnBind += (_, args) =&gt;
                 {
                     ListItem listItem = (ListItem)args.Object;
-                    LabelTablePartCell? labelControl = (LabelTablePartCell?)listItem.Child;
+                    LabelTablePartCell? cell = (LabelTablePartCell?)listItem.Child;
                     <xsl:value-of select="$RowType"/>? row = (<xsl:value-of select="$RowType"/>?)listItem.Item;
-                    if (labelControl != null &amp;&amp; row != null)
-                        labelControl.SetText(row.OwnerType.ToString());
+                    if (cell != null &amp;&amp; row != null)
+                        cell.SetText(row.OwnerType?.ToString());
                 };
                 ColumnViewColumn column = ColumnViewColumn.New("Тип власника", factory);
                 form.Grid.AppendColumn(column);
@@ -278,10 +278,10 @@ limitations under the License.
                 factory.OnBind += (_, args) =&gt;
                 {
                     ListItem listItem = (ListItem)args.Object;
-                    LabelTablePartCell? labelControl = (LabelTablePartCell?)listItem.Child;
+                    LabelTablePartCell? cell = (LabelTablePartCell?)listItem.Child;
                     <xsl:value-of select="$RowType"/>? row = (<xsl:value-of select="$RowType"/>?)listItem.Item;
-                    if (labelControl != null &amp;&amp; row != null)
-                        labelControl.SetText(row.OwnerName.ToString());
+                    if (cell != null &amp;&amp; row != null)
+                        cell.SetText(row.OwnerName.ToString());
                 };
                 ColumnViewColumn column = ColumnViewColumn.New("Власник назва", factory);
                 form.Grid.AppendColumn(column);
@@ -304,17 +304,79 @@ limitations under the License.
                 factory.OnBind += (_, args) =&gt;
                 {
                     ListItem listItem = (ListItem)args.Object;
-                    LabelTablePartCell? labelControl = (LabelTablePartCell?)listItem.Child;
+                    LabelTablePartCell? cell = (LabelTablePartCell?)listItem.Child;
                     <xsl:value-of select="$RowType"/>? row = (<xsl:value-of select="$RowType"/>?)listItem.Item;
-                    if (labelControl != null &amp;&amp; row != null)
-                        labelControl.SetText(row.Fields["<xsl:value-of select="Name"/>"]);
+                    if (cell != null &amp;&amp; row != null)
+                        cell.SetText(row.Fields["<xsl:value-of select="Name"/>"]);
                 };
                 ColumnViewColumn column = ColumnViewColumn.New("<xsl:value-of select="Caption"/>", factory);
                 column.Resizable = true;
                 form.Grid.AppendColumn(column);
             }
         </xsl:for-each>
+  </xsl:template>
 
+  <xsl:template name="AddColumnLabelTree">
+    <xsl:param name="ConfTypeName" />
+    <xsl:param name="RowType" />
+    <xsl:param name="Fields" />
+        <xsl:for-each select="$Fields">
+            //Назва: <xsl:value-of select="Name"/>, "<xsl:value-of select="Caption"/>"
+            {
+                SignalListItemFactory factory = SignalListItemFactory.New();
+                factory.OnSetup += (_, args) =&gt;
+                {
+                    ListItem listItem = (ListItem)args.Object;
+                    listItem.Child = LabelTablePartCell.NewFromType("<xsl:value-of select="Type"/>");
+                };
+                factory.OnBind += (_, args) =&gt;
+                {
+                    ListItem listItem = (ListItem)args.Object;
+                    TreeListRow? treeRow = (TreeListRow?)listItem.GetItem();
+                    if (treeRow != null)
+                    {
+                        LabelTablePartCell? cell = (LabelTablePartCell?)listItem.Child;
+                        <xsl:value-of select="$RowType"/>? row = (<xsl:value-of select="$RowType"/>?)treeRow.Item;
+                        if (cell != null &amp;&amp; row != null)
+                            cell.SetText(row.Fields["<xsl:value-of select="Name"/>"]);
+                    }
+                };
+                ColumnViewColumn column = ColumnViewColumn.New("<xsl:value-of select="Caption"/>", factory);
+                column.Resizable = true;
+                form.Grid.AppendColumn(column);
+            }
+        </xsl:for-each>
+  </xsl:template>
+
+  <xsl:template name="AddColumnTreeExpander">
+    <xsl:param name="RowType" />
+            {
+                SignalListItemFactory factory = SignalListItemFactory.New();
+                factory.OnSetup += (_, args) =&gt;
+                {
+                    ListItem listItem = (ListItem)args.Object;
+                    TreeExpander expander = TreeExpander.New();
+                    expander.SetChild(new ImageTablePartCell());
+                    listItem.SetChild(expander);
+                };
+                factory.OnBind += (_, args) =&gt;
+                {
+                    ListItem listItem = (ListItem)args.Object;
+                    TreeExpander? expander = (TreeExpander?)listItem.GetChild();
+                    TreeListRow? treeRow = (TreeListRow?)listItem.GetItem();
+                    if (expander != null &amp;&amp; treeRow != null)
+                    {
+                        expander.SetListRow(treeRow);
+                        ImageTablePartCell? cell = (ImageTablePartCell?)expander.GetChild();
+                        <xsl:value-of select="$RowType"/>? row = (<xsl:value-of select="$RowType"/>?)treeRow.Item;
+                        if (cell != null &amp;&amp; row != null)
+                            cell.SetImage((row?.DeletionLabel ?? false) ? InterfaceGtk4.Icon.ForTabularLists.Delete : InterfaceGtk4.Icon.ForTabularLists.Normal);
+                    }
+                };
+                ColumnViewColumn column = ColumnViewColumn.New("", factory);
+                column.Resizable = true;
+                form.Grid.AppendColumn(column);
+            }
   </xsl:template>
 
   <xsl:template name="AddColumnEmpty">
@@ -417,6 +479,12 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
               <xsl:otherwise>Select</xsl:otherwise>
           </xsl:choose>
       </xsl:variable>
+      <xsl:variable name="RowType">
+          <xsl:choose>
+              <xsl:when test="$DirectoryType = 'Hierarchical'">DirectoryHierarchicalRow</xsl:when>
+              <xsl:otherwise>DirectoryRowJournal</xsl:otherwise>
+          </xsl:choose>
+      </xsl:variable>
     #region DIRECTORY "<xsl:value-of select="$DirectoryName"/>"
         <xsl:for-each select="TabularLists/TabularList">
             <xsl:variable name="TabularListName" select="Name"/>
@@ -424,21 +492,42 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
     {
         public static void AddColumn(DirectoryFormJournalBase form)
         {
-            <xsl:call-template name="AddColumnImage">
-                <xsl:with-param name="RowType">DirectoryRowJournal</xsl:with-param>
-            </xsl:call-template>
+            <xsl:choose>
+                <xsl:when test="$DirectoryType = 'Hierarchical'">
+                    <xsl:call-template name="AddColumnTreeExpander">
+                        <xsl:with-param name="RowType" select="$RowType"/>
+                    </xsl:call-template>
 
-            <xsl:call-template name="AddColumnLabel">
-                <xsl:with-param name="ConfTypeName"><xsl:value-of select="$DirectoryName"/></xsl:with-param>
-                <xsl:with-param name="RowType">DirectoryRowJournal</xsl:with-param>
-                <xsl:with-param name="Fields" select="Fields/Field" />
-            </xsl:call-template>
+                    <xsl:call-template name="AddColumnLabelTree">
+                        <xsl:with-param name="ConfTypeName"><xsl:value-of select="$DirectoryName"/></xsl:with-param>
+                        <xsl:with-param name="RowType" select="$RowType"/>
+                        <xsl:with-param name="Fields" select="Fields/Field" />
+                    </xsl:call-template>
 
-            <xsl:call-template name="AddColumnLabel">
-                <xsl:with-param name="ConfTypeName"><xsl:value-of select="$DirectoryName"/></xsl:with-param>
-                <xsl:with-param name="RowType">DirectoryRowJournal</xsl:with-param>
-                <xsl:with-param name="Fields" select="Fields/AdditionalField[Visible = 'True']" />
-            </xsl:call-template>
+                    <xsl:call-template name="AddColumnLabelTree">
+                        <xsl:with-param name="ConfTypeName"><xsl:value-of select="$DirectoryName"/></xsl:with-param>
+                        <xsl:with-param name="RowType" select="$RowType"/>
+                        <xsl:with-param name="Fields" select="Fields/AdditionalField[Visible = 'True']" />
+                    </xsl:call-template>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:call-template name="AddColumnImage">
+                        <xsl:with-param name="RowType" select="$RowType"/>
+                    </xsl:call-template>
+
+                    <xsl:call-template name="AddColumnLabel">
+                        <xsl:with-param name="ConfTypeName"><xsl:value-of select="$DirectoryName"/></xsl:with-param>
+                        <xsl:with-param name="RowType" select="$RowType"/>
+                        <xsl:with-param name="Fields" select="Fields/Field" />
+                    </xsl:call-template>
+
+                    <xsl:call-template name="AddColumnLabel">
+                        <xsl:with-param name="ConfTypeName"><xsl:value-of select="$DirectoryName"/></xsl:with-param>
+                        <xsl:with-param name="RowType" select="$RowType"/>
+                        <xsl:with-param name="Fields" select="Fields/AdditionalField[Visible = 'True']" />
+                    </xsl:call-template>
+                </xsl:otherwise>
+            </xsl:choose>
 
             <xsl:call-template name="AddColumnEmpty" />
         }
@@ -477,7 +566,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
                 if (curr != null)
                 {
                     Dictionary&lt;string, object&gt; Fields = curr.Fields;
-                    DirectoryRowJournal row = new() { UnigueID = curr.UnigueID, DeletionLabel = (bool)Fields["deletion_label"] };
+                    <xsl:value-of select="$RowType"/> row = new() { UnigueID = curr.UnigueID, DeletionLabel = (bool)Fields["deletion_label"] };
                     <xsl:for-each select="Fields/Field">
                         <xsl:text>row.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", <xsl:call-template name="FieldValue"><xsl:with-param name="ConfTypeName"><xsl:value-of select="$DirectoryName"/></xsl:with-param></xsl:call-template>);
                     </xsl:for-each>
@@ -522,8 +611,16 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             /* Відбори */
             if (form.WhereList != null) <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where.AddRange(form.WhereList);
 
+            <xsl:choose>
+                <xsl:when test="$DirectoryType = 'Hierarchical'">
+            Dictionary&lt;string, DirectoryHierarchicalRow&gt; rows = [];
+            List&lt;DirectoryHierarchicalRow&gt; topRows = [];
+                </xsl:when>
+                <xsl:otherwise>
             /* Cторінки */
             await form.SplitPages(<xsl:value-of select="$DirectoryName"/>_Select.SplitSelectToPages, <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect, unigueIDSelect);
+                </xsl:otherwise>
+            </xsl:choose>
 
             <!-- Вибрати дані -->
             await <xsl:value-of select="$DirectoryName"/>_Select.Select();
@@ -535,17 +632,34 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
                 if (curr != null)
                 {
                     Dictionary&lt;string, object&gt; Fields = curr.Fields;
-                    DirectoryRowJournal row = new() { UnigueID = curr.UnigueID, DeletionLabel = (bool)Fields["deletion_label"] };
+                    <xsl:value-of select="$RowType"/> row = new() { UnigueID = curr.UnigueID, DeletionLabel = (bool)Fields["deletion_label"] };
                     <xsl:for-each select="Fields/Field">
                         <xsl:text>row.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", <xsl:call-template name="FieldValue"><xsl:with-param name="ConfTypeName"><xsl:value-of select="$DirectoryName"/></xsl:with-param></xsl:call-template>);
                     </xsl:for-each>
                     <xsl:for-each select="Fields/AdditionalField[Visible = 'True']">
                         <xsl:text>row.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", Fields["<xsl:value-of select="Name"/>"].ToString() ?? "");
                     </xsl:for-each>
+                    <xsl:choose>
+                        <xsl:when test="$DirectoryType = 'Hierarchical'">
+                    Довідники.<xsl:value-of select="$DirectoryName"/>_Pointer? parent = <xsl:value-of select="$DirectoryName"/>_Select.Parent;
+                    if (<xsl:value-of select="$DirectoryName"/>_Select.Level == 1)
+                        topRows.Add(row);
+                    else if (parent != null &amp;&amp; rows.TryGetValue(parent.UnigueID.ToString(), out DirectoryHierarchicalRow? parentRow))
+                        parentRow.Sub.Add(row);
+                    rows.Add(curr.UnigueID.ToString(), row);
+                        </xsl:when>
+                        <xsl:otherwise>
                     form.Store.Append(row);
+                        </xsl:otherwise>
+                    </xsl:choose>
                     if (row.UnigueID.Equals(unigueIDSelect)) selectPosition = form.Store.GetNItems();
                 }
             }
+            <xsl:if test="$DirectoryType = 'Hierarchical'">
+            /*Заповнення сховища*/
+            foreach (<xsl:value-of select="$RowType"/> row in topRows) 
+                form.Store.Append(row);
+            </xsl:if>
             form.AfterLoadRecords(selectPosition);
         }
     }

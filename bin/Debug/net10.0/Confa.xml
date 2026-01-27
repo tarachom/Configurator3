@@ -7,7 +7,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>17.01.2026 21:54:39</DateTimeSave>
+  <DateTimeSave>25.01.2026 23:30:01</DateTimeSave>
   <DictTSearch>simple</DictTSearch>
   <GtkVersion>Gtk4</GtkVersion>
   <ConstantsBlocks>
@@ -39468,6 +39468,19 @@ static class ЗамовленняПостачальнику_SpendTheDocument
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
           <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
+          <CompositePointerAllowDocuments>
+            <Name>ЗамовленняПостачальнику</Name>
+            <Name>ПоступленняТоварівТаПослуг</Name>
+            <Name>ЗамовленняКлієнта</Name>
+            <Name>РеалізаціяТоварівТаПослуг</Name>
+            <Name>ПереміщенняТоварів</Name>
+            <Name>ПоверненняТоварівПостачальнику</Name>
+            <Name>ПоверненняТоварівВідКлієнта</Name>
+            <Name>ВнутрішнєСпоживанняТоварів</Name>
+            <Name>РахунокФактура</Name>
+            <Name>ЗакриттяЗамовленняКлієнта</Name>
+            <Name>ЗакриттяЗамовленняПостачальнику</Name>
+          </CompositePointerAllowDocuments>
         </Field>
         <Field>
           <Name>Коментар</Name>
