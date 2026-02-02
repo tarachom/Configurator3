@@ -7,7 +7,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>27.01.2026 23:37:12</DateTimeSave>
+  <DateTimeSave>02.02.2026 15:34:13</DateTimeSave>
   <DictTSearch>simple</DictTSearch>
   <GtkVersion>Gtk4</GtkVersion>
   <ConstantsBlocks>
@@ -3460,6 +3460,17 @@ class Номенклатура_ТабличнаЧастина_Файли : Direc
               <Type>enum</Type>
               <Pointer>Перелічення.ТипиНоменклатури</Pointer>
             </Field>
+            <Field>
+              <Name>Папка</Name>
+              <Caption>Папка</Caption>
+              <Size>0</Size>
+              <SortNum>6</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>True</FilterField>
+              <Type>pointer</Type>
+              <Pointer>Довідники.Номенклатура_Папки</Pointer>
+            </Field>
             <AdditionalField>
               <Visible>True</Visible>
               <Name>Залишок</Name>
@@ -3590,7 +3601,7 @@ END]]></Value>
               <SortNum>1</SortNum>
               <SortField>True</SortField>
               <SortDirection>False</SortDirection>
-              <FilterField>True</FilterField>
+              <FilterField>False</FilterField>
               <Type>string</Type>
               <Multiline>0</Multiline>
             </Field>
@@ -3601,7 +3612,7 @@ END]]></Value>
               <SortNum>2</SortNum>
               <SortField>False</SortField>
               <SortDirection>False</SortDirection>
-              <FilterField>True</FilterField>
+              <FilterField>False</FilterField>
               <Type>string</Type>
               <Multiline>0</Multiline>
             </Field>
@@ -3615,6 +3626,28 @@ END]]></Value>
               <FilterField>True</FilterField>
               <Type>pointer</Type>
               <Pointer>Довідники.ПакуванняОдиниціВиміру</Pointer>
+            </Field>
+            <Field>
+              <Name>ТипНоменклатури</Name>
+              <Caption>Тип</Caption>
+              <Size>0</Size>
+              <SortNum>4</SortNum>
+              <SortField>True</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>True</FilterField>
+              <Type>enum</Type>
+              <Pointer>Перелічення.ТипиНоменклатури</Pointer>
+            </Field>
+            <Field>
+              <Name>Папка</Name>
+              <Caption>Папка</Caption>
+              <Size>0</Size>
+              <SortNum>5</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>True</FilterField>
+              <Type>pointer</Type>
+              <Pointer>Довідники.Номенклатура_Папки</Pointer>
             </Field>
             <AdditionalField>
               <Visible>True</Visible>
@@ -3782,14 +3815,15 @@ static class Номенклатура_Функції
         await page.SetValue();
     }
 
-    public static async ValueTask OpenPageList(UnigueID? unigueID = null, Action<UnigueID>? сallBack_OnSelectPointer = null)
+    public static async ValueTask OpenPageList(UnigueID? unigueID = null, 
+        Action<UnigueID>? сallBack_OnSelectPointer = null)
     {
         Номенклатура_Список page = new()
         {
             DirectoryPointerItem = unigueID,
             CallBack_OnSelectPointer = сallBack_OnSelectPointer
         };
-
+        
         Program.BasicForm?.NotebookFunc.CreatePage(Номенклатура_Const.FULLNAME, page);
         await page.SetValue();
     }
@@ -3834,101 +3868,97 @@ static class Номенклатура_Функції
 */
 
 using Gtk;
-using InterfaceGtk;
+using InterfaceGtk4;
 using AccountingSoftware;
-using GeneratedCode;
 using GeneratedCode.Довідники;
-using ТабличніСписки = GeneratedCode.Довідники.ТабличніСписки;
 
-namespace StorageAndTrade
+using ТабличнийСписок = GeneratedCode.Довідники.ТабличніСписки.Номенклатура_Записи;
+using Функції = StorageAndTrade.Номенклатура_Функції;
+
+namespace StorageAndTrade;
+
+class Номенклатура_Список : DirectoryFormJournalFull
 {
-    public class Номенклатура : ДовідникЖурнал
+    Номенклатура_Папки_Список Папки = new() { InsertEmptyFirstRow = true };
+    
+
+    public Номенклатура_Список() : base(Program.BasicForm?.NotebookFunc)
     {
-        CheckButton checkButtonIsHierarchy = new CheckButton("Ієрархія папок") { Active = true };
-        Номенклатура_Папки ДеревоПапок;
-        
+        TypeName = Номенклатура_Const.POINTER;
+        ТабличнийСписок.AddColumn(this);
+        SetPagesSettings(50);
 
-        public Номенклатура()
+        //Папки
         {
-            //Враховувати ієрархію папок
-            checkButtonIsHierarchy.Clicked += async (object? sender, EventArgs args) => await LoadRecords();
-            HBoxTop.PackStart(checkButtonIsHierarchy, false, false, 10);
+            CompositeMode = true;
 
-            //Дерево папок
-            ДеревоПапок = new Номенклатура_Папки() { WidthRequest = 500, CallBack_RowActivated = LoadRecords_TreeCallBack };
-            HPanedTable.Pack2(ДеревоПапок, false, true);
+            Box vBox = New(Orientation.Vertical, 0);
+            vBox.MarginStart = 5;
+            vBox.Append(Папки);
 
-            ТабличніСписки.Номенклатура_Записи.AddColumns(TreeViewGrid);
-            Config.Kernel.DirectoryObjectChanged += async (object? sender, Dictionary<string, List<Guid>> directory) =>
+            HPanedTable.SetEndChild(vBox);
+            HPanedTable.Position = 1200;
+            HPanedTable.StartChild?.MarginEnd = 5;
+
+            Папки.CallBack_Activate = async unigueID =>
             {
-                if (directory.Any((x) => x.Key == Номенклатура_Const.TYPE))
+                //Відбір по полю Папка
+                ParentWhereList = [new(Номенклатура_Const.Папка, Comparison.EQ, unigueID.UGuid)];
+                if (TypeWhereState == TypeWhere.Standart)
+                {
+                    PagesClear();
                     await LoadRecords();
+                }
             };
-
-            
         }
 
-        #region Override
-
-        protected override async ValueTask LoadRecords()
+        
+    }
+    
+    protected override async ValueTask BeforeSetValue()
+    {
+        if (SelectPointerItem != null || DirectoryPointerItem != null)
         {
-            if (DirectoryPointerItem != null || SelectPointerItem != null)
-            {
-                Номенклатура_Objest? Обєкт = await new Номенклатура_Pointer(SelectPointerItem ?? DirectoryPointerItem ?? new UnigueID()).GetDirectoryObject();
-                if (Обєкт != null) ДеревоПапок.SelectPointerItem = Обєкт.Папка.UnigueID;
-            }
-
-            await ДеревоПапок.SetValue();
+            Номенклатура_Objest? Обєкт = await new Номенклатура_Pointer(SelectPointerItem ?? DirectoryPointerItem ?? new UnigueID()).GetDirectoryObject();
+            if (Обєкт != null) Папки.SelectPointerItem = Обєкт.Папка.UnigueID;
         }
 
-        async void LoadRecords_TreeCallBack()
-        {
-            ТабличніСписки.Номенклатура_Записи.SelectPointerItem = SelectPointerItem;
-            ТабличніСписки.Номенклатура_Записи.DirectoryPointerItem = DirectoryPointerItem;
+        await Папки.SetValue();
+    }
 
-            ТабличніСписки.Номенклатура_Записи.ОчиститиВідбір(TreeViewGrid);
-            
-            if (checkButtonIsHierarchy.Active)
-                ТабличніСписки.Номенклатура_Записи.ДодатиВідбір(TreeViewGrid,
-                    new Where(Номенклатура_Const.Папка, Comparison.EQ, ДеревоПапок.SelectPointerItem?.UGuid ?? new UnigueID().UGuid));
+    public override async ValueTask LoadRecords()
+    {
+        await ТабличнийСписок.LoadRecords(this);
+    }
 
-            await ТабличніСписки.Номенклатура_Записи.LoadRecords(TreeViewGrid, OpenFolder);
-        }
+    public override async ValueTask UpdateRecords()
+    {
+        await ТабличнийСписок.UpdateRecords(this);
+    }
 
-        protected override async ValueTask LoadRecords_OnSearch(string searchText)
-        {
-            ТабличніСписки.Номенклатура_Записи.ОчиститиВідбір(TreeViewGrid);
-            
-            //Відбори
-            ТабличніСписки.Номенклатура_Записи.ДодатиВідбір(TreeViewGrid, Номенклатура_Функції.Відбори(searchText));
+    protected override async void SetSearch(string searchText)
+    {
+        WhereList = Функції.Відбори(searchText);
+    }
 
-            await ТабличніСписки.Номенклатура_Записи.LoadRecords(TreeViewGrid, OpenFolder);
-        }
+    protected override void FillFilter(FilterControl filterControl)
+    {
+        ТабличнийСписок.CreateFilter(this);
+    }
 
-        protected override Widget? FilterRecords(Box hBox)
-        {
-            return ТабличніСписки.Номенклатура_Записи.CreateFilter(TreeViewGrid);
-        }
+    protected override async ValueTask OpenPageElement(bool IsNew, UnigueID? unigueID = null)
+    {
+        await Функції.OpenPageElement(IsNew, unigueID, CallBack_LoadRecords, CallBack_OnSelectPointer);
+    }
 
-        protected override async ValueTask OpenPageElement(bool IsNew, UnigueID? unigueID = null)
-        {
-            await  Номенклатура_Функції.OpenPageElement(IsNew, unigueID, CallBack_LoadRecords, null);
-            
-        }
+    protected override async ValueTask SetDeletionLabel(UnigueID unigueID)
+    {
+        await Функції.SetDeletionLabel(unigueID);
+    }
 
-        protected override async ValueTask SetDeletionLabel(UnigueID unigueID)
-        {
-            await  Номенклатура_Функції.SetDeletionLabel(unigueID);
-            
-        }
-
-        protected override async ValueTask<UnigueID?> Copy(UnigueID unigueID)
-        {
-            return await  Номенклатура_Функції.Copy(unigueID);
-            
-        }
-
-        #endregion
+    protected override async ValueTask<UnigueID?> Copy(UnigueID unigueID)
+    {
+        return await Функції.Copy(unigueID);
     }
 }
     ]]></GeneratedCode>
@@ -3965,6 +3995,8 @@ class Номенклатура_ШвидкийВибір : DirectoryFormJournalSm
         KeyForSetting = ".Small";
         ТабличнийСписок.AddColumn(this);
         SetPagesSettings(50);
+
+        
     }
 
     public override async ValueTask LoadRecords()
@@ -4066,6 +4098,7 @@ public class Номенклатура_PointerControl : PointerControl
         {
             PopoverParent = popover,
             DirectoryPointerItem = Pointer.UnigueID,
+            OpenFolder = OpenFolder,
             CallBack_OnSelectPointer = selectPointer =>
             {
                 Pointer = new Номенклатура_Pointer(selectPointer);
@@ -4638,12 +4671,16 @@ public class Номенклатура_PointerTablePartCell : PointerTablePartCel
         popover.SetParent(button);
         popover.WidthRequest = 800;
         popover.HeightRequest = 400;
-
+        BeforeClickOpenFunc?.Invoke();
         Номенклатура_ШвидкийВибір page = new()
         {
             PopoverParent = popover,
             DirectoryPointerItem = pointer.UnigueID,
-            CallBack_OnSelectPointer = async p => await PointerChange(p)
+            CallBack_OnSelectPointer = async p => 
+            {
+                await PointerChange(p);
+                AfterSelectFunc?.Invoke();
+            }
         };
         
 
@@ -4656,80 +4693,12 @@ public class Номенклатура_PointerTablePartCell : PointerTablePartCel
     protected override async void Clear()
     {
         await PointerChange(null);
+        AfterSelectFunc?.Invoke();
+        AfterClearFunc?.Invoke();
     }
 }
     ]]></GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
-        </Form>
-        <Form Modified="0">
-          <Name>Список</Name>
-          <Desc>Список</Desc>
-          <Type>List</Type>
-          <GeneratedCode><![CDATA[
-/*     
-        Номенклатура.cs
-        Список
-*/
-
-using Gtk;
-using InterfaceGtk4;
-using AccountingSoftware;
-using GeneratedCode.Довідники;
-
-using ТабличнийСписок = GeneratedCode.Довідники.ТабличніСписки.Номенклатура_Записи;
-using Функції = StorageAndTrade.Номенклатура_Функції;
-
-namespace StorageAndTrade;
-
-class Номенклатура_Список : DirectoryFormJournalFull
-{
-    
-    
-    public Номенклатура_Список() : base(Program.BasicForm?.NotebookFunc)
-    {
-        TypeName = Номенклатура_Const.POINTER;
-        ТабличнийСписок.AddColumn(this);
-        SetPagesSettings(50);
-    }
-
-    public override async ValueTask LoadRecords()
-    {
-        await ТабличнийСписок.LoadRecords(this);
-    }
-
-    public override async ValueTask UpdateRecords()
-    {
-        await ТабличнийСписок.UpdateRecords(this);
-    }
-
-    protected override async void SetSearch(string searchText)
-    {
-        WhereList = Функції.Відбори(searchText);
-    }
-
-    protected override void FillFilter(FilterControl filterControl)
-    {
-        ТабличнийСписок.CreateFilter(this);
-    }
-
-    protected override async ValueTask OpenPageElement(bool IsNew, UnigueID? unigueID = null)
-    {
-        await Функції.OpenPageElement(IsNew, unigueID, CallBack_LoadRecords, CallBack_OnSelectPointer);
-    }
-
-    protected override async ValueTask SetDeletionLabel(UnigueID unigueID)
-    {
-        await Функції.SetDeletionLabel(unigueID);
-    }
-
-    protected override async ValueTask<UnigueID?> Copy(UnigueID unigueID)
-    {
-        return await Функції.Copy(unigueID);
-    }
-}
-    ]]></GeneratedCode>
-          <NotSaveToFile>0</NotSaveToFile>
-          <TabularList>Записи</TabularList>
         </Form>
       </Forms>
     </Directory>
@@ -9206,7 +9175,105 @@ static class Контрагенти_Функції
           <Name>Список з Деревом</Name>
           <Desc>Список з Деревом</Desc>
           <Type>ListAndTree</Type>
-          <GeneratedCode><![CDATA[]]></GeneratedCode>
+          <GeneratedCode><![CDATA[
+/*     
+        Контрагенти.cs 
+        Список з Деревом
+*/
+
+using Gtk;
+using InterfaceGtk4;
+using AccountingSoftware;
+using GeneratedCode.Довідники;
+
+using ТабличнийСписок = GeneratedCode.Довідники.ТабличніСписки.Контрагенти_Записи;
+using Функції = StorageAndTrade.Контрагенти_Функції;
+
+namespace StorageAndTrade;
+
+class Контрагенти_Список : DirectoryFormJournalFull
+{
+    Контрагенти_Папки_Список Папки = new() { InsertEmptyFirstRow = true };
+    
+
+    public Контрагенти_Список() : base(Program.BasicForm?.NotebookFunc)
+    {
+        TypeName = Контрагенти_Const.POINTER;
+        ТабличнийСписок.AddColumn(this);
+        SetPagesSettings(50);
+
+        //Папки
+        {
+            CompositeMode = true;
+
+            Box vBox = New(Orientation.Vertical, 0);
+            vBox.MarginStart = 5;
+            vBox.Append(Папки);
+
+            HPanedTable.SetEndChild(vBox);
+            HPanedTable.Position = 1200;
+            HPanedTable.StartChild?.MarginEnd = 5;
+
+            Папки.CallBack_Activate = async unigueID =>
+            {
+                //Відбір по полю Папка
+                ParentWhereList = [new(Контрагенти_Const.Папка, Comparison.EQ, unigueID.UGuid)];
+                if (TypeWhereState == TypeWhere.Standart)
+                {
+                    PagesClear();
+                    await LoadRecords();
+                }
+            };
+        }
+    }
+    
+    protected override async ValueTask BeforeSetValue()
+    {
+        if (SelectPointerItem != null || DirectoryPointerItem != null)
+        {
+            Контрагенти_Objest? Обєкт = await new Контрагенти_Pointer(SelectPointerItem ?? DirectoryPointerItem ?? new UnigueID()).GetDirectoryObject();
+            if (Обєкт != null) Папки.SelectPointerItem = Обєкт.Папка.UnigueID;
+        }
+
+        await Папки.SetValue();
+    }
+
+    public override async ValueTask LoadRecords()
+    {
+        await ТабличнийСписок.LoadRecords(this);
+    }
+
+    public override async ValueTask UpdateRecords()
+    {
+        await ТабличнийСписок.UpdateRecords(this);
+    }
+
+    protected override async void SetSearch(string searchText)
+    {
+        WhereList = Функції.Відбори(searchText);
+    }
+
+    protected override void FillFilter(FilterControl filterControl)
+    {
+        ТабличнийСписок.CreateFilter(this);
+    }
+
+    protected override async ValueTask OpenPageElement(bool IsNew, UnigueID? unigueID = null)
+    {
+        await Функції.OpenPageElement(IsNew, unigueID, CallBack_LoadRecords, CallBack_OnSelectPointer);
+    }
+
+    protected override async ValueTask SetDeletionLabel(UnigueID unigueID)
+    {
+        await Функції.SetDeletionLabel(unigueID);
+    }
+
+    protected override async ValueTask<UnigueID?> Copy(UnigueID unigueID)
+    {
+        return await Функції.Copy(unigueID);
+    }
+}
+    ]]></GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
@@ -9801,7 +9868,7 @@ class Контрагенти_Елемент : DirectoryFormElement
           <IsPresentation>1</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>1</IsFullTextSearch>
-          <IsSearch>0</IsSearch>
+          <IsSearch>1</IsSearch>
           <IsExport>0</IsExport>
           <Multiline>0</Multiline>
         </Field>
@@ -9814,7 +9881,7 @@ class Контрагенти_Елемент : DirectoryFormElement
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
-          <IsSearch>0</IsSearch>
+          <IsSearch>1</IsSearch>
           <IsExport>0</IsExport>
           <Multiline>0</Multiline>
         </Field>
@@ -9898,7 +9965,7 @@ class Контрагенти_Елемент : DirectoryFormElement
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>1</IsFullTextSearch>
-          <IsSearch>0</IsSearch>
+          <IsSearch>1</IsSearch>
           <IsExport>0</IsExport>
           <Multiline>0</Multiline>
         </Field>
@@ -10854,11 +10921,14 @@ static class Склади_Функції
         return
         [
             
-            //Код
-            new Where(Склади_Const.Код, Comparison.LIKE, searchText) { FuncToField = "TO_CHAR", FuncToField_Param1 = "''" },
-                    
             //Назва
-            new Where(Comparison.OR, Склади_Const.Назва, Comparison.LIKE, searchText) { FuncToField = "TO_CHAR", FuncToField_Param1 = "''" },
+            new Where(Склади_Const.Назва, Comparison.LIKE, searchText) { FuncToField = "LOWER" },
+                    
+            //Код
+            new Where(Comparison.OR, Склади_Const.Код, Comparison.LIKE, searchText) { FuncToField = "LOWER" },
+                    
+            //КлючовіСловаДляПошуку
+            new Where(Comparison.OR, Склади_Const.КлючовіСловаДляПошуку, Comparison.LIKE, searchText) { FuncToField = "LOWER" },
                     
         ];
     }
@@ -10933,7 +11003,105 @@ static class Склади_Функції
           <Name>Список з Деревом</Name>
           <Desc>Список з Деревом</Desc>
           <Type>ListAndTree</Type>
-          <GeneratedCode><![CDATA[]]></GeneratedCode>
+          <GeneratedCode><![CDATA[
+/*     
+        Склади.cs 
+        Список з Деревом
+*/
+
+using Gtk;
+using InterfaceGtk4;
+using AccountingSoftware;
+using GeneratedCode.Довідники;
+
+using ТабличнийСписок = GeneratedCode.Довідники.ТабличніСписки.Склади_Записи;
+using Функції = StorageAndTrade.Склади_Функції;
+
+namespace StorageAndTrade;
+
+class Склади_Список : DirectoryFormJournalFull
+{
+    Склади_Папки_Список Папки = new() { InsertEmptyFirstRow = true };
+    
+
+    public Склади_Список() : base(Program.BasicForm?.NotebookFunc)
+    {
+        TypeName = Склади_Const.POINTER;
+        ТабличнийСписок.AddColumn(this);
+        SetPagesSettings(50);
+
+        //Папки
+        {
+            CompositeMode = true;
+
+            Box vBox = New(Orientation.Vertical, 0);
+            vBox.MarginStart = 5;
+            vBox.Append(Папки);
+
+            HPanedTable.SetEndChild(vBox);
+            HPanedTable.Position = 1200;
+            HPanedTable.StartChild?.MarginEnd = 5;
+
+            Папки.CallBack_Activate = async unigueID =>
+            {
+                //Відбір по полю Папка
+                ParentWhereList = [new(Склади_Const.Папка, Comparison.EQ, unigueID.UGuid)];
+                if (TypeWhereState == TypeWhere.Standart)
+                {
+                    PagesClear();
+                    await LoadRecords();
+                }
+            };
+        }
+    }
+    
+    protected override async ValueTask BeforeSetValue()
+    {
+        if (SelectPointerItem != null || DirectoryPointerItem != null)
+        {
+            Склади_Objest? Обєкт = await new Склади_Pointer(SelectPointerItem ?? DirectoryPointerItem ?? new UnigueID()).GetDirectoryObject();
+            if (Обєкт != null) Папки.SelectPointerItem = Обєкт.Папка.UnigueID;
+        }
+
+        await Папки.SetValue();
+    }
+
+    public override async ValueTask LoadRecords()
+    {
+        await ТабличнийСписок.LoadRecords(this);
+    }
+
+    public override async ValueTask UpdateRecords()
+    {
+        await ТабличнийСписок.UpdateRecords(this);
+    }
+
+    protected override async void SetSearch(string searchText)
+    {
+        WhereList = Функції.Відбори(searchText);
+    }
+
+    protected override void FillFilter(FilterControl filterControl)
+    {
+        ТабличнийСписок.CreateFilter(this);
+    }
+
+    protected override async ValueTask OpenPageElement(bool IsNew, UnigueID? unigueID = null)
+    {
+        await Функції.OpenPageElement(IsNew, unigueID, CallBack_LoadRecords, CallBack_OnSelectPointer);
+    }
+
+    protected override async ValueTask SetDeletionLabel(UnigueID unigueID)
+    {
+        await Функції.SetDeletionLabel(unigueID);
+    }
+
+    protected override async ValueTask<UnigueID?> Copy(UnigueID unigueID)
+    {
+        return await Функції.Copy(unigueID);
+    }
+}
+    ]]></GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
@@ -11068,6 +11236,7 @@ public class Склади_PointerControl : PointerControl
         {
             PopoverParent = popover,
             DirectoryPointerItem = Pointer.UnigueID,
+            OpenFolder = OpenFolder,
             CallBack_OnSelectPointer = selectPointer =>
             {
                 Pointer = new Склади_Pointer(selectPointer);
@@ -11363,76 +11532,6 @@ class Склади_Елемент : DirectoryFormElement
           <Type>MultiplePointerControl</Type>
           <GeneratedCode><![CDATA[]]></GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
-        </Form>
-        <Form Modified="0">
-          <Name>Список</Name>
-          <Desc>Список</Desc>
-          <Type>List</Type>
-          <GeneratedCode><![CDATA[
-/*     
-        Склади.cs
-        Список
-*/
-
-using Gtk;
-using InterfaceGtk4;
-using AccountingSoftware;
-using GeneratedCode.Довідники;
-
-using ТабличнийСписок = GeneratedCode.Довідники.ТабличніСписки.Склади_Записи;
-using Функції = StorageAndTrade.Склади_Функції;
-
-namespace StorageAndTrade;
-
-class Склади_Список : DirectoryFormJournalFull
-{
-    
-    
-    public Склади_Список() : base(Program.BasicForm?.NotebookFunc)
-    {
-        TypeName = Склади_Const.POINTER;
-        ТабличнийСписок.AddColumn(this);
-        SetPagesSettings(50);
-    }
-
-    public override async ValueTask LoadRecords()
-    {
-        await ТабличнийСписок.LoadRecords(this);
-    }
-
-    public override async ValueTask UpdateRecords()
-    {
-        await ТабличнийСписок.UpdateRecords(this);
-    }
-
-    protected override async void SetSearch(string searchText)
-    {
-        WhereList = Функції.Відбори(searchText);
-    }
-
-    protected override void FillFilter(FilterControl filterControl)
-    {
-        ТабличнийСписок.CreateFilter(this);
-    }
-
-    protected override async ValueTask OpenPageElement(bool IsNew, UnigueID? unigueID = null)
-    {
-        await Функції.OpenPageElement(IsNew, unigueID, CallBack_LoadRecords, CallBack_OnSelectPointer);
-    }
-
-    protected override async ValueTask SetDeletionLabel(UnigueID unigueID)
-    {
-        await Функції.SetDeletionLabel(unigueID);
-    }
-
-    protected override async ValueTask<UnigueID?> Copy(UnigueID unigueID)
-    {
-        return await Функції.Copy(unigueID);
-    }
-}
-    ]]></GeneratedCode>
-          <NotSaveToFile>0</NotSaveToFile>
-          <TabularList>Записи</TabularList>
         </Form>
         <Form Modified="0">
           <Name>PointerTablePartCell</Name>
@@ -18146,14 +18245,18 @@ static class ХарактеристикиНоменклатури_Функції
         await page.SetValue();
     }
 
-    public static async ValueTask OpenPageList(UnigueID? unigueID = null, Action<UnigueID>? сallBack_OnSelectPointer = null)
+    public static async ValueTask OpenPageList(UnigueID? unigueID = null, 
+        Action<UnigueID>? сallBack_OnSelectPointer = null,
+            Номенклатура_Pointer? Власник = null)
     {
         ХарактеристикиНоменклатури_Список page = new()
         {
             DirectoryPointerItem = unigueID,
             CallBack_OnSelectPointer = сallBack_OnSelectPointer
         };
-
+        
+            if (Власник != null) page.Власник.Pointer = Власник;
+        
         Program.BasicForm?.NotebookFunc.CreatePage(ХарактеристикиНоменклатури_Const.FULLNAME, page);
         await page.SetValue();
     }
@@ -18208,7 +18311,7 @@ namespace StorageAndTrade;
 class ХарактеристикиНоменклатури_Список : DirectoryFormJournalFull
 {
     
-    public Номенклатура_PointerControl Власник = new Номенклатура_PointerControl() { Caption = "Номенклатура:" };
+    public Номенклатура_PointerControl Власник = new() { Caption = "Номенклатура:" };
     
     
     public ХарактеристикиНоменклатури_Список() : base(Program.BasicForm?.NotebookFunc)
@@ -18216,6 +18319,19 @@ class ХарактеристикиНоменклатури_Список : Direct
         TypeName = ХарактеристикиНоменклатури_Const.POINTER;
         ТабличнийСписок.AddColumn(this);
         SetPagesSettings(50);
+
+        
+        //Власник
+        {
+            HBoxTop.Append(Власник);
+            OwnerWhereListFunc = () => Власник.Pointer.IsEmpty() ? [] : [new(ХарактеристикиНоменклатури_Const.Номенклатура, Comparison.EQ, Власник.Pointer.UnigueID.UGuid)];
+            Власник.AfterSelectFunc = async () =>
+            {
+                PagesClear();
+                await LoadRecords();
+            };
+        }
+        
     }
 
     public override async ValueTask LoadRecords()
@@ -18240,7 +18356,7 @@ class ХарактеристикиНоменклатури_Список : Direct
 
     protected override async ValueTask OpenPageElement(bool IsNew, UnigueID? unigueID = null)
     {
-        await Функції.OpenPageElement(IsNew, unigueID, CallBack_LoadRecords, CallBack_OnSelectPointer);
+        await Функції.OpenPageElement(IsNew, unigueID, CallBack_LoadRecords, CallBack_OnSelectPointer, Власник.Pointer);
     }
 
     protected override async ValueTask SetDeletionLabel(UnigueID unigueID)
@@ -18280,7 +18396,7 @@ namespace StorageAndTrade;
 class ХарактеристикиНоменклатури_ШвидкийВибір : DirectoryFormJournalSmall
 {
     
-    public Номенклатура_PointerControl Власник = new Номенклатура_PointerControl() { Caption = "Номенклатура:" };
+    public Номенклатура_PointerControl Власник = new() { Caption = "Номенклатура:" };
     
     
     public ХарактеристикиНоменклатури_ШвидкийВибір() : base(Program.BasicForm?.NotebookFunc)
@@ -18289,6 +18405,19 @@ class ХарактеристикиНоменклатури_ШвидкийВиб�
         KeyForSetting = ".Small";
         ТабличнийСписок.AddColumn(this);
         SetPagesSettings(50);
+
+        
+        //Власник
+        {
+            HBoxTop.Append(Власник);
+            OwnerWhereListFunc = () => Власник.Pointer.IsEmpty() ? [] : [new(ХарактеристикиНоменклатури_Const.Номенклатура, Comparison.EQ, Власник.Pointer.UnigueID.UGuid)];
+            Власник.AfterSelectFunc = async () =>
+            {
+                PagesClear();
+                await LoadRecords();
+            };
+        }
+        
     }
 
     public override async ValueTask LoadRecords()
@@ -18313,12 +18442,12 @@ class ХарактеристикиНоменклатури_ШвидкийВиб�
 
     protected override async ValueTask OpenPageList(UnigueID? unigueID = null)
     {
-        await Функції.OpenPageList(unigueID, CallBack_OnSelectPointer);
+        await Функції.OpenPageList(unigueID, CallBack_OnSelectPointer, Власник.Pointer);
     }
 
     protected override async ValueTask OpenPageElement(bool IsNew, UnigueID? unigueID = null)
     {
-        await Функції.OpenPageElement(IsNew, unigueID, CallBack_LoadRecords, CallBack_OnSelectPointer);
+        await Функції.OpenPageElement(IsNew, unigueID, CallBack_LoadRecords, CallBack_OnSelectPointer, Власник.Pointer);
     }
 
     protected override async ValueTask SetDeletionLabel(UnigueID unigueID)
@@ -18392,6 +18521,7 @@ public class ХарактеристикиНоменклатури_PointerControl
         {
             PopoverParent = popover,
             DirectoryPointerItem = Pointer.UnigueID,
+            OpenFolder = OpenFolder,
             CallBack_OnSelectPointer = selectPointer =>
             {
                 Pointer = new ХарактеристикиНоменклатури_Pointer(selectPointer);
@@ -18630,12 +18760,16 @@ public class ХарактеристикиНоменклатури_PointerTablePa
         popover.SetParent(button);
         popover.WidthRequest = 800;
         popover.HeightRequest = 400;
-
+        BeforeClickOpenFunc?.Invoke();
         ХарактеристикиНоменклатури_ШвидкийВибір page = new()
         {
             PopoverParent = popover,
             DirectoryPointerItem = pointer.UnigueID,
-            CallBack_OnSelectPointer = async p => await PointerChange(p)
+            CallBack_OnSelectPointer = async p => 
+            {
+                await PointerChange(p);
+                AfterSelectFunc?.Invoke();
+            }
         };
         
         page.Власник.Pointer = Власник;
@@ -18650,6 +18784,8 @@ public class ХарактеристикиНоменклатури_PointerTablePa
     protected override async void Clear()
     {
         await PointerChange(null);
+        AfterSelectFunc?.Invoke();
+        AfterClearFunc?.Invoke();
     }
 }
     ]]></GeneratedCode>
@@ -18695,7 +18831,7 @@ public class ХарактеристикиНоменклатури_PointerTablePa
           <IsPresentation>1</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>1</IsFullTextSearch>
-          <IsSearch>0</IsSearch>
+          <IsSearch>1</IsSearch>
           <IsExport>0</IsExport>
           <Multiline>0</Multiline>
         </Field>
@@ -18708,7 +18844,7 @@ public class ХарактеристикиНоменклатури_PointerTablePa
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
-          <IsSearch>0</IsSearch>
+          <IsSearch>1</IsSearch>
           <IsExport>0</IsExport>
           <Multiline>0</Multiline>
         </Field>
@@ -18814,11 +18950,11 @@ static class Номенклатура_Папки_Функції
         return
         [
             
-            //Код
-            new Where(Номенклатура_Папки_Const.Код, Comparison.LIKE, searchText) { FuncToField = "TO_CHAR", FuncToField_Param1 = "''" },
-                    
             //Назва
-            new Where(Comparison.OR, Номенклатура_Папки_Const.Назва, Comparison.LIKE, searchText) { FuncToField = "TO_CHAR", FuncToField_Param1 = "''" },
+            new Where(Номенклатура_Папки_Const.Назва, Comparison.LIKE, searchText) { FuncToField = "LOWER" },
+                    
+            //Код
+            new Where(Comparison.OR, Номенклатура_Папки_Const.Код, Comparison.LIKE, searchText) { FuncToField = "LOWER" },
                     
         ];
     }
@@ -18848,14 +18984,15 @@ static class Номенклатура_Папки_Функції
         await page.SetValue();
     }
 
-    public static async ValueTask OpenPageList(UnigueID? unigueID = null, Action<UnigueID>? сallBack_OnSelectPointer = null)
+    public static async ValueTask OpenPageList(UnigueID? unigueID = null, 
+        Action<UnigueID>? сallBack_OnSelectPointer = null)
     {
         Номенклатура_Папки_Список page = new()
         {
             DirectoryPointerItem = unigueID,
             CallBack_OnSelectPointer = сallBack_OnSelectPointer
         };
-
+        
         Program.BasicForm?.NotebookFunc.CreatePage(Номенклатура_Папки_Const.FULLNAME, page);
         await page.SetValue();
     }
@@ -18907,7 +19044,7 @@ using Функції = StorageAndTrade.Номенклатура_Папки_Фу�
 
 namespace StorageAndTrade;
 
-class Номенклатура_Папки_Список : DirectoryFormJournalFull
+class Номенклатура_Папки_Список : DirectoryFormJournalFullTree
 {
     
     
@@ -18916,6 +19053,8 @@ class Номенклатура_Папки_Список : DirectoryFormJournalFul
         TypeName = Номенклатура_Папки_Const.POINTER;
         ТабличнийСписок.AddColumn(this);
         SetPagesSettings(50);
+
+        
     }
 
     public override async ValueTask LoadRecords()
@@ -19012,6 +19151,7 @@ public class Номенклатура_Папки_PointerControl : PointerControl
         {
             PopoverParent = popover,
             DirectoryPointerItem = Pointer.UnigueID,
+            OpenFolder = OpenFolder,
             CallBack_OnSelectPointer = selectPointer =>
             {
                 Pointer = new Номенклатура_Папки_Pointer(selectPointer);
@@ -19055,7 +19195,7 @@ using Функції = StorageAndTrade.Номенклатура_Папки_Фу�
 
 namespace StorageAndTrade;
 
-class Номенклатура_Папки_ШвидкийВибір : DirectoryFormJournalSmall
+class Номенклатура_Папки_ШвидкийВибір : DirectoryFormJournalSmallTree
 {
     
     
@@ -19065,6 +19205,8 @@ class Номенклатура_Папки_ШвидкийВибір : DirectoryFo
         KeyForSetting = ".Small";
         ТабличнийСписок.AddColumn(this);
         SetPagesSettings(50);
+
+        
     }
 
     public override async ValueTask LoadRecords()
@@ -19132,14 +19274,14 @@ namespace StorageAndTrade;
 
 class Номенклатура_Папки_Елемент : DirectoryFormElement
 {
-    public Номенклатура_Папки_Objest Елемент { get; init; } = new Номенклатура_Папки_Objest();
+    public Номенклатура_Папки_Objest Елемент { get; init; } = new();
     
-    public Номенклатура_Папки_Pointer РодичДляНового { get; set; } = new Номенклатура_Папки_Pointer();
+    public Номенклатура_Папки_Pointer РодичДляНового { get; set; } = new();
     
     #region Fields
     Entry Код = new() { WidthRequest = 100 };
-                    Entry Назва = new() { WidthRequest = 500 };
-                    Номенклатура_Папки_PointerControl Родич = new() { Caption = "Папка", WidthPresentation = 500 };
+                    Entry Назва = new() { WidthRequest = 300 };
+                    Номенклатура_Папки_PointerControl Родич = new() { Caption = "Папка", WidthPresentation = 300 };
             
     #endregion
 
@@ -19308,12 +19450,16 @@ public class Номенклатура_Папки_PointerTablePartCell : PointerT
         popover.SetParent(button);
         popover.WidthRequest = 800;
         popover.HeightRequest = 400;
-
+        BeforeClickOpenFunc?.Invoke();
         Номенклатура_Папки_ШвидкийВибір page = new()
         {
             PopoverParent = popover,
             DirectoryPointerItem = pointer.UnigueID,
-            CallBack_OnSelectPointer = async p => await PointerChange(p)
+            CallBack_OnSelectPointer = async p => 
+            {
+                await PointerChange(p);
+                AfterSelectFunc?.Invoke();
+            }
         };
         
 
@@ -19326,6 +19472,8 @@ public class Номенклатура_Папки_PointerTablePartCell : PointerT
     protected override async void Clear()
     {
         await PointerChange(null);
+        AfterSelectFunc?.Invoke();
+        AfterClearFunc?.Invoke();
     }
 }
     ]]></GeneratedCode>
@@ -19371,7 +19519,7 @@ public class Номенклатура_Папки_PointerTablePartCell : PointerT
           <IsPresentation>1</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>1</IsFullTextSearch>
-          <IsSearch>0</IsSearch>
+          <IsSearch>1</IsSearch>
           <IsExport>0</IsExport>
           <Multiline>0</Multiline>
         </Field>
@@ -19384,7 +19532,7 @@ public class Номенклатура_Папки_PointerTablePartCell : PointerT
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
-          <IsSearch>0</IsSearch>
+          <IsSearch>1</IsSearch>
           <IsExport>0</IsExport>
           <Multiline>0</Multiline>
         </Field>
@@ -19463,11 +19611,11 @@ static class Контрагенти_Папки_Функції
         return
         [
             
-            //Код
-            new Where(Контрагенти_Папки_Const.Код, Comparison.LIKE, searchText) { FuncToField = "TO_CHAR", FuncToField_Param1 = "''" },
-                    
             //Назва
-            new Where(Comparison.OR, Контрагенти_Папки_Const.Назва, Comparison.LIKE, searchText) { FuncToField = "TO_CHAR", FuncToField_Param1 = "''" },
+            new Where(Контрагенти_Папки_Const.Назва, Comparison.LIKE, searchText) { FuncToField = "LOWER" },
+                    
+            //Код
+            new Where(Comparison.OR, Контрагенти_Папки_Const.Код, Comparison.LIKE, searchText) { FuncToField = "LOWER" },
                     
         ];
     }
@@ -19556,7 +19704,7 @@ using Функції = StorageAndTrade.Контрагенти_Папки_Фун�
 
 namespace StorageAndTrade;
 
-class Контрагенти_Папки_Список : DirectoryFormJournalFull
+class Контрагенти_Папки_Список : DirectoryFormJournalFullTree
 {
     
     
@@ -19626,7 +19774,7 @@ using Функції = StorageAndTrade.Контрагенти_Папки_Фун�
 
 namespace StorageAndTrade;
 
-class Контрагенти_Папки_ШвидкийВибір : DirectoryFormJournalSmall
+class Контрагенти_Папки_ШвидкийВибір : DirectoryFormJournalSmallTree
 {
     
     
@@ -19737,6 +19885,7 @@ public class Контрагенти_Папки_PointerControl : PointerControl
         {
             PopoverParent = popover,
             DirectoryPointerItem = Pointer.UnigueID,
+            OpenFolder = OpenFolder,
             CallBack_OnSelectPointer = selectPointer =>
             {
                 Pointer = new Контрагенти_Папки_Pointer(selectPointer);
@@ -20020,7 +20169,7 @@ public class Контрагенти_Папки_PointerTablePartCell : PointerTab
           <IsPresentation>1</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>1</IsFullTextSearch>
-          <IsSearch>0</IsSearch>
+          <IsSearch>1</IsSearch>
           <IsExport>0</IsExport>
           <Multiline>0</Multiline>
         </Field>
@@ -20033,7 +20182,7 @@ public class Контрагенти_Папки_PointerTablePartCell : PointerTab
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
-          <IsSearch>0</IsSearch>
+          <IsSearch>1</IsSearch>
           <IsExport>0</IsExport>
           <Multiline>0</Multiline>
         </Field>
@@ -20089,7 +20238,7 @@ public class Контрагенти_Папки_PointerTablePartCell : PointerTab
         <BeforeDelete Action="1">BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms>
-        <Form Modified="0">
+        <Form Modified="1">
           <Name>Функції</Name>
           <Desc>Функції</Desc>
           <Type>Function</Type>
@@ -20112,11 +20261,11 @@ static class Склади_Папки_Функції
         return
         [
             
-            //Код
-            new Where(Склади_Папки_Const.Код, Comparison.LIKE, searchText) { FuncToField = "TO_CHAR", FuncToField_Param1 = "''" },
-                    
             //Назва
-            new Where(Comparison.OR, Склади_Папки_Const.Назва, Comparison.LIKE, searchText) { FuncToField = "TO_CHAR", FuncToField_Param1 = "''" },
+            new Where(Склади_Папки_Const.Назва, Comparison.LIKE, searchText) { FuncToField = "LOWER" },
+                    
+            //Код
+            new Where(Comparison.OR, Склади_Папки_Const.Код, Comparison.LIKE, searchText) { FuncToField = "LOWER" },
                     
         ];
     }
@@ -20146,14 +20295,15 @@ static class Склади_Папки_Функції
         await page.SetValue();
     }
 
-    public static async ValueTask OpenPageList(UnigueID? unigueID = null, Action<UnigueID>? сallBack_OnSelectPointer = null)
+    public static async ValueTask OpenPageList(UnigueID? unigueID = null, 
+        Action<UnigueID>? сallBack_OnSelectPointer = null)
     {
         Склади_Папки_Список page = new()
         {
             DirectoryPointerItem = unigueID,
             CallBack_OnSelectPointer = сallBack_OnSelectPointer
         };
-
+        
         Program.BasicForm?.NotebookFunc.CreatePage(Склади_Папки_Const.FULLNAME, page);
         await page.SetValue();
     }
@@ -20185,7 +20335,7 @@ static class Склади_Папки_Функції
     ]]></GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="0">
+        <Form Modified="1">
           <Name>Список</Name>
           <Desc>Список</Desc>
           <Type>List</Type>
@@ -20205,7 +20355,7 @@ using Функції = StorageAndTrade.Склади_Папки_Функції;
 
 namespace StorageAndTrade;
 
-class Склади_Папки_Список : DirectoryFormJournalFull
+class Склади_Папки_Список : DirectoryFormJournalFullTree
 {
     
     
@@ -20214,6 +20364,8 @@ class Склади_Папки_Список : DirectoryFormJournalFull
         TypeName = Склади_Папки_Const.POINTER;
         ТабличнийСписок.AddColumn(this);
         SetPagesSettings(50);
+
+        
     }
 
     public override async ValueTask LoadRecords()
@@ -20255,7 +20407,7 @@ class Склади_Папки_Список : DirectoryFormJournalFull
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="0">
+        <Form Modified="1">
           <Name>Швидкий вибір</Name>
           <Desc>Швидкий вибір</Desc>
           <Type>ListSmallSelect</Type>
@@ -20275,7 +20427,7 @@ using Функції = StorageAndTrade.Склади_Папки_Функції;
 
 namespace StorageAndTrade;
 
-class Склади_Папки_ШвидкийВибір : DirectoryFormJournalSmall
+class Склади_Папки_ШвидкийВибір : DirectoryFormJournalSmallTree
 {
     
     
@@ -20285,6 +20437,8 @@ class Склади_Папки_ШвидкийВибір : DirectoryFormJournalSma
         KeyForSetting = ".Small";
         ТабличнийСписок.AddColumn(this);
         SetPagesSettings(50);
+
+        
     }
 
     public override async ValueTask LoadRecords()
@@ -20386,6 +20540,7 @@ public class Склади_Папки_PointerControl : PointerControl
         {
             PopoverParent = popover,
             DirectoryPointerItem = Pointer.UnigueID,
+            OpenFolder = OpenFolder,
             CallBack_OnSelectPointer = selectPointer =>
             {
                 Pointer = new Склади_Папки_Pointer(selectPointer);
@@ -26939,6 +27094,7 @@ class ВидиЗапасів_Елемент : DirectoryFormElement
               <ReadOnly>0</ReadOnly>
               <Type>pointer</Type>
               <Pointer>Довідники.ДоговориКонтрагентів</Pointer>
+              <DirectoryOwner>Довідники.Контрагенти</DirectoryOwner>
               <PresetntationFields Count="2">
                 <Field>Назва</Field>
                 <Field>ТипДоговоруПредставлення</Field>
@@ -28621,7 +28777,7 @@ public class Банки_PointerTablePartCell : PointerTablePartCell
           <IsPresentation>1</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>1</IsFullTextSearch>
-          <IsSearch>0</IsSearch>
+          <IsSearch>1</IsSearch>
           <IsExport>0</IsExport>
           <Multiline>0</Multiline>
         </Field>
@@ -28724,7 +28880,7 @@ static class СкладськіПриміщення_Функції
         [
             
             //Назва
-            new Where(СкладськіПриміщення_Const.Назва, Comparison.LIKE, searchText) { FuncToField = "TO_CHAR", FuncToField_Param1 = "''" },
+            new Where(СкладськіПриміщення_Const.Назва, Comparison.LIKE, searchText) { FuncToField = "LOWER" },
                     
         ];
     }
@@ -28819,7 +28975,7 @@ namespace StorageAndTrade;
 class СкладськіПриміщення_Список : DirectoryFormJournalFull
 {
     
-    public Склади_PointerControl Власник = new Склади_PointerControl() { Caption = "Склад:" };
+    public Склади_PointerControl Власник = new() { Caption = "Склад:" };
     
     
     public СкладськіПриміщення_Список() : base(Program.BasicForm?.NotebookFunc)
@@ -28827,6 +28983,19 @@ class СкладськіПриміщення_Список : DirectoryFormJournal
         TypeName = СкладськіПриміщення_Const.POINTER;
         ТабличнийСписок.AddColumn(this);
         SetPagesSettings(50);
+
+        
+        //Власник
+        {
+            HBoxTop.Append(Власник);
+            OwnerWhereListFunc = () => Власник.Pointer.IsEmpty() ? [] : [new(СкладськіПриміщення_Const.Склад, Comparison.EQ, Власник.Pointer.UnigueID.UGuid)];
+            Власник.AfterSelectFunc = async () =>
+            {
+                PagesClear();
+                await LoadRecords();
+            };
+        }
+        
     }
 
     public override async ValueTask LoadRecords()
@@ -28891,7 +29060,7 @@ namespace StorageAndTrade;
 class СкладськіПриміщення_ШвидкийВибір : DirectoryFormJournalSmall
 {
     
-    public Склади_PointerControl Власник = new Склади_PointerControl() { Caption = "Склад:" };
+    public Склади_PointerControl Власник = new() { Caption = "Склад:" };
     
     
     public СкладськіПриміщення_ШвидкийВибір() : base(Program.BasicForm?.NotebookFunc)
@@ -28900,6 +29069,19 @@ class СкладськіПриміщення_ШвидкийВибір : Director
         KeyForSetting = ".Small";
         ТабличнийСписок.AddColumn(this);
         SetPagesSettings(50);
+
+        
+        //Власник
+        {
+            HBoxTop.Append(Власник);
+            OwnerWhereListFunc = () => Власник.Pointer.IsEmpty() ? [] : [new(СкладськіПриміщення_Const.Склад, Comparison.EQ, Власник.Pointer.UnigueID.UGuid)];
+            Власник.AfterSelectFunc = async () =>
+            {
+                PagesClear();
+                await LoadRecords();
+            };
+        }
+        
     }
 
     public override async ValueTask LoadRecords()
@@ -29003,6 +29185,7 @@ public class СкладськіПриміщення_PointerControl : PointerCont
         {
             PopoverParent = popover,
             DirectoryPointerItem = Pointer.UnigueID,
+            OpenFolder = OpenFolder,
             CallBack_OnSelectPointer = selectPointer =>
             {
                 Pointer = new СкладськіПриміщення_Pointer(selectPointer);
@@ -29309,7 +29492,7 @@ class СкладськіПриміщення_Елемент : DirectoryFormEleme
           <IsPresentation>1</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>1</IsFullTextSearch>
-          <IsSearch>0</IsSearch>
+          <IsSearch>1</IsSearch>
           <IsExport>0</IsExport>
           <Multiline>0</Multiline>
         </Field>
@@ -29578,7 +29761,7 @@ static class СкладськіКомірки_Функції
         [
             
             //Назва
-            new Where(СкладськіКомірки_Const.Назва, Comparison.LIKE, searchText) { FuncToField = "TO_CHAR", FuncToField_Param1 = "''" },
+            new Where(СкладськіКомірки_Const.Назва, Comparison.LIKE, searchText) { FuncToField = "LOWER" },
                     
         ];
     }
@@ -29654,7 +29837,120 @@ static class СкладськіКомірки_Функції
           <Name>Список з Деревом</Name>
           <Desc>Список з Деревом</Desc>
           <Type>ListAndTree</Type>
-          <GeneratedCode><![CDATA[]]></GeneratedCode>
+          <GeneratedCode><![CDATA[
+/*     
+        СкладськіКомірки.cs 
+        Список з Деревом
+*/
+
+using Gtk;
+using InterfaceGtk4;
+using AccountingSoftware;
+using GeneratedCode.Довідники;
+
+using ТабличнийСписок = GeneratedCode.Довідники.ТабличніСписки.СкладськіКомірки_Записи;
+using Функції = StorageAndTrade.СкладськіКомірки_Функції;
+
+namespace StorageAndTrade;
+
+class СкладськіКомірки_Список : DirectoryFormJournalFull
+{
+    СкладськіКомірки_Папки_Список Папки = new() { InsertEmptyFirstRow = true };
+    
+    public СкладськіПриміщення_PointerControl Власник = new() { Caption = "Приміщення:" };
+    
+
+    public СкладськіКомірки_Список() : base(Program.BasicForm?.NotebookFunc)
+    {
+        TypeName = СкладськіКомірки_Const.POINTER;
+        ТабличнийСписок.AddColumn(this);
+        SetPagesSettings(50);
+
+        //Папки
+        {
+            CompositeMode = true;
+
+            Box vBox = New(Orientation.Vertical, 0);
+            vBox.MarginStart = 5;
+            vBox.Append(Папки);
+
+            HPanedTable.SetEndChild(vBox);
+            HPanedTable.Position = 1200;
+            HPanedTable.StartChild?.MarginEnd = 5;
+
+            Папки.CallBack_Activate = async unigueID =>
+            {
+                //Відбір по полю Папка
+                ParentWhereList = [new(СкладськіКомірки_Const.Папка, Comparison.EQ, unigueID.UGuid)];
+                if (TypeWhereState == TypeWhere.Standart)
+                {
+                    PagesClear();
+                    await LoadRecords();
+                }
+            };
+        }
+
+        
+        //Власник
+        {
+            HBoxTop.Append(Власник);
+            OwnerWhereListFunc = () => Власник.Pointer.IsEmpty() ? [] : [new(СкладськіКомірки_Const.Приміщення, Comparison.EQ, Власник.Pointer.UnigueID.UGuid)];
+            Власник.AfterSelectFunc = async () =>
+            {
+                PagesClear();
+                await LoadRecords();
+            };
+        }
+        
+    }
+    
+    protected override async ValueTask BeforeSetValue()
+    {
+        if (SelectPointerItem != null || DirectoryPointerItem != null)
+        {
+            СкладськіКомірки_Objest? Обєкт = await new СкладськіКомірки_Pointer(SelectPointerItem ?? DirectoryPointerItem ?? new UnigueID()).GetDirectoryObject();
+            if (Обєкт != null) Папки.SelectPointerItem = Обєкт.Папка.UnigueID;
+        }
+
+        await Папки.SetValue();
+    }
+
+    public override async ValueTask LoadRecords()
+    {
+        await ТабличнийСписок.LoadRecords(this);
+    }
+
+    public override async ValueTask UpdateRecords()
+    {
+        await ТабличнийСписок.UpdateRecords(this);
+    }
+
+    protected override async void SetSearch(string searchText)
+    {
+        WhereList = Функції.Відбори(searchText);
+    }
+
+    protected override void FillFilter(FilterControl filterControl)
+    {
+        ТабличнийСписок.CreateFilter(this);
+    }
+
+    protected override async ValueTask OpenPageElement(bool IsNew, UnigueID? unigueID = null)
+    {
+        await Функції.OpenPageElement(IsNew, unigueID, CallBack_LoadRecords, CallBack_OnSelectPointer);
+    }
+
+    protected override async ValueTask SetDeletionLabel(UnigueID unigueID)
+    {
+        await Функції.SetDeletionLabel(unigueID);
+    }
+
+    protected override async ValueTask<UnigueID?> Copy(UnigueID unigueID)
+    {
+        return await Функції.Copy(unigueID);
+    }
+}
+    ]]></GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
@@ -29681,7 +29977,7 @@ namespace StorageAndTrade;
 class СкладськіКомірки_ШвидкийВибір : DirectoryFormJournalSmall
 {
     
-    public СкладськіПриміщення_PointerControl Власник = new СкладськіПриміщення_PointerControl() { Caption = "Приміщення:" };
+    public СкладськіПриміщення_PointerControl Власник = new() { Caption = "Приміщення:" };
     
     
     public СкладськіКомірки_ШвидкийВибір() : base(Program.BasicForm?.NotebookFunc)
@@ -29690,6 +29986,19 @@ class СкладськіКомірки_ШвидкийВибір : DirectoryFormJ
         KeyForSetting = ".Small";
         ТабличнийСписок.AddColumn(this);
         SetPagesSettings(50);
+
+        
+        //Власник
+        {
+            HBoxTop.Append(Власник);
+            OwnerWhereListFunc = () => Власник.Pointer.IsEmpty() ? [] : [new(СкладськіКомірки_Const.Приміщення, Comparison.EQ, Власник.Pointer.UnigueID.UGuid)];
+            Власник.AfterSelectFunc = async () =>
+            {
+                PagesClear();
+                await LoadRecords();
+            };
+        }
+        
     }
 
     public override async ValueTask LoadRecords()
@@ -29793,6 +30102,7 @@ public class СкладськіКомірки_PointerControl : PointerControl
         {
             PopoverParent = popover,
             DirectoryPointerItem = Pointer.UnigueID,
+            OpenFolder = OpenFolder,
             CallBack_OnSelectPointer = selectPointer =>
             {
                 Pointer = new СкладськіКомірки_Pointer(selectPointer);
@@ -29989,6 +30299,7 @@ class СкладськіКомірки_Елемент : DirectoryFormElement
               <ReadOnly>0</ReadOnly>
               <Type>pointer</Type>
               <Pointer>Довідники.СкладськіПриміщення</Pointer>
+              <DirectoryOwner>Довідники.Склади</DirectoryOwner>
               <PresetntationFields Count="1">
                 <Field>Назва</Field>
               </PresetntationFields>
@@ -30002,6 +30313,7 @@ class СкладськіКомірки_Елемент : DirectoryFormElement
               <ReadOnly>0</ReadOnly>
               <Type>pointer</Type>
               <Pointer>Довідники.СкладськіКомірки_Папки</Pointer>
+              <DirectoryOwner>Довідники.СкладськіПриміщення</DirectoryOwner>
               <PresetntationFields Count="1">
                 <Field>Назва</Field>
               </PresetntationFields>
@@ -30071,78 +30383,6 @@ class СкладськіКомірки_Елемент : DirectoryFormElement
             </Field>
           </ElementFields>
           <ElementTableParts />
-        </Form>
-        <Form Modified="0">
-          <Name>Список</Name>
-          <Desc>Список</Desc>
-          <Type>List</Type>
-          <GeneratedCode><![CDATA[
-/*     
-        СкладськіКомірки.cs
-        Список
-*/
-
-using Gtk;
-using InterfaceGtk4;
-using AccountingSoftware;
-using GeneratedCode.Довідники;
-
-using ТабличнийСписок = GeneratedCode.Довідники.ТабличніСписки.СкладськіКомірки_Записи;
-using Функції = StorageAndTrade.СкладськіКомірки_Функції;
-
-namespace StorageAndTrade;
-
-class СкладськіКомірки_Список : DirectoryFormJournalFull
-{
-    
-    public СкладськіПриміщення_PointerControl Власник = new СкладськіПриміщення_PointerControl() { Caption = "Приміщення:" };
-    
-    
-    public СкладськіКомірки_Список() : base(Program.BasicForm?.NotebookFunc)
-    {
-        TypeName = СкладськіКомірки_Const.POINTER;
-        ТабличнийСписок.AddColumn(this);
-        SetPagesSettings(50);
-    }
-
-    public override async ValueTask LoadRecords()
-    {
-        await ТабличнийСписок.LoadRecords(this);
-    }
-
-    public override async ValueTask UpdateRecords()
-    {
-        await ТабличнийСписок.UpdateRecords(this);
-    }
-
-    protected override async void SetSearch(string searchText)
-    {
-        WhereList = Функції.Відбори(searchText);
-    }
-
-    protected override void FillFilter(FilterControl filterControl)
-    {
-        ТабличнийСписок.CreateFilter(this);
-    }
-
-    protected override async ValueTask OpenPageElement(bool IsNew, UnigueID? unigueID = null)
-    {
-        await Функції.OpenPageElement(IsNew, unigueID, CallBack_LoadRecords, CallBack_OnSelectPointer);
-    }
-
-    protected override async ValueTask SetDeletionLabel(UnigueID unigueID)
-    {
-        await Функції.SetDeletionLabel(unigueID);
-    }
-
-    protected override async ValueTask<UnigueID?> Copy(UnigueID unigueID)
-    {
-        return await Функції.Copy(unigueID);
-    }
-}
-    ]]></GeneratedCode>
-          <NotSaveToFile>0</NotSaveToFile>
-          <TabularList>Записи</TabularList>
         </Form>
         <Form Modified="0">
           <Name>PointerTablePartCell</Name>
@@ -31127,7 +31367,7 @@ public class ТипорозміриКомірок_PointerTablePartCell : Pointer
           <IsPresentation>1</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>1</IsFullTextSearch>
-          <IsSearch>0</IsSearch>
+          <IsSearch>1</IsSearch>
           <IsExport>0</IsExport>
           <Multiline>0</Multiline>
         </Field>
@@ -31140,7 +31380,7 @@ public class ТипорозміриКомірок_PointerTablePartCell : Pointer
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
-          <IsSearch>0</IsSearch>
+          <IsSearch>1</IsSearch>
           <IsExport>0</IsExport>
           <Multiline>0</Multiline>
         </Field>
@@ -31242,11 +31482,11 @@ static class СкладськіКомірки_Папки_Функції
         return
         [
             
-            //Код
-            new Where(СкладськіКомірки_Папки_Const.Код, Comparison.LIKE, searchText) { FuncToField = "TO_CHAR", FuncToField_Param1 = "''" },
-                    
             //Назва
-            new Where(Comparison.OR, СкладськіКомірки_Папки_Const.Назва, Comparison.LIKE, searchText) { FuncToField = "TO_CHAR", FuncToField_Param1 = "''" },
+            new Where(СкладськіКомірки_Папки_Const.Назва, Comparison.LIKE, searchText) { FuncToField = "LOWER" },
+                    
+            //Код
+            new Where(Comparison.OR, СкладськіКомірки_Папки_Const.Код, Comparison.LIKE, searchText) { FuncToField = "LOWER" },
                     
         ];
     }
@@ -31338,10 +31578,10 @@ using Функції = StorageAndTrade.СкладськіКомірки_Папк
 
 namespace StorageAndTrade;
 
-class СкладськіКомірки_Папки_Список : DirectoryFormJournalFull
+class СкладськіКомірки_Папки_Список : DirectoryFormJournalFullTree
 {
     
-    public СкладськіПриміщення_PointerControl Власник = new СкладськіПриміщення_PointerControl() { Caption = "Власник:" };
+    public СкладськіПриміщення_PointerControl Власник = new() { Caption = "Власник:" };
     
     
     public СкладськіКомірки_Папки_Список() : base(Program.BasicForm?.NotebookFunc)
@@ -31349,6 +31589,19 @@ class СкладськіКомірки_Папки_Список : DirectoryFormJo
         TypeName = СкладськіКомірки_Папки_Const.POINTER;
         ТабличнийСписок.AddColumn(this);
         SetPagesSettings(50);
+
+        
+        //Власник
+        {
+            HBoxTop.Append(Власник);
+            OwnerWhereListFunc = () => Власник.Pointer.IsEmpty() ? [] : [new(СкладськіКомірки_Папки_Const.Власник, Comparison.EQ, Власник.Pointer.UnigueID.UGuid)];
+            Власник.AfterSelectFunc = async () =>
+            {
+                PagesClear();
+                await LoadRecords();
+            };
+        }
+        
     }
 
     public override async ValueTask LoadRecords()
@@ -31537,6 +31790,7 @@ class СкладськіКомірки_Папки_Елемент : DirectoryForm
               <ReadOnly>0</ReadOnly>
               <Type>pointer</Type>
               <Pointer>Довідники.СкладськіКомірки_Папки</Pointer>
+              <DirectoryOwner>Довідники.СкладськіПриміщення</DirectoryOwner>
               <PresetntationFields Count="1">
                 <Field>Назва</Field>
               </PresetntationFields>
@@ -31550,6 +31804,7 @@ class СкладськіКомірки_Папки_Елемент : DirectoryForm
               <ReadOnly>0</ReadOnly>
               <Type>pointer</Type>
               <Pointer>Довідники.СкладськіПриміщення</Pointer>
+              <DirectoryOwner>Довідники.Склади</DirectoryOwner>
               <PresetntationFields Count="1">
                 <Field>Назва</Field>
               </PresetntationFields>
@@ -31577,10 +31832,10 @@ using Функції = StorageAndTrade.СкладськіКомірки_Папк
 
 namespace StorageAndTrade;
 
-class СкладськіКомірки_Папки_ШвидкийВибір : DirectoryFormJournalSmall
+class СкладськіКомірки_Папки_ШвидкийВибір : DirectoryFormJournalSmallTree
 {
     
-    public СкладськіПриміщення_PointerControl Власник = new СкладськіПриміщення_PointerControl() { Caption = "Власник:" };
+    public СкладськіПриміщення_PointerControl Власник = new() { Caption = "Власник:" };
     
     
     public СкладськіКомірки_Папки_ШвидкийВибір() : base(Program.BasicForm?.NotebookFunc)
@@ -31589,6 +31844,19 @@ class СкладськіКомірки_Папки_ШвидкийВибір : Dir
         KeyForSetting = ".Small";
         ТабличнийСписок.AddColumn(this);
         SetPagesSettings(50);
+
+        
+        //Власник
+        {
+            HBoxTop.Append(Власник);
+            OwnerWhereListFunc = () => Власник.Pointer.IsEmpty() ? [] : [new(СкладськіКомірки_Папки_Const.Власник, Comparison.EQ, Власник.Pointer.UnigueID.UGuid)];
+            Власник.AfterSelectFunc = async () =>
+            {
+                PagesClear();
+                await LoadRecords();
+            };
+        }
+        
     }
 
     public override async ValueTask LoadRecords()
@@ -31692,6 +31960,7 @@ public class СкладськіКомірки_Папки_PointerControl : Pointe
         {
             PopoverParent = popover,
             DirectoryPointerItem = Pointer.UnigueID,
+            OpenFolder = OpenFolder,
             CallBack_OnSelectPointer = selectPointer =>
             {
                 Pointer = new СкладськіКомірки_Папки_Pointer(selectPointer);
@@ -37419,6 +37688,8 @@ class ЗамовленняПостачальнику_ТабличнаЧасти�
                 if (cell != null && row != null)
                 {
                     
+                    cell.BeforeClickOpenFunc = () => cell.Власник  = row.Номенклатура;
+                            
                     cell.OnSelect = () => row.ХарактеристикаНоменклатури = cell.Pointer;
                     (row.Сhanged_ХарактеристикаНоменклатури = () => cell.Pointer = row.ХарактеристикаНоменклатури).Invoke();
                         
@@ -37785,6 +38056,7 @@ class ЗамовленняПостачальнику_ТабличнаЧасти�
                   <ReadOnly>0</ReadOnly>
                   <Type>pointer</Type>
                   <Pointer>Довідники.ХарактеристикиНоменклатури</Pointer>
+                  <DirectoryOwner>Довідники.Номенклатура</DirectoryOwner>
                   <PresetntationFields Count="1">
                     <Field>Назва</Field>
                   </PresetntationFields>
@@ -38632,6 +38904,7 @@ class ЗамовленняПостачальнику_Елемент : DocumentFo
               <ReadOnly>0</ReadOnly>
               <Type>pointer</Type>
               <Pointer>Довідники.ДоговориКонтрагентів</Pointer>
+              <DirectoryOwner>Довідники.Контрагенти</DirectoryOwner>
               <PresetntationFields Count="2">
                 <Field>Назва</Field>
                 <Field>ТипДоговоруПредставлення</Field>
@@ -40242,6 +40515,8 @@ class ПоступленняТоварівТаПослуг_ТабличнаЧа�
                 if (cell != null && row != null)
                 {
                     
+                    cell.BeforeClickOpenFunc = () => cell.Власник  = row.Номенклатура;
+                            
                     cell.OnSelect = () => row.ХарактеристикаНоменклатури = cell.Pointer;
                     (row.Сhanged_ХарактеристикаНоменклатури = () => cell.Pointer = row.ХарактеристикаНоменклатури).Invoke();
                         
@@ -40709,6 +40984,7 @@ class ПоступленняТоварівТаПослуг_ТабличнаЧа�
                   <ReadOnly>0</ReadOnly>
                   <Type>pointer</Type>
                   <Pointer>Довідники.ХарактеристикиНоменклатури</Pointer>
+                  <DirectoryOwner>Довідники.Номенклатура</DirectoryOwner>
                   <PresetntationFields Count="1">
                     <Field>Назва</Field>
                   </PresetntationFields>
@@ -41604,6 +41880,7 @@ class ПоступленняТоварівТаПослуг_Елемент : Docu
               <ReadOnly>0</ReadOnly>
               <Type>pointer</Type>
               <Pointer>Довідники.ДоговориКонтрагентів</Pointer>
+              <DirectoryOwner>Довідники.Контрагенти</DirectoryOwner>
               <PresetntationFields Count="2">
                 <Field>Назва</Field>
                 <Field>ТипДоговоруПредставлення</Field>
@@ -43196,6 +43473,8 @@ class ЗамовленняКлієнта_ТабличнаЧастина_Това
                 if (cell != null && row != null)
                 {
                     
+                    cell.BeforeClickOpenFunc = () => cell.Власник  = row.Номенклатура;
+                            
                     cell.OnSelect = () => row.ХарактеристикаНоменклатури = cell.Pointer;
                     (row.Сhanged_ХарактеристикаНоменклатури = () => cell.Pointer = row.ХарактеристикаНоменклатури).Invoke();
                         
@@ -43596,6 +43875,7 @@ class ЗамовленняКлієнта_ТабличнаЧастина_Това
                   <ReadOnly>0</ReadOnly>
                   <Type>pointer</Type>
                   <Pointer>Довідники.ХарактеристикиНоменклатури</Pointer>
+                  <DirectoryOwner>Довідники.Номенклатура</DirectoryOwner>
                   <PresetntationFields Count="1">
                     <Field>Назва</Field>
                   </PresetntationFields>
@@ -44562,6 +44842,7 @@ class ЗамовленняКлієнта_Елемент : DocumentFormElement
               <ReadOnly>0</ReadOnly>
               <Type>pointer</Type>
               <Pointer>Довідники.ДоговориКонтрагентів</Pointer>
+              <DirectoryOwner>Довідники.Контрагенти</DirectoryOwner>
               <PresetntationFields Count="2">
                 <Field>Назва</Field>
                 <Field>ТипДоговоруПредставлення</Field>
@@ -45918,6 +46199,7 @@ class РеалізаціяТоварівТаПослуг_ТабличнаЧас�
                 {
                     
                     cell.OnSelect = () => row.Номенклатура = cell.Pointer;
+                        
                     (row.Сhanged_Номенклатура = () => cell.Pointer = row.Номенклатура).Invoke();
                         
                 }
@@ -45949,6 +46231,9 @@ class РеалізаціяТоварівТаПослуг_ТабличнаЧас�
                 {
                     
                     cell.OnSelect = () => row.ХарактеристикаНоменклатури = cell.Pointer;
+                        
+                    (row.Сhanged_Номенклатура = () => cell.Власник  = row.Номенклатура).Invoke();
+                            
                     (row.Сhanged_ХарактеристикаНоменклатури = () => cell.Pointer = row.ХарактеристикаНоменклатури).Invoke();
                         
                 }
@@ -45980,6 +46265,7 @@ class РеалізаціяТоварівТаПослуг_ТабличнаЧас�
                 {
                     
                     cell.OnSelect = () => row.Серія = cell.Pointer;
+                        
                     (row.Сhanged_Серія = () => cell.Pointer = row.Серія).Invoke();
                         
                 }
@@ -46040,6 +46326,7 @@ class РеалізаціяТоварівТаПослуг_ТабличнаЧас�
                 {
                     
                     cell.OnSelect = () => row.Пакування = cell.Pointer;
+                        
                     (row.Сhanged_Пакування = () => cell.Pointer = row.Пакування).Invoke();
                         
                 }
@@ -46100,6 +46387,7 @@ class РеалізаціяТоварівТаПослуг_ТабличнаЧас�
                 {
                     
                     cell.OnSelect = () => row.ВидЦіни = cell.Pointer;
+                        
                     (row.Сhanged_ВидЦіни = () => cell.Pointer = row.ВидЦіни).Invoke();
                         
                 }
@@ -46218,6 +46506,7 @@ class РеалізаціяТоварівТаПослуг_ТабличнаЧас�
                 {
                     
                     cell.OnSelect = () => row.ЗамовленняКлієнта = cell.Pointer;
+                        
                     (row.Сhanged_ЗамовленняКлієнта = () => cell.Pointer = row.ЗамовленняКлієнта).Invoke();
                         
                 }
@@ -46249,6 +46538,7 @@ class РеалізаціяТоварівТаПослуг_ТабличнаЧас�
                 {
                     
                     cell.OnSelect = () => row.РахунокФактура = cell.Pointer;
+                        
                     (row.Сhanged_РахунокФактура = () => cell.Pointer = row.РахунокФактура).Invoke();
                         
                 }
@@ -46280,6 +46570,7 @@ class РеалізаціяТоварівТаПослуг_ТабличнаЧас�
                 {
                     
                     cell.OnSelect = () => row.Склад = cell.Pointer;
+                        
                     (row.Сhanged_Склад = () => cell.Pointer = row.Склад).Invoke();
                         
                 }
@@ -46311,6 +46602,7 @@ class РеалізаціяТоварівТаПослуг_ТабличнаЧас�
                 {
                     
                     cell.OnSelect = () => row.Партія = cell.Pointer;
+                        
                     (row.Сhanged_Партія = () => cell.Pointer = row.Партія).Invoke();
                         
                 }
@@ -46484,6 +46776,7 @@ class РеалізаціяТоварівТаПослуг_ТабличнаЧас�
                   <ReadOnly>0</ReadOnly>
                   <Type>pointer</Type>
                   <Pointer>Довідники.ХарактеристикиНоменклатури</Pointer>
+                  <DirectoryOwner>Довідники.Номенклатура</DirectoryOwner>
                   <PresetntationFields Count="1">
                     <Field>Назва</Field>
                   </PresetntationFields>
@@ -47656,6 +47949,7 @@ class РеалізаціяТоварівТаПослуг_Елемент : Docume
               <ReadOnly>0</ReadOnly>
               <Type>pointer</Type>
               <Pointer>Довідники.ДоговориКонтрагентів</Pointer>
+              <DirectoryOwner>Довідники.Контрагенти</DirectoryOwner>
               <PresetntationFields Count="2">
                 <Field>Назва</Field>
                 <Field>ТипДоговоруПредставлення</Field>
@@ -48349,6 +48643,7 @@ class ВстановленняЦінНоменклатури_ТабличнаЧ�
                 {
                     
                     cell.OnSelect = () => row.Номенклатура = cell.Pointer;
+                        
                     (row.Сhanged_Номенклатура = () => cell.Pointer = row.Номенклатура).Invoke();
                         
                 }
@@ -48380,6 +48675,9 @@ class ВстановленняЦінНоменклатури_ТабличнаЧ�
                 {
                     
                     cell.OnSelect = () => row.ХарактеристикаНоменклатури = cell.Pointer;
+                        
+                    (row.Сhanged_Номенклатура = () => cell.Власник  = row.Номенклатура).Invoke();
+                            
                     (row.Сhanged_ХарактеристикаНоменклатури = () => cell.Pointer = row.ХарактеристикаНоменклатури).Invoke();
                         
                 }
@@ -48411,6 +48709,7 @@ class ВстановленняЦінНоменклатури_ТабличнаЧ�
                 {
                     
                     cell.OnSelect = () => row.Пакування = cell.Pointer;
+                        
                     (row.Сhanged_Пакування = () => cell.Pointer = row.Пакування).Invoke();
                         
                 }
@@ -48442,6 +48741,7 @@ class ВстановленняЦінНоменклатури_ТабличнаЧ�
                 {
                     
                     cell.OnSelect = () => row.ВидЦіни = cell.Pointer;
+                        
                     (row.Сhanged_ВидЦіни = () => cell.Pointer = row.ВидЦіни).Invoke();
                         
                 }
@@ -48617,6 +48917,7 @@ class ВстановленняЦінНоменклатури_ТабличнаЧ�
                   <ReadOnly>0</ReadOnly>
                   <Type>pointer</Type>
                   <Pointer>Довідники.ХарактеристикиНоменклатури</Pointer>
+                  <DirectoryOwner>Довідники.Номенклатура</DirectoryOwner>
                   <PresetntationFields Count="1">
                     <Field>Назва</Field>
                   </PresetntationFields>
@@ -50491,6 +50792,7 @@ class ПрихіднийКасовийОрдер_Елемент : DocumentFormEl
               <ReadOnly>0</ReadOnly>
               <Type>pointer</Type>
               <Pointer>Довідники.ДоговориКонтрагентів</Pointer>
+              <DirectoryOwner>Довідники.Контрагенти</DirectoryOwner>
               <PresetntationFields Count="2">
                 <Field>Назва</Field>
                 <Field>ТипДоговоруПредставлення</Field>
@@ -52000,6 +52302,7 @@ class РозхіднийКасовийОрдер_Елемент : DocumentFormEl
               <ReadOnly>0</ReadOnly>
               <Type>pointer</Type>
               <Pointer>Довідники.ДоговориКонтрагентів</Pointer>
+              <DirectoryOwner>Довідники.Контрагенти</DirectoryOwner>
               <PresetntationFields Count="2">
                 <Field>Назва</Field>
                 <Field>ТипДоговоруПредставлення</Field>
@@ -52926,6 +53229,7 @@ class ПереміщенняТоварів_ТабличнаЧастина_Тов
                 {
                     
                     cell.OnSelect = () => row.Номенклатура = cell.Pointer;
+                        
                     (row.Сhanged_Номенклатура = () => cell.Pointer = row.Номенклатура).Invoke();
                         
                 }
@@ -52957,6 +53261,9 @@ class ПереміщенняТоварів_ТабличнаЧастина_Тов
                 {
                     
                     cell.OnSelect = () => row.ХарактеристикаНоменклатури = cell.Pointer;
+                        
+                    (row.Сhanged_Номенклатура = () => cell.Власник  = row.Номенклатура).Invoke();
+                            
                     (row.Сhanged_ХарактеристикаНоменклатури = () => cell.Pointer = row.ХарактеристикаНоменклатури).Invoke();
                         
                 }
@@ -52988,6 +53295,7 @@ class ПереміщенняТоварів_ТабличнаЧастина_Тов
                 {
                     
                     cell.OnSelect = () => row.Серія = cell.Pointer;
+                        
                     (row.Сhanged_Серія = () => cell.Pointer = row.Серія).Invoke();
                         
                 }
@@ -53048,6 +53356,7 @@ class ПереміщенняТоварів_ТабличнаЧастина_Тов
                 {
                     
                     cell.OnSelect = () => row.Пакування = cell.Pointer;
+                        
                     (row.Сhanged_Пакування = () => cell.Pointer = row.Пакування).Invoke();
                         
                 }
@@ -53108,6 +53417,7 @@ class ПереміщенняТоварів_ТабличнаЧастина_Тов
                 {
                     
                     cell.OnSelect = () => row.Партія = cell.Pointer;
+                        
                     (row.Сhanged_Партія = () => cell.Pointer = row.Партія).Invoke();
                         
                 }
@@ -53260,6 +53570,7 @@ class ПереміщенняТоварів_ТабличнаЧастина_Тов
                   <ReadOnly>0</ReadOnly>
                   <Type>pointer</Type>
                   <Pointer>Довідники.ХарактеристикиНоменклатури</Pointer>
+                  <DirectoryOwner>Довідники.Номенклатура</DirectoryOwner>
                   <PresetntationFields Count="1">
                     <Field>Назва</Field>
                   </PresetntationFields>
@@ -55130,6 +55441,7 @@ class ПоверненняТоварівПостачальнику_Таблич�
                 {
                     
                     cell.OnSelect = () => row.Номенклатура = cell.Pointer;
+                        
                     (row.Сhanged_Номенклатура = () => cell.Pointer = row.Номенклатура).Invoke();
                         
                 }
@@ -55161,6 +55473,9 @@ class ПоверненняТоварівПостачальнику_Таблич�
                 {
                     
                     cell.OnSelect = () => row.ХарактеристикаНоменклатури = cell.Pointer;
+                        
+                    (row.Сhanged_Номенклатура = () => cell.Власник  = row.Номенклатура).Invoke();
+                            
                     (row.Сhanged_ХарактеристикаНоменклатури = () => cell.Pointer = row.ХарактеристикаНоменклатури).Invoke();
                         
                 }
@@ -55192,6 +55507,7 @@ class ПоверненняТоварівПостачальнику_Таблич�
                 {
                     
                     cell.OnSelect = () => row.Серія = cell.Pointer;
+                        
                     (row.Сhanged_Серія = () => cell.Pointer = row.Серія).Invoke();
                         
                 }
@@ -55252,6 +55568,7 @@ class ПоверненняТоварівПостачальнику_Таблич�
                 {
                     
                     cell.OnSelect = () => row.Пакування = cell.Pointer;
+                        
                     (row.Сhanged_Пакування = () => cell.Pointer = row.Пакування).Invoke();
                         
                 }
@@ -55370,6 +55687,7 @@ class ПоверненняТоварівПостачальнику_Таблич�
                 {
                     
                     cell.OnSelect = () => row.ДокументПоступлення = cell.Pointer;
+                        
                     (row.Сhanged_ДокументПоступлення = () => cell.Pointer = row.ДокументПоступлення).Invoke();
                         
                 }
@@ -55528,6 +55846,7 @@ class ПоверненняТоварівПостачальнику_Таблич�
                   <ReadOnly>0</ReadOnly>
                   <Type>pointer</Type>
                   <Pointer>Довідники.ХарактеристикиНоменклатури</Pointer>
+                  <DirectoryOwner>Довідники.Номенклатура</DirectoryOwner>
                   <PresetntationFields Count="1">
                     <Field>Назва</Field>
                   </PresetntationFields>
@@ -56265,6 +56584,7 @@ class ПоверненняТоварівПостачальнику_Елемен�
               <ReadOnly>0</ReadOnly>
               <Type>pointer</Type>
               <Pointer>Довідники.ДоговориКонтрагентів</Pointer>
+              <DirectoryOwner>Довідники.Контрагенти</DirectoryOwner>
               <PresetntationFields Count="2">
                 <Field>Назва</Field>
                 <Field>ТипДоговоруПредставлення</Field>
@@ -57418,6 +57738,7 @@ class ПоверненняТоварівВідКлієнта_ТабличнаЧ�
                 {
                     
                     cell.OnSelect = () => row.Номенклатура = cell.Pointer;
+                        
                     (row.Сhanged_Номенклатура = () => cell.Pointer = row.Номенклатура).Invoke();
                         
                 }
@@ -57449,6 +57770,9 @@ class ПоверненняТоварівВідКлієнта_ТабличнаЧ�
                 {
                     
                     cell.OnSelect = () => row.ХарактеристикаНоменклатури = cell.Pointer;
+                        
+                    (row.Сhanged_Номенклатура = () => cell.Власник  = row.Номенклатура).Invoke();
+                            
                     (row.Сhanged_ХарактеристикаНоменклатури = () => cell.Pointer = row.ХарактеристикаНоменклатури).Invoke();
                         
                 }
@@ -57480,6 +57804,7 @@ class ПоверненняТоварівВідКлієнта_ТабличнаЧ�
                 {
                     
                     cell.OnSelect = () => row.Серія = cell.Pointer;
+                        
                     (row.Сhanged_Серія = () => cell.Pointer = row.Серія).Invoke();
                         
                 }
@@ -57540,6 +57865,7 @@ class ПоверненняТоварівВідКлієнта_ТабличнаЧ�
                 {
                     
                     cell.OnSelect = () => row.Пакування = cell.Pointer;
+                        
                     (row.Сhanged_Пакування = () => cell.Pointer = row.Пакування).Invoke();
                         
                 }
@@ -57658,6 +57984,7 @@ class ПоверненняТоварівВідКлієнта_ТабличнаЧ�
                 {
                     
                     cell.OnSelect = () => row.ДокументРеалізації = cell.Pointer;
+                        
                     (row.Сhanged_ДокументРеалізації = () => cell.Pointer = row.ДокументРеалізації).Invoke();
                         
                 }
@@ -57816,6 +58143,7 @@ class ПоверненняТоварівВідКлієнта_ТабличнаЧ�
                   <ReadOnly>0</ReadOnly>
                   <Type>pointer</Type>
                   <Pointer>Довідники.ХарактеристикиНоменклатури</Pointer>
+                  <DirectoryOwner>Довідники.Номенклатура</DirectoryOwner>
                   <PresetntationFields Count="1">
                     <Field>Назва</Field>
                   </PresetntationFields>
@@ -58654,6 +58982,7 @@ class ПоверненняТоварівВідКлієнта_Елемент : Do
               <ReadOnly>0</ReadOnly>
               <Type>pointer</Type>
               <Pointer>Довідники.ДоговориКонтрагентів</Pointer>
+              <DirectoryOwner>Довідники.Контрагенти</DirectoryOwner>
               <PresetntationFields Count="2">
                 <Field>Назва</Field>
                 <Field>ТипДоговоруПредставлення</Field>
@@ -59479,6 +59808,7 @@ class АктВиконанихРобіт_ТабличнаЧастина_Посл
                 {
                     
                     cell.OnSelect = () => row.Номенклатура = cell.Pointer;
+                        
                     (row.Сhanged_Номенклатура = () => cell.Pointer = row.Номенклатура).Invoke();
                         
                 }
@@ -59510,6 +59840,9 @@ class АктВиконанихРобіт_ТабличнаЧастина_Посл
                 {
                     
                     cell.OnSelect = () => row.ХарактеристикаНоменклатури = cell.Pointer;
+                        
+                    (row.Сhanged_Номенклатура = () => cell.Власник  = row.Номенклатура).Invoke();
+                            
                     (row.Сhanged_ХарактеристикаНоменклатури = () => cell.Pointer = row.ХарактеристикаНоменклатури).Invoke();
                         
                 }
@@ -59743,6 +60076,7 @@ class АктВиконанихРобіт_ТабличнаЧастина_Посл
                   <ReadOnly>0</ReadOnly>
                   <Type>pointer</Type>
                   <Pointer>Довідники.ХарактеристикиНоменклатури</Pointer>
+                  <DirectoryOwner>Довідники.Номенклатура</DirectoryOwner>
                   <PresetntationFields Count="1">
                     <Field>Назва</Field>
                   </PresetntationFields>
@@ -60365,6 +60699,7 @@ class АктВиконанихРобіт_Елемент : DocumentFormElement
               <ReadOnly>0</ReadOnly>
               <Type>pointer</Type>
               <Pointer>Довідники.ДоговориКонтрагентів</Pointer>
+              <DirectoryOwner>Довідники.Контрагенти</DirectoryOwner>
               <PresetntationFields Count="2">
                 <Field>Назва</Field>
                 <Field>ТипДоговоруПредставлення</Field>
@@ -61399,6 +61734,7 @@ class ВведенняЗалишків_ТабличнаЧастина_Товар
                 {
                     
                     cell.OnSelect = () => row.Номенклатура = cell.Pointer;
+                        
                     (row.Сhanged_Номенклатура = () => cell.Pointer = row.Номенклатура).Invoke();
                         
                 }
@@ -61430,6 +61766,9 @@ class ВведенняЗалишків_ТабличнаЧастина_Товар
                 {
                     
                     cell.OnSelect = () => row.ХарактеристикаНоменклатури = cell.Pointer;
+                        
+                    (row.Сhanged_Номенклатура = () => cell.Власник  = row.Номенклатура).Invoke();
+                            
                     (row.Сhanged_ХарактеристикаНоменклатури = () => cell.Pointer = row.ХарактеристикаНоменклатури).Invoke();
                         
                 }
@@ -61461,6 +61800,7 @@ class ВведенняЗалишків_ТабличнаЧастина_Товар
                 {
                     
                     cell.OnSelect = () => row.Серія = cell.Pointer;
+                        
                     (row.Сhanged_Серія = () => cell.Pointer = row.Серія).Invoke();
                         
                 }
@@ -61521,6 +61861,7 @@ class ВведенняЗалишків_ТабличнаЧастина_Товар
                 {
                     
                     cell.OnSelect = () => row.Пакування = cell.Pointer;
+                        
                     (row.Сhanged_Пакування = () => cell.Pointer = row.Пакування).Invoke();
                         
                 }
@@ -61763,6 +62104,7 @@ class ВведенняЗалишків_ТабличнаЧастина_Товар
                   <ReadOnly>0</ReadOnly>
                   <Type>pointer</Type>
                   <Pointer>Довідники.ХарактеристикиНоменклатури</Pointer>
+                  <DirectoryOwner>Довідники.Номенклатура</DirectoryOwner>
                   <PresetntationFields Count="1">
                     <Field>Назва</Field>
                   </PresetntationFields>
@@ -62066,6 +62408,7 @@ class ВведенняЗалишків_ТабличнаЧастина_Каси :
                 {
                     
                     cell.OnSelect = () => row.Каса = cell.Pointer;
+                        
                     (row.Сhanged_Каса = () => cell.Pointer = row.Каса).Invoke();
                         
                 }
@@ -62468,6 +62811,7 @@ class ВведенняЗалишків_ТабличнаЧастина_Банкі
                 {
                     
                     cell.OnSelect = () => row.БанківськийРахунок = cell.Pointer;
+                        
                     (row.Сhanged_БанківськийРахунок = () => cell.Pointer = row.БанківськийРахунок).Invoke();
                         
                 }
@@ -62966,6 +63310,7 @@ class ВведенняЗалишків_ТабличнаЧастина_Розра
                 {
                     
                     cell.OnSelect = () => row.Контрагент = cell.Pointer;
+                        
                     (row.Сhanged_Контрагент = () => cell.Pointer = row.Контрагент).Invoke();
                         
                 }
@@ -62997,6 +63342,7 @@ class ВведенняЗалишків_ТабличнаЧастина_Розра
                 {
                     
                     cell.OnSelect = () => row.Валюта = cell.Pointer;
+                        
                     (row.Сhanged_Валюта = () => cell.Pointer = row.Валюта).Invoke();
                         
                 }
@@ -63876,6 +64222,7 @@ class ВведенняЗалишків_Елемент : DocumentFormElement
               <ReadOnly>0</ReadOnly>
               <Type>pointer</Type>
               <Pointer>Довідники.ДоговориКонтрагентів</Pointer>
+              <DirectoryOwner>Довідники.Контрагенти</DirectoryOwner>
               <PresetntationFields Count="2">
                 <Field>Назва</Field>
                 <Field>ТипДоговоруПредставлення</Field>
@@ -64669,6 +65016,7 @@ class НадлишкиТоварів_ТабличнаЧастина_Товари
                 {
                     
                     cell.OnSelect = () => row.Номенклатура = cell.Pointer;
+                        
                     (row.Сhanged_Номенклатура = () => cell.Pointer = row.Номенклатура).Invoke();
                         
                 }
@@ -64700,6 +65048,9 @@ class НадлишкиТоварів_ТабличнаЧастина_Товари
                 {
                     
                     cell.OnSelect = () => row.ХарактеристикаНоменклатури = cell.Pointer;
+                        
+                    (row.Сhanged_Номенклатура = () => cell.Власник  = row.Номенклатура).Invoke();
+                            
                     (row.Сhanged_ХарактеристикаНоменклатури = () => cell.Pointer = row.ХарактеристикаНоменклатури).Invoke();
                         
                 }
@@ -64933,6 +65284,7 @@ class НадлишкиТоварів_ТабличнаЧастина_Товари
                   <ReadOnly>0</ReadOnly>
                   <Type>pointer</Type>
                   <Pointer>Довідники.ХарактеристикиНоменклатури</Pointer>
+                  <DirectoryOwner>Довідники.Номенклатура</DirectoryOwner>
                   <PresetntationFields Count="1">
                     <Field>Назва</Field>
                   </PresetntationFields>
@@ -66243,6 +66595,7 @@ class ПересортицяТоварів_ТабличнаЧастина_Тов
                 {
                     
                     cell.OnSelect = () => row.Номенклатура = cell.Pointer;
+                        
                     (row.Сhanged_Номенклатура = () => cell.Pointer = row.Номенклатура).Invoke();
                         
                 }
@@ -66274,6 +66627,9 @@ class ПересортицяТоварів_ТабличнаЧастина_Тов
                 {
                     
                     cell.OnSelect = () => row.ХарактеристикаНоменклатури = cell.Pointer;
+                        
+                    (row.Сhanged_Номенклатура = () => cell.Власник  = row.Номенклатура).Invoke();
+                            
                     (row.Сhanged_ХарактеристикаНоменклатури = () => cell.Pointer = row.ХарактеристикаНоменклатури).Invoke();
                         
                 }
@@ -66475,6 +66831,7 @@ class ПересортицяТоварів_ТабличнаЧастина_Тов
                   <ReadOnly>0</ReadOnly>
                   <Type>pointer</Type>
                   <Pointer>Довідники.ХарактеристикиНоменклатури</Pointer>
+                  <DirectoryOwner>Довідники.Номенклатура</DirectoryOwner>
                   <PresetntationFields Count="1">
                     <Field>Назва</Field>
                   </PresetntationFields>
@@ -67912,6 +68269,7 @@ class ПерерахунокТоварів_ТабличнаЧастина_Тов
                 {
                     
                     cell.OnSelect = () => row.Номенклатура = cell.Pointer;
+                        
                     (row.Сhanged_Номенклатура = () => cell.Pointer = row.Номенклатура).Invoke();
                         
                 }
@@ -67943,6 +68301,9 @@ class ПерерахунокТоварів_ТабличнаЧастина_Тов
                 {
                     
                     cell.OnSelect = () => row.ХарактеристикаНоменклатури = cell.Pointer;
+                        
+                    (row.Сhanged_Номенклатура = () => cell.Власник  = row.Номенклатура).Invoke();
+                            
                     (row.Сhanged_ХарактеристикаНоменклатури = () => cell.Pointer = row.ХарактеристикаНоменклатури).Invoke();
                         
                 }
@@ -68032,6 +68393,7 @@ class ПерерахунокТоварів_ТабличнаЧастина_Тов
                 {
                     
                     cell.OnSelect = () => row.Пакування = cell.Pointer;
+                        
                     (row.Сhanged_Пакування = () => cell.Pointer = row.Пакування).Invoke();
                         
                 }
@@ -68274,6 +68636,7 @@ class ПерерахунокТоварів_ТабличнаЧастина_Тов
                   <ReadOnly>0</ReadOnly>
                   <Type>pointer</Type>
                   <Pointer>Довідники.ХарактеристикиНоменклатури</Pointer>
+                  <DirectoryOwner>Довідники.Номенклатура</DirectoryOwner>
                   <PresetntationFields Count="1">
                     <Field>Назва</Field>
                   </PresetntationFields>
@@ -69820,6 +70183,7 @@ class ПсуванняТоварів_ТабличнаЧастина_Товари
                 {
                     
                     cell.OnSelect = () => row.Номенклатура = cell.Pointer;
+                        
                     (row.Сhanged_Номенклатура = () => cell.Pointer = row.Номенклатура).Invoke();
                         
                 }
@@ -69851,6 +70215,9 @@ class ПсуванняТоварів_ТабличнаЧастина_Товари
                 {
                     
                     cell.OnSelect = () => row.ХарактеристикаНоменклатури = cell.Pointer;
+                        
+                    (row.Сhanged_Номенклатура = () => cell.Власник  = row.Номенклатура).Invoke();
+                            
                     (row.Сhanged_ХарактеристикаНоменклатури = () => cell.Pointer = row.ХарактеристикаНоменклатури).Invoke();
                         
                 }
@@ -69882,6 +70249,7 @@ class ПсуванняТоварів_ТабличнаЧастина_Товари
                 {
                     
                     cell.OnSelect = () => row.Серія = cell.Pointer;
+                        
                     (row.Сhanged_Серія = () => cell.Pointer = row.Серія).Invoke();
                         
                 }
@@ -69942,6 +70310,7 @@ class ПсуванняТоварів_ТабличнаЧастина_Товари
                 {
                     
                     cell.OnSelect = () => row.Пакування = cell.Pointer;
+                        
                     (row.Сhanged_Пакування = () => cell.Pointer = row.Пакування).Invoke();
                         
                 }
@@ -70060,6 +70429,7 @@ class ПсуванняТоварів_ТабличнаЧастина_Товари
                 {
                     
                     cell.OnSelect = () => row.Партія = cell.Pointer;
+                        
                     (row.Сhanged_Партія = () => cell.Pointer = row.Партія).Invoke();
                         
                 }
@@ -70218,6 +70588,7 @@ class ПсуванняТоварів_ТабличнаЧастина_Товари
                   <ReadOnly>0</ReadOnly>
                   <Type>pointer</Type>
                   <Pointer>Довідники.ХарактеристикиНоменклатури</Pointer>
+                  <DirectoryOwner>Довідники.Номенклатура</DirectoryOwner>
                   <PresetntationFields Count="1">
                     <Field>Назва</Field>
                   </PresetntationFields>
@@ -71791,6 +72162,7 @@ class ВнутрішнєСпоживанняТоварів_ТабличнаЧа�
                 {
                     
                     cell.OnSelect = () => row.Номенклатура = cell.Pointer;
+                        
                     (row.Сhanged_Номенклатура = () => cell.Pointer = row.Номенклатура).Invoke();
                         
                 }
@@ -71822,6 +72194,9 @@ class ВнутрішнєСпоживанняТоварів_ТабличнаЧа�
                 {
                     
                     cell.OnSelect = () => row.ХарактеристикаНоменклатури = cell.Pointer;
+                        
+                    (row.Сhanged_Номенклатура = () => cell.Власник  = row.Номенклатура).Invoke();
+                            
                     (row.Сhanged_ХарактеристикаНоменклатури = () => cell.Pointer = row.ХарактеристикаНоменклатури).Invoke();
                         
                 }
@@ -71853,6 +72228,7 @@ class ВнутрішнєСпоживанняТоварів_ТабличнаЧа�
                 {
                     
                     cell.OnSelect = () => row.Серія = cell.Pointer;
+                        
                     (row.Сhanged_Серія = () => cell.Pointer = row.Серія).Invoke();
                         
                 }
@@ -71913,6 +72289,7 @@ class ВнутрішнєСпоживанняТоварів_ТабличнаЧа�
                 {
                     
                     cell.OnSelect = () => row.Пакування = cell.Pointer;
+                        
                     (row.Сhanged_Пакування = () => cell.Pointer = row.Пакування).Invoke();
                         
                 }
@@ -72031,6 +72408,7 @@ class ВнутрішнєСпоживанняТоварів_ТабличнаЧа�
                 {
                     
                     cell.OnSelect = () => row.Партія = cell.Pointer;
+                        
                     (row.Сhanged_Партія = () => cell.Pointer = row.Партія).Invoke();
                         
                 }
@@ -72189,6 +72567,7 @@ class ВнутрішнєСпоживанняТоварів_ТабличнаЧа�
                   <ReadOnly>0</ReadOnly>
                   <Type>pointer</Type>
                   <Pointer>Довідники.ХарактеристикиНоменклатури</Pointer>
+                  <DirectoryOwner>Довідники.Номенклатура</DirectoryOwner>
                   <PresetntationFields Count="1">
                     <Field>Назва</Field>
                   </PresetntationFields>
@@ -73929,6 +74308,7 @@ class РахунокФактура_ТабличнаЧастина_Товари :
                 {
                     
                     cell.OnSelect = () => row.Номенклатура = cell.Pointer;
+                        
                     (row.Сhanged_Номенклатура = () => cell.Pointer = row.Номенклатура).Invoke();
                         
                 }
@@ -73960,6 +74340,9 @@ class РахунокФактура_ТабличнаЧастина_Товари :
                 {
                     
                     cell.OnSelect = () => row.ХарактеристикаНоменклатури = cell.Pointer;
+                        
+                    (row.Сhanged_Номенклатура = () => cell.Власник  = row.Номенклатура).Invoke();
+                            
                     (row.Сhanged_ХарактеристикаНоменклатури = () => cell.Pointer = row.ХарактеристикаНоменклатури).Invoke();
                         
                 }
@@ -74020,6 +74403,7 @@ class РахунокФактура_ТабличнаЧастина_Товари :
                 {
                     
                     cell.OnSelect = () => row.Пакування = cell.Pointer;
+                        
                     (row.Сhanged_Пакування = () => cell.Pointer = row.Пакування).Invoke();
                         
                 }
@@ -74080,6 +74464,7 @@ class РахунокФактура_ТабличнаЧастина_Товари :
                 {
                     
                     cell.OnSelect = () => row.ВидЦіни = cell.Pointer;
+                        
                     (row.Сhanged_ВидЦіни = () => cell.Pointer = row.ВидЦіни).Invoke();
                         
                 }
@@ -74198,6 +74583,7 @@ class РахунокФактура_ТабличнаЧастина_Товари :
                 {
                     
                     cell.OnSelect = () => row.Склад = cell.Pointer;
+                        
                     (row.Сhanged_Склад = () => cell.Pointer = row.Склад).Invoke();
                         
                 }
@@ -74359,6 +74745,7 @@ class РахунокФактура_ТабличнаЧастина_Товари :
                   <ReadOnly>0</ReadOnly>
                   <Type>pointer</Type>
                   <Pointer>Довідники.ХарактеристикиНоменклатури</Pointer>
+                  <DirectoryOwner>Довідники.Номенклатура</DirectoryOwner>
                   <PresetntationFields Count="1">
                     <Field>Назва</Field>
                   </PresetntationFields>
@@ -75217,6 +75604,7 @@ class РахунокФактура_Елемент : DocumentFormElement
               <ReadOnly>0</ReadOnly>
               <Type>pointer</Type>
               <Pointer>Довідники.ДоговориКонтрагентів</Pointer>
+              <DirectoryOwner>Довідники.Контрагенти</DirectoryOwner>
               <PresetntationFields Count="2">
                 <Field>Назва</Field>
                 <Field>ТипДоговоруПредставлення</Field>
@@ -76073,6 +76461,7 @@ class РозміщенняТоварівНаСкладі_ТабличнаЧас�
                 {
                     
                     cell.OnSelect = () => row.Номенклатура = cell.Pointer;
+                        
                     (row.Сhanged_Номенклатура = () => cell.Pointer = row.Номенклатура).Invoke();
                         
                 }
@@ -76104,6 +76493,9 @@ class РозміщенняТоварівНаСкладі_ТабличнаЧас�
                 {
                     
                     cell.OnSelect = () => row.ХарактеристикаНоменклатури = cell.Pointer;
+                        
+                    (row.Сhanged_Номенклатура = () => cell.Власник  = row.Номенклатура).Invoke();
+                            
                     (row.Сhanged_ХарактеристикаНоменклатури = () => cell.Pointer = row.ХарактеристикаНоменклатури).Invoke();
                         
                 }
@@ -76135,6 +76527,7 @@ class РозміщенняТоварівНаСкладі_ТабличнаЧас�
                 {
                     
                     cell.OnSelect = () => row.Серія = cell.Pointer;
+                        
                     (row.Сhanged_Серія = () => cell.Pointer = row.Серія).Invoke();
                         
                 }
@@ -76195,6 +76588,7 @@ class РозміщенняТоварівНаСкладі_ТабличнаЧас�
                 {
                     
                     cell.OnSelect = () => row.Пакування = cell.Pointer;
+                        
                     (row.Сhanged_Пакування = () => cell.Pointer = row.Пакування).Invoke();
                         
                 }
@@ -76255,6 +76649,7 @@ class РозміщенняТоварівНаСкладі_ТабличнаЧас�
                 {
                     
                     cell.OnSelect = () => row.Комірка = cell.Pointer;
+                        
                     (row.Сhanged_Комірка = () => cell.Pointer = row.Комірка).Invoke();
                         
                 }
@@ -76407,6 +76802,7 @@ class РозміщенняТоварівНаСкладі_ТабличнаЧас�
                   <ReadOnly>0</ReadOnly>
                   <Type>pointer</Type>
                   <Pointer>Довідники.ХарактеристикиНоменклатури</Pointer>
+                  <DirectoryOwner>Довідники.Номенклатура</DirectoryOwner>
                   <PresetntationFields Count="1">
                     <Field>Назва</Field>
                   </PresetntationFields>
@@ -76465,6 +76861,7 @@ class РозміщенняТоварівНаСкладі_ТабличнаЧас�
                   <ReadOnly>0</ReadOnly>
                   <Type>pointer</Type>
                   <Pointer>Довідники.СкладськіКомірки</Pointer>
+                  <DirectoryOwner>Довідники.СкладськіПриміщення</DirectoryOwner>
                   <PresetntationFields Count="1">
                     <Field>Назва</Field>
                   </PresetntationFields>
@@ -77912,6 +78309,7 @@ class ПереміщенняТоварівНаСкладі_ТабличнаЧа�
                 {
                     
                     cell.OnSelect = () => row.Номенклатура = cell.Pointer;
+                        
                     (row.Сhanged_Номенклатура = () => cell.Pointer = row.Номенклатура).Invoke();
                         
                 }
@@ -77943,6 +78341,9 @@ class ПереміщенняТоварівНаСкладі_ТабличнаЧа�
                 {
                     
                     cell.OnSelect = () => row.ХарактеристикаНоменклатури = cell.Pointer;
+                        
+                    (row.Сhanged_Номенклатура = () => cell.Власник  = row.Номенклатура).Invoke();
+                            
                     (row.Сhanged_ХарактеристикаНоменклатури = () => cell.Pointer = row.ХарактеристикаНоменклатури).Invoke();
                         
                 }
@@ -77974,6 +78375,7 @@ class ПереміщенняТоварівНаСкладі_ТабличнаЧа�
                 {
                     
                     cell.OnSelect = () => row.Серія = cell.Pointer;
+                        
                     (row.Сhanged_Серія = () => cell.Pointer = row.Серія).Invoke();
                         
                 }
@@ -78034,6 +78436,7 @@ class ПереміщенняТоварівНаСкладі_ТабличнаЧа�
                 {
                     
                     cell.OnSelect = () => row.Пакування = cell.Pointer;
+                        
                     (row.Сhanged_Пакування = () => cell.Pointer = row.Пакування).Invoke();
                         
                 }
@@ -78094,6 +78497,7 @@ class ПереміщенняТоварівНаСкладі_ТабличнаЧа�
                 {
                     
                     cell.OnSelect = () => row.КоміркаВідправник = cell.Pointer;
+                        
                     (row.Сhanged_КоміркаВідправник = () => cell.Pointer = row.КоміркаВідправник).Invoke();
                         
                 }
@@ -78125,6 +78529,7 @@ class ПереміщенняТоварівНаСкладі_ТабличнаЧа�
                 {
                     
                     cell.OnSelect = () => row.КоміркаОтримувач = cell.Pointer;
+                        
                     (row.Сhanged_КоміркаОтримувач = () => cell.Pointer = row.КоміркаОтримувач).Invoke();
                         
                 }
@@ -78280,6 +78685,7 @@ class ПереміщенняТоварівНаСкладі_ТабличнаЧа�
                   <ReadOnly>0</ReadOnly>
                   <Type>pointer</Type>
                   <Pointer>Довідники.ХарактеристикиНоменклатури</Pointer>
+                  <DirectoryOwner>Довідники.Номенклатура</DirectoryOwner>
                   <PresetntationFields Count="1">
                     <Field>Назва</Field>
                   </PresetntationFields>
@@ -78338,6 +78744,7 @@ class ПереміщенняТоварівНаСкладі_ТабличнаЧа�
                   <ReadOnly>0</ReadOnly>
                   <Type>pointer</Type>
                   <Pointer>Довідники.СкладськіКомірки</Pointer>
+                  <DirectoryOwner>Довідники.СкладськіПриміщення</DirectoryOwner>
                   <PresetntationFields Count="1">
                     <Field>Назва</Field>
                   </PresetntationFields>
@@ -78351,6 +78758,7 @@ class ПереміщенняТоварівНаСкладі_ТабличнаЧа�
                   <ReadOnly>0</ReadOnly>
                   <Type>pointer</Type>
                   <Pointer>Довідники.СкладськіКомірки</Pointer>
+                  <DirectoryOwner>Довідники.СкладськіПриміщення</DirectoryOwner>
                   <PresetntationFields Count="1">
                     <Field>Назва</Field>
                   </PresetntationFields>
@@ -79760,6 +80168,7 @@ class ЗбіркаТоварівНаСкладі_ТабличнаЧастина_
                 {
                     
                     cell.OnSelect = () => row.Номенклатура = cell.Pointer;
+                        
                     (row.Сhanged_Номенклатура = () => cell.Pointer = row.Номенклатура).Invoke();
                         
                 }
@@ -79791,6 +80200,9 @@ class ЗбіркаТоварівНаСкладі_ТабличнаЧастина_
                 {
                     
                     cell.OnSelect = () => row.ХарактеристикаНоменклатури = cell.Pointer;
+                        
+                    (row.Сhanged_Номенклатура = () => cell.Власник  = row.Номенклатура).Invoke();
+                            
                     (row.Сhanged_ХарактеристикаНоменклатури = () => cell.Pointer = row.ХарактеристикаНоменклатури).Invoke();
                         
                 }
@@ -79822,6 +80234,7 @@ class ЗбіркаТоварівНаСкладі_ТабличнаЧастина_
                 {
                     
                     cell.OnSelect = () => row.Серія = cell.Pointer;
+                        
                     (row.Сhanged_Серія = () => cell.Pointer = row.Серія).Invoke();
                         
                 }
@@ -79882,6 +80295,7 @@ class ЗбіркаТоварівНаСкладі_ТабличнаЧастина_
                 {
                     
                     cell.OnSelect = () => row.Пакування = cell.Pointer;
+                        
                     (row.Сhanged_Пакування = () => cell.Pointer = row.Пакування).Invoke();
                         
                 }
@@ -79942,6 +80356,7 @@ class ЗбіркаТоварівНаСкладі_ТабличнаЧастина_
                 {
                     
                     cell.OnSelect = () => row.Комірка = cell.Pointer;
+                        
                     (row.Сhanged_Комірка = () => cell.Pointer = row.Комірка).Invoke();
                         
                 }
@@ -80094,6 +80509,7 @@ class ЗбіркаТоварівНаСкладі_ТабличнаЧастина_
                   <ReadOnly>0</ReadOnly>
                   <Type>pointer</Type>
                   <Pointer>Довідники.ХарактеристикиНоменклатури</Pointer>
+                  <DirectoryOwner>Довідники.Номенклатура</DirectoryOwner>
                   <PresetntationFields Count="1">
                     <Field>Назва</Field>
                   </PresetntationFields>
@@ -80152,6 +80568,7 @@ class ЗбіркаТоварівНаСкладі_ТабличнаЧастина_
                   <ReadOnly>0</ReadOnly>
                   <Type>pointer</Type>
                   <Pointer>Довідники.СкладськіКомірки</Pointer>
+                  <DirectoryOwner>Довідники.СкладськіПриміщення</DirectoryOwner>
                   <PresetntationFields Count="1">
                     <Field>Назва</Field>
                   </PresetntationFields>
@@ -81440,6 +81857,7 @@ class РозміщенняНоменклатуриПоКоміркам_Табл�
                 {
                     
                     cell.OnSelect = () => row.Номенклатура = cell.Pointer;
+                        
                     (row.Сhanged_Номенклатура = () => cell.Pointer = row.Номенклатура).Invoke();
                         
                 }
@@ -81471,6 +81889,7 @@ class РозміщенняНоменклатуриПоКоміркам_Табл�
                 {
                     
                     cell.OnSelect = () => row.Пакування = cell.Pointer;
+                        
                     (row.Сhanged_Пакування = () => cell.Pointer = row.Пакування).Invoke();
                         
                 }
@@ -81502,6 +81921,7 @@ class РозміщенняНоменклатуриПоКоміркам_Табл�
                 {
                     
                     cell.OnSelect = () => row.Комірка = cell.Pointer;
+                        
                     (row.Сhanged_Комірка = () => cell.Pointer = row.Комірка).Invoke();
                         
                 }
@@ -81655,6 +82075,7 @@ class РозміщенняНоменклатуриПоКоміркам_Табл�
                   <ReadOnly>0</ReadOnly>
                   <Type>pointer</Type>
                   <Pointer>Довідники.СкладськіКомірки</Pointer>
+                  <DirectoryOwner>Довідники.СкладськіПриміщення</DirectoryOwner>
                   <PresetntationFields Count="1">
                     <Field>Назва</Field>
                   </PresetntationFields>
@@ -82974,6 +83395,7 @@ class КорегуванняБоргу_ТабличнаЧастина_Розра
                 {
                     
                     cell.OnSelect = () => row.Контрагент = cell.Pointer;
+                        
                     (row.Сhanged_Контрагент = () => cell.Pointer = row.Контрагент).Invoke();
                         
                 }
@@ -83005,6 +83427,7 @@ class КорегуванняБоргу_ТабличнаЧастина_Розра
                 {
                     
                     cell.OnSelect = () => row.Валюта = cell.Pointer;
+                        
                     (row.Сhanged_Валюта = () => cell.Pointer = row.Валюта).Invoke();
                         
                 }
@@ -84655,6 +85078,7 @@ class ЗакриттяЗамовленняКлієнта_ТабличнаЧас�
                 {
                     
                     cell.OnSelect = () => row.Номенклатура = cell.Pointer;
+                        
                     (row.Сhanged_Номенклатура = () => cell.Pointer = row.Номенклатура).Invoke();
                         
                 }
@@ -84686,6 +85110,9 @@ class ЗакриттяЗамовленняКлієнта_ТабличнаЧас�
                 {
                     
                     cell.OnSelect = () => row.ХарактеристикаНоменклатури = cell.Pointer;
+                        
+                    (row.Сhanged_Номенклатура = () => cell.Власник  = row.Номенклатура).Invoke();
+                            
                     (row.Сhanged_ХарактеристикаНоменклатури = () => cell.Pointer = row.ХарактеристикаНоменклатури).Invoke();
                         
                 }
@@ -84746,6 +85173,7 @@ class ЗакриттяЗамовленняКлієнта_ТабличнаЧас�
                 {
                     
                     cell.OnSelect = () => row.Пакування = cell.Pointer;
+                        
                     (row.Сhanged_Пакування = () => cell.Pointer = row.Пакування).Invoke();
                         
                 }
@@ -84806,6 +85234,7 @@ class ЗакриттяЗамовленняКлієнта_ТабличнаЧас�
                 {
                     
                     cell.OnSelect = () => row.Склад = cell.Pointer;
+                        
                     (row.Сhanged_Склад = () => cell.Pointer = row.Склад).Invoke();
                         
                 }
@@ -85019,6 +85448,7 @@ class ЗакриттяЗамовленняКлієнта_ТабличнаЧас�
                   <ReadOnly>0</ReadOnly>
                   <Type>pointer</Type>
                   <Pointer>Довідники.ХарактеристикиНоменклатури</Pointer>
+                  <DirectoryOwner>Довідники.Номенклатура</DirectoryOwner>
                   <PresetntationFields Count="1">
                     <Field>Назва</Field>
                   </PresetntationFields>
@@ -85793,6 +86223,7 @@ class ЗакриттяЗамовленняКлієнта_Елемент : Docume
               <ReadOnly>0</ReadOnly>
               <Type>pointer</Type>
               <Pointer>Довідники.ДоговориКонтрагентів</Pointer>
+              <DirectoryOwner>Довідники.Контрагенти</DirectoryOwner>
               <PresetntationFields Count="2">
                 <Field>Назва</Field>
                 <Field>ТипДоговоруПредставлення</Field>
@@ -86702,6 +87133,7 @@ class ЗакриттяРахункуФактури_ТабличнаЧастин�
                 {
                     
                     cell.OnSelect = () => row.Номенклатура = cell.Pointer;
+                        
                     (row.Сhanged_Номенклатура = () => cell.Pointer = row.Номенклатура).Invoke();
                         
                 }
@@ -86733,6 +87165,9 @@ class ЗакриттяРахункуФактури_ТабличнаЧастин�
                 {
                     
                     cell.OnSelect = () => row.ХарактеристикаНоменклатури = cell.Pointer;
+                        
+                    (row.Сhanged_Номенклатура = () => cell.Власник  = row.Номенклатура).Invoke();
+                            
                     (row.Сhanged_ХарактеристикаНоменклатури = () => cell.Pointer = row.ХарактеристикаНоменклатури).Invoke();
                         
                 }
@@ -86764,6 +87199,7 @@ class ЗакриттяРахункуФактури_ТабличнаЧастин�
                 {
                     
                     cell.OnSelect = () => row.Пакування = cell.Pointer;
+                        
                     (row.Сhanged_Пакування = () => cell.Pointer = row.Пакування).Invoke();
                         
                 }
@@ -86853,6 +87289,7 @@ class ЗакриттяРахункуФактури_ТабличнаЧастин�
                 {
                     
                     cell.OnSelect = () => row.Склад = cell.Pointer;
+                        
                     (row.Сhanged_Склад = () => cell.Pointer = row.Склад).Invoke();
                         
                 }
@@ -87066,6 +87503,7 @@ class ЗакриттяРахункуФактури_ТабличнаЧастин�
                   <ReadOnly>0</ReadOnly>
                   <Type>pointer</Type>
                   <Pointer>Довідники.ХарактеристикиНоменклатури</Pointer>
+                  <DirectoryOwner>Довідники.Номенклатура</DirectoryOwner>
                   <PresetntationFields Count="1">
                     <Field>Назва</Field>
                   </PresetntationFields>
@@ -87771,6 +88209,7 @@ class ЗакриттяРахункуФактури_Елемент : DocumentForm
               <ReadOnly>0</ReadOnly>
               <Type>pointer</Type>
               <Pointer>Довідники.ДоговориКонтрагентів</Pointer>
+              <DirectoryOwner>Довідники.Контрагенти</DirectoryOwner>
               <PresetntationFields Count="2">
                 <Field>Назва</Field>
                 <Field>ТипДоговоруПредставлення</Field>
@@ -88711,6 +89150,7 @@ class ЗакриттяЗамовленняПостачальнику_Табли�
                 {
                     
                     cell.OnSelect = () => row.Номенклатура = cell.Pointer;
+                        
                     (row.Сhanged_Номенклатура = () => cell.Pointer = row.Номенклатура).Invoke();
                         
                 }
@@ -88742,6 +89182,9 @@ class ЗакриттяЗамовленняПостачальнику_Табли�
                 {
                     
                     cell.OnSelect = () => row.ХарактеристикаНоменклатури = cell.Pointer;
+                        
+                    (row.Сhanged_Номенклатура = () => cell.Власник  = row.Номенклатура).Invoke();
+                            
                     (row.Сhanged_ХарактеристикаНоменклатури = () => cell.Pointer = row.ХарактеристикаНоменклатури).Invoke();
                         
                 }
@@ -88773,6 +89216,7 @@ class ЗакриттяЗамовленняПостачальнику_Табли�
                 {
                     
                     cell.OnSelect = () => row.Пакування = cell.Pointer;
+                        
                     (row.Сhanged_Пакування = () => cell.Pointer = row.Пакування).Invoke();
                         
                 }
@@ -88862,6 +89306,7 @@ class ЗакриттяЗамовленняПостачальнику_Табли�
                 {
                     
                     cell.OnSelect = () => row.Склад = cell.Pointer;
+                        
                     (row.Сhanged_Склад = () => cell.Pointer = row.Склад).Invoke();
                         
                 }
@@ -89075,6 +89520,7 @@ class ЗакриттяЗамовленняПостачальнику_Табли�
                   <ReadOnly>0</ReadOnly>
                   <Type>pointer</Type>
                   <Pointer>Довідники.ХарактеристикиНоменклатури</Pointer>
+                  <DirectoryOwner>Довідники.Номенклатура</DirectoryOwner>
                   <PresetntationFields Count="1">
                     <Field>Назва</Field>
                   </PresetntationFields>
@@ -89824,6 +90270,7 @@ class ЗакриттяЗамовленняПостачальнику_Елеме�
               <ReadOnly>0</ReadOnly>
               <Type>pointer</Type>
               <Pointer>Довідники.ДоговориКонтрагентів</Pointer>
+              <DirectoryOwner>Довідники.Контрагенти</DirectoryOwner>
               <PresetntationFields Count="2">
                 <Field>Назва</Field>
                 <Field>ТипДоговоруПредставлення</Field>
@@ -90834,6 +91281,7 @@ class ЧекККМ_ТабличнаЧастина_Товари : DocumentFormTab
                 {
                     
                     cell.OnSelect = () => row.Номенклатура = cell.Pointer;
+                        
                     (row.Сhanged_Номенклатура = () => cell.Pointer = row.Номенклатура).Invoke();
                         
                 }
@@ -90865,6 +91313,9 @@ class ЧекККМ_ТабличнаЧастина_Товари : DocumentFormTab
                 {
                     
                     cell.OnSelect = () => row.ХарактеристикаНоменклатури = cell.Pointer;
+                        
+                    (row.Сhanged_Номенклатура = () => cell.Власник  = row.Номенклатура).Invoke();
+                            
                     (row.Сhanged_ХарактеристикаНоменклатури = () => cell.Pointer = row.ХарактеристикаНоменклатури).Invoke();
                         
                 }
@@ -90896,6 +91347,7 @@ class ЧекККМ_ТабличнаЧастина_Товари : DocumentFormTab
                 {
                     
                     cell.OnSelect = () => row.Серія = cell.Pointer;
+                        
                     (row.Сhanged_Серія = () => cell.Pointer = row.Серія).Invoke();
                         
                 }
@@ -90956,6 +91408,7 @@ class ЧекККМ_ТабличнаЧастина_Товари : DocumentFormTab
                 {
                     
                     cell.OnSelect = () => row.Пакування = cell.Pointer;
+                        
                     (row.Сhanged_Пакування = () => cell.Pointer = row.Пакування).Invoke();
                         
                 }
@@ -91016,6 +91469,7 @@ class ЧекККМ_ТабличнаЧастина_Товари : DocumentFormTab
                 {
                     
                     cell.OnSelect = () => row.ВидЦіни = cell.Pointer;
+                        
                     (row.Сhanged_ВидЦіни = () => cell.Pointer = row.ВидЦіни).Invoke();
                         
                 }
@@ -91296,6 +91750,7 @@ class ЧекККМ_ТабличнаЧастина_Товари : DocumentFormTab
                   <ReadOnly>0</ReadOnly>
                   <Type>pointer</Type>
                   <Pointer>Довідники.ХарактеристикиНоменклатури</Pointer>
+                  <DirectoryOwner>Довідники.Номенклатура</DirectoryOwner>
                   <PresetntationFields Count="1">
                     <Field>Назва</Field>
                   </PresetntationFields>
@@ -98545,6 +99000,7 @@ SQL тип  непотрібно вказувати
               <ReadOnly>0</ReadOnly>
               <Type>pointer</Type>
               <Pointer>Довідники.ХарактеристикиНоменклатури</Pointer>
+              <DirectoryOwner>Довідники.Номенклатура</DirectoryOwner>
               <PresetntationFields Count="1">
                 <Field>Назва</Field>
               </PresetntationFields>

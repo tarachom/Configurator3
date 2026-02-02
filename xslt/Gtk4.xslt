@@ -350,6 +350,7 @@ limitations under the License.
 
   <xsl:template name="AddColumnTreeExpander">
     <xsl:param name="RowType" />
+            //TreeExpander and Image
             {
                 SignalListItemFactory factory = SignalListItemFactory.New();
                 factory.OnSetup += (_, args) =&gt;
@@ -369,8 +370,8 @@ limitations under the License.
                         expander.SetListRow(treeRow);
                         ImageTablePartCell? cell = (ImageTablePartCell?)expander.GetChild();
                         <xsl:value-of select="$RowType"/>? row = (<xsl:value-of select="$RowType"/>?)treeRow.Item;
-                        if (cell != null &amp;&amp; row != null)
-                            cell.SetImage((row?.DeletionLabel ?? false) ? InterfaceGtk4.Icon.ForTabularLists.Delete : InterfaceGtk4.Icon.ForTabularLists.Normal);
+                        if (cell != null &amp;&amp; row != null &amp;&amp; !row.UnigueID.IsEmpty()) <!-- Для пустого рядка (InsertEmptyFirstRow) не виводиться іконка -->
+                            cell.SetImage((row?.DeletionLabel ?? false) ? InterfaceGtk4.Icon.ForTree.Delete : InterfaceGtk4.Icon.ForTree.Normal);
                     }
                 };
                 ColumnViewColumn column = ColumnViewColumn.New("", factory);
@@ -473,6 +474,8 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
       <xsl:variable name="DirectoryName" select="Name"/>
       <!-- Для ієрархії -->
       <xsl:variable name="DirectoryType" select="Type"/>
+      <!-- Підпорядкування довідника -->
+      <xsl:variable name="DirectoryOwner" select="DirectoryOwner"/>
       <xsl:variable name="SelectType">
           <xsl:choose>
               <xsl:when test="$DirectoryType = 'Hierarchical'">SelectHierarchical</xsl:when>
@@ -611,14 +614,40 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             /* Відбори */
             if (form.WhereList != null) <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where.AddRange(form.WhereList);
 
-            /* Додатковий відбір */
+            /* Додатковий відбір Parent */
             if (form.ParentWhereList != null &amp;&amp; form.TypeWhereState == InterfaceGtk4.FormJournal.TypeWhere.Standart)
                 <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where.AddRange(form.ParentWhereList);
 
+            <xsl:if test="normalize-space($DirectoryOwner) != ''">
+            /* Додатковий відбір Owner */
+            if (form.OwnerWhereListFunc != null &amp;&amp; form.TypeWhereState == InterfaceGtk4.FormJournal.TypeWhere.Standart)
+                <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where.AddRange(form.OwnerWhereListFunc.Invoke());
+            </xsl:if>
+
             <xsl:choose>
                 <xsl:when test="$DirectoryType = 'Hierarchical'">
+            /* Сховати відкриту папку для вибору */
+            if (form.OpenFolder != null)
+                <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where.Add(new("uid", Comparison.NOT, form.OpenFolder.UGuid));
+
             Dictionary&lt;string, DirectoryHierarchicalRow&gt; rows = [];
             List&lt;DirectoryHierarchicalRow&gt; topRows = [];
+
+            /* Пустий рядок */
+            if (form.InsertEmptyFirstRow)
+            {
+                DirectoryHierarchicalRow emptyFirstRow = new();
+                <xsl:for-each select="Fields/Field">
+                    <xsl:text>emptyFirstRow.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", "<xsl:choose>
+                        <xsl:when test="position() = 1">-</xsl:when>
+                        <xsl:otherwise></xsl:otherwise>
+                    </xsl:choose>");
+                </xsl:for-each>
+                <xsl:for-each select="Fields/AdditionalField[Visible = 'True']">
+                    <xsl:text>emptyFirstRow.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", "");
+                </xsl:for-each>
+                topRows.Add(emptyFirstRow);
+            }
                 </xsl:when>
                 <xsl:otherwise>
             /* Cторінки */
@@ -650,7 +679,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
                         topRows.Add(row);
                     else if (parent != null &amp;&amp; rows.TryGetValue(parent.UnigueID.ToString(), out DirectoryHierarchicalRow? parentRow))
                         parentRow.Sub.Add(row);
-                    rows.Add(curr.UnigueID.ToString(), row);
+                    if (!rows.ContainsKey(curr.UnigueID.ToString())) rows.Add(curr.UnigueID.ToString(), row);
                         </xsl:when>
                         <xsl:otherwise>
                     form.Store.Append(row);

@@ -304,6 +304,12 @@ class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина_<xsl:va
                     (row.Сhanged_<xsl:value-of select="Name"/> = () =&gt; cell.Value = row.<xsl:value-of select="Name"/>).Invoke();
                         </xsl:when>
                         <xsl:when test="Type = 'pointer'">
+                        <xsl:if test="normalize-space(DirectoryOwner) != ''">
+                            <xsl:variable name="DirectoryOwner" select="substring-after(DirectoryOwner, '.')"/>
+                            <xsl:if test="count($FieldsTL[Name = $DirectoryOwner]) = 1">
+                    cell.BeforeClickOpenFunc = () =&gt; cell.Власник  = row.<xsl:value-of select="$DirectoryOwner"/>;
+                            </xsl:if>
+                        </xsl:if>
                     cell.OnSelect = () =&gt; row.<xsl:value-of select="Name"/> = cell.Pointer;
                     (row.Сhanged_<xsl:value-of select="Name"/> = () =&gt; cell.Pointer = row.<xsl:value-of select="Name"/>).Invoke();
                         </xsl:when>
