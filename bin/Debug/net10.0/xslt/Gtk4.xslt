@@ -615,7 +615,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             if (form.WhereList != null) <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where.AddRange(form.WhereList);
 
             /* Додатковий відбір Parent */
-            if (form.ParentWhereList != null &amp;&amp; form.TypeWhereState == InterfaceGtk4.FormJournal.TypeWhere.Standart)
+            if (form.ParentWhereList != null &amp;&amp; !form.UseHierarchy.Active &amp;&amp; form.TypeWhereState == InterfaceGtk4.FormJournal.TypeWhere.Standart)
                 <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where.AddRange(form.ParentWhereList);
 
             <xsl:if test="normalize-space($DirectoryOwner) != ''">

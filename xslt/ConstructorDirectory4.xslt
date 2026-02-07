@@ -828,6 +828,7 @@ class <xsl:value-of select="$DirectoryName"/>_Список : DirectoryFormJourna
         //Папки
         {
             CompositeMode = true;
+            AddSwitchUseHierarchy();
 
             Box vBox = New(Orientation.Vertical, 0);
             vBox.MarginStart = 5;
@@ -841,7 +842,7 @@ class <xsl:value-of select="$DirectoryName"/>_Список : DirectoryFormJourna
             {
                 //Відбір по полю <xsl:value-of select="$FieldFolder"/>
                 ParentWhereList = [new(<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="$FieldFolder"/>, Comparison.EQ, unigueID.UGuid)];
-                if (TypeWhereState == TypeWhere.Standart)
+                if (!UseHierarchy.Active &amp;&amp; TypeWhereState == TypeWhere.Standart)
                 {
                     PagesClear();
                     await LoadRecords();

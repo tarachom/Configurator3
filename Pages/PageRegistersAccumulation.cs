@@ -42,6 +42,7 @@ namespace Configurator
         ListBox listBoxResourcesFields = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxPropertyFields = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxTabularList = new ListBox() { SelectionMode = SelectionMode.Single };
+        ListBox listBoxTabularListPrintBalances = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxFormsList = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxTableParts = new ListBox() { SelectionMode = SelectionMode.Single };
         ListBox listBoxQueryBlock = new ListBox() { SelectionMode = SelectionMode.Single };
@@ -167,6 +168,22 @@ namespace Configurator
 
                 //Табличні списки
                 CreateTabularList(vBoxForm);
+            }
+
+            //Друк проводок
+            {
+                Expander expanderForm = new Expander("Друк проводок");
+                vBox.PackStart(expanderForm, false, false, 5);
+
+                Box vBoxForm = new Box(Orientation.Vertical, 0);
+                expanderForm.Add(vBoxForm);
+
+                //Заголовок блоку
+                Box hBoxInfo = new Box(Orientation.Horizontal, 0) { Halign = Align.Center };
+                vBoxForm.PackStart(hBoxInfo, false, false, 5);
+                hBoxInfo.PackStart(new Label("Друк проводок"), false, false, 5);
+
+                CreateTabularListPrintBalances(vBoxForm);
             }
 
             //Форми
@@ -403,6 +420,44 @@ namespace Configurator
             vBoxContainer.PackStart(vBox, false, false, 0);
         }
 
+        void CreateTabularListPrintBalances(Box vBoxContainer)
+        {
+            Box vBox = new Box(Orientation.Vertical, 0);
+
+            Toolbar toolbar = new Toolbar();
+            vBox.PackStart(toolbar, false, false, 0);
+
+            ToolButton buttonAdd = new ToolButton(new Image(Stock.New, IconSize.Menu), "Додати") { Label = "Додати", IsImportant = true };
+            buttonAdd.Clicked += OnTabularListPrintBalancesAddClick;
+            toolbar.Add(buttonAdd);
+
+            ToolButton buttonCopy = new ToolButton(new Image(Stock.Copy, IconSize.Menu), "Копіювати") { Label = "Копіювати", IsImportant = true };
+            buttonCopy.Clicked += OnTabularListPrintBalancesCopyClick;
+            toolbar.Add(buttonCopy);
+
+            ToolButton buttonRefresh = new ToolButton(new Image(Stock.Refresh, IconSize.Menu), "Обновити") { Label = "Обновити", IsImportant = true };
+            buttonRefresh.Clicked += OnTabularListPrintBalancesRefreshClick;
+            toolbar.Add(buttonRefresh);
+
+            ToolButton buttonDelete = new ToolButton(new Image(Stock.Clear, IconSize.Menu), "Видалити") { Label = "Видалити", IsImportant = true };
+            buttonDelete.Clicked += OnTabularListPrintBalancesRemoveClick;
+            toolbar.Add(buttonDelete);
+
+            Box hBoxScroll = new Box(Orientation.Horizontal, 0);
+            ScrolledWindow scrollList = new ScrolledWindow() { ShadowType = ShadowType.In };
+            scrollList.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+            scrollList.SetSizeRequest(0, 100);
+
+            listBoxTabularListPrintBalances.ButtonPressEvent += OnTabularListPrintBalancesButtonPress;
+
+            scrollList.Add(listBoxTabularListPrintBalances);
+            hBoxScroll.PackStart(scrollList, true, true, 5);
+
+            vBox.PackStart(hBoxScroll, false, false, 0);
+
+            vBoxContainer.PackStart(vBox, false, false, 0);
+        }
+
         void CreateFormsList(Box vBoxContainer)
         {
             Box vBox = new Box(Orientation.Vertical, 0);
@@ -546,6 +601,7 @@ namespace Configurator
             FillResourcesFields();
             FillPropertyFields();
             FillTabularList();
+            FillTabularListPrintBalances();
             FillFormsList();
             FillTabularParts();
             FillQueryBlockList();
@@ -605,6 +661,14 @@ namespace Configurator
                 listBoxTabularList.Add(new Label(tableList.Name) { Name = tableList.Name, Halign = Align.Start, UseUnderline = false });
 
             listBoxTabularList.ShowAll();
+        }
+
+        void FillTabularListPrintBalances()
+        {
+            foreach (ConfigurationTabularList tableList in ConfRegister.TabularListPrintBalances.Values)
+                listBoxTabularListPrintBalances.Add(new Label(tableList.Name) { Name = tableList.Name, Halign = Align.Start, UseUnderline = false });
+
+            listBoxTabularListPrintBalances.ShowAll();
         }
 
         void FillTabularParts()
@@ -1786,6 +1850,115 @@ HAVING";
         void TabularListRefreshList()
         {
             OnTabularListRefreshClick(null, new EventArgs());
+        }
+
+        #endregion
+
+        #region TabularListPrintBalances
+
+        void OnTabularListPrintBalancesButtonPress(object? sender, ButtonPressEventArgs args)
+        {
+            if (args.Event.Type == Gdk.EventType.DoubleButtonPress)
+            {
+                ListBoxRow[] selectedRows = listBoxTabularListPrintBalances.SelectedRows;
+                if (selectedRows.Length != 0)
+                {
+                    ListBoxRow curRow = selectedRows[0];
+                    if (ConfRegister.TabularListPrintBalances.TryGetValue(curRow.Child.Name, out ConfigurationTabularList? tabularList))
+                        GeneralForm?.CreateNotebookPage($"Друк проводок: {curRow.Child.Name}", () =>
+                        {
+                            Dictionary<string, ConfigurationField> AllFields = Configuration.CombineAllFieldForRegister
+                            (
+                                ConfRegister.DimensionFields.Values,
+                                ConfRegister.ResourcesFields.Values,
+                                ConfRegister.PropertyFields.Values
+                            );
+
+                            PageTabularList page = new PageTabularList()
+                            {
+                                Fields = AllFields,
+                                TabularLists = ConfRegister.TabularListPrintBalances,
+                                TabularList = tabularList,
+                                IsNew = false,
+                                GeneralForm = GeneralForm,
+                                CallBack_RefreshList = TabularListPrintBalancesRefreshList,
+                                ConfOwnerName = "РегістриНакопичення"
+                            };
+
+                            page.SetValue();
+                            return page;
+                        });
+                }
+            }
+        }
+
+        void OnTabularListPrintBalancesAddClick(object? sender, EventArgs args)
+        {
+            GeneralForm?.CreateNotebookPage("Друк проводок *", () =>
+            {
+                Dictionary<string, ConfigurationField> AllFields = Configuration.CombineAllFieldForRegister
+                (
+                    ConfRegister.DimensionFields.Values,
+                    ConfRegister.ResourcesFields.Values,
+                    ConfRegister.PropertyFields.Values
+                );
+
+                PageTabularList page = new PageTabularList()
+                {
+                    Fields = AllFields,
+                    TabularLists = ConfRegister.TabularListPrintBalances,
+                    IsNew = true,
+                    GeneralForm = GeneralForm,
+                    CallBack_RefreshList = TabularListPrintBalancesRefreshList,
+                    ConfOwnerName = "РегістриНакопичення"
+                };
+
+                page.SetValue();
+                return page;
+            });
+        }
+
+        void OnTabularListPrintBalancesCopyClick(object? sender, EventArgs args)
+        {
+            ListBoxRow[] selectedRows = listBoxTabularListPrintBalances.SelectedRows;
+            if (selectedRows.Length != 0)
+            {
+                foreach (ListBoxRow row in selectedRows)
+                    if (ConfRegister.TabularListPrintBalances.TryGetValue(row.Child.Name, out ConfigurationTabularList? tabularList))
+                    {
+                        ConfigurationTabularList newTableList = tabularList.Copy();
+                        newTableList.Name += GenerateName.GetNewName();
+
+                        ConfRegister.AppendTableListPrintBalances(newTableList);
+                    }
+
+                TabularListPrintBalancesRefreshList();
+            }
+        }
+
+        void OnTabularListPrintBalancesRefreshClick(object? sender, EventArgs args)
+        {
+            foreach (Widget item in listBoxTabularListPrintBalances.Children)
+                listBoxTabularListPrintBalances.Remove(item);
+
+            FillTabularListPrintBalances();
+        }
+
+        void OnTabularListPrintBalancesRemoveClick(object? sender, EventArgs args)
+        {
+            ListBoxRow[] selectedRows = listBoxTabularListPrintBalances.SelectedRows;
+            if (selectedRows.Length != 0)
+            {
+                foreach (ListBoxRow row in selectedRows)
+                    ConfRegister.TabularListPrintBalances.Remove(row.Child.Name);
+
+                TabularListPrintBalancesRefreshList();
+            }
+        }
+
+        void TabularListPrintBalancesRefreshList()
+        {
+            OnTabularListPrintBalancesRefreshClick(null, new EventArgs());
         }
 
         #endregion
