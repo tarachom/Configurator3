@@ -439,7 +439,12 @@ limitations under the License.
                     <xsl:value-of select="substring-before(Pointer, '.')"/>.<xsl:value-of select="substring-after(Pointer, '.')"/>_Pointer.GetJoin(<xsl:value-of select="$ConfTypeName"/>_Select.QuerySelect, <xsl:value-of select="$ConfTypeGroup"/>.<xsl:value-of select="$ConfTypeName"/>_Const.<xsl:value-of select="Name"/>,
                     <xsl:value-of select="$ConfTypeName"/>_Select.QuerySelect.Table, "join_tab_<xsl:value-of select="position()"/>", "<xsl:value-of select="Name"/>");
                 </xsl:for-each>
-            </xsl:if> 
+            </xsl:if>
+
+            <xsl:if test="$ConfTypeGroup = 'РегістриНакопичення'"><!-- Для регістрів накопичення -->
+                /* Приєднання */
+                <xsl:value-of select="$ConfTypeName"/>_Select.FillJoin(["period"]);
+            </xsl:if>
 
             <!-- Додаткові поля -->
             <xsl:for-each select="Fields/AdditionalField[Visible = 'True']">
@@ -890,6 +895,12 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
                 <xsl:with-param name="Fields" select="Fields/Field" />
             </xsl:call-template>
 
+            <xsl:call-template name="AddColumnLabel">
+                <xsl:with-param name="ConfTypeName"><xsl:value-of select="$RegisterName"/></xsl:with-param>
+                <xsl:with-param name="RowType">RegisterAccumulationRowJournal</xsl:with-param>
+                <xsl:with-param name="Fields" select="Fields/AdditionalField[Visible = 'True']" />
+            </xsl:call-template>
+
             <xsl:call-template name="AddColumnEmpty" />
         }
 
@@ -911,9 +922,6 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
                 <xsl:with-param name="ConfTypeName"><xsl:value-of select="$RegisterName"/></xsl:with-param>
                 <xsl:with-param name="SelectType"><xsl:value-of select="$SelectType"/></xsl:with-param>
             </xsl:call-template>
-
-            /* Приєднання */
-            <xsl:value-of select="$RegisterName"/>_Select.FillJoin(["period"]);
 
             /* Відбори */
             if (form.WhereList != null) <xsl:value-of select="$RegisterName"/>_Select.QuerySelect.Where.AddRange(form.WhereList);
@@ -939,12 +947,81 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
                     <xsl:text>row.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", <xsl:call-template name="FieldValueReg"><xsl:with-param name="VarName">record</xsl:with-param></xsl:call-template>);
                 </xsl:for-each>
                 <xsl:for-each select="Fields/AdditionalField[Visible = 'True']">
-                    <xsl:text>row.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", Fields["<xsl:value-of select="Name"/>"].ToString() ?? "");
+                    <xsl:text>row.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", record.JoinItemValue["<xsl:value-of select="Name"/>"].ToString() ?? "");
                 </xsl:for-each>
                 form.Store.Append(row);
                 if (row.UnigueID.Equals(unigueIDSelect)) selectPosition = form.Store.GetNItems();
             }
             form.AfterLoadRecords(selectPosition);
+        }
+    }
+	    </xsl:for-each>
+    #endregion
+    </xsl:for-each>
+}
+
+namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.РегістриНакопичення.ДрукПроводок
+{
+    <xsl:for-each select="Configuration/RegistersAccumulation/RegisterAccumulation">
+      <xsl:variable name="RegisterName" select="Name"/>
+      <xsl:variable name="SelectType">RecordsSet</xsl:variable>
+    #region REGISTER "<xsl:value-of select="$RegisterName"/>"
+    
+      <xsl:for-each select="PrintBalances/TabularLists/TabularList">
+        <xsl:variable name="TabularListName" select="Name"/>
+    public static class <xsl:value-of select="$RegisterName"/>_<xsl:value-of select="$TabularListName"/>
+    {
+        public static void AddColumn(RegisterAccumulationFormJournalSmall form)
+        {
+            <xsl:call-template name="AddColumnIncome" />
+                        
+            <xsl:call-template name="AddColumnLabel">
+                <xsl:with-param name="ConfTypeName"><xsl:value-of select="$RegisterName"/></xsl:with-param>
+                <xsl:with-param name="RowType">RegisterAccumulationRowJournal</xsl:with-param>
+                <xsl:with-param name="Fields" select="Fields/Field" />
+            </xsl:call-template>
+
+            <xsl:call-template name="AddColumnLabel">
+                <xsl:with-param name="ConfTypeName"><xsl:value-of select="$RegisterName"/></xsl:with-param>
+                <xsl:with-param name="RowType">RegisterAccumulationRowJournal</xsl:with-param>
+                <xsl:with-param name="Fields" select="Fields/AdditionalField[Visible = 'True']" />
+            </xsl:call-template>
+
+            <xsl:call-template name="AddColumnEmpty" />
+        }
+
+        public static async ValueTask LoadRecords(RegisterAccumulationFormJournalSmall form)
+        {
+            form.BeforeLoadRecords();
+            
+            /* Вибірка */
+            <xsl:call-template name="Select">
+                <xsl:with-param name="ConfTypeGroup">РегістриНакопичення</xsl:with-param>
+                <xsl:with-param name="ConfTypeName"><xsl:value-of select="$RegisterName"/></xsl:with-param>
+                <xsl:with-param name="SelectType"><xsl:value-of select="$SelectType"/></xsl:with-param>
+            </xsl:call-template>
+
+            /* Відбори */
+            if (form.WhereList != null) <xsl:value-of select="$RegisterName"/>_Select.QuerySelect.Where.AddRange(form.WhereList);
+
+            /* Cторінки */
+            await form.SplitPages(<xsl:value-of select="$RegisterName"/>_Select.SplitSelectToPages, <xsl:value-of select="$RegisterName"/>_Select.QuerySelect, null);
+
+            <!-- Вибрати дані -->
+            await <xsl:value-of select="$RegisterName"/>_Select.Read();
+            form.Store.RemoveAll();
+            foreach (<xsl:value-of select="$RegisterName"/>_<xsl:value-of select="$SelectType"/>.Record record in <xsl:value-of select="$RegisterName"/>_Select.Records)
+            {
+                RegisterAccumulationRowJournal row = new() { UnigueID = new UnigueID(record.UID), Income = record.Income, Period = record.Period, Owner = record.Owner, OwnerType = record.OwnerType, OwnerName = record.OwnerName };
+                <xsl:for-each select="Fields/Field">
+                    <xsl:text>row.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", <xsl:call-template name="FieldValueReg"><xsl:with-param name="VarName">record</xsl:with-param></xsl:call-template>);
+                </xsl:for-each>
+                <xsl:for-each select="Fields/AdditionalField[Visible = 'True']">
+                    <xsl:text>row.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", record.JoinItemValue["<xsl:value-of select="Name"/>"].ToString() ?? "");
+                </xsl:for-each>
+                form.Store.Append(row);
+            }
+            form.AfterLoadRecords(0);
         }
     }
 	    </xsl:for-each>

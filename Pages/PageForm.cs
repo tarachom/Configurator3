@@ -541,6 +541,7 @@ namespace Configurator
             {
                 ConfigurationForms.TypeForms.Element => "Елемент",
                 ConfigurationForms.TypeForms.List => "Список",
+                ConfigurationForms.TypeForms.ListSmall => "Список міні",
                 ConfigurationForms.TypeForms.ListSmallSelect => "Швидкий вибір",
                 ConfigurationForms.TypeForms.PointerControl => "PointerControl",
                 ConfigurationForms.TypeForms.PointerTablePartCell => "PointerTablePartCell",
@@ -565,6 +566,7 @@ namespace Configurator
             {
                 ConfigurationForms.TypeForms.Element => "Element",
                 ConfigurationForms.TypeForms.List => "List",
+                ConfigurationForms.TypeForms.ListSmall => "ListSmall",
                 ConfigurationForms.TypeForms.ListSmallSelect => "ListSmallSelect",
                 ConfigurationForms.TypeForms.PointerControl => "PointerControl",
                 ConfigurationForms.TypeForms.PointerTablePartCell => "PointerTablePartCell",
@@ -621,6 +623,7 @@ namespace Configurator
                         break;
                     }
                 case ConfigurationForms.TypeForms.List:
+                case ConfigurationForms.TypeForms.ListSmall:
                 case ConfigurationForms.TypeForms.ListSmallSelect:
                 case ConfigurationForms.TypeForms.ListAndTree:
                     {
@@ -656,6 +659,7 @@ namespace Configurator
             }
 
             if (TypeForm == ConfigurationForms.TypeForms.List ||
+                TypeForm == ConfigurationForms.TypeForms.ListSmall ||
                 TypeForm == ConfigurationForms.TypeForms.ListSmallSelect ||
                 TypeForm == ConfigurationForms.TypeForms.ListAndTree)
             {
@@ -736,6 +740,7 @@ namespace Configurator
             Form.NotSaveToFile = checkButtonNotSaveToFile.Active;
 
             if (TypeForm == ConfigurationForms.TypeForms.List ||
+                TypeForm == ConfigurationForms.TypeForms.ListSmall ||
                 TypeForm == ConfigurationForms.TypeForms.ListSmallSelect ||
                 TypeForm == ConfigurationForms.TypeForms.ListAndTree)
             {
@@ -943,7 +948,7 @@ namespace Configurator
                 nodeParentType.AppendChild(nodeRegisterAccumulationType);
             }
 
-            if (TypeForm == ConfigurationForms.TypeForms.List || TypeForm == ConfigurationForms.TypeForms.ListSmallSelect || TypeForm == ConfigurationForms.TypeForms.ListAndTree)
+            if (TypeForm == ConfigurationForms.TypeForms.List || TypeForm == ConfigurationForms.TypeForms.ListSmall || TypeForm == ConfigurationForms.TypeForms.ListSmallSelect || TypeForm == ConfigurationForms.TypeForms.ListAndTree)
             {
                 XmlElement nodeTabularList = xmlConfDocument.CreateElement("TabularList");
                 nodeTabularList.InnerText = Form.TabularList;

@@ -805,35 +805,15 @@ namespace Configurator
                     }
 
                     //Довідники
-                    string folderPathDirectories = CreateFolder(folderGenerateCode, "Довідники");
-
-                    foreach (ConfigurationDirectories directory in Conf.Directories.Values)
                     {
-                        string folderPathDirectory = "";
-                        bool existAnyForm = false;
+                        string folderPathDirectories = CreateFolder(folderGenerateCode, "Довідники");
 
-                        foreach (ConfigurationForms form in directory.Forms.Values)
-                            if (form.Modified && !form.NotSaveToFile)
-                            {
-                                if (!existAnyForm)
-                                {
-                                    folderPathDirectory = CreateFolder(folderPathDirectories, directory.Name);
-                                    existAnyForm = true;
-                                }
+                        foreach (ConfigurationDirectories directory in Conf.Directories.Values)
+                        {
+                            string folderPathDirectory = "";
+                            bool existAnyForm = false;
 
-                                string formPath = System.IO.Path.Combine(folderPathDirectory, form.Name + ".cs");
-
-                                TextWriter tw = System.IO.File.CreateText(formPath);
-                                tw.Write(form.GeneratedCode);
-                                tw.Flush();
-                                tw.Close();
-
-                                form.Modified = false;
-                            }
-
-                        //Табличні частини
-                        foreach (ConfigurationTablePart tabularPart in directory.TabularParts.Values)
-                            foreach (ConfigurationForms form in tabularPart.Forms.Values)
+                            foreach (ConfigurationForms form in directory.Forms.Values)
                                 if (form.Modified && !form.NotSaveToFile)
                                 {
                                     if (!existAnyForm)
@@ -842,7 +822,7 @@ namespace Configurator
                                         existAnyForm = true;
                                     }
 
-                                    string formPath = System.IO.Path.Combine(folderPathDirectory, directory.Name + "_" + form.Name + ".cs");
+                                    string formPath = System.IO.Path.Combine(folderPathDirectory, form.Name + ".cs");
 
                                     TextWriter tw = System.IO.File.CreateText(formPath);
                                     tw.Write(form.GeneratedCode);
@@ -851,38 +831,40 @@ namespace Configurator
 
                                     form.Modified = false;
                                 }
+
+                            //Табличні частини
+                            foreach (ConfigurationTablePart tabularPart in directory.TabularParts.Values)
+                                foreach (ConfigurationForms form in tabularPart.Forms.Values)
+                                    if (form.Modified && !form.NotSaveToFile)
+                                    {
+                                        if (!existAnyForm)
+                                        {
+                                            folderPathDirectory = CreateFolder(folderPathDirectories, directory.Name);
+                                            existAnyForm = true;
+                                        }
+
+                                        string formPath = System.IO.Path.Combine(folderPathDirectory, directory.Name + "_" + form.Name + ".cs");
+
+                                        TextWriter tw = System.IO.File.CreateText(formPath);
+                                        tw.Write(form.GeneratedCode);
+                                        tw.Flush();
+                                        tw.Close();
+
+                                        form.Modified = false;
+                                    }
+                        }
                     }
 
                     //Документи
-                    string folderPathDocuments = CreateFolder(folderGenerateCode, "Документи");
-
-                    foreach (ConfigurationDocuments document in Conf.Documents.Values)
                     {
-                        string folderPathDocument = "";
-                        bool existAnyForm = false;
+                        string folderPathDocuments = CreateFolder(folderGenerateCode, "Документи");
 
-                        foreach (ConfigurationForms form in document.Forms.Values)
-                            if (form.Modified && !form.NotSaveToFile)
-                            {
-                                if (!existAnyForm)
-                                {
-                                    folderPathDocument = CreateFolder(folderPathDocuments, document.Name);
-                                    existAnyForm = true;
-                                }
+                        foreach (ConfigurationDocuments document in Conf.Documents.Values)
+                        {
+                            string folderPathDocument = "";
+                            bool existAnyForm = false;
 
-                                string formPath = System.IO.Path.Combine(folderPathDocument, form.Name + ".cs");
-
-                                TextWriter tw = System.IO.File.CreateText(formPath);
-                                tw.Write(form.GeneratedCode);
-                                tw.Flush();
-                                tw.Close();
-
-                                form.Modified = false;
-                            }
-
-                        //Табличні частини
-                        foreach (ConfigurationTablePart tabularPart in document.TabularParts.Values)
-                            foreach (ConfigurationForms form in tabularPart.Forms.Values)
+                            foreach (ConfigurationForms form in document.Forms.Values)
                                 if (form.Modified && !form.NotSaveToFile)
                                 {
                                     if (!existAnyForm)
@@ -891,7 +873,7 @@ namespace Configurator
                                         existAnyForm = true;
                                     }
 
-                                    string formPath = System.IO.Path.Combine(folderPathDocument, document.Name + "_" + form.Name + ".cs");
+                                    string formPath = System.IO.Path.Combine(folderPathDocument, form.Name + ".cs");
 
                                     TextWriter tw = System.IO.File.CreateText(formPath);
                                     tw.Write(form.GeneratedCode);
@@ -900,6 +882,58 @@ namespace Configurator
 
                                     form.Modified = false;
                                 }
+
+                            //Табличні частини
+                            foreach (ConfigurationTablePart tabularPart in document.TabularParts.Values)
+                                foreach (ConfigurationForms form in tabularPart.Forms.Values)
+                                    if (form.Modified && !form.NotSaveToFile)
+                                    {
+                                        if (!existAnyForm)
+                                        {
+                                            folderPathDocument = CreateFolder(folderPathDocuments, document.Name);
+                                            existAnyForm = true;
+                                        }
+
+                                        string formPath = System.IO.Path.Combine(folderPathDocument, document.Name + "_" + form.Name + ".cs");
+
+                                        TextWriter tw = System.IO.File.CreateText(formPath);
+                                        tw.Write(form.GeneratedCode);
+                                        tw.Flush();
+                                        tw.Close();
+
+                                        form.Modified = false;
+                                    }
+                        }
+                    }
+
+                    //РегістриНакопичення
+                    {
+                        string folderPathRegAccums = CreateFolder(folderGenerateCode, "РегістриНакопичення");
+
+                        foreach (ConfigurationRegistersAccumulation regAccum in Conf.RegistersAccumulation.Values)
+                        {
+                            string folderPathRegAccum = "";
+                            bool existAnyForm = false;
+
+                            foreach (ConfigurationForms form in regAccum.Forms.Values)
+                                if (form.Modified && !form.NotSaveToFile)
+                                {
+                                    if (!existAnyForm)
+                                    {
+                                        folderPathRegAccum = CreateFolder(folderPathRegAccums, regAccum.Name);
+                                        existAnyForm = true;
+                                    }
+
+                                    string formPath = System.IO.Path.Combine(folderPathRegAccum, form.Name + ".cs");
+
+                                    TextWriter tw = System.IO.File.CreateText(formPath);
+                                    tw.Write(form.GeneratedCode);
+                                    tw.Flush();
+                                    tw.Close();
+
+                                    form.Modified = false;
+                                }
+                        }
                     }
                 }
                 else

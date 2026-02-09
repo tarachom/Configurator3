@@ -15,6 +15,9 @@
             <xsl:when test="$File = 'List'">
                 <xsl:call-template name="RegisterAccumulationList" />
             </xsl:when>
+            <xsl:when test="$File = 'ListSmall'">
+                <xsl:call-template name="RegisterAccumulationListSmall" />
+            </xsl:when>
             <xsl:when test="$File = 'Report'">
                 <xsl:call-template name="RegisterAccumulationReport" />
             </xsl:when>
@@ -67,11 +70,6 @@ public class <xsl:value-of select="$RegisterAccumulationName"/>_Список : R
         await ТабличнийСписок.LoadRecords(this);
     }
 
-    protected override async void SetSearch(string searchText)
-    {
-        //WhereList = Функції.Відбори(searchText);
-    }
-
     protected override void FillFilter(FilterControl filterControl)
     {
         ТабличнийСписок.CreateFilter(this);
@@ -85,6 +83,55 @@ public class <xsl:value-of select="$RegisterAccumulationName"/>_Список : R
     protected override async void PeriodChanged()
     {
         ФункціїНалаштуванняКористувача.ЗаписатиПеріодДляЖурналу(FormKey, Period.Period.ToString(), Period.DateStart, Period.DateStop);
+    }
+
+    #endregion
+}
+    </xsl:template>
+
+<!--- 
+//
+// ============================ Список Міні ============================
+//
+-->
+
+    <!-- Список -->
+    <xsl:template name="RegisterAccumulationListSmall">
+        <xsl:variable name="RegisterAccumulationName" select="RegisterAccumulation/Name"/>
+        <xsl:variable name="TabularList" select="RegisterAccumulation/TabularList"/>
+
+        <!-- Додатова інформація -->
+        <xsl:variable name="RegisterAccumulationType" select="RegisterAccumulation/Type"/>
+
+/*     
+        <xsl:value-of select="$RegisterAccumulationName"/>.cs
+        Список міні
+
+        Табличний список - <xsl:value-of select="$TabularList"/>
+*/
+
+using InterfaceGtk4;
+using AccountingSoftware;
+using <xsl:value-of select="$NameSpaceGeneratedCode"/>.РегістриНакопичення;
+
+using ТабличнийСписок = <xsl:value-of select="$NameSpaceGeneratedCode"/>.РегістриНакопичення.ДрукПроводок.<xsl:value-of select="$RegisterAccumulationName"/>_<xsl:value-of select="$TabularList"/>;
+
+namespace <xsl:value-of select="$NameSpace"/>.РегістриНакопичення;
+
+public class <xsl:value-of select="$RegisterAccumulationName"/>_СписокМіні : RegisterAccumulationFormJournalSmall
+{
+    public <xsl:value-of select="$RegisterAccumulationName"/>_СписокМіні() : base(Program.BasicForm?.NotebookFunc)
+    {
+        TypeName = <xsl:value-of select="$RegisterAccumulationName"/>_Const.TYPENAME;
+        ТабличнийСписок.AddColumn(this);
+        SetPagesSettings(50);
+    }
+
+    #region Override
+
+    public override async ValueTask LoadRecords()
+    {
+        await ТабличнийСписок.LoadRecords(this);
     }
 
     #endregion

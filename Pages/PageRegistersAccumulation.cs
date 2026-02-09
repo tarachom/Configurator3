@@ -1991,7 +1991,7 @@ HAVING";
                                 Form = form,
                                 TypeForm = form.Type,
                                 Fields = AllFields,
-                                TabularLists = ConfRegister.TabularList,
+                                TabularLists = form.Type == ConfigurationForms.TypeForms.ListSmall ? ConfRegister.TabularListPrintBalances : ConfRegister.TabularList,
                                 TabularList = form.TabularList,
                                 IsNew = false,
                                 GeneralForm = GeneralForm,
@@ -2033,7 +2033,7 @@ HAVING";
                         Forms = ConfRegister.Forms,
                         TypeForm = typeForms,
                         Fields = AllFields,
-                        TabularLists = ConfRegister.TabularList,
+                        TabularLists = typeForms == ConfigurationForms.TypeForms.ListSmall ? ConfRegister.TabularListPrintBalances : ConfRegister.TabularList,
                         IsNew = true,
                         GeneralForm = GeneralForm,
                         CallBack_RefreshList = FormsListRefreshList,
@@ -2050,6 +2050,12 @@ HAVING";
             {
                 MenuItem item = new MenuItem("Список");
                 item.Activated += (object? sender, EventArgs args) => { OnFormsListAdd(ConfigurationForms.TypeForms.List); };
+                Menu.Append(item);
+            }
+
+            {
+                MenuItem item = new MenuItem("Список міні");
+                item.Activated += (object? sender, EventArgs args) => { OnFormsListAdd(ConfigurationForms.TypeForms.ListSmall); };
                 Menu.Append(item);
             }
 

@@ -627,7 +627,7 @@ class <xsl:value-of select="$DocumentName"/>_Елемент : DocumentFormElemen
 
     protected override void ReportSpendTheDocument(UnigueID unigueID)
     {
-        //СпільніФорми_РухДокументуПоРегістрах.СформуватиЗвіт(new <xsl:value-of select="$DocumentName"/>_Pointer(unigueID));
+        CommonForms_DocumentMovementThroughRegisters.Create(new <xsl:value-of select="$DocumentName"/>_Pointer(unigueID));
     }
 
     protected override async ValueTask InJournal(UnigueID unigueID)
@@ -729,7 +729,8 @@ public class <xsl:value-of select="$DocumentName"/>_Список : DocumentFormJ
 
     protected override void ReportSpendTheDocument(UnigueID[] unigueID)
     {
-
+        foreach (var uid in unigueID)
+            CommonForms_DocumentMovementThroughRegisters.Create(new <xsl:value-of select="$DocumentName"/>_Pointer(uid));
     }
 
     protected override async ValueTask VersionsHistory(UnigueID[] unigueID)
@@ -836,7 +837,8 @@ public class <xsl:value-of select="$DocumentName"/>_ШвидкийВибір : D
 
     protected override void ReportSpendTheDocument(UnigueID[] unigueID)
     {
-
+        foreach (var uid in unigueID)
+            CommonForms_DocumentMovementThroughRegisters.Create(new <xsl:value-of select="$DocumentName"/>_Pointer(uid));
     }
 
     #endregion
@@ -971,12 +973,16 @@ public class <xsl:value-of select="$DocumentName"/>_PointerTablePartCell : Point
         popover.SetParent(button);
         popover.WidthRequest = 800;
         popover.HeightRequest = 400;
-
+        BeforeClickOpenFunc?.Invoke();
         <xsl:value-of select="$DocumentName"/>_ШвидкийВибір page = new()
         {
             PopoverParent = popover,
             DocumentPointerItem = pointer.UnigueID,
-            CallBack_OnSelectPointer = async p =&gt; await PointerChange(p)
+            CallBack_OnSelectPointer = async p =&gt; 
+            {
+                await PointerChange(p);
+                AfterSelectFunc?.Invoke();
+            }
         };
 
         popover.SetChild(page);
@@ -988,6 +994,8 @@ public class <xsl:value-of select="$DocumentName"/>_PointerTablePartCell : Point
     protected override async void Clear()
     {
         await PointerChange(null);
+        AfterSelectFunc?.Invoke();
+        AfterClearFunc?.Invoke();
     }
 }
     </xsl:template>
