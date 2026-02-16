@@ -974,19 +974,32 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
     }
 
     <xsl:variable name="ParentField" select="ParentField"/>
+    <xsl:variable name="AllowedContent" select="AllowedContent"/>
+    <xsl:variable name="IsFolderField_NameInTable">
+        <xsl:variable name="IsFolderField" select="IsFolderField"/>
+        <xsl:if test="$AllowedContent = 'FoldersAndElements' and normalize-space($IsFolderField) != ''">
+            <xsl:value-of select="Fields/Field[Name = $IsFolderField]/NameInTable"/>
+        </xsl:if>
+    </xsl:variable>
     <xsl:if test="Type = 'Hierarchical' and count(Fields/Field[Name = $ParentField]) != 0">
     public class <xsl:value-of select="$DirectoryName"/>_SelectHierarchical : DirectorySelectHierarchical
     {
-        public <xsl:value-of select="$DirectoryName"/>_SelectHierarchical() : base(Config.Kernel, "<xsl:value-of select="Table"/>", "<xsl:value-of select="Fields/Field[Name = $ParentField]/NameInTable"/>") { }        
+        public <xsl:value-of select="$DirectoryName"/>_SelectHierarchical() : base(Config.Kernel, "<xsl:value-of select="Table"/>", "<xsl:value-of select="Fields/Field[Name = $ParentField]/NameInTable"/>", "<xsl:value-of select="$IsFolderField_NameInTable"/>") { }        
         public async ValueTask&lt;bool&gt; Select() { return await base.BaseSelect(); }
-        public async ValueTask&lt;bool&gt; SelectSingle() { if (await base.BaseSelectSingle()) { MoveNext(); return true; } else { Current = Parent = null; Level = 0; return false; } }
+        public async ValueTask&lt;bool&gt; SelectSingle() { if (await base.BaseSelectSingle()) { MoveNext(); return true; } else { Current = Parent = null; Level = 0; IsFolder = false; return false; } }
         public bool MoveNext() { if (base.MoveToPosition() &amp;&amp; base.CurrentPointerPositionHierarchical.HasValue) { 
           Current = new <xsl:value-of select="$DirectoryName"/>_Pointer(base.CurrentPointerPositionHierarchical.Value.UnigueID, base.CurrentPointerPositionHierarchical.Value.Fields); 
           Parent = new <xsl:value-of select="$DirectoryName"/>_Pointer(base.CurrentPointerPositionHierarchical.Value.Parent); 
-          Level = base.CurrentPointerPositionHierarchical.Value.Level; return true; } else { Current = Parent = null; Level = 0; return false; } }
+          IsFolder = <xsl:choose>
+              <xsl:when test="$AllowedContent = 'Folders'">true</xsl:when>
+              <xsl:when test="$AllowedContent = 'Elements'">false</xsl:when>
+              <xsl:when test="$AllowedContent = 'FoldersAndElements'">base.CurrentPointerPositionHierarchical.Value.IsFolder</xsl:when>
+            </xsl:choose>;
+          Level = base.CurrentPointerPositionHierarchical.Value.Level; return true; } else { Current = Parent = null; Level = 0; IsFolder = false; return false; } }
         public <xsl:value-of select="$DirectoryName"/>_Pointer? Current { get; private set; }
         public <xsl:value-of select="$DirectoryName"/>_Pointer? Parent { get; private set; }
         public int Level { get; private set; } = 0;
+        public bool IsFolder { get; private set; }
     }
     </xsl:if>
 

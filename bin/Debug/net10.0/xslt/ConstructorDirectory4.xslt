@@ -206,13 +206,15 @@ static class <xsl:value-of select="$DirectoryName"/>_Функції
         await page.SetValue();
     }
 
-    public static async ValueTask OpenPageList(UnigueID? unigueID = null, 
+    public static async ValueTask OpenPageList(UnigueID? unigueID = null, bool openSelect = false, UnigueID? openFolder = null,
         Action&lt;UnigueID&gt;? сallBack_OnSelectPointer = null<xsl:if test="normalize-space($DirectoryOwner) != ''">,
             <xsl:variable name="namePointer" select="substring-after($DirectoryOwner, '.')" />
         <xsl:value-of select="$namePointer"/>_Pointer? Власник = null</xsl:if>)
     {
         <xsl:value-of select="$DirectoryName"/>_Список page = new()
         {
+            OpenSelect = openSelect,
+            OpenFolder = openFolder,
             DirectoryPointerItem = unigueID,
             CallBack_OnSelectPointer = сallBack_OnSelectPointer
         };
@@ -749,7 +751,7 @@ class <xsl:value-of select="$DirectoryName"/>_ШвидкийВибір : Directo
 
     protected override async ValueTask OpenPageList(UnigueID? unigueID = null)
     {
-        await Функції.OpenPageList(unigueID, CallBack_OnSelectPointer<xsl:if test="normalize-space($DirectoryOwner) != ''">, Власник.Pointer</xsl:if>);
+        await Функції.OpenPageList(unigueID, OpenSelect, OpenFolder, CallBack_OnSelectPointer<xsl:if test="normalize-space($DirectoryOwner) != ''">, Власник.Pointer</xsl:if>);
     }
 
     protected override async ValueTask OpenPageElement(bool IsNew, UnigueID? unigueID = null)
@@ -977,6 +979,7 @@ public class <xsl:value-of select="$DirectoryName"/>_PointerControl : PointerCon
         {
             PopoverParent = popover,
             DirectoryPointerItem = Pointer.UnigueID,
+            OpenSelect = true,
             OpenFolder = OpenFolder,
             CallBack_OnSelectPointer = selectPointer =&gt;
             {

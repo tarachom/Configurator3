@@ -24,6 +24,7 @@ limitations under the License.
 using Gtk;
 
 using AccountingSoftware;
+using InterfaceGtk3;
 
 namespace Configurator
 {
@@ -70,7 +71,9 @@ namespace Configurator
         ComboBoxText comboBoxTypeDir = new ComboBoxText();
         ComboBoxText comboBoxPointerFolders = new ComboBoxText();
         ComboBoxText comboBoxParentField = new ComboBoxText();
-        ComboBoxText comboBoxIconTree = new ComboBoxText();
+        //ComboBoxText comboBoxIconTree = new ComboBoxText();
+        ComboBoxText comboBoxAllowedContent = new ComboBoxText();
+        ComboBoxText comboBoxIsFolderField = new ComboBoxText();
         ComboBoxText comboBoxSubordinationDirectoryOwner = new ComboBoxText();
         ComboBoxText comboBoxSubordinationPointerFieldOwner = new ComboBoxText();
 
@@ -165,10 +168,14 @@ namespace Configurator
                     hBoxTypeDir.PackStart(comboBoxTypeDir, false, false, 5);
                 }
 
-                //Поле родич для Ієрархічного довідника
+                //Поле родич для Ієрархічного довідника та Тип вмісту для Ієрархічного довідника
                 {
-                    comboBoxIconTree.Append("Folder", "Папка");
-                    comboBoxIconTree.Append("Element", "Елемент");
+                    /*comboBoxIconTree.Append("Folder", "Папка");
+                    comboBoxIconTree.Append("Element", "Елемент");*/
+
+                    comboBoxAllowedContent.Append(ConfigurationDirectories.HierarchicalContentType.Folders.ToString(), "Папки");
+                    comboBoxAllowedContent.Append(ConfigurationDirectories.HierarchicalContentType.Elements.ToString(), "Елементи");
+                    comboBoxAllowedContent.Append(ConfigurationDirectories.HierarchicalContentType.FoldersAndElements.ToString(), "Папки та елементи");
 
                     Box hBoxParentField = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
                     vBoxHierarchical.PackStart(hBoxParentField, false, false, 5);
@@ -176,8 +183,14 @@ namespace Configurator
                     hBoxParentField.PackStart(new Label("Поле <b>Родич:</b>") { UseMarkup = true }, false, false, 2);
                     hBoxParentField.PackStart(comboBoxParentField, false, false, 5);
 
-                    hBoxParentField.PackStart(new Label("Іконка:"), false, false, 5);
-                    hBoxParentField.PackStart(comboBoxIconTree, false, false, 5);
+                    /*hBoxParentField.PackStart(new Label("Іконка:"), false, false, 5);
+                    hBoxParentField.PackStart(comboBoxIconTree, false, false, 5);*/
+
+                    hBoxParentField.PackStart(new Label("Тип вмісту:"), false, false, 5);
+                    hBoxParentField.PackStart(comboBoxAllowedContent, false, false, 5);
+
+                    hBoxParentField.PackStart(new Label("Поле <b>ЦеПапка:</b>") { UseMarkup = true }, false, false, 2);
+                    hBoxParentField.PackStart(comboBoxIsFolderField, false, false, 5);
                 }
 
                 //Вказівник на ієрархію в окремому довіднику
@@ -288,6 +301,20 @@ namespace Configurator
                             //Перевантажити дерево
                             GeneralForm?.LoadTreeAsync();
                         }
+
+                        if (comboBoxAllowedContent.ActiveId == ConfigurationDirectories.HierarchicalContentType.FoldersAndElements.ToString() && !ConfDirectory.Fields.ContainsKey("ЦеПапка"))
+                        {
+                            // ЦеПапка
+                            string nameInTable_IsFolder = Configuration.GetNewUnigueColumnName(Program.Kernel, ConfDirectory.Table, ConfDirectory.Fields);
+                            ConfDirectory.AppendField(new ConfigurationField("ЦеПапка", "Це папка", nameInTable_IsFolder, "boolean", "", "Це папка", false, true));
+                            ConfDirectory.IsFolderField_Hierarchical = "ЦеПапка";
+
+                            //Перевантажити список полів
+                            FieldsRefreshList();
+
+                            //Перевантажити дерево
+                            GeneralForm?.LoadTreeAsync();
+                        }
                     }
                 };
 
@@ -306,6 +333,13 @@ namespace Configurator
                     buttonAdd.Sensitive =
                         comboBoxTypeDir.ActiveId == ConfigurationDirectories.TypeDirectories.Hierarchical.ToString() ||
                         comboBoxTypeDir.ActiveId == ConfigurationDirectories.TypeDirectories.HierarchyInAnotherDirectory.ToString();
+                };
+
+                //Обробка вибору типу вмісту
+                comboBoxAllowedContent.Changed += (object? sender, EventArgs args) =>
+                {
+                    comboBoxIsFolderField.Sensitive =
+                        comboBoxAllowedContent.ActiveId == ConfigurationDirectories.HierarchicalContentType.FoldersAndElements.ToString();
                 };
 
                 //Кнопка
@@ -839,8 +873,13 @@ namespace Configurator
 
             FillFields();
             comboBoxParentField.ActiveId = ConfDirectory.ParentField_Hierarchical;
-            comboBoxIconTree.ActiveId = ConfDirectory.IconTree_Hierarchical;
-            if (comboBoxIconTree.Active == -1) comboBoxIconTree.Active = 0;
+            /*comboBoxIconTree.ActiveId = ConfDirectory.IconTree_Hierarchical;
+            if (comboBoxIconTree.Active == -1) comboBoxIconTree.Active = 0;*/
+
+            comboBoxAllowedContent.ActiveId = ConfDirectory.AllowedContent_Hierarchical.ToString();
+            if (comboBoxAllowedContent.Active == -1) comboBoxAllowedContent.Active = 0;
+
+            comboBoxIsFolderField.ActiveId = ConfDirectory.IsFolderField_Hierarchical;
 
             FillSubordinationDirectory();
             comboBoxSubordinationDirectoryOwner.ActiveId = ConfDirectory.DirectoryOwner_Subordination;
@@ -859,9 +898,14 @@ namespace Configurator
                 //Поля для ієрархії
                 if (field.Type == "pointer" && field.Pointer == $"Довідники.{ConfDirectory.Name}")
                     comboBoxParentField.Append(field.Name, field.Name);
+
+                //Поля для ЦеПапка
+                if (field.Type == "boolean")
+                    comboBoxIsFolderField.Append(field.Name, field.Name);
             }
 
             comboBoxParentField.ActiveId = ConfDirectory.ParentField_Hierarchical;
+            comboBoxIsFolderField.ActiveId = ConfDirectory.IsFolderField_Hierarchical;
 
             listBoxFields.ShowAll();
         }
@@ -968,7 +1012,9 @@ namespace Configurator
             ConfDirectory.TypeDirectory = directoryOtherInfo.TypeDirectory;
             ConfDirectory.PointerFolders_HierarchyInAnotherDirectory = directoryOtherInfo.PointerFolders;
             ConfDirectory.ParentField_Hierarchical = directoryOtherInfo.ParentField;
-            ConfDirectory.IconTree_Hierarchical = comboBoxIconTree.ActiveId;
+            /*ConfDirectory.IconTree_Hierarchical = comboBoxIconTree.ActiveId;*/
+            ConfDirectory.AllowedContent_Hierarchical = directoryOtherInfo.AllowedContent;
+            ConfDirectory.IsFolderField_Hierarchical = directoryOtherInfo.IsFolderField;
             ConfDirectory.DirectoryOwner_Subordination = comboBoxSubordinationDirectoryOwner.ActiveId;
             ConfDirectory.PointerFieldOwner_Subordination = comboBoxSubordinationPointerFieldOwner.ActiveId;
         }
@@ -990,6 +1036,13 @@ namespace Configurator
                 //ParentField
                 (ConfDirectory.TypeDirectory == ConfigurationDirectories.TypeDirectories.Hierarchical && comboBoxParentField.Active != -1) ?
                 comboBoxParentField.ActiveId : "",
+
+                //AllowedContent
+                Enum.Parse<ConfigurationDirectories.HierarchicalContentType>(comboBoxAllowedContent.ActiveId),
+
+                //IsFolderField
+                (ConfDirectory.TypeDirectory == ConfigurationDirectories.TypeDirectories.Hierarchical && comboBoxIsFolderField.Active != -1) ?
+                comboBoxIsFolderField.ActiveId : "",
 
                 //Довідник власник
                 comboBoxSubordinationDirectoryOwner.ActiveId,
@@ -1119,6 +1172,9 @@ namespace Configurator
 
             //Поля для ієрархії
             comboBoxParentField.RemoveAll();
+
+            //Поля для ЦеПапка
+            comboBoxIsFolderField.RemoveAll();
 
             FillFields();
         }
@@ -1533,6 +1589,8 @@ namespace Configurator
     struct DirectoryOtherInfoStruct(bool automaticNumeration = false,
         ConfigurationDirectories.TypeDirectories typeDirectory = ConfigurationDirectories.TypeDirectories.Normal,
         string pointerFolders = "", string parentField = "",
+        ConfigurationDirectories.HierarchicalContentType allowedContent = ConfigurationDirectories.HierarchicalContentType.Folders,
+        string isFolderField = "",
         string directoryOwner = "", string pointerFieldOwner = "")
     {
         public bool AutomaticNumeration = automaticNumeration;
@@ -1551,6 +1609,16 @@ namespace Configurator
         /// Поле Родич для ConfigurationDirectories.TypeDirectories.Hierarchical
         /// </summary>
         public string ParentField = parentField;
+
+        /// <summary>
+        /// Тип вмісту
+        /// </summary>
+        public ConfigurationDirectories.HierarchicalContentType AllowedContent = allowedContent;
+
+        /// <summary>
+        /// Поле ЦеПапка
+        /// </summary>
+        public string IsFolderField = isFolderField;
 
         /// <summary>
         /// Довідник власник

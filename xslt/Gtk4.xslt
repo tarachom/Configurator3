@@ -371,7 +371,9 @@ limitations under the License.
                         ImageTablePartCell? cell = (ImageTablePartCell?)expander.GetChild();
                         <xsl:value-of select="$RowType"/>? row = (<xsl:value-of select="$RowType"/>?)treeRow.Item;
                         if (cell != null &amp;&amp; row != null &amp;&amp; !row.UnigueID.IsEmpty()) <!-- Для пустого рядка (InsertEmptyFirstRow) не виводиться іконка -->
-                            cell.SetImage((row?.DeletionLabel ?? false) ? InterfaceGtk4.Icon.ForTree.Delete : InterfaceGtk4.Icon.ForTree.Normal);
+                            cell.SetImage(row.IsFolder? 
+                                (row.DeletionLabel ? InterfaceGtk4.Icon.ForTree.Delete : InterfaceGtk4.Icon.ForTree.Normal) : 
+                                (row.DeletionLabel ? InterfaceGtk4.Icon.ForTabularLists.Delete : InterfaceGtk4.Icon.ForTabularLists.Normal));
                     }
                 };
                 ColumnViewColumn column = ColumnViewColumn.New("", factory);
@@ -479,6 +481,8 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
       <xsl:variable name="DirectoryName" select="Name"/>
       <!-- Для ієрархії -->
       <xsl:variable name="DirectoryType" select="Type"/>
+      <xsl:variable name="DirectoryAllowedContent" select="AllowedContent"/>
+      <xsl:variable name="DirectoryIsFolderField" select="IsFolderField"/>
       <!-- Підпорядкування довідника -->
       <xsl:variable name="DirectoryOwner" select="DirectoryOwner"/>
       <xsl:variable name="SelectType">
@@ -634,6 +638,12 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             /* Сховати відкриту папку для вибору */
             if (form.OpenFolder != null)
                 <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where.Add(new("uid", Comparison.NOT, form.OpenFolder.UGuid));
+            
+            <xsl:if test="$DirectoryAllowedContent = 'FoldersAndElements'">
+            /* Сховати елементи для вибору */
+            if (form.OpenSelect)
+                <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where.Add(new(Довідники.<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="$DirectoryIsFolderField"/>, Comparison.EQ, true));
+            </xsl:if>
 
             Dictionary&lt;string, DirectoryHierarchicalRow&gt; rows = [];
             List&lt;DirectoryHierarchicalRow&gt; topRows = [];
@@ -679,6 +689,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
                     </xsl:for-each>
                     <xsl:choose>
                         <xsl:when test="$DirectoryType = 'Hierarchical'">
+                    row.IsFolder = <xsl:value-of select="$DirectoryName"/>_Select.IsFolder;
                     Довідники.<xsl:value-of select="$DirectoryName"/>_Pointer? parent = <xsl:value-of select="$DirectoryName"/>_Select.Parent;
                     if (<xsl:value-of select="$DirectoryName"/>_Select.Level == 1)
                         topRows.Add(row);
