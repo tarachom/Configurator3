@@ -7,7 +7,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>16.02.2026 15:15:44</DateTimeSave>
+  <DateTimeSave>21.02.2026 20:02:02</DateTimeSave>
   <DictTSearch>simple</DictTSearch>
   <GtkVersion>Gtk4</GtkVersion>
   <ConstantsBlocks>
@@ -7218,6 +7218,17 @@ FROM
               <Type>string</Type>
               <Multiline>0</Multiline>
             </Field>
+            <Field>
+              <Name>Родич</Name>
+              <Caption>Родич</Caption>
+              <Size>0</Size>
+              <SortNum>3</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>True</FilterField>
+              <Type>pointer</Type>
+              <Pointer>Довідники.Номенклатура_Папки</Pointer>
+            </Field>
           </Fields>
         </TabularList>
         <TabularList>
@@ -7244,6 +7255,17 @@ FROM
               <FilterField>False</FilterField>
               <Type>string</Type>
               <Multiline>0</Multiline>
+            </Field>
+            <Field>
+              <Name>Родич</Name>
+              <Caption>Родич</Caption>
+              <Size>0</Size>
+              <SortNum>3</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>True</FilterField>
+              <Type>pointer</Type>
+              <Pointer>Довідники.Номенклатура_Папки</Pointer>
             </Field>
           </Fields>
         </TabularList>

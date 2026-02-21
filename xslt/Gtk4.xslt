@@ -639,11 +639,15 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             if (form.OpenFolder != null)
                 <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where.Add(new("uid", Comparison.NOT, form.OpenFolder.UGuid));
             
-            <xsl:if test="$DirectoryAllowedContent = 'FoldersAndElements'">
+                <xsl:if test="$DirectoryAllowedContent = 'FoldersAndElements'">
             /* Сховати елементи для вибору */
             if (form.OpenSelect)
                 <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where.Add(new(Довідники.<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="$DirectoryIsFolderField"/>, Comparison.EQ, true));
-            </xsl:if>
+                </xsl:if>
+
+            /* Для пошуку і фільтру застосувати плоский список */
+            if (form.TypeWhereState == InterfaceGtk4.FormJournal.TypeWhere.Search || form.TypeWhereState == InterfaceGtk4.FormJournal.TypeWhere.Filter)
+                <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.FlatList = true;
 
             Dictionary&lt;string, DirectoryHierarchicalRow&gt; rows = [];
             List&lt;DirectoryHierarchicalRow&gt; topRows = [];
@@ -662,9 +666,9 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
                     <xsl:text>emptyFirstRow.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", "");
                 </xsl:for-each>
                 topRows.Add(emptyFirstRow);
-            }
+            }            
                 </xsl:when>
-                <xsl:otherwise>
+            <xsl:otherwise>
             /* Cторінки */
             await form.SplitPages(<xsl:value-of select="$DirectoryName"/>_Select.SplitSelectToPages, <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect, unigueIDSelect);
             uint selectPosition = 0;
@@ -695,7 +699,8 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
                         topRows.Add(row);
                     else if (parent != null &amp;&amp; rows.TryGetValue(parent.UnigueID.ToString(), out DirectoryHierarchicalRow? parentRow))
                         parentRow.Sub.Add(row);
-                    if (!rows.ContainsKey(curr.UnigueID.ToString())) rows.Add(curr.UnigueID.ToString(), row);
+                    if (form.TypeWhereState == InterfaceGtk4.FormJournal.TypeWhere.Standart &amp;&amp; !rows.ContainsKey(curr.UnigueID.ToString()))
+                        rows.Add(curr.UnigueID.ToString(), row);
                         </xsl:when>
                         <xsl:otherwise>
                     form.Store.Append(row);
