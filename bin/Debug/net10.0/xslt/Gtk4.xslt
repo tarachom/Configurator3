@@ -842,7 +842,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
             /* Відбір за період */
              if (form.TypeWhereState == InterfaceGtk4.FormJournal.TypeWhere.Standart || (form.TypeWhereState == InterfaceGtk4.FormJournal.TypeWhere.Filter &amp;&amp; form.Filter.IsUsePeriod))
             {
-                Where? where = InterfaceGtk4.PeriodForJournal.ВідбірПоПеріоду(Документи.<xsl:value-of select="$DocumentName"/>_Const.ДатаДок, form.Period.Period, form.Period.DateStart, form.Period.DateStop);
+                Where? where = InterfaceGtk4.PeriodForJournal.SelectionByPeriod(Документи.<xsl:value-of select="$DocumentName"/>_Const.ДатаДок, form.Period.Period, form.Period.DateStart, form.Period.DateStop);
                 if (where != null) <xsl:value-of select="$DocumentName"/>_Select.QuerySelect.Where.Add(where);
             }
 
@@ -945,7 +945,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
             /* Відбір за період */
             if (form.TypeWhereState == InterfaceGtk4.FormJournal.TypeWhere.Standart || (form.TypeWhereState == InterfaceGtk4.FormJournal.TypeWhere.Filter &amp;&amp; form.Filter.IsUsePeriod))
             {
-                Where? where = InterfaceGtk4.PeriodForJournal.ВідбірПоПеріоду("period", form.Period.Period, form.Period.DateStart, form.Period.DateStop);
+                Where? where = InterfaceGtk4.PeriodForJournal.SelectionByPeriod("period", form.Period.Period, form.Period.DateStart, form.Period.DateStop);
                 if (where != null) <xsl:value-of select="$RegisterName"/>_Select.QuerySelect.Where.Add(where);
             }
 
