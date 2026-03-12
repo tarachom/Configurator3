@@ -114,6 +114,7 @@ limitations under the License.
                     </xsl:when>
                     <xsl:when test="Type = 'enum'">
                         ComboBoxText <xsl:value-of select="Name"/> = new();
+                        <xsl:value-of select="Name"/>.MarginStart = 5;
                         foreach (var item in ПсевдонімиПерелічення.<xsl:value-of select="substring-after(Pointer, '.')"/>_List())
                             <xsl:value-of select="Name"/>.Append(item.Value.ToString(), item.Name);
                         <xsl:value-of select="Name"/>.Active = 0;
@@ -396,11 +397,21 @@ limitations under the License.
     <xsl:param name="ConfTypeGroup" />
     <xsl:param name="ConfTypeName" />
     <xsl:param name="SelectType" />
+    <!-- Для ієрархії довідника-->
+    <xsl:param name="DirectoryType" />
+    <xsl:param name="DirectoryAllowedContent" />
+    <xsl:param name="DirectoryIsFolderField" />
+
             <xsl:value-of select="$ConfTypeGroup"/>.<xsl:value-of select="$ConfTypeName"/>_<xsl:value-of select="$SelectType"/><xsl:text> </xsl:text><xsl:value-of select="$ConfTypeName"/>_Select = new();
             <xsl:if test="$ConfTypeGroup = 'Довідники' or $ConfTypeGroup = 'Документи'"><!-- Для довідників та документів -->
                 <xsl:value-of select="$ConfTypeName"/>_Select.QuerySelect.Field.AddRange(
                 [
                     <xsl:text>"deletion_label"</xsl:text>,
+                    <!-- Для ієрархічних довідників, у яких тип контенту папки та елементи, додаткове поле isfolders -->
+                    <xsl:if test="$ConfTypeGroup = 'Довідники' and $DirectoryType = 'Hierarchical' and $DirectoryAllowedContent = 'FoldersAndElements'">
+                        <xsl:text>/*isfolders*/ </xsl:text>
+                        <xsl:value-of select="concat($ConfTypeGroup, '.', $ConfTypeName, '_Const.', $DirectoryIsFolderField)"/>,
+                    </xsl:if>
                     <xsl:if test="$ConfTypeGroup = 'Документи'"><!-- Для документів додаткове поле spend -->
                         <xsl:text>"spend"</xsl:text>,
                     </xsl:if>
@@ -564,7 +575,11 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             <xsl:call-template name="Select">
                 <xsl:with-param name="ConfTypeGroup">Довідники</xsl:with-param>
                 <xsl:with-param name="ConfTypeName"><xsl:value-of select="$DirectoryName"/></xsl:with-param>
-                <xsl:with-param name="SelectType"><xsl:value-of select="$SelectType"/></xsl:with-param>
+                <xsl:with-param name="SelectType">Select</xsl:with-param>
+
+                <xsl:with-param name="DirectoryType"><xsl:value-of select="$DirectoryType"/></xsl:with-param>
+                <xsl:with-param name="DirectoryAllowedContent"><xsl:value-of select="$DirectoryAllowedContent"/></xsl:with-param>
+                <xsl:with-param name="DirectoryIsFolderField"><xsl:value-of select="$DirectoryIsFolderField"/></xsl:with-param>
             </xsl:call-template>
 
             /* Відбори */
@@ -585,15 +600,23 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
                     <xsl:for-each select="Fields/AdditionalField[Visible = 'True']">
                         <xsl:text>row.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", Fields["<xsl:value-of select="Name"/>"].ToString() ?? "");
                     </xsl:for-each>
+                    <xsl:if test="$DirectoryType = 'Hierarchical'">
+                    row.IsFolder = <xsl:choose>
+                            <xsl:when test="$DirectoryAllowedContent = 'Folders'">true</xsl:when>
+                            <xsl:when test="$DirectoryAllowedContent = 'Elements'">false</xsl:when>
+                            <xsl:when test="$DirectoryAllowedContent = 'FoldersAndElements'">(bool)Fields[<xsl:value-of select="concat($DirectoryName, '_Const.', $DirectoryIsFolderField)"/>]</xsl:when>
+                        </xsl:choose>;
+                    </xsl:if>
                     ObjectChanged? objCh = records.Find(x =&gt; x.Uid.Equals(curr.UniqueID.UGuid));
                     if (objCh != null)
                     {
                         bool exist = false;
                         for (uint i = 0; i &lt; form.Store.GetNItems(); i++)
                         {
-                            RowJournal? item = (RowJournal?)form.Store.GetObject(i);
+                            <xsl:value-of select="$RowType"/>? item = (<xsl:value-of select="$RowType"/>?)form.Store.GetObject(i);
                             if (item != null &amp;&amp; item.UniqueID.Equals(curr.UniqueID))
                             {
+                                <xsl:if test="$DirectoryType = 'Hierarchical'">row.Sub = item.Sub;</xsl:if>
                                 bool sel = form.Grid.Model.IsSelected(i);
                                 form.Store.Splice(i, 1, [row], 1);
                                 if (sel) form.Grid.Model.SelectItem(i, false);
