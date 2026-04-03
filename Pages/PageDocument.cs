@@ -584,14 +584,11 @@ namespace Configurator
         {
             Box vBox = new Box(Orientation.Vertical, 0);
 
-            Button buttonCreateForms = new Button("Створити");
+            Button buttonCreateForms = new Button("Згенерувати");
             buttonCreateForms.Clicked += (sender, args) =>
             {
                 void CreateForm(ConfigurationForms.TypeForms typeForms)
                 {
-                    //Перевірка чи вже є така форма
-                    if (ConfDocument.Forms.Values.Any(x => x.Type == typeForms)) return;
-
                     PageForm page = new PageForm()
                     {
                         ParentName = ConfDocument.Name,
@@ -610,17 +607,26 @@ namespace Configurator
                         ModeOperation = PageForm.FormModeOperation.Automatic
                     };
 
+                    var form = ConfDocument.Forms.Values.FirstOrDefault(x => x.Type == typeForms);
+                    if (form != null)
+                    {
+                        page.IsNew = false;
+                        page.Form = form;
+                        page.TabularList = form.TabularList;
+                    }
+
                     page.SetValue();
                     page.GenerateCode();
                     page.OnSaveClick(page, new());
                 }
 
-                CreateForm(ConfigurationForms.TypeForms.Triggers);
-                CreateForm(ConfigurationForms.TypeForms.SpendTheDocument);
+                //CreateForm(ConfigurationForms.TypeForms.Triggers);
+                //CreateForm(ConfigurationForms.TypeForms.SpendTheDocument);
                 CreateForm(ConfigurationForms.TypeForms.Function);
                 CreateForm(ConfigurationForms.TypeForms.Element);
                 CreateForm(ConfigurationForms.TypeForms.List);
                 CreateForm(ConfigurationForms.TypeForms.PointerControl);
+                CreateForm(ConfigurationForms.TypeForms.PointerTablePartCell);
             };
 
             Box hBox = new Box(Orientation.Horizontal, 0);

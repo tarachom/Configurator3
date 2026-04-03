@@ -718,14 +718,11 @@ namespace Configurator
         {
             Box vBox = new Box(Orientation.Vertical, 0);
 
-            Button buttonCreateForms = new Button("Створити");
+            Button buttonCreateForms = new Button("Згенерувати");
             buttonCreateForms.Clicked += (sender, args) =>
             {
                 void CreateForm(ConfigurationForms.TypeForms typeForms)
                 {
-                    //Перевірка чи вже є така форма
-                    if (ConfDirectory.Forms.Values.Any(x => x.Type == typeForms)) return;
-
                     PageForm page = new PageForm()
                     {
                         ParentName = ConfDirectory.Name,
@@ -743,12 +740,20 @@ namespace Configurator
                         ModeOperation = PageForm.FormModeOperation.Automatic
                     };
 
+                    var form = ConfDirectory.Forms.Values.FirstOrDefault(x => x.Type == typeForms);
+                    if (form != null)
+                    {
+                        page.IsNew = false;
+                        page.Form = form;
+                        page.TabularList = form.TabularList;
+                    }
+
                     page.SetValue();
                     page.GenerateCode();
                     page.OnSaveClick(page, new());
                 }
 
-                CreateForm(ConfigurationForms.TypeForms.Triggers);
+                //CreateForm(ConfigurationForms.TypeForms.Triggers);
                 CreateForm(ConfigurationForms.TypeForms.Function);
                 CreateForm(ConfigurationForms.TypeForms.Element);
 
@@ -758,6 +763,7 @@ namespace Configurator
 
                 CreateForm(ConfigurationForms.TypeForms.ListSmallSelect);
                 CreateForm(ConfigurationForms.TypeForms.PointerControl);
+                CreateForm(ConfigurationForms.TypeForms.PointerTablePartCell);
             };
 
             Box hBox = new Box(Orientation.Horizontal, 0);

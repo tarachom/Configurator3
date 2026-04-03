@@ -304,10 +304,41 @@ namespace Configurator
         {
             Box vBox = new Box(Orientation.Vertical, 0);
 
-            Button buttonCreateForms = new Button("Створити");
+            Button buttonCreateForms = new Button("Згенерувати");
             buttonCreateForms.Clicked += (object? sender, EventArgs args) =>
             {
+                void CreateForm(ConfigurationForms.TypeForms typeForms)
+                {
+                    PageForm page = new PageForm()
+                    {
+                        ParentName = TablePart.Name,
+                        ParentType = "TablePart",
+                        Forms = TablePart.Forms,
+                        TypeForm = typeForms,
+                        TriggerTablePartFunctions = TablePart.TriggerFunctions,
+                        Fields = TablePart.Fields,
+                        TabularLists = TablePart.TabularList,
+                        IsNew = true,
+                        Owner = Owner,
+                        GeneralForm = GeneralForm,
+                        CallBack_RefreshList = FormsListRefreshList,
+                        ModeOperation = PageForm.FormModeOperation.Automatic
+                    };
 
+                    var form = TablePart.Forms.Values.FirstOrDefault(x => x.Type == typeForms);
+                    if (form != null)
+                    {
+                        page.IsNew = false;
+                        page.Form = form;
+                        page.TabularList = form.TabularList;
+                    }
+
+                    page.SetValue();
+                    page.GenerateCode();
+                    page.OnSaveClick(page, new());
+                }
+
+                CreateForm(ConfigurationForms.TypeForms.TablePart);
             };
 
             Box hBox = new Box(Orientation.Horizontal, 0);

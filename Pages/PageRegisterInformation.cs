@@ -822,7 +822,7 @@ namespace Configurator
                         ConfigurationField newField = propertyFields.Copy();
                         newField.Name += GenerateName.GetNewName();
                         newField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, ConfRegister.Table, AllFields);
-                        
+
                         ConfRegister.AppendPropertyField(newField);
                     }
 

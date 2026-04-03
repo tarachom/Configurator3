@@ -867,6 +867,10 @@ namespace Configurator
             nodeName.InnerText = ParentName;
             nodeParentType.AppendChild(nodeName);
 
+            XmlElement nodeTable = xmlConfDocument.CreateElement("Alias");
+            nodeTable.InnerText = Configuration.GetShortGuid();
+            nodeParentType.AppendChild(nodeTable);
+
             if (ParentType == "Directory")
             {
                 XmlElement nodeDirectoryAutomaticNumeration = xmlConfDocument.CreateElement("AutomaticNumeration");
@@ -1010,7 +1014,7 @@ namespace Configurator
             sourceViewCode.Buffer.Text = Configuration.Transform
             (
                 xmlConfDocument,
-                System.IO.Path.Combine(AppContext.BaseDirectory, $"xslt/Constructor{ParentType}{gtkVersion}.xslt"),
+                System.IO.Path.Combine(AppContext.BaseDirectory, "xslt", $"Constructor{ParentType}{gtkVersion}.xslt"),
                 new Dictionary<string, object>
                 {
                     { "File", FileName },

@@ -93,27 +93,32 @@ limitations under the License.
                         object get() =&gt; <xsl:value-of select="Name"/>.Active;
                     </xsl:when>
                     <xsl:when test="Type = 'integer'">
-                        IntegerControl <xsl:value-of select="Name"/> = new();
+                        IntegerControl <xsl:value-of select="Name"/> = IntegerControl.New();
                         object get() =&gt; <xsl:value-of select="Name"/>.Value;
                     </xsl:when>
                     <xsl:when test="Type = 'numeric'">
-                        NumericControl <xsl:value-of select="Name"/> = new();
+                        NumericControl <xsl:value-of select="Name"/> = NumericControl.New();
                         object get() =&gt; <xsl:value-of select="Name"/>.Value;
                     </xsl:when>
                     <xsl:when test="Type = 'date' or Type = 'datetime'">
-                        DateTimeControl <xsl:value-of select="Name"/> = new() { <xsl:if test="Type = 'date'">OnlyDate = true</xsl:if> };
+                        DateTimeControl <xsl:value-of select="Name"/> = DateTimeControl.New();
+                        <xsl:if test="Type = 'date'">
+                            <xsl:value-of select="Name"/>.OnlyDate = true;
+                        </xsl:if>
                         object get() =&gt; <xsl:value-of select="Name"/>.Value;
                     </xsl:when>
                     <xsl:when test="Type = 'time'">
-                        TimeControl <xsl:value-of select="Name"/> = new();
+                        TimeControl <xsl:value-of select="Name"/> = TimeControl.New();
                         object get() =&gt; <xsl:value-of select="Name"/>.Value;
                     </xsl:when>
                     <xsl:when test="Type = 'pointer'">
-                        <xsl:value-of select="substring-after(Pointer, '.')"/>_PointerControl <xsl:value-of select="Name"/> = new() { Caption = "", AfterSelectFunc = () =&gt; sw.Active = true };
+                        <xsl:value-of select="substring-after(Pointer, '.')"/>_PointerControl <xsl:value-of select="Name"/> = <xsl:value-of select="substring-after(Pointer, '.')"/>_PointerControl.New();
+                        <xsl:value-of select="Name"/>.Caption = "";
+                        <xsl:value-of select="Name"/>.AfterSelectFunc = () =&gt; sw.Active = true;
                         object get() =&gt; <xsl:value-of select="Name"/>.Pointer.UniqueID.UGuid;
                     </xsl:when>
                     <xsl:when test="Type = 'enum'">
-                        ComboBoxText <xsl:value-of select="Name"/> = new();
+                        ComboBoxText <xsl:value-of select="Name"/> = ComboBoxText.New();
                         <xsl:value-of select="Name"/>.MarginStart = 5;
                         foreach (var item in ПсевдонімиПерелічення.<xsl:value-of select="substring-after(Pointer, '.')"/>_List())
                             <xsl:value-of select="Name"/>.Append(item.Value.ToString(), item.Name);
@@ -151,7 +156,7 @@ limitations under the License.
                 {
                     ListItem listItem = (ListItem)args.Object;
                     <xsl:value-of select="$RowType"/>? row = (<xsl:value-of select="$RowType"/>?)listItem.Item;
-                    listItem.SetChild(ImageTablePartCell.NewForPixbuf((row?.DeletionLabel ?? false) ? InterfaceGtk4.Icon.ForTabularLists.Delete : InterfaceGtk4.Icon.ForTabularLists.Normal));
+                    listItem.SetChild(ImageTablePartCell.NewFromPixbuf((row?.DeletionLabel ?? false) ? InterfaceGtk4.Icon.ForTabularLists.Delete : InterfaceGtk4.Icon.ForTabularLists.Normal));
                 };
                 ColumnViewColumn column = ColumnViewColumn.New("", factory);
                 form.Grid.AppendColumn(column);
@@ -166,7 +171,7 @@ limitations under the License.
                 {
                     ListItem listItem = (ListItem)args.Object;
                     DocumentRowJournal? row = (DocumentRowJournal?)listItem.Item;
-                    listItem.SetChild(ImageTablePartCell.NewForPixbuf((row?.Spend ?? false) ? InterfaceGtk4.Icon.ForInformation.Check : null));
+                    listItem.SetChild(ImageTablePartCell.NewFromPixbuf((row?.Spend ?? false) ? InterfaceGtk4.Icon.ForInformation.Check : null));
                 };
                 ColumnViewColumn column = ColumnViewColumn.New("", factory);
                 form.Grid.AppendColumn(column);
@@ -180,7 +185,7 @@ limitations under the License.
                 factory.OnSetup += (_, args) =&gt;
                 {
                     ListItem listItem = (ListItem)args.Object;
-                    var cell = LabelTablePartCell.New(null);
+                    var cell = LabelTablePartCell.New();
                     cell.Halign = Align.Center;
                     listItem.Child = cell;
                 };
@@ -205,7 +210,7 @@ limitations under the License.
                 factory.OnSetup += (_, args) =&gt;
                 {
                     ListItem listItem = (ListItem)args.Object;
-                    listItem.Child = LabelTablePartCell.New(null);
+                    listItem.Child = LabelTablePartCell.New();
                 };
                 factory.OnBind += (_, args) =&gt;
                 {
@@ -228,7 +233,7 @@ limitations under the License.
                 factory.OnSetup += (_, args) =&gt;
                 {
                     ListItem listItem = (ListItem)args.Object;
-                    listItem.Child = LabelTablePartCell.New(null);
+                    listItem.Child = LabelTablePartCell.New();
                 };
                 factory.OnBind += (_, args) =&gt;
                 {
@@ -251,7 +256,7 @@ limitations under the License.
                 factory.OnSetup += (_, args) =&gt;
                 {
                     ListItem listItem = (ListItem)args.Object;
-                    listItem.Child = LabelTablePartCell.New(null);
+                    listItem.Child = LabelTablePartCell.New();
                 };
                 factory.OnBind += (_, args) =&gt;
                 {
@@ -274,7 +279,7 @@ limitations under the License.
                 factory.OnSetup += (_, args) =&gt;
                 {
                     ListItem listItem = (ListItem)args.Object;
-                    listItem.Child = LabelTablePartCell.New(null);
+                    listItem.Child = LabelTablePartCell.New();
                 };
                 factory.OnBind += (_, args) =&gt;
                 {
@@ -358,7 +363,7 @@ limitations under the License.
                 {
                     ListItem listItem = (ListItem)args.Object;
                     TreeExpander expander = TreeExpander.New();
-                    expander.SetChild(new ImageTablePartCell());
+                    expander.SetChild(ImageTablePartCell.New());
                     listItem.SetChild(expander);
                 };
                 factory.OnBind += (_, args) =&gt;
@@ -593,7 +598,9 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
                 if (curr != null)
                 {
                     Dictionary&lt;string, object&gt; Fields = curr.Fields;
-                    <xsl:value-of select="$RowType"/> row = new() { UniqueID = curr.UniqueID, DeletionLabel = (bool)Fields["deletion_label"] };
+                    <xsl:value-of select="$RowType"/> row = <xsl:value-of select="$RowType"/>.New();
+                    row.UniqueID = curr.UniqueID;
+                    row.DeletionLabel = (bool)Fields["deletion_label"];
                     <xsl:for-each select="Fields/Field">
                         <xsl:text>row.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", <xsl:call-template name="FieldValue"><xsl:with-param name="ConfTypeName"><xsl:value-of select="$DirectoryName"/></xsl:with-param></xsl:call-template>);
                     </xsl:for-each>
@@ -678,7 +685,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             /* Пустий рядок */
             if (form.InsertEmptyFirstRow)
             {
-                DirectoryHierarchicalRow emptyFirstRow = new();
+                DirectoryHierarchicalRow emptyFirstRow = DirectoryHierarchicalRow.New();
                 <xsl:for-each select="Fields/Field">
                     <xsl:text>emptyFirstRow.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", "<xsl:choose>
                         <xsl:when test="position() = 1">-</xsl:when>
@@ -707,7 +714,9 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
                 if (curr != null)
                 {
                     Dictionary&lt;string, object&gt; Fields = curr.Fields;
-                    <xsl:value-of select="$RowType"/> row = new() { UniqueID = curr.UniqueID, DeletionLabel = (bool)Fields["deletion_label"] };
+                    <xsl:value-of select="$RowType"/> row = <xsl:value-of select="$RowType"/>.New();
+                    row.UniqueID = curr.UniqueID;
+                    row.DeletionLabel = (bool)Fields["deletion_label"];
                     <xsl:for-each select="Fields/Field">
                         <xsl:text>row.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", <xsl:call-template name="FieldValue"><xsl:with-param name="ConfTypeName"><xsl:value-of select="$DirectoryName"/></xsl:with-param></xsl:call-template>);
                     </xsl:for-each>
@@ -817,7 +826,10 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
                 if (curr != null)
                 {
                     Dictionary&lt;string, object&gt; Fields = curr.Fields;
-                    DocumentRowJournal row = new() { UniqueID = curr.UniqueID, DeletionLabel = (bool)Fields["deletion_label"], Spend = (bool)Fields["spend"] };
+                    DocumentRowJournal row = DocumentRowJournal.New();
+                    row.UniqueID = curr.UniqueID;
+                    row.DeletionLabel = (bool)Fields["deletion_label"];
+                    row.Spend = (bool)Fields["spend"];
                     <xsl:for-each select="Fields/Field">
                         <xsl:text>row.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", <xsl:call-template name="FieldValue"><xsl:with-param name="ConfTypeName"><xsl:value-of select="$DocumentName"/></xsl:with-param></xsl:call-template>);
                     </xsl:for-each>
@@ -830,7 +842,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
                         bool exist = false;
                         for (uint i = 0; i &lt; form.Store.GetNItems(); i++)
                         {
-                            RowJournal? item = (RowJournal?)form.Store.GetObject(i);
+                            DocumentRowJournal? item = (DocumentRowJournal?)form.Store.GetObject(i);
                             if (item != null &amp;&amp; item.UniqueID.Equals(curr.UniqueID))
                             {
                                 bool sel = form.Grid.Model.IsSelected(i);
@@ -882,7 +894,10 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
                 if (curr != null)
                 {
                     Dictionary&lt;string, object&gt; Fields = curr.Fields;
-                    DocumentRowJournal row = new() { UniqueID = curr.UniqueID, DeletionLabel = (bool)Fields["deletion_label"], Spend = (bool)Fields["spend"] };
+                    DocumentRowJournal row = DocumentRowJournal.New();
+                    row.UniqueID = curr.UniqueID;
+                    row.DeletionLabel = (bool)Fields["deletion_label"];
+                    row.Spend = (bool)Fields["spend"];
                     <xsl:for-each select="Fields/Field">
                         <xsl:text>row.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", <xsl:call-template name="FieldValue"><xsl:with-param name="ConfTypeName"><xsl:value-of select="$DocumentName"/></xsl:with-param></xsl:call-template>);
                     </xsl:for-each>
@@ -981,7 +996,13 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
             uint selectPosition = 0;
             foreach (<xsl:value-of select="$RegisterName"/>_<xsl:value-of select="$SelectType"/>.Record record in <xsl:value-of select="$RegisterName"/>_Select.Records)
             {
-                RegisterAccumulationRowJournal row = new() { UniqueID = new UniqueID(record.UID), Income = record.Income, Period = record.Period, Owner = record.Owner, OwnerType = record.OwnerType, OwnerName = record.OwnerName };
+                RegisterAccumulationRowJournal row = RegisterAccumulationRowJournal.New();
+                row.UniqueID = new UniqueID(record.UID);
+                row.Income = record.Income;
+                row.Period = record.Period;
+                row.Owner = record.Owner;
+                row.OwnerType = record.OwnerType;
+                row.OwnerName = record.OwnerName;
                 <xsl:for-each select="Fields/Field">
                     <xsl:text>row.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", <xsl:call-template name="FieldValueReg"><xsl:with-param name="VarName">record</xsl:with-param></xsl:call-template>);
                 </xsl:for-each>
@@ -1051,7 +1072,13 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
             form.Store.RemoveAll();
             foreach (<xsl:value-of select="$RegisterName"/>_<xsl:value-of select="$SelectType"/>.Record record in <xsl:value-of select="$RegisterName"/>_Select.Records)
             {
-                RegisterAccumulationRowJournal row = new() { UniqueID = new UniqueID(record.UID), Income = record.Income, Period = record.Period, Owner = record.Owner, OwnerType = record.OwnerType, OwnerName = record.OwnerName };
+                RegisterAccumulationRowJournal row = RegisterAccumulationRowJournal.New();
+                row.UniqueID = new UniqueID(record.UID);
+                row.Income = record.Income;
+                row.Period = record.Period;
+                row.Owner = record.Owner;
+                row.OwnerType = record.OwnerType;
+                row.OwnerName = record.OwnerName;
                 <xsl:for-each select="Fields/Field">
                     <xsl:text>row.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", <xsl:call-template name="FieldValueReg"><xsl:with-param name="VarName">record</xsl:with-param></xsl:call-template>);
                 </xsl:for-each>
