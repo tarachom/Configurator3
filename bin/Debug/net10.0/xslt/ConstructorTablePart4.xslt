@@ -159,7 +159,7 @@ partial class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина
     #region Data
     
     [GObject.Subclass&lt;GObject.Object&gt;("<xsl:value-of select="$SubclassName"/>")]
-    public partial class ItemRow : IRowTablePart
+    public partial class ItemRow : IRowSubclassTablePart
     {
         public static ItemRow New() =&gt; NewWithProperties([]);
 

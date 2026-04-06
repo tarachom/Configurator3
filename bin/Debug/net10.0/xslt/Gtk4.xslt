@@ -641,7 +641,11 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
         public static async ValueTask LoadRecords(DirectoryFormJournalBase form)
         {
             form.BeforeLoadRecords();
+
+            //Вибраний елемент
             UniqueID? unigueIDSelect = form.SelectPointerItem ?? form.DirectoryPointerItem;
+            unigueIDSelect = unigueIDSelect != null &amp;&amp; unigueIDSelect.IsEmpty() ? null : unigueIDSelect;
+            Stack&lt;UniqueID&gt; parents = [];
 
             /* Вибірка */
             <xsl:call-template name="Select">
@@ -679,8 +683,8 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             if (form.TypeWhereState == InterfaceGtk4.FormJournal.TypeWhere.Search || form.TypeWhereState == InterfaceGtk4.FormJournal.TypeWhere.Filter)
                 <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.FlatList = true;
 
-            Dictionary&lt;string, DirectoryHierarchicalRow&gt; rows = [];
-            List&lt;DirectoryHierarchicalRow&gt; topRows = [];
+            Dictionary&lt;UniqueID, DirectoryHierarchicalRow&gt; rows = [];
+            List&lt;DirectoryHierarchicalRow&gt; topLevelRows = [];
 
             /* Пустий рядок */
             if (form.InsertEmptyFirstRow)
@@ -695,7 +699,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
                 <xsl:for-each select="Fields/AdditionalField[Visible = 'True']">
                     <xsl:text>emptyFirstRow.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", "");
                 </xsl:for-each>
-                topRows.Add(emptyFirstRow);
+                topLevelRows.Add(emptyFirstRow);
             }            
                 </xsl:when>
             <xsl:otherwise>
@@ -707,7 +711,12 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
 
             <!-- Вибрати дані -->
             await <xsl:value-of select="$DirectoryName"/>_Select.Select();
-            form.Store.RemoveAll();
+            /* Очистка сховища */
+            if (form.Store.GetNItems() &gt; 0)
+            {
+                form.Store.RemoveAll();
+                GC.Collect();
+            }
             while (<xsl:value-of select="$DirectoryName"/>_Select.MoveNext())
             {
                 Довідники.<xsl:value-of select="$DirectoryName"/>_Pointer? curr = <xsl:value-of select="$DirectoryName"/>_Select.Current;
@@ -728,11 +737,28 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
                     row.IsFolder = <xsl:value-of select="$DirectoryName"/>_Select.IsFolder;
                     Довідники.<xsl:value-of select="$DirectoryName"/>_Pointer? parent = <xsl:value-of select="$DirectoryName"/>_Select.Parent;
                     if (<xsl:value-of select="$DirectoryName"/>_Select.Level == 1)
-                        topRows.Add(row);
-                    else if (parent != null &amp;&amp; rows.TryGetValue(parent.UniqueID.ToString(), out DirectoryHierarchicalRow? parentRow))
+                        topLevelRows.Add(row);
+                    else if (parent != null &amp;&amp; rows.TryGetValue(parent.UniqueID, out DirectoryHierarchicalRow? parentRow))
+                    {
+                        row.Parent = parent.UniqueID;
                         parentRow.Sub.Add(row);
-                    if (form.TypeWhereState == InterfaceGtk4.FormJournal.TypeWhere.Standart &amp;&amp; !rows.ContainsKey(curr.UniqueID.ToString()))
-                        rows.Add(curr.UniqueID.ToString(), row);
+                    }
+
+                    /* Додати в список */
+                    if (form.TypeWhereState == InterfaceGtk4.FormJournal.TypeWhere.Standart &amp;&amp; !rows.ContainsKey(curr.UniqueID))
+                        rows.Add(row.UniqueID, row);
+
+                    /* Перевірка вибраного елементу */
+                    if (unigueIDSelect != null &amp;&amp; unigueIDSelect.Equals(row.UniqueID))
+                    {
+                        parents.Push(row.UniqueID); //Добавляє знайдений елемент в чергу
+                        UniqueID? rowParent = row.Parent;
+                        while (rowParent != null &amp;&amp; rows.TryGetValue(rowParent, out DirectoryHierarchicalRow? parentRow))
+                        {
+                            parents.Push(parentRow.UniqueID);
+                            rowParent = parentRow.Parent;
+                        }
+                    }
                         </xsl:when>
                         <xsl:otherwise>
                     form.Store.Append(row);
@@ -743,10 +769,11 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             }
             <xsl:choose>
                 <xsl:when test="$DirectoryType = 'Hierarchical'">
-            /*Заповнення сховища*/
-            foreach (<xsl:value-of select="$RowType"/> row in topRows) 
+            /* Заповнення сховища */
+            foreach (<xsl:value-of select="$RowType"/> row in topLevelRows) 
                 form.Store.Append(row);
-            form.AfterLoadRecords(unigueIDSelect);
+
+            form.AfterLoadRecords(parents);
                 </xsl:when>
                 <xsl:otherwise>
             form.AfterLoadRecords(selectPosition);
@@ -886,7 +913,12 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
 
             <!-- Вибрати дані -->
             await <xsl:value-of select="$DocumentName"/>_Select.Select();
-            form.Store.RemoveAll();
+            /* Очистка сховища */
+            if (form.Store.GetNItems() &gt; 0)
+            {
+                form.Store.RemoveAll();
+                GC.Collect();
+            }
             uint selectPosition = 0;
             while (<xsl:value-of select="$DocumentName"/>_Select.MoveNext())
             {
@@ -992,7 +1024,12 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
 
             <!-- Вибрати дані -->
             await <xsl:value-of select="$RegisterName"/>_Select.Read();
-            form.Store.RemoveAll();
+            /* Очистка сховища */
+            if (form.Store.GetNItems() &gt; 0)
+            {
+                form.Store.RemoveAll();
+                GC.Collect();
+            }
             uint selectPosition = 0;
             foreach (<xsl:value-of select="$RegisterName"/>_<xsl:value-of select="$SelectType"/>.Record record in <xsl:value-of select="$RegisterName"/>_Select.Records)
             {
@@ -1069,7 +1106,12 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
 
             <!-- Вибрати дані -->
             await <xsl:value-of select="$RegisterName"/>_Select.Read();
-            form.Store.RemoveAll();
+            /* Очистка сховища */
+            if (form.Store.GetNItems() &gt; 0)
+            {
+                form.Store.RemoveAll();
+                GC.Collect();
+            }
             foreach (<xsl:value-of select="$RegisterName"/>_<xsl:value-of select="$SelectType"/>.Record record in <xsl:value-of select="$RegisterName"/>_Select.Records)
             {
                 RegisterAccumulationRowJournal row = RegisterAccumulationRowJournal.New();

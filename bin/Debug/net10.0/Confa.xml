@@ -7,7 +7,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>03.04.2026 23:52:13</DateTimeSave>
+  <DateTimeSave>06.04.2026 18:51:45</DateTimeSave>
   <DictTSearch>simple</DictTSearch>
   <GtkVersion>Gtk4</GtkVersion>
   <ConstantsBlocks>
@@ -4497,7 +4497,7 @@ END]]></Value>
             <AfterSave Action="0">AfterSave</AfterSave>
           </TriggerFunctions>
           <Forms>
-            <Form Modified="1">
+            <Form Modified="0">
               <Name>Таблична частина Контакти</Name>
               <Desc>Таблична частина</Desc>
               <Type>TablePart</Type>
@@ -4687,14 +4687,14 @@ END]]></Value>
         <BeforeDelete Action="0">BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Функції</Name>
           <Desc>Функції</Desc>
           <Type>Function</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACs1W3U4bRxS+t+R3GHxlotX6pnfEQY6xqVUHI0ySi6pC4/XB2bLecWfGpShBCiCVXFStFFEqVaIVVR/AIFBdu3Ze4cwbVbNe748XE1CLlLma3ZnvnO87c86ZSadyj9Ip4g88xwEOsYdX2N/CP9URjnCgvlen6hfTEpF9saV06lEunUqnusJ2W6TiSuDb1IJVufPZ0vRvwbJY15W226qzbblLOQRLq+ACpxKaRdYEE09wjJfqFK9whH0cYH9J23ZpG0SHWkDqknHagoLb3OS0qc2kU0JSaVvEcqgQt4lIp15PRHS6Dce2iI+r2kI+fvkKODwh+N7zfYFj9Rb7WSG55iiAcuvVJnwnFycGfDt6cJBd7obfX4ZTPeJfuRyeYQ//wkvsxVdc2CUeh2xMQJG5QpohyCBF1u5QbgvmmtXKFyUjSo68JuWua22ysg1Ok+RJplp7WdrIkH0j7m0uu19xjFfzmEVc1zYMchNRD//wJIfqR3XsZ8o5DvUMe3iCQ/UT/o5j9U4d4UAd/Schd/TxYGK/WprM93WKJ7OWij3XIi+o04VNKnZIrQPuOm1ByYE2uDLbYMwhFbEGuwZ57trfdKGysky6/ozkidt1HCPir2BJm7mPg71Plok6oI7zlFo7W1VGmxtgMd4UH4fGkDW3Dg5Ycp3ZujX46GQdxev2ZxziNf6D1zhSh6RDW6CBsJv1gTNgPYo3c71RgzEHmiQ7V0hoYd9rQtMve5tkvbDPZ0p3qS09UWZcqLmmFfrnnsyI/XAKjgDPVXigk8CSN2/IwnwHG0CbAWZxPsVnIISGlzhnPLvOWYvTtvmUCtsqdDoGif0pM942SAbP8JrgJV5hT5eLOlA/EPyg3uJYHWNfHWJPHWJ/ITMrcNJBIz+DjNcj4WnZXGMSGozt6MoyixyoBJ35WU9wkXZ0Mhqe/KirSFDqIL3CCWJ9zxrTN0b2lqLyao91wM8Ykifb1BEQLUS9WmZOM6gI4yHL6Rw/YF8d4BgHdyumWpR8qMRI7gpEhIpmdq3YHCzJ+J7PuSKhTfJB1P73WkwWzj1y6Ia7oPy8Wl0rPCs9SErVQa6AA/rAq7QBTpBWQXw+crbT8OB7HOhXgjrFy8nbyT/kwE6EuE7QZeJohyTvy0gaMFdnyUVt6O7jWTA/p8ITtDjfUkLmwgQ6wd0rZJEbihRZZ+/eEas1vgYhCf6GF+oEB+pwWg0z4nwxwbY7N88bvZ15D4g+/h0GPLTs6ZA8DEU8w0KwWaffhjmWzPS5OO9lNtJNWDvE/tYmbTiwTrmcmPQa1OISyeUI/oE9vMAh9tUxjrBH1DH21IFGeZ+ZWVuZ29hMunuUyvS84h1/OtU32yd0LXntNcl0P53yZ/8Cmas2uEMNAAA=</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список з Деревом</Name>
           <Desc>Список з Деревом</Desc>
           <Type>ListAndTree</Type>
@@ -4702,7 +4702,7 @@ END]]></Value>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Швидкий вибір</Name>
           <Desc>Швидкий вибір</Desc>
           <Type>ListSmallSelect</Type>
@@ -4710,14 +4710,14 @@ END]]></Value>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>ЗаписиШвидкийВибір</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerControl</Name>
           <Desc>PointerControl</Desc>
           <Type>PointerControl</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACpVU3U4TQRS+b9J3ODZebJEUjMQYYCGlSGmCtBGRC0LIdPewHbvMLLOzJUCa+AzGcO+dl0q4qBh9huGNzOz/tgvqXOzszPn/znemWlmYA72qlXADAPVF3amf6pu6VZPjHqdMomhxJgV3G5af6RVF1crcQrVSrQQ+ZQ605XAl+e9orRNiYVsOl9LbNjIURKLd4jY21Gf1W93cX6tb9UtN1J2arGhnjJyi7xELYU9yQRxsMvudIDaG0sN2t/8BLdnYC/qWS3x/tZjSmlErXhz3+6cvB4R2B8Mz27u8OOg+9049p1Y/qla8oO9SCzwiJCUuhP4egwKWZwC4irDBETIJr/V3mzDbRbFa5mdtPXUwIMxBO6xJO0hyGHFqQ4dRfaCXaNQjcRxGrwNqy0FPoI9MEkk5AxNeLC6uZBot4sX3T2tXhTRanPmysbW/s7PbfPN6vFzLWRUTg2cmEP+CWWAcz4MXyepgrsFU6FgET0xggevCOpBzQmVy32ijzFsYdViGWhJ3nJYfdcLXStajLdjFcyPMYxfPD6hGgnsoJEXfODyqp3iWuUhzNYFpLyuF2KUW8T7TBAdldsjd6yVQBoIlwXIIj7Nf/xH7LMsRcQNN+7y02Kb1RoeN+BANjX3Wp9mgKdIp4oJLtCTawEcoBLUx7nfIwK6HbA9dtKSxEUjJGfTDbT7ieFM4PhDh+LP07HFPOwQv3s3kphF2LpdZrNHYQ9kjApk0ohhlOiHp3+JZgL4EE14V+J4obSN1BjLTWipobeAJF9hyqTXU1W0FzErRy4cs8EB9VTdqom7166R+qE9qor7fX99/BI84mPDowU7GlUfVhbMSnueLWptUoCW5uIhb25F4GsIWDdA+o2cBdjanrLIOgQlSBFgi3+KuHbYgO0xptYjrbhBreNyNnSXEN8EvnteKhlOV5pgZoVI6TkbBZx70ZDVPJIookwcblGN1+JsTlZKrNaCubeiGlbJvwCNaZqL4ASMOavP3egjTBLIXa3Z+oslhLReJ+P+x+St4+ez/BadQJ0ymVGVcrcQo/gEkjUfVEAgAAA==</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Елемент</Name>
           <Desc>Елемент</Desc>
           <Type>Element</Type>
@@ -4835,7 +4835,7 @@ END]]></Value>
           </GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerTablePartCell</Name>
           <Desc>PointerTablePartCell</Desc>
           <Type>PointerTablePartCell</Type>
@@ -4976,14 +4976,14 @@ END]]></Value>
         <BeforeDelete Action="0">BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Функції</Name>
           <Desc>Функції</Desc>
           <Type>Function</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACs1WQWsbRxS+C/QfxrpEDsuaQm+OYhTZckQVy1hKeyjFjFbPytarme3MqIpJBLEDyaUnk7pQcKFQenaMTVUlVv7Cm38UZne1u9JaSVwa2jnNzsx77/vevO/N5nMrt/M5Eg08xhFe4Aj/1Cd4tYt/6Od4hWP9Qp/oX2xHpk7ObOVzt1fyuXyuL13WJTWmQOxRBzbV/per09Wy4/A+Uy7rNvmeGlAB8dYmMBBUQafCO2DjK5zguT7BC7zCEY5xtGp8M9oD6VMHSFNxQbtQZp2WoB3jJp+TiirXIY5HpfwwjXzuSUjD77c91yGRZd2V6s43j0DAXYLHQfTXONHPcFSUShiUEqhwHrXgsVoOHUR+zBCg+oIl398mUzNmv1ZW8Fec4MXsKoMBCeIX5+BXOJPKDk0sUuE9nwpXcmbXa19tWGlY5Amp9pnT4lUXvA4pkUKrsVu5X94pWOmN3W0qaO8Ls3/rVoEMrVkgC0Gf4hn+hed4tgh4CltjxyLX84i9/DdcvlsN50NTNdkyoPKAOeRr6vWhReU+afjAtmkXNjzoAVPFNuceqcktGFjkIXN/6ENtfY30oxkpEdb3PCsVr+wol7M78dm7a0QfUs+7R5393TqnnR1wuOjIj5vOWDZYEzxw1DZ3jdoi62xhzkvhZ3yDl/gWL/FKHxGfdsGYwqAYmc6Zm1G5Hu21LKwFplm4C6kkHoaBsqdf7h4pBolfjJQOqKsCUvYsUXvLMIxuPlsTw2QKnoQgVHKlYWrJ06dkaXGAHaCd2GZ5McQHIKUx3xCCi+K24F1Be/Y9Kl2n7PsWmVmpctGzSAFP8ZLgOV7gGb7BiT7UPxF8p5/hRL/EkT7CM32Eo6XCPMGwKaUW45o3IxNpzd7iCtqc7xt92RUBVIGp/WJAuEJ9U45WQD8dKpWUJqhAOnGub6gy04SLH5BVoD7uQ1QxpET2qCchLUWzW+VeJ9aE9XkF9Tu+w5E+xAmOP01OjTT8hIuVPRXTSDjNnVp3BTiKi4MIdU1Bj5TivP3rasxK5wZVdO1zUH1Yr2+VH2x8lrJqgloHD8yl12kbvLi04gx99H6nKcJjHJuHS5/gefhbEl107CkF3ZTpGvFMSFKKiGQd2Jvz8NI+TA8KPNj3qQwoLS/2lCG6FJqGdjdKWuqlIhXuH/yDnDXa34NUBH/D1/oVjvXRVBNz9CI68bFPbqIL4p2a/0Yc4d9J0hPfARclknTM1llibDfpj0mlZSvejLCzpo2mWZrtttOpeVX+R09C0NqySIf5XDR7DxHxcAsWDAAA</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Desc>Список</Desc>
           <Type>List</Type>
@@ -4991,7 +4991,7 @@ END]]></Value>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Швидкий вибір</Name>
           <Desc>Швидкий вибір</Desc>
           <Type>ListSmallSelect</Type>
@@ -4999,14 +4999,14 @@ END]]></Value>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>ЗаписиШвидкийВибір</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerControl</Name>
           <Desc>PointerControl</Desc>
           <Type>PointerControl</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACpVU3U4TQRS+b9J3ODZebJVUEo0aYCFQoDQiEFHREEKG3cN27DKzzsy2KiHxGYzhEYy3Ei8qCT7D8EZmZv/bgjoXOzPnf77vnK3XHtwDs+o1uwGA/qJH+qce6W/X5/rqcIdTplC0OVOChy1PFpZVVb1270G9Vq/FkrIAOqo/n527xuqYeNhR/Ue5tIMMBVHot7mPLf1V/9YX1+f6p77SI32pR/MmGCMnKCPiIewqLkiAy8x/KYiPVrvf2T56h55q7cZHXkikXKiWtOg0qoJD+kG+efssHp7M7nndJytDuXf8eHPYaB7Ua1F8FFIPIiIUJSHYeLeDAXMTEJwm6OAAmYI1890gzA9RLEyPtLiUh+gRFqBv32VCZHUMOPWhy6i50E/oNBN1msisPeqr3o5AiUwRRTkDFx7Ozs4XFm0SpfK7jdOxQtqcSdVaf7W5ubX8fO1srlHyq5YG910g8iPzwDmcgSjRNcFdhLHkqQruuMDiMIQlIENCVSZvdVCVPZwmzEEjy3uWA5DwIY2R9xcitnDo2Eq2cLhHDRo8QqEoSmf/oJljOj1IXq8LzMSZr+S/wSfdJ8gIUBWXktwsgSoWLEtXwvmsOMpb/Is6BySMzQiUtVWyllpdNuB9dAwDBVuTSXO8c9wFV+gp9IEPUAjqY8q67cTtCNkuhugpZyVWijM4sttM0u3LIpBARCAn23SHRyYgROnuZpKWZa9UWWrR2kW1QwQy5SQ5ptnY5n+B72OUClx4Wun7zGgDadBThdWjitUKHnOB7ZB6ffO69Zh5OXrllGOdoL/rCyu41CP9yyp/XJ9ff4aIBJj10o1cpm9P3mdnxt5nqlarVKCnuPiYkttVeGKBSwbpFaPvY+yujnkVHIELSsQ4Rb/OQ9+SUFzGrNokDFeI1z/cToNlre+CrN4Xq45jLy31ZoLKDSPlVKKWgc/W8rFCkdRyI0mlzrbHkmpqg7V7NPQdQ9nUDuzxpDULVforIwEa99dmEPMCin/X5Awl08PaIRLx/6PzD/CV6/8XpKyNLWeqyVm9luL4B97n2iQkCAAA</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Елемент</Name>
           <Desc>Елемент</Desc>
           <Type>Element</Type>
@@ -5049,7 +5049,7 @@ END]]></Value>
           </ElementFields>
           <ElementTableParts />
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerTablePartCell</Name>
           <Desc>PointerTablePartCell</Desc>
           <Type>PointerTablePartCell</Type>
@@ -5163,14 +5163,14 @@ END]]></Value>
         <BeforeDelete Action="0">BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Функції</Name>
           <Desc>Функції</Desc>
           <Type>Function</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACs1Wz2/bNhS+G/D/wPhSpxAUDNgtdQPXiVNjbhzE7nYYhoCWX1wtMqmR9LygNdBkwHrpKegyYEA2DBh2ToME89zF/Rce/6OBkizJVr3VXYeOJ4rk+/E9ft+j8rm12/kciQae4givcIS/6TO8wZ9xoo/1CV7oZ3iBr/RzvMERjvUZXu7jr/pbvMGx/k6f6R9sR6a8zGzlc7fX8rl8ri9d1iU1pkAcUAe21eHH69PVsuPwPlMu6zb5gRpQAfHWNjAQVEGnwjtg4wuc4KU+w6swFRytG9+M9kD61AHSVFzQLpRZpyVox7jJ56SiynWI41Ep3x1iPvc4hOj3257rkMhr3ZXqzmePQMBdgqdBZi9xop/iqCiVMAgkUOE8asE3ajV0EPkxQ4DqC5Z8f55MzZj9WlvDH3GCV7OrDAYkiF9cAlqFM6ns0J1FKrznU+FKzux67ZMtK50yeUyqfea0eNUFr0NKpNBq7Fful/cKVnpjf5cK2vvI7N+6VSBDazbJhYDO8QJ/x0u8WAQqlVtjzyLLY4wjfBicX6yH86FhYpY+VB4xh3xKvT60qDwkDR/YLu3Clgc9YKrY5twjNbkDA4s8ZO5XfahtbpB+NCMlwvqeZ6XilR3lcnYnPnt3g+hj6nn3qHO4X+e0swcOFx35z6Yzlg3WBA8ctctdo+DIOkvoZeT1Pb7Ca/wTr/FGnxCfdsG4hUExcjvn2ozKm5G8EaG1wDQLZSHMxMMw6CTTL/eAFINLWZwpHVBXBaDsWaD2jkEYsSLLl2EyBU9CECq57rDs5MkTsrI4wB7QTmyzujjFByClMd8SgoviruBdQXv2PSpdp+z7FplZqXLRs0gBz/Ga4CVemesMLvc5wdf6KU70MxwFN32Co5XCPMCw0aUWYz2YkYm0Ye9wBW3OD4327IoAqsDoohgArlDfUNUK4KdDpYrSBBXIKq71kgo0jb34N5ILlMl9iBhDSuSAehLSMjW7Ve51Yr1YH05sv+BrHOljnOD47aTWSENLcFrZUzHEBO/cqU1XgKO4OIoQ1RT0SCmu6XtXalZWSzBs6Sem+rBe3yk/2PpP6NgEtQkeGLLUaRu8mJJx9f4VL6alxVMcm4fSLIbbEUHiKClYhvobxDPpkFIEMuvA3p5PPe3D9LXAg32fygDu6mJPmSKshKah3VIFTb2MpML9o/dcz0b7S5CK4E/4Ur/AsT6Z6mwOegQ1PvbWTfsdcjk3/8w4wj+Sy0riBjVQIinjLHcTY7tJv07Ym1WYGWGXTxtNqzvb+adT88L9j56noM1mMx3mc9HsL3CLOmMuDQAA</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Desc>Список</Desc>
           <Type>List</Type>
@@ -5178,7 +5178,7 @@ END]]></Value>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Швидкий вибір</Name>
           <Desc>Швидкий вибір</Desc>
           <Type>ListSmallSelect</Type>
@@ -5186,14 +5186,14 @@ END]]></Value>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerControl</Name>
           <Desc>PointerControl</Desc>
           <Type>PointerControl</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACqVUTW/TQBC9R8p/GCIODlQBCSRQi1ulKU0joK0opYIKVVt74iwxu2a9TgWoEnDhwgmhXrkhjlD1EIrgN6z/Edr1dxMQKXvwfszszOx781yvXbkEetRrZgIA9UGN1Ykaq8/xkfqpPqlf8Zv4rfoav1Nf1Y/4vfqpxuo0PlLHe5ucMomiw5kU3G85YRGlaqrXLl2p1+q1KKTMg64cLmTrnvbqEwe7cng9P+0iQ0Ekuh3uYkt9VL/UcXykTpLcaryggzHyDMOAOAhbkgviYZu5DwRx0Vh3uxv7T9GRra1o3/FJGN6qlrRoNaoHe8O1thf4Tx8/Gkb9bUFW5I07bt9rNJ/Ua0G071MHAiIkJT6YeOcHCuYn4HmVIIcjZBJu6+8aYa6P4tbsWRaX8vADwjx0DR46fFb/iFMXeozqDX2JVjMxp0XosUNdOdgUGCKTRFLOwIZrV68uFB4dEqTnFxuvZiiyw1koW6vbd++ut+/dPpxvlGJWy4bLNpDwBXPA2puDILE1wV6EM4WlJrhgA4t8H5aAHBAqs/NWF2X5htWEeWhkeQ9zcBKOQ+3k/Ae563hgmSrX8WCHahR5gEJSDK3dJ82ci9kT5O+0gekcC5W6zxEvnSfI91AWm9K5HgJlJFhWSom7w2IZ/uV+8YYR8SMt1bK12gBLrR4b8SFamtWiAyaT5hzmXAou0ZHoAh+hENTFtJNM528EyLbQR0day5GUnMG+meYS5bWFFwIRXjgpi00e6IAQpLOdnbQM66XKUo/WFspNIpBJK8kxzceI7T4+jzCUYMPNis4ypzWk3kAWXtcrXsvY5wI7PnWG+nWrEXNy9MopZ+gS9UUdG+dTNVbfzcVv8VH8GgLiYdaDf+Q5xSV5u9Go2c9VvVaoQEdy8SIlvifxmQE1Ee42o88j7K2cuVXwBzZIEeEU+yr3XUNQsTnj1SG+v0yc4d5GGiyThQ1hdb9YvXjmpaW+TVA5hxStSsYyYdlo9yWKpM4/kltShFmWTFMbszOgvmtpOqd27oAnLV2Y0t8q8VBff6gFnBdQ/EcntZeojnV8JGJ2yf0ntOW3/QuKxseUOtXlsF5LMf4NV+YZtDwJAAA=</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Елемент</Name>
           <Desc>Елемент</Desc>
           <Type>Element</Type>
@@ -5236,7 +5236,7 @@ END]]></Value>
           </ElementFields>
           <ElementTableParts />
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerTablePartCell</Name>
           <Desc>PointerTablePartCell</Desc>
           <Type>PointerTablePartCell</Type>
@@ -5466,7 +5466,7 @@ END]]></Value>
             <AfterSave Action="0">AfterSave</AfterSave>
           </TriggerFunctions>
           <Forms>
-            <Form Modified="1">
+            <Form Modified="0">
               <Name>Таблична частина Контакти</Name>
               <Desc>Таблична частина Контакти</Desc>
               <Type>TablePart</Type>
@@ -5607,14 +5607,14 @@ END]]></Value>
         <BeforeDelete Action="0">BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Функції</Name>
           <Desc>Функції</Desc>
           <Type>Function</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACs1WXW/bNhR9N+D/wPilTiHIGLC31A1cJ06DuXEQu93DMBi0fONqkUWPpJcFrYHGBZaXPRVtBgzIgA37AU6QYJ4zu3/h8h8NlGRJtqo0wT75RJG8555D3kMqmyncz2ZI0PBHnKlXOFbHaqhe4wWO1Ik6beKv6jVOcaK+U6fqB9MSsYiFqWzmfiGbyWb6wnY7ZNuVwPepBVvy4NO1+WjJsljflbbbqbN9eUg5hFNb4AKnEtpl1gYT3+IML9QpXuIUxzjB8ZrGdmkXRI9aQOqScdqBkttucNrWMNmMkFTaFrEcKsTt5GQzL3w5vX7LsS0SIFRtIR98/hw4PCT4xmNx7qPlheSarQDKrecN+Fau+gABjm4cZJ+70fcXUVe3xa9CQRPFy8VRFw6Jlz+fIqPMXCFNP9QgZdbtUW4L5prV7c82jTg98oJU+q7VYBUbnDYpklyj1iw/Lu3ljPhEc5dy2v1Ez9+7lyMDY5FQKvkzHOFvmlaagBi32p5BbtYTov03mr5c8/sDXU3JsqDiyLXIM+r0oUHFAan1wN2lHdh0oAuuzLcYc8i22IFDgzx17a/7sL2xTvpBjxSJ23ccI5avZEmbuQ/CtQ/XiTqmjvOIWgfNKqPtPbAYb4uPhy5E1tw6OGDJXWZrFwbRyUJNs8g7vMYr/AOvcKqGpEc7oCHgMB9ALMHoVv4w6w+qMVJCk7RTJUUIA8/58y97n+S9A0hnSg+pLT1R5qJQc0crDCogWRuDqAuOAC9VdLT+FpOXL8lKeoI9oO0wZjWd4hMQQodvcs54fpezDqdd8xEVtlXq9QyyMFJhvGuQHJ7hFcELvMQRXuNMHavvCb5Xr3CmTnCshjhSQxyv5JYF+pdVbDCsfd0SmdbNHSahxdiB9plZ5kAlaA/kPcFl2tNlaXjy46lim1IH6Vko3Os7uk1fzvkb7OW5kPUgqBhSJPvUERC3pJ6tMKcdesP4d4z1M77XgzjDye1sVYvLiDQZyVWhnEjb0qoNm4MlGT8K2G9L6JJiuH9/uyuTFrpDNd34TFSeVqs7pSeb/0iZ1UFugAO6CKq0BU5YauFO3fq851uGb3CiHzZ1ihf+70xw8CFiTIIu33Xi6NSkGAhKAphbyzTjGPpu8hDMx1R40lbTkRKCV/xQP+5Omxd7yUiZ9Y7+wt7VWl+BkAR/wnP1FidqOPfKksxAVrjs1pfsR/Ke6f9PHOPv0SFEOTxtkkfbs1h/UbBZp99EFZh0RGqc92c31de2TojjZoO2HNilXPqQ3pW2ukYKBYK/4AjP8RrH6gSnOCLqBEdaFY69z9wyVu4mNv57EKcyP8PFN2Le1W/h/+gh8y7kJNNBNhP0/gTbIUPw9AwAAA==</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Desc>Список</Desc>
           <Type>List</Type>
@@ -5622,7 +5622,7 @@ END]]></Value>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Швидкий вибір</Name>
           <Desc>Швидкий вибір</Desc>
           <Type>ListSmallSelect</Type>
@@ -5630,21 +5630,21 @@ END]]></Value>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerControl</Name>
           <Desc>PointerControl</Desc>
           <Type>PointerControl</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACpVU3U4TQRS+b9J3ODZebJVUoiYaykLaKrVRCorIBTFk2D1sxy4zy+xsGyEkqBfeG8OFT+ClEi6qiTzD7BuZ2f+lBXEudnbm/Mw333fOVCv37oAe1Uo0AYD6pi7CEzUJP4Qfw0/qTP0IP4enO+ucMomiw5kU3G1Yfh5RNlUrd+5VK9VK4FPmQFcOm+l/T3vtEQu7cvgw2+0iQ0Ek2h1uY0N9VRfqLDxV5+qPmqjfatLUyRjZR98jFsKG5II42GL2a0FsjKzb3bXdd2jJxkawa7nE9xfLkJaMWnljpzvYDx63Rev+fOAcDsb9R88PVt2XtfrbasULdl1qgUeEpMSFKN/NSIGFKSqOYpZwhEzCU/19Rpjtoli8PuPScpZqQJiDdnRPnSrFNeLUhh6jekEP0ajH5uRAPbaoLQfrAn1kkkjKGZjwYH6+mXt0iJfs364dXQGow5kvGyubL170W6tPjxdqhfgyRLhrAvHfMwuMnTnwYlsdzCW4BCIxwS0TWOC6sAxkTKhM9xtdlMUIow4LUEvPPc6IiHXytZN1Q4H6ODYiRH0cb1HNDvdQSIq+sf22nnF8fbIMvwlM52uW8PwjNpmnxHJQ5ovCvh4CZSBYemyB/+P8178mPsc7Im6gW6ZoLYu43OixER+ioZXJVZw+NNMh00NwiZZEG/gIhaA2JtUQVeqah2wDXbSk0Q6k5Ax2o2ku7oqWcHwgwvGny3idezoheMlspjuNSM0CssSjsYFynQhk0ojPmOUTNccrPAjQl2DC41JfpE7PkDoDmXs9LHm1cY8L7LjUGurbrQTMytgrHnlFRajv6kxN1Ll+49Qv9UVN1M/wNDwBjziY1taVmiYcxPeMeipaz5W9nlCBluTifSJyT+J+RGDcaJuMHgTYe3IpKtcKTJAiwBn2Fe7akRj54pJXh7hum1jDnbUkWdoCJvjl9VI58NJNCzUas/KPFjNK2YtCpKO1J1HEmK4UrVDp0W/BNLPgOgPq2oaWbmZFDnhcqtXMlDx5xEEd/kY3ZgYgf+OmeyruJtZxkYj/b6X/oLF4j5swFvlEsGa6HFcrCZ9/ASc6GJl0CAAA</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerTablePartCell</Name>
           <Desc>PointerTablePartCell</Desc>
           <Type>PointerTablePartCell</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACpVUTU/bMBi+R8p/8HpKESpo4jDBStUW1vVCK9oNaQgh13mbejVOcJxWaEJi22H3aeKwX7Djhjh0k8ZvcP7R5Hw1bQMMX+zYz/v1vM8b0zCNjTWkl2lEG0JIfVd34ZWahR/DT+FndaN+hl/C69OuS7kE0ccDBl0sZBMYqxB/blcEMI21DdMIfMod1JLjnfTc1sghJtCS463stgUcBJZgN10bKuqbulM34bW6VX/VTP1RswxYJ8QNuKTc6blDOcUCdkzDNDg+A9/DBFBPugI7UOd2X2A7fj1udQbvgchKLxgQhn3/ZVHGu1ap6Po0mDQ6wbvutL1PO7T1nPUPDvtbTql8YhpeMGCUIA8LSTFDke+nsIi27+HuQ0xu4t+XWFLyJMcHMLXKqLqrD0dUjrrC9UBICr51fFKOWHm848hL9iri2t/OQlaP2CZ7bJLUo5cDUueVuE5c6uWDnH/kDKKQWSITzALd1fxrV4APXJPkclRNwZUDfJZHXsbHy7T2pAzsX3CC3mq3feyPUQtk3l/MYnEE9KyKeMAYqiE8xVRmkVd9bKNSKWN9OWRCVXOEuQPWG07PA2jv1ZBXXmGvm+/IIy2wPFSrRbjUpVVOexilEeW8kmsO0eE9YEBkrdLmE3cM2WNGYkamcCUQCTZyJyAEtSGpcuJSG8VerEYgpcvRINrW0f4EuKwLx0dYOH5RrZ52hrxkr6Y3lUjduTwTRKUHsosFcGnFMYowR9SWo0M4D8CXqIpebG4WgF4DdUZyjtpaQDVg6ApoMkrGHQ/4q4CTFYYemC71Q92ombrVPzb1W31VM/UrvA6vkIcdSGft3lFIOIjrjLQYfa8vovaoACJdcZFooS3hLDcaqSCWrJqYsQYm49O08XO5xd309DAs2iylNxfWoqq9PDHpqg8liDjSvSQmcsuOuadUfEsSaI4osy1NZqFGRm4snuVB0AbaPJrLVaU/rPAmAyzSruUoKaJC/zLymf0PCxEmClIIuTSNhKN/f5t5udkHAAA=</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Елемент</Name>
           <Desc>Елемент</Desc>
           <Type>Element</Type>
@@ -5927,7 +5927,7 @@ END]]></Value>
             <AfterSave Action="0">AfterSave</AfterSave>
           </TriggerFunctions>
           <Forms>
-            <Form Modified="1">
+            <Form Modified="0">
               <Name>Таблична частина</Name>
               <Desc>Таблична частина</Desc>
               <Type>TablePart</Type>
@@ -6068,14 +6068,14 @@ END]]></Value>
         <BeforeDelete Action="0">BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Функції</Name>
           <Desc>Функції</Desc>
           <Type>Function</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACs1WzW7bRhC+C9A7rHWJHBAUCvTmKIYi/8SoYgmW0h6KQlhRY4U1xVV3V1WNREDsAvWlpyBVgQIO0CIPIBs2otqV8gqzb1QsSZGUGMY2+run/eF8M9/sfLPMZgr3sxkSDHyrRvgOJ+oEp2qEb9QRzvAMJ018q77HKV6pH9RI/WxaYsEmdpTN3C9kM9lMX9huh+y4Evg+tWBbHny6Nt8tWRbru9J2O3W2LweUQ3i0DS5wKqFdZm0w8TXO8FyN8AKnOMErnKxpbJd2QfSoBaQuGacdKLntBqdtDZPNCEmlbRHLoULcllA289wn1Ou3HNsiAUbFFvLBF8+Aw0OCr7w4znCmXuIkLyTX8Qqg3HrWgO/kqg8Q4OjBQfa5G62/jKZ6LK4KBfwFZ3ixuOvCgHj+86lEyswV0vSNDVJm3R7ltmCuWdn5bNOIB0iek62+azXYlg1OmxRJrlFtlh+X9nJG/KBZo5x2P9Hn9+7lyNBYDCk1/FMc4zs8x3EahVhs1T2D3MQoxPtvWH215s+HuqaSpUHFoWuRz6nThwYVB6TaA7dGO7DpQBdcmW8x5pAdsQsDgzx17W/6sLOxTvrBjBSJ23ccI+avZEmbuQ/Cbx+uE3VEHecRtQ6aFUbbe2Ax3hY3my5YVt06OGDJGrO1FgPrZLGmC+UnvMZL/AMvcaqOSY92QIPAIB+ALAHpUf5w3B/kY6SYJgNPJRUhDL0OMF/Z+yTvXUF6pHRAbemRMheJmruaYVADyeoYRlNwBHiuosv1k0xevCAr6Q72gLZDm9X0EJ+AENp8k3PG8zXOOpx2zUdU2Fap1zPIws4W412D5PAULwme4wWO8Rpn6kj9SPC9eokzdYITdYxjdYyTldwyQb9lxTbD6tcj4Wnd3GUSWowdaKWZZQ5UglZB3iNcpj1dmIZHP+4qlpQ6SE9EYa7vqDfdovMfEZinQ9aDoGJIkexTR0BclPp0izntUB3GvyWtX/E9Trzl1e2EVY0TiVgZya9CQhG7pa82bA6WZPwwiH9HQpcUwwz+7bpMiugO9XTDY7H1tFLZLT3Z/EdKrQ5yAxzQhVChLXDCcgtzdYc7n6cNX+GVfuDUCM/9n5vg8kPMGAldxOvE0c5JMaCUBDC3lwONY+gO5SGYj6nwyK2mIyUor/imvt2d0hd70UiZ9Q7/Uvaqra9BSIJv8Ey9xit1PFfMEtGAWPjZrZvtjZ5P9R8pTvD36CIiLx4/yaMULVZhZGzW6bdRHSaVkWrn/edNdQPXDnHSbNCWAzXKpQ/pNbfVNVIoEPwNx3iG1z4ZHBN1gmN1pK28ZW4ZK/exaPyXIR7K/B4XX4v5VL+K/6MnzWvNyUiH2Uww+xNp/y0YCA0AAA==</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Desc>Список</Desc>
           <Type>List</Type>
@@ -6083,7 +6083,7 @@ END]]></Value>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Швидкий вибір</Name>
           <Desc>Швидкий вибір</Desc>
           <Type>ListSmallSelect</Type>
@@ -6091,7 +6091,7 @@ END]]></Value>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Елемент</Name>
           <Desc>Елемент</Desc>
           <Type>Element</Type>
@@ -6158,14 +6158,14 @@ END]]></Value>
             </TablePart>
           </ElementTableParts>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerControl</Name>
           <Desc>PointerControl</Desc>
           <Type>PointerControl</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACpVUy27TQBTdR8o/XCIWDlShEhWgBqdKA00j9QVpy6Kqoql96wwxM+54nKqtKsGKPUJZsmLBFoREQIJvmPwRGr/dJKTMwuOZ+z7n3imXHtwDvcqlcAMA9XkyUj/UePJe/Z6M1KfJO/VHfVXj3h6nTKJocSYFd2uWn9kUReXSvQflUrkU+JQ50JaDevLf0VqnxMK2HKykt21kKIhEu8VtrKmP6o/6Nhmp7+q3GqtfalzXzhh5g75HLISu5II42GT2viA2htKj9u7Ja7RkrRucWC7x/afFlBpGpXjRY5fdpnW4fPjw4NHj4HR7/3K3s7/xolI9Lpe84MSlFnhESEpcCP3dFhZYnQLjKsIJh8gkPNffTcJsF8XTRT4ba6mzPmEO2mGt2lmS25BTGzqM6gO9RKMaieOQer2ituzvCfSRSSIpZ2DCw+XleqbRIl58f7dyNTelFme+rG0cbG3tNLefX69Wch6KScJ9E4h/wSwwekvgRbIqmA24kUYsgjsmsMB1YQ3IOaEyua+1UeYtjCqsQiWJe51CEbHlayXr1jTt4LkR5rSD56+oRoh7KCRF3zg6rqY4L3KX1mAC0x7rhZwWWsf7FGkOyuyQu9dLoAwESwLnWLjOfv1/2GcZD4kb6PHJS4tUrtU6bMgHaGh+Mi6ng6ZspKwILtGSaAMfohDUxrgnwo7d9ZB10UVLGuuBlJzBSbgtRfPRFI4PRDj+dDvvcU87BC/ezeSmFjKayyzWqHVR7hGBTBpRjFk64ZC8xLMAfQkmPCnMR6K0idTpy0xrpaC1jqdcYMul1kBXtxEwK0UvH3JuT6gv6psaq+/6xVM/1Qc1Vl8no8lb8IiDSX/NZTVGIao0nK3wvFTUekYFWpKLi5jmjsQ3IYTRwB0wehZg59kNq4wtMEGKAGfIN7hrh3RkhxtaLeK668Qa9HZjZ8kQmOAXz42i4Y1Kc10aobJwzIyC/zwZyWqeShRRVnOJy3V7+JsTzWy6Vp+6tqHJm9mVfR61ayaKHz/ioDY/1MOZJpC9dtNzFU0Ua7lIxP+P038Bma/kNpiFOmFiM1Wuy6UY0b/H8R+GiAgAAA==</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerTablePartCell</Name>
           <Desc>PointerTablePartCell</Desc>
           <Type>PointerTablePartCell</Type>
@@ -6279,14 +6279,14 @@ END]]></Value>
         <BeforeDelete Action="0">BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Функції</Name>
           <Desc>Функції</Desc>
           <Type>Function</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACs1WUW/bNhB+N+D/wPilTiEoGLC31A1cJ06NuXEQu93DMAS0fHG1yKJG0nOD1kDiAN3Lnoo0AwZkQ4H9ADdIMM9t3L9w/EcDJVmSrXqruw4dnyiS9919x/uOymbWbmczJBz4Sg3UsTrFsRqoU3WMQ/xNneMVvlPHOFJn+FadqAFe4nAff1eneINj9Vydq59NSyRQZraymdtr2Uw20xW22yYVVwI/oBZsy8Mv16erRctiXVfabrvODmSPcoi2tsEFTiW0SqwFJp7hBC/9kG5whGMcrWtsl3ZAeNQCUpeM0zYU3VaD05aGyWaEpNK2iOVQIT6eYjbzNKDodZuObZEQtWoLeefrx8DhLsEXPtJrnGisvJBcMxBAufW4AU/kagAQ4ujBQXa5G39/E0/1mP1aW8NfcIJXs6su9IjvP78EtRJzhTQDOIOUWMej3BbMNauVr7aMZMjkKSl3XavByjY4LVIguUZtv3S/uJczkhv7u5TTzhd6/9atHOkbs0EuJHSBQ/xDh7SIVCK22p5BlucYefg8PL9dD+Z9XYnp8qHiyLXII+p0oUHFIal54O7SNmw50AFX5puMOaQidqBnkIeu/X0XKpsbpBvOSIG4XccxEv6KlrSZeyc6e3eDqBPqOPeodbhfZbS1BxbjLfHPpjOWNbcODlhyl9lawaF1uqCXkddLfIPX+Bav8UYNiEfboGGhlw9h56D1KL2fyXsZGgtM01QW0owR+n4nmX7ZByTvX8riSGmP2tInZc4SNXc0w7Aq0vXSj6fgCPBdxdcdpJ08e0ZWFjvYA9qKbFYXh/gAhNDmW5wznt/lrM1px7xHhW0VPc8gMytlxjsGyeEFXhO8xCsc4hucqBP1E/HvdqJ+xJEa4FANcLSSmycYNLrEYqQHPVKeNswdJqHJ2KHWnlniQCVoXeR9wiXq6VI1fPpJV4mk1EH6sopyvaQCdWPP/43kfGUyD8KKIQVyQB0BSZnq3TJzWpFejM8ntlf4DkfqBCc4/jCp1ZLUYp5G+lREMeY7d2rT5mBJxo9CRhUJHVKIcvrJlZqW1RIVtvQTU35Yre4UH2z9J+VYB7kJDuhiqdImOFFJRtn7V3UxTS2+wLF+KNU5Xga/VmGBRF4StHTpbxBHh0MKIck0gLk9H3oSQ/c1H8G8T4VPd3UxUioJK4FpYLdUQhMvIykx7+gT57PW/A6EJPgrvlZn+vxUZ3PUQ6rRsQ9u2h8Ry4X+Z8YR/hlfVuzXz4HkcRpnazc2Nuv0h7h60wrTI+jySaNpdmc7/3SqX7j/0fPkt9l0pP1sJpz9BYGS/aYuDQAA</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Desc>Список</Desc>
           <Type>List</Type>
@@ -6294,7 +6294,7 @@ END]]></Value>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Швидкий вибір</Name>
           <Desc>Швидкий вибір</Desc>
           <Type>ListSmallSelect</Type>
@@ -6302,21 +6302,21 @@ END]]></Value>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerControl</Name>
           <Desc>PointerControl</Desc>
           <Type>PointerControl</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACqVUzW4UORC+jzTvUDvi0MNGAxJBQgmdKOkkk0GQhMwCQghFTnelx0xjN273RAFFyiZvgCKuiNse2YjDLFrgFdxvhOz+zwyICT60265y1ef66nOzceM66NFsmAkA1IfkNDlJztTn5DQ5S07UR/U+eac+qW/JiRon5+r/5O/kVF2oj3s7nDKJwuFMCh503KiMUjc1G9dvNBvNRhxR5kNXDhfz/572OiAuduVwvtjtIkNBJHoO97CjztVXdWEwfFFj9VmNF3UwRl5iFBIXoS+5ID6uMO8vQTw01mfd7f0X6MpOP953AxJFd+uQlqxWfWOv/3DX33X4UzY8ctfu3Z6PVx931/1W+3mzEcb7AXUhJEJSEoCJd/VCwcJEed6klcMRMgnr+rtJmBeguDt7lqXlIvyAMB89Uw8dPsc/4tSDHqN6QV+j1U7NGQg9nlBPDnYERsgkkZQzsOHWzZuLpYdDwmz/WuvNDCAdziLZ2Xh0//7WyoP144VWJWYdNvxpA4mOmAvW3hyEqa0N9hJcApaZ4A8bWBwEsAzkkFCZ73e6KKsnrDYsQCvPe1wUJ+U40k7ub5C7hYeWQbmFh0+oriIPUUiKkfXsebvgYvYExT1tYDrHYg33FeJl8wT5PspyUdnXQ6CMBcuhVLg7Ln+jn5wv7zAiQaylWrXWG2C502MjPkRLs1p2wGTSgsOCS8EluhI94CMUgnqYdZLp/O0QWR8DdKW1GkvJGeybaS5V3orwIyDCjyZlscNDHRDCbLbznY5hvYIs8+j0Ue4QgUxaaY5pPkZsu/gqxkiCDXdqOsudNpH6A1l6zde8VvGAC3QC6g717TZi5hbVq6acoUvUP+pCjdUn/d6q/9RbNVb/Ju+SEwiJj3kP/pDnrC7p3Y1GzXqu7rVGBbqSi6OM+J7El6aoqXAfMfoqxt7apVMlf2CDFDFOsW/wwDMElYtLXg4JglXiDve2s2C5LGyI6uul+sFLN630bVqVK0jRqmWsEpaPlQOJIsX5Q3IrijC/FdPUxnQGNPAsTefUzh3wtKVLU/asEh/18cdawAWA8h2d1F6qOuYESMTskvvN0lbv9itVND4G6lSX42Yjq/F32RKNAjwJAAA=</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerTablePartCell</Name>
           <Desc>PointerTablePartCell</Desc>
           <Type>PointerTablePartCell</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACqVUy07bQBTdW/I/TLNyEApIRX1AQxQCTbOBqAllgRCajG+caczYGY+DoEJK4Q8qxLbqrkuKWKSoj18Y/1E1fsVJTNXCbGY8c+49d86ca13TtaUFpIauhRNCSH4JzoNRcCHvgvPgIhjJa/k5uJK38ncwkuPgUv4IPgbn8kZeHzYdygTwNu7Y0MRc1MC2S8Sb5MoD6NrCkq75HmUWqov+WrJuKGQXE6iL/kq6WwcGHAswa44JJXkpf8mbsJqfcizv5DgFVglxfCYos1pOVxxjDmu6pmsMH4HnYgKoJRyOLagys82xGZ3u13c674GIUsvvEBt73qu8iteNQt724cvBoN2wnm3tQsc/PX3+tOFa1ULxQNdcv2NTglzMBcU2CjM/Vle0eo+aHyK5Y05PYEHJo8m24dgoovK6WuxR0WtyxwUuKHjG/kEx1O5hXkFuPJcRUxxrU9U/IF88R2liLdSwQKj6Y7qYRg0PxOQjExCWkRY3xLavPJI9bXLwgCmBHYbKCbi0jY+yyLNoeZZoFF8NeyeMoHcqbRt7fVQHkc0XqZ3PgJ6UEfNtG1UQPsZUpMzzOVZRoZC+zixlLFWth5kFxi6jAx8amxXkFufUa2Zf6QHPYrioUgljExqjmLx1WFp4j7n6M4gd1gIbiKiUGmzo9CE9TIVNBeaOACLARM4QOKcmxDcfOtREURZjwxfCYagTTotoawhMVLnlIcwtL+/+rkqG3HguJzulsDMydcaIUgtEE3Ngwog48jB71BS9tzDwwROojF4sL+eA3gC1emKCWplCbUDX4VCzKenvuMBe+4zMKfSfnSm/yhs5lrfqdyq/y09yLL8FV8EIudiCpE/vbZlYl+juoWfD78Vp1CblQITDT2J/NAQcZVooMclMVA3b9gYm/cPEDBNbRi/sqqaZjpkpb2K2afe7WbGSUe0K4BHTvcLGFkyXmaPEkDO2qPWobRpKzFzf9JzIULPNoQJUeNi/8+7/u+trNmCevFpGkjwp1K8lW9m/qBBiQpJcyJmuxRr9AaDYd5BjCAAA</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Елемент</Name>
           <Desc>Елемент</Desc>
           <Type>Element</Type>
@@ -6454,14 +6454,14 @@ END]]></Value>
         <BeforeDelete Action="0">BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Функції</Name>
           <Desc>Функції</Desc>
           <Type>Function</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACs1W3W7bNhS+N+B3YHxTpxAUDNhd6gauE6fG3DiI3e1iGAJaPnG1yKJG0vOC1kDiAtvNroouBQpkQIE9gBskmOcu7iscvtFASZZkq0oT7K+8okien+/w+w6Vz63dzedIOPC1OsaxeoVXOME3eK5O1Ug938ff1HO8wqn6UZ2qV6YlEhYLW/nc3bV8Lp/rC9vtkporgR9QC7bl4efr89WyZbG+K22322QHckA5RFvb4AKnEjoV1gETX+JMp4AXfjpTnKxr3y7tgfCoBaQpGaddKLudFqcd7SafE5JK2yKWQ4W4GZx87mkAx+u3HdsioYe6LeS9r54Ah/sEX/hZvMWZOsZJUUiusxVAufWkBT/I1cBB6EcPDrLP3fj763iqx+LX2hq+xhleLK66MCB+/GIGjApzhTQDU4NUWM+j3BbMNeu1L7aMZHrkKan2XavFqjY4HVIihVZjv/KwvFcwkhv7u5TT3md6/86dAhkaiwllJn+GY/wdz3GcBSCRW2PPINfjibz9P5i+WQ/mQ82mNC2oOHIt8iV1+tCi4pA0PHB3aRe2HOiBK4ttxhxSEzswMMhj1/6uD7XNDdIPZ6RE3L7jGIl4ZUvazL0Xnb2/QdQJdZwH1DrcrzPa2QOL8Y74uOmCZcNtggOW3GW2VmFonSZqlkR+wXd4iX/iJV6pEfFoF7QLGBRDF0tu9Kh8OOsPojEyTNNpZ0KKPQx95c+/7ANS9C8gO1M6oLb0QZmLQM0djTBkQJobw3gKjgA/VHy1QYnJs2dkJTvAHtBOZLOaneIjEEKbb3HOeHGXsy6nPfMBFbZV9jyDLKxUGe8ZpIBneEnwHC9wjO9wpk7UzwTfq2OcqZ9wokY4ViOcrBSWAQbNKrEYcV+PVKQNc4dJaDN2qHVmVjhQCVoDRR9whXqaloYPPxkqUZQmSF9CUa1vqTbdnIvXyMtXIfMgZAwpkQPqCEhKUu9WmdOJtGH8N8J6g+9xok5whtObyaqRhBFjMtKnIjgxtqVTmzYHSzJ+FGZfk9Ajpah+/7gq0xK6BZuufSaqj+v1nfKjrX+FZk2Qm+CAJkGdtsGJqBZV6sb3PS8ZvsCpftjUKZ4HvzPhxUceExA0fTeIo0OTUggo7cDcXk4z6UP3Jt+D+ZAKH9pqtqcU4JXANLC7VfESLxmpMO/ob9Su0f4WhCT4K75VL3GqRnOtLMEMYUXHbtxkPxL3TP9/4gT/iC8hjuFjkzwuzyL/YmOzSb+PGZhWhB5BB04azau22JXnU/36fEJPh98C05kO87lw9hcUQhqYZgwAAA==</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Desc>Список</Desc>
           <Type>List</Type>
@@ -6469,7 +6469,7 @@ END]]></Value>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Швидкий вибір</Name>
           <Desc>Швидкий вибір</Desc>
           <Type>ListSmallSelect</Type>
@@ -6477,14 +6477,14 @@ END]]></Value>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerControl</Name>
           <Desc>PointerControl</Desc>
           <Type>PointerControl</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACpVU3U4TQRS+b9J3ODZebJUUEokx4EKg2tKItLEqMYSQYfewHbvOLLOzBSQkRN/AGE28885LJVygiT7D9I3MzP7TgjgXOzvnf77vnKlWZu+AXtWK2QBAfRmfqu/jz+q3ulBf1dn40/jd+P1Oj1MmUTQ5k4L7DSfMPcqqauXObLVSrUQhZR605XAx/e9oqz3iYFsO5zNpGxkKItFtchcb6qP6o3Oqc5P/l7pY1MEYeYNhQByEvuSCeLjC3OeCuGi0W+3u7mt0ZKMf7To+CcOH5ZKWrFpZsNMbdluHst+ZI4fdJ0et1ft9+sqr1berlSDa9akDARGSEh9MuJthAgsTSBzHIOEImYTH+rtGmOujeHh9xKXlLNSAMA9dc00dKq1rxKkLHUb1gb5Fqx6rk4R6bVJXDnoCQ2SSSMoZ2HBvbm4xt2iSIJHfrh1fUVCTs1A2Wi/W1zdWnj4+WagV/Mslwl0bSHjEHLB2ZiCIdXWwl+BSEYkKbtnAIt+HZSAHhMpU3mijLHpYdViAWpr3JAMi5inURs4NCdrAA8tUtIEHm1SjwwMUkmJobW3XM4yvD5bVbwPT8RZL9fzDN9knyPJQ5oeCXC+BMhIsTVvA/yT/Da/xz+sdET/SE1PUlklcbnTYiA/R0szkLE4mzXjI+BBcoiPRBT5CIaiLSTeYTu0GyProoyOt1UhKzmDXbDPxVKwILwQivHCyjXs80AEhSHY7lTQMm4XKEotGH2WPCGTSinNMszHD8Qz3Iwwl2PCgNBep0RpSbyBzq/mS1SrucYFNnzpDfbtWxJwMvWLKKzpCfVNn6kKd6ydO/VQf1IX6Mf40PoWAeJj21pWcJhjE9zQzZc4zZatHVKAjuThKSO5IfGMAjAftBaP7EXYeXfLKuQIbpIhwir7FfdeQkR8uWTWJ768SZ7jTTYKlI2BDWD4vlR0v3bTQozEq/xgxqxS9SES6VvYkirimK0krdLr5LaimNlxzQH3X0tRN7cgBj1u1mqmSJ494qN1f6sHMCsjfuMmZiqeJNX0k4v9H6T9gLN7jJogZG1PWVJOTaiXB8y/EbIXlcwgAAA==</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Елемент</Name>
           <Desc>Елемент</Desc>
           <Type>Element</Type>
@@ -6514,7 +6514,7 @@ END]]></Value>
           </ElementFields>
           <ElementTableParts />
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerTablePartCell</Name>
           <Desc>PointerTablePartCell</Desc>
           <Type>PointerTablePartCell</Type>
@@ -6710,14 +6710,14 @@ END]]></Value>
         <BeforeDelete Action="0">BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Функції</Name>
           <Desc>Функції</Desc>
           <Type>Function</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACs1WUW/bNhB+N+D/wPilTiEoGLC31A1cJ06NuXEQu9vDMAS0fHG1yKRGUvWC1kCTAe3LnoouAwZkwID+ADdIMNdZ3L9w+kcDJVmSrahrgBUbnyiSd/d9x++OKhbW7hYLJBr4Fsf4Hq9wso9v/Z/wGqf+S//U/9W0ZPpUeqtYuLtWLBQLnrRZnzSYAnFALdhWh1+uz1erlsU9pmzWb/MDNaQC4q1tYCCogl6N98DENzjDc/8UL/AaJzjFybr2zegApEstIG3FBe1DlfU6gva0m2JBKqpsi1gOlTKfQrHwLKTgel3Htkhk1bSluvfNExBwn+DrIPI7nPkvcFKWSmiEEqiwnnTgR7UaOoj86CFAeYIl398mUz0Wv9bW8Dec4cXiKoMhCeKXU9BrnEllhscNUuMDlwpbcmY2G19tGWlI5Bmpe8zq8LoNTo9USKnT2q89rO6VjPTG/i4VdPCF3r9zp0RGxiKIXMBnOMY/8RzHeaBT2Fp7BslyiD38Nzy+Ww/nI62U7PVTecQs8jV1POhQeUhaLrBd2octBwbAVLnLuUMacgeGBnnM7B88aGxuEC+akQphnuMYqXhVS9mc3YvP3t8g/jF1nAfUOtxvctrbA4uLnvxn0wXLFmuDA5ba5bausMg6K8i0/H/BK7zEv/ASr/0T4tI+aDMYliOzJVM9ajcjvZGBkWOahZpLI/EwCip5/mUfkHKQ9HykdEhtFZAyF4maO5phdOtZPYySKTgSglDJdYZpJc+fk5X8AHtAe7HNaj7ERyClNt8SgovyruB9QQfmAyptq+q6BllYqXMxMEgJz/CS4Dle4BivcOYf+z8T/OC/wJn/Cif+CY79E5yslJYJho0otRjrXY9MpA1zhyvocn6oa8usCaAKtO7LAeEadbUUjYB+OlQqKW1QQdnEub5lhenGW/5ISQWVx12IFEMq5IA6EtJlqHfr3OnF9WB8vmL6Az/gxD/GGU4/rZRaaegJDyN7KqaQ8Fk6tWkLsBQXRxHihoIBqcQ5+9crMVs2t1BQ5gmoP242d6qPtj6LnNqgNsEBfdlN2gUnllScnY/e6zw1+Bqn+qHyT/E8/PWILjj2koKtpblBHB2OVCISWQfm9jK0tA/ddwIP5kMqAzqr+Z4yJFdC09DuVglLvUykxt2jW+ar1f0epCL4O77z3+DUP5nXwRK1iEp87JOb5g2xzvQ/IU7wfZLsxG/AQYkkDYvaSozNNn2aqCurcD3CLpo2mmdnsbPOp/oF+R+1/6CNZZGOioVo9je47fw67gsAAA==</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Desc>Список</Desc>
           <Type>List</Type>
@@ -6725,7 +6725,7 @@ END]]></Value>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Швидкий вибір</Name>
           <Desc>Швидкий вибір</Desc>
           <Type>ListSmallSelect</Type>
@@ -6733,21 +6733,21 @@ END]]></Value>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>ЗаписиШвидкийВибір</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerControl</Name>
           <Desc>PointerControl</Desc>
           <Type>PointerControl</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACpVU3U4TQRS+b9J3ODZebJEUEjEaYEtKgdIEy09FLghpht3Dduw6s8zOtkHSxGcwhifwwkslXBSNPsPwRmb2f2lBnYudnTnf+fvOOVMuLcyBXuVSuAGA+qK+qVv1U016e5wyiaLJmRTcrVl+hiqKyqW5hXKpXAp8yhxoycFK8t/WqDNiYUsOltLbFjIURKLd5DbW1Gf1W13fXakb9UtN1A81WdHGGHmPvkcshK7kgjjYYPYbQWwMpcet3dN3aMlaNzi1XOL7q8WQ6kaleNEb7nd3Xu6/2N08Otjv4P7maDHoNCrVk3LJC05daoFHhKTEhdDcwzzA8lT2lxExOEQmYVN/twmzXRSr01bqa6l6nzAH7TAdrZ74H3JqQ5tRfaAf0KhG4tiJXkfUlv09gT4ySSTlDEx4vri4kiGaxIvvn1Yuc0E0OfNlbetwZ6fTeL05Xq7kdIphwTMTiH/BLDB68+BFsiqYdbjnOBbBExNY4LqwBmREqEzuay2UeQ2jCstQSfyO0+SjGvgaZD1CfgdHRhhFB0dHVLPAPRSSom8cn1RTLqcNpHGawLSNlYLfGfh4nyLfQZkdcvd6CZSBYImrHLfj7Nd/RD+LcUjcQHd6Xlos0FqtzYZ8gIZmPavQtNOU45RrwSVaEm3gQxSC2hhXOuy8XQ9ZF120pLEeSMkZnIbbfNTZDeH4QITjT7flHve0QfDi3UxuamHVcpHFiFoX5R4RyKQR+ZiFCZv9AM8D9CWY8KrQ5wloG6nTlxlqqYBaxzMusOlSa6Cz2wqYlbKXd5nrAvVVXauJutHPkbpVn9REfb+7uvsIHnEw6aEH6xjnHeUWzkh4ni+iNqhAS3JxERe2LfF9SFo0OIeMngfY3rinldUHTJAiwBnyLe7aYQGywz1Uk7juOrEGvd3YWNL2JvjFc72oeC/TXF9GrMwYJaNgMU94shpnEkUUx4PFyXV0+JsTzWysZp+6tqHLNbPz+jxqyUwUP1vEQa3+Vg9gGkD2Tk3PTjQ1rOkiEf8/Mn+hLh/7v7AUYsJQZkLG5VLM4R8LWIRE+wcAAA==</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerTablePartCell</Name>
           <Desc>PointerTablePartCell</Desc>
           <Type>PointerTablePartCell</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACo1U3U7bMBS+j5R38HqVIlSqiWkTrFRtYV1vaLWyIYEQcp3TxGtwgnNShiakPcM08QS72OWGuCibtmcwbzQ5f03bMOYbO/bn75zznc8xDdPYWCN6mEY8EULUV/Vd3alfanY68LlAkAd05MGASuyA59VYOMeWAUxjbcM0opALh3Rxsp2texo5pgy6ONnMd7sgQFIEu+PbUFNf1B91c3+tbtVvNVM/1SwHthjzI4FcOEN/jBdUwrZpmIagZxAGlAEZoi+pAy1hH0hqJ6fH3f7oPTCsDaMR82gYvizLeMeqlG2fHrl1+zw6evqs3vef7/VH7WfS/dCqVE9MI4hGHmckoBI59UjM/ZhyZOsBvT4mgqacIVLk7FGyfbiwqqSxoxeHHN2B9AOQyCG0jk+qcfXl3SRBOjeI0BzbC9FL8OmcwNJc9XAAdfyULqXRIwScfxQuxGHy4FPqRbpLxdOBhBCEFsAXpJGBa/v0rIi8SpZXWY1p6jS8FIy807QHNJyQLmCRL1GrPAJ50iAi8jzSJPSCcswjr3JskUolV3c5ZCpVx6XCAeut4OcR9HabJKiuqDcodqFEdisgzWZ8ltFY1axXceg4z5X8Coi+GIIHDJu1npj6E8gPc+FyAaWPwBBs4k9BSm5DWtnU5zZJWKx2hOgLMoqndbI3BYEt6YSESicsqy/QZCRI50a2U4udW8gzRdSGgAMqQaCVxCjDHHIb3TdwHkGIpEFe1OsloNfAHRfnqM0FVBvGvoSOx9mkH4B4FQm2otDSy1Hf1I2aqVv9Q1J36rOaqR/31/efSEAdyN7Rg5ZP605qiz0Xf68vona5BIa+vEz730M4KzyBzARLtzrU89qUTU6zZs9tlXQw0KZfvLOU3txMi+4NimJkozVGkEmkB4VLLZYvC0eZ4Zba3nG5Z1tazFJfuH5imGXz6wv6evz+Vt39b1d3PKAy61pBkjIp9K+hmNn/qBBj4iClkCvTSDX6C2oH6KGFBwAA</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Елемент</Name>
           <Desc>Елемент</Desc>
           <Type>Element</Type>
@@ -7022,14 +7022,14 @@ FROM
         <BeforeDelete Action="0">BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Функції</Name>
           <Desc>Функції</Desc>
           <Type>Function</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACtVWTW8bNxC9C9B/oH2Sg8X60pujGIosuUIVy7Cc5FAUBrUaK1uvlipJVTUSAbYDtJcABQzXBQq4RYH2rrg2qsq18heG/6jg7mo/JG2b+ANIeeKSnBm+x5k3m80sP8hmSDDwdxyoAxzgSB3hpTrAoTpURzjEEQ7xDMf4N17iNY7wCgfqSL3WJ3bwN/VaL6pv1an60bREzF9iK5t5sJzNZDNdYbstUnEl8F1qwbrc+2RlslqwLNZ1pe226mxX9iiHcGsdXOBUQrPImmDiCY7xXJ3iBV77F1zRvl3aBtGhFpC6ZJy2oOA2tzltajfZjJBU2haxHCrEXYDNZl76YDvdhmNbJPBftYV8+PwFcHhE8Ni741sca/uckFxjEUC59WIbvpFLvoPAjx4cZJe70ffn0VSP5NfyMp7hAP/Ecxwkd1zoEe8OuRsBLTJXSDNybpAia3cotwVzzWrls5IRB0FeknLXtbZZ2QanSfJksVp7XtpaJH0jeatUFD/hGC/SEMRC17YMchtAXpz7BhOyhr/oLMXr9Me5Q2hzot4b0C9W/Hlfl9VsBVCx71rkGXW6sE3FHql1wN2kLSg50AZX5hqMOaQiNqBnkKeu/VUXKmurpBvMSJ64XccxYvEKlrSZ+zA8+2iVqEPqOI+ptbdTZbS5BRbjTfHfpgnLmlsHByy5yWwtRxPrJPoU3gc7gdUqwWNv/dCXosDLbGXfTHF+wCu89LfUEenQFugA0MsFAaaC6FGcz8xcxowU01lqUmmLPPQ9mZ182bsk5z1y+k1pj9rSA2UmgZobGmGQZfMLbRJiiv2FgP7Aa2ITT/BKfe9xfY5j/APHJD/1eqkh+9EUHAFe6Chj/aDk1SuykI5pC2gztFlKZ+UJCKHNS5wzntvkrMVp23xMhW0VOh2DJFbKjLcNsohneEnwHC9wgFc4VofqDcF36gDH6jscqiOdUjhcWJzm1G83scWwpPWYibRqbjAJDcb2tHSYRQ5Ugi7tnAe4SDu62gwPfjxUjJQ6SE8Zwuf9QBHR7TX3L6rhiQvrQJCkJE92qSMgrjR6t8yc5ryS/7/rxa/4Th/EMY7eTy1qcaoi3ozZUyFlEX9Tp9ZsDpZkfD/AWpHQJvnwje5cbGbL9AaqYEZhU7XgRiVxi25eflqtbhSelO6lkuog18ABnedV2gAnrKbwoe4oGSfE4jGO9N+JOvX+S4Kkh14khjGAun5XiaMvRvIB3FkH5vo0iLgPnQGeB/NTKjzgS+meZuhY8E19uw+iNvaHQoqss39vzNYaX4KQBH/Gt+pEW07KfIqEAHR47L170K1u5TfYIf4VPWB0A48XySNqk5kdGZt1+nWU2/NL3W9fcaMJ48mWNpnq1v0R9V1PlGZv2s9mgtk/m+VkH6EPAAA=</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Desc>Список</Desc>
           <Type>List</Type>
@@ -7037,7 +7037,7 @@ FROM
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Швидкий вибір</Name>
           <Desc>Швидкий вибір</Desc>
           <Type>ListSmallSelect</Type>
@@ -7045,14 +7045,14 @@ FROM
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerControl</Name>
           <Desc>PointerControl</Desc>
           <Type>PointerControl</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACq1VW28TRxR+t+T/cGr1YQ3RgiBIKGYTJU5iLNEkqrkIIRRNdk/WUy8zy+ysLRpZCuk/QBVvfazEY4pAckPhN8z+o2pm77bphWQePJ4535zbd87ZZuPGNdCr2TAbAKjf1Xlyqs7VRXKmPianapa8Ts7UTF2omfpNfVF/qY/qs7pQn9R5cpb8ohGHB5wyiaLLmRQ8sN2o1FcXNRvXbjQbzUYcUeZDT446+f++Rh0TF3tytFrc9pChIBK9LvfQVr+qL+p98lZ9UJ9TjzpaGSMvMAqJizCQXBAfN5n3UBAPjfRZb//oJ3SlPYiP3IBE0b26S+tWq35x+Hjn4Sp1J6NbI+rGd57e2sb9Sav9vNkI46OAuhASISkJwGi7ioTB2kKaTtIM4hiZhB39e58wL0Bx7zL21jcKQ0PCfPRMhrShPKYxpx70GdUH+jNa7VScuaPXE+rJ4YHACJkkknIGDty+ebNTIrokzO6/b518k7tdziJp7z568GBv84ed6Vqror0eAFx3gESvmAvW4QqEqawNzjrMuZiJ4DsHWBwEsAFkQqjM7+0eyuoLqw1r0MrtTos0pRUQaZB7JdTv4cQy/u7h5AnVmeUhCkkxsp49bxf8XMZUEbsDTFvr1GK5lOZsXygSH2V5qNzrJVDGguVOVZidln+jf3hfRjMmQaybvCqtl8eG3WdjPkJLc17Wx6LRguF6bpbHf17Er96Y69fpPIITHXhHe9+BaZruf9VR8FHUmOASXYke8DEKQT3MKtz05n6IbIAButLaiqXkDI7MtpJOiU3hR0CEHy027gEPtUIIs93Jb2xTg5WcZAh7gPKACGTSSm0sw5hx8CO+jDGS4MDd2iTIQfeR+kNZolZrqC085gK7AXVHOrrdmLkFb1WT31Sp6p16r2bqgwH9qd6omfojeZucQkh8zDviq7WWZSjNgpki5rxSR21Tga7k4lVGaV/iC5PedLQ8YvRljP3tuVclk+CAFDEuke/ywDNUlYc5VJcEwRZxR4f7mbK8NB2I6uf1+sO5SCu9kxfuJQaDVbNdJTFfm8cSRerxVwmfGwrTiqhSY8RHu96HdhlIXbBcQVnt3SENPEtrXNoOQ572SSnKviHahQHKx3oeWfnT8qOx2NBpK7NugET8/z6+MpaqUf4XQgzGOL0UMm02Mrr+BsDNZYhZCgAA</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Елемент</Name>
           <Desc>Елемент</Desc>
           <Type>Element</Type>
@@ -7113,7 +7113,7 @@ FROM
           </GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerTablePartCell</Name>
           <Desc>PointerTablePartCell</Desc>
           <Type>PointerTablePartCell</Type>
@@ -7279,14 +7279,14 @@ FROM
         <BeforeDelete Action="1">BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Функції</Name>
           <Desc>Функції</Desc>
           <Type>Function</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACs1W0W7bNhR9N+B/YPLkFILysrfUDVzHzoy5cRCn60MxBLR042qRRY2k5wWtgSQFtpc9FV0KDMiGAfsA10gwz1mdX7j8o4GSLMlWvdlFi41PFMl7eM7lPaTyuc17+RyJGl7hBP/CG3yHY7zFgbpQL9UZDo7wVxzgHY5xdIS/q5d6Xn2vLtUb0xKp8JmpfO7eZj6Xz3WF47VJzZPAj6kFu/Lks63paMmyWNeTjtdusmPZoxziqV3wgFMJdpnZYOJrnOBQXeI1vsORJrKlsT3aAeFTC0hTMk7bUPLsQ05tDZPPCUmlYxHLpUJ8gLZ87nmoze+2XMciEVzdEfL+k2fA4QHBVwGltzhRZzgqCMk1dQGUW88O4Tu5EQJEOLpxkF3uJd9Pk65us1+bm3iFA/wDhziYnfGgRwIOhWV0lZknpJlgGaTMOj7ljmCeWa99UTHSnMlzUu161iGrOuDapEjW640nlYN10jdmSSwk/TNO8HoR4dTWjQODrMA/gP1k3L/aCvt9XTrZY6fi1LPIl9TtwiEVJ6Thg7dP21BxoQOeLLQYc0lN7EHPII8955su1Ha2STfqkSLxuq5rpPYrWdJh3v147YNtos6p6z6k1slRnVH7ACzGbfHvoTORDa8JLlhynznaclF0thCX8sNPeIs34Sp1QXzaBo0HvUKEN4epW/n9Et4rzVgQmtWwUF+C0A88P/1yjkkhOI3FTGmPOjIQZc4KNfe0wqgcsoXST7rgCgi2Ss45zDd58YKsLd7gAKgdx2wspvgIhNDhFc4ZL+xz1ua0Yz6kwrFKvm+QmZEq4x2DrOMV3hAc4jUO8BYn6lz9SPBOneFE/YAjdaGPGkdr6/MCw5spNRgbQbfMTtvmHpPQYuxEG84sc6AStCEKgeAy9XWNGoH89FappDRBBn6Kc72i9fRNXPgHrwWWZD5EFUOK5Ji6AtL+1LNV5tqxUYz/wGW/4R2O1DlOcLycxxppTYlAI7sq1pYInVu143CwJOOnkZSahA4pxsn86BbN+mmF0lr+sag+rtf3So8qn6QAmyB3wAVdHnXaAjcuwjhtH1YJ02TiKxzrt1pd4jD834lKIoZP6dFVvk1czYMUI3VZAHN3nnMaQ19hAYL5ORWBzo3FSBn1a2FoGLdSJlOvHykz//RjJbLR+hqEJPgLvlWvcawuppaa0xxpjJctfTGvQkIvHeII/0yOJ9kwUC15krjZMk2CzSb9NinUrIt0C6/wdNA0n7PX+rSrn6//0dsT3KFZpv18Lur9DX/SGNmuDAAA</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Desc>Список</Desc>
           <Type>List</Type>
@@ -7294,14 +7294,14 @@ FROM
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerControl</Name>
           <Desc>PointerControl</Desc>
           <Type>PointerControl</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACp1U3U4TQRS+b9J3ODZebJEUjZoY6paUKqURAa2IiSHNsHvYjl1mltnZEjQkRN/AGO+Mt16iwQT/X2H6Rmb2f9tqKHOx83POnHPm+8635dLCHOhRLoUTAKgP6rf6qb6qX+q7+qFOR69Hb0Yn6rSnPqpT9Ud9V+e9TU6ZRNHiTAru1iw/u140lUtzC+VSuRT4lDnQloN6su5orz1iYVsObqWnbWQoiES7xW2sqXfqt/oyeq/O1C91rjPXdTBG9tH3iIXQlVwQB5vMfiKIjaH1eXtj9wVastYNdi2X+P7dYkkNo1I86Mn24wcvbjxznMGD233cHu55Qfflo0p1p1zygl2XWuARISlxIYx3CYRgcQKXVxFkOEQm4b7+rhJmuyjuzhC+sZTG7RPmoB0ioOMmFQ85taHDqN7Ql2hUI3OcXY9tasv+pkAfmSSScgYm3Lx+vZ55tIgXn1+tvLpIdS3OfFlb2VpbW28+vH+8WMkFK9YL10wg/hGzwOjNgxfZqmA2YKyi2ARXTGCB68ISkENCZXJea6PM3zCqsAiVJO9xikpEp6+drMvwuI6HRljeOh5uU40b91BIir7xfKeaoj9D5PRlJjAdvF6odJZA8TxBsIMy2+TO9RAoA8GSGnI0HWdL/z/3s+KHxA20APPWItdLtQ4b8gEamsCM7MmkKV0pbYJLtCTawIcoBLUxbpqwuzc8ZF100ZLGciAlZ7AbTvORrJrC8YEIx59s/U3u6YDgxbOZnNRCnnOVxR61LspNIpBJI8oxzScU1GM8CNCXYMKdgpYSp1WkTl9mXrcKXsu4xwW2XGoN9OtWAmal6OVTXqQ91Cf1RZ2rM71R39Rbda4+j96PTsAjDiZd90+CY0CiR4c6DPfzRa97VKAluTiKGe9I3A/RjMS5xehBgJ17Y7cy4sAEKQKcYl/hrh0yk23GvFrEdZeJNehtxMESPZjgF/eN4sWxl+YaNkJlFvEZhVR5ipLR3JMoogL/SWdOA+EyZ5raiq0+dW1D8zi1V/s8auLMFP8ziYP6+lMt2bSA7Cc5qbZIZ6zlIhGzi+yymOYfdRH4Qp+wxqkux+VSDO5frKs0lfYIAAA=</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Швидкий вибір</Name>
           <Desc>Швидкий вибір</Desc>
           <Type>ListSmallSelect</Type>
@@ -7309,7 +7309,7 @@ FROM
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>ЗаписиШвидкийВибір</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Елемент</Name>
           <Desc>Елемент</Desc>
           <Type>Element</Type>
@@ -7360,7 +7360,7 @@ FROM
           </GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerTablePartCell</Name>
           <Desc>PointerTablePartCell</Desc>
           <Type>PointerTablePartCell</Type>
@@ -7477,14 +7477,14 @@ FROM
         <BeforeDelete Action="1">BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Функції</Name>
           <Desc>Функції</Desc>
           <Type>Function</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACs1WTW/bRhC9C9B/WPskBwR96c1RDEWWXKGKZVhOcyiKYEWOFdbULru7qmokAmwXaC89BakLFHCDAPkBimOjqlLLf2H4j4olKX6IUSMXSdE9Dbmct+/NzttlsbB+p1gg0cDfcIrX/ql/jCN8i1c6xvFjfIkjvMGJDl/7P+A1Tvwf/TP/V9OSqeTMVLFwZ71YKBb60mFd0mAKxAG1YFsdfrYxe1uxLN5nymHdNj9QAyogntoGBoIqsKvcBhNf4BQv/DO8xGscayIbGpvRHkiPWkDaigvahQqz9wW1NUyxIBVVjkUsl0p5a2XFwtNQmdfvuI5FIrCmI9XdR09AwD2CzwNCb3DqH+O4JJXQxCVQYT3Zh+/VWggQ4eghQPUFS56/SkI9sk/r63iOI/wDL3CUnWEwIAGH0odVVTmTykyQDFLlPY8KR3JmNhtf1Iw0Y/KU1PvM2ud1B1yblMlqs/WotrdKhkaWwkLKmtDlIrqppVt7BlmafQD6yZh/vRHGQ900+S2n8ohZ5Evq9mGfykPS8oDt0i7UXOgBU6UO5y5pyB0YGOQhc77tQ2Nrk/SjiJQJ67uukVqvYimHs7vxt/c2iX9CXfc+tQ4fNzm198DiwpYfTs1ktlgbXLDULne02aLsfBMu4YRf8B1e4V/hHPFoFzQaDEoR2hyiHtX3C3ivMGNBal7BQnUJwjDw+uzJOSClYC8WM6UD6qhAlJkVau5ohVEz5NtkmITgSgiWSnY5rDZ59oysLF5gD6gd56wtpvgApNTpNSG4KO0K3hW0Z96n0rEqnmeQzJs6Fz2DrOI5XhG8wEsc4Tuc+if+zwRv/GOc+j/h2D/Fkd7mldV5geGZlHoZ20CP3Eqb5g5X0OH8UNvNrAqgCrQdSoHgKvV0hxqB/PRSqaK0QQVuimt9S+PpM7j0D04LDMk9iDqGlMkBdSWk3aln69y1Y5sY/7nHXuENjv0TnOJkOYe10ooSeUb+q1hZInPuqy1HgKW4OIqENBT0SDku5Uc3aN5Nt2isZa+J+sNmc6fyoPZJmq8Nagtc0K3RpB1w4waMi/ZvumBWSHyOE31D+2d4Ef7hRO0Qg6fU6P7eJK5mQcqRtjyAuT3POI2hD68AwfycykDl2mKknPaVMDXMu1UdU7ceqXLv6OOUsdX5BqQi+Du+8V/gxD+dmWlOcaQw/mzpA3l5Cuf6RxXH+GeyNclygWIlkqJlGzRJNtv0u6RF8+7RIzy400mzWmYP81moL63/0Y0TnJx5psNiIYr+BqQ/HIKaDAAA</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Desc>Список</Desc>
           <Type>List</Type>
@@ -7492,7 +7492,7 @@ FROM
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Швидкий вибір</Name>
           <Desc>Швидкий вибір</Desc>
           <Type>ListSmallSelect</Type>
@@ -7500,14 +7500,14 @@ FROM
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerControl</Name>
           <Desc>PointerControl</Desc>
           <Type>PointerControl</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACp1U3U4TQRS+b9J3ODZebJUU/IkYcCFlhdKoQETwwphm2D1sxy4zy+xsCRIS4iMY44U33nqJiEk1UV9h+kZm9n9pkeJc7PycM+d8833nbLUyfQv0qFaiCQDUJ/Vb/Rq+G56oU/VNfddrNeioz+pU/VE/1aCzwSmTKCzOpOBeww7yy2VTtXJrulqpVsKAMhdasjefrtvaa5fY2JK9+9lpCxkKItGxuIMN9UH9VmfDj+pc/VIDnXleB2NkDwOf2AibkgviYpM5LwRxMLK+aq3vvEFbNjbDHdsjQfCoDGnBqJUPOn73Cb1z93CWLT9oLvEDa31te9Zu1uqvqxU/3PGoDT4RkhIPonjX5gfmRlg5ignDPjIJy/q7SpjjoXg0cfCFxSxqlzAXnej1OmqKts+pA21G9Ya+RaMem5PcerykjuxuCAyQSSIpZ2DCvZmZ+dzDIn5yfrN2dDU2i7NANla2nj5daz5bPp6rFUKV0cJtE0hwyGwwOlPgx7Y6mAtwAU9ighsmsNDzYBHIAaEyPW+0UBZvGHWYg1qa9zjjJBYy0E729RVcwwMjAreGBy+p5oz7KCTFwHj1up4xP3Hc7FUmMB16voRy8jDJPCKsizLfFM71EChDwVIEBYGO82Xwj/s59D7xQt10RWtZ5cVGm/V5Dw0tXS7zaNJMqEwwwSXaEh3gfRSCOpiUS1TV6z6yTfTQlsZSKCVnsBNNU3EzNYUbABFuMFryG9zXAcFPZjM9aUQaF5AlHo1NlBtEIJNGnGOcT9RIz3E/xECCCQ9LPZQ6rSJ1uzL3ul/yWsJdLtDyqN3Tr1sJmZ2xV0x5dXGoL+pMDdS53qgf6r0aqK/Dj8MT8ImLacVdKm9CR/zkqP+i/VTZ6zEVaEsuDhO92xL3Ii7jptxidD/E9uMLt3LZwAQpQhxjX+GeE+mSby54WcTzlojd66wnwdJuMCEo7xfKFy+8tFCuMSuTN55RSlSUJx3NXYkihneplIX6j5YF09gytLrUcwyt4tg67fK4gHMTif+UxEV9fVu3awYg/zWOdlrcY8zykIjrN9j/MVp80iTkRT4RwrEux9VKQu1f55jCwuIIAAA=</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Елемент</Name>
           <Desc>Елемент</Desc>
           <Type>Element</Type>
@@ -7558,7 +7558,7 @@ FROM
           </GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerTablePartCell</Name>
           <Desc>PointerTablePartCell</Desc>
           <Type>PointerTablePartCell</Type>
@@ -7675,14 +7675,14 @@ FROM
         <BeforeDelete Action="1">BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Функції</Name>
           <Desc>Функції</Desc>
           <Type>Function</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACs1WTW/bRhC9C9B/WPskBwR96c1RDEWWXKGKZVhOcwiKYEWNFcbULru7qmokAmIXaC89BYkLFHCDAPkBimGjqhzLf2H4j4olKX6IYWyjTdE9LbmcN+/NzttlsbB6p1gg4cB3OMULHOMZTp7gWxzjFU719L33E17i1PvZO/Z+My2ZCEktFQt3VouFYmEgbdYjDaZA7FELNtX+V2vztxXL4gOmbNZr8z01pAKipU1gIKiCbpV3wcTXOMNT7xjP8BInmsiaxma0D9KlFpC24oL2oMK6u4J2NUyxIBVVtkUsh0p5Qz3FwvNAjzvoOLZFQoimLdXdR09BwD2Cr3waH3DmvcRJSSqh6Uqgwnq6Cz+qlQAgxNFDgBoIFj8/jqd6pJ9WV/EEx/gnnuI4vcJgSHwOpTwtVc6kMuN4g1R536XClpyZzcY3NSPJkzwn9QGzdnndBqdLymS52XpU21kmIyOdOJfo7zjDszySidStHYNcw9mH+mJ8v1sL5iPdFtntpfKAWeRb6gxgl8p90nKBbdMe1BzoA1OlDucOacgtGBrkIbO/H0BjY50MwhkpEzZwHCORr2Ipm7O70bf31ol3SB3nPrX2nzQ57e6AxUVXXh+aimyxNjhgqW1uazuF0dmGy+31N3iB5/gRz/HSOyIu7YHGgGEpxFjA0aP6adqflGPkhGZ552qKEUa+h+dP9h4p+TuQz5QOqa18UWZaqLmlFYYtkG2OUTwFR4KfKt7boMbkxQuylJ9gB2g3ilnJp/gApNThNSG4KG0L3hO0b96n0rYqrmuQ1Js6F32DLOMJnhM8xTMc4wXOvEPvV4JX3kuceb/gxDvCsXeEk6XlRYHBqZN4GTW/HplM6+YWV9DhfF+bzKwKoAq0CUq+4Cp1dV8avvxkqkRR2qB8D0W1vqXd9Clb+oy/fBtyF8KOIWWyRx0JSU/q1Tp3upE5jP/IWe/wCifeIc5wejNftZI6YlFG9qtITyxu4asNW4CluDgI6TcU9Ek5KuC/bsush27RTp+/COoPm82tyoPaF2m0NqgNcEC3QZN2wImaLSrVzXd8XjR8hVN933rHeBr8m4RbH0EmNOgOXieOzk3KoaIsgLm5yDOJoY8nH8H8mkpf20o+UkbxUhAaxN2qeonbjFS5e/BPitfqPAOpCP6BH7zXOPWO5nZZ0Bnqij678UF7XeIT/TuJE/wr3oY4ia9OibhA6RaMg802/SFuwqwr9AiO4WTQvG7po3k+1VfQ/+j+8M/BLNNRsRDO/gZCFxydNgwAAA==</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Desc>Список</Desc>
           <Type>List</Type>
@@ -7690,7 +7690,7 @@ FROM
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Швидкий вибір</Name>
           <Desc>Швидкий вибір</Desc>
           <Type>ListSmallSelect</Type>
@@ -7698,14 +7698,14 @@ FROM
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerControl</Name>
           <Desc>PointerControl</Desc>
           <Type>PointerControl</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACpVU3U4TQRS+b9J3ODZebJEUVBIJsJBSpDRBIAKSQEgz7B62Y5eZZXa2FQmJz2AMt8Y7L5FwUTHqKwxvZGb/lxaBudiZM+d3vu+cLZcmxkCvcincAEB9U9fql7pQV2rQVl/VhfqrrtWgvcEpkyganEnB3ZrlZy5FVbk0NlEulUuBT5kDTdmdTc4tbXVILGzK7lR620SGgki0G9zGmvqi/qjLm3N1pX6rgc48q4MxcoS+RyyETckFcbDO7C1BbAy1e831g/doydpmcGC5xPfniiXNG5XiRXvn+W7nVX33xdLkyYfp4+2jre72Yr9fqe6XS15w4FILPCIkJS6E8R6ICswMYXEawYQ9ZBJe6+8KYbaLYu6ekPMLaawOYQ7a4Ut1rKSyHqc2tBjVAv2IRjVSxxn12qG27GwI9JFJIilnYMLLycnZzKJBvPj+aeX0rooanPmytry9urpWf/P6bKaSC1CsEZ6ZQPwTZoHRHgcv0lXBnIdbVcQqeGICC1wXFoD0CZXJfa2JMu9hVGEGKknesxSJiCpfG1kP5WgN+0ZY0hr2d6jGh3soJEXf2NuvpijfEy19gQlMB5wtVHSfc7wPEeagzITcvV4CZSBYkjdHwVl29P/jnxXcI26gByevLfK4UGuxHu+iocnJiBxOmlKRUiK4REuiDbyHQlAb44YIu3XdQ7aJLlrSWAyk5AwOwm08Go26cHwgwvGHW3mDezogePFuJje1kM9cZbFFbRPlBhHIpBHlGGUTDshbPA7Ql2DCdGE2EqMVpE5HZlZTBatFPOQCGy61uvp1ywGzUvTyKe9qCfVdXaqButKC+qk+q4H6cXN+8wk84mDSXXeSGoMQPTScq1AeL1otUYGW5OIkZrkl8ShEMBq2bUaPA2wt3fLKyAITpAhwhH6Zu3bIRibcsmoQ110kVre9HgdLZsAEvyjPFx1vvTTXpBEq9w2ZUQifpyJZ9UOJIirqTtpyvR4ec6qRLdfoUNc2NHcje7LDo2Ytp6r4v0cc1O7v9GimBWQ/uuGpiuaJNVwk4vHD9Bgc8w95CGShTVjXSJOzcikG9B9+C8v9fggAAA==</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Елемент</Name>
           <Desc>Елемент</Desc>
           <Type>Element</Type>
@@ -7756,7 +7756,7 @@ FROM
           </GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerTablePartCell</Name>
           <Desc>PointerTablePartCell</Desc>
           <Type>PointerTablePartCell</Type>
@@ -7959,14 +7959,14 @@ WHERE
         <BeforeDelete Action="0">BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Функції</Name>
           <Desc>Функції</Desc>
           <Type>Function</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACs1WUWsbRxB+F+g/rPUSORxnCn1zFKPIliOqWMZS2odSzOo0Vq4+7V5396qaRBC70L70KaQuBFwo9AcoxqaqUit/YfYflb073Z10URpDQ7tPe7s7M983+83sFQsbd4sFEg98hWN9ipND/F1/jzc41T/oc/2L7cjMmYWtYuHuRrFQLATSZX3SYArEEXVgVx1/ujlfrToOD5hyWb/Nj9SQCki2doGBoAp6Nd4DG1/iDC/1OV7hDU5wipNN45vRAUifOkDaigvahyrrdQTtGTfFglRUuQ5xPCrlKgLFwtOIgB90PdchsU3TlereF09AwH2CL8K4r3Gmn+OkLJUw+CRQ4TzpwHdqPXIQ+zFDgAoES7+/TKdmLH5tbOArnOHV4iqDIQnjlxPgNc6ksqPDFqnxgU+FKzmzm43PdqwsIPKU1APmdHjdBa9HKqTUaR3WHlYPSlZ243CfCjr4xOzfuVMiI2sRwkq4FzjGP/ASx6sgZ7C1DiyyzCCx/29YfLUZzUdGI/mrp/KEOeRz6gXQofKYtHxg+7QPOx4MgKlyl3OPNOQeDC3ymLnfBNDY3iJBPCMVwgLPszLxqo5yObuXnL2/RfQp9bwH1Dk+bHLaOwCHi578Z9MFyxZrgweO2ueuqa3YOi/GVPg/4xu8xr/wGm/0GfFpH4wRDMux0ZKhGbV343wnfmuFaR7oShKph1FYwfMv94iUw5SvRkqH1FUhKXuRqL1nGMZ3nlfDKJ2CJyEMlV5mlFTy7BlZWx3gAGgvsVlfDfERSGnMd4TgorwveF/Qgf2AStep+r5FFlbqXAwsUsILvCZ4iVc4xjc406f6J4Jv9XOc6R9xos9wrM9wslZaJhi1oMxionYzcpG27D2uoMv5saksuyaAKjCqL4eEa9Q3QrRC+tlQmaS0QYVFk+T6lvVlWm75PQUV1h33IVYMqZAj6knIFqHZrXOvl1SD9bFK6Td8ixN9ijOcflghtbLAUxZW/lRCIGWzdGrbFeAoLk5ivA0FA1JJMvav12G+aG6hn6XmX3/cbO5VH+18FCm1QW2DB+aim7QLXiKnJDfvudN5WvAFTs0Dpc/xMvrZiC838ZEBbUS5RTwTjFRiCnkH9u4ysKwP03FCD/ZDKkMy66s95SiuRaaR3a3SlXmRSI37J7fKVqv7NUhF8Fd8rV/iVJ/NK2CJWEwkOfbBzTIX6cL8AeIE/0wTnXoN8SuRpmBRVamx3abfprrKK9uMqHdmjeaZWeyn86l5N/5HTT9sXnmko2Ihnv0NLNnqxNoLAAA=</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Desc>Список</Desc>
           <Type>List</Type>
@@ -7974,7 +7974,7 @@ WHERE
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Швидкий вибір</Name>
           <Desc>Швидкий вибір</Desc>
           <Type>ListSmallSelect</Type>
@@ -7990,21 +7990,21 @@ WHERE
           </GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerControl</Name>
           <Desc>PointerControl</Desc>
           <Type>PointerControl</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACpVU3U4TQRS+b9J3ODZebJEUjAQJZSGlSGmC0IiICSFkunu6HbvMLLOzRSRN9BWM4cIn8FIJF9VEn2F4IzP7v20hOhc7O3P+v/OdKZcW5kCvcincAEB9Vd/vPqnxaYdTJlE0OZOCuzXLz3SKonJpbqFcKpcCnzIHWnJQT/7bWqtHLGzJwVJ620KGgki0m9zGmvqi/qibu2t1q36rsfqlxnXtjJEz9D1iIRxILoiDDWa/FsTGUHrc2u++Q0vWDoKu5RLfXyumtG5UihendmfFbfV2ng8Wl/ffW/2lt8tPe06lelIueUHXpRZ4REhKXAjd3YcCrE7VfhXBgkNkEl7o7w5htotibdLH+kZq3CfMQTssRRsnsYec2tBmVB/oBzSqkTgOodcRtWW/I9BHJomknIEJzxYX65lGk3jx/ePKVZpCkzNf1rYPd3f3Gi9fjFYrOYtiUvDEBOJfMguM03nwIlkVzHWYCBuL4JEJLHBd2AByQahM7mstlHkLowqrUEnijtLSI/R9rWTdC/seXhhhDnt4cUQ1AtxDISn6xvFJNcVx0jzN0QSmPdQLMae0430KdAdldsjd6yVQBoIlgXKojrJf/wH7LMMhcQPN7ry02JqNWpsN+QANjXfWm+mgKbopyoJLtCTawIcoBLUx7nHIuH0P2QG6aEljM5CSM+iG23zE54ZwfCDC8afp2OGedghevJvJTS3sWC6zWKN2gLJDBDJpRDFm6YQkf4XnAfoSTFgp8DtR2kHq9GWmtVTQ2sQeF9h0qTXQ1W0HzErRy4dMOaC+qRs1Vrf6AVI/1Wc1Vj/uru8+gkccTPhzbxfjqqPKwtkIz/NFrS0q0JJcXMZtbUs8CyGLBuaQ0fMA21sTVll3wAQpApwh3+auHcKfHSa0msR1N4k1ON2PnSWkN8EvnteLhhOV5lgZoTI1RkbBXx7sZDV6EkWUxb2NybE5/M2JZpKq2aeubehmzWRdn0d0zETxY0Uc1OZv9PClCWSv0/TcRBPDmi4S8f/j8iBw+cz/BaNQJ0xkpsqoXIoR/AuqaLVp5wcAAA==</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerTablePartCell</Name>
           <Desc>PointerTablePartCell</Desc>
           <Type>PointerTablePartCell</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACo1U3WrbMBS+N/gdtFw5paRl9GK0S0PqtlkYNGHplotSiiKfOFoc2ZWPE8oobK8wRi/2BLvcSi+ywfYMyhsN+S9O4nbTjWTp03fO+c4nm4Zp7GwRPUwjnggh6qv6vvik5lddnwsEeU4HHnSpRBs8r8bCJbIMYBpbO6YRhVy4pIXjg2zd1sghZdDC8V6+2wIBkiI4tu9ATX1Rf9T94k49qN9qrn6peQ5sMuZHArlwe/4QZ1TCgWmYhqATCAPKgPTQl9SFpnDOJXWS04tWZ/AeGNZ60YB5NAxflmV8aFXKtq9Og7FkHXvv+QkN5Gs22e3bp/1ZpXppGkE08DgjAZXIqUdi7qd1I/uPqPUhkTNlDJEiZ/+gOoOZVSX1Q73ocxx1pR+ARA6hdXFZjSsv6yMJ0rlOhGY4WIm8gU7nBJRmqYcLqGOnZCmJHiHg8qNwIQ6Sh55SL9LdKZ52JYQgdOm+IPUMXDujkyLyNlneZvWlidPwRjDyTtOe03BMWoBFvkSp8gjkWZ2IyPNIg9AZ5ZhH3uTYJ5VKrux6yFQqe0SFC9Zbwa8jaB83SFDdUK9b7MGG6FZAGo34JCOxqlmf4sBxlhvZFRAd0QMPGDZqbTH1x5Af5rLl8kkfgSE4xJ+ClNyBtK6pzx2SsFhHEaIvyCCetsnJFAQ2pRsSKt2wrLpAk5EgnevZTi32bCHPFFHrAXapBIFWEqMM0+cOjt7AdQQhkjp5sbtbAnoF3B3hErW3gjqCoS/B9jgbdwIQp5FgGwqtvBn1Td2ruXrQPyH1U31Wc/Vjcbf4SALqQvaCHrV7WnVSWey3+Ht7FXXMJTD05U3a/TbCpGD/zAJrt2zqeUeUja+yVi8tlfQv0IZfvbOW3tJKq84NilJkozlEkEmkR2VLDZYvC0eZ3daabo+451hazFJXjPzELuvW1xf09fjtbXr7aU/bHlCZda0gSZkU+rdQzOx/VIgxcZBSyK1ppBr9Bfd4eDd3BwAA</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Елемент</Name>
           <Desc>Елемент</Desc>
           <Type>Element</Type>
@@ -8226,14 +8226,14 @@ WHERE
         <BeforeDelete Action="0">BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Функції</Name>
           <Desc>Функції</Desc>
           <Type>Function</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACs1W3W7bNhS+N+B3YHxTpxAUDNhd6gauE6fG3DiI3e1iGAJaPnG1yKJGUvOC1kCSYe3NblZ0GTAgxQbsAdwsQd10cV/h8I0GSrIkW/XWNClaXlEkz893+H08yueWbuZzJBr4Cw7xAs/VEZ6oA/VzMPsDh+on9aNexxE+V/v4tz6ljvAlDtVjdYSvtvGv8ID+VL+Zlkj5nNrK524u5XP5nC9st0tqrgS+Qy1Yl7ufL09Wy5bFfFfabrfJdmSfcoi31sEFTiV0KqwDJj7DMZ6oIzzFCxzp9Ja1b5f2QHjUAtKUjNMulN1Oi9OOdpPPCUmlbRHLoUJcF+B87mEI2PPbjm2RKEbdFvLWVw+Aw22CT4M8X+BY7eOoKCTXeARQbj1owQ9yMXQQ+dGDg/S5m3x/nUz1mP5aWsLfcYyn06su9EkQv/jeQCvMFdIMnRukwnoe5bZgrlmvfbFmpAGQh6Tqu1aLVW1wOqRECq3GduVueatgpDe2Nymnvc/0/o0bBTIwplOeC+8Yh/gST3A4D2Iqt8aWQa6KOI73cVB/sxzOB5qzWWpRseda5Evq+NCiYpc0PHA3aRfWHOiBK4ttxhxSExvQN8h91/7Oh9rqCvGjGSkR13ccIxWvbEmbubfis7dXiDqgjnOHWrvbdUY7W2Ax3hH/bzpl2XCb4IAlN5mttR5ZZ8n+/kL8FV/jGf6DZ3ihDolHu6CDQL8YBZkJpEfl7bjeiteYY5oFNhd04mEQvECTL3uHFIMrmp8p7VNbBqDMaaDmhkYYcSTLnkEyBUdAECq5/PASyKNHZGF+gC2gndhmcX6K90AIbb7GOePFTc66nPbMO1TYVtnzDDK1UmW8Z5ACHuMZwRM8xSG+xrG+cIJv1D6O1RMcqUMcqkMcLRRmAYZPYmoxVocemUgr5gaT0GZsVyvRrHCgErRKigHgCvU0cY0AfjpUqihNkIHI4lpfUo+6BRT/Q4CBTpkHEWNIiexQR0BatHq3ypxOrB7jU5Hen/gGR+oAx3j+bsJrpIEmqI3sqRhwgn7m1KrNwZKM70X4ahJ6pBRX+Np1mxXZJfh2xWZUvV+vb5TvrX0QqjZBroIDmkh12gYnpmtcy2vkzKTs+BTPdYPVDsKft4g8ccwUSC2SFeLo5Egpgpx1YK7PAkn70C9g4MG8S0UAfnG+p0xJFkLT0O5S5U11VFJh3t4HrW6j/S0ISfA5vlDP8FwdThQ5U4gIeHzsnR/7K2d2rP/YcYSvkotMsgjqI3lS4mmWJ8Zmk36f8DyrTD3CXpE2mlR+un9MprpPfkJNLniss5kO8rlo9i95jid6ug0AAA==</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Desc>Список</Desc>
           <Type>List</Type>
@@ -8241,7 +8241,7 @@ WHERE
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Швидкий вибір</Name>
           <Desc>Швидкий вибір</Desc>
           <Type>ListSmallSelect</Type>
@@ -8249,14 +8249,14 @@ WHERE
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerControl</Name>
           <Desc>PointerControl</Desc>
           <Type>PointerControl</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACq1U32sTQRB+D+R/GIMPFy2xoqC2Xkua2hjQNlq1oEjZ3k0va87dc28vRSWgiD75okgexUcfaxWsgv4Ne/+R7N7vNora7kNud+bbnZlv5ku9duYU6FWvmQ8AqDdqV/1Q3+OJ2oufx6/N7oPajV/GL7Rd7av38TP1WaPiifqqduNX8UR92+xzyiSKDmdScL/lhMWbVVe9dupMvVavRSFlHnTlcD7b9zRqmzjYlcPzubWLDAWR6Ha4iy31Tv1Ue/FEfVE/1L7OZ14/xshDDAPiIKxLLoiHbebeEsRF473XXdt6gI5srUdbjk/C8HI1pQWrUTVs3hW3ou12cMmd3bh048LyHc/tn91pNO/Xa0G05VMHAiIkJT6Y546LNZg7xNXThEYcIZNwRf9eJcz1UVw+asyFxTzYgDAPXUOVDpbVNuLUhR6j+kCfoNVM3GlKem1QVw76AkNkkkjKGdhwbnZ2vkB0SJDaTzae/nfKHc5C2Vq5fe3aavv6lfFcoxShWgSctoGEj5kD1uYMBImvCfYCHEgzdcEJG1jk+7AIZIdQmdlbXZTlG1YT5qCRxR3nVCXTEGqQc2xjsIo7lsl5FXc2qGaYBygkxdC6d7+Z9+mo4XIObGA64nylpiO/nn4PDY2HsjiU7HoJlJFgWWKlLo+LbfiH+0VFI+JHWv1lb3VUFls9NuJDtHT/i1k5HDTvdt51wSU6El3gIxSCupjOnFHMWoBsHX10pLUUSckZbJnPTKLftvBCIMILD8upzwP9IATp184sLTMRpcxSRGsdZZ8IZNJKYkzDGJHexEcRhhJsuFjRZwa6itQbyAJ1voJawm0usONTZ6irW4mYk7NXDvnfM6M+qj21r74YyDf1Vu2rT/EkfgYB8TCbz992PWUpYcJo25xnqqhlKtCRXDxOx6An8aGhOBH8bUYfRdhbPnCr6CbYIEWEU/wr3HdNu4rDAVSH+P4ScYaba+ljmUhsCKvnherFA5WWpjhh5cgytSrxy83MVntbokiy/m3jS2ox25Jr6tB2BtR3Ld3cqVM94Mm4F670z5l4qK/f0eLOExj/QZeJIlnHRyL+XY7HSnS50r/h1GBM4lMh43otZfwX0MVI88cJAAA=</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Елемент</Name>
           <Desc>Елемент</Desc>
           <Type>Element</Type>
@@ -8348,7 +8348,7 @@ WHERE
           </ElementFields>
           <ElementTableParts />
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerTablePartCell</Name>
           <Desc>PointerTablePartCell</Desc>
           <Type>PointerTablePartCell</Type>
@@ -8724,14 +8724,14 @@ WHERE
         <BeforeDelete Action="0">BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Функції</Name>
           <Desc>Функції</Desc>
           <Type>Function</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACtVW3WobRxS+F+gdxrqJHJY1hd45ilBkyxFVLGMp7UUpYrQ6VrZe7WxnRlVNIrBdaG8KBeO6UHCh0AdQFJuqcq28wtk3KrO72h/9tJabknauZmfmfOd835xzZtOpjYfpFAkGnuME3+AEhzhxj3GEP+EEb91T9xgH+AavvfkFDhv4q/s13uLY/ca9cH/UDRHDSGylUw830ql0qitMu03KtgR+QA3YkYcfbk5XC4bBurY07XaNHcge5RBu7YANnEpoFVkLdC+8oXuBV3iLIxzjaFNh27QDwqEGkJpknLahYLfqnLYUTDolJJWmQQyLCnFfgunUS5+g021apkECzIop5KNPXgCHxwTPvLhe+7hZIbmKXwDlxos6fCXXfYAARw0Ossvt6PvTaKpG8mtjwwv1KrlqQ494/rN3JlZktpC6D6aRIus4lJuC2Xql/NG2Fg+YvCSlrm3UWckEq0VyJFOvNopPC/sZLb7R2KOcdj5Q+w8eZEhfS4a4lM4lDvA3HOJgGaVYbNV9jazKMMR/Pyw/2/TnfZWD86lDxZFtkI+p1YU6FYek6oC9R9uwbUEHbJltMmaRstiFnkae2+YXXShv5Uk3mJEcsbuWpcX8FQxpMvtRePZxnrgn1LKeUOOwUWG0tQ8G4y3x96YJy6pdAwsMucdMVbtT6yT7RVeBo0Zgkyd4hjc4cE/8qg0w5gvi7sX5A97gNf7hLxGHtkGBQi8bgM4Aq1FcrMVCjbQlpvNiLBUqQuh7XWj6ZR6QrHetyyOlPWpKj5SeJKrvKoZBXi2uq6mLGcXXAskD1MQmnuON+z1e+ror/Ulu5saWuuxHU7AEeK6jHPWdklevyNpyTvtAW6HN+nJVnoEQynybc8aze5y1Oe3oT6gwjYLjaCSxUmK8o5EMXuI1wSFe4QBvcOKeuN8RfOse48T9FkfuKQ5Unq5lZjX1O3NsMSxiNeY85fVdJqHJ2KFqGHqRA5WgijnrES5SR9WX5tGPu4qJUgPp9YLweldsG+olyv5Fn/DaCXMgSFKSIwfUEhDvLWq3xKzWoiL//3WIX/AtjtwTnOD4bv2hGhcnUkqbPxWKFCk2c2rL5GBIxo8CfmUJHZILb+Wdt5f5wrxHH9Ajt0ur/15FsOLDXXpeqewWnm3/K/VSA7kFFqhsrtAmWGHNhJfzD5JuKiCe4Vj9fKjFKKGhF7W5GClVmXliqWBILqA4D6DvzAYex1A37SHoT6nwyK4vR5qTYM039e1WkjP2t0GKzDl6p2pWm5+DkAR/xtfuOY7d02kJzxAPiIbH7vyirByJ/0SO8PfooiKvHn/JIwmTWRsZ6zX6ZZS3i0vXf4DiRlNlk4/SdKoe3//Qy+k1mflI++lUMPsTNkIiBXYOAAA=</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Desc>Список</Desc>
           <Type>List</Type>
@@ -8739,7 +8739,7 @@ WHERE
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Швидкий вибір</Name>
           <Desc>Швидкий вибір</Desc>
           <Type>ListSmallSelect</Type>
@@ -8747,21 +8747,21 @@ WHERE
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>ЗаписиШвидкийВибір</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerControl</Name>
           <Desc>PointerControl</Desc>
           <Type>PointerControl</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACqVV3W4TORS+j5R3OBtxMWGroRJcLA3TKg00BHWbigDVCqHKnTmdeDPYg8eTLltFKvsICPWCJ+CSLSBld0WfwXkjZM9/EqBhfRGPfY6Pv3O+8zn12o3roEe9ZiYAUG/UpfqgLtWFupydqal6qy7V59lfszP1Xn1Qn8z3ubo43OeUSRQdzqTgge1GRYyqqV67fqNeq9fiiDIfunLUyr572uuYuNiVo1v5bhcZCiLR63APbYPnYnauPqrPaqr+VdOWDsbIc4xC4iIMJBfExzbzHgniobE+7faPfkdX2oP4yA1IFN2pQtq0GtWNw9u42785eHD8aP1ACtLfXv+N/tFuNJ/Va2F8FFAXQiIkJQGYcD9aJdhYqM1pUjYcI5NwT//eJ8wLUNxZ9Y7NrTz4kDAfPVMKHTzDPubUgx6jekH/RKuZmFMIehxQTw73BUbIJJGUM3Dg5vp6q/DokDDdv9Y4vTLEDmeRtHce7+7utX+9N9lolCJWQcPPDpDoJXPBOlyDMLE1wdmEOVipCX5ygMVBAFtATgiV2b7dRVk+YTVhAxrZvZO8NAm7kXZyf5jWPTyxDMY9PDmguoI8RCEpRtbTZ82ch1XD5zk6wPQNrQrmlaOl8wLpPspiUdrXQ6CMBcuAlFibFJ/RN84XGYxJEGt1lq1V6rfsHhvzEVqaz4L7xUtz9qr1WJK/mubZq9fqP/V+9ip5RuBUp93S2FswSQr8nQh5/fPeEVyiK9EDPkYhqIdp5xqd9UNkAwzQldZ2LCVncGSmtUTlbeFHQIQfLYpwn4c6IITp7GQ7tumzUj1SD3uAcp8IZNJK7ljmY6T9EF/EGElw4JeKqjOn+0j9oSy8blW8tvGYC+wE1B3p7HZi5uacla+8cmeqd+pCTdVH/ayrf9RrNVV/z85nZxASH7Ou/2pvpVVJMjcvglmvVb3uUoGu5OJlSmNP4nNT0uSZeMzoixh7d+dOFeyBA1LEuMS+wwPP0FMs5rw6JAi2iTs67KfBsmZ0IKquN6sH5zItaSVr1RXFb1XuK5OVjfaxRJGg/Cqxc8KflEylXiI+2lW12QX4qmF5gKKrO0MaeJaOuLTthzzRQ2FK/wOIj/r4E/3m5BkUj/6icBPJsk6ARKyu1//FTDmzq5BgfAzQpS6Tei2l6At+L5Yn3gkAAA==</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerTablePartCell</Name>
           <Desc>PointerTablePartCell</Desc>
           <Type>PointerTablePartCell</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACqVU3W7TSBS+t+R3OPTKQZWpVpV2IYSoDWyItNBAunCBUDWxT50h7tiMj1MqVKnwCBXqBU/AJVtYKbsr+gyTN1rN+Cd246LtMjcz9nxzzjff+c7Ylm3dugl62JaZAEB9UBfqi7pQ5+picaLm6qO6UN8W7xcn6rP6ov406zN1vjeMuCCUu2wc4pBJ6mEYul6yjNQEsK2bt2wrTbgIoE/TdrEeaOQ+87BP083ybx8FSkbo9yIfXcPsfHGmvqpvaq7+VvMSuOV5USqIi2AU7dMhk9i2LdsS7ACTmHkII4okC3BL+LuS+dnui/7O+BV65I7SsReyJLnbxPies9b0e+/N7Vebv42ePRw8mIiNn3eC8aOjn56stV7aVpyOQ+5BzCRxFoIJ/WOywp0rxHybqZ1nTIgR934w1WM8dFrQuacXzzlNhjKKURLHxHnxsmWE+z82gTifOyB0hnaN+bWj5XMWJFdBjwBJc8+T5Un0SJCWH5UDhkRJbcbCVJujujuUmKDQ0kYCOgXYfcwOqsjjbHlc6JNfjCVHwoNnOuwuS6bQR6rGy5RuzgA3OiDSMIQusEPGqcy8GuMOrK2VlbmcMpeqN2EiQOd3wV+nOLjfhbi1ot6wWqNrF8WJods1J4skTquosyFmbrHCvoLYESMM0aOuOxCzaIrlZilr3TUNhNS89Ig6Vf+oz4t32WsBb7U52toIbTgurvjdCGX6sqgyIvQIfYhmKCX3MVd7FnEfMu7OdkoUCRibaR0ezFDQlgwSYDJImjSPdTCI87lT/HFNJ1bUyRHuCGnIJApyshxNmOfcp8lTfJ1iQtCBXzY2GkAPkQcTWqI2a6ht3I8k9kLuTXdiFL+mwlupy7VeAvVJnau5+qpfbvWXOlVz9cfibHECMQuweBeubNJclezmpkvM93oddZ9L9CiSR3kJB4QHlaYtjHnpVI+F4TbzpnuFAZeNkNU31m1aP3OJ3tLg9X6Lq1IVY2ufUGaZrpQ1t325rGxVKskCdOs+d5fc6xu1AI2u6k146Ds6ZqPtJlHmx8sdbUiMkMyTs9qy32+aXohMFmWvaNqkpX4Nq8z+i4wGY5I0Qo5tKxf5X+ASSxQNCQAA</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Елемент</Name>
           <Desc>Елемент</Desc>
           <Type>Element</Type>
@@ -9127,14 +9127,14 @@ WHERE
         <BeforeDelete Action="0">BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Функції</Name>
           <Desc>Функції</Desc>
           <Type>Function</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACs1W3W4bRRS+t+R3mPimTrXaCIm71I1c56cWbhzFLlwgFI3XJ+6S9cwyM8ZEraUkCLjhhqoECSkIJB7ANYkwKXFf4cwbodld7669NTRKKjpXZ8/M+fnOnG/O5nMrd/M5Ei38AYd4hZf6FEf6WH8fSL/iUH+jvzZ6HOPPOMErfaKPcIh/4EUgn+JoD38Pj+hv9an+yXZkyuvMVj53dyWfy+d60mUdUmUKxD51YEsdfLg61ZYdh/eYclmnwfdVnwqIt7aAgaAK2hXeBhtf4ARH+hTP8QrHJsFV45vRLkifOkAaigvagTJrNwVtGzf5nFRUuQ5xPCrl7UHO556GkP1ey3MdEkWpuVLd++QJCLhP8HmQ6Uuc6CMcF6USBpEEKpwnTfhKLYcOIj9mCVA9wZLvTxPRrNmvlZUg1fNZLYM+CeIXbwC1wplUdujeIhXe9alwJWd2rfrRhpWGQJ6SzR5zmnzTBa9NSqTQrO9VHpZ3C1Z6Y2+HCtr9wOzfuVMgA2s26YUAz3CIf+IIh4tApnKr71rk5pjjiP8P7s9WQ3lgOjfbXlQeMod8TL0eNKk8IHUf2A7twIYHXWCq2OLcI1W5DX2LPGbuFz2orq+RXiSREmE9z7NS8cqOcjm7F5+9v0b0MfW8B9Q52Ktx2t4Fh4u2/G/TGcs6a4AHjtrhrmF8ZJ1t+JvQ8Ud8hRf4d6giPu2ACQP9YhRmLpRZlTcjeyNia4FpFtpC2ImHQfASTb/cfVIMLmlxprRPXRWAsmeB2tsGYdQl2f4ZJCJ4EoJQyfWH10CePSNLiwPsAm3HNsuLU3wEUhrzDSG4KO4I3hG0az+g0nXKvm+RGc0mF12LFPAMLwiO8ByH+Aon5soJvtZHONHf4Vif4FCf4HipMA8wfBhTypgfZmUirdnbXEGL8wPDRbsigCowPCkGgCvUN61rBfDToVJFaYAKaBbX+pqMNIOg+C8UDJjKfYg6hpTIPvUkpGlrdje51475Y70/5PsNX+NYH+MEL9+OevU01AS3lT0VQ07wz51adwU4iovDCGFVQZeU4hrfOnOzNLtGx914JG0+rtW2y4823km7NkCtgwemmWq0BV7csnE1b7VvpqXH53hpBq1Rhr9yUQPFUVMwDVXWiGfSI6UIdNaBvTUPJe3DvIOBB/shlQH85cWeMkVZCk1Du2sVODVZSYX7h++4vvXW5yAVwV/wpX6Bl/pkysu5UkTQ42Nv/ejfQm5n5h8ex/hXcplJHkGNlEjKPNvribHdoF8m3Z5lqFnh1EgbTas/O0mmopmY79G4C57tbKaDfC6S/gEZSk3Bzg0AAA==</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Desc>Список</Desc>
           <Type>List</Type>
@@ -9142,7 +9142,7 @@ WHERE
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Швидкий вибір</Name>
           <Desc>Швидкий вибір</Desc>
           <Type>ListSmallSelect</Type>
@@ -9150,14 +9150,14 @@ WHERE
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerControl</Name>
           <Desc>PointerControl</Desc>
           <Type>PointerControl</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACq1US2/USBC+jzT/oRhx8LDREAQHlOBEiUMmE0EySxaQQCjq2BVPM6bbtNsTJWgkHtobF1arHDhx5BgCSAEp/Ib2P0LdficD2lWmD+5HVXdVffV9bjauXgE9mg0zAYB6p47UqfqeHKrj5FXy1qw+qKPk7+SNPlcn6r36oU6T18lLdaQ+q69mfaiOt/ucMonC4UwKHnTcqHy1bmo2rlxtNpqNOKLMh64czufrnvbaJS525fBGcdpFhoJI9BzuYUf9q36o4+RQfVGn6kRnNK8fY+QZRiFxEbYkF8THJeb9JYiHxvq4u7nzFF3Z2Yp33IBE0a16SgtWq36w/ee9lbvXRH/Fn3Vu8vWDdW/d23i012o/aTbCeCegLoRESEoCMO9NDziYOwfXixRJHCGTcFt/1wjzAhS3Lh51YbEINyDMR8/gpcPl9Y049aDHqN7QA7TaqTlLSo+H1JODvsAImSSScgY2XJ+dnS89HBJm55dbLy6QtMNZJDur9+/c2Vi6e3s816rEqJcBf9hAon3mgrU9A2Fqa4O9AGcSzUxwyQYWBwEsAtkjVObnnS7K6g2rDXPQyuOOC7BSTkTayZ0iGTZwzzJZb+DeQ6pR5iEKSTGyHj9pF726eMACBxuYjjlfq2sK72fzOfL4KMtN5VwPgTIWLE+t0utxuYx+c7+saUSCWP8KqtY6YRY7PTbiQ7Q0C0rGnA9a9LzoveASXYke8BEKQT3MmGeUsxki28IAXWktx1JyBjtmmkmVvCT8CIjwo/Oy6vNQPwhhNtv5ScewopJZ5tHZQtknApm00hiTfIxY7+HzGCMJNtys6TR3WkPqD2TpdaPmtYy7XKATUHeoq1uNmVugVw15Adaoj+pYnagvxumb+kedqE/JYfISQuJjztFf9j3DKcXCaNzsZ+peK1SgK7nYz4jQk/jMgJwK/z6jz2PsrZy5VfYTbJAixgn2VR54pmHl5oyXQ4JgmbjD7c3ssVwmNkT1/UL94plKKzxOUZmCVK1aBtWG5mNpV6JI8/5l8yuKMcuKaSJxnQENPEu3dyKzBzylfGnKftPER339gRZ4kcD4N9pMVcmcAIn4/5KcMtTVWv8LqsbHpD7RZdxsZJj/BDadIbPcCQAA</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Елемент</Name>
           <Desc>Елемент</Desc>
           <Type>Element</Type>
@@ -9236,7 +9236,7 @@ WHERE
           </ElementFields>
           <ElementTableParts />
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerTablePartCell</Name>
           <Desc>PointerTablePartCell</Desc>
           <Type>PointerTablePartCell</Type>
@@ -9440,14 +9440,14 @@ WHERE
         <BeforeDelete Action="0">BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Функції</Name>
           <Desc>Функції</Desc>
           <Type>Function</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACs1W3WobRxS+F+gdxrqJHJYVhd45jlFkyzFVLGMp7UUpYrQ6VrZe7agzo6omEdgyrXtRKKSpCwWHpvQBZGNTVa7lVzjzRmV2V7srbxTLJf2Zq/k7P9/Z75uz6VTufjpFgoFvVB8Hqq/66nv8RR2qr9Uh/oxj9a3qq2M8q+Fv6hCvcKS+UcfqJ9MSMdupo3Tqfi6dSqc6wnabZMOVwHeoBety98OlyW7esljHlbbbrLAd2aUcwqN1cIFTCY0Ca4CJr3CMZ+oYz/EKhzjC4ZL27dIWiDa1gFQk47QJebdR5bSh3aRTQlJpW8RyqBB3BZZOPfeBtTt1x7ZI4KtkC/ngk2fA4SHBl14+pzhW+zjMCsl13gIot55V4Su56DsI/OjBQXa4G60/jaZ6TK9yOZ0enk/vutAlXvzsrYAKzBXS9J0YpMBabcptwVyztPHRmhFPlDwnxY5rVVnRBqdBlkmmWq4VHue3M0b8oLZFOW19oM/v3cuQnjGd2kwYJzjA3/EMB7OgxHIrbxtkXmSh3/8G3WdL/rynuZakChV7rkU+pk4HqlTsknIb3C3ahDUHWuDKbJ0xh2yITega5Klrf9GBjdUV0glmZJm4HccxYvHylrSZ+yC8+3CFqAPqOI+otVsrMdrYBovxhrjddMqy7FbAAUtuMVtrNLBOkvd2Af2Il3iBf+IFXqk+adMmaGfQzQbObjjUo/D2/N+Ky5hhmgQwE1zkoee9EJOVvUOy3qeYnSntUlt6oMxpoOamRhhwIcmSXjQFR4AXKvrIfrHJixdkYXaAbaCN0GZxdopPQAhtvsY549ktzpqctsxHVNhWvt02yNROkfGWQTJ4ghcEz/AcB3iJY3WgviN4rfZxrI5w6H9xHC5kbgL0n7LYZqgCPRKRVsxNJqHO2K5WnFngQCVoNWQ9wAXa1gQ1PPjxULGiVEB6YgprfUfd6ac7+w6heXpkbQgYQ5bJDnUExMWpT4vMaYQqMf5tib3BaxyqAxzjaD6BleOAInRG8lYILEJ549aqzcGSjO8FODYktMhyWMn3rs+kmO7AqzmbSPFpqbSZf7L2j1CvAnIVHNDEKNE6OCH9wpr9DQ5MyogvcaQboN70f4oCMoS+Y2A0uVeIo5MgywG0pANz/WbCcR/65fI8mI+p8EAuzvaUgL7gm/p2dypjrOORAmvvvZcqluufg5AEX+OpeoUj1Z8o6QbgAGB4be7HeO4MTvSfLQ7xj+jDRNE8vJJHJZtmZ2RsVuiXET+Typlphz/oVx+v9V8iDtS+7gA4Usf4Gq/xQu3jwP8hrlVp3YEtyqUfynscF5dILkfwVxzgKV7iUB3hFQ6IOsKBOtCNw1tm5o2ReVf2fseJpz7hwXQXmkx1t/0ftUrvyU9m2kungtlfSv/Ey4gNAAA=</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Desc>Список</Desc>
           <Type>List</Type>
@@ -9455,7 +9455,7 @@ WHERE
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Швидкий вибір</Name>
           <Desc>Швидкий вибір</Desc>
           <Type>ListSmallSelect</Type>
@@ -9463,21 +9463,21 @@ WHERE
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerControl</Name>
           <Desc>PointerControl</Desc>
           <Type>PointerControl</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACp1UTU8TQRi+N+l/eG08bJUUEiVRcCGlQGkiHxEVE0LIdPdlO3adWWZnS5CQGIyJNxNjOHjSm0clHNBEfsPsPzKz30uLFuewszPvxzzzPO871crkHdCjWokmAFBfwxP1PTwJT8IP6kv4NnwXvlWf1WX4PjwJT9XZ7ganTKJocSYFdxuWn8eWTdXKnclqpVoJfMocaMv+bPrf0V57xMK27N/PdtvIUBCJdovb2FCf1KU6C0/VufqtLtQvdTGrkzHyCn2PWAibkgviYJPZTwWxMbJut9e7L9GSjc2ga7nE9x+VIc0ZtfLG7tILIvuLfHppamv9YTdodqZXl6ecWn2nWvGCrkst8IiQlLgQ5bspPTAzRMpRzBcOkElY0t8VwmwXxaNxc8/NZ0l7hDloR3fXSVOsA05t6DCqF/Q1GvXYnBytxxa1ZW9DoI9MEkk5AxPuTU3N5h4t4iX7t2tH/4TW4syXjeVnjx+vNVeXjmdqhUxlsHDXBOIfMguM3QnwYlsdzDm4AicxwS0TWOC6MA/kgFCZ7jfaKIsRRh1moJaee5xREqvoayfrxvKt4YERYVvDgy2qGeMeCknRN7Z36hnv46bN7mQC05lnSxjHzpLMQ6I6KPNFYV8PgTIQLAVQUOc4//X/Ep8jHxA30O1WtJYlnm902ID30dC65RoPH5qplKkluERLog18gEJQG5NaiSp63UO2iS5a0lgIpOQMutE0EfdRUzg+EOH4w+W+wT2dELxkNtOdRqRwAVni0dhEuUEEMmnEZ4zyiZroCe4H6Esw4UGpf1KnFaROT+Ze90teC7jHBbZcavX17ZYDZmXsFY/8Z22ob+pMXahz/VKqn+qjulA/wtPwDXjEwbTerlU3YSO+cdR70Xqi7LVIBVqSi8NE7o7EVxGVcUM+Y3Q/wM7ilahcNTBBigBH2Je5a0ey5IsrXi3iugvE6u+uJ8nSZjDBL6/nyoFXblqo1piVsdvOKJ1TFCcdzT2JIkZ3rZCF6o9+C6aRRdjqUdc2tIgjq7TH4/LNTSR+JImDOvy5btYMQP4qDvdZ3GGs5SIRN2+v/yK0eKNxuIt8IoAjXY6rlYTZP5iqKmHYCAAA</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerTablePartCell</Name>
           <Desc>PointerTablePartCell</Desc>
           <Type>PointerTablePartCell</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACp1Uz2sTQRS+L+z/MOa0KSUtUlRa05CmGlNKG0xrD6WUye7LZsx2dp19m1KkICmCN0GkB09686ilhyjYv2H2P5LZX9kkW6mdy5ud+d6P+d73Vtd0bWmBqKVrkSGEyG/hSP4IR+Eo/Ci/hhfh+/BCfpE34YdwFF7Kq+O2yziC2KNdB9pUYAMcp2L6kwhFAF1bWNK1wGfcJk0crKX7lkL2qAlNHKxkp03gICiC1XAtqMjP8kZehZfyWv6RY/lbjjNg3TTdgCPjdsft4SkVsKZrusbpCfgeNYF00BXUhjq39gS14tvD5m73NZhY6QRd06G+/7So4nWjVHR8TB93hlvWdsD2Hx40trfEWfcR69dL5SNd84Kuw0ziUYGMOiSKfT8+yeotLL6NaU4y+UiRmfdMsQOnRplU19XmgGG/LVwPBDLwjcOjcsTU/+iBeImtEq4ir01VeucoiY2dk9eqZQOqWpMkSXC1fMDJR84hSp6VNKROoLqfv20L8IErCl1Oqim4skNP8sjzeHue8pE8iPpn3CSvVNg96g9IEzAfL2a2OAN5UCU8cBxSI/SUMswyz8dYJaVS1onZlAlVjT7lNhj7nL0JoLVZI155jr12vjd3bobhkVot8kiDG+W0r1FBUfVzVecQu7wDDphYq7T40B1AdpnRmdEqXAQTwSLuEIRgFiTvHbrMInEUYyNAdDnpRmaRPBsCx7qwfUKF7Re92lPBiJfYanpSibSfqzNBVDqAbSqAoxHnKMIcMAv7L+FNAD6SKnmyvFwAegHM7uMEtTKF2oCeK6DhMHOw6wF/HnBzjqE7zZ78Lq/kWF6rn6L8JT/JsfwZXobviEdtSCfx1vFI2IhfHOkz+l6cRm0yASa64ixRRQvhJDcuqTRmvBrUcTaoOThOJTCRYNxXTw3ItM9MeROJTSvdy1OUrnoPQcSZbqUzEV62zV2lMpwRQ6PPHMtQZBaqpe/GMpodCeWg3KNZndf8v7XecICKtGs5SoqoUL+RfGV3YSHCREkKIee6lnD0F7kJw2MfCAAA</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Елемент</Name>
           <Desc>Елемент</Desc>
           <Type>Element</Type>
@@ -9630,14 +9630,14 @@ WHERE
         <BeforeDelete Action="0">BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Функції</Name>
           <Desc>Функції</Desc>
           <Type>Function</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACs1Vy24TMRTdR8o/uF2lKBo27EqpQvqgUmirpsACocpxbsPQiT3YHkoFldoiwYYVgrIqEhIfUCoqQkrDL1z/EfLMZGaSIdAgQHjl1z2+5/ocu1i4fKlYIHHD93hq9syheYtH2MOveIrn2MUzPDYH5pnZw84GfjDP7KR5brc5TGWiB5aKhUuXi4ViIVAub5ElrkFuUgaLeuvKdH+2wpgIuHZ5qy429TaVkCwtAgdJNTSrogkOvsYenphD/ITn2MEudqYtNqdtUD5lQOpaSNqCCm+uS9q0MMWC0lS7jDCPKjU+tWLhSUTNDxqey0iMVnOVvnrnPki4RvBVmNFH7Nn4ktLSZq6ASnZ/HR7rqQggxrFNgg4kT8d3065t6ejedNTftUTyWVC1wxm5Tb0A1qnaIis+8FXagnkP2sB1qSGER5bUMmyXyS3uPgxgaW6WBHGPzBAeeF45c16FaVfwq8nea7PE7FPPu07Z1kZN0OYaMCGb6tehA5ErvA4eML0qXCuAODpfl4vczhs8w9NoyRwQn7bAwsF2KYYbgrSt+mMGP2RWHhGapzCSXoqwGwqwP3I3SSm8jNGZ0m3q6pCUM0jUWbYMp0fpZDftgqcgPCq95qjc5OlTMjH6gDWgzSRmanSKN0EpGz4vpZClVSlakrad61S5rOL7ZTIwsyBku0wm8QhPCZ7gJzzGM+yZffOS4Dezhz3zAjvmwN4vdiYmhwlGPslMJj6wLXfSrLMsNDSE2FoIOHOqEqgG64dSSLhKfSvRckg/e1SmKHXQoZ2SWo/pPPsulH5itdCRwodYMWSGbFJPQdaednVBeM3EJ+V/b7L3+A07Zh972L2YxVaylFJ+5fyuhFrKc2jXnCuBaSF3YiZLGtpkJqnlH3do3k5jKOsC1awKrrSzcKtWW67cnP8r8quDngMPrDhqtAFeIsGkar+lg34p8RV28Rg/m0M8iX7eWBAJeoaOlfgs8WwaZCYmlwdwFodTzmLY9ytEcG5QFdKcGo2UIz8RhUZxYxUy8/ORqvB3/lAdVxoPQGmC7/CjeY1dc9D30xDlmGKy7cKP8hg52PUT7OCX9HLS80LOWqZlG9RoGuzU6aNUpXkH2Ra93tmgfjUHX/R+1/5c/9G3Ez6f+Ux3i4W49x3uIBuUNQsAAA==</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Desc>Список</Desc>
           <Type>List</Type>
@@ -9645,7 +9645,7 @@ WHERE
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Швидкий вибір</Name>
           <Desc>Швидкий вибір</Desc>
           <Type>ListSmallSelect</Type>
@@ -9653,21 +9653,21 @@ WHERE
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerControl</Name>
           <Desc>PointerControl</Desc>
           <Type>PointerControl</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACp1Uy24TMRTdR8o/XCIWE6jSCiqEWqZVE2iI1BeUwqKqKnfmdmIy2IPHk75UqYI/QKisWLBjCQikUGi/wfNHyPOeJkVpvRiPfR++PuceVyuTd0CPaiWaAEB9Ub/Ck/A0/KQ+qwv1V/1S5+pM/VHfwnfh+/BEDbbXOGUSRYszKbjbsPw8umyqVu5MVivVSuBT5kBb9mbT/4722iUWtmVvOtttI0NBJNotbmNDfVQX6kd4qn6qczVQZ2owq5Mx8gZ9j1gI65IL4uACs18IYmNk3Wyv7rxGSzbWgx3LJb7/qFzSnFErb2z7/N7UcvOZ2OiRpaXDl/tNsr/74FmtvlWteMGOSy3wiJCUuBDluz5AMDMEy1GMGPaRSXiiv08Js10Uj8bPPjefpe0S5qAd3V+nTevtc2pDh1G9oIdo1GNzcrger6gtu2sCfWSSSMoZmHB/amo292gRL9m/XTsao7gWZ75sLG4sLa0sLD85nqkVcpXLhbsmEP+AWWBsT4AX2+pgzsGlghIT3DKBBa4L80D2CJXpfqONshhh1GEGaum5xxkoMZe+drJuQOIK7hlRdSu494pq1LiHQlL0jc2teob9+Imze5nAdO7ZUp3XyJPMQ+Q6KPNFYV8PgTIQLC2hwNFx/uv/Jz6vvU/cQEuvaC0TPd/osD7voaHZy5kePjTjKuNMcImWRBt4H4WgNiYdE3X2qodsHV20pNEMpOQMdqJpIlbUgnB8IMLxh9t+jXs6IXjJbKY7jYjlQmWJR2Md5RoRyKQRnzHKJxLTc3wboC/BhIclHaVOT5E6XZl7TZe8mrjLBbZcavX07RYDZmXoFY8cozvUV/VDDdRP/W6q3+qDGqjv4Wl4Ah5xMO25K/lN8IjvHGkwWk+UvR5TgZbk4iAhvCPxTQRmLMwNRt8G2Hl8KSrnDUyQIsAR9kXu2hEx+eKSV4u4bpNYve3VJFkqBxP88nquHHjppoV+jVG5hvSM0klFgtKxsCtRxPVdSWZBAdFvwTSyEVtd6tqGpnFkp3Z53MK5KXkuiYM6/KUWbFZA/j4Oay1WGWu5SMT1JXZDSIt3Gge9yCcqcaTLcbWSYPsPYBe54OwIAAA=</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerTablePartCell</Name>
           <Desc>PointerTablePartCell</Desc>
           <Type>PointerTablePartCell</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACp1U3U4TQRS+32TfYeRqS0zhQhMDlgaKFm6kUhATQ8h09rAdu8yss2dLiCEh+gbG4JUX3nmpBpOKwjPMvpGZ/eu2XYwwN2d25js/853vrG3Z1sI8Mcu2EkMI0V/0z/gsPo8/6c/6Wv/RP/WVvtS/9bf4Xfw+PtOjg47kAkHt0J4PHaqwBb5fZ+E4RhXAtuYXbCsKufBIGwfL+X7TIA8pgzYOHhSnbRCgKILbki7U9Ud9rX/E5/pCX+mRvtSjArjKmIwEcuF15SEeUwXLtmVbgh5BGFAGpItSUQ9WhbujqJvevmpv9V4Dw3o36jGfhuHjqopXnLmq44O1h+tbuPHC393rBS/ltnzJBs+9udq+bQVRz+eMBFQhpz5JQt+VULJ0A41vU56zXCFS5OzOSZ7BsVMjjRWz2ePY7ygZgEIOofNqv5aQdTtRkCCzDSJM7OWJam8RJ7Ope/ZmszxAU2+WJgtvVgg4/ig5JOmLoobUj4wIyrcdBSEIQ6QUpJGD68/oURl5mm5Pc06yJ9HwRDDywoTdoeGAtAHL8VJ2qzOQew0iIt8nTUKPKcci82yMJTI3V3RjOmVGVatPhQfOruBvIthcb5KgNsNep9ydW7TDCUizmfjk4Z1a3tukpKT+mbpLiC3RBR8YNuubYigHUFwWhBbEKonAEFwih6AUdyF78VByl6RRnLUIUQrSS8x98mQIAleVFxKqvLDq3YEJRoLMNvKTejIBpTozRL0L2KEKBDppjirMHnexvw1vIgiRNMijxcUK0AZwr49j1IMJ1BocSgUtn7PBVgDiaSTYDEP/OYH6q/6hR/rC/B/1L/1Bj/T3+Dw+IwH1IJ/HG0ck4yN9c6LR5Pv+JGqdK2Ao1Ummi02Eo9LI5OKY8mpR31+jbHCQi2Asw7SzgRmSSZ+p8sYim1R7UCYpX6uHCCrNdCOhmfSKbekqF+KUHFp97ruOIbNSL32ZCml6KIyDcU/mdVb1/1Z7yweq8q6VKKmiwvxKypX9DwsJJklSCTm1rYyjvzldmkgsCAAA</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Елемент</Name>
           <Desc>Елемент</Desc>
           <Type>Element</Type>
@@ -9928,14 +9928,14 @@ FROM
         <BeforeDelete Action="0">BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Функції</Name>
           <Desc>Функції</Desc>
           <Type>Function</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACs1W0WobRxR9F+gfxnqJHJY1hb45ilFkyxFVLGMpyUMpZrS6VrZezWxnRlFNIrBVaF8KhZC6UHBLSz/AMTFRlVj+hTt/VGa12l1pozZKU5p5mtmZe+aeO+fMbDazdjObIWHDX/FcH+uBPtU/4O84xotgfIoX+DOO8Q1e4xhf4VAP9vEP/Q1e4Uh/q0/1T7YjEygzU9nMzbVsJpvpSpe1SYUpEAfUgW11+On69GvRcXiXKZe16/xA9aiAaGobGAiqoFXiLbDxuUlKn+JLvMIhjnC4brAZ7YD0qQOkrrigbSiyVkPQloHJZqSiynWI41Ep359iNvNkQtHvNj3XISFq1ZXq1sNHIOA2wWdBZi9wrI9xmJdKGAYSqHAeNeBrtToBCHFME6C6gsXjz+OuabOjtTU8w3N8ZVKenWHQI0EO+SXolTiTyo4hLVLiHZ8KV3JmVyufbVnJ1MkTUu4yp8HLLngtUiC5Rm2/dLe4l7OSE/u7VNDOJ2b+xo0c6VuziaaJfbE+6ffNSaXLS+URc8gD6nWhQeUhqfnAdmkbtjzoAFP5Juceqcgd6FnkPnO/6kJlc4N0wx4pENb1PCuxX9FRLme3orW3N4g+oZ53hzqH+1VOW3vgcNGS/xw6E1ljdfDAUbvcNQoPo9MHvoz8fsTXeIlv8BKv9ID4tA0GFnr5EHYO2rTS25m8laG1IDRNZSHNGKEfOG06cg9IPjiUxZnSHnVVQMqeJWrvGIahKtJ66cdd8CQEW8XHPSk7efqUrCzeYA9oK4pZXZziPZDShG8JwUV+V/C2oB37DpWuU/R9i8x8KXPRsUgOz/CS4AW+xHN8jWN9or8neK2Pcay/M6eK53qAw5XcPMHJRZD4GPnBtNROG/YOV9Dk/NB4zy4JoAqML/IB4RL1jVStgH5yq0RR6qACW0W1XtKB5uLL/43lAmdyH0LFkAI5oJ6EpE3NbJl7rcgv1v9ntt/wGof6BMc4ejer1ZLUYp5WelVEMeY7t2rTFeAoLo5CRhUFHVKIavrBnZq21RIKW/qJKd+vVneK97b+EznWQW2CB0YsVdoEL5JkVL1/pYtpafEZjsxDGSwKfj1CgUS7JGgZ6W8Qz6RDCiHJNIC9PZ96EsPcawGCfZfKgO7qYqRUEVYmoZO4pQqaeBlJiftHH7ieteaXIBXBX/CFfo4jPZj6bI56SDVa9s6X9nvkchasGuKf8WHF+wY1UCIu46x242C7Th/H6k07zLTJLZ8MmlZ39uafds0L9xE9T8E1m860n82Evb8AyTg1pk4MAAA=</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Desc>Список</Desc>
           <Type>List</Type>
@@ -9943,7 +9943,7 @@ FROM
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Швидкий вибір</Name>
           <Desc>Швидкий вибір</Desc>
           <Type>ListSmallSelect</Type>
@@ -9951,21 +9951,21 @@ FROM
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>ЗаписиШвидкийВибір</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerControl</Name>
           <Desc>PointerControl</Desc>
           <Type>PointerControl</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACqVUzW4TMRC+R8o7DBGHTalCBRxQy7ZKA00jShtRSpEQqtzd6cbNYm+93pSCKiFeAAmhHrggceIIFRIBQXkF542Qvf9NQKT4sF57xjOf55vP1crVGdCjWjETAKj36tPo5ejV6GT0Wn1QZ+rUrE/UqXqnztQP9Uudqa9qOHq10+WUSRQtzqTgfsMJ8yhlU7Uyc7VaqVaikDIP2rK/kP53tNcecbAt+zey3TYyFESi2+IuNtRbjWJ0or6on2qovqvhgg7GyFMMA+IgbEouiIdN5j4QxEVjfdze2N1HRzY2o13HJ2F4qwxp0aqVN3bCu825/bXtR1sHz64d+N3968+u3T2s1Z9UK0G061MHAiIkJT6YcBevE8yPVedFXDgcIJNwR39XCXN9FLemz7K4lIXvEeaha8qhw6f4B5y60GFUL+hztOqxOQGhxzZ1Za8rMEQmiaScgQ3X5+YWco8WCZL9y7UXU4BscRbKxsrW2tp6896d4/laIWYZNlyxgYRHzAFrZxaC2FYHexHOAUtMcMkGFvk+LAE5JFSm+402yuIJqw7zUEvzHmfFiTkOtZPzH+Su46FlUK7j4TbVVeQBCkkxtB4/qWdcTJ8gu6cNTOdYKOG+QLxkHiPfQ5kvCvt6CJSRYCmUAnfH+W/4l/P5HQbEj7RSi9ZyAyw1OmzA+2hpVvMOGE+acZhxKbhER6ILfIBCUBeTTjKdvxEg20QfHWktR1JyBrtmmo2V1xReCER44bgsujzQASFIZjvdaRjWC8gSj8Ymyi4RyKQV55jkY8R2Hw8iDCXYcLOks9RpFanXk7nXjZLXMu5xgS2fOn19u5WIOVn1iimn6BL1UZ2qofqin1v1Tb1RQ/V5dDJ6CQHxMO3BP/Kc1CW+u9GoWc+WvW5TgY7k4ighviPxqSlqLNwtRg8i7Nw+dyrnD2yQIsIJ9hXuu4agfHHOq0V8f5k4/Z2NJFgqCxvC8nqxfPDcTQt9G1flAlK0ShmLhKWjuSdRxDj/SG5BEea3YJrYmK0e9V1L0zmxc3s8bunclDyrxEN9/KEWcAYgf0fHtRerjrV8JGJ6yf1naYt3+5cqGh8DdaLLcbWS1Pg36YEJAzsJAAA=</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerTablePartCell</Name>
           <Desc>PointerTablePartCell</Desc>
           <Type>PointerTablePartCell</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACqVUy24TMRTdjzT/YLKaVFXaRZGgJY2StKRdtA2kj0VVVY7nZmLieAaPJ1WFKlX9ASSEsmCDxIolVJUICMovOH+EPK9MkimC1hvb43PvuT4+d0zDNJYWkB6mEU4IIfVRfRlfjq/Gw/Fb9UndqutwP1TX6oO6VT/Vb3WrvqnR+Oq06VIuQezjNoMmFrIOjJWIP8mVBzCNhSXTCHzKHdSQvbVkva2RHUygIXsr6dcGcBBYgl13bSip97qe8VDdqF9qpH6oUQqsEuIGXFLutNyOPMMC1kzDNDjug+9hAqglXYEdqHJ7X2A7Oj1u7LVfAZGlVtAmDPv+s7yK161C3ufTtn1Qe9reOn+82edsY6d3uLPbhBeF4olpeEGbUYI8LCTFDIW5H6osWr1DzzeR4DGnL7Gk5MFku3BmFVF5XS+OqOw2heuBkBR86/ikGKp3P7cgL57LiGuOtanq75EvnqM0sRZ6OCB1/TFdTKOHD3KyyQSEZaTFDTALtEuyp00BPnAtsMtROQGXdnE/i7yIlheJRvHVsH/OCTrUafex30MNkNl8kdr5DOhRGfGAMVRB+AxTmTLP51hFhUL6OrOUsVT1LuYOWAecvg5ge6OCvOKces3sK93jWSwPVSphbEJjFZO3DksL7zFXfwaxx1vAgMhKaZsP3B6kh6mwqcDClUAk2MgdgBDUhvjmA5faKMpi1QIpXY7a4bSINgfAZVU4PsLC8fPu7+lkyIvncvKlFHZGps4YUWqBbGIBXFoRRx7miNqy+xJeB+BLVEZPlpdzQFtAna6coFamUDXouALqjJLengf8ecDJnEL/2Znqs7pWI3Wjf6jqu3qnRurreDi+RB52IOnTO1sm1iW6e+jZcL84jdqgAoh0xXnsj20J/UwLJSaZiapjxmqY9E4TM0xsGb2wp5tmOmamvInZpt3vZcVKRrUjQURMdwobWzBdZo4SQ87Yot6lzLa0mLm+6bqRoWabQwfo8LB/593/d9fXGWCRvFpGkjwp9K8lW9m/qBBiQpJcyIVpxBr9AYBJXmRlCAAA</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Елемент</Name>
           <Desc>Елемент</Desc>
           <Type>Element</Type>
@@ -10183,14 +10183,14 @@ FROM
         <BeforeDelete Action="0">BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Функції</Name>
           <Desc>Функції</Desc>
           <Type>Function</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACs1W3W7bNhS+N+B3YHxTpxAUDNhd6gauE6fG3DiI3e1iGAJaPnG1yKRG0nOD1kCTAu3NroIuBQZkQIE+gBskmOcuziscvdFASZZkq0oT7JdXFMnz8x1+36HyuZW7+RwJBx7jGM9xjG9xhFc48g69EzzbxffeS7zEiffKO/HempZMWMxt5XN3V/K5fK4vbdYlNaZA7FELNtX+l6uz1bJl8T5TNus2+Z4aUAHR1iYwEFRBp8I7YOIbnOKZd4LneIljnOB4VftmtAfSpRaQpuKCdqHMOi1BO9pNPicVVbZFLIdKeTM4+dyzAI7bbzu2RUIPdVuqe988AQH3CR77WXzAqfcCx0WphM5WAhXWkxY8VcuBg9CPHgJUX7D4+9t4qsf818oK/oJTPJ9fZTAgfvxiBowKZ1KZgalBKrznUmFLzsx67asNI5keeUaqfWa1eNUGp0NKpNBq7FYelncKRnJjd5sK2vtC79+5UyBDYz6hzORPcYS/4RmOsgAkcmvsGOR6PJG3/wbTd6vBfKjZlKYFlQfMIl9Tpw8tKvdJwwW2Tbuw4UAPmCq2OXdITW7BwCCPmf1DH2rra6QfzkiJsL7jGIl4ZUvZnN2Lzt5fI94hdZwH1NrfrXPa2QGLi478vOmcZYM1wQFLbXNbqzC0ThM1SyI/40e8wD/wAi+9I+LSLmgXMCiGLhbc6FH5dNafRGNkmKbTzoQUexj6yp992Xuk6F9AdqZ0QG3lgzLngZpbGmHIgDQ3hvEUHAl+qPhqgxKT58/JUnaAHaCdyGY5O8VHIKU23xCCi+K24F1Be+YDKm2r7LoGmVupctEzSAFP8YLgGZ7jCD/i1Dv0fiJ45b3Aqfcax94RjrwjHC8VFgEGzSqxGHFfj1SkNXOLK2hzvq91ZlYEUAVaA0UfcIW6mpaGDz8ZKlGUJihfQlGtb6k23ZyL18jLVyF3IWQMKZE96khISlLvVrnTibRh/DvCeodXOPYOcYqTm8mqkYQRYzLSpyI4MbaFU+u2AEtxcRBmX1PQI6Wofn+7KtMSugWbrn0mqo/r9a3yo41/hGZNUOvggCZBnbbBiagWVerG9z0rGR7jRD9sejH4nQkvPvKYgKDpu0YcHZqUQkBpB+bmYppJH7o3+R7Mh1T60JazPaUALwWmgd2tipd4yUiFuwd/oXaN9vcgFcFf8YP3Bife0UwrCzBDWNGxGzfZz8Q91f+fOMbf40uIY/jYlIjLM8+/2Nhs0h9jBqYVoUfQgZNGs6rNd+XZVL8+/6Onw2+B6UyH+Vw4+xPAas69ZgwAAA==</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Desc>Список</Desc>
           <Type>List</Type>
@@ -10198,7 +10198,7 @@ FROM
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Швидкий вибір</Name>
           <Desc>Швидкий вибір</Desc>
           <Type>ListSmallSelect</Type>
@@ -10206,14 +10206,14 @@ FROM
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerControl</Name>
           <Desc>PointerControl</Desc>
           <Type>PointerControl</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACpVU3U4TQRS+b9J3ODZebJFUiMQQYCGlQmmCBUXlghgy7B62Y5eZZXa2BAiJvoIx+ApeIuGimqivMH0jM7P/tCDOxc7P+c6ZM993zlYrT6dAj2rFTACgPquhulFD9VVdqT/qavRpdKmu97c5ZRJFizMpuN9wwtyjbKpWpp5WK9VKFFLmQVv2F9N1R6MOiYNt2Z/LTtvIUBCJbou72FBf1G91PbpUN+qXGqqfariogzFyhGFAHIQdyQXxsMncN4K4aKx77a2DD+jIxk504PgkDJfKKS1btfLBfm/2w9ruqx6X/eezZ92uMzvvbDZr9ffVShAd+NSBgAhJiQ8m3MM4gYUxJs5jknCATMKa/m4Q5voolu6PuLySheoR5qFrnqlDpXkNOHWhw6je0DO06rE5uVCPXerK3rbAEJkkknIGNjybmVnMES0SJOePa+d3JNTiLJSN9bebm93my7WLhVrBv5wiPLGBhKfMAWt/GoLYVgd7GW4lkZjgkQ0s8n1YAXJCqEzPG22URQ+rDgtQS++9yIiIdQo1yHmgQF08sUxGXTzZpZodHqCQFENr73094/j+YFn+NjAdb7GUzz98k3lMLA9lvimc6yFQRoKl1xb4v8iX4T3+eb4D4ke6Y4rWsogrjQ4b8D5aWplcxfFLMx0yPQSX6Eh0gQ9QCOpiUg2mUrcCZDvooyOt1UhKzuDATNNxVzSFFwIRXjhexts80AEhSGY7PWkYNQuZJYjGDsptIpBJK75jEsY0x2s8jjCUYMN8qS9S0AZSrydz1FwJtYqHXGDLp05fv249Yk7GXvHKOypCfVPXxvBTDdUPA/o+uhx9hIB4mNbWnZomHMTvND1l9tNl1Asq0JFcnCYidyQeGQLjRnvL6HGEnRe3vHKtwAYpIpxgX+e+a8TIN7dQLeL7q8Tp728lwdIWsCEs75fLjrdeWqjRmJV/tJhVil4UIh3NQ4kizulO0QqVbpYF08SCa/Wo71pauokV2eNxqVYzU/LLIx5q93e6MbME8n/ceE/F3cRaPhLx/630HzQW3/EQxgzGpDURclGtJHz+BQeee/pzCAAA</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Елемент</Name>
           <Desc>Елемент</Desc>
           <Type>Element</Type>
@@ -10307,7 +10307,7 @@ FROM
           </ElementFields>
           <ElementTableParts />
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerTablePartCell</Name>
           <Desc>PointerTablePartCell</Desc>
           <Type>PointerTablePartCell</Type>
@@ -10934,14 +10934,14 @@ FROM
         <BeforeDelete Action="0">BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Функції</Name>
           <Desc>Функції</Desc>
           <Type>Function</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACs1WQW8aRxS+I/Efxj7haLW+9OYQi2BwUYmxjNMcoioalmey9bJDZ4ZSK0GyHSm95JBEKZXaOlWV/ABiGZmSQv7Cm39UzbLsLqxJbSdEndPs7Lzvfd+b995MMrF6I5kg/sAX2MUhDrD/AN+qJ3qqnqqO+tW0RGTX1K9k4sZqMpFMNIXt1kjBlcD3qAWbcv+rtclqxrJY05W2WyuzPdmiHIJfm+ACpxKqWVYFE1/hCE9VB89wiH1NZE1ju7QOokEtIGXJOK1Bxq3uclrVMMmEkFTaFrEcKsR8CcnEo7GERrPi2BbxrYq2kDfvPQQOtwi+9Dy/w5E6xH5KSK4ZCqDcergLP8mVMYCPowcH2eRu+H0/nOox/bW6ir/hCM+mV11oEc9/KkI9y1whzfF2g2RZvUG5LZhrFgvf5IwoJfKI5JuutcvyNjhVkibLxdK93M4yaRvTfuZyOsEunuMpdufxirgv7RgkTjNAWDRVLx74B77F19cmG8FYNN0/dTLjELufIcYXYC2a/hscqg4OsIvv1TOvHv/2o+ezU0+uLecS2IuW9xzP1CH21NEnnEoE48vk/gm+wDefmPsexuK7ygj/wZ46xN9VRz3FHg7xfNyHr0l+LuLCpHy3Np639S0TvzqoOHAt8i11mrBLxT4pNcDdpjXIOVAHV6YqjDmkILagZZC7rv1DEwob66Tpz0iauE3HMSL+Mpa0mXsz2Htrnagj6ji3qbX/oMhodQcsxqviv02nLEtuGRyw5Daz9e3sW8cvs+jV+Qu+x54ONw7VMWnQGmgzaKV8sxlTPbIXM71QgTHHNE51rowQoe29AiZf9h5JeUGfz5S2qC09Uea0UHNLK/RPPZ4P7XAKjgDPVXic47CSx4/J0nwHO0Crgc3KfIp3QAhtnuOc8dQ2ZzVO6+ZtKmwr02gYZGolz3jdIMt4gj2Cp3imuyqO1JF6RvCDOsSR+hn76hi76hj7S8uzAsePmMhikO96xDytm1tMQoWxfV1XZpYDlaDzPuUJztKGTkXDkx91FQlKGaRXNkGsr1hh+tGW+khJeZXHGuBnDEmTPeoIiJah/ptnTjWoB2NxxfQXfsC+OsIRDi5XSqUo9VCHEd8VSAj1zOzasDlYkvEDn3FBQp2kg5h99kqMl80VMijW9fN3i8WtzJ3cQtKpDHIDHNCHXaQVcIKUCqLz0XOdhAZfeg+Zc9XxXmh9HPgHHKBEaOvUXCeOdkfSvog4gLk5Sy2KofuOh2B+TYUnZ2U+Ukzk0th0bHelgEVuJpJljYMrxqtU+R6EJPga36lXOFDHkzqYkeZLCbZdumle4Es/Gk716zIMdojraZA8DMN0boXGZpn+GGZXPMP1GHfRqNEkOtOddTLVN8j/qP17bSzOtJ1M+LN/ASUCH6YqEAAA</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Desc>Список</Desc>
           <Type>List</Type>
@@ -10949,7 +10949,7 @@ FROM
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Швидкий вибір</Name>
           <Desc>Швидкий вибір</Desc>
           <Type>ListSmallSelect</Type>
@@ -10957,14 +10957,14 @@ FROM
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>ЗаписиШвидкийВибір</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerControl</Name>
           <Desc>PointerControl</Desc>
           <Type>PointerControl</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACpVU3U4TQRS+b9J3ODZebJEUEokaykJKgdIEAa1AkBAy3T1sxy4zy+xsGyRNfAWN4Rm8VMJFNcFnGN7IzP4vLahz0dmZ852f+c53Wi7NzYBe5VK4AYD6rL6rW/VLjU92OWUSRZMzKbhbs/wMVTSVSzNz5VK5FPiUOdCS/Xry3daoU2JhS/YX0tsWMhREot3kNtbUV/VbXd9dqRt1q8Y6c10HY+QMfY9YCB3JBXGwwex3gtgYWo9aO90PaMlaJ+haLvH9pWJJy0aleHFiv/fP7L03rf6LjvXy0Dok7sb+sFI9Lpe8oOtSCzwiJCUuhOEe5gEWJ15/GRGDA2QS1vXvJmG2i2JpMsrySureI8xBO3yOdk/yDzi1oc2oPtCPaFQjc5xErwNqy96uQB+ZJJJyBiY8n5+vZ4gm8eL7p5XLXBFNznxZ29jb2tpuvF4fLVZyPsWy4JkJxL9gFhgns+BFtiqYy3AvcWyCJyawwHVhBciQUJnc11oo8x5GFRahkuQdpY+PeuBrkPUI+ds4NMIqtnF4QDUL3EMhKfrG0XE15XIyQFqnCUzHqBfyTsHH+wT5DsrskLvXS6AMBEtS5bgdZZ/+I/5ZjQPiBlrpeWuxQSu1NhvwPhqa9axDk0lTjlOuBZdoSbSBD1AIamPc6VB5Ox6yDrpoSWM1kJIz6IbbbKTshnB8IMLxJ2W5yz0dELx4N5ObWti1XGUxotZBuUsEMmlEOaZhQrG/xfMAfQkmvCroPAFtInV6MkMtFFCreMoFNl1q9fXrNgJmpezlU+ZUoL6pazVWN/qgfqovaqx+3F3dfQKPOJho6ME+xu+O3hbOSHieLaLWqEBLcnERN7Yt8SwkLRqcPUbPA2yv3fPK+gMmSBHgFPsGd+2wAdnhHqpJXHeVWP2TnThYInsT/OJ5ueh476U5XUasTBkloxAxT3iyGqcSRVTHg83JKTr8zJmmCqvZo65t6HZNVV6PR5LMTPHfFnFQu+/rAUwLyP6nJmcnmhrWdJGI/x+Zv1CXr/1fWAoxYSlTIaNyKebwDwke4k77BwAA</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Елемент</Name>
           <Desc>Елемент</Desc>
           <Type>Element</Type>
@@ -11254,7 +11254,7 @@ FROM
           </ElementFields>
           <ElementTableParts />
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerTablePartCell</Name>
           <Desc>PointerTablePartCell</Desc>
           <Type>PointerTablePartCell</Type>
@@ -11383,14 +11383,14 @@ FROM
         <BeforeDelete Action="0">BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Функції</Name>
           <Desc>Функції</Desc>
           <Type>Function</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACtVW3WobRxS+F+gdxr6Sw7K+6Z2jCEWWXFHFNpbTXJRiRqtjZevVznZmVNUkgtiFlkIhYFz1yi2BPoDi2lSVY+UVzrxRmd3V/mit1DYptHM1OzPnO+f75pwzm8+tPsjnSDjwDU7wCkd4oY7UTzhRQ/xNvcIxvlND9SNe4jVeq9d7+Lv6Dq9xor5XQ/WLaYkEQmorn3uwms/lcz1hux1SdyXwfWrBhjz4ZG22WrYs1nOl7XaabF/2KYdoawNc4FRCu8LaYOIpTvFcDfECr3GMExyvaWyXdkF41ALSlIzTDpTd9i6nbQ2TzwlJpW0Ry6FC3I9ePvcioOf1Wo5tkRCxYQv58Nlz4PCI4Ikf1VucarSCkFxHL4By6/kufCtXAoAQRw8Ossfd+PuLeKpH+mt1Fc9whH/iOY7SOy70iR9D4ZbUKswV0ozhDFJhXY9yWzDXbNQ/qxrJsMkLUuu51i6r2eC0SZEsN7aeVXeWycBIx5GN+8u1YD7Ql5BVj4pD1yKfU6cHu1QckC0P3G3agaoDXXBlocWYQ+piE/oGeeraX/egvl4ivXBGisTtOY6R8Fe2pM3ch9HZRyWijqjjPKbWwV6D0fYOWIy3xT+bpiy33CY4YMltZuvknVmn2cfa43gvPFkieKLX1FGQrKFlNhNum5M/4xVe4ju9oI6JRzugIaFfCCHnYPWo3Mz/Rl2MBaZZARaKEyMM/NKbfdn7pOBf5eJIaZ/a0idlpomam5rh2oeqY+ZiTu+lUPAQNbWJp3ilXuOZ7ic4xT9wSopz97XQ5SCegiPAdx3nZeCUvHxJlhZz2gHajmxWFqvyBITQ5lXOGS9sc9bhtGs+psK2yp5nkNRKjfGuQZbxDC8JnuMFjvAKpzqnCL5Xr3CqfsCxOsaROsbx0vK8pkFDSixGhatHxlPJ3GQSWowd6AZhVjhQCbqACz7hCvV0TRk+/aSrhChNkH79R9d7x1ahG3DhA73BbyHMgzBJSZHsU0dAsp/o3Rpz2jcV9v+jK7zB9zhWRzjFye16wlZSkFgdI3sqEiZWae7Uus3BkowfhuzqErqkGN3ER28p2WK8R+2bsduFFX+vxL/TC1x72mhslp9U/5UKaYJcBwd0/jZoC5yoSqKruXfCzcTDE5zofwg1xPM4laEft7UEJV2JJeLoUEgxJJgFMDfmw05i6Fv2EcxPqfCprixGygiwFJgGdncSM/FHQSrMO/yIWm61vgIhCf6Kb9UpTtTxrHjnaIc0o2O3fj/uGEfwHI7xr/iSYp8+d8lj+dL5GhubTfpNnLE3l2zw2CSNZqqmH6DZVD+0/6FX0m8u2UgH+Vw4+xu4we7GVQ0AAA==</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Desc>Список</Desc>
           <Type>List</Type>
@@ -11398,7 +11398,7 @@ FROM
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Швидкий вибір</Name>
           <Desc>Швидкий вибір</Desc>
           <Type>ListSmallSelect</Type>
@@ -11406,21 +11406,21 @@ FROM
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerControl</Name>
           <Desc>PointerControl</Desc>
           <Type>PointerControl</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACqVUTW8TSRC9W/J/qLU4jNloiLQcQswkchxijEISCAkHhKLOTGXceNI96elxgMgSHFdaaSW0ynXFbY8QBckEsr+h5x+ter7HdlDC9mF6uqu6+lW9el2v3bkNetRr8QQA6qO6UN/UJ3UevY/+UBfRqfo7eqfG6nt0Gv2uvqhLdRn9ubfFKZMoOpxJwT3TDooIVVO9dvtOvVavhQFlLnTloJX997TXAbGxKwd3890uMhREotPhDprqL/WvOotO1bm6VGN1ocYtHYyRQwx8YiNsSy6Ii23mPBPEwdj6oru5/wptaW6H+7ZHguB+FdKS0ahu7C30nh5y8erJfPfe6qOj17tPdt12o/myXvPDfY/a4BMhKfEgjvZzJYLFqcKcJDXDITIJD/T3IWGOh+L+zW5YWs5D9wlz0YmroENnuIecOtBjVC/oWzSaiTkFoMdz6sj+lsAAmSSScgYW/DY/3yo8OsRP9281Tq4JsMNZIM21nfX1jfbjB6PFRileFTL8agEJ3jAbjL058BNbE6wlmACVmuAXC1joebAM5JhQme2bXZTlE0YTFqGR3TvKC5PwGmgn+ycJ3cBjI0a4gcfPqa4e91FIioHx4mUz5+BmwfP8LGA6fquC94ax0nmKbBdlsSjt6yFQhoJlMEp8jYrf4AfnC/xD4oVakGVrlfRls8eGfICGZrJgffrSnLcrqqHGec7qg96K3ifvBZzoZFsacQtGSVFnnssrnXeI4BJtiQ7wIQpBHUz7M9bSpo9sGz20pbESSskZ7MfTXKLjtnADIMINpoW2xX0dEPx0trIdM+6nUu6ph7mNcosIZNJI7pjlE8v3KR6FGEiwYKGi3MzpIVK3LwuvuxWvFTzgAjsetQc6u7WQ2Tk/5Suv2YPqH3Wmxupcv9nqq/qgxupzdBq9A5+4mHX3lV2U1iTJO1Z9vJ6req1Sgbbk4k1KYk/iYVzQ5CnYYfQoxN7qxKmCO7BAihBn2Ne458TkFIsJrw7xvBViD/Y202BZA1oQVNdL1YMTmZZUMdWe1xG5UbmtTFQ22gcSRYLxSlInBD4qmUp9RFw0q/oyC+hVw+wARUd3+tRzDB1xZsv3eaKFwpS+8sRFfXxXvy15BsWzPi3aRK6s4yERN9fq/+ClnNd1KIh9YpgzXUb1WkrQf0oijde1CQAA</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerTablePartCell</Name>
           <Desc>PointerTablePartCell</Desc>
           <Type>PointerTablePartCell</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACqVUXWsUSRR9b+j/cM1Tj0ibh7AsjuOQjNkxqySjE40gEmqqb3rK6VS31bcniAT0URAEkbyKbz6qZGE2u9nfUP2Pluqv6cl0lg3WS3VXnbrn1rnnlm3Z1s3rYIZtZRMA6C/6TP+lv+nT9G36Xp+lJ/pz+kbP9N/pSfpO/6HP9Xn6YX8QCkmodtkowAFT1MMgcHk8j9MEsK3rN20riYX0oU+Tdvm9ZZAHjGOfJmvVah8lKkbo9UIPXf1J/6N/pCf6VJ/rmT7Tswq4znmYSBLSH4YHdMQUtm3LtiQ7xDhiHGFIoWI+rktvVzEv333W3xm9QE7uMBnxgMXx7aaM7zgrTcv799ce/f7L07XHq5vixfb0Kb+3/WBv8+FK67ltRckoEBwipkiwALLYP6Mq3LpEy9e52AVfTIwE/ymibTxyWtC5Yz72BI0HKoxQkcDYefa8lal2dYdAVMwdkCZ+eyHrK8Yq5jxEcX8zfCSTd0FVUJgRI81/ageyFKrEpixIjCvquwOFMUojaiihU4LdbXZYRx7nn8elNsW1WPxKcnhiwu6yeAJ9pHq8XOVmBrjWAZkEAXSBHTFBFfNyjFuwslJV5SJlIVVvzKSPzmMpXia4dbcLUWtJvUG9QlcsiRNBt5udKymcVlnjLK3sDku51xA7cogBcuq6W3IaTrDarES9xDF6VvlCfzRL6dv8aYDXxhBtU/w2HC9da36uoqrKp0JCTuhBOEWlhIeFrtNQeJDn6WwkRKGEUTbdgM0pSlpXfgxM+XGTupEJBlExd8oVN+u3mhIFwh0iDZhCSU7O0YTZEx6NH+HLBGOCDvy6utoAuofCH9MctbaA2sCDUGEvEHyyE6H8LZF8qQZX6Hf9Vf/QM31qnmb9p/6oZ/p7epK+gYj5WHb/pc1YaJLfO+uG7P/GIuquUMgpVK+KAm4RHtaas7TghVM9FgQbjE/2S6vNDZ9XNzLtuHjmQnpzKy/2VVQXqhzrB4QqZ7pU1MLg1Wdtq1ZH5qO76G13nvvixkKARk/1xiLwHBOz0XTjMHfjxd7NkhgiZU/LcnP+d8v0AmSqLHtN0yYtzatXz+z/yJhhMpJGyLFtFSL/C6DgyZfsCAAA</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Елемент</Name>
           <Desc>Елемент</Desc>
           <Type>Element</Type>
@@ -11763,14 +11763,14 @@ FROM
         <BeforeDelete Action="0">BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Функції</Name>
           <Desc>Функції</Desc>
           <Type>Function</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACtVW3WobRxS+F+gdxr6Sg1jf9M5RhCJLrqhiGctpLkoxo9WxsvVqZzszqmoSge1CQqEQMK4KBbcE+gCKa1NVjpVXOPNGZXZX+6Of+IcU2rmanZnznfN9c86ZTadWH6RTJBj4Fkd4hQO8UEfqJxypPv6KY3yv+uoQRzjcxT/UD3iNI/VK9dUvhilitomtdOrBajqVTnWE5bRIxZHA96gJG3L/s7XJasE0WceRltOqsz3ZpRzCrQ1wgFMJzSJrgoGnOMZz1ccLvMahDmRNYzu0DcKlJpC6ZJy2oOA0dzhtaph0SkgqLZOYNhXirsTSqRc+MbfTsC2TBFhVS8iHz54Dh0cET7x43uFYHeIwIyTXcQug3Hy+A9/LFR8gwNGDg+xwJ/r+KprqkfxaXcUzHOBfeI6D5I4DXeLFkLmRVJE5QhoRUJYUWdul3BLMMaqVL0rZeMDkBSl3HHOHlS2wmyRHlqu1Z6XtZdLLJiOYjfjrNX/e08LP6kbFgWOSL6ndgR0q9knNBWeLtqBkQxscmWkwZpOK2IRuljx1rG87UFnPk04wIznidGw7G/NXMKXFnIfh2Ud5oo6obT+m5v5uldHmNpiMN8XNpgnLmlMHG0y5xSydsBPrJPs5qv+uU8DT/Ue8xGu8Vm92A4w8wRN9Wh35qRtgzmbHzRn6M17hJb7XHtQxcWkLNBh0MwHYFKAexfmazNUqu8B0VpSFgkUIPa8EJ1/WHsl417s4UtqllvRIGUmixqZmuPaxWpm4mFJ6KZA6QE1s4ileqTd4pvsKjvFPHJPc1E0tdNmLpmAL8FxHueo7JS9fkqXFnLaBNkOblcWqPAEhtHmJc8YzW5y1OG0bj6mwzILrZklipcx4O0uW8QwvCZ7jBQ7wCsc6mwh+UIc4Vq9xqI5xoI5xuLQ8ranfnmKLYTHrMeMpb2wyCQ3G9nXTMIocqARd1BmPcJG6us6yHv24q5godZBeTwiv947tQ7fjzEf6hddWmAtBkpIc2aO2gHiP0btlZjfnFfv/t1O8xQ84VEc4xtHt+kQtLlKkWHb2VChWpNzUqXWLgykZPwh4VSS0SS68nU/eZmYL9B79wIjcLuwC9yqGW77R5afV6mbhSelfqZc6yHWwQWdzlTbADmsmvJR7JNlEMDzBkf6/UH08jxIXulF7i5HRFZkntg6C5AJqswDGxnTAcQx9sx6C8TkVHsmVxUgz1Jd8U9/uTjLG/jZIkbkHn0TFWuMbEJLgb/hOneJIHU9KdYpwQDA8dusX5NYR+E/hEP+OLiby5vGVPJIsmZ2RsVGn30X5Ob80/YcmbjRRMvn4TKb6kf0PvZBeE5mNtJdOBbN/AHmUeSRTDQAA</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список з Деревом</Name>
           <Desc>Список з Деревом</Desc>
           <Type>ListAndTree</Type>
@@ -11778,7 +11778,7 @@ FROM
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Швидкий вибір</Name>
           <Desc>Швидкий вибір</Desc>
           <Type>ListSmallSelect</Type>
@@ -11786,14 +11786,14 @@ FROM
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>ЗаписиШвидкийВибір</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerControl</Name>
           <Desc>PointerControl</Desc>
           <Type>PointerControl</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACp1UzW4TSRC+W/I7FNYexhANILISiplEiSHGWkgsDJtdIRR1ZirjjofuoafHIUSW4IiEtBJa5cAFceO4i7KSN0t4hp43Qj3/YzubhD5MT3dV18/3VVW9dv0q6FWvxRsAqE/qRP2n/lLH0ZvonTqJjtQH9U19jY6i1+pETbZ7nDKJos2ZFNwz7aB4WxXVa1ev12v1WhhQ5kJHDlvZf1dr7RIbO3K4mN92kKEgEp02d9BUf6pv6kt0pI7VqZpozy1tjJHnGPjERuhLLoiLq8x5LIiDsfRpZ3NnD21p9sMd2yNBcKca0rLRqF5sBy8Pftvr/M4Wh1ubN9d/XvvlZe/hnttoPqvX/HDHozb4REhKPIjtXRYeWJoB5TDBC0fIJNzT3/uEOR6KOxe1vbySGx0Q5qIT566NZrGOOHWgy6g+0FdoNBNx6lqvLerIQU9ggEwSSTkDC27duNEqNNrET+9/ahyeG1qbs0Ca608ePNhYfXhvvNQoWaoGC9csIMEBs8HYXgA/kTXBWoapcFIRXLGAhZ4HK0D2CZXZvdlBWX5hNGEJGpnfcQ5JwmKglexL07eB+0Yc2wbub1GNGPdRSIqB8fRZM8f9ombznCxg2nKrEuOFraT7DKkuyuJQutdLoAwFywIosTMufoP/eV9EPiJeqNutLK1SvGJ22YgP0dC8FRzPOs1ZOg+Hj9FrNYmReKv+UafqNPojR0O918rRm2ROwKGGoaVzacE4AfqSFnNe8hoSXKIt0QE+QiGog2kFx3226SPro4e2NNZCKTmDnXhbSLp7VbgBEOEGs03Y4742CH66W9mNGdddCa9Uw+yj7BGBTBqJj3k6cWs/whchBhIsuF3p6kzpPlJ3IAutxYrWGu5ygW2P2kOd3XrI7JzTsstzK1Z9Vl/URB3rg/pXvVcT9bcWgk9czLrgzJpL0UgyjidCfF6oat2lAm3JxUFKX1fi8xjKZEw8YfRFiN27U68K1sACKUKcI1/nnhPTUhymtNrE89aIPdzeTI1lRWlBUD0vVx9OZVrqobNLdu4wMCp+yuRka3VXokiiO5PIqUEwLolKtUNcNKvdZhZBVwXzDRRV3B5QzzG0xbllPuBJ/Rciksx+HUIf5a96BuUZFMN+tlGTFmVtD4m4fH/+ECPljC4CfqwTBzhXZVyvpdR8B+Sb/UWvCQAA</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Елемент</Name>
           <Desc>Елемент</Desc>
           <Type>Element</Type>
@@ -11904,7 +11904,7 @@ FROM
           </ElementFields>
           <ElementTableParts />
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerTablePartCell</Name>
           <Desc>PointerTablePartCell</Desc>
           <Type>PointerTablePartCell</Type>
@@ -12211,14 +12211,14 @@ FROM
         <BeforeDelete Action="0">BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Функції</Name>
           <Desc>Функції</Desc>
           <Type>Function</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACs1W0W7bNhR9N+B/YPxSpxAUDNhb6gauE6fG3DiI3e1hGAJavnG1yKRGUvOC1kCTAetLn4ouAwZkwIZ9QBo0qOc2zi9c/tFAWZZkq97iosPKJ1LkPbzn8hxS+dza7XyORA3/wCFe41g/xTG+wXf6VD/FIf6K46g/xtE+/ql/xCsc6Z/0qf7FdmQqfmYqn7u9ls/lc4F0WZfUmAJxQB3YVoefr0+/lh2HB0y5rNvkB6pPBcRT28BAUAWdCu+AjS9xjBf6FF/jFQ5xhMN1g81oD6RPHSBNxQXtQpl1WoJ2DEw+JxVVrkMcj0r5IeTyuccTcn7Q9lyHRHh1V6o7Xz0CAXcJvghzehXiDotSCZO7BCqcRy34Qa1OACIc0wSoQLBk/HXSNW12tLaGZ3iOb/ACz2dnGPRJmEPxRsQqnEllJ2AWqfCeT4UrObPrtS+2rHTS5DGpBsxp8aoLXoeUSKHV2K/cL+8VrPTE/i4VtPeZmb91q0AG1myKWUrfrE/6A3M62cJSecQc8iX1AmhReUgaPrBd2oUtD3rAVLHNuUdqcgf6FnnI3O8CqG1ukCDqkRJhgedZqf3KjnI5uxOvvbtB9DH1vHvUOdyvc9rZA4eLjvz30JnIBmuCB47a5a5RdRSdPeqbSe5nfIuX+A4v8UqfEJ92wQBCvxgBzoGaVnk/h/dysxaEZkksJJggDEJfTUfuASmGx7E4U9qnrgpJ2bNE7R3DMNJDVimDpAuehHCr5KAnBSdPnpCVxRvsAe3EMauLU3wAUprwLSG4KO4K3hW0Z9+j0nXKvm+RmS9VLnoWKeAZXhK8wNd4jm9xrI/1c4LX5kT1MxzqEzzXJzhcKcwTnJg/9TF2gmmZnTbsHa6gzfmhcZ1dEUAVGEcUQ8IV6huRWiH99FapojRBhYaKa72k98xlV/wHs4We5D5EiiElckA9CWmDmtkq9zqxU6z/w2a/4zUO9bEZ3MxkjTSphKGVXRWTS5jOrdp0BTiKi6OIS01Bj5Tian50j2YNtYS2lnhQqg/r9Z3yg63/RIJNUJvggRFInbbBi2UY1+0DtTAtJ77AkXkQ9SleTH4rIlHE+ClCRugbxDOJkFJELwtgb88nncYwt1iIYN+nMiS6uhgpQ39lEjqJW6qUqReQVLh/9NEq2Wh/C1IR/A1f6Zc40idTV82RjkjGy258OS+VxZn5R8Qh/pUcULJjyFuJpHSzSk2C7Sb9PtFq1kmmTe7xdNC0orN3+7Rr3rBP6AEKL9JspoN8Lur9DcFfG2wYDAAA</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Desc>Список</Desc>
           <Type>List</Type>
@@ -12226,7 +12226,7 @@ FROM
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Швидкий вибір</Name>
           <Desc>Швидкий вибір</Desc>
           <Type>ListSmallSelect</Type>
@@ -12234,14 +12234,14 @@ FROM
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerControl</Name>
           <Desc>PointerControl</Desc>
           <Type>PointerControl</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACp1U3WoTQRS+D+QdjsGLjZZVaCnauilp2qYRbYO1ioiEye7pZsx2Zjs7m6Kl0GcQ8cJLr7xVBKNofIXJG8ns/zZRms7Fzs/5mTPfd76tVu7cAj2qlWgCAPVJjdUfNZleqIn6rn5NP0wv1Fh9VJNkPVE/e11OmUTR4kwK7pl2kMeXTdXKrTvVSrUSBpS50JbD9XTd0V5HxMa2HK5kp21kKIhEp8UdNNV7NVFfpx/UN/VbjdVPNV7XyRg5xsAnNsKB5IK42GTOU0EcjKwv2/v912hL8yDs2x4JggflkhpGrXzQO14+7m73B+3D7VVx33ZWd8XDkxdurf6qWvHDvkdt8ImQlHgQ5bsORLA2A8xZjBmOkEnY1t9dwhwPxYNF8jc2ssQDwlx0Igx04rTmEacOdBjVG/oWjXpsTq7X4zl15KArMEAmiaScgQXLd++u5x4t4ifnN2tnVyqvxVkgzZ3DR4/2mo+3z9dqhWzlguG2BSR4w2wwekvgx7Y6WA24VFJighsWsNDzYAPIKaEyPTfbKIsRRh3WoJbee57BEjMaaCf7WlTu4akR1beHp8+pRo77KCTFwHj5qp7hv0jq7G0WMJ19vVTrQpmSeYZkF2W+KZzrIVCGgqVFFJg6z5fBf+Lz6kfEC7UMi9Yy3Rtmh434EA3NYc737KUZYxlzgku0JTrARygEdTDpm6jD931kB+ihLY3NUErOoB9NS7G2msINgAg3mG3/Lvd1QvCT2UpPzIjpQmWJh3mAsksEMmnEd8zziUT1BE9CDCRYcK+kp9RpF6k7kLnXSslrE4+4wJZH7aF+3U7I7Ay94pVX6g/1WX1VY/VN/0XVD/VOjdUXbQSfuJj23T8ZThCJXx1pMdovlb22qEBbcvEmobwj8TiCMxboIaMnIXa2LkXlzIEFUoQ4x77DPSeiJt9c8moRz9sk9rC3nyRLBWFBUN43yoGXXlro2BiVheRnlO4qkpSO5pFEEVf4T0ILKoiWBdPcZmwNqOcYmsi53TrgcRvnpuTHSVzU4c+0aLMC8j/lrN5ipbGWh0QsLrNrg1p81VXwi3yiIue6nFcrCbp/Ae2OtDoACQAA</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Елемент</Name>
           <Desc>Елемент</Desc>
           <Type>Element</Type>
@@ -12311,7 +12311,7 @@ FROM
           </ElementFields>
           <ElementTableParts />
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerTablePartCell</Name>
           <Desc>PointerTablePartCell</Desc>
           <Type>PointerTablePartCell</Type>
@@ -12452,14 +12452,14 @@ FROM
         <BeforeDelete Action="1">BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Функції</Name>
           <Desc>Функції</Desc>
           <Type>Function</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACt1WUWsbRxB+F+g/rP0kh+P80jdHEYosuaaKZSyneSjFrE5j5erTrbq7qmoSge1CQqEQMK4KBTcE+gMU16aqHMt/YfYflb076e4kXRs5CZTu097uzjfzfTsze+nU6r10igQD3+AQr7GPl+pY/YRD1cNfcYTvVE8d4RAHe/ga+3jrT39XP+ANDtUL1VO/mJaIwMS20ql7q+lUOtUWttsgm64Evk8t2JAHn62NV/OWxdqutN1Gle3LDuUw2doAFziVUC+wOph4hiO8UD28xBsc6EDWNLZLmyBa1AJSlYzTBuTd+i6ndQ2TTglJpW0Ry6FCfADHdOqZz7HVrjm2RQLYsi3k/SdPgcMDgqdeaG9xpI5wkBGSawoCKLee7sL3csUHCHD04CDb3A2/vwqnesS/VlfxHPv4J15gP77jQod4MWQW4VdgrpBmiGmQAmu2KLcFc83y5hdFIxo7eUZKbdfaZSUbnDrJkuVy5UlxZ5l0jXgwicHrQC6TAo+4ruwY5A48PPhPxuHrNX/e1Sk1mwZUHLoW+ZI6bdil4oBUWuBu0wYUHWiCKzM1xhyyKbagY5DHrv1tGzbXc6QdzEiWuG3HMSL+8pa0mXt/cvZBjqhj6jgPqXWwV2a0vgMW43Xx76Yxy4pbBQcsuc1sXYpj6zj7OeK/1hntyf8jXuEN3qhXewFGjuCpPq2O/aIMMGeTfaHa+xmv8QrfaWfqhLRoAzQudDIB7hS2HoX58syVzUgwndUnUbsQoev1mfGXvU8y3k0nR0o71JYeKTNO1NzSDINUm19IYxdToi8FqgeosU08w2v1Cs9188QR/oEjkp26tESX3XAKjgDPdZi2vlPy/DlZSua0A7Q+sVlJVuURCKHNi5wzntnmrMFp03xIhW3lWy2DxFZKjDcNsozneEXwAi+xj9c40olF8FYd4Ui9xIE6wb46wcHS8rSmfuONLE7qWo8ZTzlzi0moMXag+4dZ4EAl6PrOeIQLtKVLzvDoR11FRKmC9NrD5HoX7CT6ocn8Q+vwOgxrQZCkJEv2qSMg2m70bok59Xl1/79oGm/wFgfqGEc4fL+WUYnqFYpnzJ6a6BaKOHVq3eZgScYPA4qbEpokO7moj95xZmv1Dq3BDN0mNoQ71cXiD3jpcbm8lX9U/CRVVAW5Dg7oHC/TGjiTSprcz4el3lhGPMWh/p9SPbwIMxs6Yf+L8NIlmyOOjodkA5azAObGdOxRDH3fHoL5ORUe35VkpBkVlnxT324hRSN/JqTAWocfW9BK7RsQkuBv+Fad4VCdjGt5invAdXLsvV+buwTjv6AD/Cu8rtCxp4LkoZDx9A2NzSr9Lkzg+WXsv09Ro7G+8TdrPNVv83/oYfUazmyk3XQqmP0NGZ86x3oOAAA=</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Desc>Список</Desc>
           <Type>List</Type>
@@ -12467,7 +12467,7 @@ FROM
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Елемент</Name>
           <Desc>Елемент</Desc>
           <Type>Element</Type>
@@ -12525,7 +12525,7 @@ FROM
           </ElementFields>
           <ElementTableParts />
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Швидкий вибір</Name>
           <Desc>Швидкий вибір</Desc>
           <Type>ListSmallSelect</Type>
@@ -12533,14 +12533,14 @@ FROM
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerControl</Name>
           <Desc>PointerControl</Desc>
           <Type>PointerControl</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACqVVT2sbRxS/C/QdXkUPq9RsTJpDsbI2tmIrAtcWUdwcQjDj3efVVJuZzeys3NQIkmOhUAjFh15Cbz2mwQXVrdOvMPuNysz+l+Smtueg2Zn3m/fv995Ts3H3DujVbJgNANSv6kL9pd6r8+RN8qO6SM7UL+qj+js5S16rCzU7VO/Ue/WP+RxwyiSKLmdS8MB2o1JNXdRs3LnbbDQbcUSZDz057uTffY06Ji725Ph+cdtDhoJI9LrcQ1v9rD6qD8mZOleXaqYtd7QyRl5gFBIXYSi5ID5uMu+JIB4a6bPe/tG36Ep7GB+5AYmiB3WX1q1W/eLwnhjFB6uTx0+2Y0HuDchg57vdvt9qP282wvgooC6EREhKAjD6bpEpWFvIz2maOpwgk7Ctfx8R5gUoHtzAzPpGoX9EmI+eyYjWn0cw4dSDPqP6QL9Hq52KMy/0eko9ORoIjJBJIiln4MCXq6udEtElYXb/eev0Ol52OYukvXOwu7u3+fX2dK1VUVr3G75wgESvmAvW4QqEqawNzjrMeZaJ4DMHWBwEsAHkhFCZ39s9lNUXVhvWoJXbnRbZSWmONMi9Db97eGIZN/fw5CnVeeQhCkkxsp49bxds3MBCEakDTBvp1Dy/icJsXygAH2V5qNzrJVDGguW+VOiblp/Rf7wvg5iQINYNW5XWa2DD7rMJH6OliS2LYNFoQeOnUvIuea1mJik/qD/UpbpMfiqyod5qcPImnTRwqtPQ0bF0YJrm/JoaC4qKIhNcoivRAz5BIaiHWYmbntwPkQ0xQFdaW7GUnMGR2VbSobAp/AiI8KPFhh3wUCuEMNud/MY21VjJV4awhygHRCCTVmpjGcaMgcf4MsZIggNf1SZADnqE1B/JEnW/htrCYy6wG1B3rKPbiZlbcFo1eZ3iVb+pD2qmzvVB/aneqpn6XeMgJD7mvXFl+WWJSYM308OcV+qoh1SgK7l4lTHZl/jCZDUdKQeMvoyx/3DuVUkgOCBFjEvkOzzwDEPlYQ7VJUGwRdzx4X6mLK9PB6L6eb3+cC7SSjtdXb2fGhFWzWSVsnxtHksUqaNX0js3HqYVUaWiiI92vQft0v+6YLmCsra7Ixp4lta4tPhHPO2KUpT9ZWgXhii/0ZOpiKD8j1hs37RxWTdAIq7ftbclpxrc/+HBYIyvSyHTZiNj6V+toCjJHQoAAA==</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerTablePartCell</Name>
           <Desc>PointerTablePartCell</Desc>
           <Type>PointerTablePartCell</Type>
@@ -12687,14 +12687,14 @@ FROM
         <BeforeDelete Action="0">BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Функції</Name>
           <Desc>Функції</Desc>
           <Type>Function</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACs1WwW4bNxC9C9A/0D7JwWJ96c1RDEWWXKGKZVhOcyiKgFqNla1X5JakqhqJgFgF2ksvDVIXaOAAAfIBjmEjqlIrvzD8o4K7q92V1kripgLKE5fkm3lvODPcfG79Vj5HooG/4Tuc4BivcKKHD/G1/gmvcKx/1if6D9uRqZMzW/ncrfV8Lp/rSZd1SI0pEAfUgW11+MXGdLXkOLzHlMs6TX6g+lRAvLUNDARV0C7zNtj4HCd4rk/wAq9whGMcbRjbjHZB+tQB0lRc0A6UWHtf0LYxk89JRZXrEMejUn5YRj73OJTh91qe65AIWXeluv3gEQi4Q/BZ4P0NTvRTHBWkEoalBCqcR/vwo1oLDUR2zBCgeoIl398kUzNmv9bX8U+c4MXsKoM+CfwX5uiXOZPKDiEWKfOuT4UrObPrta8qVpoWeUyqPebs86oLXpsUyWq98aCyt0oG1qyvhbxO8Qzf4jmeLeKWct/Ys8j1VGMry6b7Et/jSB9/FtnIxrKpvtAnJgc/i2pkY2lUv90I5wNTUdkSofKIOeRr6vVgn8pD0vCB7dIOVDzoAlOFFuceqckd6FvkPnO/70Fta5P0ohkpEtbzPCvlr+Qol7Pb8dk7m0QfU8+7S53Dh3VO23vgcNGWH4fOIBusCR44ape7phNF6GzRzreJ3/EdXuLfeIlXekh82gEDhX4hgs7BzShfz/ZaFdYCaJbuQimJhUHQ9aZf7gEpBIFfzJT2qasCUfasUHvHKIxuPpsTg2QKnoTAVXKlYWjJkydkZbGDPaDtGLO2mOI9kNLAK0JwUdgVvCNo175LpeuUfN8iMytVLroWWcVTvCR4jhd4Zi5TH+tfCb7XT3Gif8GRHuKZHuJoZXVeYNiwU4txzpuR8bRp73AFLc4PTW3ZZQFUgcn9QiC4TH2TjlYgP+0qFZQmqKB04ljfsMrMA1X4QFkF1cd9iDKGFMkB9SSkS9HsVrnXjmvCWm5BvQpbq1n6tHJqpOknWqzsqVhGomnu1JYrwFFcHEWsawq6pBjH7T+vxmzp3CCLru331fv1+k7pXmUpadUEtQUemEuv0xZ4cWrFEfro/U5DhM9wbF58fYLn4S9bdNGxpRR1k6abxDMuSTESkjVgb8/TS9swPSiwYH9JZSBpbbGljNCVEBribhS01EtFytw/+hcxa7S+A6kIvsQ3+jmO9XBaE3PyIjnxsU9uogv8nZp/ahzhX0nQE9uBFiWScMzmWQK2m/SHJNOyGW9G2FnToGmUZrvtdGpelf/RkxC0tizTQT4Xzf4Bjg/AaDINAAA=</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Desc>Список</Desc>
           <Type>List</Type>
@@ -12702,7 +12702,7 @@ FROM
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Швидкий вибір</Name>
           <Desc>Швидкий вибір</Desc>
           <Type>ListSmallSelect</Type>
@@ -12710,14 +12710,14 @@ FROM
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerControl</Name>
           <Desc>PointerControl</Desc>
           <Type>PointerControl</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACpVU3U7bMBS+r9R3OKt2kTJU0Ia2CQgICi3VoKAxQBNCyCSH1DTYwXHKGKo07Q02TTzDboe4YEzwDOaNJuc/bWHMF3F8/v1957hcmhgDvcqlcAMA9U39UXfqRt2qu/uv+xucMomizpkU3K1ZfmZZVJVLYxPlUrkU+JQ50JTdmeS/pa0OiYVN2Z1KpU1kKIhEu85trKkf6k5d3l+oK3WrrtWNup7RwRg5Rt8jFsKm5II4uMDsD4LYGGp3m+sHR2jJ2mZwYLnE92eLJc0ZlaJgv/2S0defPp5NvpNHa9tvjsVZwz+tVPfKJS84cKkFHhGSEhfCcI9jAdNDCJxH4GAPmYRl/V0hzHZRzI6ONDefhugQ5qAdXkuHSOrocWpDi1F9oJ/RqEbqOJFeO9SWnQ2BPjJJJOUMTHg1OTmTWdSJF8ufV84HCqlz5staY2t1tb2wttyfruT8iqXBCxOIf8YsMPbHwYt0VTDnYCB5rIJnJrDAdWEeyCmhMpHXmijzHkYVpqGS5O2nAER8+NrI+gcRbTw1wkraeLpDNRrcQyEp+sbuXjXFdHSQtF4TmI4zU8j/gE+8D5HhoMwOObleAmUgWJIuh3M/+/Uf8c/q7BE30BOQ1xbJmq+1WI930dAMZGwNJ03xTnEXXKIl0QbeQyGojTHrYSeue8g20UVLGouBlJzBQbiNR92+IBwfiHD84Tbd4J4OCF68m4mkFrKXqyy2qG2i3CACmTSiHKNswuZ/jycB+hJMeFvo+8RoBanTkZnVVMFqEQ+5wLpLra6+XSNgVopePuVAJ6if6lJdqyv9VKnf6ru6Vr/uL+6/gEccTHrpQS7ju0f3C2cmPI8XrZaoQEtycRaT25J4HAIXDdIWoycBtpYGvDKOwAQpAhyhb3DXDknIDgNWdeK6i8Tq7q/HwZLWN8EvnueKjgM3zfVmhMoDI2UUouaBT9bCoUQR1fIgSbnODn9zqpENVu9Q1zY0ZSM7sMOj1sxU8VNGHNTu23oQ0wKyt2t4hqLpYXUXifj/0XkCfPn6n4JUaBOWM9KkXy7FOP4Fe1HaaSMIAAA=</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Елемент</Name>
           <Desc>Елемент</Desc>
           <Type>Element</Type>
@@ -12776,7 +12776,7 @@ FROM
           </ElementFields>
           <ElementTableParts />
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerTablePartCell</Name>
           <Desc>PointerTablePartCell</Desc>
           <Type>PointerTablePartCell</Type>
@@ -13283,7 +13283,7 @@ FROM
             <AfterSave Action="0">AfterSave</AfterSave>
           </TriggerFunctions>
           <Forms>
-            <Form Modified="1">
+            <Form Modified="0">
               <Name>Таблична частина</Name>
               <Desc>Таблична частина</Desc>
               <Type>TablePart</Type>
@@ -13685,14 +13685,14 @@ FROM
         <BeforeDelete Action="0">BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Функції</Name>
           <Desc>Функції</Desc>
           <Type>Function</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACtVX3U4bRxS+t+R3GHxlotX6pnfEQcT8FNXBCJPkoqrQeH1wtqx33JlxXZQggSOVm0iVEDVSJSKl6gMYGlrXFOcVzrxRNbvr/bG9FNJGaudqdmfPd853zvnO2NlM4UE2Q4KFZ3iBV+oQr/A3vMIb1cMzvFQ91cXBDv6iXuMNDtX3qqfOTEvE7BJH2cyDQjaTzbSF7TbIuiuB71IL1uTeZwvjt0uWxdqutN1Gle3KDuUQHq2BC5xKqJdYHUw8xZEOAd/jDQ5wiIMFje3SJogWtYBUJeO0AUtufZvTuobJZoSk0raI5VAh7kMqm3npk2q1a45tkQCnbAv58PkL4PCI4IkXywWO1CEO8kJyHbMAyq0X2/CdnPcBAhy9OMg2d6PnL6OtXsmnQgHPsY+/4yX2kycudIgXQ/5WQiXmCmlGIAYpsWaLclsw1yyvf7FixIMlL8lq27W22aoNTp0USa5ceb6ylSMHRtJ7arRv8QMO1FFarDHnlS2D3CX0APGTBf7Vgr8/0J0yXWwq9l2LPKNOG7ap2COVFribtAErDjTBlfkaYw5ZFxvQMchT1/6mDevLi6Qd7EiRuG3HMWL+lixpM/dh+O2jRaKOqOM8ptbeTpnR+hZYjNfF35smLCtuFRyw5CaztcLG1kn2+JPfp+pIddVr3Q/qWPV2AptFgid4jX115GsrwJhu4dsl9CNe4xX+6R10SYs2QANBJx8ATYDpVZrNf2ZejBTT6QSkJidCOPDmw/jJ3iV5r5TpkdIOtaVHykwSNTc0w6CXZstj7GIiy3NBmgPUxCGe4rX6Ac/10MMR/oojUpyoUqrLg2gLjgDPddSXvlPy6hWZS+e0BbQe2synZ+UJCKHNVzhnPL/JWYPTpvmYCttaarUMknizynjTIDk8xyuCl/ge+3iNI3Wk3hD8oA5xpI5xoLrY1+00l5vMqT8/Yy9D4eo15WnR3GASaozt6QFhljhQCVrAeY9wiba0pgyPftxVLClVkJ7+w/Lec1To+yJ/y2zwRghrQdCkpEh2qSMgPk/06Spz6rOE/f+YCu/8MY4jHN5tJlTiCYmyY0x/FSYmytLEV8s2B0syvh9wWpfQJMWwEv/6SJkW40do34zcpir+oxr/Drfu6tNyeWPpycon0UUV5DI4oLu2TGvghNoIC3LP5honCk9wqH/oqB5eRs0KnWiExYho1S0SRwdAigGtaQBzbTLYOIauqIdgfk6FR3A+HWmK9pxv6tvdK4WxXw+kxFr7/ziDldrXICTBt3ihTnGoumN5TpANyIWf3fmGuJN3/5ob4B9RQSJPHk/Jo1QlOzIyNqv026gnZ0txpl0Y0TvV1RNR9fRfAezvbNOaA5uUSx/am87zC6RQIPgz9vECr3GgjvEG+0Qda51qVt5jLg0zd1t0/hUXD21c3+S1N97q6/0/dDd7I2060oNsJtj9Beib6RtmDgAA</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Елемент</Name>
           <Desc>Елемент</Desc>
           <Type>Element</Type>
@@ -13739,7 +13739,7 @@ FROM
             </TablePart>
           </ElementTableParts>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Desc>Список</Desc>
           <Type>List</Type>
@@ -13747,7 +13747,7 @@ FROM
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Швидкий вибір</Name>
           <Desc>Швидкий вибір</Desc>
           <Type>ListSmallSelect</Type>
@@ -13755,14 +13755,14 @@ FROM
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerControl</Name>
           <Desc>PointerControl</Desc>
           <Type>PointerControl</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACpVU3WobRxS+F+gdTkUvVqnZBBposLI2thwrKqktqriBhGBGu8erqdYzm9lZmdQIHPei9yY4kCfIpW3ioKQkzzD7RmX2fyXFledCq5lz5js/3/mmXrt7B/Sq1+IPAKh36lJdRyfqWn1S1+prdK7eqavoPDpV0/0ep0yiaHMmBfdMOyjuVU312p279Vq9FgaUudCRo1b2v6u9DoiNHTm6n592kKEgEp02d9BUb9U3HVN9VF/VVH1R05YGY+QQA5/YCH3JBXFxgzlPBXEwtr7o7A7+RFua/XBgeyQIHlZTWjMa1YN9//l477C3tTUc0V8eiN3BqPfr0D5qNF/Wa3448KgNPhGSEg9ivNu0BlbnGnKc9ArHyCQ80r+PCXM8FA+XwV1bzwGHhLnoxDVrwCzHMacOdBnVG/oXGs3EnIbV6xl15LAnMEAmiaScgQU/37vXKjzaxE/Pf2wc35hWm7NAmtt7T57sbPz2aLLaKKFUE4WfLCDBa2aDsb8CfmJrgrUGM6mkJvjBAhZ6HqwDOSJUZudmB2X5htGEVWhkcSd5OxLmAu1k34qyHTwy4rx28OgZ1Z3iPgpJMTBevGzm/V4GMq/FAqZRW5XclkJIv3MkuiiLTelcL4EyFCwLXmJkUvwNbrhfZD0mXqhlVbZWaV03u2zMR2horgpe54PmzFR78F59i07UNHoTnUZ/qyt1Ef0TnefVqzP1r7qI3iT6h2Nddkvn3oJJ0tT/Qch7ns+F4BJtiQ7wMQpBHUynMtbNro+sjx7a0tgMpeQMBvFnJVHqhnADIMIN5kXV474GBD/9WtmJGc9TqR+ph9lH2SMCmTSSGIt8Yqn+jq9CDCRY8KCi0szpMVJ3KAuv+xWvTTzgAtsetUe6uu2Q2Tln5ZA3TqP6oK7UVH3Ub7D6rM7UVF1G59EJ+MTFbLq/O09pJ5JqY4XH+5Wq1xYVaEsuXqfUdSUexm1MZL/H6KsQu1sztwrGwAIpQlxg3+aeE1NSbGa82sTzNok92t9NwbIBtCCo7teqF2cqLekjG88lRG5UYpRJydbGgUSRZPZdAmcEPimZSjNDXDSrqjKLhKuGxQDF9LaH1HMMjbhwvIc8mfvCRJJ3XKfQR/mHflvyCoqHe16giTRZ20Mibq/LW7NRrmaZxsc+cXILXSb1WkrLf1JOhWFnCQAA</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerTablePartCell</Name>
           <Desc>PointerTablePartCell</Desc>
           <Type>PointerTablePartCell</Type>
@@ -13916,14 +13916,14 @@ FROM
           <GeneratedCode Zip="1">H4sIAAAAAAAACs2Sz0rDQBDG7/sUS09t1fQBgoda0Yso2OJVNuk0RNPdkt1YihRsX8BL6SFoDz5B/IehkPoKs28kSYuFSsB/Feeye/i+b37MTKVM6KIwxEgPMMYQQ7w5bfiu44AvDVsuJXf6CmN8xOf0JeUKIYF0uUP3gYPPFDRrogkGhjjDRA/0ECNM9BBjc6Gr2rYIuHK5Uxct1WU+mIRw1gbZYTasxoxwhg96jE+YYIzTNIZIxZRrU9tjUuYhk8uMuBNYnmvThYPJHrfpCfMCaDB5Tg+hW1zxH1lnIBX90HeC93qEUz0sZbnz9LTeP6zLXLUMN/Z80T4GGXiqqPwASmam7JNPcNVEp+dy58tsmzTHMdEDTFIXRrn8+bEG3mKEL6mbbmzTAt1K+8zwVY/1dcFc6yh2oCV8qLML+PGmfpGq2lLg/zeoOqhd8EC5gh8wC7xvnI8lhEe91LxGzvlKM9S/m1//DfyWCLXmBAAA</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Функції</Name>
           <Desc>Функції</Desc>
           <Type>Function</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACs1W0WobRxR9F+gfxnqJHJY1hb45ilFkyxFVLGMpzUMpZrS6VrZezWxnZquaRBA7kL70KaQOmLpQ6AcoJqaqUiu/cOePyqxWuyutlcSlgc7TaGfOvefcOXdG+dza7XyORAPPcKiPcYRneIa/7uMf+jle4Vi/0Kf6te3I1M65pXzu9lo+l88F0mVdUmMKxAF1YFsdfrk++1p2HB4w5bJukx+oPhUQL20DA0EVdCq8Aza+wgle6FN8i1c4wjGO1k1sRnsgfeoAaSouaBfKrNMStGPC5HNSUeU6xPGolB+Wkc89mcrwg7bnOiRC1l2p7jx6DALuEnwZZn+DE/0MR0WphGEpgQrncQt+VKvTAFEcMwSoQLDk9zfJ1Iz5X2treI5D/BMvcDi/wqBPQg7FBQkVzqSyE5hFKrznU+FKzux67astK02PPCHVgDktXnXB65ASKbQa+5X75b2ClV7Y36WC9r4w67duFcjAmieTJf/t+nQ+MBXPlpDKI+aQr6kXQIvKQ9Lwge3SLmx50AOmim3OPVKTO9C3yEPmfh9AbXODBNGMlAgLPM9K5Ss7yuXsTrz37gbRx9Tz7lHncL/OaWcPHC468uPQOWSDNcEDR+1y1zg1QmcPddFGv+A7vMS/8RKv9AnxaRcMFPrFCLoAN6NyPdtrVVhLoFm6S6UkEQZhV8x+uQekGBZ+OVPap64KRdnzQu0dozA6+awnBskUPAlhquRIp6UlT5+SleUJ9oB2YszqcooPQEoD3xKCi+Ku4F1Be/Y9Kl2n7PsWmftS5aJnkQKe4yXBC3yLQ3yHE32sfyb4Xj/Dif4JR/oEh/oERyuFRYHThk59jD1vRibThr3DFbQ5PzT9ZVcEUAXG+8VQcIX6xo5WKD+dKlWUJqiwdeJa37DLzAVW/EBbhd3HfYgcQ0rkgHoS0q1oVqvc68Q9YX3ehvod3+NIH+MEx5/WTo00/USLld0Vy0g0LezadAU4ioujiHVNQY+U4rr9592YbZ0buOja56D6sF7fKT/Y+iy2aoLaBA/ModdpG7zYWnGFPnq+sxLhSxybh0uf4sX0SY8OOo6Uom5sukE8k5KUIiHZAPb2Ir10DHMHhRHs+1SGklaXR8oIXZlCp7gbFS31UpEK94/+Rc0a7e9AKoK/4Rv9Csf6ZNYTC/IiOfG2T75El+Q7N/+5cIR/JUVPYodalEjKMe+zBGw36Q+J07KON2N6s6ZBsyrN37azqXlV/kdPQni1ZZkO8rlo9g9UO892UgsAAA==</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Елемент</Name>
           <Desc>Елемент</Desc>
           <Type>Element</Type>
@@ -13979,7 +13979,7 @@ FROM
           </ElementFields>
           <ElementTableParts />
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Desc>Список</Desc>
           <Type>List</Type>
@@ -13987,7 +13987,7 @@ FROM
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Швидкий вибір</Name>
           <Desc>Швидкий вибір</Desc>
           <Type>ListSmallSelect</Type>
@@ -13995,14 +13995,14 @@ FROM
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerControl</Name>
           <Desc>PointerControl</Desc>
           <Type>PointerControl</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACpVU3U4TQRS+b9J3ODZebJEUEok/lIVAkVKDQKjYGELIsHvYjl1mltnZViQk+grGcEF8AC+VcFFN9BmGNzKz/9sWxLnY2Tn/833nTLk0MwV6lUvhBgDqUn2/+aSG6lJdqq8H25wyiaLBmRTcrVl+ZllUlUtTM+VSuRT4lDnQlL168t/SVkfEwqbszaXSJjIURKLd4DbW1Bf1R13dXKhr9VsN1S81rOtgjByj7xELoS25IA4uM/u1IDaG2r3m1uE7tGStHRxaLvH9hWJJi0alKDhod9jx89bT9zu7nZfdVYcGb90ng0p1v1zygkOXWuARISlxIQx3NxYwP4bAWQQO9pFJeKG/64TZLoqFyZEWl9IQXcIctMNr6RBJHX1ObWgxqg/0AxrVSB0n0qtDbdndFugjk0RSzsCEx7Oz9cyiQbxY/rByNlJIgzNf1tZ2NzY2l1+9OJ+v5PyKpcEjE4h/yiwwDqbBi3RVMBdhJHmsggcmsMB1YQnIgFCZyGtNlHkPowrzUEnynqcARHz42sj6BxGbODDCSjZx0KEaDe6hkBR9Y2+/mmI6OUharwlMx6kX8t/iE+9jZDgos0NOrpdAGQiWpMvhfJ79+nf4Z3X2iRvoCchri2Qt1Vqsz3toaAYytsaTpninuAsu0ZJoA++jENTGmPWwE7c8ZG100ZLGSiAlZ3AYbtNRty8LxwciHH+8Tbe5pwOCF+9mIqmF7OUqiy1qbZTbRCCTRpRjkk3Y/Dt4EqAvwYRnhb5PjNaROl2ZWc0VrFbwiAtsuNTq6dutBcxK0cunHOkE9U1dqaG61k+V+qk+q6H6cXNx8xE84mDSS7dyGd89ul84M+F5umi1SgVakovTmNyWxOMQuGiQdhk9CbC1OuKVcQQmSBHgBP0ad+2QhOwwYtUgrrtCrN7BVhwsaX0T/OJ5seg4ctNcb0ao3DJSRiFqHvhkLR9JFFEtt5KU6+zwN6ea2GCNLnVtQ1M2sQO7PGrNTBU/ZcRB7f5GD2JaQPZ2jc9QND2s4SIR/z8694AvX/99kAptwnImmpyXSzGOfwGCagm7IwgAAA==</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>PointerTablePartCell</Name>
           <Desc>PointerTablePartCell</Desc>
           <Type>PointerTablePartCell</Type>
