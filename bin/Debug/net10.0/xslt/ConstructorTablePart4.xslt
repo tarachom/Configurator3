@@ -436,6 +436,28 @@ partial class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина
         await <xsl:value-of select="$Records"/>.Save(true);
         //Update
         {
+            Bitset bitset = Grid.Model.GetSelection();
+            List&lt;uint&gt; selection = [];
+            for (uint i = bitset.GetMinimum(); i &lt;= bitset.GetMaximum(); i++)
+                if (Grid.Model.IsSelected(i)) selection.Add(i);
+
+            var rows = <xsl:value-of select="$InRecords"/>.Records.Select(x =&gt;
+            {
+                var row = ItemRow.New();
+                row.UniqueID = new(x.UID);
+                <xsl:for-each select="$FieldsTL">
+                    <xsl:text>row.</xsl:text><xsl:value-of select="Name"/> = x.<xsl:value-of select="Name"/>;
+                </xsl:for-each>
+                return row;
+            });
+
+            uint count = (uint)rows.Count();
+            Store.Splice(0, count, [.. rows], count);
+
+            foreach (var position in selection)
+                Grid.Model.SelectItem(position, false);
+
+            <!-- старий варіант оновлення
             uint position = 0;
             foreach (var record in <xsl:value-of select="$InRecords"/>.Records)
             {
@@ -449,7 +471,7 @@ partial class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина
                 Store.Splice(position, 1, [row], 1);
                 if (sel) Grid.Model.SelectItem(position, false);
                 position++;
-            }
+            }-->
         }
         <xsl:if test="$OwnerType != 'Constants'">}</xsl:if><!-- закриття if -->
     }

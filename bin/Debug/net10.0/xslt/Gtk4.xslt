@@ -443,8 +443,7 @@ limitations under the License.
                             <xsl:otherwise>SelectOrder.ASC</xsl:otherwise>
                         </xsl:choose>
                     </xsl:variable>
-                    <xsl:value-of select="$ConfTypeName"/>_Select.QuerySelect.Order.Add(
-                    <xsl:choose>
+                    <xsl:value-of select="$ConfTypeName"/>_Select.QuerySelect.Order.Add(<xsl:choose>
                         <xsl:when test="Type = 'pointer'">"<xsl:value-of select="Name"/>"</xsl:when>
                         <xsl:otherwise> <xsl:value-of select="$ConfTypeGroup"/>.<xsl:value-of select="$ConfTypeName"/>_Const.<xsl:value-of select="Name"/></xsl:otherwise>
                     </xsl:choose>
@@ -467,8 +466,7 @@ limitations under the License.
             <!-- Додаткові поля -->
             <xsl:for-each select="Fields/AdditionalField[Visible = 'True']">
                 /* Додаткове поле: <xsl:value-of select="Name"/> */
-                <xsl:value-of select="$ConfTypeName"/>_Select.QuerySelect.FieldAndAlias.Add(
-                    new ValueName&lt;string&gt;(@$"(<xsl:value-of select="normalize-space(Value)"/>)", "<xsl:value-of select="Name"/>"));
+                <xsl:value-of select="$ConfTypeName"/>_Select.QuerySelect.FieldAndAlias.Add(new ValueName&lt;string&gt;(@$"(<xsl:value-of select="normalize-space(Value)"/>)", "<xsl:value-of select="Name"/>"));
             </xsl:for-each>
   </xsl:template>
 
@@ -497,16 +495,12 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
       <xsl:variable name="DirectoryName" select="Name"/>
       <!-- Для ієрархії -->
       <xsl:variable name="DirectoryType" select="Type"/>
+      <xsl:variable name="ParentField" select="ParentField"/> <!-- Поле Родич (тільки для ієрархічного) -->
       <xsl:variable name="DirectoryAllowedContent" select="AllowedContent"/>
       <xsl:variable name="DirectoryIsFolderField" select="IsFolderField"/>
       <!-- Підпорядкування довідника -->
       <xsl:variable name="DirectoryOwner" select="DirectoryOwner"/>
-      <xsl:variable name="SelectType">
-          <xsl:choose>
-              <xsl:when test="$DirectoryType = 'Hierarchical'">SelectHierarchical</xsl:when>
-              <xsl:otherwise>Select</xsl:otherwise>
-          </xsl:choose>
-      </xsl:variable>
+      <xsl:variable name="SelectType">Select</xsl:variable>
       <xsl:variable name="RowType">
           <xsl:choose>
               <xsl:when test="$DirectoryType = 'Hierarchical'">DirectoryHierarchicalRow</xsl:when>
@@ -638,85 +632,41 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             }
         }
 
-        public static async ValueTask LoadRecords(DirectoryFormJournalBase form)
+        <xsl:if test="$DirectoryType = 'Hierarchical'">
+        public static DirectoryHierarchicalRow LoadEmptyChildren()
         {
-            form.BeforeLoadRecords();
+            <xsl:value-of select="$RowType"/> row = <xsl:value-of select="$RowType"/>.New();
+            <xsl:for-each select="Fields/Field">
+                <xsl:text>row.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", null);
+            </xsl:for-each>
+            <xsl:for-each select="Fields/AdditionalField[Visible = 'True']">
+                <xsl:text>row.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", null);
+            </xsl:for-each>
+            row.AllowedContent = Configuration.GetAllowedContent("<xsl:value-of select="$DirectoryAllowedContent"/>");
+            return row;
+        }
 
-            //Вибраний елемент
-            UniqueID? unigueIDSelect = form.SelectPointerItem ?? form.DirectoryPointerItem;
-            unigueIDSelect = unigueIDSelect != null &amp;&amp; unigueIDSelect.IsEmpty() ? null : unigueIDSelect;
-            Stack&lt;UniqueID&gt; parents = [];
-
+        public static async ValueTask&lt;List&lt;DirectoryHierarchicalRow&gt;&gt; LoadChildren(DirectoryFormJournalBaseTree form, UniqueID parent)
+        {
+            Console.WriteLine(parent);
             /* Вибірка */
             <xsl:call-template name="Select">
                 <xsl:with-param name="ConfTypeGroup">Довідники</xsl:with-param>
                 <xsl:with-param name="ConfTypeName"><xsl:value-of select="$DirectoryName"/></xsl:with-param>
                 <xsl:with-param name="SelectType"><xsl:value-of select="$SelectType"/></xsl:with-param>
+
+                <xsl:with-param name="DirectoryType"><xsl:value-of select="$DirectoryType"/></xsl:with-param>
+                <xsl:with-param name="DirectoryAllowedContent"><xsl:value-of select="$DirectoryAllowedContent"/></xsl:with-param>
+                <xsl:with-param name="DirectoryIsFolderField"><xsl:value-of select="$DirectoryIsFolderField"/></xsl:with-param>
             </xsl:call-template>
 
-            /* Відбори */
-            if (form.WhereList != null) <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where.AddRange(form.WhereList);
+            /* Відбір по полю Родич */
+            <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where.Add(new(Довідники.<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="$ParentField"/>, Comparison.EQ, parent.UGuid));
 
-            /* Додатковий відбір Parent */
-            if (form.ParentWhereList != null &amp;&amp; !form.UseHierarchy.Active &amp;&amp; form.TypeWhereState == InterfaceGtk4.FormJournal.TypeWhere.Standart)
-                <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where.AddRange(form.ParentWhereList);
-
-            <xsl:if test="normalize-space($DirectoryOwner) != ''">
-            /* Додатковий відбір Owner */
-            if (form.OwnerWhereListFunc != null &amp;&amp; form.TypeWhereState == InterfaceGtk4.FormJournal.TypeWhere.Standart)
-                <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where.AddRange(form.OwnerWhereListFunc.Invoke());
-            </xsl:if>
-
-            <xsl:choose>
-                <xsl:when test="$DirectoryType = 'Hierarchical'">
-            /* Сховати відкриту папку для вибору */
-            if (form.OpenFolder != null)
-                <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where.Add(new("uid", Comparison.NOT, form.OpenFolder.UGuid));
-            
-                <xsl:if test="$DirectoryAllowedContent = 'FoldersAndElements'">
-            /* Сховати елементи для вибору */
-            if (form.OpenSelect)
-                <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where.Add(new(Довідники.<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="$DirectoryIsFolderField"/>, Comparison.EQ, true));
-                </xsl:if>
-
-            /* Для пошуку і фільтру застосувати плоский список */
-            if (form.TypeWhereState == InterfaceGtk4.FormJournal.TypeWhere.Search || form.TypeWhereState == InterfaceGtk4.FormJournal.TypeWhere.Filter)
-                <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.FlatList = true;
-
-            Dictionary&lt;UniqueID, DirectoryHierarchicalRow&gt; rows = [];
-            List&lt;DirectoryHierarchicalRow&gt; topLevelRows = [];
-
-            /* Пустий рядок */
-            if (form.InsertEmptyFirstRow)
-            {
-                DirectoryHierarchicalRow emptyFirstRow = DirectoryHierarchicalRow.New();
-                <xsl:for-each select="Fields/Field">
-                    <xsl:text>emptyFirstRow.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", "<xsl:choose>
-                        <xsl:when test="position() = 1">-</xsl:when>
-                        <xsl:otherwise></xsl:otherwise>
-                    </xsl:choose>");
-                </xsl:for-each>
-                <xsl:for-each select="Fields/AdditionalField[Visible = 'True']">
-                    <xsl:text>emptyFirstRow.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", "");
-                </xsl:for-each>
-                topLevelRows.Add(emptyFirstRow);
-            }            
-                </xsl:when>
-            <xsl:otherwise>
-            /* Cторінки */
-            await form.SplitPages(<xsl:value-of select="$DirectoryName"/>_Select.SplitSelectToPages, <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect, unigueIDSelect);
-            uint selectPosition = 0;
-                </xsl:otherwise>
-            </xsl:choose>
+            List&lt;DirectoryHierarchicalRow&gt; list = [];
 
             <!-- Вибрати дані -->
             await <xsl:value-of select="$DirectoryName"/>_Select.Select();
-            /* Очистка сховища */
-            if (form.Store.GetNItems() &gt; 0)
-            {
-                form.Store.RemoveAll();
-                GC.Collect();
-            }
             while (<xsl:value-of select="$DirectoryName"/>_Select.MoveNext())
             {
                 Довідники.<xsl:value-of select="$DirectoryName"/>_Pointer? curr = <xsl:value-of select="$DirectoryName"/>_Select.Current;
@@ -727,38 +677,112 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
                     row.UniqueID = curr.UniqueID;
                     row.DeletionLabel = (bool)Fields["deletion_label"];
                     <xsl:for-each select="Fields/Field">
-                        <xsl:text>row.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", <xsl:call-template name="FieldValue"><xsl:with-param name="ConfTypeName"><xsl:value-of select="$DirectoryName"/></xsl:with-param></xsl:call-template>);
+                        <xsl:text>row.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", <xsl:call-template name="FieldValue"><xsl:with-param name="ConfTypeName">Довідники.<xsl:value-of select="$DirectoryName"/></xsl:with-param></xsl:call-template>);
+                    </xsl:for-each>
+                    <xsl:for-each select="Fields/AdditionalField[Visible = 'True']">
+                        <xsl:text>row.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", Fields["<xsl:value-of select="Name"/>"].ToString() ?? "");
+                    </xsl:for-each>
+                    row.AllowedContent = Configuration.GetAllowedContent("<xsl:value-of select="$DirectoryAllowedContent"/>");
+                    <xsl:if test="$DirectoryAllowedContent = 'FoldersAndElements'">
+                    row.IsFolder = (bool)Fields[Довідники.<xsl:value-of select="concat($DirectoryName, '_Const.', $DirectoryIsFolderField)"/>];
+                    </xsl:if>
+                    list.Add(row);
+                }
+            }
+
+            return list;
+        }
+        </xsl:if>
+
+        public static async ValueTask LoadRecords(DirectoryFormJournalBase form)
+        {
+            form.BeforeLoadRecords();
+
+            //Вибраний елемент
+            UniqueID? unigueIDSelect = form.SelectPointerItem ?? form.DirectoryPointerItem;
+
+            /* Вибірка */
+            <xsl:call-template name="Select">
+                <xsl:with-param name="ConfTypeGroup">Довідники</xsl:with-param>
+                <xsl:with-param name="ConfTypeName"><xsl:value-of select="$DirectoryName"/></xsl:with-param>
+                <xsl:with-param name="SelectType"><xsl:value-of select="$SelectType"/></xsl:with-param>
+
+                <xsl:with-param name="DirectoryType"><xsl:value-of select="$DirectoryType"/></xsl:with-param>
+                <xsl:with-param name="DirectoryAllowedContent"><xsl:value-of select="$DirectoryAllowedContent"/></xsl:with-param>
+                <xsl:with-param name="DirectoryIsFolderField"><xsl:value-of select="$DirectoryIsFolderField"/></xsl:with-param>
+            </xsl:call-template>
+
+            /* Відбори */
+            if (form.WhereList != null) <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where.AddRange(form.WhereList);
+
+            /* Додатковий відбір Parent */
+            if (form.ParentWhereList != null &amp;&amp; !form.IsUseHierarchy() &amp;&amp; form.TypeWhereState == InterfaceGtk4.FormJournal.TypeWhere.Standart)
+                <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where.AddRange(form.ParentWhereList);
+
+            <xsl:if test="normalize-space($DirectoryOwner) != ''">
+            /* Додатковий відбір Owner */
+            if (form.OwnerWhereListFunc != null &amp;&amp; form.TypeWhereState == InterfaceGtk4.FormJournal.TypeWhere.Standart)
+                <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where.AddRange(form.OwnerWhereListFunc.Invoke());
+            </xsl:if>
+
+            <xsl:choose>
+                <xsl:when test="$DirectoryType = 'Hierarchical'">
+            /* Верхній рівень */
+            <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where.Add(new(Довідники.<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="$ParentField"/>, Comparison.EQ, Guid.Empty));
+
+            /* Сховати відкриту папку для вибору */
+            if (form.OpenFolder != null)
+                <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where.Add(new("uid", Comparison.NOT, form.OpenFolder.UGuid));
+            
+                <xsl:if test="$DirectoryAllowedContent = 'FoldersAndElements'">
+            /* Сховати елементи для вибору - що це? */
+            if (form.OpenSelect)
+                <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where.Add(new(Довідники.<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="$DirectoryIsFolderField"/>, Comparison.EQ, true));
+                </xsl:if>
+
+            /* Для пошуку і фільтру застосувати плоский список */
+            if (form.TypeWhereState == InterfaceGtk4.FormJournal.TypeWhere.Search || form.TypeWhereState == InterfaceGtk4.FormJournal.TypeWhere.Filter)
+                <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.FlatList = true;
+                </xsl:when>
+                <xsl:otherwise>
+            /* Cторінки */
+            await form.SplitPages(<xsl:value-of select="$DirectoryName"/>_Select.SplitSelectToPages, <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect, unigueIDSelect);
+            uint selectPosition = 0;
+                </xsl:otherwise>
+            </xsl:choose>
+
+            <!-- Вибрати дані -->
+            await <xsl:value-of select="$DirectoryName"/>_Select.Select();
+            form.Store.RemoveAll();
+
+            <xsl:if test="$DirectoryType = 'Hierarchical'">
+            /* Пустий рядок */
+            if (form.InsertEmptyFirstRow)
+                form.Store.Append(LoadEmptyChildren());
+            </xsl:if>
+
+            while (<xsl:value-of select="$DirectoryName"/>_Select.MoveNext())
+            {
+                Довідники.<xsl:value-of select="$DirectoryName"/>_Pointer? curr = <xsl:value-of select="$DirectoryName"/>_Select.Current;
+                if (curr != null)
+                {
+                    Dictionary&lt;string, object&gt; Fields = curr.Fields;
+                    <xsl:value-of select="$RowType"/> row = <xsl:value-of select="$RowType"/>.New();
+                    row.UniqueID = curr.UniqueID;
+                    row.DeletionLabel = (bool)Fields["deletion_label"];
+                    <xsl:for-each select="Fields/Field">
+                        <xsl:text>row.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", <xsl:call-template name="FieldValue"><xsl:with-param name="ConfTypeName">Довідники.<xsl:value-of select="$DirectoryName"/></xsl:with-param></xsl:call-template>);
                     </xsl:for-each>
                     <xsl:for-each select="Fields/AdditionalField[Visible = 'True']">
                         <xsl:text>row.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", Fields["<xsl:value-of select="Name"/>"].ToString() ?? "");
                     </xsl:for-each>
                     <xsl:choose>
                         <xsl:when test="$DirectoryType = 'Hierarchical'">
-                    row.IsFolder = <xsl:value-of select="$DirectoryName"/>_Select.IsFolder;
-                    Довідники.<xsl:value-of select="$DirectoryName"/>_Pointer? parent = <xsl:value-of select="$DirectoryName"/>_Select.Parent;
-                    if (<xsl:value-of select="$DirectoryName"/>_Select.Level == 1)
-                        topLevelRows.Add(row);
-                    else if (parent != null &amp;&amp; rows.TryGetValue(parent.UniqueID, out DirectoryHierarchicalRow? parentRow))
-                    {
-                        row.Parent = parent.UniqueID;
-                        parentRow.Sub.Add(row);
-                    }
-
-                    /* Додати в список */
-                    if (form.TypeWhereState == InterfaceGtk4.FormJournal.TypeWhere.Standart &amp;&amp; !rows.ContainsKey(curr.UniqueID))
-                        rows.Add(row.UniqueID, row);
-
-                    /* Перевірка вибраного елементу */
-                    if (unigueIDSelect != null &amp;&amp; unigueIDSelect.Equals(row.UniqueID))
-                    {
-                        parents.Push(row.UniqueID); //Добавляє знайдений елемент в чергу
-                        UniqueID? rowParent = row.Parent;
-                        while (rowParent != null &amp;&amp; rows.TryGetValue(rowParent, out DirectoryHierarchicalRow? parentRow))
-                        {
-                            parents.Push(parentRow.UniqueID);
-                            rowParent = parentRow.Parent;
-                        }
-                    }
+                    row.AllowedContent = Configuration.GetAllowedContent("<xsl:value-of select="$DirectoryAllowedContent"/>");
+                    <xsl:if test="$DirectoryAllowedContent = 'FoldersAndElements'">
+                    row.IsFolder = (bool)Fields[Довідники.<xsl:value-of select="concat($DirectoryName, '_Const.', $DirectoryIsFolderField)"/>];
+                    </xsl:if>
+                    form.Store.Append(row);
                         </xsl:when>
                         <xsl:otherwise>
                     form.Store.Append(row);
@@ -769,11 +793,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             }
             <xsl:choose>
                 <xsl:when test="$DirectoryType = 'Hierarchical'">
-            /* Заповнення сховища */
-            foreach (<xsl:value-of select="$RowType"/> row in topLevelRows) 
-                form.Store.Append(row);
 
-            form.AfterLoadRecords(parents);
                 </xsl:when>
                 <xsl:otherwise>
             form.AfterLoadRecords(selectPosition);
