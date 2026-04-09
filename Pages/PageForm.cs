@@ -915,6 +915,10 @@ namespace Configurator
                     XmlElement nodeDirectoryParentField = xmlConfDocument.CreateElement("ParentField");
                     nodeDirectoryParentField.InnerText = DirectoryOtherInfo.ParentField;
                     nodeParentType.AppendChild(nodeDirectoryParentField);
+
+                    XmlElement nodeDirectoryAllowedContent = xmlConfDocument.CreateElement("AllowedContent");
+                    nodeDirectoryAllowedContent.InnerText = DirectoryOtherInfo.AllowedContent.ToString();
+                    nodeParentType.AppendChild(nodeDirectoryAllowedContent);
                 }
 
                 //Довідник власник

@@ -206,14 +206,14 @@ static class <xsl:value-of select="$DirectoryName"/>_Функції
         await page.SetValue();
     }
 
-    public static async ValueTask OpenPageList(UniqueID? uniqueID = null, bool openSelect = false, UniqueID? openFolder = null,
+    public static async ValueTask OpenPageList(UniqueID? uniqueID = null, ConfigurationDirectories.HierarchicalContentType? allowedContentSelection = null, UniqueID? openFolder = null,
         Action&lt;UniqueID&gt;? сallBack_OnSelectPointer = null<xsl:if test="normalize-space($DirectoryOwner) != ''">,
             <xsl:variable name="namePointer" select="substring-after($DirectoryOwner, '.')" />
         <xsl:value-of select="$namePointer"/>_Pointer? Власник = null</xsl:if>)
     {
         <xsl:value-of select="$DirectoryName"/>_Список page = new()
         {
-            OpenSelect = openSelect,
+            AllowedContentSelection  = allowedContentSelection,
             OpenFolder = openFolder,
             DirectoryPointerItem = uniqueID,
             CallBack_OnSelectPointer = сallBack_OnSelectPointer
@@ -283,6 +283,7 @@ static class <xsl:value-of select="$DirectoryName"/>_Функції
 
 using Gtk;
 using InterfaceGtk4;
+using AccountingSoftware;
 
 using <xsl:value-of select="$NameSpaceGeneratedCode"/>.Довідники;
 using <xsl:value-of select="$NameSpaceGeneratedCode"/>.Документи;
@@ -632,7 +633,7 @@ class <xsl:value-of select="$DirectoryName"/>_Елемент : DirectoryFormElem
         <!-- Додатова інформація про підпорядкування довідника -->
         <xsl:variable name="DirectoryOwner" select="Directory/DirectoryOwner"/>
         <xsl:variable name="PointerFieldOwner" select="Directory/PointerFieldOwner"/>
-/*     
+/*      
         <xsl:value-of select="$DirectoryName"/>.cs
         Список
 */
@@ -679,7 +680,17 @@ class <xsl:value-of select="$DirectoryName"/>_Список : DirectoryFormJourna
     {
         await ТабличнийСписок.LoadRecords(this);
     }
+    <xsl:if test="$DirectoryType = 'Hierarchical'">
+    public override async ValueTask&lt;List&lt;DirectoryHierarchicalRow&gt;&gt; LoadChildren(UniqueID parent)
+    {
+        return await ТабличнийСписок.LoadChildren(this, parent);
+    }
 
+    public override DirectoryHierarchicalRow LoadEmptyChildren()
+    {
+        return ТабличнийСписок.LoadEmptyChildren(this);
+    }
+    </xsl:if>
     public override async ValueTask UpdateRecords()
     {
         await ТабличнийСписок.UpdateRecords(this);
@@ -778,7 +789,17 @@ class <xsl:value-of select="$DirectoryName"/>_ШвидкийВибір : Directo
     {
         await ТабличнийСписок.LoadRecords(this);
     }
-
+    <xsl:if test="$DirectoryType = 'Hierarchical'">
+    public override async ValueTask&lt;List&lt;DirectoryHierarchicalRow&gt;&gt; LoadChildren(UniqueID parent)
+    {
+        return await ТабличнийСписок.LoadChildren(this, parent);
+    }
+    
+    public override DirectoryHierarchicalRow LoadEmptyChildren()
+    {
+        return ТабличнийСписок.LoadEmptyChildren(this);
+    }
+    </xsl:if>
     public override async ValueTask UpdateRecords()
     {
         await ТабличнийСписок.UpdateRecords(this);
@@ -796,7 +817,7 @@ class <xsl:value-of select="$DirectoryName"/>_ШвидкийВибір : Directo
 
     protected override async ValueTask OpenPageList(UniqueID? uniqueID = null)
     {
-        await Функції.OpenPageList(uniqueID, OpenSelect, OpenFolder, CallBack_OnSelectPointer<xsl:if test="normalize-space($DirectoryOwner) != ''">, Власник.Pointer</xsl:if>);
+        await Функції.OpenPageList(uniqueID, AllowedContentSelection, OpenFolder, CallBack_OnSelectPointer<xsl:if test="normalize-space($DirectoryOwner) != ''">, Власник.Pointer</xsl:if>);
     }
 
     protected override async ValueTask OpenPageElement(bool IsNew, UniqueID? uniqueID = null)
@@ -926,7 +947,17 @@ class <xsl:value-of select="$DirectoryName"/>_Список : DirectoryFormJourna
     {
         await ТабличнийСписок.LoadRecords(this);
     }
-
+    <xsl:if test="$DirectoryType = 'Hierarchical'">
+    public override async ValueTask&lt;List&lt;DirectoryHierarchicalRow&gt;&gt; LoadChildren(UniqueID parent)
+    {
+        return await ТабличнийСписок.LoadChildren(this, parent);
+    }
+    
+    public override DirectoryHierarchicalRow LoadEmptyChildren()
+    {
+        return ТабличнийСписок.LoadEmptyChildren(this);
+    }
+    </xsl:if>
     public override async ValueTask UpdateRecords()
     {
         await ТабличнийСписок.UpdateRecords(this);
@@ -1028,7 +1059,6 @@ public partial class <xsl:value-of select="$DirectoryName"/>_PointerControl : Po
         {
             PopoverParent = popover,
             DirectoryPointerItem = Pointer.UniqueID,
-            OpenSelect = true,
             OpenFolder = OpenFolder,
             CallBack_OnSelectPointer = selectPointer =&gt;
             {
@@ -1065,6 +1095,10 @@ public partial class <xsl:value-of select="$DirectoryName"/>_PointerControl : Po
     <xsl:template name="DirectoryPointerTablePartCell">
         <xsl:variable name="DirectoryName" select="Directory/Name"/>
         <xsl:variable name="SubclassName" select="concat('PointerTablePartCell_', Directory/Alias)"/>
+
+        <!-- Додатова інформація для ієрархічного довідника -->
+        <xsl:variable name="DirectoryType" select="Directory/Type"/>
+        <xsl:variable name="DirectoryAllowedContent" select="Directory/AllowedContent"/>
 
         <!-- Додатова інформація про підпорядкування довідника -->
         <xsl:variable name="DirectoryOwner" select="Directory/DirectoryOwner"/>
@@ -1121,6 +1155,9 @@ public partial class <xsl:value-of select="$DirectoryName"/>_PointerTablePartCel
         <xsl:value-of select="$DirectoryName"/>_ШвидкийВибір page = new()
         {
             PopoverParent = popover,
+            <xsl:if test="$DirectoryType = 'Hierarchical' and $DirectoryAllowedContent = 'FoldersAndElements'">
+            AllowedContentSelection = ConfigurationDirectories.HierarchicalContentType.Elements,
+            </xsl:if>
             DirectoryPointerItem = pointer.UniqueID,
             CallBack_OnSelectPointer = async p =&gt; 
             {
