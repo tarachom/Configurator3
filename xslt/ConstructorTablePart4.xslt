@@ -128,6 +128,7 @@ static class <xsl:value-of select="$OwnerName"/>_<xsl:value-of select="$TablePar
     <!-- Таблична Частина -->
     <xsl:template name="TablePart">
         <xsl:variable name="TablePartName" select="TablePart/Name"/>
+        <xsl:variable name="TSubclassName" select="concat('TablePart_', TablePart/Alias)"/>
         <xsl:variable name="SubclassName" select="concat('ItemRow_', TablePart/Alias)"/>
         <xsl:variable name="IncludeIconColumn" select="TablePart/IncludeIconColumn"/>
         <xsl:variable name="FieldsTL" select="TablePart/ElementFields/Field"/>
@@ -154,7 +155,8 @@ using <xsl:value-of select="$NameSpaceGeneratedCode"/>.Перелічення;
 
 namespace <xsl:value-of select="$NameSpace"/>;
 
-partial class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина_<xsl:value-of select="$TablePartName"/> : <xsl:value-of select="$OwnerType"/>FormTablePart
+[GObject.Subclass&lt;<xsl:value-of select="$OwnerType"/>FormTablePart2&gt;("<xsl:value-of select="$TSubclassName"/>")]
+partial class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина_<xsl:value-of select="$TablePartName"/> : <xsl:value-of select="$OwnerType"/>FormTablePart2
 {
     #region Data
     
@@ -235,12 +237,20 @@ partial class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина
     
     protected override Gio.ListStore Store { get; } = Gio.ListStore.New(ItemRow.GetGType());
 
-    public <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина_<xsl:value-of select="$TablePartName"/>() : base(Program.BasicForm?.NotebookFunc)
+    partial void Initialize()
     {
         MultiSelection model = MultiSelection.New(Store);
         model.OnSelectionChanged += GridOnSelectionChanged;
 
         Grid.Model = model;
+    }
+
+    public static <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина_<xsl:value-of select="$TablePartName"/> New()
+    {
+        <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина_<xsl:value-of select="$TablePartName"/> tablePart = NewWithProperties([]);
+        tablePart.NotebookFunc = Program.BasicForm?.NotebookFunc;
+
+        return tablePart;
     }
 
     protected override void Columns()
@@ -274,7 +284,11 @@ partial class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина
                     <xsl:when test="Type = 'pointer'"><xsl:value-of select="substring-after(Pointer, '.')"/>_PointerTablePartCell.New()</xsl:when>
                     <xsl:when test="Type = 'enum'">ComboTextTablePartCell.New();
                 foreach (var field in ПсевдонімиПерелічення.<xsl:value-of select="substring-after(Pointer, '.')"/>_List())
-                    cell.Combo.Append(field.Value.ToString(), field.Name)</xsl:when>
+                    cell.Combo.Append(field.Value.ToString(), field.Name);
+                //Заборона прокрутки списку
+                EventControllerScroll contr = EventControllerScroll.New(EventControllerScrollFlags.BothAxes);
+                cell.Combo.AddController(contr);
+                contr.OnScroll += (_, _) =&gt; true</xsl:when>
                     <xsl:when test="Type = 'date' or Type = 'datetime'">DateTimeTablePartCell.New()</xsl:when>
                     <xsl:when test="Type = 'time'">TimeTablePartCell.New()</xsl:when>
                     <xsl:otherwise>LabelTablePartCell.New()</xsl:otherwise>

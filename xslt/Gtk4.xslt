@@ -518,7 +518,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
         /* Тип вмісту довідника (елемент, папки, чи папки та елементи) */
         static readonly ConfigurationDirectories.HierarchicalContentType AllowedContent = Configuration.GetAllowedContent("<xsl:value-of select="$DirectoryAllowedContent"/>");
 
-        public static void AddColumn(DirectoryFormJournalBase form)
+        public static void AddColumn(DirectoryFormJournalBase2 form)
         {
             <xsl:choose>
                 <xsl:when test="$DirectoryType = 'Hierarchical'">
@@ -560,14 +560,14 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             <xsl:call-template name="AddColumnEmpty" />
         }
 
-        public static void CreateFilter(DirectoryFormJournalBase form)
+        public static void CreateFilter(DirectoryFormJournalBase2 form)
         {
             <xsl:call-template name="CreateFilter">
                 <xsl:with-param name="ConfTypeName"><xsl:value-of select="$DirectoryName"/></xsl:with-param>
             </xsl:call-template>
         }
 
-        public static async ValueTask UpdateRecords(DirectoryFormJournalBase form)
+        public static async ValueTask UpdateRecords(DirectoryFormJournalBase2 form)
         {
             <xsl:if test="$DirectoryType != 'Hierarchical'">
             List&lt;ObjectChanged&gt; records = [];
@@ -633,7 +633,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
         }
 
         <xsl:if test="$DirectoryType = 'Hierarchical'">
-        public static DirectoryHierarchicalRow LoadEmptyChildren(DirectoryFormJournalBase form)
+        public static DirectoryHierarchicalRow LoadEmptyChildren(DirectoryFormJournalBase2 form)
         {
             <xsl:value-of select="$RowType"/> row = <xsl:value-of select="$RowType"/>.New();
             <xsl:for-each select="Fields/Field">
@@ -646,7 +646,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             return row;
         }
 
-        public static async ValueTask&lt;List&lt;DirectoryHierarchicalRow&gt;&gt; LoadChildren(DirectoryFormJournalBase form, UniqueID parent)
+        public static async ValueTask&lt;List&lt;DirectoryHierarchicalRow&gt;&gt; LoadChildren(DirectoryFormJournalBase2 form, UniqueID parent)
         {
             /* Вибірка */
             <xsl:call-template name="Select">
@@ -696,7 +696,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
         }
         </xsl:if>
 
-        public static async ValueTask LoadRecords(DirectoryFormJournalBase form)
+        public static async ValueTask LoadRecords(DirectoryFormJournalBase2 form)
         {
             form.BeforeLoadRecords();
 
@@ -718,12 +718,12 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             if (form.WhereList != null) <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where.AddRange(form.WhereList);
 
             /* Додатковий відбір Parent */
-            if (form.ParentWhereList != null &amp;&amp; !form.IsUseHierarchy() &amp;&amp; form.TypeWhereState == InterfaceGtk4.FormJournal.TypeWhere.Standart)
+            if (form.ParentWhereList != null &amp;&amp; !form.IsUseHierarchy() &amp;&amp; form.TypeWhereState == InterfaceGtk4.FormJournal2.TypeWhere.Standart)
                 <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where.AddRange(form.ParentWhereList);
 
             <xsl:if test="normalize-space($DirectoryOwner) != ''">
             /* Додатковий відбір Owner */
-            if (form.OwnerWhereListFunc != null &amp;&amp; form.TypeWhereState == InterfaceGtk4.FormJournal.TypeWhere.Standart)
+            if (form.OwnerWhereListFunc != null &amp;&amp; form.TypeWhereState == InterfaceGtk4.FormJournal2.TypeWhere.Standart)
                 <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where.AddRange(form.OwnerWhereListFunc.Invoke());
             </xsl:if>
 
@@ -734,7 +734,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
                 <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where.Add(new("uid", Comparison.NOT, form.OpenFolder.UGuid));
 
             /* Тільки елементи верхнього рівня для стандартного виводу */
-            if (form.WhereList == null &amp;&amp; form.TypeWhereState == InterfaceGtk4.FormJournal.TypeWhere.Standart)
+            if (form.WhereList == null &amp;&amp; form.TypeWhereState == InterfaceGtk4.FormJournal2.TypeWhere.Standart)
                 <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where.Add(new(Довідники.<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="$ParentField"/>, Comparison.EQ, Guid.Empty));
 
                 </xsl:when>
@@ -810,7 +810,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
             <xsl:variable name="TabularListName" select="Name"/>
     public static class <xsl:value-of select="$DocumentName"/>_<xsl:value-of select="$TabularListName"/>
     {
-        public static void AddColumn(DocumentFormJournalBase form)
+        public static void AddColumn(DocumentFormJournalBase2 form)
         {
             <xsl:call-template name="AddColumnImage">
                 <xsl:with-param name="RowType">DocumentRowJournal</xsl:with-param>
@@ -833,14 +833,14 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
             <xsl:call-template name="AddColumnEmpty" />
         }
 
-        public static void CreateFilter(DocumentFormJournalBase form)
+        public static void CreateFilter(DocumentFormJournalBase2 form)
         {
             <xsl:call-template name="CreateFilter">
                 <xsl:with-param name="ConfTypeName"><xsl:value-of select="$DocumentName"/></xsl:with-param>
             </xsl:call-template>
         }
 
-        public static async ValueTask UpdateRecords(DocumentFormJournalBase form)
+        public static async ValueTask UpdateRecords(DocumentFormJournalBase2 form)
         {
             List&lt;ObjectChanged&gt; records = [];
             lock (form.Loсked)
@@ -900,7 +900,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
             }
         }
 
-        public static async ValueTask LoadRecords(DocumentFormJournalBase form)
+        public static async ValueTask LoadRecords(DocumentFormJournalBase2 form)
         {
             form.BeforeLoadRecords();
             UniqueID? unigueIDSelect = form.SelectPointerItem ?? form.DocumentPointerItem;
@@ -916,7 +916,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
             if (form.WhereList != null) <xsl:value-of select="$DocumentName"/>_Select.QuerySelect.Where.AddRange(form.WhereList);
 
             /* Відбір за період */
-             if (form.TypeWhereState == InterfaceGtk4.FormJournal.TypeWhere.Standart || (form.TypeWhereState == InterfaceGtk4.FormJournal.TypeWhere.Filter &amp;&amp; form.Filter.IsUsePeriod))
+             if (form.TypeWhereState == InterfaceGtk4.FormJournal2.TypeWhere.Standart || (form.TypeWhereState == InterfaceGtk4.FormJournal2.TypeWhere.Filter &amp;&amp; form.Filter.IsUsePeriod))
             {
                 Where? where = InterfaceGtk4.PeriodForJournal.SelectionByPeriod(Документи.<xsl:value-of select="$DocumentName"/>_Const.ДатаДок, form.Period.Period, form.Period.DateStart, form.Period.DateStop);
                 if (where != null) <xsl:value-of select="$DocumentName"/>_Select.QuerySelect.Where.Add(where);
@@ -1027,7 +1027,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
             if (form.WhereList != null) <xsl:value-of select="$RegisterName"/>_Select.QuerySelect.Where.AddRange(form.WhereList);
 
             /* Відбір за період */
-            if (form.TypeWhereState == InterfaceGtk4.FormJournal.TypeWhere.Standart || (form.TypeWhereState == InterfaceGtk4.FormJournal.TypeWhere.Filter &amp;&amp; form.Filter.IsUsePeriod))
+            if (form.TypeWhereState == InterfaceGtk4.FormJournal2.TypeWhere.Standart || (form.TypeWhereState == InterfaceGtk4.FormJournal2.TypeWhere.Filter &amp;&amp; form.Filter.IsUsePeriod))
             {
                 Where? where = InterfaceGtk4.PeriodForJournal.SelectionByPeriod("period", form.Period.Period, form.Period.DateStart, form.Period.DateStop);
                 if (where != null) <xsl:value-of select="$RegisterName"/>_Select.QuerySelect.Where.Add(where);
