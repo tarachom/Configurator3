@@ -130,6 +130,7 @@ static class <xsl:value-of select="$DocumentName"/>_Triggers
 */
 
 using AccountingSoftware;
+using <xsl:value-of select="$NameSpace"/>;
 using <xsl:value-of select="$NameSpaceGeneratedCode"/>;
 
 using <xsl:value-of select="$NameSpaceGeneratedCode"/>.Довідники;
@@ -151,7 +152,7 @@ static class <xsl:value-of select="$DocumentName"/>_SpendTheDocument
         }
         catch (Exception ex)
         {
-            await СпільніФункції.ДокументНеПроводиться(ДокументОбєкт, ДокументОбєкт.Назва, ex.Message);
+            await ФункціїДляДокументів.ДокументНеПроводиться(ДокументОбєкт, ДокументОбєкт.Назва, ex.Message);
             return false;
         }
     }
@@ -308,8 +309,8 @@ using Функції = <xsl:value-of select="$NameSpace"/>.<xsl:value-of select=
 
 namespace <xsl:value-of select="$NameSpace"/>;
 
-[GObject.Subclass&lt;DocumentFormElement2&gt;("<xsl:value-of select="$SubclassName"/>")]
-partial class <xsl:value-of select="$DocumentName"/>_Елемент : DocumentFormElement2
+[GObject.Subclass&lt;DocumentFormElement&gt;("<xsl:value-of select="$SubclassName"/>")]
+partial class <xsl:value-of select="$DocumentName"/>_Елемент : DocumentFormElement
 {
     public <xsl:value-of select="$DocumentName"/>_Objest Елемент { get; init; } = new();
 
@@ -717,8 +718,8 @@ using Функції = <xsl:value-of select="$NameSpace"/>.<xsl:value-of select=
 
 namespace <xsl:value-of select="$NameSpace"/>;
 
-[GObject.Subclass&lt;DocumentFormJournalFull2&gt;("<xsl:value-of select="$SubclassName"/>")]
-public partial class <xsl:value-of select="$DocumentName"/>_Список : DocumentFormJournalFull2
+[GObject.Subclass&lt;DocumentFormJournalFull&gt;("<xsl:value-of select="$SubclassName"/>")]
+public partial class <xsl:value-of select="$DocumentName"/>_Список : DocumentFormJournalFull
 {
     partial void Initialize()
     {
@@ -829,8 +830,8 @@ using Функції = <xsl:value-of select="$NameSpace"/>.<xsl:value-of select=
 
 namespace <xsl:value-of select="$NameSpace"/>;
 
-[GObject.Subclass&lt;DocumentFormJournalSmall2&gt;("<xsl:value-of select="$SubclassName"/>")]
-public class <xsl:value-of select="$DocumentName"/>_ШвидкийВибір : DocumentFormJournalSmall2
+[GObject.Subclass&lt;DocumentFormJournalSmall&gt;("<xsl:value-of select="$SubclassName"/>")]
+public class <xsl:value-of select="$DocumentName"/>_ШвидкийВибір : DocumentFormJournalSmall
 {
     partial void Initialize()
     {

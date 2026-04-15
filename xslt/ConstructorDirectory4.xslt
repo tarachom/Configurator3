@@ -287,8 +287,8 @@ using <xsl:value-of select="$NameSpaceGeneratedCode"/>.Перелічення;
 
 namespace <xsl:value-of select="$NameSpace"/>;
 
-[GObject.Subclass&lt;DirectoryFormElement2&gt;("<xsl:value-of select="$SubclassName"/>")]
-partial class <xsl:value-of select="$DirectoryName"/>_Елемент : DirectoryFormElement2
+[GObject.Subclass&lt;DirectoryFormElement&gt;("<xsl:value-of select="$SubclassName"/>")]
+partial class <xsl:value-of select="$DirectoryName"/>_Елемент : DirectoryFormElement
 {
     public <xsl:value-of select="$DirectoryName"/>_Objest Елемент { get; init; } = new();
     <xsl:if test="normalize-space($DirectoryOwner) != ''">
@@ -656,8 +656,8 @@ using Функції = <xsl:value-of select="$NameSpace"/>.<xsl:value-of select=
 
 namespace <xsl:value-of select="$NameSpace"/>;
 
-[GObject.Subclass&lt;DirectoryFormJournalFull<xsl:if test="$DirectoryType = 'Hierarchical'">Tree</xsl:if>2&gt;("<xsl:value-of select="$SubclassName"/>")]
-partial class <xsl:value-of select="$DirectoryName"/>_Список : DirectoryFormJournalFull<xsl:if test="$DirectoryType = 'Hierarchical'">Tree</xsl:if>2
+[GObject.Subclass&lt;DirectoryFormJournalFull<xsl:if test="$DirectoryType = 'Hierarchical'">Tree</xsl:if>&gt;("<xsl:value-of select="$SubclassName"/>")]
+partial class <xsl:value-of select="$DirectoryName"/>_Список : DirectoryFormJournalFull<xsl:if test="$DirectoryType = 'Hierarchical'">Tree</xsl:if>
 {
     <xsl:if test="normalize-space($DirectoryOwner) != ''">
     <xsl:variable name="namePointer" select="substring-after($DirectoryOwner, '.')" />
@@ -774,8 +774,8 @@ using Функції = <xsl:value-of select="$NameSpace"/>.<xsl:value-of select=
 
 namespace <xsl:value-of select="$NameSpace"/>;
 
-[GObject.Subclass&lt;DirectoryFormJournalSmall<xsl:if test="$DirectoryType = 'Hierarchical'">Tree</xsl:if>2&gt;("<xsl:value-of select="$SubclassName"/>")]
-partial class <xsl:value-of select="$DirectoryName"/>_ШвидкийВибір : DirectoryFormJournalSmall<xsl:if test="$DirectoryType = 'Hierarchical'">Tree</xsl:if>2
+[GObject.Subclass&lt;DirectoryFormJournalSmall<xsl:if test="$DirectoryType = 'Hierarchical'">Tree</xsl:if>&gt;("<xsl:value-of select="$SubclassName"/>")]
+partial class <xsl:value-of select="$DirectoryName"/>_ШвидкийВибір : DirectoryFormJournalSmall<xsl:if test="$DirectoryType = 'Hierarchical'">Tree</xsl:if>
 {
     <xsl:if test="normalize-space($DirectoryOwner) != ''">
     <xsl:variable name="namePointer" select="substring-after($DirectoryOwner, '.')" />
@@ -907,8 +907,8 @@ using Функції = <xsl:value-of select="$NameSpace"/>.<xsl:value-of select=
 
 namespace <xsl:value-of select="$NameSpace"/>;
 
-[GObject.Subclass&lt;DirectoryFormJournalFull2&gt;("<xsl:value-of select="$SubclassName"/>")]
-partial class <xsl:value-of select="$DirectoryName"/>_Список : DirectoryFormJournalFull2
+[GObject.Subclass&lt;DirectoryFormJournalFull&gt;("<xsl:value-of select="$SubclassName"/>")]
+partial class <xsl:value-of select="$DirectoryName"/>_Список : DirectoryFormJournalFull
 {
     <xsl:value-of select="$PointerFolders"/>_Список Папки = <xsl:value-of select="$PointerFolders"/>_Список.New();
     <xsl:if test="normalize-space($DirectoryOwner) != ''">

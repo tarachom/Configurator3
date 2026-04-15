@@ -155,8 +155,8 @@ using <xsl:value-of select="$NameSpaceGeneratedCode"/>.Перелічення;
 
 namespace <xsl:value-of select="$NameSpace"/>;
 
-[GObject.Subclass&lt;<xsl:value-of select="$OwnerType"/>FormTablePart2&gt;("<xsl:value-of select="$TSubclassName"/>")]
-partial class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина_<xsl:value-of select="$TablePartName"/> : <xsl:value-of select="$OwnerType"/>FormTablePart2
+[GObject.Subclass&lt;<xsl:value-of select="$OwnerType"/>FormTablePart&gt;("<xsl:value-of select="$TSubclassName"/>")]
+partial class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина_<xsl:value-of select="$TablePartName"/> : <xsl:value-of select="$OwnerType"/>FormTablePart
 {
     #region Data
     
@@ -171,12 +171,15 @@ partial class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина
             get =&gt; UnigueID_;
             set
             {
-                UnigueID_ = value;
-                Сhanged_UnigueID?.Invoke();
+                if (!UnigueID_.Equals(value))
+                {
+                    UnigueID_ = value;
+                    Сhanged_UnigueID?.Invoke();
+                }
             }
         }
         UniqueID UnigueID_ = new();
-        public Action? Сhanged_UnigueID;
+        public Action? Сhanged_UnigueID { get; set; } = null;
 
     <xsl:for-each select="$FieldsTL">
         /* <xsl:value-of select="Name"/> */
@@ -200,7 +203,7 @@ partial class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина
         <xsl:value-of select="Name"/>
         <xsl:text>_ = </xsl:text>
         <xsl:call-template name="DefaultFieldValue" />;
-        public Action? Сhanged_<xsl:value-of select="Name"/>;
+        public Action? Сhanged_<xsl:value-of select="Name"/> { get; set; } = null;
 
     </xsl:for-each>
 
@@ -210,9 +213,9 @@ partial class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина
         
         public GObject.Object Copy()
         {
-            var itemRow = New();
+            var row = New();
             <xsl:for-each select="$FieldsTL">
-                <xsl:text>itemRow.</xsl:text>
+                <xsl:text>row.</xsl:text>
                 <xsl:value-of select="Name"/>
                 <xsl:text> = </xsl:text>
                 <xsl:value-of select="Name"/>
@@ -220,7 +223,7 @@ partial class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина
                     <xsl:when test="Type = 'pointer'">.Copy()</xsl:when>
                 </xsl:choose>;
             </xsl:for-each>
-            return itemRow;
+            return row;
         }
     }
 
@@ -392,30 +395,28 @@ partial class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина
             await ЕлементВласник.<xsl:value-of select="$TablePartName"/>_TablePart.Read();
             </xsl:otherwise>
         </xsl:choose>
-
-        Store.RemoveAll();
-
+            Store.RemoveAll();
         <xsl:variable name="InRecords">
             <xsl:choose>
                 <xsl:when test="$OwnerType = 'Constants'">Таблиця</xsl:when>
                 <xsl:otherwise>ЕлементВласник.<xsl:value-of select="$TablePartName"/>_TablePart</xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        foreach (var record in <xsl:value-of select="$InRecords"/>.Records)
-        {
-            var row = ItemRow.New();
-            row.UniqueID = new(record.UID);
-            <xsl:for-each select="$FieldsTL">
-                <xsl:text>row.</xsl:text><xsl:value-of select="Name"/> = record.<xsl:value-of select="Name"/>;
-            </xsl:for-each>
-            Store.Append(row);
-
-            if (SelectPosition &gt; 0)
+            foreach (var record in <xsl:value-of select="$InRecords"/>.Records)
             {
-                Grid.Model.SelectItem(SelectPosition, true);
-                ScrollTo(SelectPosition);
+                var row = ItemRow.New();
+                row.UniqueID = new(record.UID);
+                <xsl:for-each select="$FieldsTL">
+                    <xsl:text>row.</xsl:text><xsl:value-of select="Name"/> = record.<xsl:value-of select="Name"/>;
+                </xsl:for-each>
+                Store.Append(row);
+
+                if (SelectPosition &gt; 0)
+                {
+                    Grid.Model.SelectItem(SelectPosition, true);
+                    ScrollTo(SelectPosition);
+                }
             }
-        }
         <xsl:if test="$OwnerType != 'Constants'">}</xsl:if><!-- закриття if -->
     }
 
@@ -433,60 +434,63 @@ partial class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина
             </xsl:choose>
         </xsl:variable>
         <xsl:value-of select="$Records"/>.Records.Clear();
-        for (uint i = 0; i &lt;= Store.GetNItems(); i++)
-        {
-            ItemRow? row = (ItemRow?)Store.GetObject(i);
-            if (row != null)
+            for (uint i = 0; i &lt;= Store.GetNItems(); i++)
             {
-                <xsl:value-of select="$Records"/>.Records.Add(new()
+                ItemRow? row = (ItemRow?)Store.GetObject(i);
+                if (row != null)
                 {
-                    UID = row.UniqueID.UGuid,
-                    <xsl:for-each select="$FieldsTL">
-                        <xsl:value-of select="Name"/> = row.<xsl:value-of select="Name"/>,
-                    </xsl:for-each>
-                });
+                    <xsl:value-of select="$Records"/>.Records.Add(new()
+                    {
+                        UID = row.UniqueID.UGuid,
+                        <xsl:for-each select="$FieldsTL">
+                            <xsl:value-of select="Name"/> = row.<xsl:value-of select="Name"/>,
+                        </xsl:for-each>
+                    });
+                }
             }
-        }
-        await <xsl:value-of select="$Records"/>.Save(true);
-        //Update
-        {
-            Bitset bitset = Grid.Model.GetSelection();
-            List&lt;uint&gt; selection = [];
-            for (uint i = bitset.GetMinimum(); i &lt;= bitset.GetMaximum(); i++)
-                if (Grid.Model.IsSelected(i)) selection.Add(i);
-
-            var rows = <xsl:value-of select="$InRecords"/>.Records.Select(x =&gt;
+            await <xsl:value-of select="$Records"/>.Save(true);
+            //Оновлення табличної частини після збереження
             {
-                var row = ItemRow.New();
-                row.UniqueID = new(x.UID);
-                <xsl:for-each select="$FieldsTL">
-                    <xsl:text>row.</xsl:text><xsl:value-of select="Name"/> = x.<xsl:value-of select="Name"/>;
-                </xsl:for-each>
-                return row;
-            });
+                //Пошук виділених рядків
+                Bitset bitset = Grid.Model.GetSelection();
+                List&lt;uint&gt; selection = [];
+                for (uint i = bitset.GetMinimum(); i &lt;= bitset.GetMaximum(); i++)
+                    if (Grid.Model.IsSelected(i)) selection.Add(i);
 
-            uint count = (uint)rows.Count();
-            Store.Splice(0, count, [.. rows], count);
+                var rows = <xsl:value-of select="$InRecords"/>.Records.Select(x =&gt;
+                {
+                    var row = ItemRow.New();
+                    row.UniqueID = new(x.UID);
+                    <xsl:for-each select="$FieldsTL">
+                        <xsl:text>row.</xsl:text><xsl:value-of select="Name"/> = x.<xsl:value-of select="Name"/>;
+                    </xsl:for-each>
+                    return row;
+                });
 
-            foreach (var position in selection)
-                Grid.Model.SelectItem(position, false);
+                uint count = (uint)rows.Count();
 
-            <!-- старий варіант оновлення
-            uint position = 0;
-            foreach (var record in <xsl:value-of select="$InRecords"/>.Records)
-            {
-                bool sel = Grid.Model.IsSelected(position);
+                //Оновлення всіх рядків
+                Store.Splice(0, count, [.. rows], count);
 
-                var row = ItemRow.New();
-                row.UniqueID = new(record.UID);
-                <xsl:for-each select="$FieldsTL">
-                    <xsl:text>row.</xsl:text><xsl:value-of select="Name"/> = record.<xsl:value-of select="Name"/>;
-                </xsl:for-each>
-                Store.Splice(position, 1, [row], 1);
-                if (sel) Grid.Model.SelectItem(position, false);
-                position++;
-            }-->
-        }
+                //Виділення рядків після оновлення
+                foreach (var position in selection)
+                    Grid.Model.SelectItem(position, false);
+                <!-- старий варіант оновлення
+                uint position = 0;
+                foreach (var record in <xsl:value-of select="$InRecords"/>.Records)
+                {
+                    bool sel = Grid.Model.IsSelected(position);
+
+                    var row = ItemRow.New();
+                    row.UniqueID = new(record.UID);
+                    <xsl:for-each select="$FieldsTL">
+                        <xsl:text>row.</xsl:text><xsl:value-of select="Name"/> = record.<xsl:value-of select="Name"/>;
+                    </xsl:for-each>
+                    Store.Splice(position, 1, [row], 1);
+                    if (sel) Grid.Model.SelectItem(position, false);
+                    position++;
+                }-->
+            }
         <xsl:if test="$OwnerType != 'Constants'">}</xsl:if><!-- закриття if -->
     }
 
