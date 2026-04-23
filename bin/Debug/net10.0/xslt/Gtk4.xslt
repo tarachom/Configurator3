@@ -787,7 +787,22 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             }
             <xsl:choose>
                 <xsl:when test="$DirectoryType = 'Hierarchical'">
-            form.AfterLoadRecords(0);
+            /* Вибірка всіх родичів для вибраного елементу */
+            List&lt;UniqueID&gt; parents = [];
+            if (unigueIDSelect != null &amp;&amp; !unigueIDSelect.IsEmpty())
+            {
+                <xsl:value-of select="$DirectoryName"/>_SelectHierarchical selectParents = new();
+                selectParents.QuerySelect.ParentUid = unigueIDSelect;
+                selectParents.QuerySelect.Reverse = true;
+                await selectParents.Select();
+                while (selectParents.MoveNext())
+                {
+                    Довідники.<xsl:value-of select="$DirectoryName"/>_Pointer? curr = selectParents.Current;
+                    if (curr != null) parents.Add(curr.UniqueID);
+                }                        
+                parents.Reverse();
+            }
+            await form.AfterLoadRecords(parents, unigueIDSelect);
                 </xsl:when>
                 <xsl:otherwise>
             form.AfterLoadRecords(selectPosition);

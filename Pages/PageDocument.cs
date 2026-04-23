@@ -625,6 +625,7 @@ namespace Configurator
                 CreateForm(ConfigurationForms.TypeForms.Function);
                 CreateForm(ConfigurationForms.TypeForms.Element);
                 CreateForm(ConfigurationForms.TypeForms.List);
+                CreateForm(ConfigurationForms.TypeForms.ListSmallSelect);
                 CreateForm(ConfigurationForms.TypeForms.PointerControl);
                 CreateForm(ConfigurationForms.TypeForms.PointerTablePartCell);
             };

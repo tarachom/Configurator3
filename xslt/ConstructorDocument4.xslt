@@ -347,7 +347,7 @@ partial class <xsl:value-of select="$DocumentName"/>_Елемент : DocumentFo
                 <xsl:text>DateTimeControl </xsl:text><xsl:value-of select="Name"/> = DateTimeControl.New();
             </xsl:when>
             <xsl:when test="Type = 'time'">
-                <xsl:text>TimeControl </xsl:text><xsl:value-of select="Name"/> = new();
+                <xsl:text>TimeControl </xsl:text><xsl:value-of select="Name"/> = TimeControl.New();
             </xsl:when>
             <xsl:when test="Type = 'composite_pointer'">
                 <xsl:text>CompositePointerControl </xsl:text><xsl:value-of select="Name"/> = CompositePointerControl.New();
@@ -831,7 +831,7 @@ using Функції = <xsl:value-of select="$NameSpace"/>.<xsl:value-of select=
 namespace <xsl:value-of select="$NameSpace"/>;
 
 [GObject.Subclass&lt;DocumentFormJournalSmall&gt;("<xsl:value-of select="$SubclassName"/>")]
-public class <xsl:value-of select="$DocumentName"/>_ШвидкийВибір : DocumentFormJournalSmall
+public partial class <xsl:value-of select="$DocumentName"/>_ШвидкийВибір : DocumentFormJournalSmall
 {
     partial void Initialize()
     {
