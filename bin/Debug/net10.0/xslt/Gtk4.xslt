@@ -515,9 +515,10 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             <xsl:variable name="TabularListName" select="Name"/>
     public static class <xsl:value-of select="$DirectoryName"/>_<xsl:value-of select="$TabularListName"/>
     {
+        <xsl:if test="$DirectoryType = 'Hierarchical'">
         /* Тип вмісту довідника (елемент, папки, чи папки та елементи) */
         static readonly ConfigurationDirectories.HierarchicalContentType AllowedContent = Configuration.GetAllowedContent("<xsl:value-of select="$DirectoryAllowedContent"/>");
-
+        </xsl:if>
         public static void AddColumn(DirectoryFormJournalBase form)
         {
             <xsl:choose>
@@ -747,7 +748,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
 
             <!-- Вибрати дані -->
             await <xsl:value-of select="$DirectoryName"/>_Select.Select();
-            form.Store.RemoveAll();
+            if (form.Store.GetNItems() &gt; 0) form.Store.RemoveAll();
 
             <xsl:if test="$DirectoryType = 'Hierarchical'">
             /* Пустий рядок */
@@ -942,12 +943,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
 
             <!-- Вибрати дані -->
             await <xsl:value-of select="$DocumentName"/>_Select.Select();
-            /* Очистка сховища */
-            if (form.Store.GetNItems() &gt; 0)
-            {
-                form.Store.RemoveAll();
-                GC.Collect();
-            }
+            if (form.Store.GetNItems() &gt; 0) form.Store.RemoveAll();
             uint selectPosition = 0;
             while (<xsl:value-of select="$DocumentName"/>_Select.MoveNext())
             {
@@ -1053,12 +1049,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
 
             <!-- Вибрати дані -->
             await <xsl:value-of select="$RegisterName"/>_Select.Read();
-            /* Очистка сховища */
-            if (form.Store.GetNItems() &gt; 0)
-            {
-                form.Store.RemoveAll();
-                GC.Collect();
-            }
+            if (form.Store.GetNItems() &gt; 0) form.Store.RemoveAll();
             uint selectPosition = 0;
             foreach (<xsl:value-of select="$RegisterName"/>_<xsl:value-of select="$SelectType"/>.Record record in <xsl:value-of select="$RegisterName"/>_Select.Records)
             {
@@ -1135,12 +1126,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
 
             <!-- Вибрати дані -->
             await <xsl:value-of select="$RegisterName"/>_Select.Read();
-            /* Очистка сховища */
-            if (form.Store.GetNItems() &gt; 0)
-            {
-                form.Store.RemoveAll();
-                GC.Collect();
-            }
+            if (form.Store.GetNItems() &gt; 0) form.Store.RemoveAll();
             foreach (<xsl:value-of select="$RegisterName"/>_<xsl:value-of select="$SelectType"/>.Record record in <xsl:value-of select="$RegisterName"/>_Select.Records)
             {
                 RegisterAccumulationRowJournal row = RegisterAccumulationRowJournal.New();

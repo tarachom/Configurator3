@@ -7,7 +7,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>23.04.2026 16:15:32</DateTimeSave>
+  <DateTimeSave>24.04.2026 12:19:15</DateTimeSave>
   <DictTSearch>simple</DictTSearch>
   <GtkVersion>Gtk4</GtkVersion>
   <ConstantsBlocks>
@@ -45031,14 +45031,14 @@ HAVING
         </TabularLists>
       </PrintBalances>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Type>List</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACqVU3U5TQRC+b9J32OhNIXr0QhMjoikFGhCh2qoxxpDlnOlh5XS37s6BoDHhJxHvvDE1MfE3PkBFSSql9RVm38ic05YefsSCe7PZ2Z1vZr75dtKpdOrSMItWOhVvjDF6R3XaozZtU5N2qEUt+4beU9PW7Ftq2Q1bo23HNQmHL/SbGnad2rSbTiXsX6lO36lJDbtFLWrQL2bX+0/ZxU6ojqGRTg1firxDI6TPpiSCLnMX8rh0ZaRnzbquCiUK6RdVGVe4hv2rPEjQHMHLKQ8c+kw79MPW7LrdsGvUoA9Up11qx8G2elWN9OMdzTVZFRs9E75zENXW9jF3qeEMwvN8kqE4XckrYKrcBVZEpbkPWemVND9dzY/zcwtPwUWnGC64ATfmxj3whUHQWdcNK2HAUSg5qXRlWoVa8mCMG7iZOTcjDM7fXS4/myvPrJbu58flw/Hp/N1r/rmhJ+lUNVwIhMuqXKPgAYuBB1LT/AGur7MBkkmnXnSE1ou2rITHpqSIDuI5ZIY6191X0SqtVmGWV4CNDpZUTkmDTulRYWI2e2di5CRdJ/N3sp6XU0FYkRlcFGYo4VgELHAfTBEw0rDJXL3cu37Z+zhdEg1yFO4Z2JuFlWNqPz1OIAyy0QjuocDFglZV0CjAZB4/SZYUPXNmFcKCUkuToXTZKCto5Wtecca4EW7Ut1sHXsQK7PlrwFDLGOYwE+c1+EJJNrcMWgsPDjGkumbGzap02QMehFDiZonNKO7dA1dpzxzDBF/hAv/VwiREson9LmmF4CJ4/TRiAU6KIJgUAYLOdLackqhVwMrJ0zH9OTmfnAaO0AUeNKHDvIxBWWkoAsamv1PzzW5Si3btK1uz7+Ih0qS6fW037CZtU31fPO1oyMTDJrbbLao79LE7e/aobjeoQZ9ox67ZGrXpJ72lpn1DNbtp16gVwdrNTCSP27B6gRVAC+UNXtdyRHfHKbfIpQ/ecbL/r1r6o/dMtTjdraSKqIX0M0P7N+McoYhc4yGLqh4h4DxIr/MR0qmXHdMf8McCfLYHAAA=</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список міні</Name>
           <Desc>Список міні</Desc>
           <Type>ListSmall</Type>
@@ -45512,14 +45512,14 @@ HAVING
         </TabularLists>
       </PrintBalances>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Type>List</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACqVU224TMRB9j5R/sOAlRbCABEKiFJQGWgElDU0AAUKVuzvdmm7syJ5tKQipF0F54wWlEhJX8QHLpWJpSfiF8R+h3STNthQIxS+WZzzHM2eOJ5/L544fYcnK59KNMUZvqU1f7TJF9oldoxZtUUwb9JK2bdO+oJZdpYi+U+y4JhP0jn5QbFeoTVv5XMb+niL6SNsU23VqUUzfmF3pX2XHGG1Q1DXE+dyR40l0aIT02WWJoGe5C+M4f2q4Zy26rgolCulX1Swucg07rnGQoDmCV1IeOPSWNumzbdoVu2qXKaZXFNEWtdPH1mmTWtSyz4f77/2aa7YqNnIgfGc3qm3uYG5R7AzK9XSWpTRlyetgGtwFVkWluQ9F6dU0/7e6745PztwHF51qOOMG3JhzU+ALg6CLrhvWw4CjUHJM6foVFWrJg1Fu4Hzh0IQwOI03y1OT98XJG+LM7Qflpfk7UL9x/dDQvXyuEc4EwmUNrlHwgKXIA8tqehfpZ9kAGeVzjzqK6724oITHLkuRHMRDKAx13N1byaotNaDM68BGBk+spKRBp3a7cqlcvHZp+E8iz9bgFD2vpIKwLgs4J8xQJrAKWOE+mCpgImhTOH2i537c+0VdMg1yFO4BWSzD4j4cHAwrEAbZSAJ5S+BcRasGaBRgCnfvZUtLrjllhTCj1PxYKF02wipa+ZrXnVFuhJv08MKuG6kke/EaMNQyhdnLyGENvlCSTS6A1sKDPUyprplxsyRddpMHIdS4mWcTintT4CrtmX3Y4Itc4N9amYXINrPfLa0QXASvn0YqxjERBGMiQNCFzlZSErUK2Gz2tE+P/pxPSQNH6AIPmtBeXkZhVmmoAqam31PzoSMS+9Q27UY6VbYpss/sql2jTxR15gq9pHYyddLpk9rtOkUOve4Oo+8U2VWK6Q1t2mXbpDZ9oRe0bZ9T067ZZWolsHatkMjjKiwdZRXQQnmD17WQ0N0JKs1x6YO3n/T/q5b+LD5QLU53q6kqaiH9wtCO5yJHqCLXuMeiGr8QcBik1/kI+dzjjuknplUDzc8HAAA=</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список міні</Name>
           <Desc>Список міні</Desc>
           <Type>ListSmall</Type>
@@ -46098,14 +46098,14 @@ HAVING
         </TabularLists>
       </PrintBalances>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Type>List</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACqVUX08TQRB/b9LvsJGXQvTURF9ENKUCQbE2tNEYQshyNz1Wrrt1d64EjQnQRHzzxdTExL/xA1SUpILFrzD7jczdtfSAKqj7stmZnd/O7zezk81kMxfHWLSymXhjjNFratOebdJP26Id2rctxzUp90f6SR27SQe0l82k7J+oTV9onzp2m7rUoe/Mbg6usgsJcGLoZDNjF6Po0Ajps1mJoKvchRlcvTLet+ZdV4UShfTLqoprXMOhawYkaI7gFZQHDn2gXfpqW3bTbtkN6tDbiAEdxI9t0y51qWtfjg/eO5lrmhWb+Cd85yiqbR1i7lHHOanqUlqPODnJa2Dq3AVWRqW5D3npVTT/O4YLM/eWH4GLTjlcdgNuzPV58IVB0HnXDWthwFEoOa107bYKteTBJDdwI3duThhcmrs8f3mqeP8xn4I106iCXJ1db/jnRhezmXq4HAiX1blGwQMWQw/plaUjSl5jZ3g8m3matFEfu6GEx2aliA7iCeRGE3fvVrQq63Uo8hqwiWEpFJQ06FQelqaK+btT43/q0XS2Tt7zCioIazKHK8KMpgLLgCXugykDRv1oclcv9d3P+p+gJ5BBjsI9VZkirA3hdVpUIAyyiSj4gcCVklZ10CjA5BYW0+lG15yiQlhWanU6lC6bYCWtfM1rziQ3wo0qcPPIjbh3+vEaMNQyhjnOckSDL5Rk9xqgtfDgGHvVMzNu1qXL7vMghAo3q2xOcW8eXKU9M4Q3X+MCTytPGiJdoEEFtEJwEbxBGnErTYsgmBYBgs4lW0FJ1Cpg1fRpSDX+nE9BA0foAZ81oeO6TEJVaSgDxqbfS/PZNqlLe/a5bdnX8fffp7Z9Ybdsk3aonQwAekMH0XiIx0Rst9vUduhdb2r8oLbdog69p127YVt0QN/oFe3bl9SyTbtB3QjWNnNRe9yB9fOsBFoo7+y8GpHcSVBhhUsfvGFN/l9cBkPzn7g4va2iyqiF9HOjh55bHKGMXOMxi6qfEGAEpJd8hGzmWWL6BTa5Q/JMBwAA</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список міні</Name>
           <Desc>Список міні</Desc>
           <Type>ListSmall</Type>
@@ -47158,14 +47158,14 @@ HAVING
         </TabularLists>
       </PrintBalances>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Type>List</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACqVUW2tTQRB+D+Q/LPqSih7rDcFaJY1tqZcaTVBEStmcMznd9mQ37M5pqSL0AtYHwReJIHjFHxCrhZiY+Bdm/5Gck6Q5vVh72ZdlZ2e+nfnm20mn0qnzZ1i00ql4Y4zRO6rTb+rQJrVoi9rUtm/oE3Xsql2jut2gOrXsa2pTg5qRp+OaRPAX+kMNu0odaqZTCftXqtN3alHDbsShv5hdHbiyc91nu4ZGOnXmfBQdGiF9NiURdJm7MIkLl0f61qzrqlCikH5BlXGJa9i+mgQJmiN4OeWBQ59pi37YWpS/XaEGfaA6NakTP7bRr3Bk8N7eXJNVsdFj4Ts7UW1tG7NJDeeonM8m2YpTl7wCpspdYAVUmvuQlV5R86PV/3TyfmkeXHQKYckNuDHXH4IvDILOum5YCQOOQskJpSu3VaglD8a4gRuZU3eFwdnyhVK5fCm8OsznxfiTJTF38cGpoZl0qhqWAuGyKtcoeMBi3COLbHZHC66xQ+SVTj3v6q//8qISHpuSIjqIZ5AZ6l73vKJVXK7CNK8AGz16gjklDTrFJ/nx6ey98ZGDpJ+sxcl6Xk4FYUVmcE6YoURgATDPfTAFwEjmJnNluH/9ov+3euQa5CjcE7I6DUv7cHIyzEAYZKMR9GOBc3mtqqBRgMk8nUmWGrk50wqhpNTCRChdNsryWvmaV5wxboQb9fbmDo9YsP14DRhqGcPsZui0Bl8oye4vgtbCg13MqZ6ZcbMsXfaIByEUuVlgdxX3HoKrtGf2YYUvcYH/a20SItncQfe0QnARvEEasUgnRBBMiABBZ7pbTknUKmDl5GmfXh2cT04DR+gBHzah3byMQVlpKADGpn9T882uU5ua9qWt2XfxzGlR3b6ya3adNqneE9J76kQzKZ5NsT0SlEMfe6PqN9XtGjXoE23ZFVujDv2kt9Syb6hm1+0KtWP1rWciedyB5bMsD1oo7/B1LUZ0d4Nyc1z64O33BU5Uy2BSH6sWp7cVVQG1kH5maPvmFkcoINe4y6Kqewg4DdLrfoR06kXX9Bcqe8LG/QcAAA==</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список міні</Name>
           <Desc>Список міні</Desc>
           <Type>ListSmall</Type>
@@ -47638,14 +47638,14 @@ HAVING
         </TabularLists>
       </PrintBalances>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Type>List</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACq1UX08bRxB/t+TvsAovBrVHGhVVKqWVcWJEQ8GK3VRthND6bjg2nHed3TksqJD4o4Y8VMpLZaRKLWnVD3BJi3o1sfMVZr9RdWcbH4SmxMm+rHZm57czv/nt5HP53PQUS1Y+l26MMXpGPfrb7lFkf7CH1KUOxXRMJ9Sz+/aAIntEEZ3ZH6lLMXUoopcUO67JAPxGryi2+9SjTj6Xsf9OET2nM4rtURr8D7P7o6vsQ0bHFA0McT43NZ1Eh0ZIny1KBL3OXVjAzY9nh9ai66pQopB+Va1ji2s4dy2ABM0RvJLywKFndEp/2nZSgd2jmH6hiDrUSx87olPqUtc+nR2993qu2arY3Fj4zkVU2z7H7FDsjMP7WpaxNH3JG2Ca3AVWRaW5D0Xp1TR/Ow4eLKzUH4KLTjWsuwE35rN74AuDoIuuGzbCgKNQsqx040sVasmDeW7g88KNJWFw7RM/kLfL9+HW14/qOzMBfFf6aGO7dWNyNZ9rhvVAuKzJNQoesBR6LL2tXejGp+wa6eVz3/elOHx9SwmPLUqRHMQOFCb77sGtZNW2m7DMG8DmxkuypKRBp/Zt5c5y8as7s2/6Cdl6nKLnlVQQNmQBN4SZzARWASvcB1MFTFRvCjM3h+7d4VcbkGyQo3DfA7vL0LqCm3fHDYRBNpfAfyNwo6JVEzQKMIUHq9mSk2vOskKoK7VZDqXL5lhFK1/zhjPPjXCTPn9x4Uaq4WG8Bgy1TGEuMzWhwRdKspUt0Fp4cIlBNTAzbraly+7zIIQaN5tsSXHvHrhKe+YKZniLC/y/Fmchsk0edVErBBfBG6WRCrYsgqAsAgRd6G8lJVGrgK1nT1f06835lDRwhAHwdRO6zMs8rCsNVcDU9N/U/NEXjH1s2/Y4HUNnFNkn9sAe0guK+oOIfqZeMqbScZXaE0k59Otger2kyB5QTCd0avdsm3r0F/1EZ/Ypte2h3aNuqr/DQiKPu7D9AauAFsq7fl1bCd39oNIGlz54V32Dd6plNLzHqsUZbDVVRS2kX5g899zmCFXkGi9ZVPM1AiZAev2PkM/t9k3/AkiiersYCAAA</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список міні</Name>
           <Desc>Список міні</Desc>
           <Type>ListSmall</Type>
@@ -48290,14 +48290,14 @@ HAVING
         </TabularLists>
       </PrintBalances>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Type>List</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACqVUXU8TQRR9b9L/MIGXYnQ18SNGRFMq4AdCpY3GEEKG3csysp2pM3dBMCRAo/jGiymJiYrGH1A/SCpY/At3/pHZbUsXqIK6L5O9d+6Ze849M+lUOnX+DIu+dCpeGGO0bSv2Bb2hffvKrtsqfXFck0h/oJ9Ut2u0T7vpVCL+kWr0mfaobjeoQXX6zuxaZys7x2iLaq1APZ06cz6qDo2QPrsjEfQsd2EE5y/1t6NZ11WhRCH9gprFRa7hIDUCEjRH8HLKA4e2aYe+2qpds+t2ler0lmq0S/vxYRu0Qw1q2M3+znnHe02yYgP/hO8cRrXVA8xdqjvHVZ1O6hE3J3kJTJm7wAqoNPchK72i5n/HcHJkfOYJuOgUwhk34MZcnwBfGASddd2wFAYchZLDSpfuqlBLHgxyAzcyPaPC4PT41dv5K+WRZ0NPL118NLj89OFo/kFP31Q6VQ5nAuGyMtcoeMBi4C5OmT6k4zV2iqPTqedNE7WxF5Tw2B0poh+xDJm+Zrq1K/qKS2UY4yVgA91ayClp0Ck+zg+NZe8P9f/Joclunazn5VQQlmQG54TpSxQWAPPcB1MAjNxoMpcvtNMr7SvQEsggR+GeqMwYLHbhdVJVIAyygaj4kcC5vFZl0CjAZCanku1G25wxhTCj1PxwKF02wPJa+ZqXnEFuhBtN4OahHbFz2vUaMNQyhjnKsleDL5Rk4wugtfDgCHvVCjNulqTLHvIghCI382xUcW8CXKU904U3X+QCTxpPEiI5oM4EtEJwEbxOG7GVhkUQDIsAQWeaS05J1Cpgs8m/LtP4cz85DRyhBXzaho7qMgizSkMBMA79XppPtkIN2rUvbdVuxZd/j2qxSSr0hWrN6x8bZzVqsB23G1Rz6F3rzfhBNbtOdXpPO3bVVmmfvtFr2rObVLUVu0qNCNZWMpE97sHSWZYHLZR3el4LkdzNotwclz543Uz+X1w6T+Y/cXFaS1EVUAvpZ/oOMrc4QgG5xiMRVT4mQC9Ir3kR0qmVZugXgbHMq0oHAAA=</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список міні</Name>
           <Desc>Список міні</Desc>
           <Type>ListSmall</Type>
@@ -49360,14 +49360,14 @@ HAVING
         </TabularLists>
       </PrintBalances>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Type>List</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACqVU3U5TQRC+b9J32MBNIXo0Rm9ENKUK/iA0tFEIIWQ5ZzgsnO42u3NAMCT8JOIdN6YkJooSH6CiJBVsfYXZNzLntKUHRKy6N5udnfl25ptvJ51Kp671s2ilU/HGGKN9qtoNu2Urdo8OqEGH8blCh45rEm4f6QfV7CY16DidStgPqEqf6YRqdofqVKNvzG52XNlVRntUbRlq6VT/tSg6NEL67JFE0PPchRFcujnQtmZdV4UShfQLah5XuIbTqxGQoDmCl1MeOPSBjuiLrdhNu2U3qEbvqErH1Igf26EjqlPd7g503vs112RVbPCf8J2zqLZyinlMNef37M4meYmTlLwEpsxdYAVUmvuQlV5R87+rdHpkfG4RXHQK4ZwbcGPuTIAvDILOum5YCgOOQslhpUuPVaglD4a4gbuZnlFhcHZqYmLxxdqkfLh0Y2pqYbWc9xYnc35P30w6VQ7nAuGyMtcoeMBi6Eu0M3uG2dusiyTSqZdNWbXfWFbCY4+kiA5iDTJ9zeuWV7SKq2UY4yVgg5elklPSoFOcyj8Yyz59MHCZdpNZO1nPy6kgLMkMLgjTlwgsAOa5D6YAGOnUZG5db1+vtz9HizCDHIXbNVNjsHJBnd1GB8IgG4xAngtcyGtVBo0CTGZ6Jpl+5OaMKYQ5pZaGQ+myQZbXyte85AxxI9yoM/fOeMTaasdrwFDLGOZ81b0afKEkG18GrYUH59hQLTPjZlW67BkPQihys8RGFfcmwFXaMxfUz1e4wD+1KwmRbFinI1ohuAheJ41YYsMiCIZFgKAzzS2nJGoVsPnk6YKuXJ5PTgNHaAF3m9B5XoZgXmkoAMam31PzyW5TnY7tq1gi0Xg4oap9bbfsdiSW5oCgt9SIxkc8RmK73aGqQ+9bU+U7Ve0W1WifjmJ1NegrvaETu0sVu203qB7B2u1MJI8nsHqF5UEL5XVf13JEdzMot8ClD95FYv+vWjpD9Z9qcVpbURVQC+ln+k5v7nOEAnKN5yyq/AsBvSC95kdIp9abpp/RL4DJfAcAAA==</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список міні</Name>
           <Desc>Список міні</Desc>
           <Type>ListSmall</Type>
@@ -49990,14 +49990,14 @@ HAVING
         </TabularLists>
       </PrintBalances>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Type>List</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACqVUW08TQRR+b9L/MIGXYnTReAmKaEoFghdsaCMSQsh097CMbGeambMQNCQFEvHNF1MTE6/xB9QLpoLFv3DmH5ndtnSpiIjzMplz5nxzvm++mXQqnRo8w6KRTsUTY4ze2irt01eq0zdbc1yTSL2nn9SwG7RPu+lUIv6B6vSJ9qhht6lJDfrO7EZ3KzvH6CXV24FGOnVmMKoOjZA+m5QIepG7MIHLl4Y70azrqlCikH5BLeIq13CQmgAJmiN4OeWBQ+9oh77Ymt2wm7ZKDXpNddql/fiwbdqhJjXt8+Hueb/3mmTFRk6F7xxGtbUDzF1qOIcVXUhqETcmeRlMhbvACqg09yErvaLm/8ZubuJ+6RG46BTCkhtwY65Pgy8Mgs66blgOA45CyXGly7dVqCUPRrmBG5m+u8LgQunCmD80dHF2OVeafjizNPToytULft/AfDpVCUuBcFmFaxQ8YDFyj0UWDgl4jZ3g3HTqScs9HdwVJTw2KUW0EI8hM9BKt3dFo7hWgSleBjbSe3xOSYNOcTY/NpW9NzZ8nC2TnTpZz8upICzLDC4JM5AoLADmuQ+mABhZ0GQun++k1zu+bwtjkKNwj1VkClaP4HNcRSAMspGocEbgUl6rCmgUYDJz88k2o23OlEIoKbU8HkqXjbC8Vr7mZWeUG+FGqt88tCO2SqdeA4ZaxjC97Po1+EJJdn8FtBYe9LBW7TDjZk267AEPQihys8zuKu5Ng6u0Z47gzFe5wL9dSxIieTFd5bVCcBG8bhuxfcZFEIyLAEFnWlNOSdQqYIvJ1RE3cXw/OQ0coQ180oZ6dRmFRaWhABiH/izNR7tFTdq1T23Nvoxf+x7V7TO7abfoM9Vb751e0X70G8S/Qhy321R36E37k/hBdbtJDXpLO7Zqa7HLXtCefU41u2Wr1Ixg7VYmsscdWDvL8qCF8k7OayWSu1WUW+LSB+8og/8Xl+4feSouTnsqqgJqIf3MwEHmFkcoINfYE1GV3wToB+m1HkI6td4K/QL0Myw8MwcAAA==</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список міні</Name>
           <Desc>Список міні</Desc>
           <Type>ListSmall</Type>
@@ -50786,14 +50786,14 @@ HAVING
         </TabularLists>
       </PrintBalances>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Type>List</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACqVUW2sTQRR+D+Q/DPUlFV0VFNRaJU1trZcaulERkTLdPd2O2cyEmbMtVYRe0PpWEElB8Io/IF4KMTXxL5z5R7KbpNnW2pv7MuyZM9+c7zvfnGwmmzlzksVfNpMsjDH6TG36RnW7RA16TW+pTb9szS5Rk+r2heOZVOon+k0Nu0xtamYzOyDq9JW2qGHXqEUN+snscj+VnWa0QfVuoJHNnDwTn46MkAGbkAh6lnswjuXzQ71o3vNUJFHIwFWzuMA1bG+NgwTNEfyC8sGhj7RJ323NLtuVhME7qlOT2slla7RJLWrZ9aH+fX/XmmbFho+F7+xEtbVtzCY1nP0Vnk5rkxQqeQVMlXvAXFSaB5CXfknzo7F9NH535gl46LjRjBdyY65MQSAMgs57XlSJQo5CyTGlKzdVpCUPR7iBq7mB28LgtOY37p0r3yucdS8+Hb00UR65NZofGHyczVSjmVB4rMo1Ch6yBPgAB03v0PcyO0QZ2cyzjrl698wr4bMJKeIf8RRyg53tblb8lRarMMkrwIYPKqegpEGn9LB4fTJ/5/rQfi5OV+7kfb+gwqgiczgnzGDqoAtY5AEYFzB2rMldONvbft57Jl3hDHIU3pEUm4SFPfgeBSEUBtlwDPRA4FxRqypoFGByjx6nacRpzqRCmFGqPBZJjw2zolaB5hVnhBvhxV26tiMjcVrvvAaMtExgdrM/oSEQSrK786C18GGXKqobZtwsSo/d52EEJW7K7Lbi/hR4SvtmDw34Ahd4UNvSEOnG9TujFYKH4PfLSOw2JsJwTIQIOtdZCkqiViGbTf/t2Zn96ilo4Ahd4MMWtFuXEZhVGlzAJPRvab7YVWpR0760NbuRDIstqttXdsWuxubpjIvYPLGNkqGSxO0a1R16350xv6huV6hBH2jTLtkatekHvaEtu041u2qXqBXD2tVcbI9bsHiKFUEL5R+e13wsd+dQYY7LAPy9DP9fXPoj9lhcnO5SUi5qIYPc4PbOKEdwkWvcFVHVvwQ4AdLvPIRs5nkn9AcufYqckgcAAA==</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список міні</Name>
           <Desc>Список міні</Desc>
           <Type>ListSmall</Type>
@@ -51437,14 +51437,14 @@ HAVING
         </TabularLists>
       </PrintBalances>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Type>List</Type>
           <GeneratedCode Zip="1">H4sIAAAAAAAACqVUXU8TQRR9b9L/MNGXYnTVRGMioilVEBVs2CohxpDp7mUZ2c40M3chYEiARvGNF1MT4gcaf0D9IKlg8S/c+Udmty1dELTqvkz2zr1nzj33zGQz2cz5Myz+splkYYzRtq3ZZ7RF+/aFXbd1+kxbtEWvHc+kkt7TD2raNdqn3WwmFf9ADfpEe9S0G9SiJn1jdq2Xys4xekWNTqCZzZw5H1dHRsiAjUkEPcs9GMX5S4PdaN7zVCRRyMBVs7jINRxsjYIEzRH8gvLBoW3aoS+2btfsul2lJr2hBu3SfnLYBu1Qi1p2c7B33q9c012xoX/Cdw6j2voB5i41nZO0nUmrklCUvAKmyj1gLirNA8hLv6T53/X5aPR++Ql46LhR2Qu5MdcmIRAGQec9L6pEIUeh5IjSlTsq0pKHw9zA9dype8LgzPjF6dHbZVF88GBKLS9fdtUVvDKdPzXwOJupRuVQeKzKNQoesgT6RN/MHFL1KuuDQjbztG2p7gkLSvhsTIr4RyxDbqC93cmKv9JSFSZ4BdjQyUQKShp0StPFWxP58VuDv3NtmrOT9/2CCqOKzOGcMAOpQhewyAMwLmDsUJO7fKG7vdK9Fh2xDHIUXp8qTcDiMT32VxsKg2wohpgSOFfUqgoaBZjco8dp6nGaM6EQykrNj0TSY0OsqFWgecUZ5kZ48UxuHMpIPNWt14CRlgnM0Y5PawiEkuz+AmgtfDiihOqEGTdL0mMPeRhBiZt5dk9xfxI8pX1zTPd8kQv806jSEOlh9aahFYKH4PdoJOYaEWE4IkIEnWsvBSVRq5DNpv+Omcnv+RQ0cIQOcL+EjuoyDLNKgwuYhE6W5qOtUYt27XNbt6+SZ2GPGolVavSZGu2HIbHPakywG7cb1HDobec1+U4Nu05Nekc7dtXWaZ++0kvas5tUtzW7Sq0Y1tZysT3uwtJZVgQtlN9/Xwux3O2iwhyXAfjHWf2/euk9pv/Ui9NZSspFLWSQGzjYuckRXOQaj0RU9RcBToP02xchm1lph34CL6T9dnAHAAA=</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список міні</Name>
           <Desc>Список міні</Desc>
           <Type>ListSmall</Type>
