@@ -698,9 +698,9 @@ partial class <xsl:value-of select="$DirectoryName"/>_Список : DirectoryFo
         await ТабличнийСписок.LoadRecords(this);
     }
     <xsl:if test="$DirectoryType = 'Hierarchical'">
-    public override async ValueTask&lt;List&lt;DirectoryHierarchicalRow&gt;&gt; LoadChildren(UniqueID parent)
+    public override async ValueTask&lt;List&lt;DirectoryHierarchicalRow&gt;&gt; LoadChildren(UniqueID[] parents)
     {
-        return await ТабличнийСписок.LoadChildren(this, parent);
+        return await ТабличнийСписок.LoadChildren(this, parents);
     }
 
     public override DirectoryHierarchicalRow LoadEmptyChildren()
@@ -817,9 +817,9 @@ partial class <xsl:value-of select="$DirectoryName"/>_ШвидкийВибір :
         await ТабличнийСписок.LoadRecords(this);
     }
     <xsl:if test="$DirectoryType = 'Hierarchical'">
-    public override async ValueTask&lt;List&lt;DirectoryHierarchicalRow&gt;&gt; LoadChildren(UniqueID parent)
+    public override async ValueTask&lt;List&lt;DirectoryHierarchicalRow&gt;&gt; LoadChildren(UniqueID[] parents)
     {
-        return await ТабличнийСписок.LoadChildren(this, parent);
+        return await ТабличнийСписок.LoadChildren(this, parents);
     }
     
     public override DirectoryHierarchicalRow LoadEmptyChildren()
@@ -986,9 +986,9 @@ partial class <xsl:value-of select="$DirectoryName"/>_Список : DirectoryFo
         await ТабличнийСписок.LoadRecords(this);
     }
     <xsl:if test="$DirectoryType = 'Hierarchical'">
-    public override async ValueTask&lt;List&lt;DirectoryHierarchicalRow&gt;&gt; LoadChildren(UniqueID parent)
+    public override async ValueTask&lt;List&lt;DirectoryHierarchicalRow&gt;&gt; LoadChildren(UniqueID[] parents)
     {
-        return await ТабличнийСписок.LoadChildren(this, parent);
+        return await ТабличнийСписок.LoadChildren(this, parents);
     }
     
     public override DirectoryHierarchicalRow LoadEmptyChildren()

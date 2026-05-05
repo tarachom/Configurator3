@@ -407,6 +407,7 @@ limitations under the License.
     <xsl:param name="SelectType" />
     <!-- Для ієрархії довідника-->
     <xsl:param name="DirectoryType" />
+    <xsl:param name="ParentField" />
     <xsl:param name="DirectoryAllowedContent" />
     <xsl:param name="DirectoryIsFolderField" />
 
@@ -415,13 +416,26 @@ limitations under the License.
                 <xsl:value-of select="$ConfTypeName"/>_Select.QuerySelect.Field.AddRange(
                 [
                     <xsl:text>"deletion_label"</xsl:text>,
-                    <!-- Для ієрархічних довідників, у яких тип контенту папки та елементи, додаткове поле isfolders -->
-                    <xsl:if test="$ConfTypeGroup = 'Довідники' and $DirectoryType = 'Hierarchical' and $DirectoryAllowedContent = 'FoldersAndElements'">
-                        <xsl:text>/*isfolders*/ </xsl:text>
-                        <xsl:value-of select="concat($ConfTypeGroup, '.', $ConfTypeName, '_Const.', $DirectoryIsFolderField)"/>,
+                    <!-- Для ієрархічних довідників -->
+                    <xsl:if test="$ConfTypeGroup = 'Довідники' and $DirectoryType = 'Hierarchical'">
+                        <!-- 
+                            Родич, додаткове поле parent. 
+                            Це поле потрібне для динамічного підвантаження, щоб розділити підвантажені елементи за полем Родич. 
+                            Це поле не повинно конфліктувати якщо воно буде включене в табличний список, 
+                            так як його тип pointer і воно додається в таблицю через join
+                        -->
+                        <xsl:if test="normalize-space($ParentField) != ''">
+                            <xsl:text>/* + parent */ </xsl:text>
+                            <xsl:value-of select="concat($ConfTypeGroup, '.', $ConfTypeName, '_Const.', $ParentField)"/>,
+                        </xsl:if>
+                        <!-- Тип контенту папки та елементи, додаткове поле isfolders -->
+                        <xsl:if test="$DirectoryAllowedContent = 'FoldersAndElements'">
+                            <xsl:text>/* + isfolders */ </xsl:text>
+                            <xsl:value-of select="concat($ConfTypeGroup, '.', $ConfTypeName, '_Const.', $DirectoryIsFolderField)"/>,
+                        </xsl:if>
                     </xsl:if>
                     <xsl:if test="$ConfTypeGroup = 'Документи'"><!-- Для документів додаткове поле spend -->
-                        <xsl:text>"spend"</xsl:text>,
+                        <xsl:text>/* + spend */ "spend"</xsl:text>,
                     </xsl:if>
                     <xsl:for-each select="Fields/Field[Type != 'pointer']">
                         <xsl:text>/*</xsl:text><xsl:value-of select="Name"/><xsl:text>*/ </xsl:text>
@@ -647,7 +661,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             return row;
         }
 
-        public static async ValueTask&lt;List&lt;DirectoryHierarchicalRow&gt;&gt; LoadChildren(DirectoryFormJournalBase form, UniqueID parent)
+        public static async ValueTask&lt;List&lt;DirectoryHierarchicalRow&gt;&gt; LoadChildren(DirectoryFormJournalBase form, UniqueID[] parents)
         {
             /* Вибірка */
             <xsl:call-template name="Select">
@@ -656,12 +670,13 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
                 <xsl:with-param name="SelectType"><xsl:value-of select="$SelectType"/></xsl:with-param>
 
                 <xsl:with-param name="DirectoryType"><xsl:value-of select="$DirectoryType"/></xsl:with-param>
+                <xsl:with-param name="ParentField"><xsl:value-of select="$ParentField"/></xsl:with-param>
                 <xsl:with-param name="DirectoryAllowedContent"><xsl:value-of select="$DirectoryAllowedContent"/></xsl:with-param>
                 <xsl:with-param name="DirectoryIsFolderField"><xsl:value-of select="$DirectoryIsFolderField"/></xsl:with-param>
             </xsl:call-template>
 
             /* Відбір по полю Родич */
-            <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where.Add(new(Довідники.<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="$ParentField"/>, Comparison.EQ, parent.UGuid));
+            <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where.Add(new(Довідники.<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="$ParentField"/>, Comparison.IN, $"'{string.Join("', '", parents.Select(x =&gt; x.UGuid))}'", true));
 
             /* Сховати відкриту папку для вибору */
             if (form.OpenFolder != null)
@@ -679,6 +694,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
                     <xsl:value-of select="$RowType"/> row = <xsl:value-of select="$RowType"/>.New();
                     row.UniqueID = curr.UniqueID;
                     row.DeletionLabel = (bool)Fields["deletion_label"];
+                    row.Parent = new UniqueID(Fields[Довідники.<xsl:value-of select="concat($DirectoryName, '_Const.', $ParentField)"/>]);
                     <xsl:for-each select="Fields/Field">
                         <xsl:text>row.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", <xsl:call-template name="FieldValue"><xsl:with-param name="ConfTypeName">Довідники.<xsl:value-of select="$DirectoryName"/></xsl:with-param></xsl:call-template>);
                     </xsl:for-each>
