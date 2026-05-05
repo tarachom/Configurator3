@@ -220,7 +220,7 @@ partial class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина
                 <xsl:text> = </xsl:text>
                 <xsl:value-of select="Name"/>
                 <xsl:choose>
-                    <xsl:when test="Type = 'pointer'">.Copy()</xsl:when>
+                    <xsl:when test="Type = 'pointer' or Type = 'composite_pointer'">.Copy()</xsl:when>
                 </xsl:choose>;
             </xsl:for-each>
             return row;
