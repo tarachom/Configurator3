@@ -6,7 +6,7 @@
   <NameSpace>Accounting4</NameSpace>
   <Author>
   </Author>
-  <DateTimeSave>01.05.2026 14:23:03</DateTimeSave>
+  <DateTimeSave>05.05.2026 18:59:46</DateTimeSave>
   <DictTSearch>simple</DictTSearch>
   <GtkVersion>Gtk4</GtkVersion>
   <ConstantsBlocks>
@@ -236,6 +236,12 @@
         <Constant>
           <Name>ВидиЖурналів</Name>
           <NameInTable>col_b1</NameInTable>
+          <Type>integer</Type>
+          <TabularParts />
+        </Constant>
+        <Constant>
+          <Name>ОсновніЗасоби</Name>
+          <NameInTable>col_a7</NameInTable>
           <Type>integer</Type>
           <TabularParts />
         </Constant>
@@ -838,37 +844,40 @@
           <Name>Субконто1</Name>
           <FullName>Субконто 1</FullName>
           <NameInTable>col_a9</NameInTable>
-          <Type>composite_pointer</Type>
+          <Type>string</Type>
           <Desc>Субконто 1</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <Multiline>0</Multiline>
         </Field>
         <Field>
           <Name>Субконто2</Name>
           <FullName>Субконто 2</FullName>
           <NameInTable>col_b1</NameInTable>
-          <Type>composite_pointer</Type>
+          <Type>string</Type>
           <Desc>Субконто 2</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <Multiline>0</Multiline>
         </Field>
         <Field>
           <Name>Субконто3</Name>
           <FullName>Субконто 3</FullName>
           <NameInTable>col_b2</NameInTable>
-          <Type>composite_pointer</Type>
+          <Type>string</Type>
           <Desc>Субконто 3</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <Multiline>0</Multiline>
         </Field>
         <Field>
           <Name>Клас</Name>
@@ -962,10 +971,43 @@
               <Type>boolean</Type>
             </Field>
             <Field>
+              <Name>Субконто1</Name>
+              <Caption>Субконто 1</Caption>
+              <Size>0</Size>
+              <SortNum>8</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>False</FilterField>
+              <Type>string</Type>
+              <Multiline>0</Multiline>
+            </Field>
+            <Field>
+              <Name>Субконто2</Name>
+              <Caption>Субконто 2</Caption>
+              <Size>0</Size>
+              <SortNum>9</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>False</FilterField>
+              <Type>string</Type>
+              <Multiline>0</Multiline>
+            </Field>
+            <Field>
+              <Name>Субконто3</Name>
+              <Caption>Субконто 3</Caption>
+              <Size>0</Size>
+              <SortNum>10</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>False</FilterField>
+              <Type>string</Type>
+              <Multiline>0</Multiline>
+            </Field>
+            <Field>
               <Name>Родич</Name>
               <Caption>Група</Caption>
               <Size>0</Size>
-              <SortNum>8</SortNum>
+              <SortNum>11</SortNum>
               <SortField>False</SortField>
               <SortDirection>False</SortDirection>
               <FilterField>True</FilterField>
@@ -1091,7 +1133,8 @@
               <Height>0</Height>
               <SortNum>9</SortNum>
               <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
+              <Type>string</Type>
+              <Multiline>0</Multiline>
             </Field>
             <Field>
               <Name>Субконто2</Name>
@@ -1100,7 +1143,8 @@
               <Height>0</Height>
               <SortNum>10</SortNum>
               <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
+              <Type>string</Type>
+              <Multiline>0</Multiline>
             </Field>
             <Field>
               <Name>Субконто3</Name>
@@ -1109,7 +1153,8 @@
               <Height>0</Height>
               <SortNum>11</SortNum>
               <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
+              <Type>string</Type>
+              <Multiline>0</Multiline>
             </Field>
             <Field>
               <Name>Клас</Name>
@@ -2487,6 +2532,174 @@
         </Form>
       </Forms>
     </Directory>
+    <Directory>
+      <Name>ОсновніЗасоби</Name>
+      <FullName>Основні засоби</FullName>
+      <Table>tab_a12</Table>
+      <AutoNum>1</AutoNum>
+      <VersionsHistory>0</VersionsHistory>
+      <Type>Normal</Type>
+      <PredefinedFields>
+        <PredefinedField>
+          <Name>uid</Name>
+          <NameInTable>uid</NameInTable>
+          <Type>any_pointer</Type>
+          <IsPrimaryKey>1</IsPrimaryKey>
+          <IsIndex>0</IsIndex>
+          <IsNotNull>1</IsNotNull>
+        </PredefinedField>
+        <PredefinedField>
+          <Name>deletion_label</Name>
+          <NameInTable>deletion_label</NameInTable>
+          <Type>boolean</Type>
+          <IsPrimaryKey>0</IsPrimaryKey>
+          <IsIndex>1</IsIndex>
+          <IsNotNull>1</IsNotNull>
+        </PredefinedField>
+      </PredefinedFields>
+      <Fields>
+        <Field>
+          <Name>Код</Name>
+          <FullName>Код</FullName>
+          <NameInTable>col_a1</NameInTable>
+          <Type>string</Type>
+          <Desc>Код</Desc>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>1</IsIndex>
+          <IsFullTextSearch>0</IsFullTextSearch>
+          <IsSearch>1</IsSearch>
+          <IsExport>0</IsExport>
+          <Multiline>0</Multiline>
+        </Field>
+        <Field>
+          <Name>Назва</Name>
+          <FullName>Назва</FullName>
+          <NameInTable>col_a2</NameInTable>
+          <Type>string</Type>
+          <Desc>Назва</Desc>
+          <IsPresentation>1</IsPresentation>
+          <IsIndex>1</IsIndex>
+          <IsFullTextSearch>0</IsFullTextSearch>
+          <IsSearch>1</IsSearch>
+          <IsExport>0</IsExport>
+          <Multiline>0</Multiline>
+        </Field>
+      </Fields>
+      <TabularParts />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Fields>
+            <Field>
+              <Name>Код</Name>
+              <Caption>Код</Caption>
+              <Size>0</Size>
+              <SortNum>1</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>False</FilterField>
+              <Type>string</Type>
+              <Multiline>0</Multiline>
+            </Field>
+            <Field>
+              <Name>Назва</Name>
+              <Caption>Назва</Caption>
+              <Size>0</Size>
+              <SortNum>2</SortNum>
+              <SortField>True</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>False</FilterField>
+              <Type>string</Type>
+              <Multiline>0</Multiline>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
+      <TriggerFunctions>
+        <New Action="1">New</New>
+        <Copying Action="1">Copying</Copying>
+        <BeforeSave Action="0">BeforeSave</BeforeSave>
+        <AfterSave Action="0">AfterSave</AfterSave>
+        <SetDeletionLabel Action="0">SetDeletionLabel</SetDeletionLabel>
+        <BeforeDelete Action="0">BeforeDelete</BeforeDelete>
+      </TriggerFunctions>
+      <Forms>
+        <Form Modified="1">
+          <Name>Функції</Name>
+          <Desc>Функції</Desc>
+          <Type>Function</Type>
+          <GeneratedCode Zip="1">H4sIAAAAAAAACs1W3W4aRxS+R+Idxr7C0Wp90zuHIILBQSXGMk5zEVXRsByTrZeZ7cxQaiWWYldqb3oVJY5UyZEq9QGwZauUFPIKZ96omt1ldwFj47apOlezM3N+vu/8bTazfi+bIdHCD/oYRzjGCxzpU3yPfX2MYzzHwXP8Tf+AIxzqH/Wpfm87MiU1dZXN3FvPZrKZrnRZm1SZArFPHdhSB19sTE6LjsO7TLms3eD7qkcFxFdbwEBQBa0Sb4GNb40z+hQvcYQDHOJgw+hmtAPSpw6kNBnt2YxUVLkOcTwq5fJwspmXIRy/2/Rch0Raaq5U95++AAEPCL4JvDjHsX6Ng5xUwngrgQrnxR58r9ZCBZEeswSormDJ97Nka9b01/o6/oJjvJw+ZdAjgf3cDVBKnEllh+IWKfGOT4UrObNr1S/LVtpF8pJUuszZ4xUXvBbJk9Va/Wl5d5UcWdN2F/p4hn38HS+wv8jPlPn6rkVudzvW+Nlc/3oj3B+Z/JgPMpWHzCFfUa8Le1QekLoPbIe2oexBB5jKNTn3SFVuQ88iT5j7bReqmwXSjXYkT1jX86yUvaKjXM7ux28fFIg+pp73kDoHz2uctnbB4aIlbxedkqyzBnjgqB3umpqKpOfT7qakf4cf8Qr/xCsc6RPi0zaQ/PIC9jb0cmsRmwGRtA126Xpo10JeKDsPbiHwoMwnWtx9kgtiE/Eww4VZtEddFZq7Bc502hwlW/AkBKaSqIfsk1evyMpiA7tAW7HM2mIXH4OURrwsBBe5HcHbgnbsh1S6TtH3LTJ1UuGiY5FVPMMrghd4iX38iGN9rH8m+Em/xrH+CQf6BPv6BAcrq7MAw66UOozLwqw5SwV7mytocn5gys8uCaAKTHnkogD6JmOtAH7aVIqUBqigumKu71iIpgvnbqi8Emf7brsrqPFk0xXgKC5ckPYjF4RpIK5DvRJnCpjaO/ShQKjn8Z6ZMMFZmF0uZ7HGxBj3gVW414rrzfrvivVX/ISD4HO4TKmmnl9fqMUFqEl+ESGzGuppNhJqZp9NYnAYoa8q6JB8HLh/vQn8rfS9dTJVntRq28XH5c+S2w1Qm+CBIblGm+DF+R2zdKdcmTCGb3Bo5qk+NY/MD5PJPOglTSgFwwy2AvGMeZMCAah5BfbWrKtpHaYpBhrsR1QG8NYWa5oDvRKKhnJ3IjA1XUmJ+4f/kL968xuQiuAHPNdvcahPItpmoUbQ4mdLd/glbJ8FtwP8IwlGYifAqERC03QuJsJ2g36XZON8hZgVjoC00IS96bEw2Zrx9z+aXUErnff0KJuJdn8BGYS5cdQMAAA=</GeneratedCode>
+          <NotSaveToFile>0</NotSaveToFile>
+        </Form>
+        <Form Modified="1">
+          <Name>Елемент</Name>
+          <Desc>Елемент</Desc>
+          <Type>Element</Type>
+          <GeneratedCode Zip="1">H4sIAAAAAAAACq1W3U4bORS+j5R3sOjNpEIJ0u7Fqmm6AhaiaiVKG9peVFXlzByCl8EOHg8/RUilSO1Npd6wVFppl5t9gBSBiKDJMxy/0cpjZzIZEkBofRGN7fPzne/8xMVC5WGxQNzCf/QB9rCPp9jTx/gNO/oA+/gdu+/wT7zCc/yB59jTH8t+lNEauSoWHlaKhWIhjhhvkbparw6+n3IFcpX6UFfrP6ens74vYq4YbzXEqtqmEqoZdeAgqYJgXgRQxiMDTR/jGfawi5fYrd4geKkPB5gmC57guf6A53ilj/VnI4w9/TUBwOkGRG3qQwahQV0svKk/a/4Bvio34qYf0ih6/BuT4CshdxeF3FgIYQO4euJNua93S/7M+2ebM+HL3/ni5vNf4mU+P9uaKr0tFtpUKkZDkpi5O/3kERnnsljYs1lpx82Q+TfZMxFEKpc6skdaoKqEcaaqZJ/UCIdtr1S1Ru3vAwktJjhZZBAGrggWuJK7BP/CPp6Rmt2WlzKq+eUU/sYOXuApdu6k5PwDDywEk4osohXajEMql6lUDtckjQHrW4IF5ClnZsPeg1ey13tOMUFqmSW1HFVJIYwiG6xKxVHxaPTcHpZfs0CtvYDN2PBfIz/NzEyId7zllLO89fTiPh72U2ps5USKqpsLKFc5SeIcffeYJwRSnpdg+zVTa8tStEEqBpH35m22JJxkeUkoaAqxvhhzn9TIshQtSTfKczRivumJX0ckRvIlQcWSDyxV8xRIocBXEBCxBVKyAGyhzEugChqKSuXNiR2yNSd2roc8oRZGj62ppIU8Y2aaTLmSmZp2CqX7VcXtfoYFZHylu9v93ZGgBR7cSs9+vnfxRH/Arj7AU+zrIzuFSYXghf6MXf1RHxqI7hgvsIcdO631l1zhpohotMt98oqGMazQaJ3MRhFr8WQ/rlBtbzZArcCO8nJ/drdnJNN9k2z8n0zXQU2MZBx0M75shHWH7sZgJiE3ZoaB3sVUPt3XR/H1CHOZe9wUInxCGnRrXLjmkrDI3AakRlZpGJn3w+Bayd3hJqNmFlslHt2mLP8vWLaunK8JysPgRkymQJSMszgcC2M+far8NeIt7PjQVqYVYNA1Y7xWKvivPsQeXupP+lh/wyO80l/xJH0W9fFHEkpPf7GPoDPsmOfPOBHTTPkqrYMyAzTyStNkniaApg2iTCgZ7G6OuqiHc9SJ/AdmZjdhXAoAAA==</GeneratedCode>
+          <NotSaveToFile>0</NotSaveToFile>
+          <ElementFields>
+            <Field>
+              <Name>Код</Name>
+              <Caption>Код</Caption>
+              <Size>0</Size>
+              <Height>0</Height>
+              <SortNum>1</SortNum>
+              <ReadOnly>0</ReadOnly>
+              <Type>string</Type>
+              <Multiline>0</Multiline>
+            </Field>
+            <Field>
+              <Name>Назва</Name>
+              <Caption>Назва</Caption>
+              <Size>0</Size>
+              <Height>0</Height>
+              <SortNum>2</SortNum>
+              <ReadOnly>0</ReadOnly>
+              <Type>string</Type>
+              <Multiline>0</Multiline>
+            </Field>
+          </ElementFields>
+          <ElementTableParts />
+        </Form>
+        <Form Modified="1">
+          <Name>Список</Name>
+          <Desc>Список</Desc>
+          <Type>List</Type>
+          <GeneratedCode Zip="1">H4sIAAAAAAAACqVVUU8TQRB+b9L/sOHpMObwARMjFgKFkiqWhgNJIIRs9wa6drt77s6BaEgkJvpuDLyZaPwBYHyoGPAv7P0jc9drucNSqt7D3e7OzLffNzO7VyxM3CHJUyx0v4TYT9GRvbCX9pu9iI7tiT2NjuylPbMdl5mM22f7y3YS03mxcGeiWCgWQsPlLlnE1lRvXJUIeocyWMTWZH91ljEVSuRy11M7uE819E2LIEFTBL+sfHDtx5hHdGy/2wvbsee2M3W1j/1iT+2Z/Wk70fvE/CPLiZRuxXLzCNFxPz4x3piH7XiSesaEUjpfo7f2wp5H76Lj6ISUMionh4Ll4hJ9krbBBJRBFiOxbC4uN54DQ9cLG0xQYx7Ncw0MlT6oKN1+rEItqaiEQkw7Y0vc4HbzSW1h44FZb3nrTzfM/Ul+jwazY+NbxUJANXIqSIIzpOzbubQ+JDftWCy87rZH9t3bZE9xn1Qljyf8FTjjXXMaET+rBwHUaBtIaRiXspIG3fpytba6sDKVacehzeDO+n5ZibAtHWxyM54J9ADrdBeMBxin2Tj378XmK4fu6LC3FIQNwRkxSJGzkbNWg/0BkkeNFtwgKcUg6xybda0C0MjBOJtbWSmxm1tTCA2lWpVQMlIida12NW27c9RwFhdsJueRU6oBQy0TmKnBqtUeaM19INQcSEaeURHCKjUtsqSovwJMad8M0En3KcfbSpSFyBbpMNdOt/BYC3yK8J9M8iDXuKQ8tEJgCP51Kkmfe4AeUM2ajkEd3w0mma3CS/yT0noTNMRHNW783F3g2g/JdXVmL6M3tuNkUEbgkzCpcCEqXCBop/spK4laCbKTnQ3ozOEZKmugCCnw3yXoqlbLAcj46C0IaINEp6GUIFVTg/27ZE3yFyFU52dImI5IichQiBtLms/cdewUtgd2l5SpEHOUtbYzbZdZXZYeCGBYVzz+g/2LPA9wHgQgV3KJNkA4PU19FiNq+QOoH//3rB71EztNyio4GIVUei0M5JZgDOCTHtrfSMGbZGAIAAA=</GeneratedCode>
+          <NotSaveToFile>0</NotSaveToFile>
+          <TabularList>Записи</TabularList>
+        </Form>
+        <Form Modified="1">
+          <Name>Швидкий вибір</Name>
+          <Desc>Швидкий вибір</Desc>
+          <Type>ListSmallSelect</Type>
+          <GeneratedCode Zip="1">H4sIAAAAAAAACq1VwW4bNxC9C9A/ED6tA2MToOmljhI4suUqdWUlchoEQWBQ3LHNiCJVcjaqGgRIUKC9B4V8K9Cihx7tIAfFhd1fmP2jgquVtJvIsuNkD0tyZ+bxvZkht1y6fo35p1xKB8YY/ZG8plM6o7d0mgzpkI6S13RGxzTapX/oLY3oHZ3QiN7TGxrRcTJMXoXC5eLPcSqXrl0vl8ql2Em9zzaxszqZ1zWC3eMCNrFzc/p1TQgTa5R6v2X2sM8tTE2boMFyhKhqIgjpd082GdI7OqWR33Z1tg/9RUd0TP/SKPktNb+nP+k/GqWaTljlQqywiJAMp/GpcUGyDuko8/SEMjp/J7/QKZ0kvybD5JBVcipvLgQrxKX6NO+C63EBeYzU8mRzu/0MBIatuC0Ud+7WurQg0NhBzdjuPRNbzVWry5W6HSyl45Z0uPus+Rjq9zYicUM+/var782gt3F/aflpudTjFiVXLAW7SoOwb9i5FMqlF+Pmyb8nOz43MmJ1Lf1C/gzB8ticRfhnZ9CDBu8CqywiVjXaYdjcrjd2Nh6szqK/A8+nBeizxypsKUw5LeVcFndQuBZFVaPirg7wQLrlXGALsMn3wWXoLvj6hjfPHMazl5NPvbitpGAOOUpxpSw3oD8nQ1dBUtIhq3jARxIPmtb0wKIEFzx5mpfo3cKGQWgb06nFWrAKa1qzb3k3vMudFL7YdwoehQxYwNjqFGZ1fjbMc7BWRsC4G2jBfuAqhh3uOmzL8OgBCGMjN0cz73OJF5UuD5Ev3stCJ17A42Ev4gifyaQI8gGXjIc1CAIh+pBKekRagC3gVhwEDq1vZZeuduAn/JjSowOw4E+8PzOFiyWkN+ndd0xnySsaBTmUS/BJmdSkUjWpEGwwHqpGozWK7eVXc7p0cYaqFjhCBvxpCZrVarsH2h9Jrz14qOWPMdTX77A4m7EK07FS59awmKoC2ARiha0pZfr+b6IRNLZAgUBp9Eq6ec2oCOwKq3Kl7nLR2d3WY4+mkf4n+DmiNhR0QWPQNkaxumtAf4V9KY0T7Ax2pnYqJHeWvqy8FuA6KPA53OJtUNO6TVlcUstHQNP4T2d1a5rY26xqeoPLkMruurncUow5fLKb6H/8Vlg/pgkAAA==</GeneratedCode>
+          <NotSaveToFile>0</NotSaveToFile>
+          <TabularList>Записи</TabularList>
+        </Form>
+        <Form Modified="1">
+          <Name>PointerControl</Name>
+          <Desc>PointerControl</Desc>
+          <Type>PointerControl</Type>
+          <GeneratedCode Zip="1">H4sIAAAAAAAACp1Uy24bNxTdC9A/sEIXIzeYBGgWhZWxIU9iWUFqOVZdL4LAoDhXI0YMOeFwJDiGgeYXisDdZZ1lE2ShFnC+gfqjgpy35Ge5GA7J+zz33NtsPNxAZjUbdkMI6U/LD/pSf9df9eXyQv+l/15+0N/1F704ORCUK5C+4EoK5pK41Ko/NRsbD5uNZiOJKQ9RT007+X/fSI0xgZ6aPi5uu4SIhCvKw6EYqzmWUDz1gIPECgJfBODqjyaw5YX+pi/1Qv+rFx3jh+O3EEeYQMWSsd5svOoNRm+AKHeYjAjDcfykHumW06pfnAzePH9+fDrbOZr2Xg52Z+8PZ6OIhK3262YjSkaMEhRhqShmyNq7O15ocw2lsxRAmAFX6Jn57mEeMJBPbre6tV2Ym2AeQmDzNeby+GaCBqjPqTnQ9+C00+fMqVnHNFCTAwkxcIUVFRx56OdHjzqlhI+j7P7H1tkNQfmCx8rdPXrxYr/767PzzVbFRj1M9JOHcHzKCXJOHqAofWsjbwutBJI9oR88xBPG0DbCc0xVfu/2QFU1nDbaRK3c73kBRlqz2AiRexRrH+aOjWof5sfUoCQikIpC7Lx63S6wvt1gkYeHuLHZqcV1B/1sXyteCKo8VO7NkqASyXPXlVqcl7/xDfplzDPMEtON1dd6QbfdPp+JKTimSmVF150WNVmpjS/4mIaJtGV8SiUQJSSF2N2jILEkE0owM3UBrn47jWAbdRkTczMS7N0QGBBLmjMDSsdk1qkwQAoFREGAxAykpAFk/LP9MYiApwacnUQpwdHIbg/SfuzKMEZYhvF68xyIyBhEUbZ7+Y1ruVPJP5Nwh6AOsASunNTHVTK2JQ/hXQKxQh76pdaNudAe0HCiSqnHNakdGAsJPqNkarLbTTgpalQy9xb26s/6q17ob2bG6n/0n3qhvywvln+gCIeAvP+juo4LDsHNQEuBsW1vz6tiOS9OM/L1Fby1kKfD4IjTdwn0n66qXccU7zoOrRqwCAoW2AKXh1UxHzO2g8n0ZJCxKe9eD8X189a1TVeqcJjfYTI4NctVYM3qjhXINJY1BhSNWWPDlYT1J5QFjsnxSkZPRFrS8gmnQ9qAMgT1uxkfhc+bejLtRu4zwPL+rXhP5Kq53AUoK2NDu1LkvNnIZtx/f8LM2lEJAAA=</GeneratedCode>
+          <NotSaveToFile>0</NotSaveToFile>
+        </Form>
+        <Form Modified="1">
+          <Name>PointerTablePartCell</Name>
+          <Desc>PointerTablePartCell</Desc>
+          <Type>PointerTablePartCell</Type>
+          <GeneratedCode Zip="1">H4sIAAAAAAAACp1UzU7bQBC+W/I7bHNyUBUQQm0FDREEGtIDpA0/lRBCm83E2caszXqcFFVI5RWqit567rEgDmkleIbNG1XrvziJqUL3suv1N9/MfDOzpmEaiwtEL9MIN0KI+jG6UvfqQd2q+9G1+q5+ja7Ug7pRw9OGywWC3KctBxpUYhUcp8T8sW0ewDQWFk0j8LmwSQ17a8m5rpEdyqCGvZX0tgYCJEVoV902lNQ3HcfoWt2pezVUf9QwBW4w5gYCubCbbgcHVMKaaZiGoGfge5RBBqDZTeO4ttf6CAxLzaDFHOr7r/OiXbcKedenHz693Dp0X7zb3l7eWe4ctg4Gwf5bu1A8MQ0vaDmcEY9K5NQhIfdTVSSrj2j3ORI39uEjRc6eTL4LA6tIyuv6cMSx25CuBxI5+NbxSTFUZ77KEy/ey0RozrWJ6Oawj/fILM5NLxtQxxfTx7R6+YDjj4xB6DYNpk+dQNc/+7chwQehBXMFKSfg0i49yyIvo+NlokGcCvUvBCOHmnaf+j1SA8zyRWrmeyDPykQEjkMqhA4ox9TzLMcqKRRS9addxlJVu1TYYB0Ifh5AfatCvOKMeo1sVeYog+WRSiXEJrRWMallGEoY90y8GcSeaIIDDCuluui7PUh/pkKmgkoXgSG0idsHKXkb4kz7Lm+TiMXaDBBdQVrh9pxs90HghrR9QqXt5+XraTLixXs5uSmFnZ6JM0aUmoANKkGgFfnIwxzxNnbfw3kAPpIyebW0lAPaAW53cYxamUBtQseVUHU46+15IN4Egk0oNNcrq36qWzVUd/q5U7/VVzVUN6Pr0RfiURtI+X9MZ3WhNpRi0SJhwgYOv6fmaMpoi0tg6MqLuJfqCGeZ8UoaatpXlTrOJmW906Rzxj0btYOnJ+rRUY86cnIkvGxCem10EGTEPqN8Ou+Zc7YemUapdrnTtnTUuZ3UdSMpp8clTLMJGE7w7Dz8ew6qDlBpzXZ6Xt76cclGNk/aISZ0kgu5NI34IfwLBB25KxMIAAA=</GeneratedCode>
+          <NotSaveToFile>0</NotSaveToFile>
+        </Form>
+        <Form Modified="1">
+          <Name>Тригери</Name>
+          <Desc>Тригери</Desc>
+          <Type>Triggers</Type>
+          <GeneratedCode Zip="1">H4sIAAAAAAAACs2Sz0rDQBDG74G8w9JTazXevBQPWtGLKNjiVbbpNETjbtndWKQUbAWvXkoFoT34BPEfBjH1FWbfSJIoLRZrQYvuZfbwzTff/BjTMI3lBdMg7w8Huo0RDvEOI93DKwx0G4d4i+FBWbiOA0JathzT3+gzDPEeH+NqGgvLpmEavnSZQ7aAgaAKqkVeBQuvcYiRbusOBhjpDoaFD+GabXOfKZc5JV5TDSqgELswegyyTm347NSN8+kePmCEIT4nTqYhFVWuTWyPSjnLHqbRTPeo+xXPtcl7P5WnzCb71POhTOUR2YFGdorbbuUQpCITmQZ4q7v4rDu5dEhzjNmX2hTSA1kl2Xwe+/ocXxKwgb7QPX35uVH38M6akq3ImVQ5q8xLSrjMyWY2VjK5wigIbVBXjVa1NgU/3gPpeyqrhA8f0lZM93tQRV4/jaf8BNYimaF7pAgm4c6GuY8BPsUGJL9KMmSJJOBfY8iZMUDzQrUONS6gRE/gl0/rd2Ou1RSIf5+yBGoDPFAuZ9u0At4PD7DCuUe82GjewdMrSLL/HeFW+nsD8AND9AgGAAA=</GeneratedCode>
+          <NotSaveToFile>0</NotSaveToFile>
+        </Form>
+      </Forms>
+    </Directory>
   </Directories>
   <Documents>
     <Document>
@@ -3053,34 +3266,31 @@
               <Name>Аналітика1</Name>
               <FullName>Аналітика1</FullName>
               <NameInTable>col_a4</NameInTable>
-              <Type>string</Type>
+              <Type>composite_pointer</Type>
               <IsIndex>0</IsIndex>
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
-              <Multiline>0</Multiline>
             </Field>
             <Field>
               <Name>Аналітика2</Name>
               <FullName>Аналітика2</FullName>
               <NameInTable>col_a5</NameInTable>
-              <Type>string</Type>
+              <Type>composite_pointer</Type>
               <IsIndex>0</IsIndex>
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
-              <Multiline>0</Multiline>
             </Field>
             <Field>
               <Name>Аналітика3</Name>
               <FullName>Аналітика3</FullName>
               <NameInTable>col_a6</NameInTable>
-              <Type>string</Type>
+              <Type>composite_pointer</Type>
               <IsIndex>0</IsIndex>
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
-              <Multiline>0</Multiline>
             </Field>
             <Field>
               <Name>Дебет</Name>
@@ -3211,34 +3421,31 @@
               <Name>КорАналітика1</Name>
               <FullName>КорАналітика1</FullName>
               <NameInTable>col_c1</NameInTable>
-              <Type>string</Type>
+              <Type>composite_pointer</Type>
               <IsIndex>0</IsIndex>
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
-              <Multiline>0</Multiline>
             </Field>
             <Field>
               <Name>КорАналітика2</Name>
               <FullName>КорАналітика2</FullName>
               <NameInTable>col_c2</NameInTable>
-              <Type>string</Type>
+              <Type>composite_pointer</Type>
               <IsIndex>0</IsIndex>
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
-              <Multiline>0</Multiline>
             </Field>
             <Field>
               <Name>КорАналітика3</Name>
               <FullName>КорАналітика3</FullName>
               <NameInTable>col_c3</NameInTable>
-              <Type>string</Type>
+              <Type>composite_pointer</Type>
               <IsIndex>0</IsIndex>
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
-              <Multiline>0</Multiline>
             </Field>
             <Field>
               <Name>Податок</Name>
@@ -3283,7 +3490,7 @@
               <Name>Таблична частина Проводки</Name>
               <Desc>Таблична частина Проводки</Desc>
               <Type>TablePart</Type>
-              <GeneratedCode Zip="1">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</GeneratedCode>
+              <GeneratedCode Zip="1">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</GeneratedCode>
               <NotSaveToFile>0</NotSaveToFile>
               <ElementFields>
                 <Field>
@@ -3326,8 +3533,7 @@
                   <Height>0</Height>
                   <SortNum>4</SortNum>
                   <ReadOnly>0</ReadOnly>
-                  <Type>string</Type>
-                  <Multiline>0</Multiline>
+                  <Type>composite_pointer</Type>
                 </Field>
                 <Field>
                   <Name>Аналітика2</Name>
@@ -3336,8 +3542,7 @@
                   <Height>0</Height>
                   <SortNum>5</SortNum>
                   <ReadOnly>0</ReadOnly>
-                  <Type>string</Type>
-                  <Multiline>0</Multiline>
+                  <Type>composite_pointer</Type>
                 </Field>
                 <Field>
                   <Name>Аналітика3</Name>
@@ -3346,8 +3551,7 @@
                   <Height>0</Height>
                   <SortNum>6</SortNum>
                   <ReadOnly>0</ReadOnly>
-                  <Type>string</Type>
-                  <Multiline>0</Multiline>
+                  <Type>composite_pointer</Type>
                 </Field>
                 <Field>
                   <Name>Дебет</Name>
@@ -3478,8 +3682,7 @@
                   <Height>0</Height>
                   <SortNum>19</SortNum>
                   <ReadOnly>0</ReadOnly>
-                  <Type>string</Type>
-                  <Multiline>0</Multiline>
+                  <Type>composite_pointer</Type>
                 </Field>
                 <Field>
                   <Name>КорАналітика2</Name>
@@ -3488,8 +3691,7 @@
                   <Height>0</Height>
                   <SortNum>20</SortNum>
                   <ReadOnly>0</ReadOnly>
-                  <Type>string</Type>
-                  <Multiline>0</Multiline>
+                  <Type>composite_pointer</Type>
                 </Field>
                 <Field>
                   <Name>КорАналітика3</Name>
@@ -3498,8 +3700,7 @@
                   <Height>0</Height>
                   <SortNum>21</SortNum>
                   <ReadOnly>0</ReadOnly>
-                  <Type>string</Type>
-                  <Multiline>0</Multiline>
+                  <Type>composite_pointer</Type>
                 </Field>
                 <Field>
                   <Name>Податок</Name>

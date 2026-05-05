@@ -294,6 +294,7 @@ partial class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина
                 contr.OnScroll += (_, _) =&gt; true</xsl:when>
                     <xsl:when test="Type = 'date' or Type = 'datetime'">DateTimeTablePartCell.New()</xsl:when>
                     <xsl:when test="Type = 'time'">TimeTablePartCell.New()</xsl:when>
+                    <xsl:when test="Type = 'composite_pointer'">CompositePointerControlTablePartCell.New()</xsl:when>
                     <xsl:otherwise>LabelTablePartCell.New()</xsl:otherwise>
                 </xsl:choose>;
                 <xsl:choose>
@@ -321,6 +322,7 @@ partial class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина
                     <xsl:when test="Type = 'enum'">ComboTextTablePartCell</xsl:when>
                     <xsl:when test="Type = 'date' or Type = 'datetime'">DateTimeTablePartCell</xsl:when>
                     <xsl:when test="Type = 'time'">TimeTablePartCell</xsl:when>
+                    <xsl:when test="Type = 'composite_pointer'">CompositePointerControlTablePartCell</xsl:when>
                     <xsl:otherwise>LabelTablePartCell</xsl:otherwise>
                 </xsl:choose> cell) return;
                 if (listItem.Item is not ItemRow row) return;
@@ -350,6 +352,10 @@ partial class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина
                     <xsl:when test="Type = 'date' or Type = 'datetime' or Type = 'time'">
                 cell.OnСhanged = () =&gt; row.<xsl:value-of select="Name"/> = cell.Value;
                 (row.Сhanged_<xsl:value-of select="Name"/> = () =&gt; cell.Value = row.<xsl:value-of select="Name"/>).Invoke();
+                    </xsl:when>
+                    <xsl:when test="Type = 'composite_pointer'">
+                cell.OnSelect = () =&gt; row.<xsl:value-of select="Name"/> = cell.Pointer;
+                (row.Сhanged_<xsl:value-of select="Name"/> = () =&gt; cell.Pointer = row.<xsl:value-of select="Name"/>).Invoke();
                     </xsl:when>
                     <xsl:otherwise>
                 (row.Сhanged_<xsl:value-of select="Name"/> = () =&gt; cell.SetText(row.<xsl:value-of select="Name"/>)).Invoke();
