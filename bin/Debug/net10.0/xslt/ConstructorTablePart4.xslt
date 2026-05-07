@@ -136,6 +136,12 @@ static class <xsl:value-of select="$OwnerName"/>_<xsl:value-of select="$TablePar
         <xsl:variable name="OwnerExist" select="TablePart/OwnerExist"/>
         <xsl:variable name="OwnerType" select="TablePart/OwnerType"/>
         <xsl:variable name="OwnerName" select="TablePart/OwnerName"/>
+        <xsl:variable name="OwnerTypeName">
+            <xsl:choose>
+                <xsl:when test="$OwnerType = 'Document'">Документи</xsl:when>
+                <xsl:when test="$OwnerType = 'Directory'">Довідники</xsl:when>
+            </xsl:choose>
+        </xsl:variable>
         <xsl:variable name="OwnerBlockName">
             <xsl:if test="TablePart/OwnerType = 'Constants' and normalize-space(TablePart/OwnerBlockName) != ''">
                 <xsl:value-of select="concat(normalize-space(TablePart/OwnerBlockName), '.')"/>
@@ -306,6 +312,9 @@ partial class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина
                     </xsl:when>
                     <xsl:when test="Type = 'date'">
                 cell.OnlyDate = true;
+                    </xsl:when>
+                    <xsl:when test="Type = 'composite_pointer'">
+                cell.BoundConfType = "<xsl:value-of select="$OwnerTypeName"/>.<xsl:value-of select="$OwnerName"/>.<xsl:value-of select="$TablePartName"/>.<xsl:value-of select="Name"/>";
                     </xsl:when>
                 </xsl:choose>
                 listItem.Child = cell;
