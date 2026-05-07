@@ -6,7 +6,7 @@
   <NameSpace>Accounting4</NameSpace>
   <Author>
   </Author>
-  <DateTimeSave>07.05.2026 13:22:47</DateTimeSave>
+  <DateTimeSave>07.05.2026 23:08:58</DateTimeSave>
   <DictTSearch>simple</DictTSearch>
   <GtkVersion>Gtk4</GtkVersion>
   <ConstantsBlocks>
@@ -6084,7 +6084,7 @@
             </Field>
             <Field>
               <Name>КорАналітика1</Name>
-              <FullName>КорАналітика1</FullName>
+              <FullName>КорАналітика 1</FullName>
               <NameInTable>col_c1</NameInTable>
               <Type>composite_pointer</Type>
               <IsIndex>0</IsIndex>
@@ -6095,7 +6095,7 @@
             </Field>
             <Field>
               <Name>КорАналітика2</Name>
-              <FullName>КорАналітика2</FullName>
+              <FullName>КорАналітика 2</FullName>
               <NameInTable>col_c2</NameInTable>
               <Type>composite_pointer</Type>
               <IsIndex>0</IsIndex>
@@ -6106,7 +6106,7 @@
             </Field>
             <Field>
               <Name>КорАналітика3</Name>
-              <FullName>КорАналітика3</FullName>
+              <FullName>КорАналітика 3</FullName>
               <NameInTable>col_c3</NameInTable>
               <Type>composite_pointer</Type>
               <IsIndex>0</IsIndex>
@@ -6472,7 +6472,9 @@
           </Fields>
         </TabularList>
       </TabularLists>
-      <AllowRegisterAccumulation />
+      <AllowRegisterAccumulation>
+        <Name>Проводки</Name>
+      </AllowRegisterAccumulation>
       <TriggerFunctions>
         <New Action="1">New</New>
         <Copying Action="1">Copying</Copying>
@@ -6673,5 +6675,786 @@
   </Enums>
   <Journals />
   <RegistersInformation />
-  <RegistersAccumulation />
+  <RegistersAccumulation>
+    <RegisterAccumulation>
+      <Name>Проводки</Name>
+      <FullName>Проводки</FullName>
+      <Table>tab_a29</Table>
+      <Type>Residues</Type>
+      <NoSummary>0</NoSummary>
+      <PredefinedFields>
+        <PredefinedField>
+          <Name>uid</Name>
+          <NameInTable>uid</NameInTable>
+          <Type>any_pointer</Type>
+          <IsPrimaryKey>1</IsPrimaryKey>
+          <IsIndex>0</IsIndex>
+          <IsNotNull>1</IsNotNull>
+        </PredefinedField>
+        <PredefinedField>
+          <Name>period</Name>
+          <NameInTable>period</NameInTable>
+          <Type>timestamp without time zone</Type>
+          <IsPrimaryKey>0</IsPrimaryKey>
+          <IsIndex>1</IsIndex>
+          <IsNotNull>1</IsNotNull>
+        </PredefinedField>
+        <PredefinedField>
+          <Name>income</Name>
+          <NameInTable>income</NameInTable>
+          <Type>boolean</Type>
+          <IsPrimaryKey>0</IsPrimaryKey>
+          <IsIndex>1</IsIndex>
+          <IsNotNull>1</IsNotNull>
+        </PredefinedField>
+        <PredefinedField>
+          <Name>owner</Name>
+          <NameInTable>owner</NameInTable>
+          <Type>any_pointer</Type>
+          <IsPrimaryKey>0</IsPrimaryKey>
+          <IsIndex>1</IsIndex>
+          <IsNotNull>1</IsNotNull>
+        </PredefinedField>
+        <PredefinedField>
+          <Name>ownertype</Name>
+          <NameInTable>ownertype</NameInTable>
+          <Type>composite_text</Type>
+          <IsPrimaryKey>0</IsPrimaryKey>
+          <IsIndex>1</IsIndex>
+          <IsNotNull>0</IsNotNull>
+        </PredefinedField>
+      </PredefinedFields>
+      <DimensionFields>
+        <Fields>
+          <Field>
+            <Name>Рахунок</Name>
+            <FullName>Рахунок</FullName>
+            <NameInTable>col_a1</NameInTable>
+            <Type>pointer</Type>
+            <Pointer>Довідники.ПланРахунків</Pointer>
+            <IsIndex>1</IsIndex>
+            <IsFullTextSearch>0</IsFullTextSearch>
+            <IsSearch>0</IsSearch>
+            <IsExport>0</IsExport>
+          </Field>
+          <Field>
+            <Name>Аналітика1</Name>
+            <FullName>Аналітика 1</FullName>
+            <NameInTable>col_a2</NameInTable>
+            <Type>composite_pointer</Type>
+            <IsIndex>0</IsIndex>
+            <IsFullTextSearch>0</IsFullTextSearch>
+            <IsSearch>0</IsSearch>
+            <IsExport>0</IsExport>
+          </Field>
+          <Field>
+            <Name>Аналітика2</Name>
+            <FullName>Аналітика 2</FullName>
+            <NameInTable>col_a3</NameInTable>
+            <Type>composite_pointer</Type>
+            <IsIndex>0</IsIndex>
+            <IsFullTextSearch>0</IsFullTextSearch>
+            <IsSearch>0</IsSearch>
+            <IsExport>0</IsExport>
+          </Field>
+          <Field>
+            <Name>Аналітика3</Name>
+            <FullName>Аналітика 3</FullName>
+            <NameInTable>col_a4</NameInTable>
+            <Type>composite_pointer</Type>
+            <IsIndex>0</IsIndex>
+            <IsFullTextSearch>0</IsFullTextSearch>
+            <IsSearch>0</IsSearch>
+            <IsExport>0</IsExport>
+          </Field>
+          <Field>
+            <Name>ВалютаДебет</Name>
+            <FullName>Валюта дебет</FullName>
+            <NameInTable>col_a9</NameInTable>
+            <Type>pointer</Type>
+            <Pointer>Довідники.Валюти</Pointer>
+            <IsIndex>0</IsIndex>
+            <IsFullTextSearch>0</IsFullTextSearch>
+            <IsSearch>0</IsSearch>
+            <IsExport>0</IsExport>
+          </Field>
+          <Field>
+            <Name>ВалютаКредит</Name>
+            <FullName>Валюта кредит</FullName>
+            <NameInTable>col_b5</NameInTable>
+            <Type>pointer</Type>
+            <Pointer>Довідники.Валюти</Pointer>
+            <IsIndex>0</IsIndex>
+            <IsFullTextSearch>0</IsFullTextSearch>
+            <IsSearch>0</IsSearch>
+            <IsExport>0</IsExport>
+          </Field>
+          <Field>
+            <Name>КореспондуючийРахунок</Name>
+            <FullName>Кореспондуючий рахунок</FullName>
+            <NameInTable>col_b9</NameInTable>
+            <Type>pointer</Type>
+            <Pointer>Довідники.ПланРахунків</Pointer>
+            <IsIndex>0</IsIndex>
+            <IsFullTextSearch>0</IsFullTextSearch>
+            <IsSearch>0</IsSearch>
+            <IsExport>0</IsExport>
+          </Field>
+          <Field>
+            <Name>КорАналітика1</Name>
+            <FullName>КорАналітика 1</FullName>
+            <NameInTable>col_c1</NameInTable>
+            <Type>composite_pointer</Type>
+            <IsIndex>0</IsIndex>
+            <IsFullTextSearch>0</IsFullTextSearch>
+            <IsSearch>0</IsSearch>
+            <IsExport>0</IsExport>
+          </Field>
+          <Field>
+            <Name>КорАналітика2</Name>
+            <FullName>КорАналітика 2</FullName>
+            <NameInTable>col_c2</NameInTable>
+            <Type>composite_pointer</Type>
+            <IsIndex>0</IsIndex>
+            <IsFullTextSearch>0</IsFullTextSearch>
+            <IsSearch>0</IsSearch>
+            <IsExport>0</IsExport>
+          </Field>
+          <Field>
+            <Name>КорАналітика3</Name>
+            <FullName>КорАналітика 3</FullName>
+            <NameInTable>col_c3</NameInTable>
+            <Type>composite_pointer</Type>
+            <IsIndex>0</IsIndex>
+            <IsFullTextSearch>0</IsFullTextSearch>
+            <IsSearch>0</IsSearch>
+            <IsExport>0</IsExport>
+          </Field>
+          <Field>
+            <Name>Податок</Name>
+            <FullName>Податок</FullName>
+            <NameInTable>col_c4</NameInTable>
+            <Type>pointer</Type>
+            <Pointer>Довідники.ВидиПодатків</Pointer>
+            <IsIndex>0</IsIndex>
+            <IsFullTextSearch>0</IsFullTextSearch>
+            <IsSearch>0</IsSearch>
+            <IsExport>0</IsExport>
+          </Field>
+          <Field>
+            <Name>Журнал</Name>
+            <FullName>Журнал</FullName>
+            <NameInTable>col_c6</NameInTable>
+            <Type>pointer</Type>
+            <Pointer>Довідники.ВидиЖурналів</Pointer>
+            <IsIndex>0</IsIndex>
+            <IsFullTextSearch>0</IsFullTextSearch>
+            <IsSearch>0</IsSearch>
+            <IsExport>0</IsExport>
+          </Field>
+        </Fields>
+      </DimensionFields>
+      <ResourcesFields>
+        <Fields>
+          <Field>
+            <Name>Дебет</Name>
+            <FullName>Дебет</FullName>
+            <NameInTable>col_a7</NameInTable>
+            <Type>numeric</Type>
+            <IsIndex>0</IsIndex>
+            <IsFullTextSearch>0</IsFullTextSearch>
+            <IsSearch>0</IsSearch>
+            <IsExport>0</IsExport>
+          </Field>
+          <Field>
+            <Name>КількістьДебет</Name>
+            <FullName>Кількість дебет</FullName>
+            <NameInTable>col_a8</NameInTable>
+            <Type>numeric</Type>
+            <IsIndex>0</IsIndex>
+            <IsFullTextSearch>0</IsFullTextSearch>
+            <IsSearch>0</IsSearch>
+            <IsExport>0</IsExport>
+          </Field>
+          <Field>
+            <Name>СумаВВалютіДебет</Name>
+            <FullName>Сума в валюті дебет</FullName>
+            <NameInTable>col_b1</NameInTable>
+            <Type>numeric</Type>
+            <IsIndex>0</IsIndex>
+            <IsFullTextSearch>0</IsFullTextSearch>
+            <IsSearch>0</IsSearch>
+            <IsExport>0</IsExport>
+          </Field>
+          <Field>
+            <Name>СумаПОДебет</Name>
+            <FullName>Сума в податковому обліку дебет</FullName>
+            <NameInTable>col_b2</NameInTable>
+            <Type>numeric</Type>
+            <IsIndex>0</IsIndex>
+            <IsFullTextSearch>0</IsFullTextSearch>
+            <IsSearch>0</IsSearch>
+            <IsExport>0</IsExport>
+          </Field>
+          <Field>
+            <Name>Кредит</Name>
+            <FullName>Кредит</FullName>
+            <NameInTable>col_b3</NameInTable>
+            <Type>numeric</Type>
+            <IsIndex>0</IsIndex>
+            <IsFullTextSearch>0</IsFullTextSearch>
+            <IsSearch>0</IsSearch>
+            <IsExport>0</IsExport>
+          </Field>
+          <Field>
+            <Name>КількістьКредит</Name>
+            <FullName>Кількість кредит</FullName>
+            <NameInTable>col_b4</NameInTable>
+            <Type>numeric</Type>
+            <IsIndex>0</IsIndex>
+            <IsFullTextSearch>0</IsFullTextSearch>
+            <IsSearch>0</IsSearch>
+            <IsExport>0</IsExport>
+          </Field>
+          <Field>
+            <Name>СумаВВалютіКредит</Name>
+            <FullName>Сума в валюті кредит</FullName>
+            <NameInTable>col_b6</NameInTable>
+            <Type>numeric</Type>
+            <IsIndex>0</IsIndex>
+            <IsFullTextSearch>0</IsFullTextSearch>
+            <IsSearch>0</IsSearch>
+            <IsExport>0</IsExport>
+          </Field>
+          <Field>
+            <Name>СумаПОКредит</Name>
+            <FullName>Сума в податковому обліку кредит</FullName>
+            <NameInTable>col_b7</NameInTable>
+            <Type>numeric</Type>
+            <IsIndex>0</IsIndex>
+            <IsFullTextSearch>0</IsFullTextSearch>
+            <IsSearch>0</IsSearch>
+            <IsExport>0</IsExport>
+          </Field>
+          <Field>
+            <Name>СумаПодатку</Name>
+            <FullName>Сума податку</FullName>
+            <NameInTable>col_c5</NameInTable>
+            <Type>numeric</Type>
+            <IsIndex>0</IsIndex>
+            <IsFullTextSearch>0</IsFullTextSearch>
+            <IsSearch>0</IsSearch>
+            <IsExport>0</IsExport>
+          </Field>
+        </Fields>
+      </ResourcesFields>
+      <PropertyFields>
+        <Fields>
+          <Field>
+            <Name>Коментар</Name>
+            <FullName>Коментар</FullName>
+            <NameInTable>col_b8</NameInTable>
+            <Type>string</Type>
+            <IsIndex>0</IsIndex>
+            <IsFullTextSearch>0</IsFullTextSearch>
+            <IsSearch>0</IsSearch>
+            <IsExport>0</IsExport>
+            <Multiline>0</Multiline>
+          </Field>
+        </Fields>
+      </PropertyFields>
+      <AllowDocumentSpend>
+        <Name>БухгалтерськаОперація</Name>
+      </AllowDocumentSpend>
+      <TabularParts />
+      <QueryBlockList />
+      <TabularLists>
+        <TabularList>
+          <Name>Записи</Name>
+          <Fields>
+            <Field>
+              <Name>Рахунок</Name>
+              <Caption>Рахунок</Caption>
+              <Size>0</Size>
+              <SortNum>1</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>True</FilterField>
+              <Type>pointer</Type>
+              <Pointer>Довідники.ПланРахунків</Pointer>
+            </Field>
+            <Field>
+              <Name>Аналітика1</Name>
+              <Caption>Аналітика 1</Caption>
+              <Size>0</Size>
+              <SortNum>2</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>False</FilterField>
+              <Type>composite_pointer</Type>
+            </Field>
+            <Field>
+              <Name>Аналітика2</Name>
+              <Caption>Аналітика 2</Caption>
+              <Size>0</Size>
+              <SortNum>3</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>False</FilterField>
+              <Type>composite_pointer</Type>
+            </Field>
+            <Field>
+              <Name>Аналітика3</Name>
+              <Caption>Аналітика 3</Caption>
+              <Size>0</Size>
+              <SortNum>4</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>False</FilterField>
+              <Type>composite_pointer</Type>
+            </Field>
+            <Field>
+              <Name>ВалютаДебет</Name>
+              <Caption>Валюта Дт</Caption>
+              <Size>0</Size>
+              <SortNum>5</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>True</FilterField>
+              <Type>pointer</Type>
+              <Pointer>Довідники.Валюти</Pointer>
+            </Field>
+            <Field>
+              <Name>ВалютаКредит</Name>
+              <Caption>Валюта Кт</Caption>
+              <Size>0</Size>
+              <SortNum>6</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>True</FilterField>
+              <Type>pointer</Type>
+              <Pointer>Довідники.Валюти</Pointer>
+            </Field>
+            <Field>
+              <Name>КореспондуючийРахунок</Name>
+              <Caption>Кореспондуючий рахунок</Caption>
+              <Size>0</Size>
+              <SortNum>7</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>True</FilterField>
+              <Type>pointer</Type>
+              <Pointer>Довідники.ПланРахунків</Pointer>
+            </Field>
+            <Field>
+              <Name>КорАналітика1</Name>
+              <Caption>Кор аналітика 1</Caption>
+              <Size>0</Size>
+              <SortNum>8</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>False</FilterField>
+              <Type>composite_pointer</Type>
+            </Field>
+            <Field>
+              <Name>КорАналітика2</Name>
+              <Caption>Кор аналітика 2</Caption>
+              <Size>0</Size>
+              <SortNum>9</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>False</FilterField>
+              <Type>composite_pointer</Type>
+            </Field>
+            <Field>
+              <Name>КорАналітика3</Name>
+              <Caption>Кор аналітика 3</Caption>
+              <Size>0</Size>
+              <SortNum>10</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>False</FilterField>
+              <Type>composite_pointer</Type>
+            </Field>
+            <Field>
+              <Name>Податок</Name>
+              <Caption>Податок</Caption>
+              <Size>0</Size>
+              <SortNum>11</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>True</FilterField>
+              <Type>pointer</Type>
+              <Pointer>Довідники.ВидиПодатків</Pointer>
+            </Field>
+            <Field>
+              <Name>Журнал</Name>
+              <Caption>Журнал</Caption>
+              <Size>0</Size>
+              <SortNum>12</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>True</FilterField>
+              <Type>pointer</Type>
+              <Pointer>Довідники.ВидиЖурналів</Pointer>
+            </Field>
+            <Field>
+              <Name>Дебет</Name>
+              <Caption>Дебет</Caption>
+              <Size>0</Size>
+              <SortNum>13</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>False</FilterField>
+              <Type>numeric</Type>
+            </Field>
+            <Field>
+              <Name>КількістьДебет</Name>
+              <Caption>Кількість Дт</Caption>
+              <Size>0</Size>
+              <SortNum>14</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>False</FilterField>
+              <Type>numeric</Type>
+            </Field>
+            <Field>
+              <Name>СумаВВалютіДебет</Name>
+              <Caption>Сума в валюті дебет</Caption>
+              <Size>0</Size>
+              <SortNum>15</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>False</FilterField>
+              <Type>numeric</Type>
+            </Field>
+            <Field>
+              <Name>СумаПОДебет</Name>
+              <Caption>Сума ПО дебет</Caption>
+              <Size>0</Size>
+              <SortNum>16</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>False</FilterField>
+              <Type>numeric</Type>
+            </Field>
+            <Field>
+              <Name>Кредит</Name>
+              <Caption>Кредит</Caption>
+              <Size>0</Size>
+              <SortNum>17</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>False</FilterField>
+              <Type>numeric</Type>
+            </Field>
+            <Field>
+              <Name>КількістьКредит</Name>
+              <Caption>Кількість Кт</Caption>
+              <Size>0</Size>
+              <SortNum>18</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>False</FilterField>
+              <Type>numeric</Type>
+            </Field>
+            <Field>
+              <Name>СумаВВалютіКредит</Name>
+              <Caption>Сума в валюті кредит</Caption>
+              <Size>0</Size>
+              <SortNum>19</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>False</FilterField>
+              <Type>numeric</Type>
+            </Field>
+            <Field>
+              <Name>СумаПОКредит</Name>
+              <Caption>Сума ПО кредит</Caption>
+              <Size>0</Size>
+              <SortNum>20</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>False</FilterField>
+              <Type>numeric</Type>
+            </Field>
+            <Field>
+              <Name>СумаПодатку</Name>
+              <Caption>Сума податку</Caption>
+              <Size>0</Size>
+              <SortNum>21</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>False</FilterField>
+              <Type>numeric</Type>
+            </Field>
+            <Field>
+              <Name>Коментар</Name>
+              <Caption>Коментар</Caption>
+              <Size>0</Size>
+              <SortNum>22</SortNum>
+              <SortField>False</SortField>
+              <SortDirection>False</SortDirection>
+              <FilterField>False</FilterField>
+              <Type>string</Type>
+              <Multiline>0</Multiline>
+            </Field>
+          </Fields>
+        </TabularList>
+      </TabularLists>
+      <PrintBalances>
+        <TabularLists>
+          <TabularList>
+            <Name>Записи</Name>
+            <Fields>
+              <Field>
+                <Name>Рахунок</Name>
+                <Caption>Рахунок</Caption>
+                <Size>0</Size>
+                <SortNum>1</SortNum>
+                <SortField>False</SortField>
+                <SortDirection>False</SortDirection>
+                <FilterField>False</FilterField>
+                <Type>pointer</Type>
+                <Pointer>Довідники.ПланРахунків</Pointer>
+              </Field>
+              <Field>
+                <Name>Аналітика1</Name>
+                <Caption>Аналітика 1</Caption>
+                <Size>0</Size>
+                <SortNum>2</SortNum>
+                <SortField>False</SortField>
+                <SortDirection>False</SortDirection>
+                <FilterField>False</FilterField>
+                <Type>composite_pointer</Type>
+              </Field>
+              <Field>
+                <Name>Аналітика2</Name>
+                <Caption>Аналітика 2</Caption>
+                <Size>0</Size>
+                <SortNum>3</SortNum>
+                <SortField>False</SortField>
+                <SortDirection>False</SortDirection>
+                <FilterField>False</FilterField>
+                <Type>composite_pointer</Type>
+              </Field>
+              <Field>
+                <Name>Аналітика3</Name>
+                <Caption>Аналітика 3</Caption>
+                <Size>0</Size>
+                <SortNum>4</SortNum>
+                <SortField>False</SortField>
+                <SortDirection>False</SortDirection>
+                <FilterField>False</FilterField>
+                <Type>composite_pointer</Type>
+              </Field>
+              <Field>
+                <Name>ВалютаДебет</Name>
+                <Caption>Валюта Дт</Caption>
+                <Size>0</Size>
+                <SortNum>5</SortNum>
+                <SortField>False</SortField>
+                <SortDirection>False</SortDirection>
+                <FilterField>False</FilterField>
+                <Type>pointer</Type>
+                <Pointer>Довідники.Валюти</Pointer>
+              </Field>
+              <Field>
+                <Name>ВалютаКредит</Name>
+                <Caption>Валюта Кт</Caption>
+                <Size>0</Size>
+                <SortNum>6</SortNum>
+                <SortField>False</SortField>
+                <SortDirection>False</SortDirection>
+                <FilterField>False</FilterField>
+                <Type>pointer</Type>
+                <Pointer>Довідники.Валюти</Pointer>
+              </Field>
+              <Field>
+                <Name>КореспондуючийРахунок</Name>
+                <Caption>Кореспондуючий рахунок</Caption>
+                <Size>0</Size>
+                <SortNum>7</SortNum>
+                <SortField>False</SortField>
+                <SortDirection>False</SortDirection>
+                <FilterField>False</FilterField>
+                <Type>pointer</Type>
+                <Pointer>Довідники.ПланРахунків</Pointer>
+              </Field>
+              <Field>
+                <Name>КорАналітика1</Name>
+                <Caption>Кор аналітика 1</Caption>
+                <Size>0</Size>
+                <SortNum>8</SortNum>
+                <SortField>False</SortField>
+                <SortDirection>False</SortDirection>
+                <FilterField>False</FilterField>
+                <Type>composite_pointer</Type>
+              </Field>
+              <Field>
+                <Name>КорАналітика2</Name>
+                <Caption>Кор аналітика 2</Caption>
+                <Size>0</Size>
+                <SortNum>9</SortNum>
+                <SortField>False</SortField>
+                <SortDirection>False</SortDirection>
+                <FilterField>False</FilterField>
+                <Type>composite_pointer</Type>
+              </Field>
+              <Field>
+                <Name>КорАналітика3</Name>
+                <Caption>Кор аналітика 3</Caption>
+                <Size>0</Size>
+                <SortNum>10</SortNum>
+                <SortField>False</SortField>
+                <SortDirection>False</SortDirection>
+                <FilterField>False</FilterField>
+                <Type>composite_pointer</Type>
+              </Field>
+              <Field>
+                <Name>Податок</Name>
+                <Caption>Податок</Caption>
+                <Size>0</Size>
+                <SortNum>11</SortNum>
+                <SortField>False</SortField>
+                <SortDirection>False</SortDirection>
+                <FilterField>False</FilterField>
+                <Type>pointer</Type>
+                <Pointer>Довідники.ВидиПодатків</Pointer>
+              </Field>
+              <Field>
+                <Name>Журнал</Name>
+                <Caption>Журнал</Caption>
+                <Size>0</Size>
+                <SortNum>12</SortNum>
+                <SortField>False</SortField>
+                <SortDirection>False</SortDirection>
+                <FilterField>False</FilterField>
+                <Type>pointer</Type>
+                <Pointer>Довідники.ВидиЖурналів</Pointer>
+              </Field>
+              <Field>
+                <Name>Дебет</Name>
+                <Caption>Дебет</Caption>
+                <Size>0</Size>
+                <SortNum>13</SortNum>
+                <SortField>False</SortField>
+                <SortDirection>False</SortDirection>
+                <FilterField>False</FilterField>
+                <Type>numeric</Type>
+              </Field>
+              <Field>
+                <Name>КількістьДебет</Name>
+                <Caption>Кількість Дт</Caption>
+                <Size>0</Size>
+                <SortNum>14</SortNum>
+                <SortField>False</SortField>
+                <SortDirection>False</SortDirection>
+                <FilterField>False</FilterField>
+                <Type>numeric</Type>
+              </Field>
+              <Field>
+                <Name>СумаВВалютіДебет</Name>
+                <Caption>Сума в валюті дебет</Caption>
+                <Size>0</Size>
+                <SortNum>15</SortNum>
+                <SortField>False</SortField>
+                <SortDirection>False</SortDirection>
+                <FilterField>False</FilterField>
+                <Type>numeric</Type>
+              </Field>
+              <Field>
+                <Name>СумаПОДебет</Name>
+                <Caption>Сума ПО дебет</Caption>
+                <Size>0</Size>
+                <SortNum>16</SortNum>
+                <SortField>False</SortField>
+                <SortDirection>False</SortDirection>
+                <FilterField>False</FilterField>
+                <Type>numeric</Type>
+              </Field>
+              <Field>
+                <Name>Кредит</Name>
+                <Caption>Кредит</Caption>
+                <Size>0</Size>
+                <SortNum>17</SortNum>
+                <SortField>False</SortField>
+                <SortDirection>False</SortDirection>
+                <FilterField>False</FilterField>
+                <Type>numeric</Type>
+              </Field>
+              <Field>
+                <Name>КількістьКредит</Name>
+                <Caption>Кількість Кт</Caption>
+                <Size>0</Size>
+                <SortNum>18</SortNum>
+                <SortField>False</SortField>
+                <SortDirection>False</SortDirection>
+                <FilterField>False</FilterField>
+                <Type>numeric</Type>
+              </Field>
+              <Field>
+                <Name>СумаВВалютіКредит</Name>
+                <Caption>Сума в валюті кредит</Caption>
+                <Size>0</Size>
+                <SortNum>19</SortNum>
+                <SortField>False</SortField>
+                <SortDirection>False</SortDirection>
+                <FilterField>False</FilterField>
+                <Type>numeric</Type>
+              </Field>
+              <Field>
+                <Name>СумаПОКредит</Name>
+                <Caption>Сума ПО кредит</Caption>
+                <Size>0</Size>
+                <SortNum>20</SortNum>
+                <SortField>False</SortField>
+                <SortDirection>False</SortDirection>
+                <FilterField>False</FilterField>
+                <Type>numeric</Type>
+              </Field>
+              <Field>
+                <Name>СумаПодатку</Name>
+                <Caption>Сума податку</Caption>
+                <Size>0</Size>
+                <SortNum>21</SortNum>
+                <SortField>False</SortField>
+                <SortDirection>False</SortDirection>
+                <FilterField>False</FilterField>
+                <Type>numeric</Type>
+              </Field>
+              <Field>
+                <Name>Коментар</Name>
+                <Caption>Коментар</Caption>
+                <Size>0</Size>
+                <SortNum>22</SortNum>
+                <SortField>False</SortField>
+                <SortDirection>False</SortDirection>
+                <FilterField>False</FilterField>
+                <Type>string</Type>
+                <Multiline>0</Multiline>
+              </Field>
+            </Fields>
+          </TabularList>
+        </TabularLists>
+      </PrintBalances>
+      <Forms>
+        <Form Modified="1">
+          <Name>Список</Name>
+          <Desc>Список</Desc>
+          <Type>List</Type>
+          <GeneratedCode Zip="1">H4sIAAAAAAAACqVUXU8TQRR9b9L/MIGXQnThAV5ENKUCQbBUWj+QEDLdvS1jtzPNzCwEDUmBRHzjxZTERFHjD6goSS22/oU7/8jstqVLi4A4L5O5d+6Ze86cmWgkGhkZJv6IRoKJEIJHpoxNPMYm/sA61ixbhZKf8TfWzA42sR6NhOJfsIrf8BRrZh8bWMOfxOx0t5LbBA+x2g7UopHhEb/aU4znyRzXIHPUhlldGJvoROO2LTyuGc+nRU5vUglnqVngIKkGJyEcsPATnuB3UzE7ZteUsYYfsIp1bAaH7eMJNrBhDia65/X3GmZFJm+Eb51HNZUzTF/CXk3XwmoErXFaBFWiNoSIj/0Lt5XZxexLsLWV9rK2S5W6uwR5pjTIuG17Rc+lmgk+I2TxofAkp+4UVXAvNrDAlF6bf7Lw/PGmt54Z3Sq+KC4XEvPjHOIDQ6vRSMnLuswmJSo1oy4JoPs8snZOwTvkGkdHI69b9ukgbwjmkDnO/AV7BbGhVrq9yx+ZrRIkaRHIZH8DCcGVtjLLqelk/NH0xGXODPdqxR0nIVyvyGN6namhUGEadIrmQaVB+5ehYuOjnfR2x/ptcZSmmtlXqJKEzQs4XV7jMqXJpF/6jOn1lBQlkJqBiq2shlv1t1lJoSErRGHG4zaZJCkp8pIWrSmqmO1rf//cjsAznXoJ2pM8gOllOCghzwQnixsgJXOgh7lohwlVW9wmT6nrQYaqAlkQ1FkCW0hHXcCablKmr7qaMET4crrqS6HB1uB02whMNMNcd4a5GmSsNSUE11K4JBdeXXAXl/eTkEA1tIGv21CvLlOQExLSoIPQ36X5avawgXXzxlTMYfDsT7Fq3ppds4fHWG09fHyPTf9bCL6HIG72sWrhx/Zv8QurZhdreIQnpmwqgcfe4ak5wIrZM2Vs+LBmL+bbYx62bpEUSCac6/Pa8OVuFSXWKc+Dc5HF/4tL96O8ERerPWVEWkvG87Ghs8wDqiGtqdQ9EVHqE2AQuNN6CNHIdiv0ByS0fzg8BwAA</GeneratedCode>
+          <NotSaveToFile>0</NotSaveToFile>
+          <TabularList>Записи</TabularList>
+        </Form>
+        <Form Modified="1">
+          <Name>Список міні</Name>
+          <Desc>Список міні</Desc>
+          <Type>ListSmall</Type>
+          <GeneratedCode Zip="1">H4sIAAAAAAAACp1Ty24TMRTdjzT/YJVNUolpBemGElCo2tIHaZRERVBVleO5TU1n7Mj2NCqoUguLLtmgsAHx+ILwqDQEEn7h+o/QTBI6fQgK3li+z3POvXYd15maJMlxnfQihOA7e4gD/IwD/Io9jD2mM84P+BNje4QD7BH8YTvYtx3XyQR8xC5+wu8Y22PsY4zfiD3K5Fwn+Bq7I0PsOpNTSXakuWiSJWFAbVMGi2a3MDu2lhiTkTBcNGty27Spgt+uRRCgqAF/Tvrg4Xs8wS+2Y4/sc3uIMb7FLvZwkDY7xhPsY9++nD3tdxHrGXrF/6rv4St7aF9g74yOA+x554XdyiqRwhI0BN2iDDKkC//Ca2NxrfEEmPFqUYMFVOvbVWhybUCVGIvCKKCGS7EgVbgsIyVoUAtpENzJTaT3Ktdm63FV3b/hL++tTzdmCu2VWql8c7o9kd90nVbUCDgjLaoMpwFJ61/Ylq2shPhmuCDkFrkKDtd5NlykcYs9yX2yJHjy4E8hlx+6R1HJqe+3oExDIMWLSOak0MarP6rMl0sP5mf/tKNZ0F7J9+dkEIUiZ3a4zmcSa2AqtAm6BiYZjc7NTI/dB+NPMFJJG2o4u6I8ZWhfwu1quQHXhhSTEg+52ako2QJlOOjcxmYWehLmlaWBhpS7C5FgpEgqSjYVDb17VHOWDOPumYh0o8b5CkykRFrmPONrCppcCrK2B0pxH84pIUdmQvW+YGSdBhHUqd4lq5L6VWBS+foS9rRNufnbqLIlssM6xQbCH8JznYOh6RcC8W9z9QQAAA==</GeneratedCode>
+          <NotSaveToFile>0</NotSaveToFile>
+        </Form>
+      </Forms>
+    </RegisterAccumulation>
+  </RegistersAccumulation>
 </Configuration>
