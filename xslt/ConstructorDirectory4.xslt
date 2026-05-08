@@ -1071,10 +1071,7 @@ public partial class <xsl:value-of select="$DirectoryName"/>_PointerControl : Po
     <xsl:value-of select="$DirectoryName"/>_Pointer pointer = new();
     public <xsl:value-of select="$DirectoryName"/>_Pointer Pointer
     {
-        get
-        {
-            return pointer;
-        }
+        get =&gt; pointer;
         set
         {
             pointer = value;
@@ -1275,10 +1272,7 @@ public partial class <xsl:value-of select="$DirectoryName"/>_MultiplePointerCont
     List&lt;<xsl:value-of select="$DirectoryName"/>_Pointer&gt; pointers = [];
     public <xsl:value-of select="$DirectoryName"/>_Pointer Pointer
     {
-        get
-        {
-            return pointer;
-        }
+        get =&gt; pointer;
         set
         {
             pointer = value;
