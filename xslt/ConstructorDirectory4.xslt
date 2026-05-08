@@ -873,7 +873,7 @@ partial class <xsl:value-of select="$DirectoryName"/>_ШвидкийВибір :
     <!-- Список з Деревом-->
     <xsl:template name="DirectoryListAndTree">
         <xsl:variable name="DirectoryName" select="Directory/Name"/>
-        <xsl:variable name="SubclassName" select="concat('ListAndTree', Directory/Alias)"/>
+        <xsl:variable name="SubclassName" select="concat('ListAndTree_', Directory/Alias)"/>
         <!--<xsl:variable name="TabularParts" select="Directory/TabularParts/TablePart"/>-->
         <xsl:variable name="TabularList" select="Directory/TabularList"/>
 
