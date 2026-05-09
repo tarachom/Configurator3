@@ -486,6 +486,35 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>
 
     public class Functions
     {
+        public static void CreateView()
+        {            
+            string query = """
+CREATE OR REPLACE VIEW global_entities AS
+
+<!--Довідники та Документи-->
+<xsl:for-each select="Configuration/Directories/Directory | Configuration/Documents/Document">
+    <xsl:variable name="FieldCount" select="count(Fields/Field[IsPresentation=1])"/>
+    <xsl:if test="position() &gt; 1">
+UNION ALL</xsl:if>
+SELECT uid, <xsl:choose>
+      <xsl:when test="$FieldCount = 1">"<xsl:value-of select="Fields/Field[IsPresentation=1]/NameInTable"/>"</xsl:when>
+      <xsl:when test="$FieldCount &gt; 1">
+          <xsl:text>concat_ws (', ', </xsl:text>
+          <xsl:for-each select="Fields/Field[IsPresentation=1]">
+              <xsl:text>"</xsl:text><xsl:value-of select="NameInTable"/><xsl:text>"</xsl:text>
+              <xsl:if test="position() != $FieldCount">, </xsl:if>
+          </xsl:for-each>
+          <xsl:text>)</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+          <xsl:text>"#"</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose><xsl:if test="position() = 1"> AS presentation</xsl:if> FROM <xsl:value-of select="Table"/>
+</xsl:for-each>
+
+""";
+        }
+
         /*
           Функція для типу який задається користувачем.
           Повертає презентацію для uuidAndText
