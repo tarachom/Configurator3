@@ -31,7 +31,7 @@ limitations under the License.
   <xsl:template name="FieldValue">
     <xsl:param name="ConfTypeName" />
     <xsl:choose>
-        <xsl:when test="Type = 'pointer'">
+        <xsl:when test="Type = 'pointer' or Type = 'composite_pointer'">
             <xsl:text>Fields["</xsl:text><xsl:value-of select="Name"/><xsl:text>"].ToString() ?? ""</xsl:text>
         </xsl:when>
         <xsl:when test="Type = 'enum'">
@@ -51,7 +51,7 @@ limitations under the License.
   <xsl:template name="FieldValueReg">
     <xsl:param name="VarName" />
     <xsl:choose>
-        <xsl:when test="Type = 'pointer'">
+        <xsl:when test="Type = 'pointer' or Type = 'composite_pointer'">
             <xsl:value-of select="$VarName"/>.<xsl:value-of select="Name"/><xsl:text>.Name</xsl:text>
         </xsl:when>
         <xsl:when test="Type = 'enum'">
@@ -468,10 +468,19 @@ limitations under the License.
                 </xsl:for-each>
 
                 <!-- Приєднання таблиць -->
-                <xsl:for-each select="Fields/Field[Type = 'pointer']">
-                    /* Приєднання */
-                    <xsl:value-of select="substring-before(Pointer, '.')"/>.<xsl:value-of select="substring-after(Pointer, '.')"/>_Pointer.GetJoin(<xsl:value-of select="$ConfTypeName"/>_Select.QuerySelect, <xsl:value-of select="$ConfTypeGroup"/>.<xsl:value-of select="$ConfTypeName"/>_Const.<xsl:value-of select="Name"/>,
-                    <xsl:value-of select="$ConfTypeName"/>_Select.QuerySelect.Table, "join_tab_<xsl:value-of select="position()"/>", "<xsl:value-of select="Name"/>");
+                <xsl:for-each select="Fields/Field[Type = 'pointer' or Type = 'composite_pointer']">
+                    <xsl:choose>
+                        <xsl:when test="Type = 'pointer'">
+                            /* Приєднання pointer */
+                            <xsl:value-of select="substring-before(Pointer, '.')"/>.<xsl:value-of select="substring-after(Pointer, '.')"/>_Pointer.GetJoin(<xsl:value-of select="$ConfTypeName"/>_Select.QuerySelect, <xsl:value-of select="$ConfTypeGroup"/>.<xsl:value-of select="$ConfTypeName"/>_Const.<xsl:value-of select="Name"/>,
+                            <xsl:value-of select="$ConfTypeName"/>_Select.QuerySelect.Table, "join_tab_<xsl:value-of select="position()"/>", "<xsl:value-of select="Name"/>");
+                        </xsl:when>
+                        <xsl:when test="Type = 'composite_pointer'">
+                            /* Приєднання composite_pointer */
+                            <xsl:value-of select="$ConfTypeName"/>_Select.QuerySelect.FieldAndAlias.Add(new ValueName&lt;string&gt;("join_tab_<xsl:value-of select="position()"/>.name", "<xsl:value-of select="Name"/>"));
+                            <xsl:value-of select="$ConfTypeName"/>_Select.QuerySelect.Joins.Add(new Join("view_special_presentation", <xsl:value-of select="$ConfTypeName"/>_Const.<xsl:value-of select="Name"/>, <xsl:value-of select="$ConfTypeName"/>_Select.QuerySelect.Table, "join_tab_<xsl:value-of select="position()"/>"));
+                        </xsl:when>
+                    </xsl:choose>
                 </xsl:for-each>
             </xsl:if>
 

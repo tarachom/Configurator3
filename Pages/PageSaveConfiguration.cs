@@ -714,6 +714,8 @@ namespace Configurator
                             ApendLine("Помилка: " + ex.Message);
                         }
                     }
+
+                    //
                 }
 
                 ApendLine("\nВидалення файлу команд " + pathToSqlCommandFile + "\n");
