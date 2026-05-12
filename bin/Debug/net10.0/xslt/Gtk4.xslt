@@ -289,7 +289,30 @@ limitations under the License.
                     if (cell != null &amp;&amp; row != null)
                         cell.SetText(row.OwnerName.ToString());
                 };
-                ColumnViewColumn column = ColumnViewColumn.New("Власник назва", factory);
+                ColumnViewColumn column = ColumnViewColumn.New("Назва власника", factory);
+                form.Grid.AppendColumn(column);
+            }
+  </xsl:template>
+
+  <xsl:template name="AddColumnOwnerLineNum">
+        <xsl:param name="RowType" />
+            //OwnerLineNum
+            {
+                SignalListItemFactory factory = SignalListItemFactory.New();
+                factory.OnSetup += (_, args) =&gt;
+                {
+                    ListItem listItem = (ListItem)args.Object;
+                    listItem.Child = LabelTablePartCell.New();
+                };
+                factory.OnBind += (_, args) =&gt;
+                {
+                    ListItem listItem = (ListItem)args.Object;
+                    LabelTablePartCell? cell = (LabelTablePartCell?)listItem.Child;
+                    <xsl:value-of select="$RowType"/>? row = (<xsl:value-of select="$RowType"/>?)listItem.Item;
+                    if (cell != null &amp;&amp; row != null)
+                        cell.SetText(row.OwnerLineNum.ToString());
+                };
+                ColumnViewColumn column = ColumnViewColumn.New("№", factory);
                 form.Grid.AppendColumn(column);
             }
   </xsl:template>
@@ -1024,6 +1047,9 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
             <xsl:call-template name="AddColumnOwnerName">
                 <xsl:with-param name="RowType">RegisterAccumulationRowJournal</xsl:with-param>
             </xsl:call-template>
+            <xsl:call-template name="AddColumnOwnerLineNum">
+                <xsl:with-param name="RowType">RegisterAccumulationRowJournal</xsl:with-param>
+            </xsl:call-template>
             
             <xsl:call-template name="AddColumnLabel">
                 <xsl:with-param name="ConfTypeName"><xsl:value-of select="$RegisterName"/></xsl:with-param>
@@ -1085,6 +1111,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
                 row.Owner = record.Owner;
                 row.OwnerType = record.OwnerType;
                 row.OwnerName = record.OwnerName;
+                row.OwnerLineNum = record.OwnerLineNum;
                 <xsl:for-each select="Fields/Field">
                     <xsl:text>row.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", <xsl:call-template name="FieldValueReg"><xsl:with-param name="VarName">record</xsl:with-param></xsl:call-template>);
                 </xsl:for-each>
@@ -1116,6 +1143,9 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
         public static void AddColumn(RegisterAccumulationFormJournalSmall form)
         {
             <xsl:call-template name="AddColumnIncome" />
+            <xsl:call-template name="AddColumnOwnerLineNum">
+                <xsl:with-param name="RowType">RegisterAccumulationRowJournal</xsl:with-param>
+            </xsl:call-template>
                         
             <xsl:call-template name="AddColumnLabel">
                 <xsl:with-param name="ConfTypeName"><xsl:value-of select="$RegisterName"/></xsl:with-param>
@@ -1161,6 +1191,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
                 row.Owner = record.Owner;
                 row.OwnerType = record.OwnerType;
                 row.OwnerName = record.OwnerName;
+                row.OwnerLineNum = record.OwnerLineNum;
                 <xsl:for-each select="Fields/Field">
                     <xsl:text>row.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", <xsl:call-template name="FieldValueReg"><xsl:with-param name="VarName">record</xsl:with-param></xsl:call-template>);
                 </xsl:for-each>

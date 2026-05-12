@@ -2395,6 +2395,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
                     Income = (bool)fieldValue["income"],
                     Owner = (Guid)fieldValue["owner"],
                     OwnerType = fieldValue["ownertype"] != DBNull.Value ? (NameAndText)fieldValue["ownertype"] : new NameAndText(),
+                    OwnerLineNum = fieldValue["ownerlinenum"] != DBNull.Value ? (int)fieldValue["ownerlinenum"] : 0,
                     <xsl:for-each select="(DimensionFields|ResourcesFields|PropertyFields)/Fields/Field">
                       <xsl:value-of select="Name"/>
                       <xsl:text> = </xsl:text>
@@ -2445,7 +2446,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
                         <xsl:text>}</xsl:text>,
                     </xsl:for-each>
                 };
-                record.UID = await base.BaseSave(record.UID, record.Period, record.Income, record.Owner, record.OwnerType, fieldValue);
+                record.UID = await base.BaseSave(record.UID, record.Period, record.Income, record.Owner, record.OwnerType, record.OwnerLineNum, fieldValue);
             }
             await base.BaseTrigerAdd(period, owner.Uuid);
             await base.BaseCommitTransaction();
