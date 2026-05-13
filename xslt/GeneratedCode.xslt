@@ -490,6 +490,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>
           Функція для типу який задається користувачем.
           Створює або оновлює VIEW на PostgreSQL сервері для відображення презентації для uuidAndText
         */
+        /*
         public static async ValueTask CreateCompositePresentationView()
         {            
             string query = """
@@ -517,6 +518,68 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>
                 </xsl:otherwise>
               </xsl:choose> AS name FROM <xsl:value-of select="Table"/>
             </xsl:for-each>
+            """;
+            await Config.Kernel.DataBase.ExecuteSQL(query);
+        }
+        */
+
+        public static async ValueTask CreateCompositePresentationView2()
+        {
+            string query = """
+            CREATE OR REPLACE FUNCTION func_special_composite_presentation(data uuidtext) 
+            RETURNS TEXT AS $$
+            DECLARE
+                conf_group TEXT; -- Змінна для групи (Довідники або Документи)
+                conf_name  TEXT; -- Змінна для назви об'єкта
+            BEGIN
+                conf_group := split_part(data.text, '.', 1); -- Отримаємо частину ДО крапки
+                conf_name  := split_part(data.text, '.', 2); -- Отримаємо частину ПІСЛЯ крапки
+
+                IF conf_group = 'Довідники' THEN
+                  RETURN CASE conf_name
+                    <xsl:for-each select="Configuration/Directories/Directory">
+                        <xsl:variable name="FieldCount" select="count(Fields/Field[IsPresentation=1])"/>
+                        <xsl:text>WHEN '</xsl:text><xsl:value-of select="Name"/>' THEN (SELECT <xsl:choose>
+                          <xsl:when test="$FieldCount = 1">"<xsl:value-of select="Fields/Field[IsPresentation=1]/NameInTable"/>"</xsl:when>
+                          <xsl:when test="$FieldCount &gt; 1">
+                              <xsl:text>concat_ws (', ', </xsl:text>
+                              <xsl:for-each select="Fields/Field[IsPresentation=1]">
+                                  <xsl:text>"</xsl:text><xsl:value-of select="NameInTable"/><xsl:text>"</xsl:text>
+                                  <xsl:if test="position() != $FieldCount">, </xsl:if>
+                              </xsl:for-each>
+                              <xsl:text>)</xsl:text>
+                          </xsl:when>
+                          <xsl:otherwise>
+                              <xsl:text>"#"</xsl:text>
+                          </xsl:otherwise>
+                        </xsl:choose> FROM <xsl:value-of select="Table"/> WHERE uid = data.uuid)
+                    </xsl:for-each>
+                  END;
+                ELSIF conf_group = 'Документи' THEN
+                  RETURN CASE conf_name
+                    <xsl:for-each select="Configuration/Documents/Document">
+                        <xsl:variable name="FieldCount" select="count(Fields/Field[IsPresentation=1])"/>
+                        <xsl:text>WHEN '</xsl:text><xsl:value-of select="Name"/>' THEN (SELECT <xsl:choose>
+                          <xsl:when test="$FieldCount = 1">"<xsl:value-of select="Fields/Field[IsPresentation=1]/NameInTable"/>"</xsl:when>
+                          <xsl:when test="$FieldCount &gt; 1">
+                              <xsl:text>concat_ws (', ', </xsl:text>
+                              <xsl:for-each select="Fields/Field[IsPresentation=1]">
+                                  <xsl:text>"</xsl:text><xsl:value-of select="NameInTable"/><xsl:text>"</xsl:text>
+                                  <xsl:if test="position() != $FieldCount">, </xsl:if>
+                              </xsl:for-each>
+                              <xsl:text>)</xsl:text>
+                          </xsl:when>
+                          <xsl:otherwise>
+                              <xsl:text>"#"</xsl:text>
+                          </xsl:otherwise>
+                        </xsl:choose> FROM <xsl:value-of select="Table"/> WHERE uid = data.uuid)
+                    </xsl:for-each>
+                  END;
+                END IF;
+
+                RETURN NULL;
+            END;
+            $$ LANGUAGE plpgsql STABLE;
             """;
             await Config.Kernel.DataBase.ExecuteSQL(query);
         }
@@ -1087,12 +1150,11 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
                 <xsl:choose>
                   <xsl:when test="Type = 'pointer'">
                       /* pointer */
-                      <xsl:value-of select="substring-before(Pointer, '.')"/>.<xsl:value-of select="substring-after(Pointer, '.')"/>_Pointer.GetJoin(QuerySelect, <xsl:value-of select="Name"/>, "<xsl:value-of select="../../Table"/>", "join_tab_<xsl:value-of select="position()"/>", "<xsl:value-of select="Name"/>");
+                      <xsl:value-of select="substring-before(Pointer, '.')"/>.<xsl:value-of select="substring-after(Pointer, '.')"/>_Pointer.GetJoin(QuerySelect, <xsl:value-of select="Name"/>, $"{TABLE}", "join_tab_<xsl:value-of select="position()"/>", "<xsl:value-of select="Name"/>");
                   </xsl:when>
                   <xsl:when test="Type = 'composite_pointer'">
                       /* composite_pointer */
-                      QuerySelect.FieldAndAlias.Add(new ValueName&lt;string&gt;("join_tab_<xsl:value-of select="position()"/>.name", "<xsl:value-of select="Name"/>"));
-                      QuerySelect.Joins.Add(new Join("view_special_presentation", <xsl:value-of select="Name"/>, "<xsl:value-of select="../../Table"/>", "join_tab_<xsl:value-of select="position()"/>"));
+                      QuerySelect.FieldAndAlias.Add(new ValueName&lt;string&gt;($"{SpecialFunc.CompisitePresentation}({TABLE}.{<xsl:value-of select="Name"/>})", "<xsl:value-of select="Name"/>"));
                   </xsl:when>
                 </xsl:choose>
             </xsl:for-each>
@@ -1698,20 +1760,14 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
             </xsl:if>
 
             <xsl:for-each select="Fields/Field">
-                <!--
-                <xsl:if test="Type = 'pointer'">
-                  <xsl:value-of select="substring-before(Pointer, '.')"/>.<xsl:value-of select="substring-after(Pointer, '.')"/>_Pointer.GetJoin(QuerySelect, <xsl:value-of select="Name"/>, "<xsl:value-of select="../../Table"/>", "join_tab_<xsl:value-of select="position()"/>", "<xsl:value-of select="Name"/>");
-                </xsl:if>
-                -->
                 <xsl:choose>
                   <xsl:when test="Type = 'pointer'">
                       /* pointer */
-                      <xsl:value-of select="substring-before(Pointer, '.')"/>.<xsl:value-of select="substring-after(Pointer, '.')"/>_Pointer.GetJoin(QuerySelect, <xsl:value-of select="Name"/>, "<xsl:value-of select="../../Table"/>", "join_tab_<xsl:value-of select="position()"/>", "<xsl:value-of select="Name"/>");
+                      <xsl:value-of select="substring-before(Pointer, '.')"/>.<xsl:value-of select="substring-after(Pointer, '.')"/>_Pointer.GetJoin(QuerySelect, <xsl:value-of select="Name"/>, $"{TABLE}", "join_tab_<xsl:value-of select="position()"/>", "<xsl:value-of select="Name"/>");
                   </xsl:when>
                   <xsl:when test="Type = 'composite_pointer'">
                       /* composite_pointer */
-                      QuerySelect.FieldAndAlias.Add(new ValueName&lt;string&gt;("join_tab_<xsl:value-of select="position()"/>.name", "<xsl:value-of select="Name"/>"));
-                      QuerySelect.Joins.Add(new Join("view_special_presentation", <xsl:value-of select="Name"/>, "<xsl:value-of select="../../Table"/>", "join_tab_<xsl:value-of select="position()"/>"));
+                      QuerySelect.FieldAndAlias.Add(new ValueName&lt;string&gt;($"{SpecialFunc.CompisitePresentation}({TABLE}.{<xsl:value-of select="Name"/>})", "<xsl:value-of select="Name"/>"));
                   </xsl:when>
                 </xsl:choose>
             </xsl:for-each>
@@ -2024,12 +2080,6 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
                 QuerySelect.Order.Add(field, SelectOrder.ASC);
 
             <xsl:for-each select="(DimensionFields|ResourcesFields|PropertyFields)/Fields/Field">
-                <!--
-                <xsl:if test="Type = 'pointer'">
-                  <xsl:value-of select="substring-before(Pointer, '.')"/>.<xsl:value-of select="substring-after(Pointer, '.')"/>_Pointer.GetJoin(QuerySelect, 
-                  <xsl:value-of select="$RegisterName"/>_Const.<xsl:value-of select="Name"/>, "<xsl:value-of select="../../../Table"/>", "join_tab_<xsl:value-of select="position()"/>", "<xsl:value-of select="Name"/>");
-                </xsl:if>
-                -->
                 <xsl:choose>
                   <xsl:when test="Type = 'pointer'">
                       /* pointer */
@@ -2037,8 +2087,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
                   </xsl:when>
                   <xsl:when test="Type = 'composite_pointer'">
                       /* composite_pointer */
-                      QuerySelect.FieldAndAlias.Add(new ValueName&lt;string&gt;("join_tab_<xsl:value-of select="position()"/>.name", "<xsl:value-of select="Name"/>"));
-                      QuerySelect.Joins.Add(new Join("view_special_presentation", <xsl:value-of select="$RegisterName"/>_Const.<xsl:value-of select="Name"/>, <xsl:value-of select="$RegisterName"/>_Const.TABLE, "join_tab_<xsl:value-of select="position()"/>"));
+                      QuerySelect.FieldAndAlias.Add(new ValueName&lt;string&gt;($"{SpecialFunc.CompisitePresentation}({<xsl:value-of select="$RegisterName"/>_Const.<xsl:value-of select="Name"/>})", "<xsl:value-of select="Name"/>"));
                   </xsl:when>
                 </xsl:choose>
             </xsl:for-each>
@@ -2358,8 +2407,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
                   </xsl:when>
                   <xsl:when test="Type = 'composite_pointer'">
                       /* composite_pointer */
-                      QuerySelect.FieldAndAlias.Add(new ValueName&lt;string&gt;("join_tab_<xsl:value-of select="position()"/>.name", "<xsl:value-of select="Name"/>"));
-                      QuerySelect.Joins.Add(new Join("view_special_presentation", <xsl:value-of select="$RegisterName"/>_Const.<xsl:value-of select="Name"/>, <xsl:value-of select="$RegisterName"/>_Const.TABLE, "join_tab_<xsl:value-of select="position()"/>"));
+                      QuerySelect.FieldAndAlias.Add(new ValueName&lt;string&gt;($"{SpecialFunc.CompisitePresentation}({<xsl:value-of select="$RegisterName"/>_Const.<xsl:value-of select="Name"/>})", "<xsl:value-of select="Name"/>"));
                   </xsl:when>
                 </xsl:choose>
             </xsl:for-each>

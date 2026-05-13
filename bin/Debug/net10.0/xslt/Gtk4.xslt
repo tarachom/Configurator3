@@ -500,8 +500,7 @@ limitations under the License.
                         </xsl:when>
                         <xsl:when test="Type = 'composite_pointer'">
                             /* Приєднання composite_pointer */
-                            <xsl:value-of select="$ConfTypeName"/>_Select.QuerySelect.FieldAndAlias.Add(new ValueName&lt;string&gt;("join_tab_<xsl:value-of select="position()"/>.name", "<xsl:value-of select="Name"/>"));
-                            <xsl:value-of select="$ConfTypeName"/>_Select.QuerySelect.Joins.Add(new Join("view_special_presentation", <xsl:value-of select="$ConfTypeName"/>_Const.<xsl:value-of select="Name"/>, <xsl:value-of select="$ConfTypeName"/>_Select.QuerySelect.Table, "join_tab_<xsl:value-of select="position()"/>"));
+                            <xsl:value-of select="$ConfTypeName"/>_Select.QuerySelect.FieldAndAlias.Add(new ValueName&lt;string&gt;($"{SpecialFunc.CompisitePresentation}({<xsl:value-of select="$ConfTypeGroup"/>.<xsl:value-of select="$ConfTypeName"/>_Const.<xsl:value-of select="Name"/>})", "<xsl:value-of select="Name"/>"));
                         </xsl:when>
                     </xsl:choose>
                 </xsl:for-each>
