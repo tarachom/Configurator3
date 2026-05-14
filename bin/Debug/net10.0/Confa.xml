@@ -7,7 +7,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>13.05.2026 16:06:05</DateTimeSave>
+  <DateTimeSave>14.05.2026 17:02:31</DateTimeSave>
   <DictTSearch>simple</DictTSearch>
   <GtkVersion>Gtk4</GtkVersion>
   <ConstantsBlocks>
@@ -5768,7 +5768,7 @@ END]]></Value>
           <GeneratedCode Zip="1">H4sIAAAAAAAACpVUzU7bQBC+W/I7bHNyUBU4ILVAQxQMpKkqSBtaDgihzXribGPWZj1OQBUSbQ+9VxWHPkGPLeKQVirPsH6jyj9xnMQ0ZS+7Xn/zzcw3M6trura8RKKla/FGCFHf1F14pUbhh/Bj+EndqB/h5/D6pOVygSAPaMeBFpVoguNUmD+xKwLo2tKyrgU+FzZpYH9jfG5GyC5l0MD+anbbAAGSIlima0FFfVV36ia8Vrfqjxqp32qUAeuMuYFALuy228UhlbCha7om6Cn4HmVA2uhKakNdWAeSWsnfo8Z+5x0wrLSDDnOo7z8rinjTKBVdn5yfdYYvnjzffrljdnbXzs099mqtbZfKx7rmBR2HM+JRiZw6JOZ+iIpk/R7t3ifipvw+UuTsQcR7MDTKpLoZHQ459lrS9UAiB984Oi7HqiyuOPHSvUpExLcxFdUC23RPTNJ8omUDRnGl1ClltHzAyUfOIHaZBTKgThBVNf+3JcEHEYnkClIdgyt79DSPvEyOl+Pc0zSofyEYeRvRHlC/TxqAeb5ExWIP5FGViMBxSI3QIeWYeZ7nWCelUqb6rMtUKrNHhQ3GG8HPAmhu14hXnlOvla/IghIYHqnVYtyY0iiPaxiHEcc8F2sOsS/a4ADDWqUpBm4fsp+ZiJmY0kVgCBZxByAltyDNcuByiyQsxlaA6ArSibfHZGcAAuvS9gmVtl+UqxeRES/dq+ObStzduThTRKUN2KISBBqJjyLMIbew9xrOAvCRVMnTlZUC0HPgdg8nqNUp1BZ0XQmmw1l/3wOxGwg2pdDCF1V9VzdqpG6jp039Ul/USP0Mr8Mr4lEbSPWhZvN6UBsqqViJIHHTxt8zszNjtM0lMHTlRdpDTYTT3EiNG2nWl0kdZ4uy/sm4YyZ9mrSBF03RveOddOL0GHj5hKJV7yLIhH1O8WzGc+d8HXINYva4YxlR1IUd1HMTKWfHJE6zDRhP7fwc/Lv/TQeoNOY7vCjv6EHJR/Y/aceY2Ekh5FLX0sfvL9HBa4v3BwAA</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Елемент</Name>
           <Desc>Елемент</Desc>
           <Type>Element</Type>
@@ -46976,94 +46976,9 @@ SQL тип  непотрібно вказувати
       </TabularLists>
       <Forms>
         <Form Modified="0">
-          <Name>Елемент</Name>
-          <Type>Element</Type>
-          <GeneratedCode Zip="1">
-          </GeneratedCode>
-          <NotSaveToFile>0</NotSaveToFile>
-          <ElementFields>
-            <Field>
-              <Name>Номенклатура</Name>
-              <Caption>Номенклатура</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>100</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>pointer</Type>
-              <Pointer>Довідники.Номенклатура</Pointer>
-              <PresetntationFields Count="1">
-                <Field>Назва</Field>
-              </PresetntationFields>
-            </Field>
-            <Field>
-              <Name>ХарактеристикаНоменклатури</Name>
-              <Caption>ХарактеристикаНоменклатури</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>100</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>pointer</Type>
-              <Pointer>Довідники.ХарактеристикиНоменклатури</Pointer>
-              <DirectoryOwner>Довідники.Номенклатура</DirectoryOwner>
-              <PresetntationFields Count="1">
-                <Field>Назва</Field>
-              </PresetntationFields>
-            </Field>
-            <Field>
-              <Name>ВидЦіни</Name>
-              <Caption>ВидЦіни</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>100</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>pointer</Type>
-              <Pointer>Довідники.ВидиЦін</Pointer>
-              <PresetntationFields Count="1">
-                <Field>Назва</Field>
-              </PresetntationFields>
-            </Field>
-            <Field>
-              <Name>Ціна</Name>
-              <Caption>Ціна</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>100</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>numeric</Type>
-            </Field>
-            <Field>
-              <Name>Пакування</Name>
-              <Caption>Пакування</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>100</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>pointer</Type>
-              <Pointer>Довідники.ПакуванняОдиниціВиміру</Pointer>
-              <PresetntationFields Count="1">
-                <Field>Назва</Field>
-              </PresetntationFields>
-            </Field>
-            <Field>
-              <Name>Валюта</Name>
-              <Caption>Валюта</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>100</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>pointer</Type>
-              <Pointer>Довідники.Валюти</Pointer>
-              <PresetntationFields Count="1">
-                <Field>Назва</Field>
-              </PresetntationFields>
-            </Field>
-          </ElementFields>
-        </Form>
-        <Form Modified="0">
           <Name>Список</Name>
           <Type>List</Type>
-          <GeneratedCode Zip="1">
-          </GeneratedCode>
+          <GeneratedCode Zip="1">H4sIAAAAAAAACqVUXU8bRxR9t+T/MAovBrWbtmpVqZRGxgFEQsBirbYoQmjYvV4Gr2ecmbsgUiFBkErfkKrKSJXSL1V9dtogmQ+7f+HOP4pmbeOFUBzSfRntmTtnzz337ORz+dz9CeaefC5dGGP0l21Sh9r0krp0QSfUoTM6p5Z9YQ/sHrW9wGSKf6d/qW33qUtn+VwG/4Na9IrOqW0PU7JTZveHpexDRsfU6gPtfG7ivjudGCEjNi8RdJUHMIe1TycHaDEIVCJRyMhXVdzmGi635kCC5ghhSYXg0W90Qv/Ypt23L5xe+tE26XXaS9dhdEKnk8Ovva002xObeg927yqnbV4ynlHbG+XvWtaZVKjkdTANHgDzUWkeQVGGFc3v0uvTuaX1TQjQ85P1IObGfLkMkTAIel5Wla5zFErOKl1/pBIteTzNDXxVuLcgDK6VanzTf7Y5U/tkZSmAx9/WPl/5uHhvfDWfayTrsQhYg2sUPGYp8cj8rF3x9ws2Wkg+910vWYMPbSkRsnkp3It4DoXx3na/yj2VnQYs8jqwqdF6Skoa9Cor5ZnF4pOZydtCnJXuFcOwpOKkLgu4Icx45qAPWOYRGB/QBdYUPvtosL07+Ev63hnkKII7mrYI2zf0fDeOWBhkU47qG4EbZa0aoFGAKTxdzbbiyrxFhbCuVG02kQGbYmWtIs3r3jQ3InCzenClIg3c4LwGTLRMaa47MKYhEkqypS3QWoRwzRnVhxk3OzJgX/M4gQo3NbageLgMgdKhucEFvs0FjhpdliI7vOF0tEIIEMKhjDR0syKOZ0WMoAu9paQkahWzavbthtncrqekgSP0id9V0HVfpqGqNPiAKfTf1vxpD1w07Pe2aY/pJbXSkPzgYkJ/U4s61LFH9DN1XWjSmyXF7SG1PPqlf9FcuFxRm36lE7tnm9Sl1/QTndsjaqZp6zhae1Bw8XgMOx+wMmihwnfva8vZ3TtU2uAygvCmyP+vXob37Hv14vWXivJRCxkVxi93HnIEH7nGa4hqvGXAGMiw9yPkc7s96A0rDY+HlwcAAA==</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
@@ -47193,51 +47108,9 @@ SQL тип  непотрібно вказувати
       </TabularLists>
       <Forms>
         <Form Modified="0">
-          <Name>Елемент</Name>
-          <Type>Element</Type>
-          <GeneratedCode Zip="1">
-          </GeneratedCode>
-          <NotSaveToFile>0</NotSaveToFile>
-          <ElementFields>
-            <Field>
-              <Name>Валюта</Name>
-              <Caption>Валюта</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>100</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>pointer</Type>
-              <Pointer>Довідники.Валюти</Pointer>
-              <PresetntationFields Count="1">
-                <Field>Назва</Field>
-              </PresetntationFields>
-            </Field>
-            <Field>
-              <Name>Курс</Name>
-              <Caption>Курс</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>100</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>numeric</Type>
-            </Field>
-            <Field>
-              <Name>Кратність</Name>
-              <Caption>Кратність</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>100</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>integer</Type>
-              <AutomaticNumbering>0</AutomaticNumbering>
-            </Field>
-          </ElementFields>
-        </Form>
-        <Form Modified="0">
           <Name>Список</Name>
           <Type>List</Type>
-          <GeneratedCode Zip="1">
-          </GeneratedCode>
+          <GeneratedCode Zip="1">H4sIAAAAAAAACqVUW08TQRR+b9L/MMGXYnT1QR8U0ZQqBMXa0MZrDBl2T5eR3Zlm5iyIhoRLoj5pYkxJSLzGH1AvJBVs/Qtn/pHZbUsXqIC6L5P95pwz3/nON5PNZDNnTrL4y2aShTFGm3bdrthVatJratCOfWnXHNekAj7SL2raVWrTdjaTwj9Rg77QDjXtc2pRk34wu9oPZacZbVCjCzSzmZNn4uzICOmzSYmgq9yFCZw/N9JD866rIolC+mVVxUWuYXdrAiRojuAVlAcOfaAt+mbrdtWu2ZWYua3Td2rTT2rHGG3Rj5H+aQeZpntio/9Q3dlb09Z3K25T0xmk6UxajYSc5CGYGneBlVFp7kNeehXN/6a/BxO3Zh+Bi045mnUDbsylafCFQdCTsqp0yFEoOa50eF1FWvJgjBu4nBuaEgZn7mnxaO5+ZSx/NhRhvnj1wnT4+O7i0PDDbKYWzQbCZTWuUfCAJZUHGmVmj5AX2dGnZzNPOxbqFV9QwmOTUsQ/4gnkhjvb3aj4qyzVoMhDYKODORSUNOhU7pWuFfM3r40c5tA0XSfveQUVRKHM4Zwww6nEMmCJ+2DKgLEbTe782d72cu8KdDUyyFG4xxCnCIsDejs6LxAG2WicfkfgXEmrGmgUYHIPHqYpx2FOUSHMKjU/HkmXjbKSVr7moTPGjXDjOVzZE5E4qJevASMtkzL7Oz2hwRdKslsLoLXwYJ8Cqgszbpaky27zIIIKN/NsSnFvGlylPTOgc77IBR41onSJ9JD6U9AKwUXw+jQSQ42LIBgXAYLOdZaCkqhVwKrpvwHzOJxPQQNH6BY+LqH9uoxBVWkoAybQn6X5bNepRdv2ma3bDXob24Ma9oVds+v0lRrUopZ9RZvUjp+I5KlIcPucGg69674cP6lh16hJ72nLrtg6tek7vaEd+4rqsfOolbhuPRfb4wYsnWIl0EJ5x+9rIZa7k1SY49IHb5DN/6uX/sP5T7043aWiyqiF9HPDuztXOUIZucZ9iKodEOAESK9zEbKZ5Q70G/TbzYRQBwAA</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
@@ -47391,7 +47264,16 @@ SQL тип  непотрібно вказувати
           </Fields>
         </TabularList>
       </TabularLists>
-      <Forms />
+      <Forms>
+        <Form Modified="1">
+          <Name>Список</Name>
+          <Desc>Список</Desc>
+          <Type>List</Type>
+          <GeneratedCode Zip="1">H4sIAAAAAAAACqVUW2sTQRR+D+Q/DPUlLbpVvIDWKmm0pVpjMMF6Qcp092Q7djMTZs62VCm0Fi9vgkgEod7wwceoLaSXxL9w5h/JbpJmW6u9uC/DfnPON+d855tJp9KpwQEWfelUvDDG6Jt9ZpeoYZ/TJrVojRq0Si3apnVq0iZtUd0+sytRhOOaRNpn+kUNu0wt2kynEvgXqtN32qKGfUlNatAGs8u9UHaK0Tuqd4BGOjUwGGWHRkifjUsEXeYujOHsuaEumnVdFUoU0i+qMs5zDTtbYyBBcwQvpzxw6BOt009bs8vtjuiNrdFa3EsrwmidNoZ6p/1ZabInNnwMdmc3p63tMG5Swzm80lNJjeKSJa+AqXIXWBGV5j5kpVfS/ChdPxy7Pf0YXHSK4bQbcGMu3wFfGAQ9LstKVzgKJUeVrtxQoZY8GOEGrmT6JoTBqTPemXulsDB/cXZyJi+y7oML/tlsX/+jdKoaTgfCZVWuUfCAxcRH8NTULs0vsYNLSqeett3WPXJOCY+NSxH9iCeQ6W9vd6Kir7RQhTyvABs+SmU5JQ06pfuF6/nsretD/7J4sgkn63k5FYQVmcEZYfoTiUXAAvfBFAEjO5vM+dPd7cXuHeroaZCjcI8tZB7m99HhuGyBMMiGI9JJgTMFraqgUYDJPHyUbC8Kc/IKYVqp2dFQumyYFbTyNa84I9wIN5rk1V0RsTG7+Row1DKm2avKCQ2+UJLdngOthQd71FIdmHGzIF12lwchlLiZZROKe3fAVdoz++jB57nAg8aZpEgOtDcxrRBcBK9XRmzJUREEoyJA0Jn2klMStQpYOfm3z5T+XU9OA0foEB+2oL26jEBZaSgCxtDfpflqVyJr2Be2Zt/RKtVjk7yKbEI/qE5NatrX9J5asa2Wu7h9SXWHPnQepO3IV9Sgj7Rul2wtdt5b2rKvqRa7rRnR2pVMZI+bsHCSFUAL5R2+r7lI7nZSboZLH7z9zP9fvfTe42P14nSWkiqiFtLP9O/sXOMIReQa9yCq+ocAJ0B67YuQTi22od/kceCB0wcAAA==</GeneratedCode>
+          <NotSaveToFile>0</NotSaveToFile>
+          <TabularList>Записи</TabularList>
+        </Form>
+      </Forms>
     </RegisterInformation>
     <RegisterInformation>
       <Name>ФайлиДокументів</Name>
@@ -47472,12 +47354,11 @@ SQL тип  непотрібно вказувати
         </TabularList>
       </TabularLists>
       <Forms>
-        <Form Modified="0">
+        <Form Modified="1">
           <Name>Список</Name>
           <Desc>Список</Desc>
           <Type>List</Type>
-          <GeneratedCode Zip="1">
-          </GeneratedCode>
+          <GeneratedCode Zip="1">H4sIAAAAAAAACqVU3U5TQRC+b9J32OBNMXrwAi8U0UClBEUotGqMMWQ5Z3pYOd1tdueAaEiAJuKdiTE1MfE3PED9ISk/ra8w+0bmnLb0gAiCe7PZb2a/nflmdtKpdGrgIotWOhVvjDHaojrt0B416C21aNdWaZ+2qWk3bI2+O65JuH6hX9Sw65FbOpXAv1KdvkUUdpOa1KAdZtd7ruwyo3dU7wCNdOriQHQ7NEL6bEIi6BJ3YRwXB4e66IjrqlCikH5BlXCZazgwjYMEzRG8rPLAoc+0TT9sza7bDbtGDXpja/STWrRPrQijbdoZ6r32Z6TJnNjwOdidw5y2dsC4Sw3nZHXnkrrEYUpeBlPhLrACKs19GJFeUfOzZPp4fHr+KbjoFMJ5N+DG3JgFXxgEPSFLSpc5CiVzSpfvqFBLHoxyAzczfZPC4NxE0c2ZyTt4Pyznr3kzg6Njz/Izff1P0qlKOB8Il1W4RsEDFhOf0jtzh7S9zk4PI5160e6q7jNLSnhsQoroIJ5Dpr9t7nhFq7hSgSleBjZ8WjRZJQ06xUf5samRe2NDJ7VvMnBnxPOyKgjLMoMLwvQnLhYA89wHUwCMWtVkrl7pmle7/6Ojm0GOwj2TYFOwfEy+Z2EIhEE2HBE9FLiQ16oCGgWYzOMnyTQiN2dKIcwrtZgLpcuGWV4rX/OyM8qNcKMq3TrkETda974GDLWMaY5mf0GDL5Rk00ugtfDgiCqqAzNuVqTLHvAghCI3i2xScW8WXKU9c4wGfJkLPK1sSYpk4XqV0QrBRfB6YcTtlhNBkBMBgs60t6ySqFXASsnTMZU5OZ6sBo7QIf7XgI7qMgolpaEAGEN/l2bLVqlJu/alrdl39IHqtEd1+8pu2Cp9pzo1qWlf03tqRZMknigxbjep7tDHzoDZp7rdoAZ9om27ZmvUop/0lvbsa6rZql2jZkRrq5moPe7CyiWWBy2U9+95LUVyty9lF7j0wTu24f8nl958PVcuTmcrqgJqIf1M/4HlNkcoINd4BFGVPwS4ANJrf4R0arUN/QZ/U+kgiwcAAA==</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
@@ -47633,12 +47514,11 @@ SQL тип  непотрібно вказувати
         </TabularList>
       </TabularLists>
       <Forms>
-        <Form Modified="0">
+        <Form Modified="1">
           <Name>Список</Name>
           <Desc>Список</Desc>
           <Type>List</Type>
-          <GeneratedCode Zip="1">
-          </GeneratedCode>
+          <GeneratedCode Zip="1">H4sIAAAAAAAACrVVbU8bRxD+bsn/YRW+mKg9orap1FJaGRdTkhQsbLWqEELL3fjYct61duewIIoEQWraT5Gq6iJFok2q/gC3BcW8OX9h9h9Fe7bxQQhQSu7Lap+ZnZ155pm9fC6fG7vN3JfPpQtjjF5Ql17RkU3sL7RHx3Rsn9IOdeko3R3QIbXtY7ttN6lDf1CXnjubTewmHVCbjmiH2vSy50e7NvF8kwn+kl5Tx25Rlw7yuQz+J7Xpbzqkjn1Cx9ShfWa3hq7sQ0bPqN0HOvnc7TF3OjZChmxGIug692EaVz8ZH6BF31exRCHDqqpji2s4MU2DBM0RgpIKwKMXtEf/2sRu2cdpTb/ahHbTersOoz3aHx/e9nam2ZrYxDWie6dj2uQk4gF1vJvux1KWybQwyRtgmtwHVkWleQhFGdQ0/y/cLEzPLf8IPnrVeNmPuDFfzEMoDIKekXWlGxyFkmWlG/dUrCWPJrmBLwu3HgiDSxvlKfVp6zN/ZfUjNffN9HyEG+sfF2+NLuZzzXg5Ej5rco2CRyyNfOMCXTrVwM/Z5Znncw970h0ktqZEwGakcBuxAYXRnrnv5b7aehNmeQPYxM3nX1LSoFf7oTI1W/x2avyiqcqW6hWDoKSiuCELuCLMaOZgFbDCQzBVQDdBpnD3zsD8aDC2/d4Y5Cj899yUWWidw+n7vTMSBtmEu/p7gSsVrZqgUYApLCxmqXJu3qxCWFZqtRxLn02wilah5g1vkhvhO+18dcojnZjBeQ0Ya5mGOcvwiIZQKMnm1kBrEcAZ5lUfZtysS599x6MYatyssgeKB/PgKx2Yc1jjLS7wMmlkQ2TFMey+Vgg+QjBMIx2CsoiisogQdKG3lJRErSJWz+7O6eXF+ZQ0cIR+4KsmdJaXSagrDVXAFHo3NX/ZbScf+5NN7LNUJE5IPzsp0T/U7gvtOXWdsNKnMcXtE2p79Hv/pTxy2kt1t2c3bUJd2qXf6NA+pSRV5LELa7cLTh73Yf0DVgEtVHD1utYc3b1DpRUuQwjOG5H/VcvwR3GtWrz+UlNV1EKGhdETy9ccoYpc4xlENd8iYARk0BuEfO5RD3oD2tN6ALgIAAA=</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>

@@ -631,6 +631,12 @@ namespace Configurator
                 System.IO.Path.Combine(PathToXsltTemplate, "xslt/ComparisonAnalize.xslt"),
                 System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, "ComparisonAnalize.xml"));
 
+            ApendLine("6. Створення функцій SQL");
+            Configuration.GeneratedFunc(
+                Conf.PathToTempXmlFileConfiguration,
+                System.IO.Path.Combine(PathToXsltTemplate, "xslt/GeneratedFunc.xslt"),
+                System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, "GeneratedFunc.xml"));
+
             if (informationSchema.Tables.Count > 0)
             {
                 ApendLine("");
@@ -686,6 +692,7 @@ namespace Configurator
             ClearListBoxTerminal();
 
             string pathToSqlCommandFile = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, "ComparisonAnalize.xml");
+            string pathToFuncSqlCommandFile = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, "GeneratedFunc.xml");
 
             if (File.Exists(pathToSqlCommandFile))
             {
@@ -720,6 +727,37 @@ namespace Configurator
 
                 ApendLine("\nВидалення файлу команд " + pathToSqlCommandFile + "\n");
                 File.Delete(pathToSqlCommandFile);
+            }
+
+            if (File.Exists(pathToFuncSqlCommandFile))
+            {
+                //Read SQL
+                List<string> SqlList = Configuration.ListComparisonSql(pathToFuncSqlCommandFile);
+
+                ApendLine("[ Створення функцій SQL ]\n");
+
+                if (SqlList.Count != 0)
+                {
+                    //Execute
+                    foreach (string sqlText in SqlList)
+                    {
+                        ApendLine(" --> " + (sqlText.Length > 100 ? sqlText[..100] : sqlText));
+
+                        try
+                        {
+                            await Program.Kernel.DataBase.ExecuteSQL(sqlText);
+                        }
+                        catch (Exception ex)
+                        {
+                            ApendLine("Помилка: " + ex.Message);
+                        }
+                    }
+
+                    //
+                }
+
+                ApendLine("\nВидалення файлу команд " + pathToFuncSqlCommandFile + "\n");
+                File.Delete(pathToFuncSqlCommandFile);
             }
 
             if (File.Exists(Conf.PathToTempXmlFileConfiguration))
@@ -905,6 +943,36 @@ namespace Configurator
 
                                         form.Modified = false;
                                     }
+                        }
+                    }
+
+                    //РегістриІнформації
+                    {
+                        string folderPathRegInfos = CreateFolder(folderGenerateCode, "РегістриІнформації");
+
+                        foreach (ConfigurationRegistersInformation regInfo in Conf.RegistersInformation.Values)
+                        {
+                            string folderPathRegInfo = "";
+                            bool existAnyForm = false;
+
+                            foreach (ConfigurationForms form in regInfo.Forms.Values)
+                                if (form.Modified && !form.NotSaveToFile)
+                                {
+                                    if (!existAnyForm)
+                                    {
+                                        folderPathRegInfo = CreateFolder(folderPathRegInfos, regInfo.Name);
+                                        existAnyForm = true;
+                                    }
+
+                                    string formPath = System.IO.Path.Combine(folderPathRegInfo, form.Name + ".cs");
+
+                                    TextWriter tw = System.IO.File.CreateText(formPath);
+                                    tw.Write(form.GeneratedCode);
+                                    tw.Flush();
+                                    tw.Close();
+
+                                    form.Modified = false;
+                                }
                         }
                     }
 

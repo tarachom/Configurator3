@@ -485,105 +485,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>
     }
 
     public class Functions
-    {
-        /*
-          Функція для типу який задається користувачем.
-          Створює або оновлює VIEW на PostgreSQL сервері для відображення презентації для uuidAndText
-        */
-        /*
-        public static async ValueTask CreateCompositePresentationView()
-        {            
-            string query = """
-            CREATE OR REPLACE VIEW view_special_presentation AS
-            <!--Довідники та Документи-->
-            <xsl:for-each select="Configuration/Directories/Directory | Configuration/Documents/Document">
-                <xsl:variable name="FieldCount" select="count(Fields/Field[IsPresentation=1])"/>
-                <xsl:if test="position() &gt; 1">
-            UNION ALL</xsl:if>
-            SELECT (uid, '<xsl:choose>
-                  <xsl:when test="name() = 'Directory'">Довідники.</xsl:when>
-                  <xsl:when test="name() = 'Document'">Документи.</xsl:when>
-              </xsl:choose><xsl:value-of select="Name"/>')::uuidtext AS uid, <xsl:choose>
-                <xsl:when test="$FieldCount = 1">"<xsl:value-of select="Fields/Field[IsPresentation=1]/NameInTable"/>"</xsl:when>
-                <xsl:when test="$FieldCount &gt; 1">
-                    <xsl:text>concat_ws (', ', </xsl:text>
-                    <xsl:for-each select="Fields/Field[IsPresentation=1]">
-                        <xsl:text>"</xsl:text><xsl:value-of select="NameInTable"/><xsl:text>"</xsl:text>
-                        <xsl:if test="position() != $FieldCount">, </xsl:if>
-                    </xsl:for-each>
-                    <xsl:text>)</xsl:text>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:text>"#"</xsl:text>
-                </xsl:otherwise>
-              </xsl:choose> AS name FROM <xsl:value-of select="Table"/>
-            </xsl:for-each>
-            """;
-            await Config.Kernel.DataBase.ExecuteSQL(query);
-        }
-        */
-
-        public static async ValueTask CreateCompositePresentationView2()
-        {
-            string query = """
-            CREATE OR REPLACE FUNCTION func_special_composite_presentation(data uuidtext) 
-            RETURNS TEXT AS $$
-            DECLARE
-                conf_group TEXT; -- Змінна для групи (Довідники або Документи)
-                conf_name  TEXT; -- Змінна для назви об'єкта
-            BEGIN
-                conf_group := split_part(data.text, '.', 1); -- Отримаємо частину ДО крапки
-                conf_name  := split_part(data.text, '.', 2); -- Отримаємо частину ПІСЛЯ крапки
-
-                IF conf_group = 'Довідники' THEN
-                  RETURN CASE conf_name
-                    <xsl:for-each select="Configuration/Directories/Directory">
-                        <xsl:variable name="FieldCount" select="count(Fields/Field[IsPresentation=1])"/>
-                        <xsl:text>WHEN '</xsl:text><xsl:value-of select="Name"/>' THEN (SELECT <xsl:choose>
-                          <xsl:when test="$FieldCount = 1">"<xsl:value-of select="Fields/Field[IsPresentation=1]/NameInTable"/>"</xsl:when>
-                          <xsl:when test="$FieldCount &gt; 1">
-                              <xsl:text>concat_ws (', ', </xsl:text>
-                              <xsl:for-each select="Fields/Field[IsPresentation=1]">
-                                  <xsl:text>"</xsl:text><xsl:value-of select="NameInTable"/><xsl:text>"</xsl:text>
-                                  <xsl:if test="position() != $FieldCount">, </xsl:if>
-                              </xsl:for-each>
-                              <xsl:text>)</xsl:text>
-                          </xsl:when>
-                          <xsl:otherwise>
-                              <xsl:text>"#"</xsl:text>
-                          </xsl:otherwise>
-                        </xsl:choose> FROM <xsl:value-of select="Table"/> WHERE uid = data.uuid)
-                    </xsl:for-each>
-                  END;
-                ELSIF conf_group = 'Документи' THEN
-                  RETURN CASE conf_name
-                    <xsl:for-each select="Configuration/Documents/Document">
-                        <xsl:variable name="FieldCount" select="count(Fields/Field[IsPresentation=1])"/>
-                        <xsl:text>WHEN '</xsl:text><xsl:value-of select="Name"/>' THEN (SELECT <xsl:choose>
-                          <xsl:when test="$FieldCount = 1">"<xsl:value-of select="Fields/Field[IsPresentation=1]/NameInTable"/>"</xsl:when>
-                          <xsl:when test="$FieldCount &gt; 1">
-                              <xsl:text>concat_ws (', ', </xsl:text>
-                              <xsl:for-each select="Fields/Field[IsPresentation=1]">
-                                  <xsl:text>"</xsl:text><xsl:value-of select="NameInTable"/><xsl:text>"</xsl:text>
-                                  <xsl:if test="position() != $FieldCount">, </xsl:if>
-                              </xsl:for-each>
-                              <xsl:text>)</xsl:text>
-                          </xsl:when>
-                          <xsl:otherwise>
-                              <xsl:text>"#"</xsl:text>
-                          </xsl:otherwise>
-                        </xsl:choose> FROM <xsl:value-of select="Table"/> WHERE uid = data.uuid)
-                    </xsl:for-each>
-                  END;
-                END IF;
-
-                RETURN NULL;
-            END;
-            $$ LANGUAGE plpgsql STABLE;
-            """;
-            await Config.Kernel.DataBase.ExecuteSQL(query);
-        }
-
+    {        
         /*
           Функція для типу який задається користувачем.
           Повертає презентацію для uuidAndText
@@ -2055,6 +1957,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
     #region REGISTER "<xsl:value-of select="$RegisterName"/>"
     public static class <xsl:value-of select="$RegisterName"/>_Const
     {
+        public const string TYPENAME = "РегістриВідомостей.<xsl:value-of select="$RegisterName"/>";
         public const string FULLNAME = "<xsl:value-of select="normalize-space(FullName)"/>";
         public const string TABLE = "<xsl:value-of select="Table"/>";
         <xsl:for-each select="(DimensionFields|ResourcesFields|PropertyFields)/Fields/Field">
@@ -2087,10 +1990,13 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
                   </xsl:when>
                   <xsl:when test="Type = 'composite_pointer'">
                       /* composite_pointer */
-                      QuerySelect.FieldAndAlias.Add(new ValueName&lt;string&gt;($"{SpecialFunc.CompisitePresentation}({<xsl:value-of select="$RegisterName"/>_Const.<xsl:value-of select="Name"/>})", "<xsl:value-of select="Name"/>"));
+                      QuerySelect.FieldAndAlias.Add(new ValueName&lt;string&gt;($"{SpecialFunc.CompisitePresentation}({<xsl:value-of select="$RegisterName"/>_Const.TABLE}.{<xsl:value-of select="$RegisterName"/>_Const.<xsl:value-of select="Name"/>})", "<xsl:value-of select="Name"/>"));
                   </xsl:when>
                 </xsl:choose>
             </xsl:for-each>
+
+            /* Назва власника */
+            QuerySelect.FieldAndAlias.Add(new ValueName&lt;string&gt;($"{SpecialFunc.CompisitePresentation}({<xsl:value-of select="$RegisterName"/>_Const.TABLE}.owner, {<xsl:value-of select="$RegisterName"/>_Const.TABLE}.ownertype)", "OwnerName"));
         }
 
         public async ValueTask Read()
@@ -2114,16 +2020,17 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
                     </xsl:for-each>
                 };
                 Records.Add(record);
-                <xsl:if test="count((DimensionFields|ResourcesFields|PropertyFields)/Fields/Field[Type = 'pointer']) != 0">
-                  if (JoinValue.TryGetValue(record.UID.ToString(), out var ItemValue))
-                  {
+                <xsl:if test="count((DimensionFields|ResourcesFields|PropertyFields)/Fields/Field[Type = 'pointer' or Type = 'composite_pointer']) != 0">
+                if (JoinValue.TryGetValue(record.UID.ToString(), out var ItemValue))
+                {
                     record.JoinItemValue = ItemValue;
+                    if (ItemValue.TryGetValue("OwnerName", out var ownerName)) record.OwnerName = ownerName;
                     <xsl:for-each select="(DimensionFields|ResourcesFields|PropertyFields)/Fields/Field">
                         <xsl:if test="Type = 'pointer' or Type = 'composite_pointer'">
                           <xsl:text>record.</xsl:text><xsl:value-of select="Name"/>.Name = ItemValue["<xsl:value-of select="Name"/>"];
                         </xsl:if>
                     </xsl:for-each>
-                  }
+                }
                 </xsl:if>
             }
             base.BaseClear();
@@ -2391,7 +2298,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
 		
         public List&lt;Record&gt; Records { get; set; } = [];
         
-        public void FillJoin(string[]? orderFields = null, bool docname_required = true)
+        public void FillJoin(string[]? orderFields = null)
         {
             QuerySelect.Clear();
 
@@ -2407,13 +2314,16 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
                   </xsl:when>
                   <xsl:when test="Type = 'composite_pointer'">
                       /* composite_pointer */
-                      QuerySelect.FieldAndAlias.Add(new ValueName&lt;string&gt;($"{SpecialFunc.CompisitePresentation}({<xsl:value-of select="$RegisterName"/>_Const.<xsl:value-of select="Name"/>})", "<xsl:value-of select="Name"/>"));
+                      QuerySelect.FieldAndAlias.Add(new ValueName&lt;string&gt;($"{SpecialFunc.CompisitePresentation}({<xsl:value-of select="$RegisterName"/>_Const.TABLE}.{<xsl:value-of select="$RegisterName"/>_Const.<xsl:value-of select="Name"/>})", "<xsl:value-of select="Name"/>"));
                   </xsl:when>
                 </xsl:choose>
             </xsl:for-each>
 
+            /* Назва власника */
+            QuerySelect.FieldAndAlias.Add(new ValueName&lt;string&gt;($"{SpecialFunc.CompisitePresentation}({<xsl:value-of select="$RegisterName"/>_Const.TABLE}.owner, {<xsl:value-of select="$RegisterName"/>_Const.TABLE}.ownertype)", "OwnerName"));
+
             //Назва документу
-            if (docname_required)
+            /*if (docname_required)
             {
               <xsl:text>string query_case = $"CASE </xsl:text>
               <xsl:for-each select="AllowDocumentSpend/Name">
@@ -2427,7 +2337,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
               int i = 0;
               foreach (string table in <xsl:value-of select="$RegisterName"/>_Const.AllowDocumentSpendTable)
                   QuerySelect.Joins.Add(new Join(table, "owner", "<xsl:value-of select="$Table"/>", $"join_doc_{++i}"));
-            }
+            }*/
         }
 
         public async ValueTask Read()
@@ -2453,11 +2363,11 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
                     </xsl:for-each>
                 };
                 Records.Add(record);
-                <xsl:if test="count((DimensionFields|ResourcesFields|PropertyFields)/Fields/Field[Type = 'pointer']) != 0">
+                <xsl:if test="count((DimensionFields|ResourcesFields|PropertyFields)/Fields/Field[Type = 'pointer' or Type = 'composite_pointer']) != 0">
                 if (JoinValue.TryGetValue(record.UID.ToString(), out var ItemValue))
                 {
                     record.JoinItemValue = ItemValue;
-                    if (ItemValue.TryGetValue("docname", out var ownerName)) record.OwnerName = ownerName;
+                    if (ItemValue.TryGetValue("OwnerName", out var ownerName)) record.OwnerName = ownerName;
                     <xsl:for-each select="(DimensionFields|ResourcesFields|PropertyFields)/Fields/Field">
                         <xsl:if test="Type = 'pointer' or Type = 'composite_pointer'">
                           <xsl:text>record.</xsl:text><xsl:value-of select="Name"/>.Name = ItemValue["<xsl:value-of select="Name"/>"];
