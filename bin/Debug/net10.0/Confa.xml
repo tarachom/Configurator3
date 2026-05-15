@@ -7,7 +7,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>14.05.2026 17:02:31</DateTimeSave>
+  <DateTimeSave>15.05.2026 11:12:28</DateTimeSave>
   <DictTSearch>simple</DictTSearch>
   <GtkVersion>Gtk4</GtkVersion>
   <ConstantsBlocks>
@@ -1121,7 +1121,7 @@ https://accounting.org.ua/storage_and_trade.html</Desc>
           <Name>МетодСписанняПартій</Name>
           <NameInTable>col_h4</NameInTable>
           <Type>enum</Type>
-          <Pointer>Перелічення.МетодиСписанняПартій</Pointer>
+          <Pointer>Перелічення.МетодиСписання</Pointer>
           <TabularParts />
         </Constant>
       </Constants>
@@ -1975,6 +1975,18 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
         </Field>
+        <Field>
+          <Name>Категорія</Name>
+          <FullName>Категорія</FullName>
+          <NameInTable>col_a6</NameInTable>
+          <Type>pointer</Type>
+          <Pointer>Довідники.Категорії</Pointer>
+          <IsPresentation>0</IsPresentation>
+          <IsIndex>0</IsIndex>
+          <IsFullTextSearch>0</IsFullTextSearch>
+          <IsSearch>0</IsSearch>
+          <IsExport>0</IsExport>
+        </Field>
       </Fields>
       <TabularParts>
         <TablePart>
@@ -2433,7 +2445,7 @@ END]]></Value>
           <Name>Список з Деревом</Name>
           <Desc>Список з Деревом</Desc>
           <Type>ListAndTree</Type>
-          <GeneratedCode Zip="1">H4sIAAAAAAAACqVWzW4bNxC+C9A7MDkE68BYp0VzqaMIsizbKhJb9doJgiAIqN2xzJoiFXLWitIEcBOgvfVQBM6pLVr0AZygQV2ncV6B+0YFqZW0qx//tDxoteTMx2+G3wy3WFi4TuwoFtyDEGJ+NqfmH/PefDQn5oM5Sl4mr5IDc+SHOmv1m/lkjpPvzKk5IeYvYl6b98mBeW/eWe9i4fpCsVAsxJqJFlnFvcXB/7pAUDs0hFXc+2I4WwlDGQtkohXIHexSBcOlVRCgKEJUlRH45rU5Ne+SQ/On+WiOzYk5XhztY343R+at+WCOkx/c8t85lqVzsfw8QnI49HeLMxLz2LwxR6mdpZOS+SN5ZS2T75PD5A0pkQCloi2oiGhLUbv9TLicp4tP0DboDg1hHMWtPlzdaH4DIfpB3Aw51frWMlMQolS9FanaX8lYCcpXYs5ve1fvMI3OG+DpgxavPdiOn2zTNVXp3H3We7bJulfnHhULHaqQUU4c3ExJPM7l90sya9ti4du+cmYD/epSeGKO85ijeVK6tLe/Dl1vbrG/tU2UfQ4i25csInXB7At7Bt5cfzklasdWrwPrtA1n7VyVQqPf2Kivb9U2051coGdK0a9EUVXyuC083GV6QNGOALBBW6ADQFsO2rt5wy6PDBYWRtGOZjO07ajKdkdqhnBXRpY/qthKJWtSiaKgyzDc3dawxkBRFe72XLbydkvyKdm3PyVi07mhGAikyKTw74FCFlI+TxzHrJf18O9S1WIiQKqQlMjNaSaVTgdE5I1CmiSw1qACoi3a5OAHgDURVXcZjzzrP75t1rZhE8CkICXy2ec3bpxh6Rg60HLKuSailHHea8TTrwsNCmvtDvZWmNK4KbvTE53xqVLOl2i497gSItunaI+G6p4ISSzYkxjqy6R0O+89drCpAn5yXettcpgcEPPJnLof8yH5cbTb0aRjgyoQeH8XFNguQErkoYCud464R4jzTldUMS2FX/t6fsja316NWTT3aCxyO9gO8a5kJea72IFcu+YKzLEJ0OWiNJqxZyIiqjAty3NS0o+uBbrKgaphzY8P2qUMyR1Jo00IpYr0VMsX+akXGZPMUv/fi2FbiZuchUTb0ggv2DBde5poOxfz5f0DXIfufYa7DSU7thhBew8fZWOyZv66RGhKubcSi5CUSEPJlqJtf4lqFtpOXc5Z5ESvAGMlHEyKmqYgjVpJhBAhInIflGIRpHq+R3kMW1TvkSXYkQoCQDc1JV6rkAA4hNiQzH4d1BHa5EqJiJhz8vz56FaZsp6Rx5gsZqbR3pUay8T8Yt4mr81J8tJWoVOGgO5sv3T3KVzL5ekcy2WHuJ1WiTc3568CDk37l/aEBG0+MtwGgWb7yCSFUiacTMX6g73zGh699OPOQQ8OanG6wmcedK6sJk453ejsazELkb0Y85o7h8d2J6II/5NJHmSMyznad18WAWAAtuF5GpX9HtTubQue4iSlbEvOf/35g1ZvTpMDc+xlUC7AxzFZYZyvMG6l239UpUAlOdnJvk3pQ2dnqKqAIqTAl0vQ6Kw2OiBs365xaINAryklJ3W9Dt35YdmUM5djtuYnjzSfuXHsFHYANk+Gt3FGdpnZDZErs/8SXgC4DBzsV8gd2gTuDWIasrhgLBNAQ//Ls7o1TOxtUpWd3kVIpdfAVG4OYwqftGj/BUky6UdiDgAA</GeneratedCode>
+          <GeneratedCode Zip="1">H4sIAAAAAAAACqVWzW4bNxC+C9A7MDkE68BYp22C/jiKICuyoyKxVa8cH4LAoHbHMusVqZKzVtTGgJsA7a2HwnBObdGiD+AEDeo6jfMK3DcqSK20u/qxnZQHrZac+fjN8JvhFgsL14kZxYJ9EEL0L/pM/6tf67f6VL/Rx/Gz+Hl8oI9dX2Wtftfv9En8vT7Tp0T/TfShfh0f6Nf6lfEuFq4vFAvFQqQYb5MV3F0c/q9zBLlNfVjB3Zuj2Yrvi4gj421PbGOPShgtrQAHSRGCqgjA1Yf6TL+Kj/Rf+q0+0af6ZDHdR/+hj/VL/UafxD/a5X9yLEsXYrl5hPho5G8XZyRmS7/Qx4mdoZOQ+TN+bizjH+Kj+AUpEQ+FpG2o8KApqdl+JlzO08bHaQdUl/owjmJXH62stb4GH10vavkhVer2XSbBRyH7y0J2vhSR5DRcjsLwjnP1PlNovQG2sL+09mB9079Za1Y+/+QztflprXJ17nGx0KUSGQ2JRZupiK1cer8gs3YtFr4bCGc20G82g6f6JI+ZzpPSe3u7q9Bz5hYHW5s8mecwsj3BAlLnzLywb8GZGywnRM1o9ruwSjtw3s5VwRW6jbX6arO2nuxkAz1XiW4lCKoijDrcwR2mhhTN8AAbtA3KAzTVoJxbN8xyarCwkEabzmZom1EVna5QDOGBCAx/lJFRStakEgRej6G/s6HgHgNJpb/Tt9nK2y2JJ2TP/JSISeeaZMCRIhPcfQgSmU/DeWI5Zr2Mh/uAyjbjHlKJpERuTTOpdLvAAycNaZLAvQblEDRpKwTXA6zxoLrDwsAx/uPbZm0bJgFMcFIiH31848Y5lpahBS0nnGs8SBjnvVKebp0rkFjrdLG/zKTCddGbnuiMT5WG4RL1d7cqPrI9iuZoqOpzn0ScfRNB/S4p3cl7jx1sooCfbdN6GR/FB0S/02f2R7+Jf0p3O550bFAJHDd3QIJpAqREHnHoOReIO0Wct7qikinB3dpX8yPW7sZKxIK5x2ORm8G2iXMlKzHXxg7k2jVbYJaNhzYXpXTGnAkPqMSkLC9IySC6NqhqCFSOan580B5lSO4LGqyDL2Sgplru56f2MyaZpcG//VFbiVoh84kypeFfsmHa9jTRdi7nGw4OcBV6mwx3GlJ0TTGCch49zsZkzNxVgdASYnc54j4pkYYUbUk77hJVzDedupyzyIleAkaSW5gENUlBErUUCD5CQMQeSMkCSPT8kIYRNKnaJUuwLSR4gHZqSrxGIR6E4GNDMPNxUEfokCslwqMwJE+fprfKlPWMPMZkMTON5qpUWCb6V/0yPtSn8TNThVYZHHqz/ZLdp3Atl6dzLJct4kZSJc7cnLsCODId3NkTEjT5yHAbBprtI5MUSplwMhXrDvfOazh9GcSdgx4e1OJ0hc886FxZTZxystH512IWInsx5jV3AY+NbkAR/ieTPMgYlwu0b78sPEAPTMNzFErzOajsWxOe4CSlbEvOf/y5w1avz+IDfeJkUC7BxzJZZmG4zEIj3cGjKjhKEZLt7NuUPnR+hqoSKEIC/H4JSs9qrQvc9O1aCB3g6LSECEldrUJvflQ25czlmK35ySPNZ24cO4Edgs2T0W2ckV1mdo3nyuxDwvMA70II5ivkPm1B6AxjGrG4ZCwTQCP/92d1e5TYO6Qquv3LkEqugancLMYUPknR/gfzBEeEYQ4AAA==</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
@@ -2441,7 +2453,7 @@ END]]></Value>
           <Name>Швидкий вибір</Name>
           <Desc>Швидкий вибір</Desc>
           <Type>ListSmallSelect</Type>
-          <GeneratedCode Zip="1">H4sIAAAAAAAACq1VTW8bNxC9C9B/IHxaB8amaJtLHSVwZEtQ68qCV2kOQWBQ3LHMiiIVcjaKWwRwEqC9B4VyaQ8teujRDlJAcRr3L8z+o4Krr5UjxXaTPSzJnZnH92aG3GLh+jXmn2IhGxhj9Bud0T/0N72jU3pLx+mz9Hl6RMd79Be9oiG9plMa0ht6QUM6SQfpUShcLnqJU7Fw7XqxUCwkTuo2q2JnfTKvaQS7zwVUsfPl9OuGECbRKHU7MvvY5xampiposBwhLpsYQvqFzuhVOqDX9I6Gftv12T70Bx3TCb2lYfpzZn5Dv9O/NEyf0hmdstKFWOE8QjqYxmfGpal6ScdjvyH9mg585JQ//Zk+9xHpT+kgfclKLEJjeRs2dNy03NNYCjsXmenUvAuuxwWcR8ms96s7re9BYBglLaG4czc3pQWBxh5WjO1+bRKruYq6XKlbwUo2bkuHe51EbNW5/AK3Pv+2+jjefsgbuzfaK6sPioUetyi5Yhnc1ZuFfcWWUigWfhw1Uv492e+RkTGraekX8gcIVkfmcYR/moc9qPMusNJyWmWjHYaNnVq9ubW7Pov9BjybCNB3HCuxlTBjtJJz+XAvhRtxXDYq6eoAD6RbzQVGgA3eBjdGd8GNz7x55jCaPZl86iUtJQVzyFGK/5HhOvQXZOfqOEo6ZCUPd0/iQcOaHliU4IL7D/LyvFtYNwgtYzqVRAtWYg1r2pZ3wzvcSeHLfHvOY069BUyszmDWF2fCPAJrZQyMu0Mt2HdcJdDkrsO2DY93QRgbuwWKeZ9LvKhseYh84Z7M9eAFPO72Yo7wkUzmQc5xGfOwBkEgxOepZIcjAoyAW3EQOLS+jV22asJjfJ/SvQOw4M+6Py1z10pIL7Ib8ITO0iMaBjmUS/DJmFSkUhWpEGwwGspGozWK7edXC3r0wxkqW+AIY+CrJWhWq50eaH8cvfbgrpYPE6ht3mbJeMZKTCdKLa3hfKrmwCYQa2xDKdP3/xSNoDECBQKl0WvZ5hWjYrBrrMyVusNFZ29HjzwaRvpf4ceI2lLQBY1ByxjFaq4O/TX2qTROsMewM7VTIbmz9GnlRYCboMDncJu3QE3rNmVxSS3vAU3jr87q5jSxt1jZ9A4vQ2p81y3klmEs4DO+if4D6AyYq6oJAAA=</GeneratedCode>
+          <GeneratedCode Zip="1">H4sIAAAAAAAACq1VQW8TRxS+W/J/GOW0QdHCoa1Eg0HGwZHb4FisKUIIRePdF2fq8YyZeYubVkhpkdo7qsylPYA49JggKplQ0r/w9h9Vs17bu8EmSWEPOzP73vvm+957M1suXb7E3FMupQNjjP6kE/qH/qb3dEzv6DD5JXmaHNDhDv1Fr2lMb+iYxvSWntGYjpJRcuCHNhe9xKlcunS5XCqXYitUl21ib306bygEs8tD2MTeF7Ov1TDUsUKhuoHexSE3MDNtggLDEaKajsCn3+mEXicjekPvaey2XZ/vQy/pkI7oHY2T31LzW3pB/9I4+ZlO6JhVzsTyiwjJaBafGpem6jkdZn5j+iMZucgZf3qVPHURya/JKHnOKixAbXgXqipqG+5oLIUtRKY6Fe+DHfAQTqOk1geb253vIUQ/iDuh5NZe2xAGQtRmv65N/xsdG8Vl0OdSXvdW0nFLWNyxX9UFDiJ7+0rwqNu9X71q8Gq/u7L6sFwacIOCS5bCXbxZ2NdsKYVy6adJI+Xf0/0eaxGxhhJuIX4Eb3ViziLc094fQJP3gVWW06ppZdFvbTea7Vt31uex34JjEwC6jmMVtuKnjFZyLh/vJb8aRTUt477ycE/Y1VxgANjiXbAZuvW+vOLMc4fJ7Mn00yDuSBEyixxF+D8y3IThguxcHEcKi6zi4O4J3GsZPQCDAqz34GFennPzmxqho3WvHquQVVjL6K7hff8mtyJ0Zb5R8CioN4CxUSnM+uJM6MdgjIiAcbuvQvYdlzG0ue2xLc2jOxBqE9kFivmQCzyrbHmIfOGeFHrwDB53BxFH+EQmRZBTXDIeRiOECNFpKunhCAAD4Cbc8ywa18Y2XbXhB/yQ0r09MODOujsthWvFp2fpDXhEJ8kBjb0cyjn4pEzqQsq6kAjGmww1rdBoyXbzqwU9+vEM1QxwhAz4Ygma12p7AModR6fdu6vEoxgaGzdYnM1YhalYyqU1LKaqADaFWGNVKfXQ/VMUgsIAJIQotFpLN69rGYFZYzUu5U0e9na21cSjpYX7FX6KqFsS+qDQ62gtWcM2YbjGPpfGKXYGO1c7E5I7S59XXgC4ARJcDrd4B+SsbjMW59TyAdAs/uKsrs0Se53V9GD/PKSyu24htxRjAZ/sJvoPalenCKoJAAA=</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>ЗаписиМіні</TabularList>
         </Form>
@@ -2449,14 +2461,14 @@ END]]></Value>
           <Name>PointerControl</Name>
           <Desc>PointerControl</Desc>
           <Type>PointerControl</Type>
-          <GeneratedCode Zip="1">H4sIAAAAAAAACpVUzW4bNxC+C9A7TIUeVmmwCRAfCitrQ94ksgDHdiu7PgSBQXNHK0YMueFyJbiGgSB5g6LIrfce0yAF3LTJM1BvVHD/V/IvD8slOb/fNzPt1oN7YFe7lW4AYP4w38x/5m/z1Xwx/5qPi3eL94u35uPxvmRCo/Kl0Epyl8aVTvOp3br3oN1qt5KYiRAGetor/odWakwoDvR0rbztUyoToZkIR3Ks50Rh+TRAgYpoDHwZoGt+N9/Mp8UH89l8NRfmi7noWT+CvMY4IhRhpKUiIfZFcKBIYM20Wy8GeyevkGp3lJxQTuL4cTPaDafTvDgeHwSjnfmrtfHh4JE+3PXXjuY/dbov260oOeGMQkSUZoRDau22eMH6CkpnGYA4Q6Hhqf1uExFwVI9vsrmxWRqbEBFikGZqjRWxzSQLYCiYPbBf0elmz7lLu45YoCf7CmMUmmgmBXjw6OHDXiXhkyi//75zdmVIvhSxdp8d7uzs9p8/PV/v1Cw0g4QfPCDxqaDgHN+HKHvrgrcBS2HkT/CdByLhHDaBzAnTxb07QF3XcLqwDp3C73kJRcZWbIXorWnaxbmTxrSL8yNmEZIRKs0wdl687JY432SuzMEDYS32GjHdqJ3vK6SFqKtD7d4uhTpRonBcY+G8+o2v0a8inhGe2Oapvzap3HSHYian6Fh+Ki5XnZZsLLHiSzFmYaJSAp8whVRLxTB2txkqouiEUcItJyj0wWmEm9DnXM7tIEjvRsiRpuVyZkHp2cx6Ne6V1Eg1BiBnqBQLMK+8tC/2IhSZAWcr0VoKOEm3+1kX9lUYA1FhvNo0+zKyBiHKd6+4cdO6qeWfS7gj1PtEodBO5uMymbQVf8Y3CcYaPPix0YWF0DaycKIrqbWG1BaOpUKfMzq12T1LBC05qqr22so1f5pP5sJ8tnPV/GN+Mxfmr8WHxVuISIjg3V1xFRMSopsDloGSNnt6XhYrauI0L7yhxtcp3NkIOBTsTYLDJ8tqV1WJd1X9LBtI0ZM8SMmtDstiPuF8i9Dp8V5eSUXnehA3zxtXNlylInB+40xwGnbrsNrVH2tUWSQr3Jct2aiDS0vVnzAeODbDS2t5IjNCq6d8MFtIRqh/sYOj9HldN2Z9KHyORN29Ce+EWz2T28CUyqSBXSpy3m7ls+1/pzPBLT0JAAA=</GeneratedCode>
+          <GeneratedCode Zip="1">H4sIAAAAAAAACpVUzW4bNxC+C9A7TIUeVmmwCdAAba2sDXmTyAJS26ji5BAEBsUdrVgx5IbLleoaBoL2DYoit957TIMUcNMmz0C9UUHuan8kO7b3IIqcH858831st+7cAvu1W24BAPOH+WT+M3+bj+aD+de8Xf6y/HX52rw9PpRMaFShFFpJ7tO0imma2q1bd9qtditLmYhhoGe91f+h9ZoQigM9u1ee9imVmdBMxCM50QuisDQNUKAiGqNQRuib380n8275xrw3H825+WDOe/YeQV5imhCKMNJSkRj7InqiSGTTtFvPBwfjH5Fqf5SNKSdper9Z7bbXaR4c68lPM8nwm6ODpwv23YTvknF/0em+aLeSbMwZhYQozQgHl+66gMHWBkynOYI4R6Hhof3dIyLiqO5flXN7p0w2JSLGyLVqk61qm0sWwVAwu2E/o9fNzcWV9nvGIj09VJii0EQzKSCAr+/e7VUeIUmK8y87p5eWFEqRav/R0ePH+/3vH55tdWoZmkXCVwGQ9ERQ8I5vQ5LbuhBsw1oZhQm+CEBknMMOkAVhenXuD1DXI7wubEFnde9ZCUU+rdQ60WuPaR8XnqtpHxfPmEVIJqg0w9R7/qJb4nxVurKHAITN2GvUdGV0sW4MLUZtayuS15BOUVebWoC7tCxlTnhmZVG3Nme04w/FXM7Qs8BXQ6rFnK3BvAZ3KMWExZlyk3nAFFItFcPU32OoiKJTRgm3YKPQT04S3IE+53JhJe7ORsiROh6c2m57trNebahKaqQaI5BzVIpFWFDKEf4gQZEn8HYzraWAsVtu5/LqqzgFouJ0Uw2HMrEJISnWYHXiO0LU+i88/BHqQ6JQaC+/4yIfp7Ef8FWGqYYAvm3Ia+W0hyye6srrXsNrFydSYcgZndnuHmWCljOq6PhZSpo/zTtzbt7bF9P8Y34z5+av5Zvla0hIjBDcPHATExKjXwCWg+JU7PbrbitOnBTEG2p86eDOtX0k2KsMhw/Wwy5jSXAZf9YTOPQkj9xwq826W0g43yV0dnxQMGklyQDS5n77UsFVIQIXV4rda+Stw2q//kSjyivZmH0pyQYPLqRqOGU88myHF3J5KvOBVqbixbWQjFA/tQ9Heefn1JjrUIQcibq5CG+EW72T68DkfFxhF7qctVvF2/Y/5khc7BcJAAA=</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
         <Form Modified="0">
           <Name>Елемент</Name>
           <Desc>Елемент</Desc>
           <Type>Element</Type>
-          <GeneratedCode Zip="1">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</GeneratedCode>
+          <GeneratedCode Zip="1">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</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
           <ElementFields>
             <Field>
@@ -2481,7 +2493,7 @@ END]]></Value>
             </Field>
             <Field>
               <Name>НазваПовна</Name>
-              <Caption>НазваПовна</Caption>
+              <Caption>Назва повна</Caption>
               <Size>0</Size>
               <Height>0</Height>
               <SortNum>100</SortNum>
@@ -2511,7 +2523,7 @@ END]]></Value>
             </Field>
             <Field>
               <Name>ТипНоменклатури</Name>
-              <Caption>ТипНоменклатури</Caption>
+              <Caption>Тип</Caption>
               <Size>0</Size>
               <Height>0</Height>
               <SortNum>100</SortNum>
@@ -2534,7 +2546,7 @@ END]]></Value>
             </Field>
             <Field>
               <Name>ВидНоменклатури</Name>
-              <Caption>ВидНоменклатури</Caption>
+              <Caption>Вид</Caption>
               <Size>0</Size>
               <Height>0</Height>
               <SortNum>100</SortNum>
@@ -2547,7 +2559,7 @@ END]]></Value>
             </Field>
             <Field>
               <Name>ОдиницяВиміру</Name>
-              <Caption>ОдиницяВиміру</Caption>
+              <Caption>Одиниця виміру</Caption>
               <Size>0</Size>
               <Height>0</Height>
               <SortNum>100</SortNum>
@@ -2573,13 +2585,26 @@ END]]></Value>
             </Field>
             <Field>
               <Name>ОсновнаКартинкаФайл</Name>
-              <Caption>ОсновнаКартинкаФайл</Caption>
+              <Caption>Основна картинка</Caption>
               <Size>0</Size>
               <Height>0</Height>
               <SortNum>100</SortNum>
               <ReadOnly>0</ReadOnly>
               <Type>pointer</Type>
               <Pointer>Довідники.Файли</Pointer>
+              <PresetntationFields Count="1">
+                <Field>Назва</Field>
+              </PresetntationFields>
+            </Field>
+            <Field>
+              <Name>Категорія</Name>
+              <Caption>Категорія</Caption>
+              <Size>0</Size>
+              <Height>0</Height>
+              <SortNum>100</SortNum>
+              <ReadOnly>0</ReadOnly>
+              <Type>pointer</Type>
+              <Pointer>Довідники.Категорії</Pointer>
               <PresetntationFields Count="1">
                 <Field>Назва</Field>
               </PresetntationFields>
@@ -2613,7 +2638,7 @@ END]]></Value>
           <Name>PointerTablePartCell</Name>
           <Desc>PointerTablePartCell</Desc>
           <Type>PointerTablePartCell</Type>
-          <GeneratedCode Zip="1">H4sIAAAAAAAACpVUzU7bQBC+W/I7bHNyUGU4oKqChigJJSBVEDXQVEIIbeyJs8SszXochCok1L5BVXHrvUeKqJTSwjNs3qha/8VJTIG97Hr9zTcz38ysruna4gJRS9eijRAiv8t7+Vf+knfyVv6RV+PP4y/jC3l12PIYRxC7tOtCiwpsgOuaVjCxLALo2sKiroUB4w5p4mA1PW8pZI9a0MTBcnbbBA6CItgNzwZTfpP38np8KW/knRzJWznKgDXL8kKOjDttr4enVMCqrukap8cQ+NQC0kZPUAdq3N4V1I7/7jd3ukdgodkOu5ZLg+BNUcRrRqno+rDzrrt5tPlqr3Pk19c/4sY75tZK5QNd88OuyyziU4GMuiRifp6KZOUB7T7F4iYeAqTIrGdSb8OpUSaVNXXoMOy3hOeDQAaBsX9QjnR5StWJn+wVwhXj6lRkj1one2yUZKWWA6hiS8gTUrUCwMlHziBymoUypG6oapv/2xIQAFdSeZxUUrC5TY/zyPP4eJ7mnyRCgzNukQ+KdpcGA9IEzPPFShZ7IC8qhIeuS6qEnlKGmed5jhVSKmXKz7pMpGr0KXfA2OPsJISt9Srxy3PqtfI1ebQIhk+q1QiZkhrltI5RIFHUc9HmEDu8DS5YWDW3+NAbQPYzkzGTU3gIFoJNvCEIwWxI8hx6zCYxi1EPET1OutH2krwdAseacAJChRMUZesrMuIneyW9MaMez8WZIMw2YIsK4GjEPoowHWZj/z2chBAgqZDXS0sFoE1gTh8nqOUpVB16noCGy6zBjg98I+TWlEJPeFvlD3ktR/JGPXLyt/wqR/Ln+HJ8QXzqAKk833BeE+qAmQgWixK1bvQ9M0EzRutMgIWeOEv6aAvhODdYaTPN+mpQ161Ta3CYds2kW+NW8NUsPTjkcTdOD4OfT0itWg9BxOxzqmeTnjvna5Frkkafubahoi7sor4XSzk7KlGabcBodudn4f8z0HCBCmO+y4vyVs9KPrKnpB1hIieFkHNdS57Af+rOgxAFCAAA</GeneratedCode>
+          <GeneratedCode Zip="1">H4sIAAAAAAAACpVUzU7bQBC+W/I7bHNyUGWiCqQKGqIklJALRA2UA0Jos54425i1sx6HogoJtW9QVdx675EiKqW08AybN6r8E8dJTIG97Hr9zTcz38ysruna8hIJl65FGyFEfVf36q/6pe7Urfqjrsafx1/GF+rquOVygSD3aMeBFpVYB8cxmT+1zAPo2tKyrgU+FzZpYH99cm6GyC5l0MD+SnrbAAGSIlh11wJTfVP36np8qW7UnRqpWzVKgVXG3EAgF3bb7eIplbCua7om6An4HmVA2uhKakNVWHuSWvHfw8Zu5wMwNNtBhznU99/kRbxhFPKuj7lY/VgbrG6V+rRVGmyzV/tdvm0Xike65gUdhzPiUYmcOiTifp6OZO0B9T7F8iYefKTI2TOpd+DUKJLyRng44NhrSdcDiRx84/CoGCnzlLoTL9nLRISM6zORPWqd7LFRklW4bMAwtoQ8IQ2XDzj9yBhETtNQhtQJwupm/7Yk+CBCqVxByhOwuUNPssjz+Hg+yT9JhPpngpH3Ie0e9fukAZjli5XM90BelIkIHIdUCD2lHFPPixxrpFBIlZ93mUhV71Fhg7Ev+CCA5maFeMUF9VrZmjxaBMMjlUqEnJAaxUkdo0CiqBeizSB2RRscYFgxm2Lo9iH9mcqYyildBIZgEXcIUnILkjyHLrdIzGLUAkRXkE60vSRvhyCwKm2fUGn7edl6IRnxkr08uTGjHs/EmSDMNmCLShBoxD7yMAfcwt47GATgIymT16VSDmgbuN3DKWplBlWDriuh7nDW3/VAbAWCzSj0hNdV/VDXaqRuwmdO/VZf1Uj9HF+OL4hHbSDl5xsuakJtMBPBYlGi1o2+5yZozmiTS2DoyrOkj5oIJ5nBmjTTvK86dZwaZf3jSddMuzVuBS+cpQeHPO7G2WHwsgmFq9pFkDH7gurppGfO2VpkmqTe445lhFHndlHPjaWcH5UozTZgNLuLs/D/Gag7QKWx2OV5eYfPSjayp6QdYSInuZBzXUuewH8h//vwBwgAAA==</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
       </Forms>
@@ -14708,7 +14733,7 @@ FROM
           <FullName>Метод списання</FullName>
           <NameInTable>col_a4</NameInTable>
           <Type>enum</Type>
-          <Pointer>Перелічення.МетодиСписанняПартій</Pointer>
+          <Pointer>Перелічення.МетодиСписання</Pointer>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
@@ -14815,7 +14840,7 @@ FROM
               <SortDirection>False</SortDirection>
               <FilterField>False</FilterField>
               <Type>enum</Type>
-              <Pointer>Перелічення.МетодиСписанняПартій</Pointer>
+              <Pointer>Перелічення.МетодиСписання</Pointer>
             </Field>
             <Field>
               <Name>РахунокОбліку</Name>
@@ -14939,7 +14964,7 @@ FROM
               <SortNum>4</SortNum>
               <ReadOnly>0</ReadOnly>
               <Type>enum</Type>
-              <Pointer>Перелічення.МетодиСписанняПартій</Pointer>
+              <Pointer>Перелічення.МетодиСписання</Pointer>
             </Field>
             <Field>
               <Name>РахунокОбліку</Name>
@@ -27636,18 +27661,18 @@ FROM
         <ClearSpend Action="0">ClearSpend</ClearSpend>
       </SpendFunctions>
       <Forms>
-        <Form Modified="0">
+        <Form Modified="1">
           <Name>PointerControl</Name>
           <Desc>PointerControl</Desc>
           <Type>PointerControl</Type>
-          <GeneratedCode Zip="1">H4sIAAAAAAAACqVUTW/TQBC9W/J/GCIODiAXQSVQi1u1BtJIpSkNhQOqqo09dZa4u+56naigSqiIO0KIM0eOgEAKFe1v2PwjtLYT201BKewhm915Ox/vzdg0TGPuGuhlGukGAOqdOhkdq/dqqE7UmTpVX9SpGo7eqk/qTH0dfRwd725yyiQKlzMpeGh7cfG6ajKNa3OmkcSUBdCQvcXx/6bG7BEPG7I3P7ltIENBJPou99FWH9SZOhm9Ub/UD3U6OlbDRdMwDUb2MY6Ih9CWXJAAV5j/RBAfU+vzRqvzAj1pt5OOF5I4vldNaMmqVS92/cPWlly91Q+39ztb7mHr8fqdQVCr75hGlHRC6kFEhKQkhNTd5dmBhSlOXmV0YR+ZhAf6d40wP0Rxb3bvS8sTt13CAvTT8rXbcb59Tn1oMqoP9CVa9cycB9frGfVld1NgjEwSSTkDB27fvLlYIFwS5fdXa69mSM7lLJb2w+319Y2VRw+OFmolX9V04boDJD5kHli7NyDKbHVwluBcQrkJrjjAkjCEZSADQuX43m6gLL+w6rAAtXHcowkpmZaxBnn/IOIGDqw0uw0cPKOaNR6hkBRj6/lOfcL97I4ndTnAtO/FSp6X8JPvU+IGKItD6V4vgTIRbJxCSaOj4m/8l/dF7n0SJnryytaq0Mt2k/V5Dy2tXqH0dNBCK8ElehJ94H0UgvqYd0ra0a0IWRtD9KS1mkjJGXTS7UY2SSsiiIGIIJ5u900eaYcQ5bszvrFTdUsZ5Qi7jXKTCGTSymJchEmHaAsPEowlOHC3Mj9j0BrSoCsL1HwFtYp7XKAbUq+nq3uYMG/CWtFbM/aX+qy+qaH6rk7UUP1ModrwGiISIDj/42KaJxKgnZOYEZUObHo+D7vPvWQfmcy7oylxP1Ugm+JtRg8SbN4//8olYbhKvN5uKxd93PYOxNXz0h+7tXjCcHCJ0bIqEcp167WyJ1FkOU0JNunsinilrnK7NPQtXeGFbdflGc+FKf/maUraKJ/qqZtE+tvgZCPD3BCJuPy8/CNv5ZpmoSnFpCleCDkyjfwT8Ruv/1vFsAgAAA==</GeneratedCode>
+          <GeneratedCode Zip="1">H4sIAAAAAAAACqVUTW/TQBC9W/J/GCIOTqncIhCgFrdKA00joKkIbQ+oqrb21Fni7Jr1OhGgSqiIO0KIM0eOgEAKFe1v2PwjtLbj2E1BKewhm91587Hvzdg0TGNhDvQyjWQDAPVOnYyO1Xs1VCfqTJ2qL+pUDUdv1Sd1pr6OPo6O97c4ZRJFnTMpeGC70cS7bDKNuQXTiCPKfGjI7vL4f1NjDomLDdm9md82kKEgEr0699BWH9SZOhm9Ub/UD3U6OlbDZdMwDUZ6GIXERWhLLoiPNeY9EcTDxPq00Tp4hq602/GBG5AoulsuaMWqlC/2r+/cai22W71u40FQ2w42ev3b636lumcaYXwQUBdCIiQlASThLs8OLE1x8iqlC/vIJNzXvxuEeQGKu7NHX1nNw3YI89FLnq/Djuvtc+pBk1F9oC/RqqbmLLleu9STnS2BETJJJOUMHLixuLg8QdRJmN1frbyaobg6Z5G017cfPtysPbp/tFQpxCqXC9ccINEL5oK1Pw9haquCswLnCspMcMUBFgcBrAIZECrH93YDZdHDqsISVMZ5j3JSUi0jDXL/QcRNHFhJdZs42KWaNR6ikBQj6+leNed+9sD5uxxgOvZyqc5LxMn2KXF9lLreLE1Bhwjl5FBwSNLnRfVJEOuRKlrLCq7aTdbnXbS0LBMJCz5H50UQXKIr0QPeRyGoh1kLJK3aCpG1MUBXWmuxlJzBQbLNpyNSE34ERPjRdB9v8VAHhDDbnfGNnchWqChD2G2UW0Qgk1aa4yJMMh2P8XmMkQQH7pQGYwzaQOp35AR1s4Raw0MusB5Qt6tftx4zN2dt0jQzNo76rL6pofquTtRQ/Uyg2vAaQuIjOP8TYpon4qOdkZgSlUxicj4Pu8fduIdMZt3RlNhLFEjHc5vR5zE27533qpMgWCNud7+ViT7uZwei8nnlj906cWE4uMTMWKUMxXfrVTuUKNKapgTLO7skXqGr6h0aeJZ+4YVt1+EpzxNT9jHTlLRR7uipyzP9bXDSkWH1AIm4/Lz8I2/FN81CU4JJSrwQcmQa2SfiNzgMZ2yJCAAA</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="0">
+        <Form Modified="1">
           <Name>Елемент</Name>
           <Desc>Елемент</Desc>
           <Type>Element</Type>
-          <GeneratedCode Zip="1">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</GeneratedCode>
+          <GeneratedCode Zip="1">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</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
           <ElementFields>
             <Field>
@@ -27831,34 +27856,34 @@ FROM
             </TablePart>
           </ElementTableParts>
         </Form>
-        <Form Modified="0">
+        <Form Modified="1">
           <Name>Функції</Name>
           <Desc>Функції</Desc>
           <Type>Function</Type>
-          <GeneratedCode Zip="1">H4sIAAAAAAAACs1WUW8aRxB+R+I/rHmCCB0vfXOIRTB2UYmxDEkeqspajjG5+rilu3ulUWLJ2Gqdh6qtLJdKldw2VX8AdmP1CjX5C7P/qNrj4A5jUqjiqvu0t7fz7Xwz881uPBaPZe7FYyQY+B321RGeood9HOI19vAaPfUl/oJDvFBddbSLv6ljvMa++kp11Q+GKSLWU7/isXuZeCwec4XlNEjRkcD3qAmbcv+D1fFqzjSZ60jLaVTYnmxTDpNfm+AApxLqeVYHA89wiH11jH/hFV6rI/RWNbZDmyBa1ARSkYzTBuScepXTuoaJx4Sk0jKJaVMhlqcWj70YUWu5NdsySYBWsoS8//QZcHhA8FR18Q1e4FAdopcUkmvPBVBuPqvCFzI1Aghw9OAgXe6E3x+HUz2mvzIZPMce/oGX2Jv+40Cb+D4kF6CVZ46QRgiVJnnWbFFuCeYYpeJHhXTUZfKCbLiOWWUbFth1kiWJUvlpYSdBDtLTPsz1+UccTtLUU4fzPI84Ud5Jk8WJ3MC/ezoD9Y06wSFeqi6+xoGeYQ/PcKC+xZ9xqF6pY12bd0B0wZPvLASfrI7mB1pOs1qg4rljkifUdqFKxT4pt8DZpg0o2NAERyZrjNmkKLagnSaPHeszF4rra8QNZiRLHNe205Hzcqa0mHN/svfBGlEdatsPqbm/W2K0vgMm43UxNp1rOWVYdipggym3maW7UGA8K85FWsT3OMCrcfmRFm0AyS5vaGxBO5kKguvHlTbAyN/O9NYIzLWdJTs3EH6THKNYeyTppyqIy3jQNrXk6Ix/4AC2AB8mTPAo0uTlS7IyH2cHaH1ik4ocH0mNHo9ACG1e4Jzx5DZnDU6bxkMqLDPXaqXJ1MoG4800SeA5XhG8xDfY0/JRHfU1wbfqEIfqBD2/gRyht5KI8gj7dGRxogA9Zk5aM7aYhBpj+1ppRp4DlaCVkAyS09LVmfbpR4+KBKUC0hfSJKRLak7fS8l3iOy/EshrfIue6ujrehl5RMxuF8c6M13dVAIfixKaJDuh+d7lsESKF27oG49Lpa3co8Kd1EEF5DrYoJNcojWwJ7UwidG/yuc4bniKff2AUF281Juwr6sE2qFwI3R0318jtnaDZANyswDG5k2Xoxi6kfgIxodU+DRT85FmyK+MTEd2SwUycvmQPGs9f09xLNc+BSEJ/oQX6kzvDsJ3k3JAcbJt4e64hA/n/jvCwz/D5ITn+ZwlD8M2XaOhsVGhn4dVOh6zL4oZO//l0sGBOsbf0dut0poN25TLEeAetQWkVkkmQ/BX7OEFDtBTJ5oQUSfYUx3dsf3PxDRS4l2ejBp61I1xXqeb/HiqL7P/0U3kN+RZTw/isWD2N5+XCjLKDQAA</GeneratedCode>
+          <GeneratedCode Zip="1">H4sIAAAAAAAACs1X3W4bRRS+t+R3mPjKqaz1DXdpGqXODxFuEsUuvUAoGq9PnCXrHTMzxlRtpfwIwkVFURSChBSgiAdwQiKMjd1XOPNGaHbX3tlsXGzaIOZqdnfOmfOdc75vZtOpdCp/L50i4cDvsKsO8QQ72MUB9rGNfeyor/AXHOCFOlOH2/ibOsI+dtXX6kz9YNnCsI59Sqfu5dOpdKopHK9G1jwJfIfasCr3Ppgbvl20bdb0pOPVSmxHtiiH0adV8IBTCdUCq4KFpzjArjrCv/Aa++oQO3Pat0frIBrUBlKSjNMaLHrVMqdV7SadEpJKxya2S4WYHlo69SyA1mhWXMcmobeiI+T9J7vA4QHBE3WGV3iBA7WPnayQXEcugHJ7twxfytnAQehHDw6yyb3o+ZNoqkf8KZ/Hc2zjH3iJ7fgXD1rEjyE7AawC84S0Ilc5UmD1BuWOYJ5VXPtoOWeGTJ6RlaZnl9mKA26VzJNMcePJ8laGvMjFYxgb8484GJWprfbHRW4EsbGVI5MDueH/7uH01LfqGAd4qc7wNfb0DNt4ij31Cn/GgfpGHenevAOgE+58Zyn4dC6Yv9B0SnKBiqeeTT6mbhPKVOyRjQZ4m7QGyy7UwZPZCmMuWRPr0MqRx57zeRPWlhZIM5yReeI1XTdn7LdoS4d590drHywQdUBd9yG197aLjFa3wGa8KoamYy1jhhteCVyw5SZztAqFxklyTiIR32MPr4ftRxq0BmR+ekNrHVrZ2TC5fl5pDazC7UhvzcBY2yTYsYnwRXLoxdkhWb9UYV6Gg7aoI4M9/gEDuAJ8N1GBg0yT58/JzHg/W0CrI5tZY3ujNHo8AiG0+TLnjGc3OatxWrceUuHYi41GjsTerDBez5EMnuM1wUu8wramjzpQLwm+Ufs4UMfY8QXkEDszGRNHpNPGyxED9EjstGCtMwkVxvY006wCBypBMyEbFqehuzPnwze3MpJSAukTaZTSKTmnz6XsW0j2XxHkNb7BjjrQx/U09DDMbifHErObWlTCGNck1Mn8COZ7p8MUJZ5Y0FceF4vri4+W76QPSiCXwAVd5CKtgDvqhVGO/lU9h3nDE+zqC4Q6w0u9CLu6S6AVEdeAo3V/gbg6DDIfgks6sFZvhmz60ELie7A+pMKHOTveUwL8TGAa2E2VSOPwIQXWePqe8rhR+QyEJPgTXqhTvTpM303IIcTRsonVcYoYzv17RAf/jIoT7edjljxKW7xHI2OrRL+IunQ4kjeKhJ1/cznAnjrC37GzXaYVFzYpl4HDHeoKmJ0j+TzBX7GNF9jDjjrWgIg6xrY60IrtP2binjJviyQQdDOMYV3jIm8eZv+jk8gX5GSkk2pDA7xqeReGGprs6ZzPWSL0wiVmv0OLL8R7PKi+vgxPLjZRu/sSEQat3dsy0ZqaNOaO4dkVneDxpTcQ3lJcvWomQYtECjH6hqd+8fTFfIBdk6Oj7MX+LKMLvH+xv/L/Z/SNqK9e+uwI9C3oiNuWYV+9MgMYltPMy9heNjhpsN4FyhMYDeUM3f0NuusIZzEQAAA=</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
-        <Form Modified="0">
+        <Form Modified="1">
           <Name>Список</Name>
           <Desc>Список</Desc>
           <Type>List</Type>
-          <GeneratedCode Zip="1">H4sIAAAAAAAACqVW3U4bRxS+t+R3GKU3S4Q2uWhvSpwIzE/dEmOxDomEEBrvHuwp65ntzCzEqZAIqE3vUkWRI1Xqr/oApkokFwJ9hTNvVM16bdbGBAN7s7tn5nz7ne/8zOZz+dy9u8Re+VxyI4Tgz3hsDvANdvEYz/AUO3iKXfMD/oFneGTa5sD1VWb7n/gfds1LPMPjfO7uvXwun4sV43VS4hrkFvVhSW9/PtO3zvq+iLlmvO6JLb1LJQyWloCDpBqCogjAxbcW0hziR/yAp+YAuzPn2PgXdvAIT7BrXll6+G+WBylcieUOI5j2wP/YLl6pwSa+w07qYYmltP42h3iKx+ZH0zbvSIF4Wkhah1keVCW1RCYAHsJIYua0CSqiPoziJavrSyu1b8HXrhfX/JAq9WBe+HETuF4Usvm1iCWn4WIchg+dO8tM6c3m3IuY36/GzxZapai88PiZXmutzd6Z2sjnorgWMp9EVGpGQ5LATVARm0Pqf0kuIZDPfd8rnD7+jmABKXFmX9gLcKZ6y+kue1VbEZRpE0hhEhpFwZV2KyulcnVhdSZTpJ8sF3c2CIoijJvc0Q2mpjKOHugKrYPyQNuSVc4X96dJYnE9bYPg9YpQTDPB3QUe9F33bF6SQHt6Kk01868tZBl2x0hyXZSQKU0KFuwp042KFBFIzUA56xvZUO02tyw01ITYXoy5TwqkIkVd0qY7RxXzbTIfDe1Iyq/vL0HHkicwoyp8JqHOBCcrOyAlC2BEHZGaCVUt7pM1GsZQpWqbLAsarIIvZKDG6EB3KdNXpTYLkU3u3qQcnkQB1XBLFsMg43lIocHXEIxSSXrEA+0BlX7DUVraSaOStyo81xcpPW2ABNvptmmGpomLb0wb3+MRnpl97DoZlAn4JEwWWRguslCDdHq3ouBaipBsZd/GVO2nFSpKoBpS4OsJdJ6rlQi4bc6FEOz0cWpChKSkyrA7TZ5w9l0MpflHJE6fSIHwOAwvTemwcqPYKWwfbJoUaRjOUX97M1NyGesK9yAEX1cEs+fiTcLzQM9DCHbYLNMahE4/pgGLCWO5ADTwvz6rBwNhH5KiiFqTkEpHxVhuCcYt+JA52BISPNCJ6fKOHfos/oodPMGO+ckcmEP8J5mpp+Y1/tLrFPOybzevsOPib+bAmvEjduzfBP6OH8y+aeMZvse3eGJeY9scmv1kOJ+YQ8fOzm+gNU0qIJkIrtn9Padig/I6BONOhFvFcv4jc6NY3PRWFV4ympypwco81ZAckyMWEd2o/CPgQbUB/Z+LQaWtb2TaMOl5ZbfOC/9cqgmn2ypEQupJvnQxC7bsqN8gzg6VJGYBYXx0d/8qimZTcCuk2ux/5LHYSSZLtSFFXG+sQp0pDVKlo9HhsDvJ0Z/OFydmwdRNVF4DqZjg6iumtJDn7Tw29NFzHnjQO+rzub2e6X+0ECokYwwAAA==</GeneratedCode>
+          <GeneratedCode Zip="1">H4sIAAAAAAAACqVW3U4bRxS+t+R3GKU3S4Q2rdTelDgRGExpiW15TVCEEBrvHuwp6xlnZhbXqZAIqE3vUkWRI1Xqr/oApkokFwJ9hTNvVM36h7UxYGBvdvfMnG+/8/ftpFPp1IP7xF7pVHwjhODPeGwO8A128RjP8BQ7eIpd8wP+gWd4ZNrmwPVVYvuf+B92zUs8w+N06v6DdCqdihTjVbLCNcht6sOy3vl8bmCd930Rcc141RPbukklDJeWgYOkGoKsCMDFtxbSHOJH/ICn5gC7c+fY+Bd28AhPsGteWXr4b5IHyVyL5Y4imPbQ/9guXpuDLXyHnb6HJdan9bc5xFM8Nj+atnlHMsTTQtIqzPOgLKklMgXwCEYcM6d1UA3qwzhevLqxXKh8C752vajih1Sph4vCj+rAdU7I+tcikpyGuSgMHzn3VpnSW58te/la7tmz0tp6PqtLYavwovWkeW9mM51qRJWQ+aRBpWY0JDHcFB2xNZL9L8klBNKp73uNM8DfFSwgK5zZF/YCnJnecn+XvcqtBuRpHUhmGhpZwZV2i4WVfHmpNJdo0ivbxZ0PgqwIozp3dI2pmYSjB7pIq6A80LZllfPFp7MktrietkHwalEoppng7hIPBq57ti5xoL18Kk0182+cyDw0J6TkpighU5pkLNg607WiFA2QmoFyNjaTodptbl5oqAixk4u4TzKkKEVV0rq7QBXzbTEfj+yI22/gL0FHkscw41n4REKVCU4KuyAlC2AsO6JvJlS1uE+e0jCCMlU7ZFXQoAS+kIGakAfapExfV9okRLK4e9NyWGsEVMMdWYyCTOYhhQZfQzBOJZ4RD7QHVPo1R2lplUbFb2X4Tl+ktF4DCXbS7dCMqImLb0wb3+MRnpl97DoJlCn4xExyLAxzLNQgnd4tK7iWIiTbybcJXXt1hrISqIY+8M0SdF6rQgO4Hc6lEKz6OBUhQrKi8tCcJWucPY9gZfExifpPJEN4FIaXlnQ0c+PYfdgB2CzJ0jBcoP7OVqLlEtYC9yAEXxcFs//F24TngV6EEKzYrNIKhM4gpiGLKWO5ADT0vzmrh8PEPiJZ0WhNQ6ovFRO5xRh34EMWYFtI8EDHpssnduSz+Ct28AQ75idzYA7xn1hTT81r/KU3KeblwG5eYcfF38yBNeNH7NjTBP6OH8y+aeMZvse3eGJeY9scmv1YnE/MoWO18xtozZIiSCaCG05/zylbo7wKwaQ/wp1iOT/I3CoWt38rCy+WJmdmuLJINcS/yTGLaNyq/RvAg3INBoeLYadtbCbGMJ55ZbcuCv9iqmxvUL9GnF0qScQCwvh4o149OuMkIhbMnn9vWhUtQUNIPU1EdwohK+p1wW3B1NbgI0/Ebqxg5ZoUUbVWgipTGqTqS7DDoTnNEaOvYzb+mdtU8ylIxQRXXzGlhTyXjYmhj58ngAe9I0U6tdcz/Q8W7C98ywwAAA==</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="0">
+        <Form Modified="1">
           <Name>Швидкий вибір</Name>
           <Desc>Швидкий вибір</Desc>
           <Type>ListSmallSelect</Type>
-          <GeneratedCode Zip="1">H4sIAAAAAAAACq1WXU8bORR9j5T/YNGXoULTfWC10tK0gvAhWhqyTFgeEELOzCXxMrGntgc2XSFR0G73rauqSqWV9lP7sI+holIKhf0L1/9o5ckkJBBKaDovHtvXx+eee33tbCabuXeX2C+bSRpCCP6CJ+YAX2ELT/Acz7CJZ9gyP+KfeI5HpmEOXF/1mP+F/2HLPMdzPMlm7t7LZrKZWDFeIYtcg9yiPizo7cmpzui074uYa8YrntjSu1RCd2oBOEiqIciLAFx8bSHNIX7Ad3hmDrA1dYGNf2MTj/AUW+aFpYfve3mQ3I1Ybj+CaXTXn9jJGzXYxDfYTFdYYimtf8whnuGJ+ck0zBuSI54WklZgmgclSS2RIYD7MBKfOa2BiqgPl/GS2fWF5fJ34GvXi8t+SJW6Pyv8uAZczwtZeyRiyWno1WgYPnDGknaJKb25ApO1p5NfPSvMsSjvrbI1Vn+09c3Y+EY2E8XlkPkkolIzGpIEdIi82MR/8S228NhqiO8TUzuxT74m11HKZn5o51Jnsx3BArLIme2wZ+CMt6dTK/uV6hEUaA1IbhhOecGVdovLi4XS3MrUBcpjqM8L6YG2qUhyZMxN+Iz1mHw8ydzpIMiLMK5xR1eZGu9Z6IEu0gqoFF05X37Rmd6zEUv8bWusNNXMH0ncAuwOUGkUxJApTXIWeI3palGKCKRmoJz1jV43rZlbEBrKQmzPx9wnOVKUoiJpzZ2hivk22A/7LJKE7ayXoGPJE5jL6tyRUGGCk+UdkJIFcEk1kQ4TqurcJ9/SMIYSVdtkSdBgBXwhAzVAE7pLmb4prL0QvYHdG5bDahRQDSOy6AcZzEMKDb6G4DKV5Ah5oD2g0q86Skub4irpleB7fZXSWhUk2Kpgz1Rf/XHxlWngMR7hudnHltODMgSfhMk8C8N5FmqQTrvJC66lCMlWb29ABn9cobwEqiEFvp1AF7FajoDbo2p9d1Y5exrD4uxDEqd/JEd4HIbXxrBfqj6wDsQEydMwnKH+9uYy9yAEXxcFs1fjKHznQrDV1CkLEZJFVYDdCfK56HewU9gBjvQckc/rngd6FkLQTPAlWoawG5IuiyF9uQLUXX97Vve7wj4geRHVhyGVlraB3BKMEfiQGdgSEjzQydD1FaZvW/wNm3iKTfOzOTCH+Da5D87MS/y1fbLN8864eYFNF383B3YYP2DTvpfwD3xn9k0Dz/EYX+OpeYkNc2j2k4vl1Bw6ttY/hvoEKYJkIrhltWovylcpr0Aw6DYbyZeLp9on+eKmTUl4SSl1xrszs1SDp6nUl0ZE9EnpHwEPSlXoPJa6mba+0XMMkzOvrOms8C+kGrIar0AkpB5mp6tRsGlH/SpxdqgkMQsI45etO19e1GqCWyHVZmeTJ2InqSylqhRxpboCFaY0SJWWcofD7jDPlrS+ODELxq+ofAd40H47ZDN77aH/AXZPRkHmDAAA</GeneratedCode>
+          <GeneratedCode Zip="1">H4sIAAAAAAAACq1WW08bRxR+t+T/MCIvS4Q2bZX2ocSJwFxEoeCyprRFCA27B3vCemY7Mwt1KyQCatO3VFHkSJV6VR/6aCIiORDoXzjzj6pZr41tDJg4fhnvOWe++c51JpvJZu7dJfaXzSQLIQR/wRNzgM+xgSd4jmdYxzNsmB/xTzzHI1MzB66vOsz/wv+wYZ7gOZ5kM3fvZTPZTKwYL5E5rkFuUR9m9fb98ZZ0wvdFzDXjJU9s6V0qoa2aBQ6SagjyIgAXX1hIc4hv8TWemQNsjF9g499YxyM8xYZ5aunhm04eJHcjltuNYGrt/SdWeWMMNvAl1tMdllhK6x9ziGd4Yn4yNfOS5IinhaQlmOBBUVJLZADgLozEZ04roCLqQy9eol2bXdp8DL52vXjTD6lSD6aEH1eA6xkhK5+JWHIaehUahg+dkWRdYEpvlCe+ul/afux9PU1X5z9c/ib6ZKX60Rcjo+vZTBRvhswnEZWa0ZAkoAPUxQb+i6+wgcc2hvgmMbWKffIpuYpSNvNDs5Zah+0IFpA5zuwH+x6c0aY6tbK/YjWCRVoBkhuEU15wpd3C0txicXp5/AJlHqozQnqgbSmSHBlxEz4jHSbXF5k7EQR5EcYV7ugyU6MdGz3QBVoClaIr5+MPWuo9m7HE32aMlaaa+UMFdxF2+0RpGMSQKU1yFniV6XJBigikZqCctfVON62Zuyg0bAqxPRNzn+RIQYqSpBV3kirm22Q/6rJICra1X4KOJU9geqNzR0KJCU6WdkBKFkBP1EQqJlRVuU++pGEMRaq2yYKgwTL4QgaqT0zoLmX6prR2QnQmdm9QDitRQDUMyaIbpD8PKTT4GoJeKkkLeaA9oNIvO0pLW+Iq+SrCd/oypdUySLBTwfZU1/xx8bmp4TEe4bnZx4bTgTIAn4TJDAvDGRZqkE5zyQuupQjJVudXnwq+PkJ5CVRDCny7AF3kaikCblvV+u6scPZtDHNTj0ic/iM5wuMwvDKH3aHqAmtBjJE8DcNJ6m9vLHEPQvB1QTB7NQ7DdzoEO02dTSFCMqcWYXeMvC/6LewUto8jHS3yft3zQE9BCJoJvkA3IWynpM1iQF8uAbX3357Vg3ZgH5K8iKqDkEpHW19uCcYQfMgkbAkJHuhEdPWE6ToWf8M6nmLd/GwOzCG+Su6DM/MMf212tnnSkpunWHfxd3NgxfgW6/a9hH/ga7NvaniOx/gCT80zrJlDs59cLKfm0LGzfh6qY6QAkongltOquSlfprwEQb/bbChfLp5q7+SLmy5F4SWj1Blta6aoBk9TqXskInqn8o+AB8UytB5L7UpbW+9ow6TnlTWdEv7lUNnaoH6ZODtUkpgFhPHeQr2+dXpJxCwYuzhv0Km/DJGQehCPhnIhLyoVwW3C1EbrkM/FTjLBimUp4lJ5GUpMaZAqvTIcDruDPI/SOWb9H73k9h3gQfONks3sNUX/A+pR8FBODQAA</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
           <TabularList>Записи</TabularList>
         </Form>
-        <Form Modified="0">
+        <Form Modified="1">
           <Name>PointerTablePartCell</Name>
           <Desc>PointerTablePartCell</Desc>
           <Type>PointerTablePartCell</Type>
-          <GeneratedCode Zip="1">H4sIAAAAAAAACqVUTW/TQBC9W/J/WHJyKuT2UBBqSaM0pSEH2oiktKKqqs164mzjrN31OFWFKqEi7gghzhw5AgIpRLS/YfOPkL8SJ3ElUvay9u7bNzNv36yu6drqCgmHrkUTIUR9UKPxtfqohmqkbtWN+qZu1HD8Xn1Rt+r7+PP4+rThcoEgW7TtQINKrILjmMyfcuQBdG1lVdcCnwub1LC3mX7XQ2SHMqhhb32yWgMBkiJYVdcCU31St2o0fqf+qF/qZnythhNghTE3EMiF3XQ7eEElbOqargnaB9+jDEgTXUltqAirJakV7x7X9ttnwNBsBm3mUN9/mpfxllHIWz49sl83O2uyfXhw+Wj3rPWih0ePK4Xiia55QdvhjHhUIqcOiajvKyjZuEPGN7HOSSwfKXJ27yB7cGEUSWkr/Djk2G1I1wOJHHzj+KQYibWcKYiXzCUiQu7NmWyX4Enm+HhSczhswDDfJExCHw4fcPqTORCFnyQ1oE4QmiC725DggwiFdAUppWBzj/azyKv48yrVJCmJ+peCkVchbYv6PVIDzPLF6uZHIA9KRASOQ8qEXlCOk8iLHBukUJjcxnzIRKpqlwobjAPBzwOo75SJV1xQr5G9nSWuw/BIuRydSemNYnq3UUpR/gt5ZxD7ogkOMCybdTFwezDZnAoqXQSGYBF3AFJyC5JKBy63SHza2A4QXUHa0fSQPBuAwIq0fUKl7efV64VkxEvmUrpiRs7P5JcgzCZgg0oQaMQx8jCH3MLuSzgPwEdSIk/W1nJAz4HbXZyi1mdQ29BxJVQdznr7HojdQLAZZZZ6kNVX9UMN1U81UkP1O4KGG2+JR20gpf+hWNSJ2mAmIsZCRYaO/udhOy4L+iAwMVEdoZ/pr9RJ86eq1HG2KeudppaZmjb2gxe21J29Hltxtie8bAXhqHQQZMy+IP2k4WeuIeOPapc7lhHmmmugrhsrNt8dUXFNwKhxl7V/1QEqjUWD51UbvinZzP6l2AgTBcmFXOla8v79Bap+c4o1CAAA</GeneratedCode>
+          <GeneratedCode Zip="1">H4sIAAAAAAAACqVUXWsTQRR9X9j/MOZpU2Rb1AdtTUOaagxCG0xqlVLKZPZms81kdjt7N6FIQSq+i4jPPvqoohCD7W+Y/CPZr2STbMHUeZndmTPn3nvm3NE1XVtfI+HQtWgihKgPajy5VB/VSI3VtbpS39SVGk3eqy/qWn2ffJ5cnjRcRyDIFm1zaFCJVeDcZP6MIw+ga2vruhb4jrBJDXtb6Xc9RHYogxr2HkxXayBAUgSr6lpgqk/qWo0n79Qf9UtdTS7VaAqsMOYGAh1hN90ODqmELV3TNUH74HuUAWmiK6kNFWG1JLXi3aPafvsUGJrNoM049f3HeRlvG4W85ZMOPuKvn99vnx40B5XdV/cOeOvcGxaKx7rmBW3uMOJRiQ7lJOK+raJk8wYd38RCJ7F8pOiwWwfZg6FRJKXt8OPQwW5Duh5IdMA3jo6LkVqruYJ4yVwiIuTemst2BZ5kjo8nNYfDBgzzTcIk9OHwAWc/mQNR+GlSA8qD0AXZ3YYEH0QopCtIKQWbe7SfRV7EnxepJklJ1D8XjLwMaVvU75EaYJYvVjc/ArlTIiLgnJQJHVIHp5GXOTZJoTC9jcWQiVTVLhU2GAfCOQugvlsmXnFJvUb2dla4DsMj5XJ0JqU3iundRilF+S/lnUHsiyZwYFg262Lg9mC6ORNUuggMwSLuAKR0LEgqHbiOReLTxk6A6ArSjqa75MkABFak7RMqbT+vXi8kI14yl9IVM3J+Jr8EYTYBG1SCQCOOkYc5dCzsvoCzAHwkJfJwYyMH9Awcu4sz1IM51A50XAlV7rDevgfiaSDYnDIrvcjqq/qhRuqnGquR+h1Bw423xKM2kNL/UCzrRG0wExFjoSJDR/+LsF2XBX0QmJiojtDP9FfqpMVTVcr5DmW9k9QyM9PGfvDClrqx12MrzveEl60gHJUOgozZl6SfNvzcNWT8Ue063DLCXHMN1HVjxRa7IyquCRg17qr2r3Kg0lg2eF614ZuSzexfio0wUZBcyIWuJe/fX9IZ2G42CAAA</GeneratedCode>
           <NotSaveToFile>0</NotSaveToFile>
         </Form>
       </Forms>
@@ -41233,7 +41258,7 @@ FROM
       </Fields>
     </Enum>
     <Enum>
-      <Name>МетодиСписанняПартій</Name>
+      <Name>МетодиСписання</Name>
       <SerialNumber>2</SerialNumber>
       <Fields>
         <Field>
@@ -47265,7 +47290,7 @@ SQL тип  непотрібно вказувати
         </TabularList>
       </TabularLists>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Desc>Список</Desc>
           <Type>List</Type>
@@ -47354,7 +47379,7 @@ SQL тип  непотрібно вказувати
         </TabularList>
       </TabularLists>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Desc>Список</Desc>
           <Type>List</Type>
@@ -47514,7 +47539,7 @@ SQL тип  непотрібно вказувати
         </TabularList>
       </TabularLists>
       <Forms>
-        <Form Modified="1">
+        <Form Modified="0">
           <Name>Список</Name>
           <Desc>Список</Desc>
           <Type>List</Type>
