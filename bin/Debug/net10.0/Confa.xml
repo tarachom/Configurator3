@@ -7,7 +7,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>18.05.2026 07:48:24</DateTimeSave>
+  <DateTimeSave>20.05.2026 18:46:47</DateTimeSave>
   <DictTSearch>simple</DictTSearch>
   <GtkVersion>Gtk4</GtkVersion>
   <ConstantsBlocks>
@@ -3824,36 +3824,6 @@ END]]></Value>
               <IsExport>0</IsExport>
               <AutomaticNumbering>1</AutomaticNumbering>
             </Field>
-            <Field>
-              <Name>ДатаЧас</Name>
-              <FullName>Дата та час</FullName>
-              <NameInTable>col_a3</NameInTable>
-              <Type>datetime</Type>
-              <IsIndex>0</IsIndex>
-              <IsFullTextSearch>0</IsFullTextSearch>
-              <IsSearch>0</IsSearch>
-              <IsExport>0</IsExport>
-            </Field>
-            <Field>
-              <Name>Дата</Name>
-              <FullName>Дата</FullName>
-              <NameInTable>col_a4</NameInTable>
-              <Type>date</Type>
-              <IsIndex>0</IsIndex>
-              <IsFullTextSearch>0</IsFullTextSearch>
-              <IsSearch>0</IsSearch>
-              <IsExport>0</IsExport>
-            </Field>
-            <Field>
-              <Name>Час</Name>
-              <FullName>Час</FullName>
-              <NameInTable>col_a5</NameInTable>
-              <Type>time</Type>
-              <IsIndex>0</IsIndex>
-              <IsFullTextSearch>0</IsFullTextSearch>
-              <IsSearch>0</IsSearch>
-              <IsExport>0</IsExport>
-            </Field>
           </Fields>
           <TabularLists />
           <TriggerFunctions>
@@ -3865,7 +3835,7 @@ END]]></Value>
               <Name>Таблична частин Контакти</Name>
               <Desc>Таблична частина</Desc>
               <Type>TablePart</Type>
-              <GeneratedCode Zip="1">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</GeneratedCode>
+              <GeneratedCode Zip="1">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</GeneratedCode>
               <NotSaveToFile>0</NotSaveToFile>
               <ElementFields>
                 <Field>
@@ -3957,33 +3927,6 @@ END]]></Value>
                   <ReadOnly>0</ReadOnly>
                   <Type>string</Type>
                   <Multiline>0</Multiline>
-                </Field>
-                <Field>
-                  <Name>ДатаЧас</Name>
-                  <Caption>Дата та час</Caption>
-                  <Size>200</Size>
-                  <Height>0</Height>
-                  <SortNum>100</SortNum>
-                  <ReadOnly>0</ReadOnly>
-                  <Type>datetime</Type>
-                </Field>
-                <Field>
-                  <Name>Дата</Name>
-                  <Caption>Дата</Caption>
-                  <Size>100</Size>
-                  <Height>0</Height>
-                  <SortNum>100</SortNum>
-                  <ReadOnly>0</ReadOnly>
-                  <Type>date</Type>
-                </Field>
-                <Field>
-                  <Name>Час</Name>
-                  <Caption>Час</Caption>
-                  <Size>100</Size>
-                  <Height>0</Height>
-                  <SortNum>100</SortNum>
-                  <ReadOnly>0</ReadOnly>
-                  <Type>time</Type>
                 </Field>
               </ElementFields>
               <IncludeIconColumn>0</IncludeIconColumn>
@@ -5443,17 +5386,6 @@ END]]></Value>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
         </Field>
-        <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
-          <NameInTable>col_a3</NameInTable>
-          <Type>composite_pointer</Type>
-          <IsPresentation>0</IsPresentation>
-          <IsIndex>0</IsIndex>
-          <IsFullTextSearch>0</IsFullTextSearch>
-          <IsSearch>0</IsSearch>
-          <IsExport>0</IsExport>
-        </Field>
       </Fields>
       <TabularParts>
         <TablePart>
@@ -5579,16 +5511,6 @@ END]]></Value>
               <IsExport>0</IsExport>
               <Multiline>0</Multiline>
             </Field>
-            <Field>
-              <Name>Основа</Name>
-              <FullName>Основа</FullName>
-              <NameInTable>col_a3</NameInTable>
-              <Type>composite_pointer</Type>
-              <IsIndex>0</IsIndex>
-              <IsFullTextSearch>0</IsFullTextSearch>
-              <IsSearch>0</IsSearch>
-              <IsExport>0</IsExport>
-            </Field>
           </Fields>
           <TabularLists />
           <TriggerFunctions>
@@ -5600,7 +5522,7 @@ END]]></Value>
               <Name>Таблична частина Контакти</Name>
               <Desc>Таблична частина Контакти</Desc>
               <Type>TablePart</Type>
-              <GeneratedCode Zip="1">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</GeneratedCode>
+              <GeneratedCode Zip="1">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</GeneratedCode>
               <NotSaveToFile>0</NotSaveToFile>
               <ElementFields>
                 <Field>
@@ -5693,15 +5615,6 @@ END]]></Value>
                   <Type>string</Type>
                   <Multiline>0</Multiline>
                 </Field>
-                <Field>
-                  <Name>Основа</Name>
-                  <Caption>Основа</Caption>
-                  <Size>0</Size>
-                  <Height>0</Height>
-                  <SortNum>100</SortNum>
-                  <ReadOnly>0</ReadOnly>
-                  <Type>composite_pointer</Type>
-                </Field>
               </ElementFields>
               <IncludeIconColumn>0</IncludeIconColumn>
             </Form>
@@ -5726,23 +5639,13 @@ END]]></Value>
             <Field>
               <Name>Назва</Name>
               <Caption>Назва</Caption>
-              <Size>0</Size>
+              <Size>300</Size>
               <SortNum>2</SortNum>
               <SortField>True</SortField>
               <SortDirection>False</SortDirection>
               <FilterField>False</FilterField>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <SortNum>100</SortNum>
-              <SortField>False</SortField>
-              <SortDirection>False</SortDirection>
-              <FilterField>False</FilterField>
-              <Type>composite_pointer</Type>
             </Field>
           </Fields>
         </TabularList>
@@ -5842,15 +5745,6 @@ END]]></Value>
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>100</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts>
@@ -7376,17 +7270,6 @@ FROM
               <Type>string</Type>
               <Multiline>0</Multiline>
             </Field>
-            <Field>
-              <Name>Родич</Name>
-              <Caption>Родич</Caption>
-              <Size>0</Size>
-              <SortNum>3</SortNum>
-              <SortField>False</SortField>
-              <SortDirection>False</SortDirection>
-              <FilterField>True</FilterField>
-              <Type>pointer</Type>
-              <Pointer>Довідники.Номенклатура_Папки</Pointer>
-            </Field>
           </Fields>
         </TabularList>
         <TabularList>
@@ -7413,17 +7296,6 @@ FROM
               <FilterField>False</FilterField>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Родич</Name>
-              <Caption>Родич</Caption>
-              <Size>0</Size>
-              <SortNum>3</SortNum>
-              <SortField>False</SortField>
-              <SortDirection>False</SortDirection>
-              <FilterField>True</FilterField>
-              <Type>pointer</Type>
-              <Pointer>Довідники.Номенклатура_Папки</Pointer>
             </Field>
           </Fields>
         </TabularList>
@@ -14460,17 +14332,6 @@ FROM
               <FilterField>False</FilterField>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Родич</Name>
-              <Caption>Група</Caption>
-              <Size>0</Size>
-              <SortNum>11</SortNum>
-              <SortField>False</SortField>
-              <SortDirection>False</SortDirection>
-              <FilterField>True</FilterField>
-              <Type>pointer</Type>
-              <Pointer>Довідники.ПланРахунків</Pointer>
             </Field>
           </Fields>
         </TabularList>
