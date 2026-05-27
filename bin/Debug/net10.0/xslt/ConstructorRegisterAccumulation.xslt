@@ -58,13 +58,13 @@ namespace <xsl:value-of select="$NameSpace"/>.РегістриНакопичен
 
         #region Override
 
-        public override async ValueTask LoadRecords()
+        public override async Task LoadRecords()
         {
             ТабличніСписки.<xsl:value-of select="$RegisterAccumulationName"/>_<xsl:value-of select="$TabularList"/>.ДодатиВідбірПоПеріоду(TreeViewGrid, Період.Period, Період.DateStart, Період.DateStop);
             await ТабличніСписки.<xsl:value-of select="$RegisterAccumulationName"/>_<xsl:value-of select="$TabularList"/>.LoadRecords(TreeViewGrid, SelectPointerItem);
         }
 
-        public override async ValueTask LoadRecords_OnSearch(string searchText)
+        public override async Task LoadRecords_OnSearch(string searchText)
         {
             ТабличніСписки.<xsl:value-of select="$RegisterAccumulationName"/>_<xsl:value-of select="$TabularList"/>.ОчиститиВідбір(TreeViewGrid);
 
@@ -77,7 +77,7 @@ namespace <xsl:value-of select="$NameSpace"/>.РегістриНакопичен
         
         const string КлючНалаштуванняКористувача = "РегістриНакопичення.<xsl:value-of select="$RegisterAccumulationName"/>";
 
-        protected override async ValueTask BeforeSetValue()
+        protected override async Task BeforeSetValue()
         {
             await ФункціїНалаштуванняКористувача.ОтриматиПеріодДляЖурналу(КлючНалаштуванняКористувача, Період);
         }
@@ -120,7 +120,7 @@ namespace <xsl:value-of select="$NameSpace"/>
 {
     public static class <xsl:value-of select="$RegisterAccumulationName"/>_Звіт
     {
-        public static async ValueTask Сформувати()
+        public static async Task Сформувати()
         {
             <xsl:variable name="CountFieldsTL" select="count($FieldsTL)"/>
             string query = $@"
@@ -181,7 +181,7 @@ FROM
                 ReportName = "<xsl:value-of select="$RegisterAccumulationName"/>_Звіт",
                 Caption = "<xsl:value-of select="$RegisterAccumulationName"/>",
                 Query = query,
-                GetInfo = () =&gt; ValueTask.FromResult("")
+                GetInfo = () =&gt; Task.FromResult("")
             };
 
             Звіт.ColumnSettings.Add("period", new("Період"));

@@ -7,7 +7,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>20.05.2026 18:46:47</DateTimeSave>
+  <DateTimeSave>27.05.2026 17:33:28</DateTimeSave>
   <DictTSearch>simple</DictTSearch>
   <GtkVersion>Gtk4</GtkVersion>
   <ConstantsBlocks>
@@ -2106,7 +2106,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
               <Caption>Код</Caption>
               <Size>0</Size>
               <SortNum>1</SortNum>
-              <SortField>True</SortField>
+              <SortField>False</SortField>
               <SortDirection>False</SortDirection>
               <FilterField>False</FilterField>
               <Type>string</Type>
@@ -2117,7 +2117,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
               <Caption>Назва</Caption>
               <Size>0</Size>
               <SortNum>2</SortNum>
-              <SortField>False</SortField>
+              <SortField>True</SortField>
               <SortDirection>False</SortDirection>
               <FilterField>False</FilterField>
               <Type>string</Type>
@@ -2144,17 +2144,6 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
               <FilterField>True</FilterField>
               <Type>enum</Type>
               <Pointer>Перелічення.ТипиНоменклатури</Pointer>
-            </Field>
-            <Field>
-              <Name>Папка</Name>
-              <Caption>Папка</Caption>
-              <Size>0</Size>
-              <SortNum>6</SortNum>
-              <SortField>False</SortField>
-              <SortDirection>False</SortDirection>
-              <FilterField>True</FilterField>
-              <Type>pointer</Type>
-              <Pointer>Довідники.Номенклатура_Папки</Pointer>
             </Field>
             <AdditionalField>
               <Visible>True</Visible>
@@ -2284,7 +2273,7 @@ END]]></Value>
               <Caption>Код</Caption>
               <Size>0</Size>
               <SortNum>1</SortNum>
-              <SortField>True</SortField>
+              <SortField>False</SortField>
               <SortDirection>False</SortDirection>
               <FilterField>False</FilterField>
               <Type>string</Type>
@@ -2295,7 +2284,7 @@ END]]></Value>
               <Caption>Номенклатура</Caption>
               <Size>0</Size>
               <SortNum>2</SortNum>
-              <SortField>False</SortField>
+              <SortField>True</SortField>
               <SortDirection>False</SortDirection>
               <FilterField>False</FilterField>
               <Type>string</Type>
@@ -2317,22 +2306,11 @@ END]]></Value>
               <Caption>Тип</Caption>
               <Size>0</Size>
               <SortNum>4</SortNum>
-              <SortField>True</SortField>
+              <SortField>False</SortField>
               <SortDirection>False</SortDirection>
               <FilterField>True</FilterField>
               <Type>enum</Type>
               <Pointer>Перелічення.ТипиНоменклатури</Pointer>
-            </Field>
-            <Field>
-              <Name>Папка</Name>
-              <Caption>Папка</Caption>
-              <Size>0</Size>
-              <SortNum>5</SortNum>
-              <SortField>False</SortField>
-              <SortDirection>False</SortDirection>
-              <FilterField>True</FilterField>
-              <Type>pointer</Type>
-              <Pointer>Довідники.Номенклатура_Папки</Pointer>
             </Field>
             <AdditionalField>
               <Visible>True</Visible>
@@ -5639,7 +5617,7 @@ END]]></Value>
             <Field>
               <Name>Назва</Name>
               <Caption>Назва</Caption>
-              <Size>300</Size>
+              <Size>500</Size>
               <SortNum>2</SortNum>
               <SortField>True</SortField>
               <SortDirection>False</SortDirection>
@@ -9946,6 +9924,30 @@ FROM
               <FilterField>False</FilterField>
               <Type>datetime</Type>
             </Field>
+            <AdditionalField>
+              <Visible>False</Visible>
+              <Name>Залишки</Name>
+              <Caption>Залишки</Caption>
+              <Size>0</Size>
+              <SortNum>100</SortNum>
+              <Type>string</Type>
+              <Value><![CDATA[WITH Залишки AS 
+(
+    SELECT
+        ПартіїТоварів.{РегістриНакопичення.ПартіїТоварів_Підсумки_TablePart.ПартіяТоварівКомпозит} AS ПартіяТоварівКомпозит,
+        SUM(ПартіїТоварів.{РегістриНакопичення.ПартіїТоварів_Підсумки_TablePart.Кількість} ) AS Кількість
+    FROM
+        {РегістриНакопичення.ПартіїТоварів_Підсумки_TablePart.TABLE} AS ПартіїТоварів
+    WHERE
+        ПартіїТоварів.{РегістриНакопичення.ПартіїТоварів_Підсумки_TablePart.ПартіяТоварівКомпозит} = 
+	    {Довідники.ПартіяТоварівКомпозит_Const.TABLE}.uid
+    GROUP BY ПартіяТоварівКомпозит
+)
+SELECT 
+    ROUND(Кількість, 1)
+FROM 
+    Залишки]]></Value>
+            </AdditionalField>
           </Fields>
         </TabularList>
       </TabularLists>
@@ -16310,7 +16312,7 @@ FROM
         <BeforeSave Action="0">BeforeSave</BeforeSave>
         <AfterSave Action="0">AfterSave</AfterSave>
         <SetDeletionLabel Action="1">SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete Action="0">BeforeDelete</BeforeDelete>
+        <BeforeDelete Action="1">BeforeDelete</BeforeDelete>
       </TriggerFunctions>
       <Forms>
         <Form Modified="0">
@@ -47004,7 +47006,7 @@ SQL тип  непотрібно вказувати
     </RegisterInformation>
     <RegisterInformation>
       <Name>ШтрихкодиНоменклатури</Name>
-      <FullName>Штрихкоди</FullName>
+      <FullName>Штрихкоди номенклатури</FullName>
       <Table>tab_b17</Table>
       <PredefinedFields>
         <PredefinedField>
@@ -47252,7 +47254,7 @@ SQL тип  непотрібно вказувати
     </RegisterInformation>
     <RegisterInformation>
       <Name>РозміщенняНоменклатуриПоКоміркамНаСкладі</Name>
-      <FullName>Розміщення номенклатури</FullName>
+      <FullName>Розміщення номенклатури по комірках</FullName>
       <Table>tab_a74</Table>
       <PredefinedFields>
         <PredefinedField>
@@ -48335,7 +48337,7 @@ HAVING
     </RegisterAccumulation>
     <RegisterAccumulation>
       <Name>ЗамовленняКлієнтів</Name>
-      <FullName>ЗамовленняКлієнтів</FullName>
+      <FullName>Замовлення клієнтів</FullName>
       <Table>tab_a55</Table>
       <Type>Residues</Type>
       <Desc>Замовлення клієнтів</Desc>
@@ -48811,7 +48813,7 @@ HAVING
     </RegisterAccumulation>
     <RegisterAccumulation>
       <Name>РозрахункиЗКлієнтами</Name>
-      <FullName>РозрахункиЗКлієнтами</FullName>
+      <FullName>Розрахунки з клієнтами</FullName>
       <Table>tab_a56</Table>
       <Type>Residues</Type>
       <NoSummary>0</NoSummary>
@@ -49894,7 +49896,7 @@ HAVING
     </RegisterAccumulation>
     <RegisterAccumulation>
       <Name>ВільніЗалишки</Name>
-      <FullName>ВільніЗалишки</FullName>
+      <FullName>Вільні залишки</FullName>
       <Table>tab_a58</Table>
       <Type>Residues</Type>
       <NoSummary>0</NoSummary>
@@ -50548,7 +50550,7 @@ HAVING
     </RegisterAccumulation>
     <RegisterAccumulation>
       <Name>ЗамовленняПостачальникам</Name>
-      <FullName>ЗамовленняПостачальникам</FullName>
+      <FullName>Замовлення постачальникам</FullName>
       <Table>tab_a60</Table>
       <Type>Residues</Type>
       <NoSummary>0</NoSummary>
@@ -50970,7 +50972,7 @@ HAVING
     </RegisterAccumulation>
     <RegisterAccumulation>
       <Name>РозрахункиЗПостачальниками</Name>
-      <FullName>РозрахункиЗПостачальниками</FullName>
+      <FullName>Розрахунки з постачальниками</FullName>
       <Table>tab_a61</Table>
       <Type>Residues</Type>
       <NoSummary>0</NoSummary>
@@ -51458,7 +51460,7 @@ HAVING
     </RegisterAccumulation>
     <RegisterAccumulation>
       <Name>РухКоштів</Name>
-      <FullName>РухКоштів</FullName>
+      <FullName>Рух коштів</FullName>
       <Table>tab_a78</Table>
       <Type>Residues</Type>
       <NoSummary>0</NoSummary>
@@ -52118,7 +52120,7 @@ HAVING
     </RegisterAccumulation>
     <RegisterAccumulation>
       <Name>ПартіїТоварів</Name>
-      <FullName>ПартіїТоварів</FullName>
+      <FullName>Партії товарів</FullName>
       <Table>tab_a79</Table>
       <Type>Residues</Type>
       <NoSummary>0</NoSummary>
@@ -53834,7 +53836,7 @@ HAVING
     </RegisterAccumulation>
     <RegisterAccumulation>
       <Name>ТовариВКомірках</Name>
-      <FullName>ТовариВКомірках</FullName>
+      <FullName>Товари в комірках</FullName>
       <Table>tab_b01</Table>
       <Type>Residues</Type>
       <NoSummary>0</NoSummary>
@@ -54638,7 +54640,7 @@ HAVING
     </RegisterAccumulation>
     <RegisterAccumulation>
       <Name>РухКоштівККМ</Name>
-      <FullName>РухКоштів ККМ</FullName>
+      <FullName>Рух коштів ККМ</FullName>
       <Table>tab_b53</Table>
       <Type>Residues</Type>
       <Desc>Рух коштів для кас ККМ</Desc>

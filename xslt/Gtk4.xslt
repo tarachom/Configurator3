@@ -613,7 +613,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             </xsl:call-template>
         }
 
-        public static async ValueTask UpdateRecords(DirectoryFormJournalBase form)
+        public static async Task UpdateRecords(DirectoryFormJournalBase form)
         {
             <xsl:if test="$DirectoryType != 'Hierarchical'">
             List&lt;ObjectChanged&gt; records = [];
@@ -692,7 +692,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             return row;
         }
 
-        public static async ValueTask&lt;List&lt;DirectoryHierarchicalRow&gt;&gt; LoadChildren(DirectoryFormJournalBase form, UniqueID[] parents)
+        public static async Task&lt;List&lt;DirectoryHierarchicalRow&gt;&gt; LoadChildren(DirectoryFormJournalBase form, UniqueID[] parents)
         {
             /* Вибірка */
             <xsl:call-template name="Select">
@@ -744,7 +744,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
         }
         </xsl:if>
 
-        public static async ValueTask LoadRecords(DirectoryFormJournalBase form)
+        public static async Task LoadRecords(DirectoryFormJournalBase form)
         {
             form.BeforeLoadRecords();
 
@@ -903,7 +903,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
             </xsl:call-template>
         }
 
-        public static async ValueTask UpdateRecords(DocumentFormJournalBase form)
+        public static async Task UpdateRecords(DocumentFormJournalBase form)
         {
             List&lt;ObjectChanged&gt; records = [];
             lock (form.Loсked)
@@ -963,7 +963,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
             }
         }
 
-        public static async ValueTask LoadRecords(DocumentFormJournalBase form)
+        public static async Task LoadRecords(DocumentFormJournalBase form)
         {
             form.BeforeLoadRecords();
             UniqueID? unigueIDSelect = form.SelectPointerItem ?? form.DocumentPointerItem;
@@ -1068,7 +1068,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
             </xsl:call-template>
         }
 
-        public static async ValueTask LoadRecords(RegisterInformationFormJournalBase form)
+        public static async Task LoadRecords(RegisterInformationFormJournalBase form)
         {
             form.BeforeLoadRecords();
             UniqueID? unigueIDSelect = form.SelectPointerItem;
@@ -1174,7 +1174,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
             </xsl:call-template>
         }
 
-        public static async ValueTask LoadRecords(RegisterAccumulationFormJournalBase form)
+        public static async Task LoadRecords(RegisterAccumulationFormJournalBase form)
         {
             form.BeforeLoadRecords();
             UniqueID? unigueIDSelect = form.SelectPointerItem;
@@ -1263,7 +1263,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
             <xsl:call-template name="AddColumnEmpty" />
         }
 
-        public static async ValueTask LoadRecords(RegisterAccumulationFormJournalSmall form)
+        public static async Task LoadRecords(RegisterAccumulationFormJournalSmall form)
         {
             form.BeforeLoadRecords();
             

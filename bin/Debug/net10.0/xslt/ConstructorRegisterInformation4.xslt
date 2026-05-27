@@ -264,7 +264,7 @@ namespace <xsl:value-of select="$NameSpace"/>
 
         #endregion
 
-        protected override async ValueTask&lt;bool&gt; Save()
+        protected override async Task&lt;bool&gt; Save()
         {
             bool isSaved = false;
             try
@@ -332,7 +332,7 @@ public partial class <xsl:value-of select="$RegisterInformationName"/>_Спис�
 
     #region Override
 
-    public override async ValueTask LoadRecords()
+    public override async Task LoadRecords()
     {
         await ТабличнийСписок.LoadRecords(this);
     }
@@ -342,7 +342,7 @@ public partial class <xsl:value-of select="$RegisterInformationName"/>_Спис�
         ТабличнийСписок.CreateFilter(this);
     }
 
-    protected override async ValueTask BeforeSetValue()
+    protected override async Task BeforeSetValue()
     {
         await ФункціїНалаштуванняКористувача.ОтриматиПеріодДляЖурналу(FormKey, Period);
     }
@@ -383,7 +383,7 @@ namespace <xsl:value-of select="$NameSpace"/>
 {
     public static class <xsl:value-of select="$RegisterInformationName"/>_Звіт
     {
-        public static async ValueTask Сформувати()
+        public static async Task Сформувати()
         {
             <xsl:variable name="CountFieldsTL" select="count($FieldsTL)"/>
             string query = $@"
@@ -443,7 +443,7 @@ FROM
                 ReportName = "<xsl:value-of select="$RegisterInformationName"/>_Звіт",
                 Caption = "<xsl:value-of select="$RegisterInformationName"/>",
                 Query = query,
-                GetInfo = () =&gt; ValueTask.FromResult("")
+                GetInfo = () =&gt; Task.FromResult("")
             };
 
             Звіт.ColumnSettings.Add("period", new("Період"));

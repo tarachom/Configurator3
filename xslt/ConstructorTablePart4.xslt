@@ -107,14 +107,14 @@ namespace <xsl:value-of select="$NameSpaceGeneratedCode"/>.<xsl:value-of select=
 
 static class <xsl:value-of select="$OwnerName"/>_<xsl:value-of select="$TablePartName"/>_Triggers
 {
-    public static async ValueTask <xsl:value-of select="$TriggerFunctions/BeforeSave"/>(<xsl:value-of select="$OwnerName"/>_Objest <xsl:value-of select="$OwnerTypeName"/>Обєкт, <xsl:value-of select="$OwnerName"/>_<xsl:value-of select="$TablePartName"/>_TablePart ТабличнаЧастина)
+    public static async Task <xsl:value-of select="$TriggerFunctions/BeforeSave"/>(<xsl:value-of select="$OwnerName"/>_Objest <xsl:value-of select="$OwnerTypeName"/>Обєкт, <xsl:value-of select="$OwnerName"/>_<xsl:value-of select="$TablePartName"/>_TablePart ТабличнаЧастина)
     {
-        await ValueTask.FromResult(true);
+        await Task.FromResult(true);
     }
 
-    public static async ValueTask <xsl:value-of select="$TriggerFunctions/AfterSave"/>(<xsl:value-of select="$OwnerName"/>_Objest <xsl:value-of select="$OwnerTypeName"/>Обєкт, <xsl:value-of select="$OwnerName"/>_<xsl:value-of select="$TablePartName"/>_TablePart ТабличнаЧастина)
+    public static async Task <xsl:value-of select="$TriggerFunctions/AfterSave"/>(<xsl:value-of select="$OwnerName"/>_Objest <xsl:value-of select="$OwnerTypeName"/>Обєкт, <xsl:value-of select="$OwnerName"/>_<xsl:value-of select="$TablePartName"/>_TablePart ТабличнаЧастина)
     {
-        await ValueTask.FromResult(true);
+        await Task.FromResult(true);
     }
 }
     </xsl:template>
@@ -387,7 +387,7 @@ partial class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина
         }
     }
 
-    public override async ValueTask LoadRecords()
+    public override async Task LoadRecords()
     {
         <xsl:choose>
             <xsl:when test="$OwnerType = 'Constants'">
@@ -435,7 +435,7 @@ partial class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина
         <xsl:if test="$OwnerType != 'Constants'">}</xsl:if><!-- закриття if -->
     }
 
-    public override async ValueTask SaveRecords()
+    public override async Task SaveRecords()
     {
         <xsl:if test="$OwnerType != 'Constants'"><!-- відкриття if -->
         if (ЕлементВласник != null)
@@ -509,7 +509,7 @@ partial class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина
         <xsl:if test="$OwnerType != 'Constants'">}</xsl:if><!-- закриття if -->
     }
 
-    public override async ValueTask&lt;bool&gt; NewRecord()
+    public override async Task&lt;bool&gt; NewRecord()
     {
         Store.Append(ItemRow.New());
         return true;
@@ -570,7 +570,7 @@ namespace <xsl:value-of select="$NameSpace"/>
 {
     public static class <xsl:value-of select="$OwnerName"/>_<xsl:value-of select="$TablePartName"/>_Звіт
     {
-        public static async ValueTask Сформувати()
+        public static async Task Сформувати()
         {
             <xsl:variable name="CountFieldsTL" select="count(TablePart/ElementFields/Field)"/>
             string query = $@"
@@ -628,7 +628,7 @@ FROM
                 ReportName = "<xsl:value-of select="$OwnerName"/>_<xsl:value-of select="$TablePartName"/>_Звіт",
                 Caption = "<xsl:value-of select="$TablePartName"/>",
                 Query = query,
-                GetInfo = () =&gt; ValueTask.FromResult("")
+                GetInfo = () =&gt; Task.FromResult("")
             };
 
             <xsl:for-each select="$FieldsTL">

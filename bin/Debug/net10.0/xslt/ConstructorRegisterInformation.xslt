@@ -264,7 +264,7 @@ namespace <xsl:value-of select="$NameSpace"/>
 
         #endregion
 
-        protected override async ValueTask&lt;bool&gt; Save()
+        protected override async Task&lt;bool&gt; Save()
         {
             bool isSaved = false;
             try
@@ -316,7 +316,7 @@ namespace <xsl:value-of select="$NameSpace"/>.РегістриВідомосте
 
         #region Override
 
-        public override async ValueTask LoadRecords()
+        public override async Task LoadRecords()
         {
             ТабличніСписки.<xsl:value-of select="$RegisterInformationName"/>_<xsl:value-of select="$TabularList"/>.SelectPointerItem = SelectPointerItem;
             ТабличніСписки.<xsl:value-of select="$RegisterInformationName"/>_<xsl:value-of select="$TabularList"/>.ДодатиВідбірПоПеріоду(TreeViewGrid, Період.Period, Період.DateStart, Період.DateStop);
@@ -324,7 +324,7 @@ namespace <xsl:value-of select="$NameSpace"/>.РегістриВідомосте
             await ТабличніСписки.<xsl:value-of select="$RegisterInformationName"/>_<xsl:value-of select="$TabularList"/>.LoadRecords(TreeViewGrid);
         }
 
-        public override async ValueTask LoadRecords_OnSearch(string searchText)
+        public override async Task LoadRecords_OnSearch(string searchText)
         {
             ТабличніСписки.<xsl:value-of select="$RegisterInformationName"/>_<xsl:value-of select="$TabularList"/>.ОчиститиВідбір(TreeViewGrid);
 
@@ -335,7 +335,7 @@ namespace <xsl:value-of select="$NameSpace"/>.РегістриВідомосте
             await ТабличніСписки.<xsl:value-of select="$RegisterInformationName"/>_<xsl:value-of select="$TabularList"/>.LoadRecords(TreeViewGrid);
         }
 
-        protected override async ValueTask OpenPageElement(bool IsNew, UniqueID? uniqueID = null)
+        protected override async Task OpenPageElement(bool IsNew, UniqueID? uniqueID = null)
         {
             <xsl:value-of select="$RegisterInformationName"/>_Елемент page = new <xsl:value-of select="$RegisterInformationName"/>_Елемент
             {
@@ -353,7 +353,7 @@ namespace <xsl:value-of select="$NameSpace"/>.РегістриВідомосте
             NotebookFunction.CreateNotebookPage(Program.GeneralNotebook, page.Caption, () =&gt; page);
             page.SetValue();
         }
-        protected override async ValueTask Delete(UniqueID uniqueID)
+        protected override async Task Delete(UniqueID uniqueID)
         {
             <xsl:value-of select="$RegisterInformationName"/>_Objest Обєкт = new <xsl:value-of select="$RegisterInformationName"/>_Objest();
             if (await Обєкт.Read(uniqueID))
@@ -362,7 +362,7 @@ namespace <xsl:value-of select="$NameSpace"/>.РегістриВідомосте
                 Message.Error(Program.GeneralForm, "Не вдалось прочитати!");
         }
 
-        protected override async ValueTask&lt;UniqueID?&gt; Copy(UniqueID uniqueID)
+        protected override async Task&lt;UniqueID?&gt; Copy(UniqueID uniqueID)
         {
             <xsl:value-of select="$RegisterInformationName"/>_Objest Обєкт = new <xsl:value-of select="$RegisterInformationName"/>_Objest();
             if (await Обєкт.Read(uniqueID))
@@ -380,7 +380,7 @@ namespace <xsl:value-of select="$NameSpace"/>.РегістриВідомосте
 
         const string КлючНалаштуванняКористувача = "РегістриВідомостей.<xsl:value-of select="$RegisterInformationName"/>";
 
-        protected override async ValueTask BeforeSetValue()
+        protected override async Task BeforeSetValue()
         {
             await ФункціїНалаштуванняКористувача.ОтриматиПеріодДляЖурналу(КлючНалаштуванняКористувача, Період);
         }
@@ -423,7 +423,7 @@ namespace <xsl:value-of select="$NameSpace"/>
 {
     public static class <xsl:value-of select="$RegisterInformationName"/>_Звіт
     {
-        public static async ValueTask Сформувати()
+        public static async Task Сформувати()
         {
             <xsl:variable name="CountFieldsTL" select="count($FieldsTL)"/>
             string query = $@"
@@ -483,7 +483,7 @@ FROM
                 ReportName = "<xsl:value-of select="$RegisterInformationName"/>_Звіт",
                 Caption = "<xsl:value-of select="$RegisterInformationName"/>",
                 Query = query,
-                GetInfo = () =&gt; ValueTask.FromResult("")
+                GetInfo = () =&gt; Task.FromResult("")
             };
 
             Звіт.ColumnSettings.Add("period", new("Період"));

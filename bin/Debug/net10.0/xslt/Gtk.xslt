@@ -202,7 +202,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
           </xsl:if>
         }
 
-        public static async ValueTask UpdateRecords(TreeView treeView, List&lt;ObjectChanged&gt; recordsChanged)
+        public static async Task UpdateRecords(TreeView treeView, List&lt;ObjectChanged&gt; recordsChanged)
         {
             <xsl:value-of select="$StoreType"/> Store = (<xsl:value-of select="$StoreType"/>)treeView.Model;
             Dictionary&lt;Guid, (TreeIter Iter, TypeObjectChanged Type)&gt; records = [];
@@ -297,7 +297,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             }
         }
 
-        public static async ValueTask LoadRecords(TreeView treeView, UniqueID? openFolder = null, 
+        public static async Task LoadRecords(TreeView treeView, UniqueID? openFolder = null, 
           UniqueID? selectPointerItem = null, UniqueID? directoryPointerItem = null)
         {
             TreePath? /*FirstPath = null,*/ SelectPath = null, CurrentPath = null;
@@ -580,7 +580,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
           </xsl:if>
         }
 
-        public static async ValueTask UpdateRecords(TreeView treeView, List&lt;ObjectChanged&gt; recordsChanged)
+        public static async Task UpdateRecords(TreeView treeView, List&lt;ObjectChanged&gt; recordsChanged)
         {
             ListStore Store = (ListStore)treeView.Model;
             Dictionary&lt;Guid, (TreeIter Iter, TypeObjectChanged Type)&gt; records = [];
@@ -662,7 +662,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
             }
         }
 
-        public static async ValueTask LoadRecords(TreeView treeView, UniqueID? selectPointerItem = null, UniqueID? directoryPointerItem = null)
+        public static async Task LoadRecords(TreeView treeView, UniqueID? selectPointerItem = null, UniqueID? directoryPointerItem = null)
         {
             TreePath? /*FirstPath = null,*/ SelectPath = null, CurrentPath = null;
             UniqueID? unigueIDSelect = selectPointerItem ?? directoryPointerItem;
@@ -864,7 +864,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
         }
 
         // Завантаження даних
-        public static async ValueTask LoadRecords(TreeView treeView, UniqueID? selectPointerItem = null) 
+        public static async Task LoadRecords(TreeView treeView, UniqueID? selectPointerItem = null) 
         {
             TreePath? SelectPath = null, CurrentPath = null;
             ListStore Store = (ListStore)treeView.Model;
@@ -1044,7 +1044,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
             if (where != null) ДодатиВідбір(treeView, where);               
         }
 
-        public static async ValueTask LoadRecords(TreeView treeView, UniqueID? selectPointerItem = null)
+        public static async Task LoadRecords(TreeView treeView, UniqueID? selectPointerItem = null)
         {
             TreePath? SelectPath = null, CurrentPath = null;
             ListStore Store = (ListStore)treeView.Model;
@@ -1194,7 +1194,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
             ДодатиВідбір(treeView, new Where("owner", Comparison.EQ, owner), true);
         }
 
-        public static async ValueTask LoadRecords(TreeView treeView, UniqueID? selectPointerItem = null, bool position_last = true)
+        public static async Task LoadRecords(TreeView treeView, UniqueID? selectPointerItem = null, bool position_last = true)
         {
             TreePath? SelectPath = null, CurrentPath = null;
             ListStore Store = (ListStore)treeView.Model;

@@ -72,42 +72,42 @@ namespace <xsl:value-of select="$NameSpaceGeneratedCode"/>.Довідники;
 
 static class <xsl:value-of select="$DirectoryName"/>_Triggers
 {
-    public static async ValueTask <xsl:value-of select="$TriggerFunctions/New"/>(<xsl:value-of select="$DirectoryName"/>_Objest ДовідникОбєкт)
+    public static Task <xsl:value-of select="$TriggerFunctions/New"/>(<xsl:value-of select="$DirectoryName"/>_Objest ДовідникОбєкт)
     {
         <xsl:if test="$DirectoryAutomaticNumeration = '1'">
             <xsl:text>ДовідникОбєкт.Код = (++НумераціяДовідників.</xsl:text>
             <xsl:value-of select="$DirectoryName"/>
             <xsl:text>_Const).ToString("D6");</xsl:text>
         </xsl:if>
-        await ValueTask.FromResult(true);
+        return Task.CompletedTask;
     }
 
-    public static async ValueTask <xsl:value-of select="$TriggerFunctions/Copying"/>(<xsl:value-of select="$DirectoryName"/>_Objest ДовідникОбєкт, <xsl:value-of select="$DirectoryName"/>_Objest Основа)
+    public static Task <xsl:value-of select="$TriggerFunctions/Copying"/>(<xsl:value-of select="$DirectoryName"/>_Objest ДовідникОбєкт, <xsl:value-of select="$DirectoryName"/>_Objest Основа)
     {
         <xsl:if test="$Fields[Name = 'Назва']">
         ДовідникОбєкт.Назва += " - Копія";
         </xsl:if>
-        await ValueTask.FromResult(true);
+        return Task.CompletedTask;
     }
 
-    public static async ValueTask <xsl:value-of select="$TriggerFunctions/BeforeSave"/>(<xsl:value-of select="$DirectoryName"/>_Objest ДовідникОбєкт)
+    public static Task <xsl:value-of select="$TriggerFunctions/BeforeSave"/>(<xsl:value-of select="$DirectoryName"/>_Objest ДовідникОбєкт)
     {
-        await ValueTask.FromResult(true);
+        return Task.CompletedTask;
     }
 
-    public static async ValueTask <xsl:value-of select="$TriggerFunctions/AfterSave"/>(<xsl:value-of select="$DirectoryName"/>_Objest ДовідникОбєкт)
+    public static Task <xsl:value-of select="$TriggerFunctions/AfterSave"/>(<xsl:value-of select="$DirectoryName"/>_Objest ДовідникОбєкт)
     {
-        await ValueTask.FromResult(true);
+        return Task.CompletedTask;
     }
 
-    public static async ValueTask <xsl:value-of select="$TriggerFunctions/SetDeletionLabel"/>(<xsl:value-of select="$DirectoryName"/>_Objest ДовідникОбєкт, bool label)
+    public static Task <xsl:value-of select="$TriggerFunctions/SetDeletionLabel"/>(<xsl:value-of select="$DirectoryName"/>_Objest ДовідникОбєкт, bool label)
     {
-        await ValueTask.FromResult(true);
+        return Task.CompletedTask;
     }
 
-    public static async ValueTask <xsl:value-of select="$TriggerFunctions/BeforeDelete"/>(<xsl:value-of select="$DirectoryName"/>_Objest ДовідникОбєкт)
+    public static Task <xsl:value-of select="$TriggerFunctions/BeforeDelete"/>(<xsl:value-of select="$DirectoryName"/>_Objest ДовідникОбєкт)
     {
-        await ValueTask.FromResult(true);
+        return Task.CompletedTask;
     }
 }
     </xsl:template>
@@ -176,7 +176,7 @@ static class <xsl:value-of select="$DirectoryName"/>_Функції
         ];
     }
 
-    public static async ValueTask OpenPageElement(bool IsNew, UniqueID? uniqueID = null, 
+    public static async Task OpenPageElement(bool IsNew, UniqueID? uniqueID = null, 
         Action&lt;UniqueID?&gt;? сallBack_LoadRecords = null, 
         Action&lt;UniqueID&gt;? сallBack_OnSelectPointer = null<xsl:if test="normalize-space($DirectoryOwner) != ''">,
             <xsl:variable name="namePointer" select="substring-after($DirectoryOwner, '.')" />
@@ -204,7 +204,7 @@ static class <xsl:value-of select="$DirectoryName"/>_Функції
         await page.SetValue();
     }
 
-    public static async ValueTask OpenPageList(UniqueID? uniqueID = null, ConfigurationDirectories.HierarchicalContentType? allowedContentSelection = null, UniqueID? openFolder = null,
+    public static async Task OpenPageList(UniqueID? uniqueID = null, ConfigurationDirectories.HierarchicalContentType? allowedContentSelection = null, UniqueID? openFolder = null,
         Action&lt;UniqueID&gt;? сallBack_OnSelectPointer = null<xsl:if test="normalize-space($DirectoryOwner) != ''">,
             <xsl:variable name="namePointer" select="substring-after($DirectoryOwner, '.')" />
         <xsl:value-of select="$namePointer"/>_Pointer? Власник = null</xsl:if>)
@@ -223,14 +223,14 @@ static class <xsl:value-of select="$DirectoryName"/>_Функції
         await page.SetValue();
     }
 
-    public static async ValueTask SetDeletionLabel(UniqueID uniqueID)
+    public static async Task SetDeletionLabel(UniqueID uniqueID)
     {
         <xsl:value-of select="$DirectoryName"/>_Pointer Вказівник = new(uniqueID);
         bool? label = await Вказівник.GetDeletionLabel();
         if (label.HasValue) await Вказівник.SetDeletionLabel(!label.Value);
     }
 
-    public static async ValueTask&lt;UniqueID?&gt; Copy(UniqueID uniqueID)
+    public static async Task&lt;UniqueID?&gt; Copy(UniqueID uniqueID)
     {
         <xsl:value-of select="$DirectoryName"/>_Objest Обєкт = new();
         if (await Обєкт.Read(uniqueID))
@@ -506,7 +506,7 @@ partial class <xsl:value-of select="$DirectoryName"/>_Елемент : Directory
 
     #region Присвоєння / зчитування значень
 
-    public override async ValueTask AssignValue()
+    public override async Task AssignValue()
     {
         <xsl:if test="normalize-space($DirectoryOwner) != ''">
         if (IsNew) 
@@ -600,7 +600,7 @@ partial class <xsl:value-of select="$DirectoryName"/>_Елемент : Directory
 
     #endregion
 
-    protected override async ValueTask&lt;bool&gt; Save()
+    protected override async Task&lt;bool&gt; Save()
     {
         bool isSaved = false;
         try
@@ -693,12 +693,12 @@ partial class <xsl:value-of select="$DirectoryName"/>_Список : DirectoryFo
         return list;
     }
 
-    public override async ValueTask LoadRecords()
+    public override async Task LoadRecords()
     {
         await ТабличнийСписок.LoadRecords(this);
     }
     <xsl:if test="$DirectoryType = 'Hierarchical'">
-    public override async ValueTask&lt;List&lt;DirectoryHierarchicalRow&gt;&gt; LoadChildren(UniqueID[] parents)
+    public override async Task&lt;List&lt;DirectoryHierarchicalRow&gt;&gt; LoadChildren(UniqueID[] parents)
     {
         return await ТабличнийСписок.LoadChildren(this, parents);
     }
@@ -708,7 +708,7 @@ partial class <xsl:value-of select="$DirectoryName"/>_Список : DirectoryFo
         return ТабличнийСписок.LoadEmptyChildren(this);
     }
     </xsl:if>
-    public override async ValueTask UpdateRecords()
+    public override async Task UpdateRecords()
     {
         await ТабличнийСписок.UpdateRecords(this);
     }
@@ -723,17 +723,17 @@ partial class <xsl:value-of select="$DirectoryName"/>_Список : DirectoryFo
         ТабличнийСписок.CreateFilter(this);
     }
 
-    protected override async ValueTask OpenPageElement(bool IsNew, UniqueID? uniqueID = null)
+    protected override async Task OpenPageElement(bool IsNew, UniqueID? uniqueID = null)
     {
         await Функції.OpenPageElement(IsNew, uniqueID, CallBack_LoadRecords, CallBack_OnSelectPointer<xsl:if test="normalize-space($DirectoryOwner) != ''">, Власник.Pointer</xsl:if>);
     }
 
-    protected override async ValueTask SetDeletionLabel(UniqueID uniqueID)
+    protected override async Task SetDeletionLabel(UniqueID uniqueID)
     {
         await Функції.SetDeletionLabel(uniqueID);
     }
 
-    protected override async ValueTask&lt;UniqueID?&gt; Copy(UniqueID uniqueID)
+    protected override async Task&lt;UniqueID?&gt; Copy(UniqueID uniqueID)
     {
         return await Функції.Copy(uniqueID);
     }
@@ -812,12 +812,12 @@ partial class <xsl:value-of select="$DirectoryName"/>_ШвидкийВибір :
         return list;
     }
 
-    public override async ValueTask LoadRecords()
+    public override async Task LoadRecords()
     {
         await ТабличнийСписок.LoadRecords(this);
     }
     <xsl:if test="$DirectoryType = 'Hierarchical'">
-    public override async ValueTask&lt;List&lt;DirectoryHierarchicalRow&gt;&gt; LoadChildren(UniqueID[] parents)
+    public override async Task&lt;List&lt;DirectoryHierarchicalRow&gt;&gt; LoadChildren(UniqueID[] parents)
     {
         return await ТабличнийСписок.LoadChildren(this, parents);
     }
@@ -827,7 +827,7 @@ partial class <xsl:value-of select="$DirectoryName"/>_ШвидкийВибір :
         return ТабличнийСписок.LoadEmptyChildren(this);
     }
     </xsl:if>
-    public override async ValueTask UpdateRecords()
+    public override async Task UpdateRecords()
     {
         await ТабличнийСписок.UpdateRecords(this);
     }
@@ -842,22 +842,22 @@ partial class <xsl:value-of select="$DirectoryName"/>_ШвидкийВибір :
         ТабличнийСписок.CreateFilter(this);
     }
 
-    protected override async ValueTask OpenPageList(UniqueID? uniqueID = null)
+    protected override async Task OpenPageList(UniqueID? uniqueID = null)
     {
         await Функції.OpenPageList(uniqueID, AllowedContentSelection, OpenFolder, CallBack_OnSelectPointer<xsl:if test="normalize-space($DirectoryOwner) != ''">, Власник.Pointer</xsl:if>);
     }
 
-    protected override async ValueTask OpenPageElement(bool IsNew, UniqueID? uniqueID = null)
+    protected override async Task OpenPageElement(bool IsNew, UniqueID? uniqueID = null)
     {
         await Функції.OpenPageElement(IsNew, uniqueID, CallBack_LoadRecords, CallBack_OnSelectPointer<xsl:if test="normalize-space($DirectoryOwner) != ''">, Власник.Pointer</xsl:if>);
     }
 
-    protected override async ValueTask SetDeletionLabel(UniqueID uniqueID)
+    protected override async Task SetDeletionLabel(UniqueID uniqueID)
     {
         await Функції.SetDeletionLabel(uniqueID);
     }
 
-    protected override async ValueTask&lt;UniqueID?&gt; Copy(UniqueID uniqueID)
+    protected override async Task&lt;UniqueID?&gt; Copy(UniqueID uniqueID)
     {
         return await Функції.Copy(uniqueID);
     }
@@ -970,7 +970,7 @@ partial class <xsl:value-of select="$DirectoryName"/>_Список : DirectoryFo
         return list;
     }
     
-    protected override async ValueTask BeforeSetValue()
+    protected override async Task BeforeSetValue()
     {
         if (SelectPointerItem != null || DirectoryPointerItem != null)
         {
@@ -981,12 +981,12 @@ partial class <xsl:value-of select="$DirectoryName"/>_Список : DirectoryFo
         await Папки.SetValue();
     }
 
-    public override async ValueTask LoadRecords()
+    public override async Task LoadRecords()
     {
         await ТабличнийСписок.LoadRecords(this);
     }
     <xsl:if test="$DirectoryType = 'Hierarchical'">
-    public override async ValueTask&lt;List&lt;DirectoryHierarchicalRow&gt;&gt; LoadChildren(UniqueID[] parents)
+    public override async Task&lt;List&lt;DirectoryHierarchicalRow&gt;&gt; LoadChildren(UniqueID[] parents)
     {
         return await ТабличнийСписок.LoadChildren(this, parents);
     }
@@ -996,7 +996,7 @@ partial class <xsl:value-of select="$DirectoryName"/>_Список : DirectoryFo
         return ТабличнийСписок.LoadEmptyChildren(this);
     }
     </xsl:if>
-    public override async ValueTask UpdateRecords()
+    public override async Task UpdateRecords()
     {
         await ТабличнийСписок.UpdateRecords(this);
     }
@@ -1011,17 +1011,17 @@ partial class <xsl:value-of select="$DirectoryName"/>_Список : DirectoryFo
         ТабличнийСписок.CreateFilter(this);
     }
 
-    protected override async ValueTask OpenPageElement(bool IsNew, UniqueID? uniqueID = null)
+    protected override async Task OpenPageElement(bool IsNew, UniqueID? uniqueID = null)
     {
         await Функції.OpenPageElement(IsNew, uniqueID, CallBack_LoadRecords, CallBack_OnSelectPointer);
     }
 
-    protected override async ValueTask SetDeletionLabel(UniqueID uniqueID)
+    protected override async Task SetDeletionLabel(UniqueID uniqueID)
     {
         await Функції.SetDeletionLabel(uniqueID);
     }
 
-    protected override async ValueTask&lt;UniqueID?&gt; Copy(UniqueID uniqueID)
+    protected override async Task&lt;UniqueID?&gt; Copy(UniqueID uniqueID)
     {
         return await Функції.Copy(uniqueID);
     }
@@ -1170,9 +1170,9 @@ public partial class <xsl:value-of select="$DirectoryName"/>_PointerTablePartCel
         }
     }
 
-    public async ValueTask GetPresentation() =&gt; Presentation = pointer != null ? await pointer.GetPresentation() : "";
+    public async Task GetPresentation() =&gt; Presentation = await pointer.GetPresentation();
 
-    async ValueTask PointerChange(UniqueID? p)
+    async Task PointerChange(UniqueID? p)
     {
         Pointer = new <xsl:value-of select="$DirectoryName"/>_Pointer(p ?? new UniqueID());
         await GetPresentation();
@@ -1332,7 +1332,7 @@ public partial class <xsl:value-of select="$DirectoryName"/>_MultiplePointerCont
         await page.SetValue();
     }
 
-    protected override async ValueTask FillList(ListBox listBox)
+    protected override async Task FillList(ListBox listBox)
     {
         foreach (<xsl:value-of select="$DirectoryName"/>_Pointer item in pointers)
         {
@@ -1406,7 +1406,7 @@ namespace <xsl:value-of select="$NameSpace"/>
 {
     public static class <xsl:value-of select="$DirectoryName"/>_Звіт
     {
-        public static async ValueTask Сформувати()
+        public static async Task Сформувати()
         {
             <xsl:variable name="CountFieldsTL" select="count($FieldsTL)"/>
             string query = $@"
@@ -1464,7 +1464,7 @@ FROM
                 ReportName = "<xsl:value-of select="$DirectoryName"/>_Звіт",
                 Caption = "<xsl:value-of select="$DirectoryName"/>",
                 Query = query,
-                GetInfo = () =&gt; ValueTask.FromResult("")
+                GetInfo = () =&gt; Task.FromResult("")
             };
 
             <xsl:for-each select="$FieldsTL">

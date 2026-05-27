@@ -33,14 +33,14 @@ namespace Configurator
     {
         public FormConfigurationSelection() : base(null, Program.Kernel, TypeForm.Configurator) { }
 
-        public override async ValueTask<bool> OpenConfigurator(ConfigurationParam? openConfigurationParam)
+        public override async Task<bool> OpenConfigurator(ConfigurationParam? openConfigurationParam)
         {
             FormConfigurator сonfigurator = new() { OpenConfigurationParam = openConfigurationParam };
             сonfigurator.Show();
             сonfigurator.SetValue();
             сonfigurator.LoadTreeAsync();
 
-            return await ValueTask.FromResult(true);
+            return await Task.FromResult(true);
         }
     }
 }
