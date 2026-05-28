@@ -72,21 +72,22 @@ namespace <xsl:value-of select="$NameSpaceGeneratedCode"/>.Довідники;
 
 static class <xsl:value-of select="$DirectoryName"/>_Triggers
 {
-    public static Task <xsl:value-of select="$TriggerFunctions/New"/>(<xsl:value-of select="$DirectoryName"/>_Objest ДовідникОбєкт)
+    public static <xsl:if test="$DirectoryAutomaticNumeration = '1'">async</xsl:if> Task <xsl:value-of select="$TriggerFunctions/New"/>(<xsl:value-of select="$DirectoryName"/>_Objest ДовідникОбєкт)
     {
-        <xsl:if test="$DirectoryAutomaticNumeration = '1'">
-            <xsl:text>ДовідникОбєкт.Код = (++НумераціяДовідників.</xsl:text>
-            <xsl:value-of select="$DirectoryName"/>
-            <xsl:text>_Const).ToString("D6");</xsl:text>
-        </xsl:if>
+        <xsl:choose>
+            <xsl:when test="$DirectoryAutomaticNumeration = '1'">
+        int number = await НумераціяДовідників.<xsl:value-of select="$DirectoryName"/>();
+        ДовідникОбєкт.Код = (await НумераціяДовідників.<xsl:value-of select="$DirectoryName"/>(++number)).ToString("D8");
+            </xsl:when>
+            <xsl:otherwise>
         return Task.CompletedTask;
+            </xsl:otherwise>
+        </xsl:choose>  
     }
 
     public static Task <xsl:value-of select="$TriggerFunctions/Copying"/>(<xsl:value-of select="$DirectoryName"/>_Objest ДовідникОбєкт, <xsl:value-of select="$DirectoryName"/>_Objest Основа)
     {
-        <xsl:if test="$Fields[Name = 'Назва']">
-        ДовідникОбєкт.Назва += " - Копія";
-        </xsl:if>
+        <xsl:if test="$Fields[Name = 'Назва']">ДовідникОбєкт.Назва += " - Копія";</xsl:if>
         return Task.CompletedTask;
     }
 

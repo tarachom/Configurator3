@@ -537,7 +537,8 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Конс
     public static class <xsl:value-of select="Name"/>
     {       
         <xsl:for-each select="Constants/Constant">
-        //[Obsolete("Бажано не використовувати! Устарівний варіант звернення до константи.")]
+        <!--
+        [Obsolete("Бажано не використовувати! Устарівний варіант звернення до константи.")]
         <xsl:text>public static </xsl:text>
         <xsl:call-template name="FieldType" />
         <xsl:text> </xsl:text>
@@ -569,7 +570,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Конс
                 </xsl:choose>);
             }
         }
-
+        -->
         <xsl:text>public static async Task&lt;</xsl:text>
         <xsl:call-template name="FieldType" />
         <xsl:text>&gt; </xsl:text>
@@ -584,8 +585,11 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Конс
             <xsl:call-template name="DefaultFieldValue" />;
         }
 
-        <xsl:text>public static async Task </xsl:text>
-        <xsl:value-of select="Name"/>(<xsl:call-template name="FieldType" /> value) =&gt;
+        <xsl:text>public static async Task&lt;</xsl:text>
+        <xsl:call-template name="FieldType" />
+        <xsl:text>&gt; </xsl:text>
+        <xsl:value-of select="Name"/>(<xsl:call-template name="FieldType" /> value)
+        {
             await Config.Kernel.DataBase.SaveConstants(SpecialTables.Constants, "<xsl:value-of select="NameInTable"/><xsl:text>", </xsl:text>
             <xsl:choose>
               <xsl:when test="Type = 'enum'">
@@ -598,6 +602,8 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Конс
                 <xsl:text>.UniqueID.UGuid</xsl:text>
               </xsl:when>
             </xsl:choose>);
+            return value;
+        }
         </xsl:for-each>
 
         <xsl:for-each select="Constants/Constant">

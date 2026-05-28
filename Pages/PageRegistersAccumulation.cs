@@ -813,7 +813,7 @@ INSERT INTO {{{tablePartName}.TABLE}}
             query += @$"
 )
 SELECT
-    uuid_generate_v4(),
+    uuidv7(),
     date_trunc('day', {regName}.period::timestamp) AS Період,";
 
             counter = 0;
@@ -914,7 +914,7 @@ INSERT INTO {{{tablePartName}.TABLE}}
             query += @$"
 )
 SELECT
-    uuid_generate_v4(),
+    uuidv7(),
     date_trunc('day', {regName}.period::timestamp) AS Період,";
 
             counter = 0;
@@ -1027,7 +1027,7 @@ INSERT INTO {{{tablePartName}.TABLE}}
             query += @$"
 )
 SELECT
-    uuid_generate_v4(),
+    uuidv7(),
     date_trunc('day', {regName}.period::timestamp) AS Період,";
 
             counter = 0;
@@ -1148,7 +1148,7 @@ INSERT INTO {{{tablePartName}.TABLE}}
             query += @$"
 )
 SELECT
-    uuid_generate_v4(),";
+    uuidv7(),";
 
             counter = 0;
 

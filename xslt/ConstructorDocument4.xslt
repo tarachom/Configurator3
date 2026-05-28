@@ -69,22 +69,23 @@ namespace <xsl:value-of select="$NameSpaceGeneratedCode"/>.Документи;
 
 static class <xsl:value-of select="$DocumentName"/>_Triggers
 {
-    public static Task <xsl:value-of select="$TriggerFunctions/New"/>(<xsl:value-of select="$DocumentName"/>_Objest ДокументОбєкт)
+    public static <xsl:if test="$DocumentAutomaticNumeration = '1'">async</xsl:if> Task <xsl:value-of select="$TriggerFunctions/New"/>(<xsl:value-of select="$DocumentName"/>_Objest ДокументОбєкт)
     {
-        <xsl:if test="$DocumentAutomaticNumeration = '1'">
-            <xsl:text>ДокументОбєкт.НомерДок = (++НумераціяДокументів.</xsl:text>
-            <xsl:value-of select="$DocumentName"/>
-            <xsl:text>_Const).ToString("D8");</xsl:text>
-        </xsl:if>
         ДокументОбєкт.ДатаДок = DateTime.Now;
+        <xsl:choose>
+            <xsl:when test="$DocumentAutomaticNumeration = '1'">
+        int number = await НумераціяДокументів.<xsl:value-of select="$DocumentName"/>();
+        ДокументОбєкт.НомерДок = (await НумераціяДокументів.<xsl:value-of select="$DocumentName"/>(++number)).ToString("D8");
+            </xsl:when>
+            <xsl:otherwise>
         return Task.CompletedTask;
+            </xsl:otherwise>
+        </xsl:choose>        
     }
 
     public static Task <xsl:value-of select="$TriggerFunctions/Copying"/>(<xsl:value-of select="$DocumentName"/>_Objest ДокументОбєкт, <xsl:value-of select="$DocumentName"/>_Objest Основа)
     {
-        <xsl:if test="$Fields[Name = 'Назва']">
-        ДокументОбєкт.Назва += " - Копія";
-        </xsl:if>
+        <xsl:if test="$Fields[Name = 'Назва']">ДокументОбєкт.Назва += " - Копія";</xsl:if>
         return Task.CompletedTask;
     }
 
@@ -152,7 +153,7 @@ static class <xsl:value-of select="$DocumentName"/>_SpendTheDocument
         }
         catch (Exception ex)
         {
-            await ФункціїДляДокументів.ДокументНеПроводиться(ДокументОбєкт, ДокументОбєкт.Назва, ex.Message);
+            await ПроведенняДокументів.ДокументНеПроводиться(ДокументОбєкт, ДокументОбєкт.Назва, ex.Message);
             return false;
         }
     }
