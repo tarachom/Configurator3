@@ -294,10 +294,7 @@ partial class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина
                     <xsl:when test="Type = 'enum'">ComboTextTablePartCell.New();
                 foreach (var field in ПсевдонімиПерелічення.<xsl:value-of select="substring-after(Pointer, '.')"/>_List())
                     cell.Combo.Append(field.Value.ToString(), field.Name);
-                //Заборона прокрутки списку
-                EventControllerScroll contr = EventControllerScroll.New(EventControllerScrollFlags.BothAxes);
-                cell.Combo.AddController(contr);
-                contr.OnScroll += (_, _) =&gt; true</xsl:when>
+                cell.Combo.AddController(FunctionForComboBox.DisableScrolling())</xsl:when>
                     <xsl:when test="Type = 'date' or Type = 'datetime'">DateTimeTablePartCell.New()</xsl:when>
                     <xsl:when test="Type = 'time'">TimeTablePartCell.New()</xsl:when>
                     <xsl:when test="Type = 'composite_pointer'">CompositePointerControlTablePartCell.New()</xsl:when>

@@ -484,10 +484,8 @@ partial class <xsl:value-of select="$DocumentName"/>_Елемент : DocumentFo
                 foreach (var field in ПсевдонімиПерелічення.<xsl:value-of select="substring-after(Pointer, '.')"/>_List())
                     <xsl:value-of select="Name"/>.Append(field.Value.ToString(), field.Name);
 
-                //Заборона прокрутки списку
-                EventControllerScroll controller = EventControllerScroll.New(EventControllerScrollFlags.BothAxes);
-                <xsl:value-of select="Name"/>.AddController(controller);
-                controller.OnScroll += (_, _) =&gt; true;
+                <xsl:value-of select="Name"/>.Active = 0;
+                <xsl:value-of select="Name"/>.AddController(FunctionForComboBox.DisableScrolling());
             }
                 </xsl:when>
             </xsl:choose>
