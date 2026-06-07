@@ -215,7 +215,7 @@ static class <xsl:value-of select="$DocumentName"/>_Функції
                 <xsl:otherwise>
                     <xsl:if test="$FieldsFilter[Name = 'Назва']">
             //Назва
-            new Where(<xsl:if test="$FieldsFilter[Name = 'Код']">Comparison.OR, </xsl:if><xsl:value-of select="$DocumentName"/>_Const.Назва, Comparison.LIKE, searchText) { <xsl:call-template name="Function_FuncToField" /> },
+            new Where(<xsl:value-of select="$DocumentName"/>_Const.Назва, Comparison.LIKE, searchText) { FuncToField = "LOWER" },
                     </xsl:if>
                 </xsl:otherwise>
             </xsl:choose>

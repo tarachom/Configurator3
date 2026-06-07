@@ -163,11 +163,11 @@ namespace <xsl:value-of select="$NameSpace"/>
                     <xsl:otherwise>
                         <xsl:if test="$FieldsFilter[Name = 'Код']">
                 //Код
-                new Where(<xsl:value-of select="$DirectoryName"/>_Const.Код, Comparison.LIKE, searchText) { <xsl:call-template name="Function_FuncToField" /> },
+                new Where(<xsl:value-of select="$DirectoryName"/>_Const.Код, Comparison.LIKE, searchText) { FuncToField = "LOWER" },
                         </xsl:if>
                         <xsl:if test="$FieldsFilter[Name = 'Назва']">
                 //Назва
-                new Where(<xsl:if test="$FieldsFilter[Name = 'Код']">Comparison.OR, </xsl:if><xsl:value-of select="$DirectoryName"/>_Const.Назва, Comparison.LIKE, searchText) { <xsl:call-template name="Function_FuncToField" /> },
+                new Where(<xsl:if test="$FieldsFilter[Name = 'Код']">Comparison.OR, </xsl:if><xsl:value-of select="$DirectoryName"/>_Const.Назва, Comparison.LIKE, searchText) { FuncToField = "LOWER" },
                         </xsl:if>
                     </xsl:otherwise>
                 </xsl:choose>
