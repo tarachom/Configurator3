@@ -107,12 +107,12 @@ namespace <xsl:value-of select="$NameSpaceGeneratedCode"/>.<xsl:value-of select=
 
 static class <xsl:value-of select="$OwnerName"/>_<xsl:value-of select="$TablePartName"/>_Triggers
 {
-    public static Task <xsl:value-of select="$TriggerFunctions/BeforeSave"/>(<xsl:value-of select="$OwnerName"/>_Objest <xsl:value-of select="$OwnerTypeName"/>Обєкт, <xsl:value-of select="$OwnerName"/>_<xsl:value-of select="$TablePartName"/>_TablePart ТабличнаЧастина)
+    public static Task <xsl:value-of select="$TriggerFunctions/BeforeSave"/>(<xsl:value-of select="$OwnerName"/>_Object <xsl:value-of select="$OwnerTypeName"/>Обєкт, <xsl:value-of select="$OwnerName"/>_<xsl:value-of select="$TablePartName"/>_TablePart ТабличнаЧастина)
     {
         return Task.CompletedTask;
     }
 
-    public static Task <xsl:value-of select="$TriggerFunctions/AfterSave"/>(<xsl:value-of select="$OwnerName"/>_Objest <xsl:value-of select="$OwnerTypeName"/>Обєкт, <xsl:value-of select="$OwnerName"/>_<xsl:value-of select="$TablePartName"/>_TablePart ТабличнаЧастина)
+    public static Task <xsl:value-of select="$TriggerFunctions/AfterSave"/>(<xsl:value-of select="$OwnerName"/>_Object <xsl:value-of select="$OwnerTypeName"/>Обєкт, <xsl:value-of select="$OwnerName"/>_<xsl:value-of select="$TablePartName"/>_TablePart ТабличнаЧастина)
     {
         return Task.CompletedTask;
     }
@@ -240,7 +240,7 @@ partial class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина
     <xsl:value-of select="$OwnerBlockName"/><xsl:value-of select="$OwnerName"/>_<xsl:value-of select="$TablePartName"/>_TablePart Таблиця { get; set; } = new();
         </xsl:when>
         <xsl:otherwise>
-    public <xsl:value-of select="$OwnerName"/>_Objest? ЕлементВласник { get; set; }
+    public <xsl:value-of select="$OwnerName"/>_Object? ЕлементВласник { get; set; }
         </xsl:otherwise>
     </xsl:choose>
     

@@ -51,7 +51,7 @@ namespace <xsl:value-of select="$NameSpace"/>
 {
     class <xsl:value-of select="$RegisterInformationName"/>_Елемент : РегістриВідомостейЕлемент
     {
-        public <xsl:value-of select="$RegisterInformationName"/>_Objest Елемент { get; init; } = new <xsl:value-of select="$RegisterInformationName"/>_Objest();
+        public <xsl:value-of select="$RegisterInformationName"/>_Object Елемент { get; init; } = new <xsl:value-of select="$RegisterInformationName"/>_Object();
         DateTimeControl Період = new DateTimeControl();
 
         #region Fields
@@ -355,7 +355,7 @@ namespace <xsl:value-of select="$NameSpace"/>.РегістриВідомосте
         }
         protected override async Task Delete(UniqueID uniqueID)
         {
-            <xsl:value-of select="$RegisterInformationName"/>_Objest Обєкт = new <xsl:value-of select="$RegisterInformationName"/>_Objest();
+            <xsl:value-of select="$RegisterInformationName"/>_Object Обєкт = new <xsl:value-of select="$RegisterInformationName"/>_Object();
             if (await Обєкт.Read(uniqueID))
                 await Обєкт.Delete();
             else
@@ -364,10 +364,10 @@ namespace <xsl:value-of select="$NameSpace"/>.РегістриВідомосте
 
         protected override async Task&lt;UniqueID?&gt; Copy(UniqueID uniqueID)
         {
-            <xsl:value-of select="$RegisterInformationName"/>_Objest Обєкт = new <xsl:value-of select="$RegisterInformationName"/>_Objest();
+            <xsl:value-of select="$RegisterInformationName"/>_Object Обєкт = new <xsl:value-of select="$RegisterInformationName"/>_Object();
             if (await Обєкт.Read(uniqueID))
             {
-                <xsl:value-of select="$RegisterInformationName"/>_Objest Новий = Обєкт.Copy();
+                <xsl:value-of select="$RegisterInformationName"/>_Object Новий = Обєкт.Copy();
                 await Новий.Save();
                 return Новий.UniqueID;
             }

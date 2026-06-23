@@ -69,7 +69,7 @@ namespace <xsl:value-of select="$NameSpaceGeneratedCode"/>.Довідники
 {
     static class <xsl:value-of select="$DirectoryName"/>_Triggers
     {
-        public static Task <xsl:value-of select="$TriggerFunctions/New"/>(<xsl:value-of select="$DirectoryName"/>_Objest ДовідникОбєкт)
+        public static Task <xsl:value-of select="$TriggerFunctions/New"/>(<xsl:value-of select="$DirectoryName"/>_Object ДовідникОбєкт)
         {
             <xsl:if test="$DirectoryAutomaticNumeration = '1'">
                 <xsl:text>ДовідникОбєкт.Код = (++НумераціяДовідників.</xsl:text>
@@ -79,7 +79,7 @@ namespace <xsl:value-of select="$NameSpaceGeneratedCode"/>.Довідники
             return Task.CompletedTask;
         }
 
-        public static Task <xsl:value-of select="$TriggerFunctions/Copying"/>(<xsl:value-of select="$DirectoryName"/>_Objest ДовідникОбєкт, <xsl:value-of select="$DirectoryName"/>_Objest Основа)
+        public static Task <xsl:value-of select="$TriggerFunctions/Copying"/>(<xsl:value-of select="$DirectoryName"/>_Object ДовідникОбєкт, <xsl:value-of select="$DirectoryName"/>_Object Основа)
         {
             <xsl:if test="$Fields[Name = 'Назва']">
             ДовідникОбєкт.Назва += " - Копія";
@@ -87,22 +87,22 @@ namespace <xsl:value-of select="$NameSpaceGeneratedCode"/>.Довідники
             return Task.CompletedTask;
         }
 
-        public static Task <xsl:value-of select="$TriggerFunctions/BeforeSave"/>(<xsl:value-of select="$DirectoryName"/>_Objest ДовідникОбєкт)
+        public static Task <xsl:value-of select="$TriggerFunctions/BeforeSave"/>(<xsl:value-of select="$DirectoryName"/>_Object ДовідникОбєкт)
         {
             return Task.CompletedTask;
         }
 
-        public static Task <xsl:value-of select="$TriggerFunctions/AfterSave"/>(<xsl:value-of select="$DirectoryName"/>_Objest ДовідникОбєкт)
+        public static Task <xsl:value-of select="$TriggerFunctions/AfterSave"/>(<xsl:value-of select="$DirectoryName"/>_Object ДовідникОбєкт)
         {
             return Task.CompletedTask;
         }
 
-        public static Task <xsl:value-of select="$TriggerFunctions/SetDeletionLabel"/>(<xsl:value-of select="$DirectoryName"/>_Objest ДовідникОбєкт, bool label)
+        public static Task <xsl:value-of select="$TriggerFunctions/SetDeletionLabel"/>(<xsl:value-of select="$DirectoryName"/>_Object ДовідникОбєкт, bool label)
         {
             return Task.CompletedTask;
         }
 
-        public static Task <xsl:value-of select="$TriggerFunctions/BeforeDelete"/>(<xsl:value-of select="$DirectoryName"/>_Objest ДовідникОбєкт)
+        public static Task <xsl:value-of select="$TriggerFunctions/BeforeDelete"/>(<xsl:value-of select="$DirectoryName"/>_Object ДовідникОбєкт)
         {
             return Task.CompletedTask;
         }
@@ -216,10 +216,10 @@ namespace <xsl:value-of select="$NameSpace"/>
 
         public static async Task&lt;UniqueID?&gt; Copy(UniqueID uniqueID)
         {
-            <xsl:value-of select="$DirectoryName"/>_Objest Обєкт = new <xsl:value-of select="$DirectoryName"/>_Objest();
+            <xsl:value-of select="$DirectoryName"/>_Object Обєкт = new <xsl:value-of select="$DirectoryName"/>_Object();
             if (await Обєкт.Read(uniqueID))
             {
-                <xsl:value-of select="$DirectoryName"/>_Objest Новий = await Обєкт.Copy(true);
+                <xsl:value-of select="$DirectoryName"/>_Object Новий = await Обєкт.Copy(true);
                 await Новий.Save();
                 <xsl:for-each select="$TabularParts">
                     await Новий.<xsl:value-of select="Name"/>_TablePart.Save(false); // Таблична частина "<xsl:value-of select="Name"/>"
@@ -274,7 +274,7 @@ namespace <xsl:value-of select="$NameSpace"/>
 {
     class <xsl:value-of select="$DirectoryName"/>_Елемент : ДовідникЕлемент
     {
-        public <xsl:value-of select="$DirectoryName"/>_Objest Елемент { get; init; } = new <xsl:value-of select="$DirectoryName"/>_Objest();
+        public <xsl:value-of select="$DirectoryName"/>_Object Елемент { get; init; } = new <xsl:value-of select="$DirectoryName"/>_Object();
         <xsl:if test="normalize-space($DirectoryOwner) != ''">
         <xsl:variable name="namePointer" select="substring-after($DirectoryOwner, '.')" />
         public <xsl:value-of select="$namePointer"/>_Pointer ВласникДляНового = new <xsl:value-of select="$namePointer"/>_Pointer();
@@ -853,7 +853,7 @@ namespace <xsl:value-of select="$NameSpace"/>
             {
                 if (DirectoryPointerItem != null || SelectPointerItem != null)
                 {
-                    <xsl:value-of select="$DirectoryName"/>_Objest? Обєкт = await new <xsl:value-of select="$DirectoryName"/>_Pointer(SelectPointerItem ?? DirectoryPointerItem ?? new UniqueID()).GetDirectoryObject();
+                    <xsl:value-of select="$DirectoryName"/>_Object? Обєкт = await new <xsl:value-of select="$DirectoryName"/>_Pointer(SelectPointerItem ?? DirectoryPointerItem ?? new UniqueID()).GetDirectoryObject();
                     if (Обєкт != null) ДеревоПапок.SelectPointerItem = Обєкт.<xsl:value-of select="$FieldFolder"/>.UniqueID;
                 }
 
