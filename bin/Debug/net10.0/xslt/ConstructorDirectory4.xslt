@@ -452,7 +452,20 @@ partial class <xsl:value-of select="$DirectoryName"/>_Елемент : Directory
         return element;
     }
 
-    protected override void CreateStart(Box vBox)
+    #region Interface
+
+    FunctionForInterfaces.DirectoryElement Interface;
+
+    protected override void BuildInterface()
+    {
+        Interface = FunctionForInterfaces.ForDirectory();
+
+        Append(Interface.MainBox);
+        CreateStart(Interface.TopStartBox);
+        CreateEnd(Interface.TopEndBox);
+    }
+
+    void CreateStart(Box vBox)
     {
         <xsl:for-each select="$FieldsTL">
             // <xsl:value-of select="Name"/>
@@ -492,7 +505,7 @@ partial class <xsl:value-of select="$DirectoryName"/>_Елемент : Directory
         </xsl:for-each>
     }
 
-    protected override void CreateEnd(Box vBox)
+    void CreateEnd(Box vBox)
     {
         <xsl:for-each select="$TabularPartsTL">
             // Таблична частина "<xsl:value-of select="Name"/>"
@@ -501,6 +514,8 @@ partial class <xsl:value-of select="$DirectoryName"/>_Елемент : Directory
             CreateTablePart(vBox, "<xsl:value-of select="Caption"/>", <xsl:value-of select="Name"/>);
         </xsl:for-each>
     }
+
+    #endregion
 
     #region Присвоєння / зчитування значень
 
@@ -1061,7 +1076,7 @@ public partial class <xsl:value-of select="$DirectoryName"/>_PointerControl : Po
     {
         WidthPresentation = 300;
         Caption = $"{<xsl:value-of select="$DirectoryName"/>_Const.FULLNAME}:";
-        PointerChanged += async (_, pointer) =&gt; Presentation = pointer != null ? await pointer.GetPresentation() : "";
+        PointerChanged += async (_, pointer) =&gt; Presentation = !pointer.IsEmpty() ? await pointer.GetPresentation() : "";
     }
 
     public static <xsl:value-of select="$DirectoryName"/>_PointerControl New() =&gt; NewWithProperties([]);
@@ -1168,7 +1183,7 @@ public partial class <xsl:value-of select="$DirectoryName"/>_PointerTablePartCel
         }
     }
 
-    public async Task GetPresentation() =&gt; Presentation = await pointer.GetPresentation();
+    public async Task GetPresentation() =&gt; Presentation = !pointer.IsEmpty() ? await pointer.GetPresentation() : "";
 
     async Task PointerChange(UniqueID? p)
     {

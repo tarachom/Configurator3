@@ -424,17 +424,16 @@ partial class <xsl:value-of select="$DocumentName"/>_Елемент : DocumentFo
 
         CreateDocName(<xsl:value-of select="$DocumentName"/>_Const.FULLNAME, НомерДок, ДатаДок);
         <xsl:if test="$FieldsTL[Name = 'Коментар']">
-        CreateField(HBoxComment, "<xsl:value-of select="$FieldsTL[Name = 'Коментар']/Caption"/>:", Коментар);
+        CreateField(Interface.CommentBox, "<xsl:value-of select="$FieldsTL[Name = 'Коментар']/Caption"/>:", Коментар);
         </xsl:if>
 
         <xsl:if test="count($TabularPartsTL) != 0">
             <xsl:for-each select="$TabularPartsTL">
             // Таблична частина "<xsl:value-of select="Name"/>"
-            <xsl:value-of select="Name"/>.WidthRequest = 500;
             <xsl:value-of select="Name"/>.HeightRequest = 300;
-            NotebookTablePart.InsertPage(<xsl:value-of select="Name"/>, Label.New("<xsl:value-of select="Caption"/>"), <xsl:value-of select="position() - 1"/>);
+            Interface.Notebook.InsertPage(<xsl:value-of select="Name"/>, Label.New("<xsl:value-of select="Caption"/>"), <xsl:value-of select="position() - 1"/>);
             </xsl:for-each>
-            NotebookTablePart.SetCurrentPage(0);
+            Interface.Notebook.SetCurrentPage(0);
         </xsl:if>
 
         <!-- Крім поля Назва -->
@@ -500,17 +499,33 @@ partial class <xsl:value-of select="$DocumentName"/>_Елемент : DocumentFo
         return element;
     }
 
-    protected override void CreateTopStart(Box vBox)
+    #region Interface
+
+    FunctionForInterfaces.DocumentElement Interface;
+
+    protected override void BuildInterface()
+    {
+        Interface = FunctionForInterfaces.ForDocument();
+
+        Append(Interface.MainBox);
+
+        CreateTopStart(Interface.TopStartBox);
+        CreateTopEnd(Interface.TopEndBox);
+        CreateBottomStart(Interface.BottomStartBox);
+        CreateBottomEnd(Interface.BottomEndBox);
+    }
+
+    void CreateTopStart(Box vBox)
     {
         
     }
 
-    protected override void CreateTopEnd(Box vBox)
+    void CreateTopEnd(Box vBox)
     {
         
     }
 
-    protected override void CreateBottomStart(Box vBox)
+    void CreateBottomStart(Box vBox)
     {
         <!-- Крім полів які зразу добавляються в шапку НомерДок, ДатаДок, Коментар -->
         <!-- та скритого поля Назва яке формується перед збереженням -->
@@ -552,10 +567,12 @@ partial class <xsl:value-of select="$DocumentName"/>_Елемент : DocumentFo
         </xsl:for-each>
     }
 
-    protected override void CreateBottomEnd(Box vBox)
+    void CreateBottomEnd(Box vBox)
     {
         
     }
+
+    #endregion
 
     #region Присвоєння / зчитування значень
 
@@ -961,7 +978,7 @@ public partial class <xsl:value-of select="$DocumentName"/>_PointerControl : Poi
     {
         WidthPresentation = 300;
         Caption = $"{<xsl:value-of select="$DocumentName"/>_Const.FULLNAME}:";
-        PointerChanged += async (_, pointer) =&gt; Presentation = pointer != null ? await pointer.GetPresentation() : "";
+        PointerChanged += async (_, pointer) =&gt; Presentation = !pointer.IsEmpty() ? await pointer.GetPresentation() : "";
     }
 
     public static <xsl:value-of select="$DocumentName"/>_PointerControl New() =&gt; NewWithProperties([]);
@@ -1048,7 +1065,7 @@ public partial class <xsl:value-of select="$DocumentName"/>_PointerTablePartCell
         }
     }
 
-    public async Task GetPresentation() =&gt; Presentation = pointer != null ? await pointer.GetPresentation() : "";
+    public async Task GetPresentation() =&gt; Presentation = !pointer.IsEmpty() ? await pointer.GetPresentation() : "";
 
     async Task PointerChange(UniqueID? p)
     {
