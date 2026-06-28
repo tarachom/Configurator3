@@ -1217,10 +1217,11 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Пере
             return name switch
             {
                 <xsl:for-each select="Fields/Field">
-                  <xsl:text>"</xsl:text><xsl:value-of select="normalize-space(Name)"/>" =&gt; <xsl:value-of select="$EnumName"/>.<xsl:value-of select="Name"/>,
-                  <xsl:if test="normalize-space(Desc) != '' and normalize-space(Name) != normalize-space(Desc)">
-                      <xsl:text>"</xsl:text><xsl:value-of select="normalize-space(Desc)"/>" =&gt; <xsl:value-of select="$EnumName"/>.<xsl:value-of select="Name"/>,
-                  </xsl:if>
+                  <xsl:variable name="NameNormalize" select="normalize-space(Name)" />
+                  <xsl:variable name="DescNormalize" select="normalize-space(Desc)" />
+                  <xsl:text>"</xsl:text><xsl:value-of select="$NameNormalize"/><xsl:text>"</xsl:text> <xsl:if test="$DescNormalize != '' and $NameNormalize != $DescNormalize">
+                      <xsl:text> or "</xsl:text><xsl:value-of select="$DescNormalize"/><xsl:text>"</xsl:text>
+                  </xsl:if> =&gt; <xsl:value-of select="$EnumName"/>.<xsl:value-of select="Name"/>,
                 </xsl:for-each>
                 <xsl:text>_ =&gt; 0</xsl:text>
             };
@@ -1230,18 +1231,38 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Пере
         {
             return [
             <xsl:for-each select="Fields/Field">
-              <xsl:variable name="ReturnValue">
+              <xsl:variable name="NameNormalize" select="normalize-space(Name)" />
+              <xsl:variable name="DescNormalize">
                   <xsl:choose>
                       <xsl:when test="normalize-space(Desc) != ''">
                           <xsl:value-of select="normalize-space(Desc)"/>
                       </xsl:when>
                       <xsl:otherwise>
-                          <xsl:value-of select="normalize-space(Name)"/>
+                          <xsl:value-of select="$NameNormalize"/>
                       </xsl:otherwise>
                   </xsl:choose>
               </xsl:variable>
-              <xsl:text>new NameValue&lt;</xsl:text><xsl:value-of select="$EnumName"/>&gt;("<xsl:value-of select="$ReturnValue"/>", <xsl:value-of select="$EnumName"/>.<xsl:value-of select="Name"/>),
+              <xsl:text>new NameValue&lt;</xsl:text><xsl:value-of select="$EnumName"/>&gt;("<xsl:value-of select="$DescNormalize"/>", <xsl:value-of select="$EnumName"/>.<xsl:value-of select="$NameNormalize"/>),
             </xsl:for-each>];
+        }
+
+        public static Dictionary&lt;string, string&gt; <xsl:value-of select="$EnumName"/>_Dict()
+        {
+            return new() {
+            <xsl:for-each select="Fields/Field">
+              <xsl:variable name="NameNormalize" select="normalize-space(Name)" />
+              <xsl:variable name="DescNormalize">
+                  <xsl:choose>
+                      <xsl:when test="normalize-space(Desc) != ''">
+                          <xsl:value-of select="normalize-space(Desc)"/>
+                      </xsl:when>
+                      <xsl:otherwise>
+                          <xsl:value-of select="$NameNormalize"/>
+                      </xsl:otherwise>
+                  </xsl:choose>
+              </xsl:variable>
+              <xsl:text>{"</xsl:text><xsl:value-of select="$NameNormalize"/>", "<xsl:value-of select="$DescNormalize"/>"},
+            </xsl:for-each>};
         }
         #endregion
     </xsl:for-each>
