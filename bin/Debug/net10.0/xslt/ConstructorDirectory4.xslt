@@ -442,6 +442,14 @@ partial class <xsl:value-of select="$DirectoryName"/>_Елемент : Directory
                 </xsl:when>
             </xsl:choose>
         </xsl:for-each>
+
+        <xsl:for-each select="$TabularPartsTL">
+            // Таблична частина "<xsl:value-of select="Name"/>"
+            <xsl:value-of select="Name"/>.ЕлементВласник = Елемент;
+            <xsl:value-of select="Name"/>.WidthRequest = 500;
+            <xsl:value-of select="Name"/>.HeightRequest = 300;
+            <xsl:value-of select="Name"/>.Vexpand = false;
+        </xsl:for-each>
     }
 
     public static <xsl:value-of select="$DirectoryName"/>_Елемент New()
@@ -507,8 +515,6 @@ partial class <xsl:value-of select="$DirectoryName"/>_Елемент : Directory
     {
         <xsl:for-each select="$TabularPartsTL">
             // Таблична частина "<xsl:value-of select="Name"/>"
-            <xsl:value-of select="Name"/>.WidthRequest = 500;
-            <xsl:value-of select="Name"/>.HeightRequest = 300;
             CreateTablePart(vBox, "<xsl:value-of select="Caption"/>", <xsl:value-of select="Name"/>);
         </xsl:for-each>
     }
@@ -566,9 +572,7 @@ partial class <xsl:value-of select="$DirectoryName"/>_Елемент : Directory
         </xsl:for-each>
 
         <xsl:for-each select="$TabularPartsTL">
-            // Таблична частина "<xsl:value-of select="Name"/>"
-            <xsl:value-of select="Name"/>.ЕлементВласник = Елемент;
-            await <xsl:value-of select="Name"/>.LoadRecords();
+            await <xsl:value-of select="Name"/>.LoadRecords(); // Таблична частина "<xsl:value-of select="Name"/>"
         </xsl:for-each>
     }
 
