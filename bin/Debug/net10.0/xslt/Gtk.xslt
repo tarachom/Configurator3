@@ -382,7 +382,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             {
                 Довідники.<xsl:value-of select="$DirectoryName"/>_Pointer? current = <xsl:value-of select="$DirectoryName"/>_Select.Current;
                 <xsl:if test="$DirectoryType = 'Hierarchical'">
-                string Parent = <xsl:value-of select="$DirectoryName"/>_Select.Parent?.ToString() ?? Guid.Empty.ToString();
+                string Parent = <xsl:value-of select="$DirectoryName"/>_Select.Parent?.UniqueID.ToString() ?? Guid.Empty.ToString();
                 int Level = <xsl:value-of select="$DirectoryName"/>_Select.Level;
                 </xsl:if>
                 if (current != null)
