@@ -419,6 +419,19 @@
         
   </xsl:template>
 
+  <!--  -->
+  <xsl:template name="DirectoryOrDocumentSelectFields">
+        object Get(string name) =&gt; Current != null &amp;&amp; Current.Fields.TryGetValue(name, out object? value) ? value : throw new Exception($"Не знайдено поле {name} в колекції вибраних полів! Можливо потрібно додати поле в колекцію полів які потрбіно вибрати!");
+        <xsl:for-each select="Fields/Field">
+          <xsl:text>public </xsl:text>
+          <xsl:call-template name="FieldType" />
+          <xsl:text> </xsl:text>
+          <xsl:value-of select="Name"/> { get { var obj = Get("<xsl:value-of select="NameInTable"/>"); return <xsl:call-template name="ReadFieldValue2">
+              <xsl:with-param name="BaseFieldContainer">obj</xsl:with-param>
+            </xsl:call-template>; } }
+        </xsl:for-each>
+  </xsl:template>
+
   <xsl:template match="/">
 /*
  *
@@ -920,10 +933,10 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
     
     public class <xsl:value-of select="$DirectoryName"/>_Select : DirectorySelect
     {
-        public <xsl:value-of select="$DirectoryName"/>_Select() : base(Config.Kernel, "<xsl:value-of select="Table"/>") { }        
+        public <xsl:value-of select="$DirectoryName"/>_Select() : base(Config.Kernel, "<xsl:value-of select="Table"/>", <xsl:value-of select="$DirectoryName"/>_Const.PRESENTATION_FIELDS) { }        
         public async Task&lt;bool&gt; Select() =&gt; await base.BaseSelect();
         public async Task&lt;bool&gt; SelectSingle() { if (await base.BaseSelectSingle()) { MoveNext(); return true; } else { Current = null; return false; } }
-        public bool MoveNext() { if (base.MoveToPosition() &amp;&amp; base.CurrentPointerPosition.HasValue) { Current = new <xsl:value-of select="$DirectoryName"/>_Pointer(base.CurrentPointerPosition.Value.UniqueID, base.CurrentPointerPosition.Value.Fields); return true; } else { Current = null; return false; } }
+        public bool MoveNext() { if (base.MoveToPosition() &amp;&amp; base.CurrentPointerPosition.HasValue) { Current = new <xsl:value-of select="$DirectoryName"/>_Pointer(base.CurrentPointerPosition.Value.UniqueID, base.CurrentPointerPosition.Value.Fields, base.CurrentPointerPresentation); return true; } else { Current = null; return false; } }
         public <xsl:value-of select="$DirectoryName"/>_Pointer? Current { get; private set; }
         
         public async Task&lt;<xsl:value-of select="$DirectoryName"/>_Pointer&gt; FindByField(string name, object value, string funcToField = "", string funcToField_Param1 = "")
@@ -939,6 +952,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
                 directoryPointerList.Add(new <xsl:value-of select="$DirectoryName"/>_Pointer(directoryPointer.UniqueID, directoryPointer.Fields));
             return directoryPointerList;
         }
+        <xsl:call-template name="DirectoryOrDocumentSelectFields" />
     }
 
     <xsl:variable name="ParentField" select="ParentField"/>
@@ -952,7 +966,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
     <xsl:if test="Type = 'Hierarchical' and count(Fields/Field[Name = $ParentField]) != 0">
     public class <xsl:value-of select="$DirectoryName"/>_SelectHierarchical : DirectorySelectHierarchical
     {
-        public <xsl:value-of select="$DirectoryName"/>_SelectHierarchical() : base(Config.Kernel, "<xsl:value-of select="Table"/>", "<xsl:value-of select="Fields/Field[Name = $ParentField]/NameInTable"/>", "<xsl:value-of select="$IsFolderField_NameInTable"/>") { }        
+        public <xsl:value-of select="$DirectoryName"/>_SelectHierarchical() : base(Config.Kernel, "<xsl:value-of select="Table"/>", "<xsl:value-of select="Fields/Field[Name = $ParentField]/NameInTable"/>", "<xsl:value-of select="$IsFolderField_NameInTable"/>", <xsl:value-of select="$DirectoryName"/>_Const.PRESENTATION_FIELDS) { }        
         public async Task&lt;bool&gt; Select() { return await base.BaseSelect(); }
         public async Task&lt;bool&gt; SelectSingle() { if (await base.BaseSelectSingle()) { MoveNext(); return true; } else { Current = Parent = null; Level = 0; IsFolder = false; return false; } }
         public bool MoveNext() { if (base.MoveToPosition() &amp;&amp; base.CurrentPointerPositionHierarchical.HasValue) { 
@@ -968,6 +982,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
         public <xsl:value-of select="$DirectoryName"/>_Pointer? Parent { get; private set; }
         public int Level { get; private set; } = 0;
         public bool IsFolder { get; private set; }
+        <xsl:call-template name="DirectoryOrDocumentSelectFields" />
     }
     </xsl:if>
 
@@ -1554,10 +1569,10 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
 
     public class <xsl:value-of select="$DocumentName"/>_Select : DocumentSelect
     {		
-        public <xsl:value-of select="$DocumentName"/>_Select() : base(Config.Kernel, "<xsl:value-of select="Table"/>") { }
+        public <xsl:value-of select="$DocumentName"/>_Select() : base(Config.Kernel, "<xsl:value-of select="Table"/>", <xsl:value-of select="$DocumentName"/>_Const.PRESENTATION_FIELDS) { }
         public async Task&lt;bool&gt; Select() =&gt; await base.BaseSelect();
         public async Task&lt;bool&gt; SelectSingle() { if (await base.BaseSelectSingle()) { MoveNext(); return true; } else { Current = null; return false; } }
-        public bool MoveNext() { if (base.MoveToPosition() &amp;&amp; base.CurrentPointerPosition.HasValue) { Current = new <xsl:value-of select="$DocumentName"/>_Pointer(base.CurrentPointerPosition.Value.UniqueID, base.CurrentPointerPosition.Value.Fields); return true; } else { Current = null; return false; } }
+        public bool MoveNext() { if (base.MoveToPosition() &amp;&amp; base.CurrentPointerPosition.HasValue) { Current = new <xsl:value-of select="$DocumentName"/>_Pointer(base.CurrentPointerPosition.Value.UniqueID, base.CurrentPointerPosition.Value.Fields, base.CurrentPointerPresentation); return true; } else { Current = null; return false; } }
         public <xsl:value-of select="$DocumentName"/>_Pointer? Current { get; private set; }
 
         public async Task&lt;<xsl:value-of select="$DocumentName"/>_Pointer&gt; FindByField(string name, object value, string funcToField = "", string funcToField_Param1 = "")
@@ -1573,6 +1588,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
                 documentPointerList.Add(new <xsl:value-of select="$DocumentName"/>_Pointer(documentPointer.UniqueID, documentPointer.Fields));
             return documentPointerList;
         }
+        <xsl:call-template name="DirectoryOrDocumentSelectFields" />
     }
 
       <xsl:for-each select="TabularParts/TablePart"> <!-- TableParts -->
