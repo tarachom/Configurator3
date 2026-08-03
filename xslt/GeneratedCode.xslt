@@ -419,7 +419,7 @@
         
   </xsl:template>
 
-  <!--  -->
+  <!-- Для формування полів в середині вибірки довідників або документів -->
   <xsl:template name="DirectoryOrDocumentSelectFields">
         object Get(string name) =&gt; Current != null &amp;&amp; Current.Fields.TryGetValue(name, out object? value) ? value : throw new Exception($"Не знайдено поле {name} в колекції вибраних полів! Можливо потрібно додати поле в колекцію полів які потрбіно вибрати!");
         <xsl:for-each select="Fields/Field">
@@ -941,16 +941,16 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
         
         public async Task&lt;<xsl:value-of select="$DirectoryName"/>_Pointer&gt; FindByField(string name, object value, string funcToField = "", string funcToField_Param1 = "")
         {
-            UniqueID? pointer = await base.BaseFindByField(name, value, funcToField, funcToField_Param1);
-            return pointer != null ? new <xsl:value-of select="$DirectoryName"/>_Pointer(pointer) : new <xsl:value-of select="$DirectoryName"/>_Pointer();
+            bool result = await base.BaseFindByField(name, value, funcToField, funcToField_Param1);
+            return result &amp;&amp; MoveNext() &amp;&amp; Current != null ? Current : new();
         }
         
-        public async Task&lt;List&lt;<xsl:value-of select="$DirectoryName"/>_Pointer&gt;&gt; FindListByField(string name, object value, int limit = 0, int offset = 0)
+        public async Task&lt;List&lt;<xsl:value-of select="$DirectoryName"/>_Pointer&gt;&gt; FindListByField(string name, object value, int limit = 0, int offset = 0, string funcToField = "", string funcToField_Param1 = "")
         {
-            List&lt;<xsl:value-of select="$DirectoryName"/>_Pointer&gt; directoryPointerList = [];
-            foreach (var directoryPointer in await base.BaseFindListByField(name, value, limit, offset)) 
-                directoryPointerList.Add(new <xsl:value-of select="$DirectoryName"/>_Pointer(directoryPointer.UniqueID, directoryPointer.Fields));
-            return directoryPointerList;
+            List&lt;<xsl:value-of select="$DirectoryName"/>_Pointer&gt; list = [];
+            if (await base.BaseFindListByField(name, value, limit, offset, funcToField, funcToField_Param1))
+                while(MoveNext()) if (Current != null) list.Add(Current);
+            return list;
         }
         <xsl:call-template name="DirectoryOrDocumentSelectFields" />
     }
@@ -1577,16 +1577,16 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
 
         public async Task&lt;<xsl:value-of select="$DocumentName"/>_Pointer&gt; FindByField(string name, object value, string funcToField = "", string funcToField_Param1 = "")
         {
-            UniqueID? pointer = await base.BaseFindByField(name, value, funcToField, funcToField_Param1);
-            return pointer != null ? new <xsl:value-of select="$DocumentName"/>_Pointer(pointer) : new <xsl:value-of select="$DocumentName"/>_Pointer();
+            bool result = await base.BaseFindByField(name, value, funcToField, funcToField_Param1);
+            return result &amp;&amp; MoveNext() &amp;&amp; Current != null ? Current : new();
         }
         
-        public async Task&lt;List&lt;<xsl:value-of select="$DocumentName"/>_Pointer&gt;&gt; FindListByField(string name, object value, int limit = 0, int offset = 0)
+        public async Task&lt;List&lt;<xsl:value-of select="$DocumentName"/>_Pointer&gt;&gt; FindListByField(string name, object value, int limit = 0, int offset = 0, string funcToField = "", string funcToField_Param1 = "")
         {
-            List&lt;<xsl:value-of select="$DocumentName"/>_Pointer&gt; documentPointerList = [];
-            foreach (var documentPointer in await base.BaseFindListByField(name, value, limit, offset)) 
-                documentPointerList.Add(new <xsl:value-of select="$DocumentName"/>_Pointer(documentPointer.UniqueID, documentPointer.Fields));
-            return documentPointerList;
+            List&lt;<xsl:value-of select="$DocumentName"/>_Pointer&gt; list = [];
+            if (await base.BaseFindListByField(name, value, limit, offset, funcToField, funcToField_Param1))
+                while(MoveNext()) if (Current != null) list.Add(Current);
+            return list;
         }
         <xsl:call-template name="DirectoryOrDocumentSelectFields" />
     }
