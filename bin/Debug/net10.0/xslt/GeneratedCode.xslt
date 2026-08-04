@@ -946,12 +946,18 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             return result &amp;&amp; MoveNext() &amp;&amp; Current != null ? Current : new();
         }
         
-        public async Task&lt;List&lt;<xsl:value-of select="$DirectoryName"/>_Pointer&gt;&gt; FindListByField(string name, object value, int limit = 0, int offset = 0, string funcToField = "", string funcToField_Param1 = "")
+        public async Task&lt;List&lt;<xsl:value-of select="$DirectoryName"/>_Pointer&gt;&gt; FindListByField(string name, object value, string funcToField = "", string funcToField_Param1 = "")
         {
             List&lt;<xsl:value-of select="$DirectoryName"/>_Pointer&gt; list = [];
-            if (await base.BaseFindListByField(name, value, limit, offset, funcToField, funcToField_Param1))
+            if (await base.BaseFindListByField(name, value, funcToField, funcToField_Param1))
                 while(MoveNext()) if (Current != null) list.Add(Current);
             return list;
+        }
+
+        public async Task&lt;bool&gt; SelectByField(string[] selectFields, string name, object value, string funcToField = "", string funcToField_Param1 = "")
+        {
+            bool result = await base.BaseSelectByField(selectFields, name, value, funcToField, funcToField_Param1);
+            return result &amp;&amp; MoveNext() &amp;&amp; Current != null;
         }
         <xsl:call-template name="DirectoryOrDocumentSelectFields" />
     }
@@ -1582,12 +1588,18 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
             return result &amp;&amp; MoveNext() &amp;&amp; Current != null ? Current : new();
         }
         
-        public async Task&lt;List&lt;<xsl:value-of select="$DocumentName"/>_Pointer&gt;&gt; FindListByField(string name, object value, int limit = 0, int offset = 0, string funcToField = "", string funcToField_Param1 = "")
+        public async Task&lt;List&lt;<xsl:value-of select="$DocumentName"/>_Pointer&gt;&gt; FindListByField(string name, object value, string funcToField = "", string funcToField_Param1 = "")
         {
             List&lt;<xsl:value-of select="$DocumentName"/>_Pointer&gt; list = [];
-            if (await base.BaseFindListByField(name, value, limit, offset, funcToField, funcToField_Param1))
+            if (await base.BaseFindListByField(name, value, funcToField, funcToField_Param1))
                 while(MoveNext()) if (Current != null) list.Add(Current);
             return list;
+        }
+
+        public async Task&lt;bool&gt; SelectByField(string[] selectFields, string name, object value, string funcToField = "", string funcToField_Param1 = "")
+        {
+            bool result = await base.BaseSelectByField(selectFields, name, value, funcToField, funcToField_Param1);
+            return result &amp;&amp; MoveNext() &amp;&amp; Current != null;
         }
         <xsl:call-template name="DirectoryOrDocumentSelectFields" />
     }
