@@ -340,6 +340,7 @@ limitations under the License.
                 };
                 ColumnViewColumn column = ColumnViewColumn.New("<xsl:value-of select="Caption"/>", factory);
                 column.Resizable = true;
+                <xsl:if test="Size != '0'">column.FixedWidth = <xsl:value-of select="Size"/>;</xsl:if>
                 form.Grid.AppendColumn(column);
             }
         </xsl:for-each>
@@ -372,6 +373,7 @@ limitations under the License.
                 };
                 ColumnViewColumn column = ColumnViewColumn.New("<xsl:value-of select="Caption"/>", factory);
                 column.Resizable = true;
+                <xsl:if test="Size != '0'">column.FixedWidth = <xsl:value-of select="Size"/>;</xsl:if>
                 form.Grid.AppendColumn(column);
             }
         </xsl:for-each>
