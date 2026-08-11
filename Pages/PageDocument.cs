@@ -699,7 +699,7 @@ namespace Configurator
                 ConfDocument.AppendField(new ConfigurationField("Коментар", "Коментар", nameInTable_Comment, "string", "", "Коментар"));
 
                 string nameInTable_Basis = Configuration.GetNewUnigueColumnName(Program.Kernel, entryTable.Text, ConfDocument.Fields);
-                ConfDocument.AppendField(new ConfigurationField("Основа", "Основа", nameInTable_Basis, "composite_pointer", "", "Основа"));
+                ConfDocument.AppendField(new ConfigurationField("Підстава", "Підстава", nameInTable_Basis, "composite_pointer", "", "Підстава"));
 
                 //Заповнення списків
                 ConfDocument.AppendTableList(new ConfigurationTabularList("Записи"));

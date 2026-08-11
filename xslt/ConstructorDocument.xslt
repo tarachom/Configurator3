@@ -74,7 +74,7 @@ namespace <xsl:value-of select="$NameSpaceGeneratedCode"/>.Документи
             return Task.CompletedTask;
         }
 
-        public static Task <xsl:value-of select="$TriggerFunctions/Copying"/>(<xsl:value-of select="$DocumentName"/>_Object ДокументОбєкт, <xsl:value-of select="$DocumentName"/>_Object Основа)
+        public static Task <xsl:value-of select="$TriggerFunctions/Copying"/>(<xsl:value-of select="$DocumentName"/>_Object ДокументОбєкт, <xsl:value-of select="$DocumentName"/>_Object Підстава)
         {
             <xsl:if test="$Fields[Name = 'Назва']">
             ДокументОбєкт.Назва += " - Копія";

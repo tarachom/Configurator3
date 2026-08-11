@@ -7,7 +7,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>07.08.2026 19:42:02</DateTimeSave>
+  <DateTimeSave>10.08.2026 14:14:14</DateTimeSave>
   <DictTSearch>simple</DictTSearch>
   <GtkVersion>Gtk4</GtkVersion>
   <ConstantsBlocks>
@@ -18131,11 +18131,11 @@ FROM
           <IsExport>0</IsExport>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_b8</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Документ основа</Desc>
+          <Desc>Документ підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
@@ -18836,15 +18836,6 @@ FROM
               </PresetntationFields>
             </Field>
             <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>25</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
-            </Field>
-            <Field>
               <Name>Коментар</Name>
               <Caption>Коментар</Caption>
               <Size>0</Size>
@@ -19303,11 +19294,11 @@ FROM
           <IsExport>1</IsExport>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a1</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Документ основа</Desc>
+          <Desc>Документ підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
@@ -20714,15 +20705,6 @@ FROM
               </PresetntationFields>
             </Field>
             <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>100</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
-            </Field>
-            <Field>
               <Name>Коментар</Name>
               <Caption>Коментар</Caption>
               <Size>1200</Size>
@@ -21205,8 +21187,8 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_d1</NameInTable>
           <Type>composite_pointer</Type>
           <IsPresentation>0</IsPresentation>
@@ -21936,15 +21918,6 @@ FROM
               <Multiline>0</Multiline>
             </Field>
             <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>31</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
-            </Field>
-            <Field>
               <Name>Автор</Name>
               <Caption>Автор</Caption>
               <Size>0</Size>
@@ -22250,11 +22223,11 @@ FROM
           <IsExport>0</IsExport>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_b7</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Документ основа</Desc>
+          <Desc>Документ підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
@@ -23478,15 +23451,6 @@ FROM
               </PresetntationFields>
             </Field>
             <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>18</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
-            </Field>
-            <Field>
               <Name>Статус</Name>
               <Caption>Статус</Caption>
               <Size>0</Size>
@@ -23776,8 +23740,8 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a6</NameInTable>
           <Type>composite_pointer</Type>
           <IsPresentation>0</IsPresentation>
@@ -24180,15 +24144,6 @@ FROM
               <Multiline>0</Multiline>
             </Field>
             <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>10</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
-            </Field>
-            <Field>
               <Name>Автор</Name>
               <Caption>Автор</Caption>
               <Size>0</Size>
@@ -24361,8 +24316,8 @@ FROM
           <IsExport>0</IsExport>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_i3</NameInTable>
           <Type>composite_pointer</Type>
           <IsPresentation>0</IsPresentation>
@@ -25122,15 +25077,6 @@ FROM
               <Pointer>Перелічення.ГосподарськіОперації</Pointer>
             </Field>
             <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>8</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
-            </Field>
-            <Field>
               <Name>Контрагент</Name>
               <Caption>Контрагент</Caption>
               <Size>0</Size>
@@ -25526,11 +25472,11 @@ FROM
           <IsExport>0</IsExport>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a1</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Документ основа</Desc>
+          <Desc>Документ підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
@@ -26344,15 +26290,6 @@ FROM
               <Type>numeric</Type>
             </Field>
             <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>17</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
-            </Field>
-            <Field>
               <Name>Коментар</Name>
               <Caption>Коментар</Caption>
               <Size>0</Size>
@@ -26680,8 +26617,8 @@ FROM
           <IsExport>0</IsExport>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
           <IsPresentation>0</IsPresentation>
@@ -27572,15 +27509,6 @@ FROM
               <Multiline>0</Multiline>
             </Field>
             <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>20</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
-            </Field>
-            <Field>
               <Name>Автор</Name>
               <Caption>Автор</Caption>
               <Size>0</Size>
@@ -27892,11 +27820,11 @@ FROM
           <IsExport>0</IsExport>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Документ основа</Desc>
+          <Desc>Документ підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
@@ -28883,15 +28811,6 @@ FROM
               </PresetntationFields>
             </Field>
             <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>19</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
-            </Field>
-            <Field>
               <Name>Коментар</Name>
               <Caption>Коментар</Caption>
               <Size>0</Size>
@@ -29207,11 +29126,11 @@ FROM
           <IsExport>0</IsExport>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Документ основа</Desc>
+          <Desc>Документ підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
@@ -30171,15 +30090,6 @@ FROM
               </PresetntationFields>
             </Field>
             <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>16</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
-            </Field>
-            <Field>
               <Name>Коментар</Name>
               <Caption>Коментар</Caption>
               <Size>0</Size>
@@ -30504,8 +30414,8 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_b1</NameInTable>
           <Type>composite_pointer</Type>
           <IsPresentation>0</IsPresentation>
@@ -31331,15 +31241,6 @@ FROM
               </PresetntationFields>
             </Field>
             <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>100</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
-            </Field>
-            <Field>
               <Name>ВідобразитиВБухгалтерськомуОбліку</Name>
               <Caption>ВідобразитиВБухгалтерськомуОбліку</Caption>
               <Size>0</Size>
@@ -31596,8 +31497,8 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a4</NameInTable>
           <Type>composite_pointer</Type>
           <IsPresentation>0</IsPresentation>
@@ -32802,15 +32703,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>14</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
             <Field>
               <Name>Автор</Name>
@@ -34214,8 +34106,8 @@ FROM
           <IsExport>0</IsExport>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a5</NameInTable>
           <Type>composite_pointer</Type>
           <IsPresentation>0</IsPresentation>
@@ -34684,15 +34576,6 @@ FROM
                 <Field>Назва</Field>
               </PresetntationFields>
             </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>11</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
-            </Field>
           </ElementFields>
           <ElementTableParts>
             <TablePart>
@@ -34901,8 +34784,8 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_b2</NameInTable>
           <Type>composite_pointer</Type>
           <IsPresentation>0</IsPresentation>
@@ -35399,15 +35282,6 @@ FROM
               <Type>string</Type>
               <Multiline>0</Multiline>
             </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>12</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
-            </Field>
           </ElementFields>
           <ElementTableParts>
             <TablePart>
@@ -35580,8 +35454,8 @@ FROM
           <IsExport>0</IsExport>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_b7</NameInTable>
           <Type>composite_pointer</Type>
           <IsPresentation>0</IsPresentation>
@@ -36440,15 +36314,6 @@ FROM
               </PresetntationFields>
             </Field>
             <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>9</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
-            </Field>
-            <Field>
               <Name>ГосподарськаОперація</Name>
               <Caption>Господарська операція</Caption>
               <Size>0</Size>
@@ -36814,8 +36679,8 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a8</NameInTable>
           <Type>composite_pointer</Type>
           <IsPresentation>0</IsPresentation>
@@ -37771,15 +37636,6 @@ FROM
               <Multiline>0</Multiline>
             </Field>
             <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>21</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
-            </Field>
-            <Field>
               <Name>Автор</Name>
               <Caption>Автор</Caption>
               <Size>0</Size>
@@ -37951,8 +37807,8 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
           <IsPresentation>0</IsPresentation>
@@ -38423,15 +38279,6 @@ FROM
               <Multiline>0</Multiline>
             </Field>
             <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
-            </Field>
-            <Field>
               <Name>Склад</Name>
               <Caption>Склад</Caption>
               <Size>0</Size>
@@ -38626,8 +38473,8 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
           <IsPresentation>0</IsPresentation>
@@ -39111,15 +38958,6 @@ FROM
               <Multiline>0</Multiline>
             </Field>
             <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
-            </Field>
-            <Field>
               <Name>Склад</Name>
               <Caption>Склад</Caption>
               <Size>0</Size>
@@ -39301,8 +39139,8 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
           <IsPresentation>0</IsPresentation>
@@ -39773,15 +39611,6 @@ FROM
               <Multiline>0</Multiline>
             </Field>
             <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
-            </Field>
-            <Field>
               <Name>Склад</Name>
               <Caption>Склад</Caption>
               <Size>0</Size>
@@ -40019,8 +39848,8 @@ FROM
           <IsExport>0</IsExport>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a5</NameInTable>
           <Type>composite_pointer</Type>
           <IsPresentation>0</IsPresentation>
@@ -40393,15 +40222,6 @@ FROM
                 <Field>Назва</Field>
               </PresetntationFields>
             </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>9</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
-            </Field>
           </ElementFields>
           <ElementTableParts>
             <TablePart>
@@ -40575,8 +40395,8 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a1</NameInTable>
           <Type>composite_pointer</Type>
           <IsPresentation>0</IsPresentation>
@@ -41220,15 +41040,6 @@ FROM
               <Multiline>0</Multiline>
             </Field>
             <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>9</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
-            </Field>
-            <Field>
               <Name>Автор</Name>
               <Caption>Автор</Caption>
               <Size>0</Size>
@@ -41525,8 +41336,8 @@ FROM
           <IsExport>0</IsExport>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a4</NameInTable>
           <Type>composite_pointer</Type>
           <IsPresentation>0</IsPresentation>
@@ -42124,15 +41935,6 @@ FROM
               <Type>enum</Type>
               <Pointer>Перелічення.ПричиниЗакриттяЗамовленняКлієнта</Pointer>
             </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>100</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
-            </Field>
           </ElementFields>
           <ElementTableParts>
             <TablePart>
@@ -42401,8 +42203,8 @@ FROM
           <IsExport>0</IsExport>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a4</NameInTable>
           <Type>composite_pointer</Type>
           <IsPresentation>0</IsPresentation>
@@ -42988,15 +42790,6 @@ FROM
                 <Field>Назва</Field>
               </PresetntationFields>
             </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>100</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
-            </Field>
           </ElementFields>
           <ElementTableParts>
             <TablePart>
@@ -43265,8 +43058,8 @@ FROM
           <IsExport>0</IsExport>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a4</NameInTable>
           <Type>composite_pointer</Type>
           <IsPresentation>0</IsPresentation>
@@ -43863,15 +43656,6 @@ FROM
                 <Field>Назва</Field>
               </PresetntationFields>
             </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>100</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
-            </Field>
           </ElementFields>
           <ElementTableParts>
             <TablePart>
@@ -44002,16 +43786,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
         <Field>
           <Name>Організація</Name>
@@ -44637,15 +44422,6 @@ FROM
               <Multiline>0</Multiline>
             </Field>
             <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
-            </Field>
-            <Field>
               <Name>Організація</Name>
               <Caption>Організація</Caption>
               <Size>0</Size>
@@ -44826,16 +44602,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>base</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
         <Field>
           <Name>Автор</Name>
@@ -45421,16 +45198,6 @@ FROM
               <Type>string</Type>
               <Multiline>0</Multiline>
             </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <SortNum>100</SortNum>
-              <SortField>False</SortField>
-              <SortDirection>False</SortDirection>
-              <FilterField>False</FilterField>
-              <Type>composite_pointer</Type>
-            </Field>
           </Fields>
         </TabularList>
       </TabularLists>
@@ -45502,15 +45269,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
             <Field>
               <Name>Організація</Name>
@@ -45668,16 +45426,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
         <Field>
           <Name>Організація</Name>
@@ -46368,15 +46127,6 @@ FROM
               <Multiline>0</Multiline>
             </Field>
             <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
-            </Field>
-            <Field>
               <Name>Організація</Name>
               <Caption>Організація</Caption>
               <Size>0</Size>
@@ -46631,16 +46381,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
         <Field>
           <Name>Організація</Name>
@@ -46834,15 +46585,6 @@ FROM
               <Multiline>0</Multiline>
             </Field>
             <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
-            </Field>
-            <Field>
               <Name>Організація</Name>
               <Caption>Організація</Caption>
               <Size>0</Size>
@@ -47020,16 +46762,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
         <Field>
           <Name>Організація</Name>
@@ -47223,15 +46966,6 @@ FROM
               <Multiline>0</Multiline>
             </Field>
             <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
-            </Field>
-            <Field>
               <Name>Організація</Name>
               <Caption>Організація</Caption>
               <Size>0</Size>
@@ -47409,16 +47143,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -47540,15 +47275,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -47693,16 +47419,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
         <Field>
           <Name>Організація</Name>
@@ -48766,15 +48493,6 @@ FROM
               <Multiline>0</Multiline>
             </Field>
             <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
-            </Field>
-            <Field>
               <Name>Організація</Name>
               <Caption>Організація</Caption>
               <Size>0</Size>
@@ -49013,16 +48731,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -49144,15 +48863,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -49297,16 +49007,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -49426,15 +49137,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>100</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -49579,16 +49281,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -49710,15 +49413,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -49863,16 +49557,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -49994,15 +49689,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -50147,16 +49833,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -50278,15 +49965,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -50431,16 +50109,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -50562,15 +50241,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -50715,16 +50385,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -50846,15 +50517,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -50999,16 +50661,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -51130,15 +50793,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -51283,16 +50937,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -51414,15 +51069,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -51567,16 +51213,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -51698,15 +51345,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -51851,16 +51489,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -51982,15 +51621,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -52135,16 +51765,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -52266,15 +51897,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -52419,16 +52041,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -52550,15 +52173,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -52703,16 +52317,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -52834,15 +52449,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -52987,16 +52593,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -53118,15 +52725,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -53271,16 +52869,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -53402,15 +53001,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -53555,16 +53145,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -53686,15 +53277,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -53839,16 +53421,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -53970,15 +53553,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -54123,16 +53697,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -54254,15 +53829,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -54407,16 +53973,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -54538,15 +54105,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -54691,16 +54249,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -54822,15 +54381,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -54975,16 +54525,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -55106,15 +54657,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -55259,16 +54801,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -55390,15 +54933,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -55543,16 +55077,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -55674,15 +55209,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -55827,16 +55353,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -55958,15 +55485,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -56111,16 +55629,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -56242,15 +55761,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -56395,16 +55905,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -56526,15 +56037,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>100</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -56679,16 +56181,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -56810,15 +56313,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -56963,16 +56457,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -57094,15 +56589,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -57247,16 +56733,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -57378,15 +56865,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -57531,16 +57009,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -57662,15 +57141,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -57815,16 +57285,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -57946,15 +57417,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -58099,16 +57561,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -58230,15 +57693,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>5</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -58383,16 +57837,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -58514,15 +57969,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>100</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -58667,16 +58113,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -58798,15 +58245,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>100</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -58951,16 +58389,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -59082,15 +58521,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>100</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -59235,16 +58665,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -59366,15 +58797,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>100</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -59519,16 +58941,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -59650,15 +59073,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>100</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -59803,16 +59217,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -59934,15 +59349,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>100</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -60087,16 +59493,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -60218,15 +59625,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>100</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -60371,16 +59769,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -60502,15 +59901,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>100</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -60655,16 +60045,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -60786,15 +60177,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>100</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -60939,16 +60321,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -61070,15 +60453,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>100</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -61223,16 +60597,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -61354,15 +60729,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>100</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -61507,16 +60873,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -61638,15 +61005,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>100</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -61791,16 +61149,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -61922,15 +61281,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>100</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />
@@ -62075,16 +61425,17 @@ FROM
           <Multiline>0</Multiline>
         </Field>
         <Field>
-          <Name>Основа</Name>
-          <FullName>Основа</FullName>
+          <Name>Підстава</Name>
+          <FullName>Підстава</FullName>
           <NameInTable>col_a2</NameInTable>
           <Type>composite_pointer</Type>
-          <Desc>Основа</Desc>
+          <Desc>Підстава</Desc>
           <IsPresentation>0</IsPresentation>
           <IsIndex>0</IsIndex>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <CompositePointerNotUseDirectories>1</CompositePointerNotUseDirectories>
         </Field>
       </Fields>
       <TabularParts />
@@ -62208,15 +61559,6 @@ FROM
               <ReadOnly>0</ReadOnly>
               <Type>string</Type>
               <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Основа</Name>
-              <Caption>Основа</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>100</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>composite_pointer</Type>
             </Field>
           </ElementFields>
           <ElementTableParts />

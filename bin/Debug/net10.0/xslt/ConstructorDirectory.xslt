@@ -79,7 +79,7 @@ namespace <xsl:value-of select="$NameSpaceGeneratedCode"/>.Довідники
             return Task.CompletedTask;
         }
 
-        public static Task <xsl:value-of select="$TriggerFunctions/Copying"/>(<xsl:value-of select="$DirectoryName"/>_Object ДовідникОбєкт, <xsl:value-of select="$DirectoryName"/>_Object Основа)
+        public static Task <xsl:value-of select="$TriggerFunctions/Copying"/>(<xsl:value-of select="$DirectoryName"/>_Object ДовідникОбєкт, <xsl:value-of select="$DirectoryName"/>_Object Підстава)
         {
             <xsl:if test="$Fields[Name = 'Назва']">
             ДовідникОбєкт.Назва += " - Копія";

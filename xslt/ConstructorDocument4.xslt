@@ -83,7 +83,7 @@ static class <xsl:value-of select="$DocumentName"/>_Triggers
         </xsl:choose>        
     }
 
-    public static Task <xsl:value-of select="$TriggerFunctions/Copying"/>(<xsl:value-of select="$DocumentName"/>_Object ДокументОбєкт, <xsl:value-of select="$DocumentName"/>_Object Основа)
+    public static Task <xsl:value-of select="$TriggerFunctions/Copying"/>(<xsl:value-of select="$DocumentName"/>_Object ДокументОбєкт, <xsl:value-of select="$DocumentName"/>_Object Підстава)
     {
         <xsl:if test="$Fields[Name = 'Назва']">ДокументОбєкт.Назва += " - Копія";</xsl:if>
         return Task.CompletedTask;
