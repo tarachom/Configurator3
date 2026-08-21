@@ -375,7 +375,7 @@ partial class <xsl:value-of select="$DocumentName"/>_Елемент : DocumentFo
                 <xsl:value-of select="$namePointer"/>_PointerControl <xsl:value-of select="Name"/> = <xsl:value-of select="$namePointer"/>_PointerControl.New();
             </xsl:when>
             <xsl:when test="Type = 'enum'">
-                <xsl:text>ComboBoxText </xsl:text><xsl:value-of select="Name"/> = ComboBoxText.New();
+                <xsl:text>DropDownControl </xsl:text><xsl:value-of select="Name"/> = DropDownControl.New();
             </xsl:when>
             <xsl:when test="Type = 'any_pointer'">
                 <xsl:text>//Guid </xsl:text><xsl:value-of select="Name"/> = new();
@@ -479,14 +479,8 @@ partial class <xsl:value-of select="$DocumentName"/>_Елемент : DocumentFo
                     <xsl:value-of select="Name"/>.Caption = "<xsl:value-of select="Caption"/>";
                     <xsl:value-of select="Name"/>.WidthPresentation = <xsl:value-of select="$Size"/>;
                 </xsl:when>
-                <xsl:when test="Type = 'enum'">{
-                //Заповнення списку
-                foreach (var field in ПсевдонімиПерелічення.<xsl:value-of select="substring-after(Pointer, '.')"/>_List())
-                    <xsl:value-of select="Name"/>.Append(field.Value.ToString(), field.Name);
-
-                <xsl:value-of select="Name"/>.Active = 0;
-                <xsl:value-of select="Name"/>.AddController(FunctionForComboBox.DisableScrolling());
-            }
+                <xsl:when test="Type = 'enum'">
+                    <xsl:value-of select="Name"/>.Fill(ПсевдонімиПерелічення.<xsl:value-of select="substring-after(Pointer, '.')"/>_Dict());
                 </xsl:when>
             </xsl:choose>
         </xsl:for-each>
@@ -603,7 +597,7 @@ partial class <xsl:value-of select="$DocumentName"/>_Елемент : DocumentFo
                     <xsl:value-of select="Name"/>.Pointer = Елемент.<xsl:value-of select="Name"/>;
                 </xsl:when>
                 <xsl:when test="Type = 'enum'">
-                    <xsl:value-of select="Name"/>.ActiveId = Елемент.<xsl:value-of select="Name"/>.ToString();
+                    <xsl:value-of select="Name"/>.Value = Елемент.<xsl:value-of select="Name"/>.ToString();
                 </xsl:when>
                 <xsl:when test="Type = 'any_pointer' or Type = 'composite_text' or Type = 'bytea' or Type = 'string[]' or Type = 'integer[]' or Type = 'numeric[]' or Type = 'uuid[]'">
                     <xsl:text>//</xsl:text><xsl:value-of select="Name"/> = Елемент.<xsl:value-of select="Name"/>;
@@ -644,8 +638,7 @@ partial class <xsl:value-of select="$DocumentName"/>_Елемент : DocumentFo
                     <xsl:text>Елемент.</xsl:text><xsl:value-of select="Name"/> = <xsl:value-of select="Name"/>.Pointer;
                 </xsl:when>
                 <xsl:when test="Type = 'enum'">
-                    <xsl:variable name="namePointer" select="substring-after(Pointer, '.')" />
-                    <xsl:text>Елемент.</xsl:text><xsl:value-of select="Name"/> = ПсевдонімиПерелічення.<xsl:value-of select="$namePointer"/>_FindByName(<xsl:value-of select="Name"/>.ActiveId);
+                    <xsl:text>Елемент.</xsl:text><xsl:value-of select="Name"/> = ПсевдонімиПерелічення.<xsl:value-of select="substring-after(Pointer, '.')"/>_FindByName(<xsl:value-of select="Name"/>.Value);
                 </xsl:when>
                 <xsl:when test="Type = 'any_pointer' or Type = 'composite_text' or Type = 'bytea' or Type = 'string[]' or Type = 'integer[]' or Type = 'numeric[]' or Type = 'uuid[]'">
                     <xsl:text>//Елемент.</xsl:text><xsl:value-of select="Name"/> = <xsl:value-of select="Name"/>;

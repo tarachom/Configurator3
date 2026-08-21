@@ -118,12 +118,9 @@ limitations under the License.
                         object get() =&gt; <xsl:value-of select="Name"/>.Pointer.UniqueID.UGuid;
                     </xsl:when>
                     <xsl:when test="Type = 'enum'">
-                        ComboBoxText <xsl:value-of select="Name"/> = ComboBoxText.New();
+                        DropDownControl <xsl:value-of select="Name"/> = DropDownControl.NewWithValues(ПсевдонімиПерелічення.<xsl:value-of select="substring-after(Pointer, '.')"/>_Dict());
                         <xsl:value-of select="Name"/>.MarginStart = 5;
-                        foreach (var item in ПсевдонімиПерелічення.<xsl:value-of select="substring-after(Pointer, '.')"/>_List())
-                            <xsl:value-of select="Name"/>.Append(item.Value.ToString(), item.Name);
-                        <xsl:value-of select="Name"/>.Active = 0;
-                        object get() =&gt; Enum.TryParse(<xsl:value-of select="Name"/>.ActiveId, out <xsl:value-of select="substring-after(Pointer, '.')"/> value) ? (int)value: 0;
+                        object get() =&gt; (int)ПсевдонімиПерелічення.<xsl:value-of select="substring-after(Pointer, '.')"/>_FindByName(<xsl:value-of select="Name"/>.Value);
                     </xsl:when>
                     <xsl:otherwise>
                         Label <xsl:value-of select="Name"/> = Label.New("<xsl:value-of select="Type"/>");

@@ -292,10 +292,6 @@ partial class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина
                     <xsl:when test="Type = 'boolean'">CheckTablePartCell.New()</xsl:when>
                     <xsl:when test="Type = 'pointer'"><xsl:value-of select="substring-after(Pointer, '.')"/>_PointerTablePartCell.New()</xsl:when>
                     <xsl:when test="Type = 'enum'">DropDownTablePartCell.NewWithValues(ПсевдонімиПерелічення.<xsl:value-of select="substring-after(Pointer, '.')"/>_Dict())</xsl:when>
-                <!--<xsl:when test="Type = 'enum'">ComboTextTablePartCell.New();
-                foreach (var field in ПсевдонімиПерелічення.<xsl:value-of select="substring-after(Pointer, '.')"/>_List())
-                    cell.Combo.Append(field.Value.ToString(), field.Name);
-                cell.Combo.AddController(FunctionForComboBox.DisableScrolling())</xsl:when>-->
                     <xsl:when test="Type = 'date' or Type = 'datetime'">DateTimeTablePartCell.New()</xsl:when>
                     <xsl:when test="Type = 'time'">TimeTablePartCell.New()</xsl:when>
                     <xsl:when test="Type = 'composite_pointer'">CompositePointerControlTablePartCell.New()</xsl:when>
@@ -327,7 +323,6 @@ partial class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина
                     <xsl:when test="Type = 'boolean'">CheckTablePartCell</xsl:when>
                     <xsl:when test="Type = 'pointer'"><xsl:value-of select="substring-after(Pointer, '.')"/>_PointerTablePartCell</xsl:when>
                     <xsl:when test="Type = 'enum'">DropDownTablePartCell</xsl:when>
-                <!--<xsl:when test="Type = 'enum'">ComboTextTablePartCell</xsl:when>-->
                     <xsl:when test="Type = 'date' or Type = 'datetime'">DateTimeTablePartCell</xsl:when>
                     <xsl:when test="Type = 'time'">TimeTablePartCell</xsl:when>
                     <xsl:when test="Type = 'composite_pointer'">CompositePointerControlTablePartCell</xsl:when>
