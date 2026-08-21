@@ -65,7 +65,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
       </xsl:variable>
       <xsl:variable name="IconTree">
           <xsl:choose>
-              <xsl:when test="$DirectoryType = 'Hierarchical' and IconTree = 'Folder'">ДляДерева</xsl:when>
+              <xsl:when test="$DirectoryType = 'Hierarchical' and AllowedContent = 'Folders'">ДляДерева</xsl:when>
               <xsl:otherwise>ДляТабличногоСписку</xsl:otherwise>
           </xsl:choose>
       </xsl:variable>
