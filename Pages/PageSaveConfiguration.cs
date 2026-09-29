@@ -641,37 +641,29 @@ namespace Configurator
             {
                 ApendLine("");
 
-                XPathDocument xPathDoc = new XPathDocument(
-                    System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, "ComparisonAnalize.xml")
-                );
-                XPathNavigator xPathDocNavigator = xPathDoc.CreateNavigator();
-
-                XPathNodeIterator nodeInfo = xPathDocNavigator.Select("/root/info");
-                if (nodeInfo.Count == 0)
+                string pathToSqlCommandFile = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, "ComparisonAnalize.xml");
+                if (File.Exists(pathToSqlCommandFile))
                 {
-                    ApendLine("Інформація відсутня!");
-                }
-                else
-                    while (nodeInfo!.MoveNext())
+                    //Read SQL
+                    (List<string> InfoList, List<string> SqlList) = Configuration.ListComparisonSql(pathToSqlCommandFile);
+
+                    if (InfoList.Count == 0)
+                        ApendLine("Інформація відсутня!");
+                    else
+                        foreach (string info in InfoList)
+                            ApendLine(info);
+
+                    ApendLine("\n[ Команди SQL ]\n");
+
+                    if (SqlList.Count == 0)
+                        ApendLine("Команди відсутні!");
+                    else
                     {
-                        ApendLine(nodeInfo?.Current?.Value ?? "");
+                        foreach (string sql in SqlList)
+                            ApendLine(sql);
+
+                        ApendLine("\n Для внесення змін - натисніть \"Збереження змін. Крок 2\"\n");
                     }
-
-                ApendLine("\n[ Команди SQL ]\n");
-
-                XPathNodeIterator nodeSQL = xPathDocNavigator.Select("/root/sql");
-                if (nodeSQL.Count == 0)
-                {
-                    ApendLine("Команди відсутні!");
-                }
-                else
-                {
-                    while (nodeSQL!.MoveNext())
-                    {
-                        ApendLine(" - " + nodeSQL?.Current?.Value);
-                    }
-
-                    ApendLine("\n Для внесення змін - натисніть \"Збереження змін. Крок 2\"\n");
                 }
             }
             else
@@ -697,7 +689,7 @@ namespace Configurator
             if (File.Exists(pathToSqlCommandFile))
             {
                 //Read SQL
-                List<string> SqlList = Configuration.ListComparisonSql(pathToSqlCommandFile);
+                (_, List<string> SqlList) = Configuration.ListComparisonSql(pathToSqlCommandFile);
 
                 ApendLine("[ Виконання SQL ]\n");
 
@@ -732,7 +724,7 @@ namespace Configurator
             if (File.Exists(pathToFuncSqlCommandFile))
             {
                 //Read SQL
-                List<string> SqlList = Configuration.ListComparisonSql(pathToFuncSqlCommandFile);
+                (_, List<string> SqlList) = Configuration.ListComparisonSql(pathToFuncSqlCommandFile);
 
                 ApendLine("[ Створення функцій SQL ]\n");
 
