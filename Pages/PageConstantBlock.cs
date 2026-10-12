@@ -113,13 +113,13 @@ namespace Configurator
 
         public void SetValue()
         {
-            entryName.Text = ConfConstantsBlock.BlockName;
+            entryName.Text = ConfConstantsBlock.Name;
             textViewDesc.Buffer.Text = ConfConstantsBlock.Desc;
         }
 
         void GetValue()
         {
-            ConfConstantsBlock.BlockName = entryName.Text;
+            ConfConstantsBlock.Name = entryName.Text;
             ConfConstantsBlock.Desc = textViewDesc.Buffer.Text;
         }
 
@@ -147,7 +147,7 @@ namespace Configurator
             }
             else
             {
-                if (ConfConstantsBlock.BlockName != entryName.Text)
+                if (ConfConstantsBlock.Name != entryName.Text)
                 {
                     if (Conf.ConstantsBlock.ContainsKey(entryName.Text))
                     {
@@ -156,17 +156,17 @@ namespace Configurator
                     }
                 }
 
-                Conf.ConstantsBlock.Remove(ConfConstantsBlock.BlockName);
+                Conf.ConstantsBlock.Remove(ConfConstantsBlock.Name);
             }
 
             GetValue();
 
-            Conf.ConstantsBlock.Add(ConfConstantsBlock.BlockName, ConfConstantsBlock);
+            Conf.ConstantsBlock.Add(ConfConstantsBlock.Name, ConfConstantsBlock);
 
             IsNew = false;
 
             GeneralForm?.LoadTreeAsync();
-            GeneralForm?.RenameCurrentPageNotebook($"Блок констант: {ConfConstantsBlock.BlockName}");
+            GeneralForm?.RenameCurrentPageNotebook($"Блок констант: {ConfConstantsBlock.Name}");
         }
 
         void OnAddConstClick(object? sender, EventArgs args)
@@ -175,8 +175,8 @@ namespace Configurator
             {
                 ConfigurationConstants ConfConstants = new ConfigurationConstants();
 
-                if (Conf.ConstantsBlock.ContainsKey(ConfConstantsBlock.BlockName))
-                    ConfConstants.Block = new ConfigurationConstantsBlock(ConfConstantsBlock.BlockName);
+                if (Conf.ConstantsBlock.ContainsKey(ConfConstantsBlock.Name))
+                    ConfConstants.Block = new ConfigurationConstantsBlock(ConfConstantsBlock.Name);
                 else if (Conf.ConstantsBlock.Count != 0)
                     ConfConstants.Block = Conf.ConstantsBlock.Values.First<ConfigurationConstantsBlock>();
 

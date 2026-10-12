@@ -253,7 +253,7 @@ namespace Configurator
                     if (CancellationTokenThread.IsCancellationRequested)
                         break;
 
-                    ApendLine(configurationConstantsBlock.BlockName);
+                    ApendLine(configurationConstantsBlock.Name);
 
                     foreach (ConfigurationConstants configurationConstants in configurationConstantsBlock.Constants.Values)
                     {

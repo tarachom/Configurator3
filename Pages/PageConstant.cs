@@ -138,7 +138,7 @@ namespace Configurator
             vBox.PackStart(hBoxBlock, false, false, 5);
 
             foreach (ConfigurationConstantsBlock block in Conf.ConstantsBlock.Values)
-                comboBoxBlock.Append(block.BlockName, block.BlockName);
+                comboBoxBlock.Append(block.Name, block.Name);
 
             hBoxBlock.PackStart(new Label("Блок:"), false, false, 5);
             hBoxBlock.PackStart(comboBoxBlock, false, false, 5);
@@ -208,7 +208,7 @@ namespace Configurator
 
             textViewDesc.Buffer.Text = ConfConstants.Desc;
 
-            comboBoxBlock.ActiveId = ConfConstants.Block.BlockName;
+            comboBoxBlock.ActiveId = ConfConstants.Block.Name;
             comboBoxType.ActiveId = ConfConstants.Type;
 
             if (comboBoxBlock.Active == -1)
@@ -291,7 +291,7 @@ namespace Configurator
             }
             else
             {
-                if (ConfConstants.Name != entryName.Text || ConfConstants.Block.BlockName != comboBoxBlock.ActiveId)
+                if (ConfConstants.Name != entryName.Text || ConfConstants.Block.Name != comboBoxBlock.ActiveId)
                 {
                     if (Conf.ConstantsBlock[comboBoxBlock.ActiveId].Constants.ContainsKey(entryName.Text))
                     {
@@ -300,7 +300,7 @@ namespace Configurator
                     }
                 }
 
-                Conf.ConstantsBlock[ConfConstants.Block.BlockName].Constants.Remove(ConfConstants.Name);
+                Conf.ConstantsBlock[ConfConstants.Block.Name].Constants.Remove(ConfConstants.Name);
             }
 
             GetValue();
@@ -318,7 +318,7 @@ namespace Configurator
                     return;
                 }
 
-            Conf.AppendConstants(ConfConstants.Block.BlockName, ConfConstants);
+            Conf.AppendConstants(ConfConstants.Block.Name, ConfConstants);
 
             IsNew = false;
 
@@ -343,7 +343,7 @@ namespace Configurator
                                 TabularParts = ConfConstants.TabularParts,
                                 TablePart = tablePart,
                                 IsNew = false,
-                                Owner = new OwnerTablePart(false, "Constants", ConfConstants.Name, ConfConstants.Block.BlockName),
+                                Owner = new OwnerTablePart(false, "Constants", ConfConstants.Name, ConfConstants.Block.Name),
                                 GeneralForm = GeneralForm,
                                 CallBack_RefreshList = TabularPartsRefreshList
                             };
@@ -363,7 +363,7 @@ namespace Configurator
                 {
                     TabularParts = ConfConstants.TabularParts,
                     IsNew = true,
-                    Owner = new OwnerTablePart(false, "Constants", ConfConstants.Name, ConfConstants.Block.BlockName),
+                    Owner = new OwnerTablePart(false, "Constants", ConfConstants.Name, ConfConstants.Block.Name),
                     GeneralForm = GeneralForm,
                     CallBack_RefreshList = TabularPartsRefreshList
                 };

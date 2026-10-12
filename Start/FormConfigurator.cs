@@ -59,7 +59,7 @@ namespace Configurator
 
         void LoadConstant(TreeIter rootIter, ConfigurationConstants confConstant)
         {
-            string key = $"Константи.{confConstant.Block.BlockName}/{confConstant.Name}";
+            string key = $"Константи.{confConstant.Block.Name}/{confConstant.Name}";
 
             TreeIter constantIter = treeStore.AppendValues(rootIter, confConstant.Name, GetTypeInfo(confConstant.Type, confConstant.Pointer), key);
 
@@ -94,9 +94,9 @@ namespace Configurator
         {
             foreach (KeyValuePair<string, ConfigurationConstantsBlock> ConfConstantsBlock in Conf.ConstantsBlock)
             {
-                string key = $"БлокКонстант.{ConfConstantsBlock.Value.BlockName}";
+                string key = $"БлокКонстант.{ConfConstantsBlock.Value.Name}";
 
-                TreeIter contantsBlockIter = treeStore.AppendValues(rootIter, ConfConstantsBlock.Value.BlockName, "", key);
+                TreeIter contantsBlockIter = treeStore.AppendValues(rootIter, ConfConstantsBlock.Value.Name, "", key);
 
                 foreach (ConfigurationConstants ConfConstants in ConfConstantsBlock.Value.Constants.Values)
                     LoadConstant(contantsBlockIter, ConfConstants);
@@ -456,7 +456,7 @@ namespace Configurator
             foreach (ConfigurationConstantsBlock block in Conf.ConstantsBlock.Values)
                 foreach (ConfigurationConstants constants in block.Constants.Values)
                 {
-                    string fullName = block.BlockName + "." + constants.Name;
+                    string fullName = block.Name + "." + constants.Name;
                     ConstantsAllFields.Add(fullName, new ConfigurationField(fullName, fullName, constants.NameInTable, constants.Type, constants.Pointer, constants.Desc));
                 }
 
@@ -1887,11 +1887,11 @@ namespace Configurator
                 case "БлокКонстант":
                     {
                         ConfigurationConstantsBlock newConstantBlock = Conf.ConstantsBlock[name].Copy();
-                        newConstantBlock.BlockName += GenerateName.GetNewName();
+                        newConstantBlock.Name += GenerateName.GetNewName();
 
                         Dictionary<string, ConfigurationField> AllFields = GetConstantsAllFields();
 
-                        if (!Conf.ConstantsBlock.ContainsKey(newConstantBlock.BlockName))
+                        if (!Conf.ConstantsBlock.ContainsKey(newConstantBlock.Name))
                         {
                             foreach (ConfigurationConstants itemConst in newConstantBlock.Constants.Values)
                             {
