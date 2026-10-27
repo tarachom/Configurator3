@@ -110,8 +110,8 @@ namespace Configurator
             Box hBoxTypeReg = new Box(Orientation.Horizontal, 0) { Halign = Align.End };
             vBox.PackStart(hBoxTypeReg, false, false, 5);
 
-            comboBoxTypeReg.Append(TypeRegistersAccumulation.Residues.ToString(), "Залишки");
-            comboBoxTypeReg.Append(TypeRegistersAccumulation.Turnover.ToString(), "Обороти");
+            comboBoxTypeReg.Append(ConfigurationRegistersAccumulation.TypeRegistersAccumulation.Residues.ToString(), "Залишки");
+            comboBoxTypeReg.Append(ConfigurationRegistersAccumulation.TypeRegistersAccumulation.Turnover.ToString(), "Обороти");
 
             hBoxTypeReg.PackStart(new Label("Вид регістру:"), false, false, 5);
             hBoxTypeReg.PackStart(comboBoxTypeReg, false, false, 5);
@@ -614,7 +614,7 @@ namespace Configurator
             else
                 entryTable.Text = ConfRegister.Table;
 
-            comboBoxTypeReg.ActiveId = ConfRegister.TypeRegistersAccumulation.ToString();
+            comboBoxTypeReg.ActiveId = ConfRegister.TypeRegisters.ToString();
 
             if (comboBoxTypeReg.Active == -1)
                 comboBoxTypeReg.Active = 0;
@@ -703,7 +703,7 @@ namespace Configurator
             ConfRegister.Name = entryName.Text;
             ConfRegister.FullName = entryFullName.Text;
             ConfRegister.Table = entryTable.Text;
-            ConfRegister.TypeRegistersAccumulation = Enum.Parse<TypeRegistersAccumulation>(comboBoxTypeReg.ActiveId);
+            ConfRegister.TypeRegisters = Enum.Parse<ConfigurationRegistersAccumulation.TypeRegistersAccumulation>(comboBoxTypeReg.ActiveId);
             ConfRegister.Desc = textViewDesc.Buffer.Text;
             ConfRegister.NoSummary = checkButtonNoSummary.Active;
         }
@@ -712,7 +712,7 @@ namespace Configurator
         {
             return new RegisterAccumulationOtherInfoStruct
             (
-                Enum.Parse<TypeRegistersAccumulation>(comboBoxTypeReg.ActiveId)
+                Enum.Parse<ConfigurationRegistersAccumulation.TypeRegistersAccumulation>(comboBoxTypeReg.ActiveId)
             );
         }
 
@@ -1360,9 +1360,9 @@ HAVING";
                     return;
                 }
 
-                switch (ConfRegister.TypeRegistersAccumulation)
+                switch (ConfRegister.TypeRegisters)
                 {
-                    case TypeRegistersAccumulation.Residues: /* Залишки */
+                    case ConfigurationRegistersAccumulation.TypeRegistersAccumulation.Residues: /* Залишки */
                         {
                             ConfigurationTablePart Залишки_TablePart = await CreateVirtualTable_Залишки();
                             await CreateVirtualTable_ЗалишкиТаОбороти();
@@ -1372,7 +1372,7 @@ HAVING";
 
                             break;
                         }
-                    case TypeRegistersAccumulation.Turnover: /* Обороти */
+                    case ConfigurationRegistersAccumulation.TypeRegistersAccumulation.Turnover: /* Обороти */
                         {
                             await CreateVirtualTable_Обороти();
                             break;
@@ -2306,11 +2306,11 @@ HAVING";
     /// <summary>
     /// Структура для додаткової інформації про регістр
     /// </summary>
-    struct RegisterAccumulationOtherInfoStruct(TypeRegistersAccumulation typeRegistersAccumulation = TypeRegistersAccumulation.Residues)
+    struct RegisterAccumulationOtherInfoStruct(ConfigurationRegistersAccumulation.TypeRegistersAccumulation typeRegisters = ConfigurationRegistersAccumulation.TypeRegistersAccumulation.Residues)
     {
         /// <summary>
         /// Тип регістру
         /// </summary>
-        public TypeRegistersAccumulation TypeReg = typeRegistersAccumulation;
+        public ConfigurationRegistersAccumulation.TypeRegistersAccumulation TypeReg = typeRegisters;
     }
 }
