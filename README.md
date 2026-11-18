@@ -13,7 +13,7 @@
 
     sudo apt-get update && sudo apt-get install -y dotnet-sdk-11.0
 
-Довідка як встановити dotnet-sdk-10.0 на Ubuntu [Install .NET SDK or .NET Runtime on Ubuntu](https://learn.microsoft.com/uk-ua/dotnet/core/install/linux-ubuntu-install?tabs=dotnet10&pivots=os-linux-ubuntu-2604)
+Довідка як встановити dotnet-sdk-10.0 на Ubuntu [Install .NET SDK or .NET Runtime on Ubuntu](https://learn.microsoft.com/uk-ua/dotnet/core/install/linux-ubuntu-install?tabs=dotnet11&pivots=os-linux-ubuntu-2604)
 
 Встановити PostgreSQL
 
